@@ -6,7 +6,7 @@ export default function Home() {
           Shark Human Alliance
         </h1>
         <p className="text-lg text-gray-700">
-          Friendly sharks. Safer oceans. Better humans.
+          Friendly sharks. Safer oceans. Better humans etc..
         </p>
       </div>
     </main>
