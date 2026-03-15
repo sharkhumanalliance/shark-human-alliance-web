@@ -7,18 +7,21 @@ export function SiteFooter() {
             Shark Human Alliance
           </p>
           <p className="mt-1 text-sm text-[var(--muted)]">
-            A fictional alliance for better shark-human relations.
+            A fictional alliance for better shark-human relations. 50% of every sale funds real ocean conservation.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-5 text-sm text-[var(--muted)]">
-          <a href="#about" className="transition hover:text-[var(--brand-dark)]">
+          <a href="/#real-impact" className="transition hover:text-[var(--brand-dark)]">
+            Real Impact
+          </a>
+          <a href="/#about" className="transition hover:text-[var(--brand-dark)]">
             About
           </a>
-          <a href="#membership" className="transition hover:text-[var(--brand-dark)]">
+          <a href="/membership" className="transition hover:text-[var(--brand-dark)]">
             Membership
           </a>
-          <a href="#faq" className="transition hover:text-[var(--brand-dark)]">
+          <a href="/#faq" className="transition hover:text-[var(--brand-dark)]">
             FAQ
           </a>
         </div>
