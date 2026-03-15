@@ -1,0 +1,58 @@
+[
+  {
+    "id": "demo-001",
+    "name": "Captain James Coral",
+    "tier": "protected",
+    "date": "2026-01-15",
+    "dedication": ""
+  },
+  {
+    "id": "demo-002",
+    "name": "Marina Deepwater",
+    "tier": "nonsnack",
+    "date": "2026-02-03",
+    "dedication": "For surviving every beach vacation since 1987"
+  },
+  {
+    "id": "demo-003",
+    "name": "Dave",
+    "tier": "basic",
+    "date": "2026-02-14",
+    "dedication": ""
+  },
+  {
+    "id": "demo-004",
+    "name": "Professor Waverly Tidesworth III",
+    "tier": "nonsnack",
+    "date": "2026-02-20",
+    "dedication": "Still not on the menu"
+  },
+  {
+    "id": "demo-005",
+    "name": "Samantha Reef-Friendly",
+    "tier": "protected",
+    "date": "2026-03-01",
+    "dedication": "A gift from someone who thinks this is hilarious"
+  },
+  {
+    "id": "demo-006",
+    "name": "El Surfista Valiente",
+    "tier": "protected",
+    "date": "2026-03-08",
+    "dedication": "Porque los tiburones merecen amor"
+  },
+  {
+    "id": "m-1773596691088-v1cj7e",
+    "name": "Peter Sudderland",
+    "tier": "protected",
+    "date": "2026-03-15",
+    "dedication": "Shark lover"
+  },
+  {
+    "id": "m-1773598761657-lnfaxr",
+    "name": "Sarah Jones",
+    "tier": "nonsnack",
+    "date": "2026-03-15",
+    "dedication": "For surviving every holiday since 1987"
+  }
+]

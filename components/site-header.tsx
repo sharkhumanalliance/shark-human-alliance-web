@@ -1,14 +1,20 @@
-import Link from "next/link";
+"use client";
 
-const navItems = [
-  { label: "Real Impact", href: "/#real-impact" },
-  { label: "How it works", href: "/#how-it-works" },
-  { label: "Membership", href: "/membership" },
-  { label: "About", href: "/#about" },
-  { label: "FAQ", href: "/#faq" },
-];
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { LanguageSwitcher } from "./language-switcher";
 
 export function SiteHeader() {
+  const t = useTranslations("header");
+
+  const navItems = [
+    { label: t("nav.realImpact"), href: "/#real-impact" },
+    { label: t("nav.howItWorks"), href: "/#how-it-works" },
+    { label: t("nav.membership"), href: "/membership" },
+    { label: t("nav.about"), href: "/#about" },
+    { label: t("nav.registry"), href: "/registry" },
+  ];
+
   return (
     <header className="sticky top-0 z-50 border-b border-white/60 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -18,10 +24,10 @@ export function SiteHeader() {
           </div>
           <div>
             <p className="text-sm font-semibold tracking-wide text-[var(--brand-dark)]">
-              Shark Human Alliance
+              {t("brand")}
             </p>
             <p className="text-xs text-[var(--muted)]">
-              Peace between humans and sharks
+              {t("tagline")}
             </p>
           </div>
         </Link>
@@ -38,12 +44,15 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          href="/membership"
-          className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
-        >
-          Join the Alliance
-        </Link>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <Link
+            href="/membership"
+            className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+          >
+            {t("cta")}
+          </Link>
+        </div>
       </div>
     </header>
   );

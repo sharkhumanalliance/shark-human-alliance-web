@@ -1,26 +1,33 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export function HeroSection() {
+  const t = useTranslations("hero");
+
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
         {/* Left — copy */}
         <div className="flex flex-col justify-center">
+          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-800 shadow-sm">
+            {t("giftBadge")}
+          </div>
+
           <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-teal-200 bg-white px-4 py-2 text-sm font-medium text-[var(--brand-dark)] shadow-sm">
             <span className="inline-block h-2 w-2 rounded-full bg-teal-500" />
-            50% of every sale funds real ocean conservation
+            {t("badge")}
           </div>
 
           <h1 className="max-w-2xl text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
-            Sharks deserve better PR.
+            {t("titleLine1")}
             <br />
-            <span className="text-[var(--brand)]">And real protection.</span>
+            <span className="text-[var(--brand)]">{t("titleLine2")}</span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl">
-            A fictional alliance with a real mission — buy a funny certificate,
-            and half the price goes directly to shark and ocean conservation.
-            The other half keeps one very tired human running this project.
+            {t("description")}
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -28,20 +35,19 @@ export function HeroSection() {
               href="/membership"
               className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
-              Get your certificate
+              {t("ctaPrimary")}
             </a>
 
             <a
               href="#real-impact"
               className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
             >
-              See where the money goes
+              {t("ctaSecondary")}
             </a>
           </div>
 
           <p className="mt-5 text-sm text-[var(--muted)]">
-            Personalized certificate. Entirely symbolic protection. Very real
-            conservation impact.
+            {t("subtext")}
           </p>
         </div>
 
@@ -54,7 +60,7 @@ export function HeroSection() {
             <div className="p-4">
               <Image
                 src="/mascots/finnley-luna-hero.png"
-                alt="Finnley Mako and Luna Reef — the Alliance ambassadors"
+                alt={t("imageAlt")}
                 width={1400}
                 height={1100}
                 className="h-auto w-full rounded-[1.5rem]"
@@ -65,18 +71,18 @@ export function HeroSection() {
             <div className="grid grid-cols-2 gap-px bg-sky-100">
               <div className="bg-white p-4">
                 <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                  Finnley Mako
+                  {t("finnleyName")}
                 </p>
                 <p className="mt-1 text-xs text-[var(--muted)]">
-                  Press spokesperson. Optimistic. Slightly offended by Hollywood.
+                  {t("finnleyDesc")}
                 </p>
               </div>
               <div className="bg-white p-4">
                 <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                  Luna Reef
+                  {t("lunaName")}
                 </p>
                 <p className="mt-1 text-xs text-[var(--muted)]">
-                  Dept. of Misunderstanding Prevention. Judges your wetsuit color.
+                  {t("lunaDesc")}
                 </p>
               </div>
             </div>

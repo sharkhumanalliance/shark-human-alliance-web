@@ -1,0 +1,339 @@
+"use client";
+
+import { useTranslations, useLocale } from "next-intl";
+import { MembershipCard } from "@/components/home/membership-card";
+import { SocialProofToasts } from "@/components/social-proof-toasts";
+
+export function MembershipPageContent() {
+  const t = useTranslations("membershipPage");
+  const locale = useLocale();
+
+  const comparisonRows = Array.from({ length: 5 }, (_, i) => ({
+    label: t(`comparisonRows.${i}.label`),
+    basic: t(`comparisonRows.${i}.basic`),
+    protected: t(`comparisonRows.${i}.protected`),
+    nonsnack: t(`comparisonRows.${i}.nonsnack`),
+  }));
+
+  const faqItems = Array.from({ length: 4 }, (_, i) => ({
+    question: t(`faqItems.${i}.question`),
+    answer: t(`faqItems.${i}.answer`),
+  }));
+
+  return (
+    <>
+      <section className="relative overflow-hidden py-20 lg:py-24">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            <div className="inline-flex rounded-full border border-sky-200 bg-white px-4 py-2 text-sm font-medium text-[var(--brand-dark)] shadow-sm">
+              {t("badge")}
+            </div>
+
+            <h1 className="mt-6 max-w-3xl text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+              {t("title")}
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl">
+              {t("description")}
+            </p>
+
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <a
+                href="#membership"
+                className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              >
+                {t("ctaTiers")}
+              </a>
+              <a
+                href="#comparison"
+                className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+              >
+                {t("ctaCompare")}
+              </a>
+            </div>
+
+            <p className="mt-5 text-sm text-[var(--muted)]">
+              {t("recommended")} <strong>{t("recommendedProduct")}</strong>.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-[0_24px_80px_rgba(25,87,138,0.12)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+              {t("productLogicLabel")}
+            </p>
+
+            <div className="mt-6 space-y-4">
+              <div className="rounded-[1.5rem] border border-sky-100 bg-sky-50/70 p-5">
+                <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
+                  {t("whatBuyingTitle")}
+                </h2>
+                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">
+                  {t("whatBuyingText")}
+                </p>
+              </div>
+
+              <div className="rounded-[1.5rem] border border-cyan-100 bg-cyan-50/70 p-5">
+                <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
+                  {t("whyWorksTitle")}
+                </h2>
+                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">
+                  {t("whyWorksText")}
+                </p>
+              </div>
+
+              <div className="rounded-[1.5rem] border border-orange-100 bg-orange-50/70 p-5">
+                <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
+                  {t("toneTitle")}
+                </h2>
+                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">
+                  {t("toneText")}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="membership" className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+              {t("tiersLabel")}
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+              {t("tiersTitle")}
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
+              {t("tiersDescription")}
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            <MembershipCard
+              id="basic"
+              variant="basic"
+              title={t("basicTitle")}
+              price="$9"
+              description={t("basicDescription")}
+              features={[t("basicFeatures.0"), t("basicFeatures.1"), t("basicFeatures.2")]}
+              ctaLabel={t("basicCta")}
+              href="/purchase?tier=basic"
+            />
+
+            <MembershipCard
+              id="protected"
+              variant="protected"
+              title={t("protectedTitle")}
+              price="$19"
+              description={t("protectedDescription")}
+              features={[t("protectedFeatures.0"), t("protectedFeatures.1"), t("protectedFeatures.2")]}
+              ctaLabel={t("protectedCta")}
+              href="/purchase?tier=protected"
+            />
+
+            <MembershipCard
+              id="nonsnack"
+              variant="nonsnack"
+              title={t("nonsnackTitle")}
+              price="$29"
+              description={t("nonsnackDescription")}
+              features={[t("nonsnackFeatures.0"), t("nonsnackFeatures.1"), t("nonsnackFeatures.2")]}
+              ctaLabel={t("nonsnackCta")}
+              href="/purchase?tier=nonsnack"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="comparison" className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+              {t("comparisonLabel")}
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+              {t("comparisonTitle")}
+            </h2>
+          </div>
+
+          <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/70 bg-white shadow-[0_18px_60px_rgba(25,87,138,0.08)]">
+            <div className="grid grid-cols-4 border-b border-sky-100 bg-sky-50/60 text-sm font-semibold text-[var(--brand-dark)]">
+              <div className="p-4">{t("comparisonHeaders.feature")}</div>
+              <div className="p-4">{t("comparisonHeaders.basic")}</div>
+              <div className="p-4">{t("comparisonHeaders.protected")}</div>
+              <div className="p-4">{t("comparisonHeaders.nonsnack")}</div>
+            </div>
+
+            {comparisonRows.map((row, index) => (
+              <div
+                key={row.label}
+                className={`grid grid-cols-4 text-sm ${
+                  index !== comparisonRows.length - 1
+                    ? "border-b border-sky-100"
+                    : ""
+                }`}
+              >
+                <div className="p-4 font-medium text-[var(--brand-dark)]">{row.label}</div>
+                <div className="p-4 text-[var(--muted)]">{row.basic}</div>
+                <div className="p-4 text-[var(--muted)]">{row.protected}</div>
+                <div className="p-4 text-[var(--muted)]">{row.nonsnack}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              { step: "01", title: t("step1Title"), text: t("step1Text"), borderColor: "border-sky-100", stepColor: "text-sky-700" },
+              { step: "02", title: t("step2Title"), text: t("step2Text"), borderColor: "border-cyan-100", stepColor: "text-cyan-700" },
+              { step: "03", title: t("step3Title"), text: t("step3Text"), borderColor: "border-orange-100", stepColor: "text-orange-700" },
+            ].map((item) => (
+              <article key={item.step} className={`rounded-[2rem] border ${item.borderColor} bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]`}>
+                <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${item.stepColor}`}>
+                  {item.step}
+                </p>
+                <h3 className="mt-4 text-xl font-semibold text-[var(--brand-dark)]">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                  {item.text}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="rounded-[2rem] border border-white/70 bg-[var(--surface-soft)] p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+              {t("clarificationLabel")}
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
+              {t("clarificationTitle")}
+            </h2>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--muted)]">
+              {t("clarificationText")}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+              {t("faqLabel")}
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+              {t("faqTitle")}
+            </h2>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {faqItems.map((item) => (
+              <article
+                key={item.question}
+                className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
+              >
+                <h3 className="text-xl font-semibold text-[var(--brand-dark)]">
+                  {item.question}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                  {item.answer}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Business certification */}
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="rounded-[2.25rem] border border-indigo-200 bg-gradient-to-b from-indigo-50 to-white p-8 shadow-[0_18px_60px_rgba(25,87,138,0.08)] sm:p-12">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+              <div>
+                <div className="inline-flex rounded-full border border-indigo-200 bg-white px-4 py-2 text-sm font-medium text-indigo-800 shadow-sm">
+                  🏢 {t("businessBadge")}
+                </div>
+                <h2 className="mt-6 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+                  {t("businessTitle")}
+                </h2>
+                <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
+                  {t("businessDescription")}
+                </p>
+                <p className="mt-6 text-4xl font-semibold text-[var(--brand-dark)]">$99</p>
+                <ul className="mt-6 space-y-3">
+                  {[0, 1, 2, 3].map((i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm leading-6 text-[var(--foreground)]">
+                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-indigo-500" />
+                      <span>{t(`businessFeatures.${i}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="/purchase?tier=business"
+                  className="mt-8 inline-flex items-center justify-center rounded-full bg-indigo-600 px-6 py-4 text-base font-semibold text-white transition hover:bg-indigo-700"
+                >
+                  {t("businessCta")}
+                </a>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="w-full max-w-sm rounded-[2rem] border-2 border-dashed border-indigo-200 bg-indigo-50/50 p-8 text-center">
+                  <p className="text-4xl">🏢🦈</p>
+                  <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-indigo-800">
+                    {t("businessCertLabel")}
+                  </p>
+                  <p className="mt-4 text-2xl font-semibold text-[var(--brand-dark)]">
+                    [ {t("businessCertName")} ]
+                  </p>
+                  <p className="mt-3 text-sm text-[var(--muted)]">
+                    {t("businessCertText")}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="join" className="pb-24 pt-8">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="rounded-[2.25rem] border border-white/70 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
+              {t("joinLabel")}
+            </p>
+            <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight">
+              {t("joinTitle")}
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-sky-100/90">
+              {t("joinText")}
+            </p>
+
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <a
+                href="/purchase?tier=protected"
+                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
+              >
+                {t("joinCtaPrimary")}
+              </a>
+              <a
+                href="/"
+                className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
+              >
+                {t("joinCtaSecondary")}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SocialProofToasts locale={locale as "en" | "es"} />
+    </>
+  );
+}

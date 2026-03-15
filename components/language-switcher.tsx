@@ -1,26 +1,47 @@
 "use client";
 
-import { useI18n } from "@/components/i18n-provider";
-import { type Locale, localeNames } from "@/data/i18n";
+import { useLocale } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
 
-const locales: Locale[] = ["en", "es", "zh"];
+const locales = [
+  { code: "en", flag: "🇬🇧", label: "English" },
+  { code: "es", flag: "🇪🇸", label: "Español" },
+];
 
 export function LanguageSwitcher() {
-  const { locale, setLocale } = useI18n();
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+
+  function switchLocale(nextLocale: string) {
+    // Replace the current locale prefix in the pathname
+    // pathname is like /en/membership or /es/membership
+    const segments = pathname.split("/");
+    segments[1] = nextLocale;
+    const newPath = segments.join("/");
+
+    startTransition(() => {
+      router.replace(newPath);
+    });
+  }
 
   return (
-    <div className="flex items-center gap-1 rounded-full border border-sky-200 bg-white/80 px-1 py-1 text-xs font-medium">
+    <div className="flex items-center gap-1">
       {locales.map((loc) => (
         <button
-          key={loc}
-          onClick={() => setLocale(loc)}
-          className={`rounded-full px-3 py-1.5 transition ${
-            locale === loc
-              ? "bg-[var(--brand-dark)] text-white shadow-sm"
-              : "text-[var(--muted)] hover:text-[var(--brand-dark)]"
-          }`}
+          key={loc.code}
+          onClick={() => switchLocale(loc.code)}
+          disabled={isPending}
+          title={loc.label}
+          className={`flex h-9 w-9 items-center justify-center rounded-full text-lg transition ${
+            locale === loc.code
+              ? "bg-sky-100 shadow-sm"
+              : "opacity-50 hover:opacity-100 hover:bg-sky-50"
+          } ${isPending ? "cursor-wait" : "cursor-pointer"}`}
         >
-          {localeNames[loc]}
+          {loc.flag}
         </button>
       ))}
     </div>
