@@ -176,7 +176,7 @@ const Toast = ({
                 el.classList.add('toast-exit');
               }
             }}
-            className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors opacity-0 group-hover:opacity-100"
+            className="flex-shrink-0 text-gray-500 hover:text-gray-700 transition-colors opacity-0 group-hover:opacity-100"
             aria-label="Dismiss"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -211,9 +211,11 @@ export function SocialProofToasts({ locale = 'en' }: SocialProofToastsProps) {
       index++;
     };
 
-    const interval = setInterval(showNext, 6000);
+    // First toast after 8s, then every 15s
+    const initialTimeout = setTimeout(showNext, 8000);
+    const interval = setInterval(showNext, 15000);
 
-    return () => clearInterval(interval);
+    return () => { clearTimeout(initialTimeout); clearInterval(interval); };
   }, [locale]);
 
   const handleDismiss = (id: string) => {

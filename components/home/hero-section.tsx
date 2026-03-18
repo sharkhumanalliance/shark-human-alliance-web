@@ -8,16 +8,11 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
         {/* Left — copy */}
         <div className="flex flex-col justify-center">
-          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-800 shadow-sm">
+          <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-800 shadow-sm">
             {t("giftBadge")}
-          </div>
-
-          <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-teal-200 bg-white px-4 py-2 text-sm font-medium text-[var(--brand-dark)] shadow-sm">
-            <span className="inline-block h-2 w-2 rounded-full bg-teal-500" />
-            {t("badge")}
           </div>
 
           <h1 className="max-w-2xl text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
@@ -26,28 +21,28 @@ export function HeroSection() {
             <span className="text-[var(--brand)]">{t("titleLine2")}</span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl">
+          <p className="mt-4 max-w-xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
             {t("description")}
           </p>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <a
-              href="/membership"
+              href="/purchase?tier=protected"
               className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               {t("ctaPrimary")}
             </a>
 
             <a
-              href="#real-impact"
+              href="#certificate-preview"
               className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
             >
               {t("ctaSecondary")}
             </a>
           </div>
 
-          <p className="mt-5 text-sm text-[var(--muted)]">
-            {t("subtext")}
+          <p className="mt-4 text-sm italic text-[var(--brand)]">
+            {t("brandLine")}
           </p>
         </div>
 
@@ -56,7 +51,7 @@ export function HeroSection() {
           <div className="absolute -left-10 top-10 h-32 w-32 rounded-full bg-cyan-200/40 blur-3xl" />
           <div className="absolute -right-10 bottom-6 h-36 w-36 rounded-full bg-sky-300/30 blur-3xl" />
 
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 shadow-[0_24px_80px_rgba(25,87,138,0.12)] backdrop-blur">
+          <div className="relative overflow-hidden rounded-[2rem] border border-sky-100 bg-white shadow-[0_24px_80px_rgba(25,87,138,0.12)]">
             <div className="p-4">
               <Image
                 src="/mascots/finnley-luna-hero.png"
@@ -87,6 +82,24 @@ export function HeroSection() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Mini "How it works" strip */}
+      <div className="border-t border-sky-100 bg-white/80 backdrop-blur-sm">
+        <div className="mx-auto grid max-w-4xl grid-cols-3 gap-6 px-6 py-6 text-center">
+          {[
+            { num: "1", text: t("howStep1"), icon: "📋" },
+            { num: "2", text: t("howStep2"), icon: "🌊" },
+            { num: "3", text: t("howStep3"), icon: "🎁" },
+          ].map((step) => (
+            <div key={step.num} className="flex flex-col items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-50 text-lg">
+                {step.icon}
+              </div>
+              <p className="text-sm font-medium text-[var(--brand-dark)]">{step.text}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

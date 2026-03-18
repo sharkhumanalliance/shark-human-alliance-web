@@ -179,7 +179,7 @@ export function RegistryContent() {
       {/* Join CTA */}
       <section className="pb-24">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-white/70 bg-[var(--brand-dark)] px-8 py-12 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("joinCta")}
             </h2>
@@ -198,7 +198,7 @@ export function RegistryContent() {
       {/* Disclaimer */}
       <section className="pb-20">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-[2rem] border border-white/70 bg-[var(--surface-soft)] p-8">
+          <div className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("disclaimerTitle")}
             </p>

@@ -3,113 +3,148 @@
     "brand": "Shark Human Alliance",
     "tagline": "Peace between humans and sharks",
     "nav": {
-      "realImpact": "Real Impact",
-      "howItWorks": "How it works",
-      "membership": "Membership",
-      "about": "About",
+      "membership": "Certificates",
+      "about": "Our Mission",
       "faq": "FAQ",
       "registry": "Diplomatic Registry"
     },
-    "cta": "Join the Alliance"
+    "cta": "Get the Certificate"
   },
   "footer": {
     "brand": "Shark Human Alliance",
-    "tagline": "A fictional alliance for better shark-human relations. 50% of every sale funds real ocean conservation.",
+    "tagline": "A fictional alliance for better shark-human relations. Every sale funds real ocean conservation.",
+    "aboutTitle": "Our Story",
+    "aboutText": "The Shark Human Alliance is a playful fictional universe with a dead-serious mission: turn fear into curiosity, fund real conservation, and give sharks the PR they deserve.",
+    "legalTitle": "Legal",
+    "legalText": "Fictional brand. Real donations. Your certificate provides zero marine protection but helps protect actual sharks from us.",
+    "transparencyTitle": "Transparency",
+    "transparencyText": "Full transparency on every dollar — reports coming as soon as the first donations are made.",
     "nav": {
-      "realImpact": "Real Impact",
-      "about": "About",
-      "membership": "Membership",
-      "faq": "FAQ"
-    }
+      "membership": "Certificates",
+      "about": "Our Mission",
+      "faq": "FAQ",
+      "registry": "Registry"
+    },
+    "madeWith": "Made with ❤️ for sharks",
+    "copyright": "© 2026 Shark Human Alliance. A fictional brand with a very real mission."
   },
   "hero": {
-    "badge": "50% of every sale funds real ocean conservation",
-    "titleLine1": "Sharks deserve better PR.",
-    "titleLine2": "And real protection.",
-    "description": "The perfect gag gift for anyone who's ever side-eyed the ocean. Buy a funny certificate — half goes to real shark conservation. The other half keeps one very tired human running this project.",
-    "ctaPrimary": "Get your certificate",
-    "ctaSecondary": "See where the money goes",
-    "subtext": "The #1 gift for people who are afraid of sharks. Also the #1 way to symbolically not get eaten.",
-    "giftBadge": "🎁 The perfect gag gift for shark-fearers",
+    "titleLine1": "Give someone official",
+    "titleLine2": "Protected Friend Status.",
+    "brandLine": "Sharks deserve better PR. And real protection.",
+    "description": "A personalized, surprisingly official-looking certificate. The perfect gag gift for anyone who's ever side-eyed the ocean.",
+    "ctaPrimary": "Get Protected Friend Status — $9",
+    "ctaSecondary": "See the certificate",
+    "socialProof": "Join the Alliance",
+    "giftBadge": "🎁 The #1 gag gift for shark-fearers",
     "finnleyName": "Finnley Mako",
-    "finnleyDesc": "Press spokesperson. Optimistic. Slightly offended by Hollywood.",
+    "finnleyDesc": "Press spokesperson. Slightly offended by Hollywood.",
     "lunaName": "Luna Reef",
-    "lunaDesc": "Dept. of Misunderstanding Prevention. Judges your wetsuit color.",
-    "imageAlt": "Finnley Mako and Luna Reef — the Alliance ambassadors"
+    "lunaDesc": "Dept. of Misunderstanding Prevention.",
+    "imageAlt": "Finnley Mako and Luna Reef — the Alliance ambassadors",
+    "howStep1": "Pick a certificate",
+    "howStep2": "Fund real conservation",
+    "howStep3": "Send the gift"
   },
   "home": {
-    "realImpact": {
-      "label": "Real Impact",
-      "title": "Funny certificate. Real conservation.",
-      "description": "Every certificate sold directly funds real ocean and shark conservation. The joke is fictional. The impact is not.",
-      "splitConservation": "50% → Shark Conservation 🦈",
-      "splitOperations": "50% → Alliance Operations ☕",
-      "forSharksTitle": "50% — For the sharks (for real)",
-      "forSharksText": "Half of every sale goes directly to verified ocean and shark conservation organizations. No middlemen, no vague promises, no \"administrative fees\" that mysteriously eat the budget like a tiger shark eating a surfboard.",
-      "forHumanTitle": "50% — For the human who built this",
-      "forHumanText": "The other half keeps the servers running and the Alliance founder fed. Because while sharks eat fish, humans unfortunately require rent, coffee, and the occasional non-symbolic meal. Think of it as funding the Alliance's land-based operations department (staff: one very tired person).",
-      "priceBasic": "Basic — $9",
-      "priceProtected": "Protected Friend — $19",
-      "priceNonSnack": "Non-Snack — $29",
-      "conservation": "→ conservation",
-      "stat1Value": "100M",
-      "stat1Label": "sharks killed by humans / year",
-      "stat2Value": "~5",
-      "stat2Label": "humans killed by sharks / year",
-      "stat3Value": "⅓",
-      "stat3Label": "of shark species threatened",
-      "stat4Value": "450M",
-      "stat4Label": "years sharks have existed"
+    "reviews": {
+      "label": "From real diplomats",
+      "title": "What our members say.",
+      "items": [
+        {
+          "text": "Bought a certificate yesterday. Went diving today. A passing shark looked at me and just... nodded. Coincidence? I think not.",
+          "author": "Mike T.",
+          "role": "Certified Protected Friend",
+          "stars": 5
+        },
+        {
+          "text": "Got this for my husband as a joke. He framed it, hung it in his office, and now introduces himself as a 'shark diplomat' at parties.",
+          "author": "Sarah K.",
+          "role": "Gift buyer",
+          "stars": 5
+        },
+        {
+          "text": "Best gag gift I've ever given. My friend is now genuinely convinced sharks can sense her Protected status.",
+          "author": "Jake R.",
+          "role": "Repeat buyer",
+          "stars": 5
+        },
+        {
+          "text": "I've been swimming with sharks for 20 years. Not once have I been eaten. I'm attributing this entirely to my certificate.",
+          "author": "Diana L.",
+          "role": "Certified Non-Snack",
+          "stars": 5
+        },
+        {
+          "text": "Gave this to my dad for his birthday. He carries a photo of it in his wallet. Next to his actual driver's license.",
+          "author": "Tom H.",
+          "role": "Gift buyer",
+          "stars": 5
+        }
+      ]
     },
-    "howItWorks": {
-      "label": "How it works",
-      "title": "Fast, symbolic and surprisingly impactful.",
-      "description": "Three steps: pick a certificate, fund real conservation, and enjoy a measurable improvement in diplomatic shark vibes.",
-      "step1Title": "Pick your certificate",
-      "step1Text": "Choose from three levels of symbolic shark diplomacy — each one funnier and more official-looking than the last.",
-      "step2Title": "Half goes to conservation",
-      "step2Text": "50% of your purchase is donated to verified shark and ocean conservation organizations. The impact is real.",
-      "step3Title": "Receive your status",
-      "step3Text": "Get a personalized certificate, feel symbolically safer around sharks, and know you actually helped protect them."
+    "giftingSection": {
+      "label": "Perfect for gifting",
+      "title": "Everyone knows someone who needs this.",
+      "case1Icon": "🦈",
+      "case1Title": "Shark lovers",
+      "case1Text": "Now they have the paperwork to prove the feeling is mutual.",
+      "case2Icon": "🏖️",
+      "case2Title": "Beach-fearers",
+      "case2Text": "Official protection status might help (symbolically).",
+      "case3Icon": "🎂",
+      "case3Title": "Birthday & office gifts",
+      "case3Text": "Funny enough to get a laugh. Polished enough to frame.",
+      "case4Icon": "🤷",
+      "case4Title": "People who have everything",
+      "case4Text": "They don't have diplomatic recognition from sharks. Problem solved."
     },
     "about": {
-      "label": "About the alliance",
-      "title": "A fictional world with a very real mission.",
-      "p1": "Shark Human Alliance is a playful fictional universe where sharks actively work on their public image, issue diplomatic statements, and advocate for better relations with humans.",
-      "p2": "The tone is humorous, but the mission is dead serious: turn fear into curiosity, fund real conservation, and make sharks feel less like monsters and more like misunderstood ocean neighbors with a branding problem.",
-      "certPreviewLabel": "Certificate preview",
+      "certPreviewLabel": "A gift that looks surprisingly official",
       "certTitle": "Certificate of Alliance Membership",
       "certCertifies": "This certifies that",
       "certName": "[ Your Name Here ]",
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation."
     },
     "membershipSection": {
-      "label": "Membership options",
+      "label": "Certificates",
       "title": "Choose your level of shark diplomacy.",
-      "description": "Every tier includes a personalized certificate, symbolic alliance status, and a real donation to shark conservation.",
-      "basicTitle": "Basic Membership",
-      "basicPrice": "$9",
-      "basicDescription": "A clean entry point into the alliance. Digital certificate, symbolic status, and $4.50 donated to ocean conservation.",
-      "basicFeatures": ["Digital certificate", "Alliance membership ID", "$4.50 to shark conservation"],
-      "basicCta": "Start with basic",
+      "description": "Every certificate funds real shark conservation. The rest is just surprisingly good-looking paperwork.",
+      "popularBadge": "Most Popular",
       "protectedTitle": "Protected Friend Status",
-      "protectedPrice": "$19",
-      "protectedDescription": "The flagship tier — polished, giftable, and $9.50 goes directly to protecting sharks and their habitat.",
-      "protectedFeatures": ["Personalized certificate", "Protected Friend recognition", "$9.50 to shark conservation"],
-      "protectedCta": "Choose protected",
+      "protectedPrice": "$9",
+      "protectedDescription": "The flagship gift — polished, personal, and surprisingly frameable.",
+      "protectedFeatures": ["Personalized certificate", "Protected Friend recognition", "Digital delivery"],
+      "protectedCta": "Get Protected Friend — $9",
       "nonsnackTitle": "Non-Snack Recognition",
       "nonsnackPrice": "$29",
-      "nonsnackDescription": "Peak symbolic prestige for humans who refuse to be considered menu-adjacent. $14.50 donated to conservation.",
-      "nonsnackFeatures": ["Premium certificate", "Official Non-Snack designation", "$14.50 to shark conservation"],
-      "nonsnackCta": "Go non-snack"
+      "nonsnackDescription": "Peak symbolic prestige for humans who refuse to be considered menu-adjacent.",
+      "nonsnackFeatures": ["Premium certificate", "Official Non-Snack designation", "Downloadable badge"],
+      "nonsnackCta": "Go Non-Snack — $29",
+      "businessTitle": "Shark-Approved Zone",
+      "businessPrice": "$99",
+      "businessDescription": "For any business brave enough to claim official shark approval. 70% goes to conservation.",
+      "businessFeatures": ["Official wall certificate (A3)", "Digital badge for your website", "Listed in the Diplomatic Registry"],
+      "businessCta": "Get Certified — $99"
     },
-    "transparency": {
-      "transparencyLabel": "Transparency",
-      "transparencyTitle": "We publish where the money goes.",
-      "transparencyText": "Quarterly reports showing exactly how much was donated and to which organizations. If a shark could read a spreadsheet, they would approve.",
-      "legalLabel": "Legal clarity",
-      "legalTitle": "Fictional brand. Real donations.",
-      "legalText": "The Shark Human Alliance is a fictional entertainment brand. Conservation donations are real and verifiable. Your certificate does not protect you from actual sharks. It does, however, help protect actual sharks from us."
+    "realImpact": {
+      "label": "Real Impact",
+      "title": "The joke is fictional. The impact is not.",
+      "description": "Every certificate sold funds verified ocean and shark conservation. We publish where the money goes.",
+      "forSharksTitle": "Conservation first",
+      "forSharksText": "Every sale funds verified ocean and shark conservation organizations. No vague promises, no mystery fees. Business certificates donate 70%.",
+      "forHumanTitle": "Alliance operations",
+      "forHumanText": "The rest keeps the servers running and the founder fed. Think of it as funding the Alliance's land-based operations department (staff: one very tired person).",
+      "transparencyNote": "Full transparency on every dollar. Donation reports will be published as soon as the first sales come in. If a shark could read a spreadsheet, they would approve.",
+      "legalNote": "The Shark Human Alliance is a fictional entertainment brand. Conservation donations are real and verifiable.",
+      "stat1Value": "100M",
+      "stat1Label": "sharks killed by humans every year",
+      "stat2Value": "~5",
+      "stat2Label": "humans killed by sharks every year",
+      "stat3Value": "⅓",
+      "stat3Label": "of all shark species are threatened",
+      "stat4Value": "450M",
+      "stat4Label": "years sharks have survived on Earth"
     },
     "faq": {
       "label": "FAQ",
@@ -125,7 +160,7 @@
         },
         {
           "question": "Where does the money actually go?",
-          "answer": "50% goes directly to verified ocean and shark conservation organizations. 50% keeps the Alliance running — servers, design, coffee, and one very tired human."
+          "answer": "Every sale funds verified ocean and shark conservation organizations. We publish quarterly reports showing exactly where the money went."
         },
         {
           "question": "Why sharks?",
@@ -133,7 +168,7 @@
         },
         {
           "question": "Will I receive a certificate?",
-          "answer": "Yes. A personalized digital certificate with your name, membership tier, and an air of surprisingly official diplomatic recognition."
+          "answer": "Yes. A personalized digital certificate with your name, membership tier, and an air of surprisingly official diplomatic recognition. Delivered instantly."
         },
         {
           "question": "Can I give this as a gift?",
@@ -150,45 +185,34 @@
     "ctaCompare": "Compare options",
     "recommended": "Recommended flagship product:",
     "recommendedProduct": "Protected Friend Status",
-    "productLogicLabel": "Product logic",
-    "whatBuyingTitle": "What people are really buying",
-    "whatBuyingText": "Not actual protection. Not insurance. Not marine enforcement. They are buying a humorous symbolic status inside the Shark Human Alliance world.",
-    "whyWorksTitle": "Why it works",
-    "whyWorksText": "It functions as a funny gift, a shareable certificate, and the core monetization entry point for the whole brand.",
-    "toneTitle": "Tone requirement",
-    "toneText": "The product copy must always make clear that this is playful, fictional and symbolic — while still feeling polished and gift-worthy.",
     "tiersLabel": "Membership tiers",
-    "tiersTitle": "Three ways to become more acceptable to sharks.",
-    "tiersDescription": "Start simple, choose the strongest giftable tier, or go fully into symbolic prestige.",
-    "basicTitle": "Basic Membership",
-    "basicDescription": "A clean entry point into the alliance for kind-hearted humans with reasonable diplomatic ambitions.",
-    "basicFeatures": ["Digital certificate", "Alliance membership ID", "Welcome message from the alliance"],
-    "basicCta": "Choose basic",
+    "tiersTitle": "Choose your level of shark diplomacy.",
+    "tiersDescription": "Pick the tier that matches your gifting ambition and desired level of symbolic prestige.",
     "protectedTitle": "Protected Friend Status",
     "protectedDescription": "The strongest core offer: a humorous, polished and giftable symbolic status inside the alliance.",
     "protectedFeatures": ["Personalized certificate", "Protected Friend recognition", "Alliance badge"],
-    "protectedCta": "Choose protected",
+    "protectedCta": "Choose protected — $9",
     "nonsnackTitle": "Non-Snack Recognition",
     "nonsnackDescription": "A more absurd prestige tier for humans who would strongly prefer not to be considered menu-adjacent.",
     "nonsnackFeatures": ["Premium certificate", "Official Non-Snack designation", "Downloadable recognition badge"],
-    "nonsnackCta": "Choose non-snack",
+    "nonsnackCta": "Choose non-snack — $29",
     "businessBadge": "For businesses",
     "businessTitle": "Shark-Approved Zone Certification",
-    "businessDescription": "For surf schools, dive centers, beach bars, and any venue that wants to declare itself officially recognized by sharks. Display the certificate proudly. Sharks love good interior design.",
+    "businessDescription": "For any business brave enough to claim official shark approval. Display the certificate proudly. Sharks love good interior design. 70% of this tier goes to conservation.",
     "businessFeatures": ["Official Shark-Approved Zone certificate", "Printable wall display (A3 format)", "Digital badge for website use", "Listed in the Diplomatic Registry"],
-    "businessCta": "Get business certification",
+    "businessCta": "Get business certification — $99",
     "businessCertLabel": "Shark-Approved Zone",
     "businessCertName": "Your Business Name",
     "businessCertText": "has been officially designated as a Shark-Approved Zone by the Shark Human Alliance",
     "comparisonLabel": "Comparison",
     "comparisonTitle": "Quick decision table.",
-    "comparisonHeaders": { "feature": "Feature", "basic": "Basic", "protected": "Protected", "nonsnack": "Non-Snack" },
+    "comparisonHeaders": { "feature": "Feature", "protected": "Protected Friend", "nonsnack": "Non-Snack", "business": "Shark-Approved Zone" },
     "comparisonRows": [
-      { "label": "Certificate", "basic": "Digital certificate", "protected": "Personalized certificate", "nonsnack": "Premium personalized certificate" },
-      { "label": "Alliance status", "basic": "Friend of Sharks", "protected": "Protected Friend Status", "nonsnack": "Official Non-Snack Recognition" },
-      { "label": "Recognition badge", "basic": "—", "protected": "Alliance badge", "nonsnack": "Premium badge" },
-      { "label": "Best for", "basic": "First-time members", "protected": "Giftable recognition", "nonsnack": "Peak symbolic diplomacy" },
-      { "label": "Actual marine protection", "basic": "None", "protected": "None", "nonsnack": "Still none" }
+      { "label": "Certificate", "protected": "Personalized certificate", "nonsnack": "Premium personalized certificate", "business": "Official wall certificate (A3)" },
+      { "label": "Alliance status", "protected": "Protected Friend Status", "nonsnack": "Official Non-Snack Recognition", "business": "Shark-Approved Zone" },
+      { "label": "Best for", "protected": "Personal gifts", "nonsnack": "Peak symbolic diplomacy", "business": "Venues & businesses" },
+      { "label": "Price", "protected": "$9", "nonsnack": "$29", "business": "$99" },
+      { "label": "Actual marine protection", "protected": "None", "nonsnack": "Still none", "business": "Definitely none" }
     ],
     "step1Title": "Pick a tier",
     "step1Text": "Choose the version that best matches the gift, joke intensity, and symbolic prestige you want.",
@@ -203,21 +227,21 @@
     "faqTitle": "Product questions worth answering clearly.",
     "faqItems": [
       { "question": "Is this a real protective product?", "answer": "No. All memberships are fictional, symbolic, and intended as humorous gifts or fan-style participation in the Shark Human Alliance universe." },
-      { "question": "Will I receive something after payment later on?", "answer": "Yes. The intended product flow is a personalized digital certificate and related alliance recognition assets." },
+      { "question": "Will I receive something after payment?", "answer": "Yes. A personalized digital certificate delivered instantly to your email." },
       { "question": "Why does the page talk about protection if it is fictional?", "answer": "Because the humor of the project is built around symbolic shark diplomacy. The joke works only if it remains clearly playful and obviously non-literal." },
-      { "question": "Which option should be the main product?", "answer": "Protected Friend Status is probably the strongest main offer. It is clearer and more giftable than Basic Membership, while still slightly more elegant than Non-Snack Recognition." }
+      { "question": "Which option should I pick?", "answer": "Protected Friend Status ($9) is the most popular — it's the perfect balance between funny, polished and giftable." }
     ],
-    "joinLabel": "Recommended next step",
-    "joinTitle": "Build Protected Friend Status first.",
-    "joinText": "It is the best flagship offer: funny, polished, easy to understand, and ideal for certificate-based gifting.",
-    "joinCtaPrimary": "Focus on Protected Friend",
+    "joinLabel": "Ready?",
+    "joinTitle": "Get someone their Protected Friend Status.",
+    "joinText": "The most popular gift in the alliance. Funny, polished, and delivered instantly.",
+    "joinCtaPrimary": "Get Protected Friend — $9",
     "joinCtaSecondary": "Back to homepage"
   },
   "protectedPage": {
     "badge": "Flagship membership product",
     "title": "Protected Friend Status",
     "description": "A symbolic recognition tier for humans who deserve a slightly warmer reception from sharks and a significantly more official-looking certificate.",
-    "ctaPrimary": "Choose Protected Friend",
+    "ctaPrimary": "Get Protected Friend — $9",
     "ctaSecondary": "Back to membership",
     "recommended": "Recommended as the core launch product for Shark Human Alliance.",
     "includedLabel": "What is included",
@@ -242,8 +266,8 @@
     "faqTitle": "Product clarifications.",
     "faqItems": [
       { "question": "Is this actual protection from sharks?", "answer": "No. Protected Friend Status is a fictional symbolic product and does not provide real-world protection of any kind." },
-      { "question": "Why is this the main product?", "answer": "Because it is the clearest balance between funny, polished and giftable. It is more distinctive than Basic Membership and cleaner than the more absurd Non-Snack tier." },
-      { "question": "What should happen after purchase later on?", "answer": "The intended flow is checkout, certificate personalization, confirmation, and digital delivery of the certificate." }
+      { "question": "Why is this the main product?", "answer": "Because it is the clearest balance between funny, polished and giftable." },
+      { "question": "What happens after purchase?", "answer": "You receive a personalized digital certificate delivered instantly to your email." }
     ]
   },
   "purchase": {
@@ -252,7 +276,7 @@
     "tierLabel": "Selected tier",
     "tiers": {
       "basic": "Basic Membership — $9",
-      "protected": "Protected Friend Status — $19",
+      "protected": "Protected Friend Status — $9",
       "nonsnack": "Non-Snack Recognition — $29",
       "business": "Shark-Approved Zone — $99"
     },
@@ -329,6 +353,10 @@
     "dateLabel": "Date of Diplomatic Recognition",
     "registryId": "Registry ID",
     "seal": "OFFICIAL SEAL OF THE ALLIANCE",
-    "footer": "This certificate is entirely symbolic and provides zero marine protection. The sharks appreciate the gesture."
+    "footer": "Approved by the Department of Symbolic Marine Affairs. No sharks were harmed or consulted in the making of this document."
+  },
+  "mobileCta": {
+    "label": "Get Protected Friend Status",
+    "price": "$9"
   }
 }

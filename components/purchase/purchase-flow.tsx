@@ -2,11 +2,20 @@
 
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, Suspense } from "react";
+import { useState, useRef, Suspense } from "react";
 import { generateCertificatePDF } from "@/lib/generate-certificate";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
+
+const DEDICATION_SUGGESTIONS = [
+  "For surviving every beach vacation since 1987",
+  "Because you always said 'something touched my foot'",
+  "Officially no longer snack material",
+  "In honor of watching Jaws 47 times",
+  "May the sharks remember your generosity",
+  "To the bravest ankle-deep swimmer I know",
+];
 
 function PurchaseFlowInner() {
   const t = useTranslations("purchase");
@@ -28,7 +37,7 @@ function PurchaseFlowInner() {
 
   const tierPrices: Record<Tier, string> = {
     basic: "$9",
-    protected: "$19",
+    protected: "$9",
     nonsnack: "$29",
     business: "$99",
   };
@@ -88,7 +97,7 @@ function PurchaseFlowInner() {
   function handleDownloadCertificate() {
     const doc = generateCertificatePDF({
       name: name.trim(),
-      tier: tier === "business" ? "nonsnack" : tier,
+      tier,
       date: new Date().toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
@@ -237,8 +246,8 @@ function PurchaseFlowInner() {
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("tierLabel")}
               </label>
-              <div className="mt-2 grid gap-3 grid-cols-2">
-                {(["basic", "protected", "nonsnack", "business"] as Tier[]).map((tierOption) => {
+              <div className="mt-2 grid gap-3 grid-cols-3">
+                {(["protected", "nonsnack", "business"] as Tier[]).map((tierOption) => {
                   const isSelected = tier === tierOption;
                   const colors: Record<Tier, string> = {
                     basic: isSelected ? "border-sky-400 bg-sky-50" : "border-sky-100",
@@ -315,6 +324,20 @@ function PurchaseFlowInner() {
                 placeholder={tier === "business" ? t("businessDedicationPlaceholder") : t("dedicationPlaceholder")}
                 className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
+              {tier !== "business" && (
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {DEDICATION_SUGGESTIONS.slice(0, 3).map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      type="button"
+                      onClick={() => setDedication(suggestion)}
+                      className="rounded-full border border-sky-100 bg-sky-50/50 px-3 py-1 text-xs text-[var(--muted)] transition hover:border-sky-300 hover:bg-sky-50 hover:text-[var(--brand-dark)]"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Email */}

@@ -1,18 +1,15 @@
 "use client";
 
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { MembershipCard } from "@/components/home/membership-card";
-import { SocialProofToasts } from "@/components/social-proof-toasts";
 
 export function MembershipPageContent() {
   const t = useTranslations("membershipPage");
-  const locale = useLocale();
-
   const comparisonRows = Array.from({ length: 5 }, (_, i) => ({
     label: t(`comparisonRows.${i}.label`),
-    basic: t(`comparisonRows.${i}.basic`),
     protected: t(`comparisonRows.${i}.protected`),
     nonsnack: t(`comparisonRows.${i}.nonsnack`),
+    business: t(`comparisonRows.${i}.business`),
   }));
 
   const faqItems = Array.from({ length: 4 }, (_, i) => ({
@@ -23,8 +20,8 @@ export function MembershipPageContent() {
   return (
     <>
       <section className="relative overflow-hidden py-20 lg:py-24">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-3xl">
             <div className="inline-flex rounded-full border border-sky-200 bg-white px-4 py-2 text-sm font-medium text-[var(--brand-dark)] shadow-sm">
               {t("badge")}
             </div>
@@ -57,40 +54,6 @@ export function MembershipPageContent() {
             </p>
           </div>
 
-          <div className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-[0_24px_80px_rgba(25,87,138,0.12)]">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
-              {t("productLogicLabel")}
-            </p>
-
-            <div className="mt-6 space-y-4">
-              <div className="rounded-[1.5rem] border border-sky-100 bg-sky-50/70 p-5">
-                <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
-                  {t("whatBuyingTitle")}
-                </h2>
-                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">
-                  {t("whatBuyingText")}
-                </p>
-              </div>
-
-              <div className="rounded-[1.5rem] border border-cyan-100 bg-cyan-50/70 p-5">
-                <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
-                  {t("whyWorksTitle")}
-                </h2>
-                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">
-                  {t("whyWorksText")}
-                </p>
-              </div>
-
-              <div className="rounded-[1.5rem] border border-orange-100 bg-orange-50/70 p-5">
-                <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
-                  {t("toneTitle")}
-                </h2>
-                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">
-                  {t("toneText")}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -108,18 +71,7 @@ export function MembershipPageContent() {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            <MembershipCard
-              id="basic"
-              variant="basic"
-              title={t("basicTitle")}
-              price="$9"
-              description={t("basicDescription")}
-              features={[t("basicFeatures.0"), t("basicFeatures.1"), t("basicFeatures.2")]}
-              ctaLabel={t("basicCta")}
-              href="/purchase?tier=basic"
-            />
-
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
             <MembershipCard
               id="protected"
               variant="protected"
@@ -156,12 +108,12 @@ export function MembershipPageContent() {
             </h2>
           </div>
 
-          <div className="mt-10 overflow-hidden rounded-[2rem] border border-white/70 bg-white shadow-[0_18px_60px_rgba(25,87,138,0.08)]">
+          <div className="mt-10 overflow-hidden rounded-[2rem] border border-sky-100 bg-white shadow-[0_18px_60px_rgba(25,87,138,0.08)]">
             <div className="grid grid-cols-4 border-b border-sky-100 bg-sky-50/60 text-sm font-semibold text-[var(--brand-dark)]">
               <div className="p-4">{t("comparisonHeaders.feature")}</div>
-              <div className="p-4">{t("comparisonHeaders.basic")}</div>
               <div className="p-4">{t("comparisonHeaders.protected")}</div>
               <div className="p-4">{t("comparisonHeaders.nonsnack")}</div>
+              <div className="p-4">{t("comparisonHeaders.business")}</div>
             </div>
 
             {comparisonRows.map((row, index) => (
@@ -174,9 +126,9 @@ export function MembershipPageContent() {
                 }`}
               >
                 <div className="p-4 font-medium text-[var(--brand-dark)]">{row.label}</div>
-                <div className="p-4 text-[var(--muted)]">{row.basic}</div>
                 <div className="p-4 text-[var(--muted)]">{row.protected}</div>
                 <div className="p-4 text-[var(--muted)]">{row.nonsnack}</div>
+                <div className="p-4 text-[var(--muted)]">{row.business}</div>
               </div>
             ))}
           </div>
@@ -209,7 +161,7 @@ export function MembershipPageContent() {
 
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-[2rem] border border-white/70 bg-[var(--surface-soft)] p-8">
+          <div className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("clarificationLabel")}
             </p>
@@ -238,7 +190,7 @@ export function MembershipPageContent() {
             {faqItems.map((item) => (
               <article
                 key={item.question}
-                className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
+                className="rounded-[2rem] border border-sky-100 bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
               >
                 <h3 className="text-xl font-semibold text-[var(--brand-dark)]">
                   {item.question}
@@ -304,7 +256,7 @@ export function MembershipPageContent() {
 
       <section id="join" className="pb-24 pt-8">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-white/70 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
               {t("joinLabel")}
             </p>
@@ -333,7 +285,6 @@ export function MembershipPageContent() {
         </div>
       </section>
 
-      <SocialProofToasts locale={locale as "en" | "es"} />
     </>
   );
 }

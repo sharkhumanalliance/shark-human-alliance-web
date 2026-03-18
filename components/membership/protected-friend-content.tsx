@@ -49,13 +49,13 @@ export function ProtectedFriendContent() {
             </p>
           </div>
 
-          <div className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-[0_24px_80px_rgba(25,87,138,0.12)]">
+          <div className="rounded-[2rem] border border-sky-100 bg-white p-8 shadow-[0_24px_80px_rgba(25,87,138,0.12)]">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
               {t("includedLabel")}
             </p>
 
             <p className="mt-4 text-4xl font-semibold text-[var(--brand-dark)]">
-              $19
+              $9
             </p>
 
             <ul className="mt-8 space-y-4">
@@ -120,7 +120,7 @@ export function ProtectedFriendContent() {
 
       <section id="buy" className="py-20">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-white/70 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
               {t("buyLabel")}
             </p>
@@ -164,7 +164,7 @@ export function ProtectedFriendContent() {
             {faqItems.map((item) => (
               <article
                 key={item.question}
-                className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
+                className="rounded-[2rem] border border-sky-100 bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
               >
                 <h3 className="text-xl font-semibold text-[var(--brand-dark)]">
                   {item.question}

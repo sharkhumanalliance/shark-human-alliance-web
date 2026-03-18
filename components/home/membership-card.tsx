@@ -1,4 +1,4 @@
-type MembershipVariant = "basic" | "protected" | "nonsnack";
+type MembershipVariant = "basic" | "protected" | "nonsnack" | "business";
 
 type MembershipCardProps = {
   id?: string;
@@ -14,12 +14,14 @@ type MembershipCardProps = {
 function getBadgeClass(variant: MembershipVariant) {
   if (variant === "basic") return "bg-sky-100 text-sky-800";
   if (variant === "protected") return "bg-teal-100 text-teal-800";
+  if (variant === "business") return "bg-indigo-100 text-indigo-800";
   return "bg-orange-100 text-orange-800";
 }
 
 function getBorderClass(variant: MembershipVariant) {
   if (variant === "basic") return "border-sky-100";
   if (variant === "protected") return "border-teal-100";
+  if (variant === "business") return "border-indigo-100";
   return "border-orange-100";
 }
 
@@ -30,6 +32,10 @@ function getButtonClass(variant: MembershipVariant) {
 
   if (variant === "protected") {
     return "border border-transparent bg-[var(--brand)] text-white hover:bg-[var(--brand-dark)]";
+  }
+
+  if (variant === "business") {
+    return "border border-transparent bg-indigo-600 text-white hover:bg-indigo-700";
   }
 
   return "border border-transparent bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)]";

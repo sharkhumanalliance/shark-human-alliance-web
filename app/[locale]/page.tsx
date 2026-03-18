@@ -1,7 +1,7 @@
 import { HeroSection } from "@/components/home/hero-section";
-import { MembershipCard } from "@/components/home/membership-card";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { MobileStickyCta } from "@/components/mobile-sticky-cta";
 import { setRequestLocale } from "next-intl/server";
 import { HomeContent } from "@/components/home/home-content";
 
@@ -16,11 +16,12 @@ export default async function Home({ params }: Props) {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className="pb-16 md:pb-0">
         <HeroSection />
         <HomeContent />
       </main>
       <SiteFooter />
+      <MobileStickyCta />
     </>
   );
 }
