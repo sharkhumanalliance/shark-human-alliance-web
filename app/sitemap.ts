@@ -1,0 +1,31 @@
+import type { MetadataRoute } from "next";
+
+const BASE_URL = "https://sharkhumanalliance.com";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const locales = ["en", "es"];
+  const routes = [
+    { path: "", changeFrequency: "weekly" as const, priority: 1.0 },
+    { path: "/purchase", changeFrequency: "monthly" as const, priority: 0.9 },
+    { path: "/registry", changeFrequency: "daily" as const, priority: 0.8 },
+    { path: "/impact", changeFrequency: "monthly" as const, priority: 0.7 },
+    { path: "/faq", changeFrequency: "monthly" as const, priority: 0.6 },
+    { path: "/membership", changeFrequency: "monthly" as const, priority: 0.7 },
+    { path: "/membership/Protected-friend-status", changeFrequency: "monthly" as const, priority: 0.6 },
+  ];
+
+  const entries: MetadataRoute.Sitemap = [];
+
+  for (const locale of locales) {
+    for (const route of routes) {
+      entries.push({
+        url: `${BASE_URL}/${locale}${route.path}`,
+        lastModified: new Date(),
+        changeFrequency: route.changeFrequency,
+        priority: route.priority,
+      });
+    }
+  }
+
+  return entries;
+}

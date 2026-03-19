@@ -25,6 +25,12 @@ export function SiteFooter() {
             <p className="mt-3 text-xs text-[var(--muted)]">
               {t("madeWith")}
             </p>
+            <a
+              href={`mailto:${t("email")}`}
+              className="mt-2 inline-block text-xs text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
+            >
+              {t("email")}
+            </a>
           </div>
 
           {/* Our Story */}
@@ -62,7 +68,10 @@ export function SiteFooter() {
               <a href="/#real-impact" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">
                 {t("nav.about")}
               </a>
-              <a href="/#faq" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">
+              <a href="/impact" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">
+                {t("nav.impact")}
+              </a>
+              <a href="/faq" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">
                 {t("nav.faq")}
               </a>
               <a href="/registry" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">

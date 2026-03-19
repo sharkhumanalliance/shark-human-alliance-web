@@ -28,7 +28,7 @@ export function HeroSection() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <a
               href="/purchase?tier=protected"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-7 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)] hover:shadow-xl hover:shadow-orange-200/60"
             >
               {t("ctaPrimary")}
             </a>
@@ -85,23 +85,6 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Mini "How it works" strip */}
-      <div className="border-t border-sky-100 bg-white/80 backdrop-blur-sm">
-        <div className="mx-auto grid max-w-4xl grid-cols-3 gap-6 px-6 py-6 text-center">
-          {[
-            { num: "1", text: t("howStep1"), icon: "📋" },
-            { num: "2", text: t("howStep2"), icon: "🌊" },
-            { num: "3", text: t("howStep3"), icon: "🎁" },
-          ].map((step) => (
-            <div key={step.num} className="flex flex-col items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-50 text-lg">
-                {step.icon}
-              </div>
-              <p className="text-sm font-medium text-[var(--brand-dark)]">{step.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

@@ -1,16 +1,20 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 
+const PARTNERS = [
+  { i: 1, icon: "🦈", url: "https://www.sharktrust.org" },
+  { i: 2, icon: "🌊", url: "https://oceana.org" },
+  { i: 3, icon: "🔬", url: "https://sharks.org" },
+  { i: 4, icon: "🏝️", url: "https://www.fundacionmalpelo.org" },
+];
+
 export function HomeContent() {
   const t = useTranslations("home");
-
-  const faqItems = Array.from({ length: 6 }, (_, i) => ({
-    question: t(`faq.items.${i}.question`),
-    answer: t(`faq.items.${i}.answer`),
-  }));
+  const [previewName, setPreviewName] = useState("");
 
   const reviews = Array.from({ length: 5 }, (_, i) => ({
     text: t(`reviews.items.${i}.text`),
@@ -20,76 +24,57 @@ export function HomeContent() {
 
   return (
     <>
-      {/* Reviews — social proof right after hero */}
-      <section className="py-10 bg-white">
-        <div className="mx-auto max-w-6xl px-6">
+      {/* 1 — Value prop + impact hook */}
+      <section className="py-14 bg-white">
+        <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
-              {t("reviews.label")}
+              {t("valueHook.label")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
-              {t("reviews.title")}
+            <h2 className="mx-auto mt-3 max-w-2xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+              {t("valueHook.title")}
             </h2>
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {reviews.slice(0, 3).map((review, i) => (
-              <div
-                key={i}
-                className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-5 shadow-sm"
-              >
-                <div className="flex gap-1 text-orange-400">
-                  {"★★★★★".split("").map((star, j) => (
-                    <span key={j} className="text-lg">{star}</span>
-                  ))}
-                </div>
-                <p className="mt-3 text-sm leading-7 text-[var(--foreground)] italic">
-                  &ldquo;{review.text}&rdquo;
-                </p>
-                <div className="mt-3 flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand)] text-xs font-bold text-white">
-                    {review.author.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-[var(--brand-dark)]">{review.author}</p>
-                    <p className="text-xs text-[var(--muted)]">{review.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Perfect for gifting */}
-      <section className="py-12">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-700">
-              {t("giftingSection.label")}
-            </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
-              {t("giftingSection.title")}
-            </h2>
-          </div>
-
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="rounded-[2rem] border border-sky-100 bg-white p-6 text-center shadow-[0_16px_50px_rgba(25,87,138,0.08)]">
-                <p className="text-3xl">{t(`giftingSection.case${i}Icon`)}</p>
-                <h3 className="mt-3 text-lg font-semibold text-[var(--brand-dark)]">
-                  {t(`giftingSection.case${i}Title`)}
+          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="text-center">
+                <span className="text-4xl">{t(`valueHook.point${i}Icon`)}</span>
+                <h3 className="mt-4 text-lg font-semibold text-[var(--brand-dark)]">
+                  {t(`valueHook.point${i}Title`)}
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-                  {t(`giftingSection.case${i}Text`)}
+                  {t(`valueHook.point${i}Text`)}
                 </p>
               </div>
             ))}
           </div>
+
+          <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-6 text-[var(--muted)]">
+            {t("valueHook.impactLine")}
+          </p>
         </div>
       </section>
 
-      {/* Certificate Preview — full width showcase */}
+      {/* How it works strip */}
+      <div className="border-y border-sky-100 bg-white/80 backdrop-blur-sm">
+        <div className="mx-auto grid max-w-4xl grid-cols-3 gap-6 px-6 py-5 text-center">
+          {[
+            { num: "1", text: t("howStep1"), icon: "📋" },
+            { num: "2", text: t("howStep2"), icon: "🌊" },
+            { num: "3", text: t("howStep3"), icon: "🎁" },
+          ].map((step) => (
+            <div key={step.num} className="flex flex-col items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-50 text-lg">
+                {step.icon}
+              </div>
+              <p className="text-sm font-medium text-[var(--brand-dark)]">{step.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 2 — Certificate Preview (interactive) */}
       <section id="certificate-preview" className="py-12 bg-gradient-to-b from-sky-50/50 to-white">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center">
@@ -98,9 +83,23 @@ export function HomeContent() {
             </p>
           </div>
 
-          <div className="mt-8 mx-auto max-w-2xl">
+          {/* Live name input */}
+          <div className="mx-auto mt-6 max-w-md">
+            <div className="flex items-center gap-3 rounded-2xl border-2 border-teal-200 bg-white px-5 py-4 shadow-[0_8px_30px_rgba(25,87,138,0.08)] transition focus-within:border-teal-400 focus-within:shadow-[0_8px_30px_rgba(25,87,138,0.15)]">
+              <span className="text-lg" aria-hidden="true">✍️</span>
+              <input
+                type="text"
+                value={previewName}
+                onChange={(e) => setPreviewName(e.target.value)}
+                placeholder={t("about.inputPlaceholder")}
+                className="w-full bg-transparent text-base text-[var(--brand-dark)] placeholder:text-[var(--muted)]/50 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="mt-6 mx-auto max-w-2xl">
             <CertificatePreview
-              name={t("about.certName")}
+              name={previewName.trim() || t("about.certName")}
               tier="protected"
               date={new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
               registryId="SHA-XXXX"
@@ -121,18 +120,25 @@ export function HomeContent() {
             />
           </div>
 
-          <div className="mt-8 text-center">
+          {/* Dual CTA */}
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
-              href="/purchase?tier=protected"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              href={`/purchase?tier=protected${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)]"
             >
-              {t("membershipSection.protectedCta")}
+              🛡️ {t("about.ctaBuy")}
+            </a>
+            <a
+              href={`/purchase?tier=protected&gift=true${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`}
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-orange-200 bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-orange-300 hover:bg-orange-50"
+            >
+              🎁 {t("about.ctaGift")}
             </a>
           </div>
         </div>
       </section>
 
-      {/* Membership — dark section for contrast */}
+      {/* 3 — Membership tiers (dark) */}
       <section id="membership" className="py-14 bg-[var(--brand-dark)]">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
@@ -188,6 +194,7 @@ export function HomeContent() {
                 t("membershipSection.nonsnackFeatures.0"),
                 t("membershipSection.nonsnackFeatures.1"),
                 t("membershipSection.nonsnackFeatures.2"),
+                t("membershipSection.nonsnackFeatures.3"),
               ]}
               ctaLabel={t("membershipSection.nonsnackCta")}
               href="/purchase?tier=nonsnack"
@@ -210,7 +217,7 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* Dramatic Stats */}
+      {/* 4 — Stats */}
       <section className="py-14 bg-white">
         <div className="mx-auto max-w-5xl px-6">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
@@ -234,64 +241,125 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* Real Impact — moved down */}
+      {/* 5 — Impact teaser */}
       <section id="real-impact" className="py-12">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
-              {t("realImpact.label")}
-            </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
-              {t("realImpact.title")}
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-lg leading-8 text-[var(--muted)]">
-              {t("realImpact.description")}
-            </p>
-          </div>
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
+            {t("realImpact.label")}
+          </p>
+          <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+            {t("realImpact.title")}
+          </h2>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-[2rem] border border-teal-200 bg-gradient-to-b from-teal-50 to-white p-8 shadow-[0_16px_50px_rgba(25,87,138,0.06)]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-100 text-xl">
-                  🌊
-                </div>
-                <h3 className="text-xl font-semibold text-[var(--brand-dark)]">
-                  {t("realImpact.forSharksTitle")}
-                </h3>
-              </div>
-              <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
-                {t("realImpact.forSharksText")}
-              </p>
-            </div>
+          {/* Partner links inline */}
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--muted)]">
+            {t("impactTeaser.donationsIntro")}{" "}
+            {PARTNERS.map(({ i, url }, idx) => (
+              <span key={i}>
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-teal-700 underline decoration-teal-300 underline-offset-2 transition hover:text-teal-900 hover:decoration-teal-500"
+                >
+                  {t(`realImpact.partner${i}Name`)}
+                </a>
+                {idx < PARTNERS.length - 1 ? (idx === PARTNERS.length - 2 ? ` ${t("impactTeaser.and")} ` : ", ") : ". "}
+              </span>
+            ))}
+            {t("impactTeaser.opsJoke")}
+          </p>
 
-            <div className="rounded-[2rem] border border-orange-200 bg-gradient-to-b from-orange-50 to-white p-8 shadow-[0_16px_50px_rgba(25,87,138,0.06)]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-xl">
-                  ☕
-                </div>
-                <h3 className="text-xl font-semibold text-[var(--brand-dark)]">
-                  {t("realImpact.forHumanTitle")}
-                </h3>
-              </div>
-              <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
-                {t("realImpact.forHumanText")}
-              </p>
-            </div>
-          </div>
-
-          {/* Transparency + Legal inline */}
-          <div className="mt-8 rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-8">
-            <p className="text-sm leading-7 text-[var(--muted)]">
-              {t("realImpact.transparencyNote")}
-            </p>
-            <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
-              {t("realImpact.legalNote")}
-            </p>
+          <div className="mt-6">
+            <a
+              href="/impact"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
+            >
+              {t("impactTeaser.linkText")} →
+            </a>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* 6 — Gifting */}
+      <section className="py-12 bg-gradient-to-b from-white to-orange-50/30">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-700">
+              {t("giftingSection.label")}
+            </p>
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+              {t("giftingSection.title")}
+            </h2>
+          </div>
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="rounded-[2rem] border border-orange-100 bg-white p-6 text-center shadow-[0_16px_50px_rgba(25,87,138,0.08)]">
+                <p className="text-3xl">{t(`giftingSection.case${i}Icon`)}</p>
+                <h3 className="mt-3 text-lg font-semibold text-[var(--brand-dark)]">
+                  {t(`giftingSection.case${i}Title`)}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                  {t(`giftingSection.case${i}Text`)}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <a
+              href="/purchase?tier=protected&gift=true"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)]"
+            >
+              🎁 {t("giftingSection.cta")}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 7 — Reviews */}
+      <section className="py-10 bg-white">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
+              {t("reviews.label")}
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+              {t("reviews.title")}
+            </h2>
+          </div>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {reviews.slice(0, 3).map((review, i) => (
+              <div
+                key={i}
+                className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-5 shadow-sm"
+              >
+                <div className="flex gap-1 text-orange-400" aria-label="5 stars">
+                  {"★★★★★".split("").map((star, j) => (
+                    <span key={j} className="text-lg" aria-hidden="true">{star}</span>
+                  ))}
+                </div>
+                <p className="mt-3 text-sm leading-7 text-[var(--foreground)] italic">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+                <div className="mt-3 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand)] text-xs font-bold text-white">
+                    {review.author.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-[var(--brand-dark)]">{review.author}</p>
+                    <p className="text-xs text-[var(--muted)]">{review.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8 — Mini FAQ (3 questions + link) */}
       <section id="faq" className="py-12">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
@@ -303,13 +371,16 @@ export function HomeContent() {
             </h2>
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            {faqItems.map((item) => (
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {Array.from({ length: 3 }, (_, i) => ({
+              question: t(`faq.items.${i}.question`),
+              answer: t(`faq.items.${i}.answer`),
+            })).map((item) => (
               <article
                 key={item.question}
                 className="rounded-[2rem] border border-sky-100 bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
               >
-                <h3 className="text-xl font-semibold text-[var(--brand-dark)]">
+                <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
                   {item.question}
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
@@ -317,6 +388,15 @@ export function HomeContent() {
                 </p>
               </article>
             ))}
+          </div>
+
+          <div className="mt-6 text-center">
+            <a
+              href="/faq"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
+            >
+              {t("faq.allQuestions")} →
+            </a>
           </div>
         </div>
       </section>

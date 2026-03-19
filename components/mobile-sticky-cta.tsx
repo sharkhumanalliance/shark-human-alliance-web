@@ -12,7 +12,7 @@ export function MobileStickyCta() {
         className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--accent)] px-6 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[var(--accent-dark)]"
       >
         <span>{t("label")}</span>
-        <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold">
+        <span className="rounded-full bg-white px-2.5 py-0.5 text-xs font-bold text-[var(--accent-dark)]">
           {t("price")}
         </span>
       </a>

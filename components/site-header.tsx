@@ -15,7 +15,8 @@ export function SiteHeader() {
   const navItems = [
     { label: t("nav.membership"), hash: "#membership", href: "/#membership" },
     { label: t("nav.about"), hash: "#real-impact", href: "/#real-impact" },
-    { label: t("nav.faq"), hash: "#faq", href: "/#faq" },
+    { label: t("nav.impact"), hash: "", href: "/impact" },
+    { label: t("nav.faq"), hash: "", href: "/faq" },
     { label: t("nav.registry"), hash: "", href: "/registry" },
   ];
 

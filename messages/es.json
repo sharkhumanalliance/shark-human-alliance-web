@@ -1,10 +1,41 @@
 {
+  "seo": {
+    "home": {
+      "title": "Shark Human Alliance — Certificados Oficiales de Protección de Tiburones",
+      "description": "Obtén tu certificado oficial de Amigo Protegido. Un regalo personalizado y divertido que financia la conservación real de tiburones. Entrega digital, desde $9."
+    },
+    "purchase": {
+      "title": "Obtén tu Certificado — Shark Human Alliance",
+      "description": "Compra un certificado oficial de protección de tiburones. Personalizado, sorprendentemente oficial y entregado al instante. Cada venta financia la conservación marina."
+    },
+    "registry": {
+      "title": "Registro Diplomático — Shark Human Alliance",
+      "description": "Explora el registro oficial de humanos que han logrado reconocimiento diplomático simbólico de los tiburones. Únete a la lista y financia la conservación real."
+    },
+    "impact": {
+      "title": "Nuestro Impacto — Adónde Va el Dinero | Shark Human Alliance",
+      "description": "Transparencia total en cada dólar. Mira cómo las ventas de certificados financian la conservación real de tiburones y océanos a través de organizaciones verificadas."
+    },
+    "membership": {
+      "title": "Certificados y Niveles de Membresía — Shark Human Alliance",
+      "description": "Elige tu nivel de diplomacia con tiburones. Amigo Protegido ($9), Reconocimiento No-Snack ($29), o Zona Aprobada ($99). Cada certificado financia la conservación."
+    },
+    "protectedFriend": {
+      "title": "Estatus de Amigo Protegido — Shark Human Alliance",
+      "description": "El certificado estrella de protección de tiburones. Personalizado, elegante y sorprendentemente enmarcable. El regalo broma perfecto que financia la conservación marina."
+    },
+    "faq": {
+      "title": "FAQ — Shark Human Alliance",
+      "description": "Respuestas a preguntas frecuentes sobre certificados de protección de tiburones, donaciones para conservación y la Shark Human Alliance. Todo lo que necesitas saber."
+    }
+  },
   "header": {
     "brand": "Shark Human Alliance",
     "tagline": "Paz entre humanos y tiburones",
     "nav": {
       "membership": "Certificados",
       "about": "Nuestra Misión",
+      "impact": "Impacto",
       "faq": "FAQ",
       "registry": "Registro Diplomático"
     },
@@ -18,14 +49,16 @@
     "legalTitle": "Legal",
     "legalText": "Marca ficticia. Donaciones reales. Tu certificado no te protege de tiburones pero sí ayuda a proteger a los tiburones de nosotros.",
     "transparencyTitle": "Transparencia",
-    "transparencyText": "Transparencia total en cada dólar — los informes se publicarán en cuanto se realicen las primeras donaciones.",
+    "transparencyText": "Transparencia total en cada dólar. Los informes se publicarán trimestralmente una vez que comiencen las donaciones.",
     "nav": {
       "membership": "Certificados",
       "about": "Nuestra Misión",
+      "impact": "Impacto",
       "faq": "FAQ",
       "registry": "Registro"
     },
     "madeWith": "Hecho con ❤️ para los tiburones",
+    "email": "sharkhumanalliance@gmail.com",
     "copyright": "© 2026 Shark Human Alliance. Una marca ficticia con una misión muy real."
   },
   "hero": {
@@ -88,23 +121,33 @@
       "title": "Todos conocen a alguien que necesita esto.",
       "case1Icon": "🦈",
       "case1Title": "Amantes de los tiburones",
-      "case1Text": "Ahora tienen el papeleo que demuestra que el sentimiento es mutuo.",
+      "case1Text": "Apuesto a que no tienen papeleo oficial de diplomacia con tiburones. Ahora sí.",
       "case2Icon": "🏖️",
       "case2Title": "Los que temen la playa",
-      "case2Text": "El estatus de protección oficial podría ayudar (simbólicamente).",
+      "case2Text": "Apuesto a que no tienen protección simbólica contra tiburones. Problema casi resuelto.",
       "case3Icon": "🎂",
       "case3Title": "Regalos de cumpleaños y oficina",
-      "case3Text": "Lo suficientemente divertido para reír. Lo suficientemente elegante para enmarcar.",
+      "case3Text": "Apuesto a que no tienen un certificado enmarcado que los declare amigos de los tiburones.",
       "case4Icon": "🤷",
       "case4Title": "Gente que ya tiene todo",
-      "case4Text": "No tienen reconocimiento diplomático de tiburones. Problema resuelto."
+      "case4Text": "Apuesto a que no tienen reconocimiento diplomático de tiburones. Problema resuelto.",
+      "cta": "Regalar Amigo Protegido — $9"
     },
     "about": {
       "certPreviewLabel": "Un regalo que luce sorprendentemente oficial",
       "certTitle": "Certificado de Membresía de la Alianza",
       "certCertifies": "Esto certifica que",
       "certName": "[ Tu nombre aquí ]",
-      "certText": "es oficialmente reconocido por la Shark Human Alliance como un defensor de las relaciones pacíficas entre tiburones y humanos y un contribuyente a la conservación marina real."
+      "certText": "es oficialmente reconocido por la Shark Human Alliance como un defensor de las relaciones pacíficas entre tiburones y humanos y un contribuyente a la conservación marina real.",
+      "inputPlaceholder": "Escribe un nombre — mira tu certificado",
+      "ctaBuy": "Comprar para ti — $9",
+      "ctaGift": "Comprar como regalo — $9"
+    },
+    "impactTeaser": {
+      "donationsIntro": "Cada venta de certificados financia conservación verificada a través de",
+      "and": "y",
+      "opsJoke": "El resto mantiene funcionando el departamento de operaciones terrestres de una sola persona de la Alianza (apenas).",
+      "linkText": "Ver informe completo de impacto y detalles de socios"
     },
     "membershipSection": {
       "label": "Certificados",
@@ -113,18 +156,31 @@
       "popularBadge": "Más Popular",
       "protectedTitle": "Estatus de Amigo Protegido",
       "protectedPrice": "$9",
-      "protectedDescription": "El regalo estrella — elegante, personal y sorprendentemente enmarcable.",
-      "protectedFeatures": ["Certificado personalizado", "Reconocimiento de Amigo Protegido", "Entrega digital"],
+      "protectedDescription": "El regalo estrella — elegante, personal y sorprendentemente enmarcable. Ideal para regalos rápidos, divertidos y con estilo.",
+      "protectedFeatures": [
+        "Certificado personalizado",
+        "Reconocimiento de Amigo Protegido",
+        "Entrega digital"
+      ],
       "protectedCta": "Obtén Amigo Protegido — $9",
       "nonsnackTitle": "Reconocimiento No-Snack",
       "nonsnackPrice": "$29",
-      "nonsnackDescription": "Prestigio simbólico máximo para humanos que se niegan a ser considerados adyacentes al menú.",
-      "nonsnackFeatures": ["Certificado premium", "Designación oficial No-Snack", "Insignia descargable"],
+      "nonsnackDescription": "Prestigio simbólico máximo con certificado deluxe, ubicación exclusiva en el registro y sello dorado coleccionable. Ideal para quienes quieren una versión más exclusiva y coleccionable.",
+      "nonsnackFeatures": [
+        "Certificado premium con sello dorado",
+        "Designación oficial No-Snack",
+        "Insignia descargable",
+        "Ubicación destacada en el registro"
+      ],
       "nonsnackCta": "Elegir No-Snack — $29",
       "businessTitle": "Zona Aprobada por Tiburones",
       "businessPrice": "$99",
-      "businessDescription": "Para cualquier negocio lo suficientemente valiente como para reclamar aprobación oficial de tiburones. El 70% va a conservación.",
-      "businessFeatures": ["Certificado oficial para pared (A3)", "Insignia digital para tu web", "Listado en el Registro Diplomático"],
+      "businessDescription": "Para cualquier negocio lo suficientemente valiente como para reclamar aprobación oficial de tiburones. El 70% va a conservación. Ideal para oficinas, cafés, estudios y negocios amigos de los tiburones.",
+      "businessFeatures": [
+        "Certificado oficial para pared (A3)",
+        "Insignia digital para tu web",
+        "Listado en el Registro Diplomático"
+      ],
       "businessCta": "Obtener Certificación — $99"
     },
     "realImpact": {
@@ -135,12 +191,23 @@
       "forSharksText": "Cada venta financia organizaciones verificadas de conservación de océanos y tiburones. Sin promesas vagas, sin tarifas misteriosas. Los certificados empresariales donan el 70%.",
       "forHumanTitle": "Operaciones de la Alianza",
       "forHumanText": "El resto mantiene los servidores funcionando y al fundador alimentado. Piensa en ello como financiar el departamento de operaciones terrestres de la Alianza (personal: una persona muy cansada).",
-      "transparencyNote": "Transparencia total en cada dólar. Los informes de donaciones se publicarán en cuanto lleguen las primeras ventas. Si un tiburón pudiera leer una hoja de cálculo, lo aprobaría.",
+      "transparencyNote": "Transparencia total en cada dólar. Los informes se publicarán trimestralmente una vez que comiencen las donaciones. Si un tiburón pudiera leer una hoja de cálculo, lo aprobaría.",
       "legalNote": "La Shark Human Alliance es una marca de entretenimiento ficticia. Las donaciones para conservación son reales y verificables.",
-      "stat1Value": "100M",
-      "stat1Label": "tiburones matados por humanos cada año",
-      "stat2Value": "~5",
-      "stat2Label": "humanos matados por tiburones cada año",
+      "partnersTitle": "Adónde va el dinero",
+      "partnersSubtitle": "Organizaciones que planeamos apoyar",
+      "partner1Name": "Shark Trust",
+      "partner1Desc": "Organización benéfica del Reino Unido dedicada a salvaguardar el futuro de los tiburones mediante ciencia, educación e influencia.",
+      "partner2Name": "Oceana",
+      "partner2Desc": "La organización internacional más grande enfocada exclusivamente en la conservación de los océanos.",
+      "partner3Name": "Shark Conservation Fund",
+      "partner3Desc": "Financiación directa para investigación, iniciativas de protección y cambio de políticas sobre tiburones en todo el mundo.",
+      "partner4Name": "Malpelo Foundation",
+      "partner4Desc": "Protección de la fauna marina y uno de los santuarios de tiburones más importantes del mundo en Colombia.",
+      "partnersDisclaimer": "Listados como socios planificados. Las asociaciones formales se anunciarán cuando comiencen las donaciones.",
+      "stat1Value": "~100M",
+      "stat1Label": "tiburones estimados matados por humanos anualmente",
+      "stat2Value": "<10",
+      "stat2Label": "muertes humanas por tiburones en la mayoría de los años",
       "stat3Value": "⅓",
       "stat3Label": "de todas las especies de tiburones están amenazadas",
       "stat4Value": "450M",
@@ -160,11 +227,11 @@
         },
         {
           "question": "¿Adónde va realmente el dinero?",
-          "answer": "Cada venta financia organizaciones verificadas de conservación de océanos y tiburones. Publicamos informes trimestrales mostrando exactamente adónde fue el dinero."
+          "answer": "Cada venta financia organizaciones verificadas de conservación de océanos y tiburones. Publicamos informes trimestrales mostrando exactamente adónde fue el dinero — los informes comienzan una vez que se realicen las primeras donaciones."
         },
         {
           "question": "¿Por qué tiburones?",
-          "answer": "Los humanos matan aproximadamente 100 millones de tiburones al año. Los tiburones matan a unos 5 humanos. Necesitan mejor imagen y ayuda real. Hacemos ambas cosas."
+          "answer": "Los humanos matan un estimado de 100 millones de tiburones al año. Las muertes humanas por tiburones se mantienen en un solo dígito. Necesitan mejor imagen y ayuda real. Hacemos ambas cosas."
         },
         {
           "question": "¿Recibiré un certificado?",
@@ -174,8 +241,68 @@
           "question": "¿Puedo regalarlo?",
           "answer": "Por supuesto. El Estatus de Amigo Protegido es la opción de regalo más popular — lo suficientemente divertido para compartir, lo suficientemente elegante para enmarcar."
         }
-      ]
-    }
+      ],
+      "allQuestions": "Todas las preguntas respondidas"
+    },
+    "valueHook": {
+      "label": "Por qué existe esto",
+      "title": "Una broma que protege tiburones. De verdad.",
+      "point1Icon": "📄",
+      "point1Title": "Parece oficial. No lo es.",
+      "point1Text": "Personalizado, sorprendentemente enmarcable y garantizado para confundir a quien lo lea dos veces.",
+      "point2Icon": "🦈",
+      "point2Title": "Dinero real para tiburones reales",
+      "point2Text": "Cada certificado financia directamente la conservación marina a través de organizaciones verificadas.",
+      "point3Icon": "📜",
+      "point3Title": "Tu nombre en el registro",
+      "point3Text": "Listado permanentemente en nuestro Registro Diplomático como amigo oficialmente reconocido de los tiburones.",
+      "impactLine": "Cada venta financia la conservación a través de Shark Trust, Oceana, Saving the Blue y Fundación Malpelo."
+    },
+    "howStep1": "Elige un certificado",
+    "howStep2": "Financia conservación real",
+    "howStep3": "Envía el regalo"
+  },
+  "faqPage": {
+    "label": "FAQ",
+    "title": "Todo lo que necesitas saber.",
+    "subtitle": "Aclaraciones para humanos sensatos que quieren entender qué están comprando, adónde va el dinero y si los tiburones realmente pueden leer certificados.",
+    "items": [
+      {
+        "question": "¿Es real la alianza?",
+        "answer": "La alianza es ficticia e intencionalmente humorística. Las donaciones para conservación son reales y verificables. Piénsalo como un show de comedia donde el precio de la entrada va a caridad."
+      },
+      {
+        "question": "¿La membresía me protege de los tiburones?",
+        "answer": "No. Tu certificado proporciona cero protección marina. Sin embargo, ayuda a proteger a los tiburones reales de nosotros. Lo cual, estadísticamente, es la dirección en la que realmente se necesita protección."
+      },
+      {
+        "question": "¿Adónde va realmente el dinero?",
+        "answer": "Cada venta financia organizaciones verificadas de conservación incluyendo Shark Trust, Oceana, Shark Conservation Fund y Malpelo Foundation. Publicamos informes trimestrales mostrando exactamente adónde fue el dinero — los informes comienzan una vez que se realicen las primeras donaciones."
+      },
+      {
+        "question": "¿Por qué tiburones?",
+        "answer": "Los humanos matan un estimado de 100 millones de tiburones al año. Las muertes humanas por tiburones se mantienen en un solo dígito en la mayoría de los años. Necesitan mejor imagen y ayuda real. Hacemos ambas cosas — un certificado sorprendentemente oficial a la vez."
+      },
+      {
+        "question": "¿Recibiré un certificado?",
+        "answer": "Sí. Un certificado digital personalizado con tu nombre, nivel de membresía y un aire de reconocimiento diplomático sorprendentemente oficial. Entregado instantáneamente a tu email."
+      },
+      {
+        "question": "¿Puedo regalarlo?",
+        "answer": "Por supuesto. El Estatus de Amigo Protegido es la opción de regalo más popular — lo suficientemente divertido para compartir, lo suficientemente elegante para enmarcar. Puedes agregar el email del destinatario, fecha de entrega y mensaje personal durante el checkout."
+      },
+      {
+        "question": "¿Cuánto va a conservación?",
+        "answer": "Para certificados personales (Amigo Protegido, No-Snack), el 50% va directamente a conservación. Para certificados empresariales (Zona Aprobada), es el 70%. El resto mantiene los servidores funcionando y al fundador alimentado."
+      },
+      {
+        "question": "¿Es deducible de impuestos?",
+        "answer": "No. Esto es una compra de un producto digital humorístico, no una donación caritativa. La financiación de conservación ocurre de nuestro lado — tú recibes un certificado y la cálida satisfacción de saber que ayudaste a los tiburones."
+      }
+    ],
+    "ctaTitle": "¿Aún tienes preguntas?",
+    "ctaText": "La mejor manera de entender el certificado es verlo. Prueba la vista previa en vivo en nuestra página principal — o simplemente hazlo.",
+    "ctaButton": "Obtén Amigo Protegido — $9"
   },
   "membershipPage": {
     "badge": "Paquetes de reconocimiento simbólico",
@@ -190,29 +317,72 @@
     "tiersDescription": "Elige el nivel que mejor se ajuste a tu ambición de regalo y el grado deseado de prestigio simbólico.",
     "protectedTitle": "Estatus de Amigo Protegido",
     "protectedDescription": "La oferta principal más fuerte: un estatus simbólico humorístico, elegante y regalable dentro de la alianza.",
-    "protectedFeatures": ["Certificado personalizado", "Reconocimiento de Amigo Protegido", "Insignia de la Alianza"],
+    "protectedFeatures": [
+      "Certificado personalizado",
+      "Reconocimiento de Amigo Protegido",
+      "Insignia de la Alianza"
+    ],
     "protectedCta": "Elegir protegido — $9",
     "nonsnackTitle": "Reconocimiento No-Snack",
     "nonsnackDescription": "Un nivel de prestigio más absurdo para humanos que preferirían firmemente no ser considerados adyacentes al menú.",
-    "nonsnackFeatures": ["Certificado premium", "Designación oficial No-Snack", "Insignia de reconocimiento descargable"],
+    "nonsnackFeatures": [
+      "Certificado premium",
+      "Designación oficial No-Snack",
+      "Insignia de reconocimiento descargable"
+    ],
     "nonsnackCta": "Elegir no-snack — $29",
     "businessBadge": "Para negocios",
     "businessTitle": "Certificación Zona Aprobada por Tiburones",
     "businessDescription": "Para cualquier negocio lo suficientemente valiente como para reclamar aprobación oficial de tiburones. Exhibe el certificado con orgullo. El 70% de este nivel va a conservación.",
-    "businessFeatures": ["Certificado oficial de Zona Aprobada por Tiburones", "Imprimible para exhibición en pared (formato A3)", "Insignia digital para uso en sitio web", "Listado en el Registro Diplomático"],
+    "businessFeatures": [
+      "Certificado oficial de Zona Aprobada por Tiburones",
+      "Imprimible para exhibición en pared (formato A3)",
+      "Insignia digital para uso en sitio web",
+      "Listado en el Registro Diplomático"
+    ],
     "businessCta": "Obtener certificación — $99",
     "businessCertLabel": "Zona Aprobada por Tiburones",
     "businessCertName": "Nombre de tu negocio",
     "businessCertText": "ha sido oficialmente designado como Zona Aprobada por Tiburones por la Shark Human Alliance",
     "comparisonLabel": "Comparación",
     "comparisonTitle": "Tabla de decisión rápida.",
-    "comparisonHeaders": { "feature": "Característica", "protected": "Amigo Protegido", "nonsnack": "No-Snack", "business": "Zona Aprobada" },
+    "comparisonHeaders": {
+      "feature": "Característica",
+      "protected": "Amigo Protegido",
+      "nonsnack": "No-Snack",
+      "business": "Zona Aprobada"
+    },
     "comparisonRows": [
-      { "label": "Certificado", "protected": "Certificado personalizado", "nonsnack": "Certificado personalizado premium", "business": "Certificado oficial para pared (A3)" },
-      { "label": "Estatus en la alianza", "protected": "Estatus de Amigo Protegido", "nonsnack": "Reconocimiento Oficial No-Snack", "business": "Zona Aprobada por Tiburones" },
-      { "label": "Ideal para", "protected": "Regalos personales", "nonsnack": "Diplomacia simbólica máxima", "business": "Locales y negocios" },
-      { "label": "Precio", "protected": "$9", "nonsnack": "$29", "business": "$99" },
-      { "label": "Protección marina real", "protected": "Ninguna", "nonsnack": "Todavía ninguna", "business": "Definitivamente ninguna" }
+      {
+        "label": "Certificado",
+        "protected": "Certificado personalizado",
+        "nonsnack": "Certificado personalizado premium",
+        "business": "Certificado oficial para pared (A3)"
+      },
+      {
+        "label": "Estatus en la alianza",
+        "protected": "Estatus de Amigo Protegido",
+        "nonsnack": "Reconocimiento Oficial No-Snack",
+        "business": "Zona Aprobada por Tiburones"
+      },
+      {
+        "label": "Ideal para",
+        "protected": "Regalos personales",
+        "nonsnack": "Diplomacia simbólica máxima",
+        "business": "Locales y negocios"
+      },
+      {
+        "label": "Precio",
+        "protected": "$9",
+        "nonsnack": "$29",
+        "business": "$99"
+      },
+      {
+        "label": "Protección marina real",
+        "protected": "Ninguna",
+        "nonsnack": "Todavía ninguna",
+        "business": "Definitivamente ninguna"
+      }
     ],
     "step1Title": "Elige un nivel",
     "step1Text": "Elige la versión que mejor se adapte al regalo, la intensidad del chiste y el prestigio simbólico que deseas.",
@@ -226,10 +396,22 @@
     "faqLabel": "FAQ",
     "faqTitle": "Preguntas sobre el producto que vale la pena responder claramente.",
     "faqItems": [
-      { "question": "¿Es un producto de protección real?", "answer": "No. Todas las membresías son ficticias, simbólicas y están destinadas como regalos humorísticos o participación estilo fan en el universo de la Shark Human Alliance." },
-      { "question": "¿Recibiré algo después del pago?", "answer": "Sí. Un certificado digital personalizado entregado instantáneamente a tu email." },
-      { "question": "¿Por qué la página habla de protección si es ficticia?", "answer": "Porque el humor del proyecto se basa en la diplomacia simbólica con tiburones. El chiste funciona solo si se mantiene claramente lúdico y obviamente no literal." },
-      { "question": "¿Qué opción debería elegir?", "answer": "El Estatus de Amigo Protegido ($9) es el más popular — es el equilibrio perfecto entre divertido, elegante y regalable." }
+      {
+        "question": "¿Es un producto de protección real?",
+        "answer": "No. Todas las membresías son ficticias, simbólicas y están destinadas como regalos humorísticos o participación estilo fan en el universo de la Shark Human Alliance."
+      },
+      {
+        "question": "¿Recibiré algo después del pago?",
+        "answer": "Sí. Un certificado digital personalizado entregado instantáneamente a tu email."
+      },
+      {
+        "question": "¿Por qué la página habla de protección si es ficticia?",
+        "answer": "Porque el humor del proyecto se basa en la diplomacia simbólica con tiburones. El chiste funciona solo si se mantiene claramente lúdico y obviamente no literal."
+      },
+      {
+        "question": "¿Qué opción debería elegir?",
+        "answer": "El Estatus de Amigo Protegido ($9) es el más popular — es el equilibrio perfecto entre divertido, elegante y regalable."
+      }
     ],
     "joinLabel": "¿Listo?",
     "joinTitle": "Regala el Estatus de Amigo Protegido.",
@@ -245,7 +427,12 @@
     "ctaSecondary": "Volver a membresía",
     "recommended": "Recomendado como el producto principal de lanzamiento para Shark Human Alliance.",
     "includedLabel": "Qué incluye",
-    "includedItems": ["Certificado digital personalizado", "Designación de Estatus de Amigo Protegido", "Insignia de la Alianza", "Reconocimiento simbólico regalable"],
+    "includedItems": [
+      "Certificado digital personalizado",
+      "Designación de Estatus de Amigo Protegido",
+      "Insignia de la Alianza",
+      "Reconocimiento simbólico regalable"
+    ],
     "bestUseTitle": "Mejor caso de uso",
     "bestUseText": "Este es el mejor nivel para regalos, claridad de marca y monetización basada en certificados.",
     "whyLabel": "Por qué funciona este producto",
@@ -265,13 +452,22 @@
     "faqLabel": "FAQ",
     "faqTitle": "Aclaraciones del producto.",
     "faqItems": [
-      { "question": "¿Es protección real contra tiburones?", "answer": "No. El Estatus de Amigo Protegido es un producto simbólico ficticio y no proporciona protección real de ningún tipo." },
-      { "question": "¿Por qué es el producto principal?", "answer": "Porque es el equilibrio más claro entre divertido, elegante y regalable." },
-      { "question": "¿Qué pasa después de la compra?", "answer": "Recibes un certificado digital personalizado entregado instantáneamente a tu email." }
+      {
+        "question": "¿Es protección real contra tiburones?",
+        "answer": "No. El Estatus de Amigo Protegido es un producto simbólico ficticio y no proporciona protección real de ningún tipo."
+      },
+      {
+        "question": "¿Por qué es el producto principal?",
+        "answer": "Porque es el equilibrio más claro entre divertido, elegante y regalable."
+      },
+      {
+        "question": "¿Qué pasa después de la compra?",
+        "answer": "Recibes un certificado digital personalizado entregado instantáneamente a tu email."
+      }
     ]
   },
   "purchase": {
-    "title": "Asegura tu estatus diplomático.",
+    "title": "Procede a la Autorización Diplomática.",
     "subtitle": "Un formulario. Un pago. Un paso más cerca de no ser un snack.",
     "tierLabel": "Nivel seleccionado",
     "tiers": {
@@ -295,9 +491,10 @@
     "businessDedicationPlaceholder": "ej. Orgullosamente aprobado por tiburones desde 2026",
     "emailLabel": "Email para entrega del certificado",
     "emailPlaceholder": "tu@email.com",
-    "paymentTitle": "Pago",
-    "paymentPlaceholder": "La pasarela de pago se conectará aquí. Por ahora, haz clic abajo para simular una compra completada.",
-    "submitButton": "Completar compra simbólica",
+    "paymentTitle": "Pago Seguro",
+    "paymentPlaceholder": "Los tiburones no pueden leer números de tarjeta — tu información de pago está segura. La pasarela se conectará aquí.",
+    "submitButton": "Emitir Mi Certificado",
+    "orderSummary": "Informe Diplomático",
     "processing": "Procesando tu papeleo diplomático...",
     "sendEmail": "Enviar certificado por email",
     "sendingEmail": "Enviando...",
@@ -318,7 +515,8 @@
     "filterBasic": "Básico",
     "filterProtected": "Amigos Protegidos",
     "filterNonsnack": "No-Snacks",
-    "emptyState": "No se encontraron diplomáticos. Los tiburones siguen esperando.",
+    "emptyState": "Nadie es oficialmente no-comido todavía. Alguien tiene que ser el primero.",
+    "emptyStateFounders": "Los diplomáticos fundadores aparecerán aquí. Sé el primero.",
     "memberSince": "Diplomático desde",
     "tierLabels": {
       "basic": "Amigo de los Tiburones",
@@ -327,6 +525,15 @@
       "business": "Zona Aprobada por Tiburones"
     },
     "filterBusiness": "Zonas Aprobadas",
+    "copyLink": "Copiar enlace del perfil",
+    "viralNewest": "Diplomáticos más recientes",
+    "viralNotFood": "Oficialmente No Comida",
+    "viralNotFoodDesc": "Estos humanos han sido formalmente designados como no comestibles por la Alianza. Los tiburones han sido notificados (simbólicamente).",
+    "viralWanted": "Se buscan: Aún sin protección",
+    "viralWantedDesc": "Miles de millones de humanos permanecen sin ninguna forma de protección simbólica de tiburones. ¿Conoces a alguien que necesite autorización diplomática? Regálale un certificado antes de que sea demasiado tarde (simbólicamente).",
+    "viralWantedCta": "Protege a alguien que conoces",
+    "viralFounders": "Amigos Fundadores",
+    "viralFoundersDesc": "Los primeros humanos lo suficientemente valientes como para buscar reconocimiento diplomático de los tiburones.",
     "joinCta": "¿Quieres unirte a la lista?",
     "joinCtaButton": "Obtén tu certificado",
     "disclaimerTitle": "Descargo de responsabilidad del registro",
@@ -354,6 +561,63 @@
     "registryId": "ID de Registro",
     "seal": "SELLO OFICIAL DE LA ALIANZA",
     "footer": "Aprobado por el Departamento de Asuntos Marinos Simbólicos. Ningún tiburón fue dañado ni consultado en la elaboración de este documento."
+  },
+  "impact": {
+    "label": "Nuestro Impacto",
+    "title": "Adónde va realmente el dinero.",
+    "subtitle": "La alianza es ficticia. La financiación de conservación no lo es. Aquí explicamos exactamente cómo se divide, rastrea y reporta cada dólar.",
+    "splitTitle": "Cómo se dividen los fondos",
+    "splitDescription": "Cada certificado vendido genera una contribución directa a la conservación marina. La división depende del nivel que elijas.",
+    "splitPersonalPercent": "50%",
+    "splitPersonalLabel": "Amigo Protegido y No-Snack",
+    "splitPersonalText": "La mitad de cada venta de certificado personal va directamente a organizaciones verificadas de conservación de tiburones y océanos.",
+    "splitBusinessPercent": "70%",
+    "splitBusinessLabel": "Zona Aprobada por Tiburones",
+    "splitBusinessText": "Los certificados empresariales donan el 70% a conservación — porque los negocios pueden ser más generosos que los fundadores cansados.",
+    "splitOpsPercent": "Resto",
+    "splitOpsLabel": "Operaciones de la Alianza",
+    "splitOpsText": "El resto mantiene los servidores funcionando, los certificados generándose y al equipo de una persona de la Alianza alimentado. Piénsalo como el presupuesto de operaciones terrestres.",
+    "partnersTitle": "Adónde va el dinero",
+    "partnersSubtitle": "Estas son las organizaciones que planeamos apoyar. Cada una ha sido seleccionada por su impacto directo en la conservación de tiburones, investigación científica y protección oceánica.",
+    "partner1Name": "Shark Trust",
+    "partner1Desc": "Organización benéfica del Reino Unido dedicada a salvaguardar el futuro de los tiburones mediante ciencia, educación e influencia política.",
+    "partner1Focus": "Enfoque: Política de tiburones en el Reino Unido y Europa, conservación basada en ciencia, campañas de educación pública.",
+    "partner2Name": "Oceana",
+    "partner2Desc": "La organización internacional más grande enfocada exclusivamente en la conservación de los océanos, con campañas en docenas de países.",
+    "partner2Focus": "Enfoque: Cambio de políticas, protección de hábitats oceánicos, defensa de la pesca sostenible.",
+    "partner3Name": "Shark Conservation Fund",
+    "partner3Desc": "Colaboración filantrópica que proporciona financiación directa para la conservación de tiburones y rayas a nivel mundial.",
+    "partner3Focus": "Enfoque: Becas de investigación, áreas marinas protegidas, campañas contra el aleteo.",
+    "partner4Name": "Malpelo Foundation",
+    "partner4Desc": "Protección de la fauna marina y uno de los santuarios de tiburones más importantes del mundo frente a la costa pacífica de Colombia.",
+    "partner4Focus": "Enfoque: Protección del santuario de la Isla Malpelo, investigación de tiburones martillo, patrullas marinas.",
+    "partnersDisclaimer": "Listados como socios planificados. Las asociaciones formales se establecerán y anunciarán cuando comience el volumen de donaciones. No reclamaremos una asociación hasta que esté confirmada.",
+    "visitWebsite": "Visitar sitio web",
+    "selectionTitle": "Cómo elegimos socios",
+    "selectionCriteria1Title": "Impacto directo en tiburones",
+    "selectionCriteria1Text": "La organización debe trabajar directamente en conservación, investigación o protección de hábitat de tiburones — no en causas marinas generales.",
+    "selectionCriteria2Title": "Transparencia financiera",
+    "selectionCriteria2Text": "Deben publicar informes anuales, estados financieros o métricas de impacto verificables que podamos compartir con nuestra comunidad.",
+    "selectionCriteria3Title": "Trayectoria comprobada",
+    "selectionCriteria3Text": "Priorizamos organizaciones con años de resultados de conservación documentados, no solo buenas intenciones.",
+    "selectionCriteria4Title": "Equilibrio global y local",
+    "selectionCriteria4Text": "Buscamos una mezcla de organizaciones globales y santuarios locales para asegurar que la financiación llegue donde más se necesita.",
+    "reportingTitle": "Reportes y transparencia",
+    "reportingSubtitle": "Cada dólar se rastrea y reporta. Si un tiburón pudiera leer una hoja de cálculo, lo aprobaría.",
+    "reporting1Icon": "📊",
+    "reporting1Title": "Informes trimestrales",
+    "reporting1Text": "Publicados públicamente en esta página. Cuánto se recaudó, adónde fue y qué impacto tuvo.",
+    "reporting2Icon": "🔍",
+    "reporting2Title": "Donaciones verificables",
+    "reporting2Text": "Cada donación viene con recibos y confirmación de la organización receptora.",
+    "reporting3Icon": "📢",
+    "reporting3Title": "Actualizaciones comunitarias",
+    "reporting3Text": "Actualizaciones por email a todos los titulares de certificados mostrando exactamente cómo contribuyó su compra.",
+    "preReportTitle": "Aún no hemos publicado nuestro primer informe",
+    "preReportText": "La Shark Human Alliance aún está en sus primeras etapas. Los informes se publicarán trimestralmente una vez que el volumen de donaciones sea suficiente para hacer contribuciones significativas. Preferimos esperar y donar algo sustancial que repartir cantidades pequeñas. Esta página se actualizará con nuestro primer informe de impacto tan pronto como esté listo.",
+    "ctaTitle": "Cada certificado ayuda.",
+    "ctaText": "El chiste es ficticio. La financiación es real. Obtén un certificado y ayuda a proteger a los tiburones que definitivamente no están tramando nada.",
+    "ctaButton": "Obtén tu certificado — desde $9"
   },
   "mobileCta": {
     "label": "Obtén Amigo Protegido",

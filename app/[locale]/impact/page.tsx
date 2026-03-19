@@ -1,7 +1,7 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { MembershipPageContent } from "@/components/membership/membership-page-content";
+import { ImpactContent } from "@/components/impact/impact-content";
 import type { Metadata } from "next";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "seo.membership" });
+  const t = await getTranslations({ locale, namespace: "seo.impact" });
   return {
     title: t("title"),
     description: t("description"),
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function MembershipPage({ params }: Props) {
+export default async function ImpactPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
@@ -27,7 +27,7 @@ export default async function MembershipPage({ params }: Props) {
     <>
       <SiteHeader />
       <main id="main" className="pb-20 md:pb-0">
-        <MembershipPageContent />
+        <ImpactContent />
       </main>
       <SiteFooter />
     </>

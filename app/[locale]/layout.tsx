@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -17,9 +17,56 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shark Human Alliance",
+  title: {
+    default: "Shark Human Alliance — Official Shark Protection Certificates",
+    template: "%s | Shark Human Alliance",
+  },
   description:
-    "A fictional alliance helping humans and sharks build better relations — through friendship, diplomacy, and significantly reduced human snacking.",
+    "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $9.",
+  metadataBase: new URL("https://sharkhumanalliance.com"),
+  openGraph: {
+    type: "website",
+    siteName: "Shark Human Alliance",
+    title: "Shark Human Alliance — Official Shark Protection Certificates",
+    description:
+      "Get official Protected Friend status and fund real shark conservation. The perfect gag gift for anyone who's ever side-eyed the ocean.",
+    images: [
+      {
+        url: "/mascots/finnley-luna-hero.png",
+        width: 1400,
+        height: 1100,
+        alt: "Finnley Mako and Luna Reef — Shark Human Alliance ambassadors",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shark Human Alliance",
+    description:
+      "Official shark protection certificates + real conservation funding. From $9.",
+    images: ["/mascots/finnley-luna-hero.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.svg",
+  },
+  manifest: "/manifest.json",
+  alternates: {
+    languages: {
+      en: "/en",
+      es: "/es",
+    },
+  },
 };
 
 type Props = {
@@ -29,6 +76,69 @@ type Props = {
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+// JSON-LD structured data
+function JsonLd() {
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Shark Human Alliance",
+    url: "https://sharkhumanalliance.com",
+    logo: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.png",
+    description:
+      "A fictional alliance helping humans and sharks build better relations. Every certificate sale funds real ocean conservation.",
+    email: "sharkhumanalliance@gmail.com",
+  };
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Protected Friend Status Certificate",
+    description:
+      "A personalized, surprisingly official-looking shark protection certificate. The perfect gag gift that funds real ocean conservation.",
+    image: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.png",
+    brand: { "@type": "Brand", name: "Shark Human Alliance" },
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Protected Friend Status",
+        price: "9.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: "https://sharkhumanalliance.com/purchase?tier=protected",
+      },
+      {
+        "@type": "Offer",
+        name: "Non-Snack Recognition",
+        price: "29.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: "https://sharkhumanalliance.com/purchase?tier=nonsnack",
+      },
+      {
+        "@type": "Offer",
+        name: "Shark-Approved Zone",
+        price: "99.00",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: "https://sharkhumanalliance.com/purchase?tier=business",
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+    </>
+  );
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -45,9 +155,22 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
+      <head>
+        <JsonLd />
+        <link rel="alternate" hrefLang="en" href="https://sharkhumanalliance.com/en" />
+        <link rel="alternate" hrefLang="es" href="https://sharkhumanalliance.com/es" />
+        <link rel="alternate" hrefLang="x-default" href="https://sharkhumanalliance.com/en" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-[var(--background)] text-[var(--foreground)] antialiased`}
       >
+        {/* Skip to content — accessibility */}
+        <a
+          href="#main"
+          className="absolute -top-12 left-4 z-[100] rounded-b-lg bg-[var(--brand-dark)] px-4 py-2 text-sm font-semibold text-white transition focus:top-0"
+        >
+          Skip to main content
+        </a>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

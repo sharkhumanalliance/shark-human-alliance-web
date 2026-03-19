@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 type Member = {
   id: string;
@@ -41,6 +41,7 @@ export function RegistryContent() {
   const [members, setMembers] = useState<Member[]>([]);
   const [filter, setFilter] = useState<TierFilter>("all");
   const [loading, setLoading] = useState(true);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/members")
@@ -54,9 +55,23 @@ export function RegistryContent() {
       .catch(() => setLoading(false));
   }, []);
 
+  const copyProfileLink = useCallback((memberId: string) => {
+    const url = `${window.location.origin}/registry?highlight=${memberId}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopiedId(memberId);
+      setTimeout(() => setCopiedId(null), 2000);
+    });
+  }, []);
+
   const filtered = filter === "all"
     ? members
     : members.filter((m) => m.tier === filter);
+
+  // Viral groupings
+  const newestDiplomats = members.slice(0, 3);
+  const nonSnacks = members.filter((m) => m.tier === "nonsnack");
+  const protectedFriends = members.filter((m) => m.tier === "protected");
+  const foundingFriends = members.slice(-5).reverse(); // earliest members
 
   const filters: { key: TierFilter; label: string }[] = [
     { key: "all", label: t("filterAll") },
@@ -123,12 +138,21 @@ export function RegistryContent() {
       <section className="pb-20">
         <div className="mx-auto max-w-6xl px-6">
           {loading ? (
-            <div className="py-20 text-center">
-              <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
+            <div className="py-20 text-center" role="status" aria-live="polite">
+              <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" aria-hidden="true" />
+              <p className="mt-4 text-sm text-[var(--muted)]">Loading diplomats...</p>
             </div>
           ) : filtered.length === 0 ? (
             <div className="py-20 text-center">
-              <p className="text-lg text-[var(--muted)]">{t("emptyState")}</p>
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-sky-50 text-4xl">🦈</div>
+              <p className="mt-6 text-xl font-semibold text-[var(--brand-dark)]">{t("emptyState")}</p>
+              <p className="mt-2 text-sm text-[var(--muted)]">{t("emptyStateFounders")}</p>
+              <a
+                href="/purchase?tier=protected"
+                className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              >
+                {t("joinCtaButton")}
+              </a>
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -153,13 +177,23 @@ export function RegistryContent() {
                           </p>
                         </div>
                       </div>
+                      <button
+                        onClick={() => copyProfileLink(member.id)}
+                        className="shrink-0 rounded-full p-2 text-xs text-[var(--muted)] transition hover:bg-sky-50 hover:text-[var(--brand)]"
+                        title={t("copyLink")}
+                      >
+                        {copiedId === member.id ? "✓" : "🔗"}
+                      </button>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 flex items-center gap-2">
                       <span
                         className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${style.badge}`}
                       >
                         {t(`tierLabels.${member.tier}`)}
+                      </span>
+                      <span className="text-xs text-[var(--muted)]">
+                        {member.id}
                       </span>
                     </div>
 
@@ -176,19 +210,110 @@ export function RegistryContent() {
         </div>
       </section>
 
+      {/* Viral sections — only shown when members exist */}
+      {!loading && members.length > 0 && (
+        <section className="pb-16">
+          <div className="mx-auto max-w-6xl px-6 space-y-12">
+            {/* Newest Diplomats */}
+            {newestDiplomats.length > 0 && (
+              <div>
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-[var(--brand-dark)]">
+                  <span className="text-xl">🆕</span> {t("viralNewest")}
+                </h3>
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                  {newestDiplomats.map((m) => {
+                    const s = TIER_STYLES[m.tier];
+                    return (
+                      <div key={m.id} className={`flex items-center gap-3 rounded-2xl border ${s.border} bg-white p-4`}>
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-sm">
+                          {s.icon}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">{m.name}</p>
+                          <p className="text-xs text-[var(--muted)]">{m.date}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Officially Not Food */}
+            {nonSnacks.length > 0 && (
+              <div>
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-[var(--brand-dark)]">
+                  <span className="text-xl">🚫🍽️</span> {t("viralNotFood")}
+                </h3>
+                <p className="mt-1 text-sm text-[var(--muted)]">{t("viralNotFoodDesc")}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {nonSnacks.map((m) => (
+                    <span key={m.id} className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 border border-orange-100 px-4 py-2 text-sm font-medium text-orange-800">
+                      🚫🍽️ {m.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Wanted: Still Unprotected */}
+            <div className="rounded-[2rem] border-2 border-dashed border-red-200 bg-red-50/30 p-6">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-red-800">
+                <span className="text-xl">🚨</span> {t("viralWanted")}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-red-700/70">
+                {t("viralWantedDesc")}
+              </p>
+              <a
+                href="/purchase?tier=protected&gift=true"
+                className="mt-4 inline-flex items-center justify-center rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+              >
+                {t("viralWantedCta")}
+              </a>
+            </div>
+
+            {/* Founding Friends */}
+            {foundingFriends.length > 0 && (
+              <div>
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-[var(--brand-dark)]">
+                  <span className="text-xl">⭐</span> {t("viralFounders")}
+                </h3>
+                <p className="mt-1 text-sm text-[var(--muted)]">{t("viralFoundersDesc")}</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-5">
+                  {foundingFriends.map((m) => {
+                    const s = TIER_STYLES[m.tier];
+                    return (
+                      <div key={m.id} className="text-center rounded-2xl border border-sky-100 bg-white p-4">
+                        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-200 to-orange-200 text-sm font-bold text-amber-800">
+                          {m.name.charAt(0)}
+                        </div>
+                        <p className="mt-2 truncate text-sm font-semibold text-[var(--brand-dark)]">{m.name}</p>
+                        <span className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${s.badge}`}>
+                          {s.icon}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* Join CTA */}
       <section className="pb-24">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
-            <h2 className="text-3xl font-semibold tracking-tight">
+          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-14 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+            <h2 className="text-3xl font-semibold tracking-tight text-white">
               {t("joinCta")}
             </h2>
-            <div className="mt-6">
+            <div className="mt-8">
               <a
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-orange-500/30 transition hover:bg-[var(--accent-dark)] hover:shadow-xl"
               >
-                {t("joinCtaButton")}
+                🛡️ {t("joinCtaButton")}
               </a>
             </div>
           </div>

@@ -23,13 +23,17 @@ function PurchaseFlowInner() {
   const searchParams = useSearchParams();
 
   const initialTier = (searchParams.get("tier") as Tier) || "protected";
+  const initialName = searchParams.get("name") || "";
+  const initialGift = searchParams.get("gift") === "true";
 
   const [tier, setTier] = useState<Tier>(initialTier);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(initialName);
   const [dedication, setDedication] = useState("");
   const [email, setEmail] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
-  const [isGift, setIsGift] = useState(false);
+  const [giftMessage, setGiftMessage] = useState("");
+  const [giftDeliveryDate, setGiftDeliveryDate] = useState("");
+  const [isGift, setIsGift] = useState(initialGift);
   const [step, setStep] = useState<"form" | "processing" | "success">("form");
   const [memberId, setMemberId] = useState("");
   const [emailSending, setEmailSending] = useState(false);
@@ -356,20 +360,49 @@ function PurchaseFlowInner() {
               />
             </div>
 
-            {/* Recipient email (gift mode) */}
+            {/* Gift fields */}
             {isGift && (
-              <div>
-                <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
-                  {t("recipientEmailLabel")}
-                </label>
-                <input
-                  id="recipientEmail"
-                  type="email"
-                  value={recipientEmail}
-                  onChange={(e) => setRecipientEmail(e.target.value)}
-                  placeholder={t("recipientEmailPlaceholder")}
-                  className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
-                />
+              <div className="space-y-4 rounded-2xl border border-orange-100 bg-orange-50/30 p-5">
+                <p className="text-xs font-semibold uppercase tracking-wider text-orange-700">🎁 Gift details</p>
+                <div>
+                  <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
+                    {t("recipientEmailLabel")}
+                  </label>
+                  <input
+                    id="recipientEmail"
+                    type="email"
+                    value={recipientEmail}
+                    onChange={(e) => setRecipientEmail(e.target.value)}
+                    placeholder={t("recipientEmailPlaceholder")}
+                    className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="giftDeliveryDate" className="text-sm font-semibold text-[var(--brand-dark)]">
+                    Delivery date (optional)
+                  </label>
+                  <input
+                    id="giftDeliveryDate"
+                    type="date"
+                    value={giftDeliveryDate}
+                    onChange={(e) => setGiftDeliveryDate(e.target.value)}
+                    min={new Date().toISOString().split("T")[0]}
+                    className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="giftMessage" className="text-sm font-semibold text-[var(--brand-dark)]">
+                    Personal message (optional)
+                  </label>
+                  <textarea
+                    id="giftMessage"
+                    value={giftMessage}
+                    onChange={(e) => setGiftMessage(e.target.value)}
+                    placeholder="e.g. Happy birthday! Now the sharks know you're off the menu."
+                    rows={3}
+                    className="mt-2 w-full resize-none rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                  />
+                </div>
               </div>
             )}
 
