@@ -1,5 +1,27 @@
 import jsPDF from "jspdf";
 
+/** Cache the seal image as a base64 data URL so we only fetch once. */
+let sealImageCache: string | null = null;
+
+async function loadSealImage(): Promise<string | null> {
+  if (sealImageCache) return sealImageCache;
+  try {
+    const res = await fetch("/seal.png");
+    const blob = await res.blob();
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        sealImageCache = reader.result as string;
+        resolve(sealImageCache);
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
+
 type PageFormat = "a4" | "letter";
 
 type CertificateData = {
@@ -60,7 +82,7 @@ function pickReason(name: string, reasons: string[]): string | null {
   return reasons[Math.abs(hash) % reasons.length];
 }
 
-export function generateCertificatePDF(data: CertificateData): jsPDF {
+export async function generateCertificatePDF(data: CertificateData): Promise<jsPDF> {
   const pageFormat = data.format || "a4";
   const doc = new jsPDF({
     orientation: "portrait",
@@ -170,20 +192,25 @@ export function generateCertificatePDF(data: CertificateData): jsPDF {
   doc.text(data.t.tierName, cx, y + 5, { align: "center" });
   y += 18;
 
-  // ─── Seal (circle) ───
-  doc.setDrawColor(color[0], color[1], color[2]);
-  doc.setLineWidth(0.8);
-  doc.circle(cx, y + 8, 14);
-  doc.setLineWidth(0.3);
-  doc.circle(cx, y + 8, 12);
+  // ─── Seal (image) ───
+  const sealDataUrl = await loadSealImage();
+  const sealSize = 28; // mm
+  if (sealDataUrl) {
+    doc.addImage(sealDataUrl, "PNG", cx - sealSize / 2, y, sealSize, sealSize);
+  } else {
+    // Fallback: draw circles if image can't be loaded
+    doc.setDrawColor(color[0], color[1], color[2]);
+    doc.setLineWidth(0.8);
+    doc.circle(cx, y + sealSize / 2, 14);
+    doc.setLineWidth(0.3);
+    doc.circle(cx, y + sealSize / 2, 12);
+  }
   doc.setTextColor(color[0], color[1], color[2]);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  doc.text("🤝", cx, y + 5, { align: "center" });
   doc.setFontSize(3.5);
+  doc.setFont("helvetica", "bold");
   const sealLines = doc.splitTextToSize(data.t.sealText, 20);
-  doc.text(sealLines, cx, y + 10, { align: "center" });
-  y += 30;
+  doc.text(sealLines, cx, y + sealSize + 3, { align: "center" });
+  y += sealSize + 8;
 
   // ─── Single reason (matching preview) ───
   const reason = data.selectedReason || pickReason(data.name, data.t.reasons);

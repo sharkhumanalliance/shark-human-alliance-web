@@ -199,22 +199,16 @@ export const CertificatePreview: React.FC<CertificatePreviewProps> = ({
             </div>
           </div>
 
-          {/* Seal — centered circle matching PDF */}
+          {/* Seal — mascot image */}
           <div className="flex flex-col items-center">
-            <div
-              className="rounded-full flex items-center justify-center"
-              style={{
-                width: '18%',
-                aspectRatio: '1',
-                border: `2px solid ${colors.accentColor}`,
-                position: 'relative',
-              }}
-            >
-              <div
-                className="absolute inset-[8%] rounded-full"
-                style={{ border: `1px solid ${colors.accentColor}` }}
+            <div className="relative" style={{ width: '22%' }}>
+              <Image
+                src="/seal.png"
+                alt="SHA Seal"
+                width={200}
+                height={200}
+                className="w-full h-auto"
               />
-              <span className="text-lg">🤝</span>
             </div>
             <p
               className="text-center text-[6px] sm:text-[7px] font-bold uppercase tracking-widest mt-1 max-w-[40%]"

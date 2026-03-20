@@ -160,10 +160,10 @@ function SuccessContentInner() {
     return reasons[Math.abs(hash) % reasons.length];
   }
 
-  function handleDownloadCertificate(format: "a4" | "letter" = pageFormat) {
+  async function handleDownloadCertificate(format: "a4" | "letter" = pageFormat) {
     if (!member) return;
     const certT = getCertTranslations(member.tier);
-    const doc = generateCertificatePDF({
+    const doc = await generateCertificatePDF({
       name: member.name,
       tier: member.tier,
       date: new Date(member.date).toLocaleDateString("en-US", {
