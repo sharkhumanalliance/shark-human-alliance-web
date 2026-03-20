@@ -1,16 +1,5 @@
 import Stripe from "stripe";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  console.warn(
-    "[SHA] STRIPE_SECRET_KEY is not set. Stripe checkout will not work."
-  );
-}
-
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2025-02-24.acacia",
-  typescript: true,
-});
-
 /** Price in cents for each tier */
 export const TIER_PRICES: Record<string, number> = {
   basic: 900,
@@ -26,3 +15,28 @@ export const TIER_NAMES: Record<string, string> = {
   nonsnack: "Non-Snack Recognition",
   business: "Shark-Approved Zone Certification",
 };
+
+/**
+ * Returns a Stripe client instance.
+ * Lazy-initialized to avoid crashing at build time when the secret key
+ * is not available (Vercel only injects runtime env vars, not build-time).
+ */
+let _stripe: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  if (_stripe) return _stripe;
+
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    throw new Error(
+      "[SHA] STRIPE_SECRET_KEY is not set. Cannot initialize Stripe."
+    );
+  }
+
+  _stripe = new Stripe(key, {
+    apiVersion: "2025-02-24.acacia",
+    typescript: true,
+  });
+
+  return _stripe;
+}

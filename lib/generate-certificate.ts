@@ -262,7 +262,7 @@ export async function generateCertificatePDF(data: CertificateData): Promise<jsP
   // ─── Bottom section (pinned from bottom) ───
 
   // Date + Registry (two columns)
-  const bottomStart = H - 55;
+  const bottomStart = H - 60;
   const leftCol = W / 4;
   const rightCol = (W * 3) / 4;
 
@@ -317,7 +317,7 @@ export async function generateCertificatePDF(data: CertificateData): Promise<jsP
   doc.setFontSize(5);
   doc.setFont("helvetica", "italic");
   const disclaimerLines = doc.splitTextToSize(data.t.disclaimer, W - 40);
-  doc.text(disclaimerLines, cx, H - 14, { align: "center" });
+  doc.text(disclaimerLines, cx, H - 18, { align: "center" });
 
   return doc;
 }

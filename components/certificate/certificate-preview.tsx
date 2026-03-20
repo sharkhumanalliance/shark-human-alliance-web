@@ -149,7 +149,7 @@ export const CertificatePreview: React.FC<CertificatePreviewProps> = ({
         <div className="absolute bottom-[3%] right-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
 
         {/* Content — matches PDF layout order and proportions */}
-        <div className="relative z-10 flex flex-col h-full px-[10%] py-[8%]" style={{ gap: '2.5%' }}>
+        <div className="relative z-10 flex flex-col h-full px-[11%] py-[9%]" style={{ gap: '2.5%' }}>
 
           {/* Header */}
           <div className="text-center">

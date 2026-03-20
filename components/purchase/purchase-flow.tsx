@@ -404,12 +404,17 @@ function PurchaseFlowInner() {
               </label>
               <input
                 id="promoCode"
+                name="promo_code_nofill"
                 type="text"
                 value={promoCode}
                 onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                 placeholder={t("promoCodePlaceholder")}
-                autoComplete="off"
+                autoComplete="new-password"
+                autoCorrect="off"
+                autoCapitalize="off"
                 spellCheck={false}
+                data-form-type="other"
+                data-lpignore="true"
                 className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase"
               />
             </div>

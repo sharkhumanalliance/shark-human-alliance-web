@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import { resend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
 import fs from "fs/promises";
 import path from "path";
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing signature" }, { status: 400 });
     }
 
-    event = stripe.webhooks.constructEvent(rawBody, sig, WEBHOOK_SECRET);
+    event = getStripe().webhooks.constructEvent(rawBody, sig, WEBHOOK_SECRET);
   } catch (err) {
     console.error("[SHA Webhook] Signature verification failed:", err);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
+import { getStripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
 import fs from "fs/promises";
 import path from "path";
 
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
     const priceInCents = TIER_PRICES[tier];
     const tierName = TIER_NAMES[tier];
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       payment_method_types: ["card"],
       customer_email: email,
       allow_promotion_codes: true,
