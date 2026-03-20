@@ -5,6 +5,32 @@ import { useState } from "react";
 import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 
+function useCertTranslations() {
+  const ct = useTranslations("certificate");
+  return {
+    header: ct("header"),
+    subtitle: ct("subtitle"),
+    certTitle: ct("certTitle"),
+    certifies: ct("certifies"),
+    statusLabel: ct("statusLabel"),
+    tierName: ct("tierNames.protected"),
+    body: ct("body"),
+    reasonsLabel: ct("reasonsLabel"),
+    reasons: Array.from({ length: 8 }, (_, i) => { try { return ct(`reasons.${i}`); } catch { return ''; } }).filter(Boolean),
+    privileges: ct("privileges"),
+    validityNote: ct("validityNote"),
+    sig1Name: ct("sig1Name"),
+    sig1Title: ct("sig1Title"),
+    sig2Name: ct("sig2Name"),
+    sig2Title: ct("sig2Title"),
+    sealText: ct("sealText"),
+    dedicationLabel: ct("dedication"),
+    dateLabel: ct("dateLabel"),
+    registryIdLabel: ct("registryId"),
+    disclaimer: ct("disclaimer"),
+  };
+}
+
 const PARTNERS = [
   { i: 1, icon: "🦈", url: "https://www.sharktrust.org" },
   { i: 2, icon: "🌊", url: "https://oceana.org" },
@@ -14,6 +40,7 @@ const PARTNERS = [
 
 export function HomeContent() {
   const t = useTranslations("home");
+  const certT = useCertTranslations();
   const [previewName, setPreviewName] = useState("");
 
   const reviews = Array.from({ length: 5 }, (_, i) => ({
@@ -25,18 +52,18 @@ export function HomeContent() {
   return (
     <>
       {/* 1 — Value prop + impact hook */}
-      <section className="py-14 bg-white">
+      <section className="py-10 bg-white">
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
               {t("valueHook.label")}
             </p>
-            <h2 className="mx-auto mt-3 max-w-2xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+            <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("valueHook.title")}
             </h2>
           </div>
 
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+          <div className="mt-8 grid gap-6 sm:grid-cols-3">
             {[1, 2, 3].map((i) => (
               <div key={i} className="text-center">
                 <span className="text-4xl">{t(`valueHook.point${i}Icon`)}</span>
@@ -75,10 +102,10 @@ export function HomeContent() {
       </div>
 
       {/* 2 — Certificate Preview (interactive) */}
-      <section id="certificate-preview" className="py-12 bg-gradient-to-b from-sky-50/50 to-white">
+      <section id="certificate-preview" className="py-10 bg-gradient-to-b from-sky-50/50 to-white">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+          <div className="text-center max-w-lg mx-auto">
+            <p className="text-base md:text-lg font-medium text-[var(--brand-dark)] leading-relaxed">
               {t("about.certPreviewLabel")}
             </p>
           </div>
@@ -102,21 +129,8 @@ export function HomeContent() {
               name={previewName.trim() || t("about.certName")}
               tier="protected"
               date={new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-              registryId="SHA-XXXX"
-              t={{
-                header: "SHARK HUMAN ALLIANCE",
-                subtitle: "Office of Interspecies Diplomatic Affairs",
-                certTitle: t("about.certTitle"),
-                certifies: t("about.certCertifies"),
-                statusLabel: "has been granted the status of",
-                tierName: "Protected Friend",
-                body: t("about.certText"),
-                dedicationLabel: "",
-                dateLabel: "Date",
-                registryIdLabel: "Registry ID",
-                seal: "OFFICIAL SEAL",
-                footer: "Approved by the Department of Symbolic Marine Affairs. No sharks were harmed or consulted in the making of this document.",
-              }}
+              registryId="SHA-XXXX-DIP"
+              t={certT}
             />
           </div>
 
@@ -139,7 +153,7 @@ export function HomeContent() {
       </section>
 
       {/* 3 — Membership tiers (dark) */}
-      <section id="membership" className="py-14 bg-[var(--brand-dark)]">
+      <section id="membership" className="py-10 bg-[var(--brand-dark)]">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-300">
@@ -218,31 +232,31 @@ export function HomeContent() {
       </section>
 
       {/* 4 — Stats */}
-      <section className="py-14 bg-white">
+      <section className="py-10 bg-white">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             <div className="text-center">
-              <p className="text-5xl font-bold text-[var(--brand-dark)] md:text-6xl">{t("realImpact.stat1Value")}</p>
-              <p className="mt-3 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat1Label")}</p>
+              <p className="text-4xl font-bold text-[var(--brand-dark)] md:text-5xl">{t("realImpact.stat1Value")}</p>
+              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat1Label")}</p>
             </div>
             <div className="text-center">
-              <p className="text-5xl font-bold text-[var(--accent)] md:text-6xl">{t("realImpact.stat2Value")}</p>
-              <p className="mt-3 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat2Label")}</p>
+              <p className="text-4xl font-bold text-[var(--accent)] md:text-5xl">{t("realImpact.stat2Value")}</p>
+              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat2Label")}</p>
             </div>
             <div className="text-center">
-              <p className="text-5xl font-bold text-[var(--brand-dark)] md:text-6xl">{t("realImpact.stat3Value")}</p>
-              <p className="mt-3 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat3Label")}</p>
+              <p className="text-4xl font-bold text-[var(--brand-dark)] md:text-5xl">{t("realImpact.stat3Value")}</p>
+              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat3Label")}</p>
             </div>
             <div className="text-center">
-              <p className="text-5xl font-bold text-teal-600 md:text-6xl">{t("realImpact.stat4Value")}</p>
-              <p className="mt-3 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat4Label")}</p>
+              <p className="text-4xl font-bold text-teal-600 md:text-5xl">{t("realImpact.stat4Value")}</p>
+              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat4Label")}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* 5 — Impact teaser */}
-      <section id="real-impact" className="py-12">
+      <section id="real-impact" className="py-10">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
             {t("realImpact.label")}
@@ -282,7 +296,7 @@ export function HomeContent() {
       </section>
 
       {/* 6 — Gifting */}
-      <section className="py-12 bg-gradient-to-b from-white to-orange-50/30">
+      <section className="py-10 bg-gradient-to-b from-white to-orange-50/30">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-700">
@@ -307,12 +321,18 @@ export function HomeContent() {
             ))}
           </div>
 
-          <div className="mt-8 text-center">
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
               href="/purchase?tier=protected&gift=true"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)]"
             >
               🎁 {t("giftingSection.cta")}
+            </a>
+            <a
+              href="/wanted"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-red-200 bg-white px-8 py-4 text-base font-semibold text-red-700 transition hover:border-red-300 hover:bg-red-50"
+            >
+              🚨 {t("giftingSection.wantedCta")}
             </a>
           </div>
         </div>
@@ -360,7 +380,7 @@ export function HomeContent() {
       </section>
 
       {/* 8 — Mini FAQ (3 questions + link) */}
-      <section id="faq" className="py-12">
+      <section id="faq" className="py-10">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">

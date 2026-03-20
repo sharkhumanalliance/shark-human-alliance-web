@@ -9,6 +9,8 @@ type Member = {
   tier: "basic" | "protected" | "nonsnack" | "business";
   date: string;
   dedication: string;
+  referralCode?: string;
+  referralCount?: number;
 };
 
 type TierFilter = "all" | "basic" | "protected" | "nonsnack" | "business";
@@ -27,7 +29,7 @@ const TIER_STYLES: Record<string, { badge: string; border: string; icon: string 
   nonsnack: {
     badge: "bg-orange-100 text-orange-800",
     border: "border-orange-100",
-    icon: "🚫🍽️",
+    icon: "🚫",
   },
   business: {
     badge: "bg-indigo-100 text-indigo-800",
@@ -72,6 +74,10 @@ export function RegistryContent() {
   const nonSnacks = members.filter((m) => m.tier === "nonsnack");
   const protectedFriends = members.filter((m) => m.tier === "protected");
   const foundingFriends = members.slice(-5).reverse(); // earliest members
+  const topRecruiters = [...members]
+    .filter((m) => (m.referralCount || 0) > 0)
+    .sort((a, b) => (b.referralCount || 0) - (a.referralCount || 0))
+    .slice(0, 5);
 
   const filters: { key: TierFilter; label: string }[] = [
     { key: "all", label: t("filterAll") },
@@ -84,13 +90,13 @@ export function RegistryContent() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 lg:py-24">
+      <section className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-3xl">
-            <h1 className="text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+            <h1 className="text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
-            <p className="mt-4 text-xl text-[var(--muted)]">
+            <p className="mt-3 text-lg text-[var(--muted)]">
               {t("subtitle")}
             </p>
             <p className="mt-4 text-sm text-[var(--muted)]">
@@ -135,17 +141,17 @@ export function RegistryContent() {
       </section>
 
       {/* Members grid */}
-      <section className="pb-20">
+      <section className="pb-14">
         <div className="mx-auto max-w-6xl px-6">
           {loading ? (
-            <div className="py-20 text-center" role="status" aria-live="polite">
+            <div className="py-14 text-center" role="status" aria-live="polite">
               <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" aria-hidden="true" />
-              <p className="mt-4 text-sm text-[var(--muted)]">Loading diplomats...</p>
+              <p className="mt-4 text-sm text-[var(--muted)]">{t("loadingText")}</p>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="py-20 text-center">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-sky-50 text-4xl">🦈</div>
-              <p className="mt-6 text-xl font-semibold text-[var(--brand-dark)]">{t("emptyState")}</p>
+            <div className="py-14 text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sky-50 text-3xl">🦈</div>
+              <p className="mt-4 text-lg font-semibold text-[var(--brand-dark)]">{t("emptyState")}</p>
               <p className="mt-2 text-sm text-[var(--muted)]">{t("emptyStateFounders")}</p>
               <a
                 href="/purchase?tier=protected"
@@ -243,13 +249,13 @@ export function RegistryContent() {
             {nonSnacks.length > 0 && (
               <div>
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-[var(--brand-dark)]">
-                  <span className="text-xl">🚫🍽️</span> {t("viralNotFood")}
+                  <span className="text-xl">🚫</span> {t("viralNotFood")}
                 </h3>
                 <p className="mt-1 text-sm text-[var(--muted)]">{t("viralNotFoodDesc")}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {nonSnacks.map((m) => (
                     <span key={m.id} className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 border border-orange-100 px-4 py-2 text-sm font-medium text-orange-800">
-                      🚫🍽️ {m.name}
+                      🚫 {m.name}
                     </span>
                   ))}
                 </div>
@@ -264,12 +270,20 @@ export function RegistryContent() {
               <p className="mt-2 text-sm leading-6 text-red-700/70">
                 {t("viralWantedDesc")}
               </p>
-              <a
-                href="/purchase?tier=protected&gift=true"
-                className="mt-4 inline-flex items-center justify-center rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
-              >
-                {t("viralWantedCta")}
-              </a>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a
+                  href="/purchase?tier=protected&gift=true"
+                  className="inline-flex items-center justify-center rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+                >
+                  {t("viralWantedCta")}
+                </a>
+                <a
+                  href="/wanted"
+                  className="inline-flex items-center justify-center rounded-full border-2 border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-700 transition hover:bg-red-50"
+                >
+                  🚨 {t("viralWantedPoster")}
+                </a>
+              </div>
             </div>
 
             {/* Founding Friends */}
@@ -297,14 +311,43 @@ export function RegistryContent() {
                 </div>
               </div>
             )}
+
+            {/* Top Recruiters — VIP */}
+            {topRecruiters.length > 0 && (
+              <div className="rounded-[2rem] border-2 border-amber-200 bg-gradient-to-b from-amber-50/50 to-white p-6">
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-amber-800">
+                  <span className="text-xl">🏆</span> {t("viralRecruiters")}
+                </h3>
+                <p className="mt-1 text-sm text-amber-700/70">{t("viralRecruitersDesc")}</p>
+                <div className="mt-4 space-y-3">
+                  {topRecruiters.map((m, idx) => (
+                    <div key={m.id} className="flex items-center gap-4 rounded-2xl border border-amber-100 bg-white p-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-orange-300 text-sm font-bold text-white">
+                        #{idx + 1}
+                      </div>
+                      <div className="min-w-0 flex-grow">
+                        <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">{m.name}</p>
+                        <p className="text-xs text-[var(--muted)]">{m.referralCount} {t("viralRecruitersCount")}</p>
+                      </div>
+                      <a
+                        href="/career"
+                        className="shrink-0 text-xs font-semibold text-amber-700 hover:text-amber-900"
+                      >
+                        {t("viralRecruitersRank")} →
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
 
       {/* Join CTA */}
-      <section className="pb-24">
+      <section className="pb-16">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-14 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-10 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight text-white">
               {t("joinCta")}
             </h2>
@@ -321,9 +364,9 @@ export function RegistryContent() {
       </section>
 
       {/* Disclaimer */}
-      <section className="pb-20">
+      <section className="pb-14">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-8">
+          <div className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-6">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("disclaimerTitle")}
             </p>

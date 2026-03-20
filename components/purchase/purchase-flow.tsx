@@ -1,9 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, useRef, Suspense } from "react";
-import { generateCertificatePDF } from "@/lib/generate-certificate";
+import { useState, Suspense } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
@@ -21,10 +20,13 @@ function PurchaseFlowInner() {
   const t = useTranslations("purchase");
   const ct = useTranslations("certificate");
   const searchParams = useSearchParams();
+  const locale = useLocale();
 
   const initialTier = (searchParams.get("tier") as Tier) || "protected";
   const initialName = searchParams.get("name") || "";
   const initialGift = searchParams.get("gift") === "true";
+  const referredByCode = searchParams.get("ref") || "";
+  const wasCanceled = searchParams.get("canceled") === "true";
 
   const [tier, setTier] = useState<Tier>(initialTier);
   const [name, setName] = useState(initialName);
@@ -34,10 +36,9 @@ function PurchaseFlowInner() {
   const [giftMessage, setGiftMessage] = useState("");
   const [giftDeliveryDate, setGiftDeliveryDate] = useState("");
   const [isGift, setIsGift] = useState(initialGift);
-  const [step, setStep] = useState<"form" | "processing" | "success">("form");
-  const [memberId, setMemberId] = useState("");
-  const [emailSending, setEmailSending] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [error, setError] = useState("");
 
   const tierPrices: Record<Tier, string> = {
     basic: "$9",
@@ -49,25 +50,92 @@ function PurchaseFlowInner() {
   const tierIcons: Record<Tier, string> = {
     basic: "🐟",
     protected: "🛡️",
-    nonsnack: "🚫🍽️",
+    nonsnack: "🚫",
     business: "🏢",
   };
 
   function getCertTranslations() {
-    const tierKey = tier === "business" ? "business" : tier;
+    const tierKey = tier === "basic" ? "protected" : tier;
+
+    function readReasons(prefix: string, max: number) {
+      const arr: string[] = [];
+      for (let i = 0; i < max; i++) {
+        try { arr.push(ct(`${prefix}.${i}`)); } catch { break; }
+      }
+      return arr;
+    }
+
+    if (tier === "business") {
+      return {
+        header: ct("businessHeader"),
+        subtitle: ct("businessSubtitle"),
+        certTitle: ct("businessCertTitle"),
+        certifies: ct("certifies"),
+        statusLabel: ct("statusLabel"),
+        tierName: ct("tierNames.business"),
+        body: ct("businessBody"),
+        reasonsLabel: ct("businessReasonsLabel"),
+        reasons: readReasons("businessReasons", 10),
+        privileges: ct("businessPrivileges"),
+        validityNote: ct("businessValidityNote"),
+        sig1Name: ct("sig1Name"),
+        sig1Title: ct("sig1Title"),
+        sig2Name: ct("sig2Name"),
+        sig2Title: ct("sig2Title"),
+        sealText: ct("sealText"),
+        dedicationLabel: ct("dedication"),
+        dateLabel: ct("dateLabel"),
+        registryIdLabel: ct("registryId"),
+        disclaimer: ct("businessDisclaimer"),
+      };
+    }
+
+    if (tier === "nonsnack") {
+      return {
+        header: ct("header"),
+        subtitle: ct("nonsnackSubtitle"),
+        certTitle: ct("nonsnackCertTitle"),
+        certifies: ct("certifies"),
+        statusLabel: ct("statusLabel"),
+        tierName: ct("tierNames.nonsnack"),
+        body: ct("nonsnackBody"),
+        reasonsLabel: ct("nonsnackReasonsLabel"),
+        reasons: readReasons("nonsnackReasons", 10),
+        privileges: ct("nonsnackPrivileges"),
+        validityNote: ct("validityNote"),
+        sig1Name: ct("sig1Name"),
+        sig1Title: ct("sig1Title"),
+        sig2Name: ct("sig2Name"),
+        sig2Title: ct("sig2Title"),
+        sealText: ct("sealText"),
+        dedicationLabel: ct("dedication"),
+        dateLabel: ct("dateLabel"),
+        registryIdLabel: ct("registryId"),
+        disclaimer: ct("nonsnackDisclaimer"),
+      };
+    }
+
     return {
       header: ct("header"),
-      subtitle: tier === "business" ? ct("businessSubtitle") : ct("subtitle"),
-      certTitle: tier === "business" ? ct("businessCertTitle") : ct("certTitle"),
+      subtitle: ct("subtitle"),
+      certTitle: ct("certTitle"),
       certifies: ct("certifies"),
       statusLabel: ct("statusLabel"),
       tierName: ct(`tierNames.${tierKey}`),
-      body: tier === "business" ? ct("businessBody") : ct("body"),
+      body: ct("body"),
+      reasonsLabel: ct("reasonsLabel"),
+      reasons: readReasons("reasons", 10),
+      privileges: ct("privileges"),
+      validityNote: ct("validityNote"),
+      sig1Name: ct("sig1Name"),
+      sig1Title: ct("sig1Title"),
+      sig2Name: ct("sig2Name"),
+      sig2Title: ct("sig2Title"),
+      sealText: ct("sealText"),
       dedicationLabel: ct("dedication"),
       dateLabel: ct("dateLabel"),
       registryIdLabel: ct("registryId"),
-      seal: ct("seal"),
-      footer: tier === "business" ? ct("businessFooter") : ct("footer"),
+      disclaimer: ct("disclaimer"),
     };
   }
 
@@ -75,68 +143,42 @@ function PurchaseFlowInner() {
     e.preventDefault();
     if (!name.trim() || !email.trim()) return;
 
-    setStep("processing");
+    setIsRedirecting(true);
+    setError("");
 
     try {
-      const res = await fetch("/api/members", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), tier, dedication: dedication.trim() }),
-      });
-
-      if (!res.ok) throw new Error("Failed to register");
-
-      const member = await res.json();
-      setMemberId(member.id);
-
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setStep("success");
-    } catch {
-      setMemberId(`m-${Date.now()}`);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setStep("success");
-    }
-  }
-
-  function handleDownloadCertificate() {
-    const doc = generateCertificatePDF({
-      name: name.trim(),
-      tier,
-      date: new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-      dedication: dedication.trim(),
-      registryId: memberId.toUpperCase(),
-      t: getCertTranslations(),
-    });
-
-    doc.save(`SHA-Certificate-${name.trim().replace(/\s+/g, "-")}.pdf`);
-  }
-
-  async function handleSendEmail() {
-    const targetEmail = isGift && recipientEmail ? recipientEmail : email;
-    if (!targetEmail) return;
-
-    setEmailSending(true);
-    try {
-      await fetch("/api/send-certificate", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          to: targetEmail,
-          name: name.trim(),
           tier,
+          name: name.trim(),
           dedication: dedication.trim(),
-          memberId,
+          email: email.trim(),
+          isGift,
+          recipientEmail: recipientEmail.trim(),
+          referredBy: referredByCode || undefined,
+          locale,
+          promoCode: promoCode.trim() || undefined,
         }),
       });
-    } catch {
-      // Silently fail for prototype
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Checkout failed");
+      }
+
+      const { url } = await res.json();
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
+    } catch (err) {
+      console.error("[SHA] Checkout error:", err);
+      setError(t("checkoutError"));
+      setIsRedirecting(false);
     }
-    setEmailSending(false);
-    setEmailSent(true);
   }
 
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -145,102 +187,51 @@ function PurchaseFlowInner() {
     day: "numeric",
   });
 
-  if (step === "processing") {
+  if (isRedirecting) {
     return (
       <section className="py-32">
         <div className="mx-auto max-w-lg px-6 text-center">
           <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
-            {t("processing")}
+            {t("redirecting")}
           </p>
-        </div>
-      </section>
-    );
-  }
-
-  if (step === "success") {
-    return (
-      <section className="py-20">
-        <div className="mx-auto max-w-4xl px-6">
-          <div className="text-center">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-teal-100 text-4xl">
-              🦈
-            </div>
-            <h1 className="mt-6 text-3xl font-semibold text-[var(--brand-dark)]">
-              {t("successTitle")}
-            </h1>
-            <p className="mt-3 text-lg text-[var(--muted)]">
-              {t("successText")}
-            </p>
-          </div>
-
-          {/* Certificate visual preview */}
-          <div className="mt-10">
-            <CertificatePreview
-              name={name.trim()}
-              tier={tier}
-              dedication={dedication.trim()}
-              date={currentDate}
-              registryId={memberId.toUpperCase()}
-              t={getCertTranslations()}
-            />
-          </div>
-
-          {/* Actions */}
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <button
-              onClick={handleDownloadCertificate}
-              className="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-            >
-              {t("downloadCert")}
-            </button>
-
-            {!emailSent ? (
-              <button
-                onClick={handleSendEmail}
-                disabled={emailSending}
-                className="inline-flex items-center justify-center rounded-full border border-teal-200 bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-teal-50 disabled:opacity-50"
-              >
-                {emailSending ? t("sendingEmail") : t("sendEmail")}
-              </button>
-            ) : (
-              <span className="inline-flex items-center gap-2 rounded-full bg-teal-50 px-6 py-4 text-base font-semibold text-teal-700">
-                ✓ {t("emailSentConfirm")}
-              </span>
-            )}
-
-            <a
-              href="/registry"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
-            >
-              {t("viewRegistry")}
-            </a>
-          </div>
-
-          <div className="mt-4 text-center">
-            <a
-              href="/"
-              className="text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
-            >
-              {t("backHome")}
-            </a>
-          </div>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-20 lg:py-24">
+    <section className="py-14 lg:py-16">
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center">
-          <h1 className="text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+          <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
             {t("title")}
           </h1>
-          <p className="mt-4 text-lg text-[var(--muted)]">
+          <p className="mt-3 text-lg text-[var(--muted)]">
             {t("subtitle")}
           </p>
         </div>
+
+        {/* Canceled notice */}
+        {wasCanceled && (
+          <div className="mt-6 mx-auto max-w-md rounded-2xl border border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm text-amber-800">
+            {t("canceledNotice")}
+          </div>
+        )}
+
+        {/* Referral badge */}
+        {referredByCode && (
+          <div className="mt-6 mx-auto max-w-md rounded-full border border-teal-200 bg-teal-50/50 px-5 py-3 text-center text-sm text-teal-700">
+            🤝 {t("referredByBadge")}
+          </div>
+        )}
+
+        {/* Error */}
+        {error && (
+          <div className="mt-6 mx-auto max-w-md rounded-2xl border border-red-200 bg-red-50/50 px-5 py-4 text-center text-sm text-red-700">
+            {error}
+          </div>
+        )}
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.1fr]">
           {/* Form */}
@@ -363,7 +354,7 @@ function PurchaseFlowInner() {
             {/* Gift fields */}
             {isGift && (
               <div className="space-y-4 rounded-2xl border border-orange-100 bg-orange-50/30 p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-orange-700">🎁 Gift details</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-orange-700">🎁 {t("giftDetailsTitle")}</p>
                 <div>
                   <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
                     {t("recipientEmailLabel")}
@@ -379,7 +370,7 @@ function PurchaseFlowInner() {
                 </div>
                 <div>
                   <label htmlFor="giftDeliveryDate" className="text-sm font-semibold text-[var(--brand-dark)]">
-                    Delivery date (optional)
+                    {t("giftDeliveryDateLabel")}
                   </label>
                   <input
                     id="giftDeliveryDate"
@@ -392,13 +383,13 @@ function PurchaseFlowInner() {
                 </div>
                 <div>
                   <label htmlFor="giftMessage" className="text-sm font-semibold text-[var(--brand-dark)]">
-                    Personal message (optional)
+                    {t("giftMessageLabel")}
                   </label>
                   <textarea
                     id="giftMessage"
                     value={giftMessage}
                     onChange={(e) => setGiftMessage(e.target.value)}
-                    placeholder="e.g. Happy birthday! Now the sharks know you're off the menu."
+                    placeholder={t("giftMessagePlaceholder")}
                     rows={3}
                     className="mt-2 w-full resize-none rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                   />
@@ -406,23 +397,45 @@ function PurchaseFlowInner() {
               </div>
             )}
 
-            {/* Payment placeholder */}
-            <div className="rounded-2xl border-2 border-dashed border-sky-200 bg-[var(--surface-soft)] p-6">
-              <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                {t("paymentTitle")}
-              </p>
-              <p className="mt-2 text-sm text-[var(--muted)]">
-                {t("paymentPlaceholder")}
-              </p>
+            {/* Promo code */}
+            <div>
+              <label htmlFor="promoCode" className="text-sm font-semibold text-[var(--brand-dark)]">
+                {t("promoCodeLabel")}
+              </label>
+              <input
+                id="promoCode"
+                type="text"
+                value={promoCode}
+                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                placeholder={t("promoCodePlaceholder")}
+                autoComplete="off"
+                spellCheck={false}
+                className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase"
+              />
+            </div>
+
+            {/* Stripe secure payment note */}
+            <div className="flex items-center gap-3 rounded-2xl border border-teal-100 bg-teal-50/30 p-4">
+              <span className="text-lg">🔒</span>
+              <div>
+                <p className="text-sm font-semibold text-[var(--brand-dark)]">
+                  {t("stripeSecure")}
+                </p>
+                <p className="mt-0.5 text-xs text-[var(--muted)]">
+                  {t("stripeSecureNote")}
+                </p>
+              </div>
             </div>
 
             {/* Submit */}
             <button
               type="submit"
-              disabled={!name.trim() || !email.trim()}
+              disabled={!name.trim() || !email.trim() || isRedirecting}
               className="w-full rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {t("submitButton")}
+              {promoCode.trim()
+                ? t("submitButtonPromo")
+                : `${t("submitButton")} — ${tierPrices[tier]}`}
             </button>
           </form>
 

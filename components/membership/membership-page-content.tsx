@@ -19,22 +19,22 @@ export function MembershipPageContent() {
 
   return (
     <>
-      <section className="relative overflow-hidden py-20 lg:py-24">
+      <section className="relative overflow-hidden py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-3xl">
             <div className="inline-flex rounded-full border border-sky-200 bg-white px-4 py-2 text-sm font-medium text-[var(--brand-dark)] shadow-sm">
               {t("badge")}
             </div>
 
-            <h1 className="mt-6 max-w-3xl text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+            <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl">
+            <p className="mt-4 max-w-2xl text-lg leading-7 text-[var(--muted)]">
               {t("description")}
             </p>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <a
                 href="#membership"
                 className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
@@ -57,7 +57,7 @@ export function MembershipPageContent() {
         </div>
       </section>
 
-      <section id="membership" className="py-20">
+      <section id="membership" className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -97,7 +97,7 @@ export function MembershipPageContent() {
         </div>
       </section>
 
-      <section id="comparison" className="py-20">
+      <section id="comparison" className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -135,7 +135,7 @@ export function MembershipPageContent() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid gap-6 md:grid-cols-3">
             {[
@@ -159,7 +159,7 @@ export function MembershipPageContent() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -175,7 +175,7 @@ export function MembershipPageContent() {
         </div>
       </section>
 
-      <section id="faq" className="py-20">
+      <section id="faq" className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -205,7 +205,7 @@ export function MembershipPageContent() {
       </section>
 
       {/* Business certification */}
-      <section className="py-20">
+      <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="rounded-[2.25rem] border border-indigo-200 bg-gradient-to-b from-indigo-50 to-white p-8 shadow-[0_18px_60px_rgba(25,87,138,0.08)] sm:p-12">
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
@@ -254,7 +254,7 @@ export function MembershipPageContent() {
         </div>
       </section>
 
-      <section id="join" className="pb-24 pt-8">
+      <section id="join" className="pb-16 pt-4">
         <div className="mx-auto max-w-5xl px-6">
           <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">

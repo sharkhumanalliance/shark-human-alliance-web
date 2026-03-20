@@ -61,7 +61,7 @@ const getTierEmoji = (tier: Tier): string => {
     case 'protected':
       return '🛡️';
     case 'nonsnack':
-      return '🚫🍽️';
+      return '🚫';
   }
 };
 

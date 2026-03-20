@@ -13,16 +13,16 @@ export function FaqContent() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 lg:py-24">
+      <section className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("label")}
             </p>
-            <h1 className="mt-3 text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
-            <p className="mt-4 text-xl leading-8 text-[var(--muted)]">
+            <p className="mt-3 text-lg leading-7 text-[var(--muted)]">
               {t("subtitle")}
             </p>
           </div>
@@ -30,7 +30,7 @@ export function FaqContent() {
       </section>
 
       {/* Questions */}
-      <section className="pb-20">
+      <section className="pb-14">
         <div className="mx-auto max-w-4xl px-6">
           <div className="space-y-6">
             {items.map((item) => (
@@ -51,7 +51,7 @@ export function FaqContent() {
       </section>
 
       {/* CTA */}
-      <section className="pb-24">
+      <section className="pb-16">
         <div className="mx-auto max-w-5xl px-6">
           <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">

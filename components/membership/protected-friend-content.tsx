@@ -14,18 +14,18 @@ export function ProtectedFriendContent() {
 
   return (
     <>
-      <section className="py-20 lg:py-24">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+      <section className="py-14 lg:py-16">
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <div className="inline-flex rounded-full border border-teal-200 bg-white px-4 py-2 text-sm font-medium text-[var(--brand-dark)] shadow-sm">
               {t("badge")}
             </div>
 
-            <h1 className="mt-6 max-w-3xl text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+            <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl">
+            <p className="mt-4 max-w-2xl text-lg leading-7 text-[var(--muted)]">
               {t("description")}
             </p>
 
@@ -82,7 +82,7 @@ export function ProtectedFriendContent() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
@@ -118,7 +118,7 @@ export function ProtectedFriendContent() {
         </div>
       </section>
 
-      <section id="buy" className="py-20">
+      <section id="buy" className="py-14">
         <div className="mx-auto max-w-5xl px-6">
           <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
@@ -149,7 +149,7 @@ export function ProtectedFriendContent() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">

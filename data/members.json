@@ -61,5 +61,34 @@
     "tier": "nonsnack",
     "date": "2026-03-16",
     "dedication": "Nowak"
+  },
+  {
+    "id": "m-1773944028618-jv6j2r",
+    "name": "Ben Jones",
+    "tier": "protected",
+    "date": "2026-03-19",
+    "dedication": "Because you always said 'something touched my foot'"
+  },
+  {
+    "id": "m-1773997862297-867roh",
+    "name": "Luka Tuka",
+    "tier": "nonsnack",
+    "date": "2026-03-20",
+    "dedication": "Officially no longer snack material",
+    "referralCode": "SHA-G6DC",
+    "referralCount": 0,
+    "email": "janko.l@seznam.cz",
+    "stripeSessionId": "promo_1773997862297_4ofh8p"
+  },
+  {
+    "id": "m-1773999483902-ergqyr",
+    "name": "Luka Tuka",
+    "tier": "protected",
+    "date": "2026-03-20",
+    "dedication": "Officially no longer snack material",
+    "referralCode": "SHA-FJTM",
+    "referralCount": 0,
+    "email": "janko.l@seznam.cz",
+    "stripeSessionId": "promo_1773999483902_plsdab"
   }
 ]

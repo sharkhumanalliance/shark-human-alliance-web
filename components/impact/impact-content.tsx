@@ -15,16 +15,16 @@ export function ImpactContent() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 lg:py-24">
+      <section className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
               {t("label")}
             </p>
-            <h1 className="mt-3 text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
-            <p className="mt-4 text-xl leading-8 text-[var(--muted)]">
+            <p className="mt-3 text-lg leading-7 text-[var(--muted)]">
               {t("subtitle")}
             </p>
           </div>
@@ -32,7 +32,7 @@ export function ImpactContent() {
       </section>
 
       {/* Fund split */}
-      <section className="pb-16">
+      <section className="pb-12">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
             {t("splitTitle")}
@@ -76,7 +76,7 @@ export function ImpactContent() {
       </section>
 
       {/* Partner organizations */}
-      <section className="py-16 bg-[var(--surface-soft)]">
+      <section className="py-12 bg-[var(--surface-soft)]">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
             {t("partnersTitle")}
@@ -122,7 +122,7 @@ export function ImpactContent() {
       </section>
 
       {/* How we select partners */}
-      <section className="py-16">
+      <section className="py-12">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
             {t("selectionTitle")}
@@ -146,7 +146,7 @@ export function ImpactContent() {
       </section>
 
       {/* Reporting & Transparency */}
-      <section className="py-16 bg-[var(--brand-dark)]">
+      <section className="py-12 bg-[var(--brand-dark)]">
         <div className="mx-auto max-w-6xl px-6 text-white">
           <h2 className="text-3xl font-semibold tracking-tight">
             {t("reportingTitle")}
@@ -172,7 +172,7 @@ export function ImpactContent() {
       </section>
 
       {/* Pre-first-report notice */}
-      <section className="py-16">
+      <section className="py-12">
         <div className="mx-auto max-w-6xl px-6">
           <div className="rounded-[2rem] border border-orange-200 bg-orange-50/50 p-8">
             <div className="flex items-start gap-4">
@@ -193,7 +193,7 @@ export function ImpactContent() {
       </section>
 
       {/* CTA */}
-      <section className="pb-24">
+      <section className="pb-16">
         <div className="mx-auto max-w-5xl px-6">
           <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">

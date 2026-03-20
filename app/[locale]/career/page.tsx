@@ -1,7 +1,7 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { ImpactContent } from "@/components/impact/impact-content";
+import { CareerContent } from "@/components/career/career-content";
 import type { Metadata } from "next";
 
 type Props = {
@@ -10,24 +10,27 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "seo.impact" });
+  const t = await getTranslations({ locale, namespace: "seo.career" });
   const otherLocale = locale === "en" ? "es" : "en";
   return {
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: `https://sharkhumanalliance.com/${locale}/impact`,
+      canonical: `https://sharkhumanalliance.com/${locale}/career`,
       languages: {
-        [locale]: `/${locale}/impact`,
-        [otherLocale]: `/${otherLocale}/impact`,
+        [locale]: `/${locale}/career`,
+        [otherLocale]: `/${otherLocale}/career`,
       },
     },
-    openGraph: { title: t("title"), description: t("description"), type: "website", images: [{ url: "/mascots/finnley-luna-hero.png", width: 1400, height: 1100 }] },
-    twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/mascots/finnley-luna-hero.png"] },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      type: "website",
+    },
   };
 }
 
-export default async function ImpactPage({ params }: Props) {
+export default async function CareerPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
@@ -35,7 +38,7 @@ export default async function ImpactPage({ params }: Props) {
     <>
       <SiteHeader />
       <main id="main" className="pb-20 md:pb-0">
-        <ImpactContent />
+        <CareerContent />
       </main>
       <SiteFooter />
     </>

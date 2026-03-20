@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
+import Image from 'next/image';
 
 interface CertificatePreviewProps {
   name: string;
@@ -16,26 +17,25 @@ interface CertificatePreviewProps {
     statusLabel: string;
     tierName: string;
     body: string;
+    reasonsLabel: string;
+    reasons: string[];
+    privileges: string;
+    validityNote: string;
+    sig1Name: string;
+    sig1Title: string;
+    sig2Name: string;
+    sig2Title: string;
+    sealText: string;
     dedicationLabel: string;
     dateLabel: string;
     registryIdLabel: string;
-    seal: string;
-    footer: string;
+    disclaimer: string;
   };
 }
 
 const getTierColors = (tier: string) => {
   switch (tier) {
     case 'basic':
-      return {
-        borderColor: '#93c5fd',
-        accentColor: '#2563eb',
-        accentBg: '#eff6ff',
-        sealColor: '#3b82f6',
-        gradientFrom: '#eff6ff',
-        gradientTo: '#ecfeff',
-        sharkOpacity: '0.04',
-      };
     case 'protected':
       return {
         borderColor: '#5eead4',
@@ -68,11 +68,11 @@ const getTierColors = (tier: string) => {
       };
     default:
       return {
-        borderColor: '#93c5fd',
-        accentColor: '#2563eb',
-        accentBg: '#eff6ff',
-        sealColor: '#3b82f6',
-        gradientFrom: '#eff6ff',
+        borderColor: '#5eead4',
+        accentColor: '#0d9488',
+        accentBg: '#f0fdfa',
+        sealColor: '#14b8a6',
+        gradientFrom: '#f0fdfa',
         gradientTo: '#ecfeff',
         sharkOpacity: '0.04',
       };
@@ -87,29 +87,16 @@ const SharkWatermark = ({ color, opacity }: { color: string; opacity: string }) 
     preserveAspectRatio="xMidYMid slice"
     aria-hidden="true"
   >
-    {/* Large centered shark silhouette */}
     <g transform="translate(400, 300) scale(2.2)" opacity={opacity}>
       <path
         d="M-80,0 C-70,-15 -50,-25 -30,-28 C-10,-31 10,-28 25,-20 C35,-15 45,-8 55,-3 C65,2 80,5 95,3 C85,8 70,10 60,8 C50,12 40,15 30,14 C20,13 10,10 0,8 C-10,6 -25,8 -35,12 C-45,16 -55,12 -65,8 C-75,4 -85,5 -80,0Z"
         fill={color}
       />
-      {/* Dorsal fin */}
-      <path
-        d="M-10,-28 C-5,-45 5,-50 10,-28"
-        fill={color}
-      />
-      {/* Tail fin */}
+      <path d="M-10,-28 C-5,-45 5,-50 10,-28" fill={color} />
       <path
         d="M-80,0 C-90,-12 -100,-20 -105,-25 C-95,-15 -90,-5 -80,0 C-90,5 -95,15 -105,25 C-100,20 -90,12 -80,0Z"
         fill={color}
       />
-    </g>
-    {/* Small scattered sharks */}
-    <g opacity={String(Number(opacity) * 0.6)}>
-      <text x="120" y="100" fontSize="40" fill={color} transform="rotate(-15, 120, 100)">🦈</text>
-      <text x="650" y="150" fontSize="30" fill={color} transform="rotate(10, 650, 150)">🦈</text>
-      <text x="100" y="480" fontSize="28" fill={color} transform="rotate(5, 100, 480)">🦈</text>
-      <text x="680" y="500" fontSize="35" fill={color} transform="rotate(-8, 680, 500)">🦈</text>
     </g>
   </svg>
 );
@@ -124,11 +111,24 @@ export const CertificatePreview: React.FC<CertificatePreviewProps> = ({
 }) => {
   const colors = getTierColors(tier);
 
+  // Pick one random reason from the pool (stable per name to avoid flicker)
+  const selectedReason = useMemo(() => {
+    if (!t.reasons || t.reasons.length === 0) return null;
+    let hash = 0;
+    const seed = name || 'default';
+    for (let i = 0; i < seed.length; i++) {
+      hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
+    }
+    const idx = Math.abs(hash) % t.reasons.length;
+    return t.reasons[idx];
+  }, [name, t.reasons]);
+
   return (
-    <div className="flex items-center justify-center p-4 md:p-6">
+    <div className="flex items-center justify-center">
       <div
-        className="w-full max-w-2xl rounded-[1.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+        className="w-full max-w-lg rounded-[1.5rem] shadow-2xl relative overflow-hidden"
         style={{
+          aspectRatio: '210 / 297',
           background: `linear-gradient(135deg, ${colors.gradientFrom}, ${colors.gradientTo})`,
           border: `3px solid ${colors.borderColor}`,
         }}
@@ -138,65 +138,57 @@ export const CertificatePreview: React.FC<CertificatePreviewProps> = ({
 
         {/* Inner decorative border */}
         <div
-          className="absolute inset-3 rounded-[1rem] pointer-events-none"
+          className="absolute inset-[6%] rounded-[0.75rem] pointer-events-none"
           style={{ border: `1px solid ${colors.borderColor}` }}
         />
 
         {/* Corner ornaments */}
-        <div className="absolute top-5 left-5 text-lg opacity-25" style={{ color: colors.accentColor }}>❖</div>
-        <div className="absolute top-5 right-5 text-lg opacity-25" style={{ color: colors.accentColor }}>❖</div>
-        <div className="absolute bottom-5 left-5 text-lg opacity-25" style={{ color: colors.accentColor }}>❖</div>
-        <div className="absolute bottom-5 right-5 text-lg opacity-25" style={{ color: colors.accentColor }}>❖</div>
+        <div className="absolute top-[3%] left-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
+        <div className="absolute top-[3%] right-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
+        <div className="absolute bottom-[3%] left-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
+        <div className="absolute bottom-[3%] right-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
 
-        {/* Content */}
-        <div className="relative z-10">
+        {/* Content — matches PDF layout order and proportions */}
+        <div className="relative z-10 flex flex-col h-full px-[10%] py-[8%]" style={{ gap: '2.5%' }}>
+
           {/* Header */}
-          <div className="text-center mb-6">
-            <h1
-              className="text-lg md:text-xl font-bold tracking-[0.2em] uppercase mb-1"
+          <div className="text-center">
+            <p
+              className="text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase"
               style={{ color: colors.accentColor }}
             >
               {t.header}
-            </h1>
-            <p className="text-xs md:text-sm text-gray-500 tracking-wide">
+            </p>
+            <p className="mt-0.5 text-[7px] sm:text-[8px] text-gray-400 tracking-wide">
               {t.subtitle}
             </p>
-            <div className="mt-3 mx-auto w-20 h-0.5" style={{ backgroundColor: colors.borderColor }} />
+            <div className="mt-1.5 mx-auto w-[35%] h-px" style={{ backgroundColor: colors.borderColor }} />
           </div>
 
           {/* Cert Title */}
-          <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-800">
+          <div className="text-center">
+            <p className="text-sm sm:text-base font-bold text-gray-800 leading-tight tracking-tight">
               {t.certTitle}
-            </h2>
+            </p>
           </div>
 
-          {/* Certifies line */}
-          <p className="text-center text-sm text-gray-600 mb-3">
-            {t.certifies}
-          </p>
-
-          {/* NAME — prominent */}
-          <div className="text-center mb-2">
+          {/* Certifies + Name + Status */}
+          <div className="text-center">
+            <p className="text-[10px] text-gray-500">
+              {t.certifies}
+            </p>
             <p
-              className="text-3xl md:text-4xl font-bold"
+              className="mt-1 text-xl sm:text-2xl font-bold leading-tight"
               style={{ color: colors.accentColor }}
             >
               {name}
             </p>
             <div
-              className="mt-2 mx-auto w-48 h-0.5"
+              className="mt-1.5 mx-auto w-[50%] h-px"
               style={{ backgroundColor: colors.borderColor }}
             />
-          </div>
-
-          {/* Status label */}
-          <p className="text-center text-sm text-gray-600 mt-3 mb-3">{t.statusLabel}</p>
-
-          {/* Tier badge */}
-          <div className="flex justify-center mb-6">
-            <div
-              className="inline-block px-5 py-2 rounded-full text-sm md:text-base font-bold tracking-wide"
+            <p className="mt-1.5 text-[10px] text-gray-500">{t.statusLabel}</p>
+            <div className="mt-1 inline-block px-4 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase"
               style={{
                 backgroundColor: colors.accentBg,
                 color: colors.accentColor,
@@ -207,57 +199,110 @@ export const CertificatePreview: React.FC<CertificatePreviewProps> = ({
             </div>
           </div>
 
-          {/* Seal */}
-          <div className="flex justify-center mb-6">
+          {/* Seal — centered circle matching PDF */}
+          <div className="flex flex-col items-center">
             <div
-              className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-center"
+              className="rounded-full flex items-center justify-center"
               style={{
-                border: `3px solid ${colors.borderColor}`,
-                color: colors.sealColor,
+                width: '18%',
+                aspectRatio: '1',
+                border: `2px solid ${colors.accentColor}`,
+                position: 'relative',
               }}
             >
-              <div>
-                <div className="font-bold text-base md:text-lg leading-none">SHA</div>
-                <div className="text-[7px] md:text-[8px] font-semibold uppercase leading-tight mt-1 max-w-[50px]">{t.seal}</div>
-              </div>
+              <div
+                className="absolute inset-[8%] rounded-full"
+                style={{ border: `1px solid ${colors.accentColor}` }}
+              />
+              <span className="text-lg">🤝</span>
             </div>
+            <p
+              className="text-center text-[6px] sm:text-[7px] font-bold uppercase tracking-widest mt-1 max-w-[40%]"
+              style={{ color: colors.sealColor }}
+            >
+              {t.sealText}
+            </p>
           </div>
 
-          {/* Body text */}
-          <p className="text-center text-xs md:text-sm text-gray-600 italic leading-relaxed mb-6 max-w-md mx-auto">
-            {t.body}
-          </p>
+          {/* Reason */}
+          {selectedReason && (
+            <p className="text-center text-[10px] sm:text-[11px] leading-relaxed text-gray-600 max-w-[80%] mx-auto">
+              {t.reasonsLabel}{' '}
+              <span className="font-semibold" style={{ color: colors.accentColor }}>
+                {selectedReason}
+              </span>
+            </p>
+          )}
+
+          {/* Privileges */}
+          {t.privileges && (
+            <p className="text-center text-[8px] sm:text-[9px] text-gray-400 italic leading-relaxed max-w-[80%] mx-auto">
+              {t.privileges}
+            </p>
+          )}
 
           {/* Dedication */}
           {dedication && (
-            <div className="text-center mb-6 pt-3 mx-8" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
-              <p className="text-xs text-gray-500 mb-1">{t.dedicationLabel}</p>
-              <p className="text-sm text-gray-700 italic">&ldquo;{dedication}&rdquo;</p>
+            <div className="text-center pt-1.5 mx-[8%]" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
+              <p className="text-[8px] text-gray-400 mb-0.5">{t.dedicationLabel}</p>
+              <p className="text-[10px] text-gray-600 italic">&ldquo;{dedication}&rdquo;</p>
             </div>
           )}
 
-          {/* Bottom: date + registry */}
-          <div className="grid grid-cols-2 gap-4 md:gap-6 mb-6 text-center text-xs">
-            <div className="pt-3" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
-              <p className="text-gray-500 mb-1">{t.dateLabel}</p>
-              <p className="font-semibold text-gray-700">{date}</p>
+          {/* Spacer to push bottom section down */}
+          <div className="flex-1" />
+
+          {/* Date + Registry — two columns */}
+          <div className="grid grid-cols-2 gap-4 text-center">
+            <div className="pt-1.5" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
+              <p className="text-[8px] text-gray-400 mb-0.5">{t.dateLabel}</p>
+              <p className="text-[10px] font-semibold text-gray-600">{date}</p>
             </div>
-            <div className="pt-3" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
-              <p className="text-gray-500 mb-1">{t.registryIdLabel}</p>
-              <p className="font-mono font-semibold text-gray-700">{registryId}</p>
+            <div className="pt-1.5" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
+              <p className="text-[8px] text-gray-400 mb-0.5">{t.registryIdLabel}</p>
+              <p className="text-[10px] font-mono font-semibold text-gray-600">{registryId}</p>
             </div>
           </div>
 
-          {/* Footer */}
+          {/* Validity note */}
+          {t.validityNote && (
+            <p className="text-center text-[7px] text-gray-400 italic">
+              {t.validityNote}
+            </p>
+          )}
+
+          {/* Signatures — two columns */}
+          <div className="grid grid-cols-2 gap-6 text-center">
+            <div>
+              <div className="font-serif italic text-[11px] sm:text-xs text-gray-500 mb-0.5">
+                {t.sig1Name}
+              </div>
+              <div className="mx-auto w-[80%] h-px bg-gray-300 mb-0.5" />
+              <p className="text-[7px] text-gray-400 leading-tight">
+                {t.sig1Title}
+              </p>
+            </div>
+            <div>
+              <div className="font-serif italic text-[11px] sm:text-xs text-gray-500 mb-0.5">
+                {t.sig2Name}
+              </div>
+              <div className="mx-auto w-[80%] h-px bg-gray-300 mb-0.5" />
+              <p className="text-[7px] text-gray-400 leading-tight">
+                {t.sig2Title}
+              </p>
+            </div>
+          </div>
+
+          {/* Legal disclaimer */}
           <div
-            className="text-center text-[10px] md:text-xs rounded-lg p-3"
+            className="text-center text-[6px] sm:text-[7px] rounded-md px-3 py-1.5"
             style={{
               backgroundColor: colors.accentBg,
               border: `1px solid ${colors.borderColor}`,
-              color: '#6b7280',
+              color: '#b0b8c4',
             }}
           >
-            <p>{t.footer}</p>
+            <p>{t.disclaimer}</p>
           </div>
         </div>
       </div>

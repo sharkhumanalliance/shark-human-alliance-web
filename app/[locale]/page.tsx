@@ -13,9 +13,17 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo.home" });
+  const otherLocale = locale === "en" ? "es" : "en";
   return {
     title: t("title"),
     description: t("description"),
+    alternates: {
+      canonical: `https://sharkhumanalliance.com/${locale}`,
+      languages: {
+        [locale]: `/${locale}`,
+        [otherLocale]: `/${otherLocale}`,
+      },
+    },
     openGraph: {
       title: t("title"),
       description: t("description"),

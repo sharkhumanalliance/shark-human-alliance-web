@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/faq", changeFrequency: "monthly" as const, priority: 0.6 },
     { path: "/membership", changeFrequency: "monthly" as const, priority: 0.7 },
     { path: "/membership/Protected-friend-status", changeFrequency: "monthly" as const, priority: 0.6 },
+    { path: "/wanted", changeFrequency: "monthly" as const, priority: 0.7 },
+    { path: "/career", changeFrequency: "monthly" as const, priority: 0.6 },
   ];
 
   const entries: MetadataRoute.Sitemap = [];
@@ -20,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const route of routes) {
       entries.push({
         url: `${BASE_URL}/${locale}${route.path}`,
-        lastModified: new Date(),
+        lastModified: new Date("2026-03-19"),
         changeFrequency: route.changeFrequency,
         priority: route.priority,
       });

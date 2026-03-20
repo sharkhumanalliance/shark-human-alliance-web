@@ -27,6 +27,18 @@
     "faq": {
       "title": "FAQ — Shark Human Alliance",
       "description": "Answers to common questions about shark protection certificates, conservation donations, and the Shark Human Alliance. Everything you need to know."
+    },
+    "wanted": {
+      "title": "Wanted Poster Generator — Shark Human Alliance",
+      "description": "Someone you know is still unprotected. Generate a Wanted poster, share it on Stories, and gift them a Protected Friend certificate. Fun meets conservation."
+    },
+    "career": {
+      "title": "Alliance Career Ladder — Shark Human Alliance",
+      "description": "Climb the ranks from Civilian to Chief Shark Whisperer. Refer friends, earn promotions, and rise through the Alliance's diplomatic hierarchy."
+    },
+    "purchaseSuccess": {
+      "title": "Welcome to the Alliance!",
+      "description": "Your shark protection certificate is ready. Download your PDF and share your referral link."
     }
   },
   "header": {
@@ -55,11 +67,15 @@
       "about": "Our Mission",
       "impact": "Impact",
       "faq": "FAQ",
-      "registry": "Registry"
+      "registry": "Registry",
+      "wanted": "Wanted Poster",
+      "career": "Alliance Career"
     },
+    "navTitle": "Explore",
     "madeWith": "Made with ❤️ for sharks",
     "email": "sharkhumanalliance@gmail.com",
-    "copyright": "© 2026 Shark Human Alliance. A fictional brand with a very real mission."
+    "copyright": "© 2026 Shark Human Alliance. A fictional brand with a very real mission.",
+    "operator": "Operated by JEEL Wekeza s.r.o."
   },
   "hero": {
     "titleLine1": "Give someone official",
@@ -121,17 +137,18 @@
       "title": "Everyone knows someone who needs this.",
       "case1Icon": "🦈",
       "case1Title": "Shark lovers",
-      "case1Text": "Bet, they don't have official shark diplomacy paperwork. Now they do.",
+      "case1Text": "Finally, the paperwork to prove the feeling is mutual.",
       "case2Icon": "🏖️",
       "case2Title": "Beach-fearers",
-      "case2Text": "Bet, they don't have symbolic protection from sharks. Problem almost solved.",
+      "case2Text": "Official protection status might not stop a jellyfish, but it's a start.",
       "case3Icon": "🎂",
       "case3Title": "Birthday & office gifts",
-      "case3Text": "Bet, they don't have a framed certificate declaring them a friend of sharks.",
+      "case3Text": "A framed certificate declaring them a friend of sharks. Beats another gift card.",
       "case4Icon": "🤷",
       "case4Title": "People who have everything",
-      "case4Text": "Bet, they don't have diplomatic recognition from sharks. Problem solved.",
-      "cta": "Gift Protected Friend Status — $9"
+      "case4Text": "They don't have diplomatic recognition from sharks. Nobody does. That's why it's perfect.",
+      "cta": "Gift Protected Friend Status — $9",
+      "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
       "donationsIntro": "Every certificate sale funds verified conservation through",
@@ -140,12 +157,12 @@
       "linkText": "See full impact report and partner details"
     },
     "about": {
-      "certPreviewLabel": "A gift that looks surprisingly official",
+      "certPreviewLabel": "Tired of being mistaken for a seal? Enter your name and see what your diplomatic passport looks like.",
       "certTitle": "Certificate of Alliance Membership",
       "certCertifies": "This certifies that",
       "certName": "[ Your Name Here ]",
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
-      "inputPlaceholder": "Enter a name — see your certificate",
+      "inputPlaceholder": "Your name (the sharks are waiting)",
       "ctaBuy": "Buy for yourself — $9",
       "ctaGift": "Buy as a gift — $9"
     },
@@ -298,6 +315,10 @@
       {
         "question": "Is this tax-deductible?",
         "answer": "No. This is a purchase of a humorous digital product, not a charitable donation. The conservation funding happens on our end — you get a certificate and the warm glow of knowing you helped sharks."
+      },
+      {
+        "question": "How big is the certificate?",
+        "answer": "Certificates are optimized for A4 (for the rest of the world) or US Letter (for the USA) — you choose when downloading. Large enough to conceal the fact that sharks cannot read, but small enough to fit into a standard frame you can buy from us here on land."
       }
     ],
     "ctaTitle": "Still have questions?",
@@ -491,25 +512,42 @@
     "businessDedicationPlaceholder": "e.g. Proudly shark-approved since 2026",
     "emailLabel": "Email for certificate delivery",
     "emailPlaceholder": "your@email.com",
-    "paymentTitle": "Secure Payment",
-    "paymentPlaceholder": "Sharks can't read card numbers — your payment info is safe. Gateway will be connected here.",
-    "submitButton": "Issue My Certificate",
+    "promoCodeLabel": "Promo code (optional)",
+    "promoCodePlaceholder": "e.g. SHATEST",
+    "stripeSecure": "Secure payment via Stripe",
+    "stripeSecureNote": "Sharks can't read card numbers — your payment info is safe. You'll be redirected to Stripe's secure checkout.",
+    "submitButton": "Proceed to Payment",
+    "submitButtonPromo": "Apply Promo Code & Continue",
     "orderSummary": "Diplomatic Briefing",
+    "redirecting": "Redirecting to secure checkout...",
+    "checkoutError": "Something went wrong creating your checkout. Please try again.",
+    "canceledNotice": "Your payment was canceled. No worries — your form data is still here. Ready when you are!",
     "processing": "Processing your diplomatic paperwork...",
-    "sendEmail": "Send certificate via email",
-    "sendingEmail": "Sending...",
-    "emailSentConfirm": "Email sent!",
+    "successLoading": "Confirming your payment with Stripe — this usually takes just a moment.",
+    "successPending": "Payment received!",
+    "successPendingText": "Your payment was successful, but we're still processing your certificate. It should arrive in your email shortly. If not, please contact us.",
     "successTitle": "Welcome to the Alliance, diplomat.",
     "successText": "Your symbolic status has been registered. The sharks have been notified (symbolically).",
     "downloadCert": "Download your certificate (PDF)",
     "viewRegistry": "See yourself in the Diplomatic Registry",
+    "emailSentAutomatic": "A certificate email has been sent to your inbox automatically. Check spam if you don't see it!",
     "backHome": "Back to homepage",
-    "changeTier": "Change tier"
+    "changeTier": "Change tier",
+    "giftDetailsTitle": "Gift details",
+    "giftDeliveryDateLabel": "Delivery date (optional)",
+    "giftMessageLabel": "Personal message (optional)",
+    "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
+    "referredByBadge": "You were referred by a fellow diplomat. Welcome to the Alliance!",
+    "referralTitle": "Your Alliance Career Starts Now",
+    "referralText": "Share your referral link with friends. Every recruit moves you up the ranks.",
+    "referralCopy": "Copy",
+    "referralCareerLink": "See the full career ladder"
   },
   "registry": {
     "title": "The Diplomatic Registry",
     "subtitle": "An official-ish record of every human who has achieved symbolic recognition from sharks.",
     "description": "Listed below are all recognized diplomats of the Shark Human Alliance. Sorted by date of diplomatic achievement. No sharks were consulted in the creation of this list.",
+    "loadingText": "Searching the oceanic archives... Careful, some records may have been nibbled.",
     "countLabel": "registered diplomats",
     "filterAll": "All diplomats",
     "filterBasic": "Basic",
@@ -532,6 +570,11 @@
     "viralWanted": "Wanted: Still Unprotected",
     "viralWantedDesc": "Billions of humans remain without any form of symbolic shark protection. Know someone who needs diplomatic clearance? Gift them a certificate before it's too late (symbolically).",
     "viralWantedCta": "Protect someone you know",
+    "viralWantedPoster": "Generate a Wanted Poster",
+    "viralRecruiters": "Top Alliance Recruiters",
+    "viralRecruitersDesc": "These diplomats have recruited the most humans into the Alliance. Finnley Mako personally reads their names out loud (allegedly).",
+    "viralRecruitersCount": "recruits",
+    "viralRecruitersRank": "View rank",
     "viralFounders": "Founding Friends",
     "viralFoundersDesc": "The very first humans brave enough to seek diplomatic recognition from sharks.",
     "joinCta": "Want to join the list?",
@@ -540,27 +583,72 @@
     "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, make you part of a very exclusive list of people who paid money to be told they are not food."
   },
   "certificate": {
-    "header": "SHARK HUMAN ALLIANCE",
-    "subtitle": "Office of Interspecies Diplomatic Affairs",
-    "certTitle": "Certificate of Diplomatic Recognition",
-    "certifies": "This document officially certifies that",
+    "header": "UNITED OCEANS DIPLOMATIC CORPS",
+    "subtitle": "Shark Human Alliance | Bureau of Not Being Eaten",
+    "certTitle": "CERTIFICATE OF DIPLOMATIC PROTECTION FROM SHARK ENCOUNTERS",
+    "certifies": "This document officially certifies that the esteemed",
     "statusLabel": "has been granted the status of",
-    "tierNames": {
-      "basic": "Friend of Sharks",
-      "protected": "Protected Friend",
-      "nonsnack": "Certified Non-Snack",
-      "business": "Shark-Approved Zone"
-    },
-    "body": "and is hereby recognized by the Shark Human Alliance as a contributor to peaceful shark-human relations, a supporter of real ocean conservation, and a human whose name has been formally recorded in the Diplomatic Registry.",
-    "businessSubtitle": "Bureau of Interspecies Commercial Compliance",
-    "businessCertTitle": "Certificate of Shark-Approved Zone Status",
-    "businessBody": "and is hereby designated by the Shark Human Alliance as a Shark-Approved Zone, signifying that this establishment has met the symbolic standards of interspecies hospitality and is considered a safe diplomatic territory by sharks worldwide (symbolically).",
-    "businessFooter": "This certification is entirely symbolic. No actual sharks were consulted, surveyed, or asked for their opinion on your venue's ambiance.",
+    "body": "on the basis of an in-depth diplomatic inquiry and sensory analysis (strictly symbolic), the above-named individual has been declared entirely unsuitable for shark consumption anywhere in the world.",
+    "reasonsLabel": "The Alliance has determined that the holder is",
+    "reasons": [
+      "fundamentally unappetizing (confirmed by three independent shark focus groups).",
+      "dangerously high in caffeine and microplastics, known to cause shark insomnia.",
+      "a very, very good belly rubber, and therefore too valuable to eat.",
+      "smelling suspiciously of sunscreen and existential regret.",
+      "too crunchy for comfort (sharks strongly prefer smooth textures).",
+      "exhibiting chronic flailing behavior in water, which confuses sonar.",
+      "a suspected fish whisperer and potential double agent.",
+      "of negligible nutritional value but surprisingly high entertainment value."
+    ],
+    "privileges": "The holder may enter the ocean knowing that any shark who would consider them a meal would be regarded as an individual with very poor judgment.",
+    "validityNote": "Validity: Lifetime (or until you start smelling like tuna).",
+    "sig1Name": "Finnley Mako",
+    "sig1Title": "Chief Diplomat SHA & Press Spokesperson (and Optimist)",
+    "sig2Name": "Luna Reef",
+    "sig2Title": "Head of Culinary Inspection & Dept. of Misunderstanding Prevention",
+    "sealText": "IN SHARKS WE TRUST (TO NOT EAT US)",
     "dedication": "Dedication",
     "dateLabel": "Date of Diplomatic Recognition",
     "registryId": "Registry ID",
-    "seal": "OFFICIAL SEAL OF THE ALLIANCE",
-    "footer": "Approved by the Department of Symbolic Marine Affairs. No sharks were harmed or consulted in the making of this document."
+    "disclaimer": "Shark Legal Dept. Notice: This certificate is 100% fictional and guarantees absolutely no protection, primarily because sharks cannot read. Sharks were not invited to negotiations and are likely unaware of your existence.",
+    "tierNames": {
+      "basic": "Protected Friend",
+      "protected": "Protected Friend",
+      "nonsnack": "Certified Non-Snack",
+      "business": "Shark-Approved Free Zone"
+    },
+    "nonsnackSubtitle": "Office of Interspecies Diplomatic Affairs & Culinary Diplomacy",
+    "nonsnackCertTitle": "CERTIFICATE OF OFFICIAL INEDIBILITY",
+    "nonsnackCertTitleSub": "(Non-Snack Recognition Status)",
+    "nonsnackBody": "has, following an in-depth diplomatic inquiry and sensory analysis (strictly symbolic), been declared a being entirely unsuitable for shark consumption anywhere in the world.",
+    "nonsnackReasonsLabel": "The SHA Prey Assessment Committee has concluded that the holder is",
+    "nonsnackReasons": [
+      "carrying excessive caffeine and stress hormones, known to cause shark anxiety and insomnia.",
+      "of desperately low fat content — nutritionally uninteresting with a bone-choking hazard.",
+      "emitting a cheap sunscreen aroma that is culinarily offensive to sensitive shark noses.",
+      "overall too tough, with a consistency that causes premature jaw fatigue.",
+      "leaving a suspicious aftertaste of processed food and screen radiation.",
+      "generating an off-putting amount of body heat from chronic overthinking."
+    ],
+    "nonsnackPrivileges": "The holder may enter the ocean knowing that any shark considering them a snack would be regarded as an individual with very poor taste within the Alliance.",
+    "nonsnackDisclaimer": "Disclaimer: This recognition is purely symbolic. Most sharks unfortunately cannot read and some may actually like caffeine. The Alliance does not vouch for encounters with gourmet sharks who ignore bureaucracy. Entering the water remains at your own risk.",
+    "businessHeader": "UNITED OCEANS DIPLOMATIC CORPS",
+    "businessSubtitle": "Office of Interspecies Commercial Certification",
+    "businessCertTitle": "OFFICIAL CERTIFICATE: SHARK-APPROVED FREE ZONE",
+    "businessCertTitleSub": "(License Tier)",
+    "businessBody": "has been officially recognized as a supporter of constructive shark dialogue and harmonious coexistence in oceanic space. This zone is declared safe for all forms of business not in conflict with the interests (or culinary preferences) of the Alliance.",
+    "businessReasonsLabel": "This establishment has committed to",
+    "businessReasons": [
+      "zero culinary provocations — no menu items questioning shark existence.",
+      "proper image promotion — absolutely no Jaws screenings on the premises.",
+      "diligent beach care, ensuring sharks do not suffer stomach issues from litter.",
+      "granting symbolic Non-Snack status to all employees, automatically and irrevocably.",
+      "maintaining zero shark fin products on premises (obviously).",
+      "providing free Wi-Fi for visiting marine diplomats."
+    ],
+    "businessPrivileges": "The holder of this license is entitled to free consultations with ambassadors Finnley Mako and Luna Reef (if they ever approach you).",
+    "businessValidityNote": "Validity: Until the sharks unionize.",
+    "businessDisclaimer": "Disclaimer: This certificate is purely symbolic. Sharks are not bound by any Alliance agreements and may have their own culinary preferences. The license does not vouch for encounters with sharks who disrespect bureaucracy. Entering the water and operating your business remain at your own risk."
   },
   "impact": {
     "label": "Our Impact",
@@ -622,5 +710,105 @@
   "mobileCta": {
     "label": "Get Protected Friend Status",
     "price": "$9"
+  },
+  "wanted": {
+    "label": "Alliance Security Bureau",
+    "title": "Someone you know is still unprotected.",
+    "subtitle": "Generate a Wanted poster. Share it. Then gift them the protection they clearly need.",
+    "formTitle": "Report an unprotected human",
+    "formSubtitle": "Enter the name of someone who lacks official shark diplomatic status. We'll handle the rest.",
+    "nameLabel": "Name of the unprotected individual",
+    "namePlaceholder": "e.g. Dave from Accounting",
+    "suggestion1": "My Boss",
+    "suggestion2": "Dad",
+    "suggestion3": "That One Friend",
+    "generateButton": "Generate Wanted Poster",
+    "formDisclaimer": "No humans were harmed in the making of this poster. Sharks remain indifferent to your existence.",
+    "defaultName": "Unidentified Human",
+    "posterHeader": "Shark Human Alliance",
+    "wantedTitle": "WANTED",
+    "wantedSubtitle": "Unprotected Status",
+    "chargesLabel": "Charges",
+    "charges": [
+      "Entering shark territory without diplomatic papers",
+      "Suspiciously resembling a seal on multiple occasions",
+      "Zero attempts to establish inter-species dialogue",
+      "Chronic refusal to acknowledge shark sovereignty",
+      "Swimming with reckless confidence and no credentials",
+      "Failing to register with the Diplomatic Registry",
+      "Possession of an unprotected beach towel",
+      "Repeated consumption of fish without Alliance approval",
+      "Suspicious lack of any shark-related paperwork",
+      "Being observed flailing in shallow water (a known provocation)",
+      "Smelling vaguely of tuna (a documented risk factor)",
+      "Telling people Jaws is a 'great movie' (it's propaganda)"
+    ],
+    "rewardLabel": "Reward",
+    "rewardText": "One Protected Friend Certificate ($9)",
+    "ctaButton": "PROTECT THIS PERSON NOW",
+    "posterFooter": "sharkhumanalliance.com — Peace between humans and sharks",
+    "downloadButton": "Download Poster (Stories format)",
+    "downloadingButton": "Preparing poster...",
+    "shareButton": "Share to Stories / Messages",
+    "shareTitle": "WANTED: Unprotected Human",
+    "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
+    "giftCta": "Gift {name} a Protected Friend Certificate — $9",
+    "newPoster": "Create another poster",
+    "viralPrompt": "Share it on Instagram Stories, send it in a group chat, or print it and tape it to their desk.",
+    "viralSubtext": "Every poster shared is a step toward universal shark-human diplomatic coverage.",
+    "howTitle": "How it works",
+    "howStep1Icon": "🚨",
+    "howStep1Title": "Generate a Wanted poster",
+    "howStep1Text": "Enter their name. We'll create a shareable poster declaring their unprotected status.",
+    "howStep2Icon": "📲",
+    "howStep2Title": "Share it everywhere",
+    "howStep2Text": "Post it on Stories, drop it in the group chat, or tape it to their monitor. Maximum embarrassment encouraged.",
+    "howStep3Icon": "🛡️",
+    "howStep3Title": "Gift them protection",
+    "howStep3Text": "Resolve the situation by gifting them an official Protected Friend certificate. Diplomacy restored.",
+    "bottomCta": "Gift Protected Friend Status — $9"
+  },
+  "career": {
+    "hero": {
+      "label": "Alliance Personnel Department",
+      "title": "Your Alliance Career.",
+      "subtitle": "Every great shark diplomat started as a Civilian. Refer friends, climb the ranks, and one day Finnley Mako might actually remember your name."
+    },
+    "ladder": {
+      "label": "Career Ladder",
+      "title": "The ranks of shark diplomacy.",
+      "startingRank": "Starting rank — everyone begins here",
+      "referralsNeeded": "{count}+ referrals to unlock"
+    },
+    "checkRank": {
+      "title": "Check your rank",
+      "subtitle": "Enter your referral code (you received it after your purchase) to see your current rank and progress.",
+      "codeLabel": "Your referral code",
+      "button": "Check my rank",
+      "loading": "Consulting the archives...",
+      "notFound": "Hmm, that code wasn't found in our oceanic archives. Double-check and try again.",
+      "error": "Something went wrong. The sharks may have chewed through a cable.",
+      "currentRank": "Your current rank",
+      "referralCount": "{count} successful referrals",
+      "progressToNext": "Progress to next rank",
+      "referralsRemaining": "more to go",
+      "yourLink": "Your referral link",
+      "copy": "Copy"
+    },
+    "howWorks": {
+      "label": "How It Works",
+      "title": "Three steps to shark diplomatic glory.",
+      "step1Title": "Get your certificate",
+      "step1Text": "Buy any tier. You'll receive a unique referral code and a shareable link.",
+      "step2Title": "Share your referral link",
+      "step2Text": "Send it to friends, post it on social media, or print it on a T-shirt. We don't judge.",
+      "step3Title": "Climb the ranks",
+      "step3Text": "Every friend who joins through your link earns you a referral. Hit the thresholds, unlock new ranks."
+    },
+    "cta": {
+      "title": "Start your Alliance career.",
+      "text": "Every career in shark diplomacy starts with a single certificate. Get yours now and receive your personal referral code.",
+      "button": "Get your certificate"
+    }
   }
 }

@@ -8,14 +8,14 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 px-6 py-10 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
         {/* Left — copy */}
         <div className="flex flex-col justify-center">
           <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-800 shadow-sm">
             {t("giftBadge")}
           </div>
 
-          <h1 className="max-w-2xl text-5xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+          <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
             {t("titleLine1")}
             <br />
             <span className="text-[var(--brand)]">{t("titleLine2")}</span>
