@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { resend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
+import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
 
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    await resend.emails.send({
+    await getResend().emails.send({
       from: EMAIL_FROM,
       to,
       subject: `Your Alliance Certificate — Welcome, ${name}!`,

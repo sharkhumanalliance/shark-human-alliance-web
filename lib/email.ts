@@ -1,15 +1,26 @@
 import { Resend } from "resend";
 
-if (!process.env.RESEND_API_KEY) {
-  console.warn(
-    "[SHA] RESEND_API_KEY is not set. Email delivery will not work."
-  );
-}
-
-export const resend = new Resend(process.env.RESEND_API_KEY || "");
-
 export const EMAIL_FROM =
   process.env.EMAIL_FROM || "Shark Human Alliance <diplomacy@sharkhumanalliance.com>";
+
+/**
+ * Returns a Resend client instance.
+ * Lazy-initialized to avoid crashing at build time when the API key
+ * is not available (Vercel only injects runtime env vars, not build-time).
+ */
+let _resend: Resend | null = null;
+
+export function getResend(): Resend {
+  if (_resend) return _resend;
+
+  const key = process.env.RESEND_API_KEY;
+  if (!key) {
+    throw new Error("[SHA] RESEND_API_KEY is not set. Cannot initialize Resend.");
+  }
+
+  _resend = new Resend(key);
+  return _resend;
+}
 
 /**
  * Generate the HTML email template for a certificate delivery.

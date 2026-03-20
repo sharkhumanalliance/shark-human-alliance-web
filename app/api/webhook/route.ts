@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
-import { resend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
+import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
 import fs from "fs/promises";
 import path from "path";
 
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {
-        await resend.emails.send({
+        await getResend().emails.send({
           from: EMAIL_FROM,
           to: targetEmail,
           subject: `Your Alliance Certificate — Welcome, ${name}!`,
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
     // 3. Also send to buyer if gift
     if (isGift === "true" && recipientEmail && email && email !== recipientEmail && process.env.RESEND_API_KEY) {
       try {
-        await resend.emails.send({
+        await getResend().emails.send({
           from: EMAIL_FROM,
           to: email,
           subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,
