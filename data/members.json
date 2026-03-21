@@ -4,70 +4,108 @@
     "name": "Captain James Coral",
     "tier": "protected",
     "date": "2026-01-15",
-    "dedication": ""
+    "dedication": "",
+    "referralCode": "SHA-JCRL",
+    "referralCount": 28
   },
   {
     "id": "demo-002",
     "name": "Marina Deepwater",
     "tier": "nonsnack",
     "date": "2026-02-03",
-    "dedication": "For surviving every beach vacation since 1987"
+    "dedication": "For surviving every beach vacation since 1987",
+    "referralCode": "SHA-MDWP",
+    "referralCount": 12
   },
   {
     "id": "demo-003",
     "name": "Dave",
     "tier": "basic",
     "date": "2026-02-14",
-    "dedication": ""
+    "dedication": "",
+    "referralCode": "SHA-DAVE",
+    "referralCount": 0
   },
   {
     "id": "demo-004",
     "name": "Professor Waverly Tidesworth III",
     "tier": "nonsnack",
     "date": "2026-02-20",
-    "dedication": "Still not on the menu"
+    "dedication": "Still not on the menu",
+    "referralCode": "SHA-WTDE",
+    "referralCount": 6
   },
   {
     "id": "demo-005",
     "name": "Samantha Reef-Friendly",
     "tier": "protected",
     "date": "2026-03-01",
-    "dedication": "A gift from someone who thinks this is hilarious"
+    "dedication": "A gift from someone who thinks this is hilarious",
+    "referralCode": "SHA-SRFR",
+    "referralCount": 3
   },
   {
     "id": "demo-006",
     "name": "El Surfista Valiente",
     "tier": "protected",
     "date": "2026-03-08",
-    "dedication": "Porque los tiburones merecen amor"
+    "dedication": "Porque los tiburones merecen amor",
+    "referralCode": "SHA-SURF",
+    "referralCount": 1
+  },
+  {
+    "id": "demo-007",
+    "name": "Dr. Natasha Finberg",
+    "tier": "business",
+    "date": "2026-01-22",
+    "dedication": "Protecting the entire research team, one certificate at a time",
+    "referralCode": "SHA-NFIN",
+    "referralCount": 15
+  },
+  {
+    "id": "demo-008",
+    "name": "Marco 'The Anchor' Bellini",
+    "tier": "nonsnack",
+    "date": "2026-02-10",
+    "dedication": "I didn't survive the Mediterranean to become sushi",
+    "referralCode": "SHA-MBEL",
+    "referralCount": 5
   },
   {
     "id": "m-1773596691088-v1cj7e",
     "name": "Peter Sudderland",
     "tier": "protected",
     "date": "2026-03-15",
-    "dedication": "Shark lover"
+    "dedication": "Shark lover",
+    "referralCode": "SHA-PSUD",
+    "referralCount": 0
   },
   {
     "id": "m-1773598761657-lnfaxr",
     "name": "Sarah Jones",
     "tier": "nonsnack",
     "date": "2026-03-15",
-    "dedication": "For surviving every holiday since 1987"
+    "dedication": "For surviving every holiday since 1987",
+    "referralCode": "SHA-SJNS",
+    "referralCount": 2
   },
   {
     "id": "m-1773685765990-eul5we",
     "name": "Thomas",
     "tier": "nonsnack",
     "date": "2026-03-16",
-    "dedication": "Nowak"
+    "dedication": "Nowak",
+    "referralCode": "SHA-THMS",
+    "referralCount": 0
   },
   {
     "id": "m-1773944028618-jv6j2r",
     "name": "Ben Jones",
     "tier": "protected",
     "date": "2026-03-19",
-    "dedication": "Because you always said 'something touched my foot'"
+    "dedication": "Because you always said 'something touched my foot'",
+    "referralCode": "SHA-BJNS",
+    "referralCount": 0
   },
   {
     "id": "m-1773997862297-867roh",
@@ -90,5 +128,15 @@
     "referralCount": 0,
     "email": "janko.l@seznam.cz",
     "stripeSessionId": "promo_1773999483902_plsdab"
+  },
+  {
+    "id": "m-1774095617869-wv0msx",
+    "name": "Kevin Rubes",
+    "tier": "protected",
+    "date": "2026-03-21",
+    "dedication": "For surviving every beach vacation since 1987",
+    "referralCode": "SHA-Y73Z",
+    "referralCount": 0,
+    "stripeSessionId": "promo_1774095617869_me7buk"
   }
 ]

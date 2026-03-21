@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useState, useRef, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/components/analytics";
 
 /* ── helpers ────────────────────────────────────────────── */
 
@@ -81,7 +82,7 @@ export function WantedContent() {
     });
   }, []);
 
-  /* ── Canvas drawing (9:16 = 1080×1920) ────────────── */
+  /* ── Canvas drawing (A4 portrait = 2100×2970) ────── */
 
   const drawPoster = useCallback(
     async (ctx: CanvasRenderingContext2D, w: number, h: number) => {
@@ -91,68 +92,67 @@ export function WantedContent() {
       ctx.fillStyle = POSTER_BG;
       ctx.fillRect(0, 0, w, h);
 
-      // Paper area with rough edges feel
-      const mx = 60, my = 80;
+      // Paper area
+      const mx = 120, my = 140;
       const pw = w - mx * 2, ph = h - my * 2;
       ctx.fillStyle = POSTER_PAPER;
       ctx.beginPath();
-      ctx.roundRect(mx, my, pw, ph, 12);
+      ctx.roundRect(mx, my, pw, ph, 16);
       ctx.fill();
 
       // Inner border (double line effect)
       ctx.strokeStyle = POSTER_MUTED;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.roundRect(mx + 20, my + 20, pw - 40, ph - 40, 8);
+      ctx.roundRect(mx + 36, my + 36, pw - 72, ph - 72, 10);
       ctx.stroke();
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.roundRect(mx + 26, my + 26, pw - 52, ph - 52, 6);
+      ctx.roundRect(mx + 46, my + 46, pw - 92, ph - 92, 8);
       ctx.stroke();
 
-      let y = my + 80;
+      let y = my + 140;
       const cx = w / 2;
 
       // "SHARK HUMAN ALLIANCE" header
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "600 22px 'Geist', sans-serif";
+      ctx.font = "600 36px 'Geist', sans-serif";
       ctx.textAlign = "center";
-      ctx.letterSpacing = "6px";
+      ctx.letterSpacing = "10px";
       ctx.fillText(t("posterHeader").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 60;
+      y += 100;
 
       // "WANTED" — big bold
       ctx.fillStyle = POSTER_RED;
-      ctx.font = "900 120px 'Geist', sans-serif";
+      ctx.font = "900 200px 'Geist', sans-serif";
       ctx.fillText(t("wantedTitle"), cx, y);
-      y += 20;
+      y += 36;
 
       // Decorative line
       ctx.strokeStyle = POSTER_RED;
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 5;
       ctx.beginPath();
-      ctx.moveTo(cx - 200, y);
-      ctx.lineTo(cx + 200, y);
+      ctx.moveTo(cx - 340, y);
+      ctx.lineTo(cx + 340, y);
       ctx.stroke();
-      y += 50;
+      y += 80;
 
       // Subtitle
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 28px 'Geist', sans-serif";
-      ctx.letterSpacing = "4px";
+      ctx.font = "600 46px 'Geist', sans-serif";
+      ctx.letterSpacing = "6px";
       ctx.fillText(t("wantedSubtitle").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 70;
+      y += 110;
 
       // Seal image (circular area)
       try {
         const sealImg = await ensureSealLoaded();
-        const sealSize = 260;
-        // Circle clip
+        const sealSize = 420;
         ctx.save();
         ctx.beginPath();
-        ctx.arc(cx, y + sealSize / 2, sealSize / 2 + 10, 0, Math.PI * 2);
+        ctx.arc(cx, y + sealSize / 2, sealSize / 2 + 16, 0, Math.PI * 2);
         ctx.fillStyle = "#e8d5b0";
         ctx.fill();
         ctx.beginPath();
@@ -160,58 +160,55 @@ export function WantedContent() {
         ctx.clip();
         ctx.drawImage(sealImg, cx - sealSize / 2, y, sealSize, sealSize);
         ctx.restore();
-        // Ring around seal
         ctx.strokeStyle = POSTER_GOLD;
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 6;
         ctx.beginPath();
-        ctx.arc(cx, y + sealSize / 2, sealSize / 2 + 10, 0, Math.PI * 2);
+        ctx.arc(cx, y + sealSize / 2, sealSize / 2 + 16, 0, Math.PI * 2);
         ctx.stroke();
-        y += sealSize + 50;
+        y += sealSize + 80;
       } catch {
-        y += 40;
+        y += 60;
       }
 
       // NAME — large display
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "900 64px 'Geist', sans-serif";
-      // Truncate if too wide
-      let fontSize = 64;
-      while (ctx.measureText(displayName).width > pw - 120 && fontSize > 32) {
-        fontSize -= 2;
+      ctx.font = "900 108px 'Geist', sans-serif";
+      let fontSize = 108;
+      while (ctx.measureText(displayName).width > pw - 200 && fontSize > 48) {
+        fontSize -= 4;
         ctx.font = `900 ${fontSize}px 'Geist', sans-serif`;
       }
       ctx.fillText(displayName, cx, y);
-      y += 16;
+      y += 28;
       // Underline
-      const nameW = Math.min(ctx.measureText(displayName).width + 40, pw - 120);
+      const nameW = Math.min(ctx.measureText(displayName).width + 60, pw - 200);
       ctx.strokeStyle = POSTER_GOLD;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(cx - nameW / 2, y);
       ctx.lineTo(cx + nameW / 2, y);
       ctx.stroke();
-      y += 55;
+      y += 90;
 
       // "CHARGES:" label
       ctx.fillStyle = POSTER_RED;
-      ctx.font = "700 24px 'Geist', sans-serif";
-      ctx.letterSpacing = "3px";
+      ctx.font = "700 40px 'Geist', sans-serif";
+      ctx.letterSpacing = "5px";
       ctx.fillText(t("chargesLabel").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 40;
+      y += 64;
 
       // Charges list
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "500 22px 'Geist', sans-serif";
+      ctx.font = "500 36px 'Geist', sans-serif";
       ctx.textAlign = "center";
       for (const charge of selectedCharges) {
-        // Wrap long charges
         const words = charge.split(" ");
         let line = "";
         const lines: string[] = [];
         for (const word of words) {
           const test = line ? `${line} ${word}` : word;
-          if (ctx.measureText(test).width > pw - 160) {
+          if (ctx.measureText(test).width > pw - 260) {
             lines.push(line);
             line = word;
           } else {
@@ -220,48 +217,47 @@ export function WantedContent() {
         }
         if (line) lines.push(line);
         for (const l of lines) {
-          ctx.fillText(`${l}`, cx, y);
-          y += 32;
+          ctx.fillText(l, cx, y);
+          y += 52;
         }
-        y += 8;
+        y += 14;
       }
-      y += 20;
+      y += 36;
 
       // Reward section
       ctx.fillStyle = POSTER_GOLD;
-      ctx.font = "700 22px 'Geist', sans-serif";
-      ctx.letterSpacing = "2px";
+      ctx.font = "700 36px 'Geist', sans-serif";
+      ctx.letterSpacing = "4px";
       ctx.fillText(t("rewardLabel").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 36;
+      y += 60;
 
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 26px 'Geist', sans-serif";
+      ctx.font = "600 42px 'Geist', sans-serif";
       ctx.fillText(t("rewardText"), cx, y);
-      y += 70;
+      y += 110;
 
       // Footer CTA
-      // Rounded rect button
-      const btnW = 600, btnH = 70;
-      const btnX = cx - btnW / 2, btnY = y - 10;
+      const btnW = 1000, btnH = 110;
+      const btnX = cx - btnW / 2, btnY = y - 16;
       ctx.fillStyle = POSTER_RED;
       ctx.beginPath();
-      ctx.roundRect(btnX, btnY, btnW, btnH, 35);
+      ctx.roundRect(btnX, btnY, btnW, btnH, 55);
       ctx.fill();
       ctx.fillStyle = "#ffffff";
-      ctx.font = "700 26px 'Geist', sans-serif";
-      ctx.fillText(t("ctaButton"), cx, btnY + btnH / 2 + 9);
-      y += btnH + 40;
+      ctx.font = "700 42px 'Geist', sans-serif";
+      ctx.fillText(t("ctaButton"), cx, btnY + btnH / 2 + 14);
 
       // Alliance branding at bottom
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "400 18px 'Geist', sans-serif";
-      ctx.fillText(t("posterFooter"), cx, h - my - 50);
+      ctx.font = "400 30px 'Geist', sans-serif";
+      ctx.fillText(t("posterFooter"), cx, h - my - 80);
     },
     [name, selectedCharges, t, ensureSealLoaded]
   );
 
   const handleGenerate = useCallback(async () => {
+    trackEvent("wanted_poster_generate", { name_length: name.trim().length });
     setGenerated(true);
     // Small delay to ensure canvas is mounted
     await new Promise((r) => setTimeout(r, 100));
@@ -269,14 +265,15 @@ export function WantedContent() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    canvas.width = 1080;
-    canvas.height = 1920;
-    await drawPoster(ctx, 1080, 1920);
+    canvas.width = 2100;
+    canvas.height = 2970;
+    await drawPoster(ctx, 2100, 2970);
   }, [drawPoster]);
 
   const handleDownload = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    trackEvent("wanted_poster_download");
     setDownloading(true);
     try {
       const blob = await new Promise<Blob | null>((resolve) =>
@@ -351,7 +348,7 @@ export function WantedContent() {
         <div className="mx-auto max-w-xl px-6">
           {!generated ? (
             /* ── Form state ──────────────────────────── */
-            <div className="rounded-[2rem] border border-red-100 bg-white p-8 shadow-[0_16px_50px_rgba(25,87,138,0.08)]">
+            <div className="rounded-xl border border-red-100 bg-white p-8 shadow-sm">
               <div className="text-center mb-6">
                 <span className="text-5xl">🚨</span>
                 <h2 className="mt-4 text-2xl font-bold text-[var(--brand-dark)]">
@@ -370,7 +367,7 @@ export function WantedContent() {
                   >
                     {t("nameLabel")}
                   </label>
-                  <div className="flex items-center gap-3 rounded-2xl border-2 border-red-200 bg-white px-5 py-4 transition focus-within:border-red-400 focus-within:shadow-[0_8px_30px_rgba(192,57,43,0.1)]">
+                  <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-white px-5 py-4 shadow-sm transition focus-within:border-red-400 focus-within:shadow-md">
                     <span className="text-lg" aria-hidden="true">🔍</span>
                     <input
                       id="wanted-name"
@@ -393,7 +390,7 @@ export function WantedContent() {
                       key={s}
                       type="button"
                       onClick={() => setName(s)}
-                      className="rounded-full border border-red-100 bg-red-50/50 px-4 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-100"
+                      className="rounded-lg border border-red-100 bg-red-50/50 px-4 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-100"
                     >
                       {s}
                     </button>
@@ -403,7 +400,7 @@ export function WantedContent() {
                 <button
                   onClick={handleGenerate}
                   disabled={!name.trim()}
-                  className="mt-4 w-full rounded-full bg-red-600 px-6 py-4 text-base font-bold text-white shadow-lg shadow-red-200/50 transition hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="mt-4 w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {t("generateButton")}
                 </button>
@@ -417,11 +414,11 @@ export function WantedContent() {
             /* ── Result state ─────────────────────────── */
             <div className="space-y-6">
               {/* Canvas poster preview */}
-              <div className="rounded-[2rem] overflow-hidden shadow-2xl border-2 border-amber-900/20">
+              <div className="rounded-xl overflow-hidden shadow-md border border-amber-900/20">
                 <canvas
                   ref={canvasRef}
                   className="w-full h-auto"
-                  style={{ aspectRatio: "9/16" }}
+                  style={{ aspectRatio: "210/297" }}
                 />
               </div>
 
@@ -430,21 +427,21 @@ export function WantedContent() {
                 <button
                   onClick={handleDownload}
                   disabled={downloading}
-                  className="w-full rounded-full bg-[var(--brand-dark)] px-6 py-4 text-base font-bold text-white shadow-lg transition hover:bg-[var(--brand-dark)]/90 disabled:opacity-60"
+                  className="w-full rounded-lg bg-[var(--brand-dark)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--brand-dark)]/90 disabled:opacity-60"
                 >
                   {downloading ? t("downloadingButton") : t("downloadButton")}
                 </button>
 
                 <button
                   onClick={handleShare}
-                  className="w-full rounded-full border-2 border-[var(--brand-dark)] bg-white px-6 py-4 text-base font-bold text-[var(--brand-dark)] transition hover:bg-sky-50"
+                  className="w-full rounded-lg border border-[var(--brand-dark)] bg-white px-6 py-4 text-base font-bold text-[var(--brand-dark)] transition hover:bg-sky-50"
                 >
                   {t("shareButton")}
                 </button>
 
                 <Link
                   href={giftUrl}
-                  className="block w-full rounded-full bg-red-600 px-6 py-4 text-center text-base font-bold text-white shadow-lg shadow-red-200/50 transition hover:bg-red-700"
+                  className="block w-full rounded-lg bg-red-600 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-red-700"
                 >
                   🛡️ {t("giftCta", { name: name.trim() || t("defaultName") })}
                 </Link>
@@ -458,7 +455,7 @@ export function WantedContent() {
               </div>
 
               {/* Viral sharing prompt */}
-              <div className="rounded-[2rem] border border-orange-100 bg-orange-50/50 p-6 text-center">
+              <div className="rounded-xl border border-orange-100 bg-orange-50/50 p-6 text-center">
                 <p className="text-sm font-semibold text-orange-800">
                   {t("viralPrompt")}
                 </p>
@@ -472,7 +469,7 @@ export function WantedContent() {
       </section>
 
       {/* How it works strip */}
-      <section className="border-t border-sky-100 bg-white py-14">
+      <section className="border-t border-[var(--border)] bg-white py-14">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
             {t("howTitle")}
@@ -495,7 +492,7 @@ export function WantedContent() {
           <div className="mt-10">
             <Link
               href="/purchase?tier=protected&gift=true"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               🎁 {t("bottomCta")}
             </Link>

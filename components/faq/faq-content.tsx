@@ -32,16 +32,16 @@ export function FaqContent() {
       {/* Questions */}
       <section className="pb-14">
         <div className="mx-auto max-w-4xl px-6">
-          <div className="space-y-6">
+          <div className="space-y-4">
             {items.map((item) => (
               <article
                 key={item.question}
-                className="rounded-[2rem] border border-sky-100 bg-white p-8 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
+                className="rounded-xl border border-[var(--border)] bg-white px-6 py-5 shadow-sm"
               >
-                <h2 className="text-xl font-semibold text-[var(--brand-dark)]">
+                <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
                   {item.question}
                 </h2>
-                <p className="mt-4 text-base leading-7 text-[var(--muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
                   {item.answer}
                 </p>
               </article>
@@ -53,7 +53,7 @@ export function FaqContent() {
       {/* CTA */}
       <section className="pb-16">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("ctaTitle")}
             </h2>
@@ -63,7 +63,7 @@ export function FaqContent() {
             <div className="mt-6">
               <a
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-orange-500/30 transition hover:bg-[var(--accent-dark)] hover:shadow-xl"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 🛡️ {t("ctaButton")}
               </a>

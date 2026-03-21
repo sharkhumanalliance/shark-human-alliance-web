@@ -8,14 +8,14 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-center gap-8 px-6 py-10 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
         {/* Left — copy */}
         <div className="flex flex-col justify-center">
-          <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-800 shadow-sm">
+          <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-lg border border-orange-200 bg-orange-50 px-3 py-1.5 text-sm font-semibold text-orange-800">
             {t("giftBadge")}
           </div>
 
-          <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+          <h1 className="max-w-2xl text-5xl font-bold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
             {t("titleLine1")}
             <br />
             <span className="text-[var(--brand)]">{t("titleLine2")}</span>
@@ -25,17 +25,17 @@ export function HeroSection() {
             {t("description")}
           </p>
 
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="/purchase?tier=protected"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-7 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)] hover:shadow-xl hover:shadow-orange-200/60"
+              className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               {t("ctaPrimary")}
             </a>
 
             <a
               href="#certificate-preview"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+              className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] transition hover:border-gray-300 hover:bg-gray-50"
             >
               {t("ctaSecondary")}
             </a>
@@ -48,22 +48,19 @@ export function HeroSection() {
 
         {/* Right — image + ambassadors */}
         <div className="relative">
-          <div className="absolute -left-10 top-10 h-32 w-32 rounded-full bg-cyan-200/40 blur-3xl" />
-          <div className="absolute -right-10 bottom-6 h-36 w-36 rounded-full bg-sky-300/30 blur-3xl" />
-
-          <div className="relative overflow-hidden rounded-[2rem] border border-sky-100 bg-white shadow-[0_24px_80px_rgba(25,87,138,0.12)]">
-            <div className="p-4">
+          <div className="relative overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-sm">
+            <div className="p-3">
               <Image
                 src="/mascots/finnley-luna-hero.png"
                 alt={t("imageAlt")}
                 width={1400}
                 height={1100}
-                className="h-auto w-full rounded-[1.5rem]"
+                className="h-auto w-full rounded-lg"
                 priority
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-px bg-sky-100">
+            <div className="grid grid-cols-2 gap-px border-t border-[var(--border)] bg-[var(--border)]">
               <div className="bg-white p-4">
                 <p className="text-sm font-semibold text-[var(--brand-dark)]">
                   {t("finnleyName")}

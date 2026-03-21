@@ -22,7 +22,7 @@ export function MembershipPageContent() {
       <section className="relative overflow-hidden py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-3xl">
-            <div className="inline-flex rounded-full border border-sky-200 bg-white px-4 py-2 text-sm font-medium text-[var(--brand-dark)] shadow-sm">
+            <div className="inline-flex rounded-lg border border-[var(--border)] bg-white px-3 py-1.5 text-sm font-medium text-[var(--brand-dark)]">
               {t("badge")}
             </div>
 
@@ -37,13 +37,13 @@ export function MembershipPageContent() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <a
                 href="#membership"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 {t("ctaTiers")}
               </a>
               <a
                 href="#comparison"
-                className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+                className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
               >
                 {t("ctaCompare")}
               </a>
@@ -108,8 +108,8 @@ export function MembershipPageContent() {
             </h2>
           </div>
 
-          <div className="mt-10 overflow-hidden rounded-[2rem] border border-sky-100 bg-white shadow-[0_18px_60px_rgba(25,87,138,0.08)]">
-            <div className="grid grid-cols-4 border-b border-sky-100 bg-sky-50/60 text-sm font-semibold text-[var(--brand-dark)]">
+          <div className="mt-10 overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-sm">
+            <div className="grid grid-cols-4 border-b border-[var(--border)] bg-[var(--surface-soft)] text-sm font-semibold text-[var(--brand-dark)]">
               <div className="p-4">{t("comparisonHeaders.feature")}</div>
               <div className="p-4">{t("comparisonHeaders.protected")}</div>
               <div className="p-4">{t("comparisonHeaders.nonsnack")}</div>
@@ -121,7 +121,7 @@ export function MembershipPageContent() {
                 key={row.label}
                 className={`grid grid-cols-4 text-sm ${
                   index !== comparisonRows.length - 1
-                    ? "border-b border-sky-100"
+                    ? "border-b border-[var(--border)]"
                     : ""
                 }`}
               >
@@ -143,14 +143,14 @@ export function MembershipPageContent() {
               { step: "02", title: t("step2Title"), text: t("step2Text"), borderColor: "border-cyan-100", stepColor: "text-cyan-700" },
               { step: "03", title: t("step3Title"), text: t("step3Text"), borderColor: "border-orange-100", stepColor: "text-orange-700" },
             ].map((item) => (
-              <article key={item.step} className={`rounded-[2rem] border ${item.borderColor} bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]`}>
+              <article key={item.step} className={`rounded-xl border ${item.borderColor} bg-white p-6 shadow-sm`}>
                 <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${item.stepColor}`}>
                   {item.step}
                 </p>
                 <h3 className="mt-4 text-xl font-semibold text-[var(--brand-dark)]">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
                   {item.text}
                 </p>
               </article>
@@ -161,7 +161,7 @@ export function MembershipPageContent() {
 
       <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-8">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("clarificationLabel")}
             </p>
@@ -190,12 +190,12 @@ export function MembershipPageContent() {
             {faqItems.map((item) => (
               <article
                 key={item.question}
-                className="rounded-[2rem] border border-sky-100 bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
+                className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-sm"
               >
                 <h3 className="text-xl font-semibold text-[var(--brand-dark)]">
                   {item.question}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
                   {item.answer}
                 </p>
               </article>
@@ -207,10 +207,10 @@ export function MembershipPageContent() {
       {/* Business certification */}
       <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-[2.25rem] border border-indigo-200 bg-gradient-to-b from-indigo-50 to-white p-8 shadow-[0_18px_60px_rgba(25,87,138,0.08)] sm:p-12">
+          <div className="rounded-xl border border-indigo-200 bg-gradient-to-b from-indigo-50 to-white p-8 shadow-sm sm:p-12">
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
               <div>
-                <div className="inline-flex rounded-full border border-indigo-200 bg-white px-4 py-2 text-sm font-medium text-indigo-800 shadow-sm">
+                <div className="inline-flex rounded-lg border border-indigo-200 bg-white px-3 py-1.5 text-sm font-medium text-indigo-800">
                   🏢 {t("businessBadge")}
                 </div>
                 <h2 className="mt-6 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -230,13 +230,13 @@ export function MembershipPageContent() {
                 </ul>
                 <a
                   href="/purchase?tier=business"
-                  className="mt-8 inline-flex items-center justify-center rounded-full bg-indigo-600 px-6 py-4 text-base font-semibold text-white transition hover:bg-indigo-700"
+                  className="mt-8 inline-flex items-center justify-center rounded-lg bg-indigo-600 px-6 py-4 text-base font-semibold text-white transition hover:bg-indigo-700"
                 >
                   {t("businessCta")}
                 </a>
               </div>
               <div className="flex items-center justify-center">
-                <div className="w-full max-w-sm rounded-[2rem] border-2 border-dashed border-indigo-200 bg-indigo-50/50 p-8 text-center">
+                <div className="w-full max-w-sm rounded-xl border-2 border-dashed border-indigo-200 bg-indigo-50/50 p-8 text-center">
                   <p className="text-4xl">🏢🦈</p>
                   <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-indigo-800">
                     {t("businessCertLabel")}
@@ -256,7 +256,7 @@ export function MembershipPageContent() {
 
       <section id="join" className="pb-16 pt-4">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
               {t("joinLabel")}
             </p>
@@ -270,13 +270,13 @@ export function MembershipPageContent() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <a
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
+                className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
               >
                 {t("joinCtaPrimary")}
               </a>
               <a
                 href="/"
-                className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 {t("joinCtaSecondary")}
               </a>

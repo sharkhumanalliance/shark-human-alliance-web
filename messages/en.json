@@ -182,9 +182,9 @@
       "protectedCta": "Get Protected Friend — $9",
       "nonsnackTitle": "Non-Snack Recognition",
       "nonsnackPrice": "$29",
-      "nonsnackDescription": "Peak symbolic prestige with a deluxe certificate, exclusive registry placement, and a collectible golden seal. Best for people who want a more deluxe, collectible version.",
+      "nonsnackDescription": "Peak symbolic prestige with a deluxe certificate, exclusive registry placement, and downloadable badge. For people who want the most absurd tier possible.",
       "nonsnackFeatures": [
-        "Premium certificate with golden seal",
+        "Premium deluxe certificate",
         "Official Non-Snack designation",
         "Downloadable badge",
         "Featured registry placement"
@@ -194,9 +194,9 @@
       "businessPrice": "$99",
       "businessDescription": "For any business brave enough to claim official shark approval. 70% goes to conservation. Best for offices, cafés, studios and shark-friendly businesses.",
       "businessFeatures": [
-        "Official wall certificate (A3)",
+        "Official certificate for your wall",
         "Digital badge for your website",
-        "Listed in the Diplomatic Registry"
+        "Premium Diplomatic Registry placement"
       ],
       "businessCta": "Get Certified — $99"
     },
@@ -357,7 +357,7 @@
     "businessDescription": "For any business brave enough to claim official shark approval. Display the certificate proudly. Sharks love good interior design. 70% of this tier goes to conservation.",
     "businessFeatures": [
       "Official Shark-Approved Zone certificate",
-      "Printable wall display (A3 format)",
+      "Printable wall display",
       "Digital badge for website use",
       "Listed in the Diplomatic Registry"
     ],
@@ -378,7 +378,7 @@
         "label": "Certificate",
         "protected": "Personalized certificate",
         "nonsnack": "Premium personalized certificate",
-        "business": "Official wall certificate (A3)"
+        "business": "Official wall certificate"
       },
       {
         "label": "Alliance status",
@@ -511,7 +511,13 @@
     "businessDedicationLabel": "Tagline or location (optional)",
     "businessDedicationPlaceholder": "e.g. Proudly shark-approved since 2026",
     "emailLabel": "Email for certificate delivery",
+    "emailOptionalTag": "optional",
+    "emailOptionalHint": "If you skip this, your certificate can only be downloaded immediately after purchase and cannot be retrieved later.",
     "emailPlaceholder": "your@email.com",
+    "noEmailWarningTitle": "No email — download only",
+    "noEmailWarningText": "Without an email address, your certificate will only be available for download immediately after payment. There is no way to retrieve it later.",
+    "noEmailContinue": "Continue without email",
+    "noEmailAddEmail": "Add email address",
     "promoCodeLabel": "Promo code (optional)",
     "promoCodePlaceholder": "e.g. SHATEST",
     "stripeSecure": "Secure payment via Stripe",
@@ -546,9 +552,11 @@
   "registry": {
     "title": "The Diplomatic Registry",
     "subtitle": "An official-ish record of every human who has achieved symbolic recognition from sharks.",
-    "description": "Listed below are all recognized diplomats of the Shark Human Alliance. Sorted by date of diplomatic achievement. No sharks were consulted in the creation of this list.",
+    "description": "All individuals listed below have been formally assessed and declared unsuitable for shark consumption. This determination is entirely symbolic, legally meaningless, and scientifically unverified. Sharks have been notified (they did not respond).",
     "loadingText": "Searching the oceanic archives... Careful, some records may have been nibbled.",
     "countLabel": "registered diplomats",
+    "searchPlaceholder": "Search by name or referral code...",
+    "searchNoResults": "No diplomats match your search. They might be hiding from sharks.",
     "filterAll": "All diplomats",
     "filterBasic": "Basic",
     "filterProtected": "Protected Friends",
@@ -565,8 +573,6 @@
     "filterBusiness": "Shark-Approved Zones",
     "copyLink": "Copy profile link",
     "viralNewest": "Newest Diplomats",
-    "viralNotFood": "Officially Not Food",
-    "viralNotFoodDesc": "These humans have been formally designated as non-edible by the Alliance. Sharks have been notified (symbolically).",
     "viralWanted": "Wanted: Still Unprotected",
     "viralWantedDesc": "Billions of humans remain without any form of symbolic shark protection. Know someone who needs diplomatic clearance? Gift them a certificate before it's too late (symbolically).",
     "viralWantedCta": "Protect someone you know",
@@ -575,8 +581,6 @@
     "viralRecruitersDesc": "These diplomats have recruited the most humans into the Alliance. Finnley Mako personally reads their names out loud (allegedly).",
     "viralRecruitersCount": "recruits",
     "viralRecruitersRank": "View rank",
-    "viralFounders": "Founding Friends",
-    "viralFoundersDesc": "The very first humans brave enough to seek diplomatic recognition from sharks.",
     "joinCta": "Want to join the list?",
     "joinCtaButton": "Get your certificate",
     "disclaimerTitle": "Registry disclaimer",

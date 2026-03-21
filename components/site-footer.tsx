@@ -6,7 +6,7 @@ export function SiteFooter() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="border-t border-sky-100 bg-white">
+    <footer className="border-t border-[var(--border)] bg-[var(--surface-soft)]">
       <div className="mx-auto max-w-6xl px-6 py-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
           {/* Brand + about */}
@@ -85,7 +85,7 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-6 border-t border-sky-100 pt-4 flex flex-col items-center gap-1 text-center text-[10px] text-[var(--muted)]">
+        <div className="mt-6 border-t border-[var(--border)] pt-4 flex flex-col items-center gap-1 text-center text-[10px] text-[var(--muted)]">
           <p>{t("copyright")}</p>
           <p>{t("operator")}</p>
         </div>

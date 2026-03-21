@@ -182,9 +182,9 @@
       "protectedCta": "Obtén Amigo Protegido — $9",
       "nonsnackTitle": "Reconocimiento No-Snack",
       "nonsnackPrice": "$29",
-      "nonsnackDescription": "Prestigio simbólico máximo con certificado deluxe, ubicación exclusiva en el registro y sello dorado coleccionable. Ideal para quienes quieren una versión más exclusiva y coleccionable.",
+      "nonsnackDescription": "Prestigio simbólico máximo con certificado deluxe, ubicación exclusiva en el registro e insignia descargable. Para quienes quieren el nivel más absurdo posible.",
       "nonsnackFeatures": [
-        "Certificado premium con sello dorado",
+        "Certificado premium deluxe",
         "Designación oficial No-Snack",
         "Insignia descargable",
         "Ubicación destacada en el registro"
@@ -194,9 +194,9 @@
       "businessPrice": "$99",
       "businessDescription": "Para cualquier negocio lo suficientemente valiente como para reclamar aprobación oficial de tiburones. El 70% va a conservación. Ideal para oficinas, cafés, estudios y negocios amigos de los tiburones.",
       "businessFeatures": [
-        "Certificado oficial para pared (A3)",
+        "Certificado oficial para tu pared",
         "Insignia digital para tu web",
-        "Listado en el Registro Diplomático"
+        "Ubicación premium en el Registro Diplomático"
       ],
       "businessCta": "Obtener Certificación — $99"
     },
@@ -357,7 +357,7 @@
     "businessDescription": "Para cualquier negocio lo suficientemente valiente como para reclamar aprobación oficial de tiburones. Exhibe el certificado con orgullo. El 70% de este nivel va a conservación.",
     "businessFeatures": [
       "Certificado oficial de Zona Aprobada por Tiburones",
-      "Imprimible para exhibición en pared (formato A3)",
+      "Imprimible para exhibición en pared",
       "Insignia digital para uso en sitio web",
       "Listado en el Registro Diplomático"
     ],
@@ -378,7 +378,7 @@
         "label": "Certificado",
         "protected": "Certificado personalizado",
         "nonsnack": "Certificado personalizado premium",
-        "business": "Certificado oficial para pared (A3)"
+        "business": "Certificado oficial para pared"
       },
       {
         "label": "Estatus en la alianza",
@@ -511,7 +511,13 @@
     "businessDedicationLabel": "Eslogan o ubicación (opcional)",
     "businessDedicationPlaceholder": "ej. Orgullosamente aprobado por tiburones desde 2026",
     "emailLabel": "Email para entrega del certificado",
+    "emailOptionalTag": "opcional",
+    "emailOptionalHint": "Si lo omites, el certificado solo estará disponible para descargar justo después del pago y no podrás recuperarlo más tarde.",
     "emailPlaceholder": "tu@email.com",
+    "noEmailWarningTitle": "Sin email — solo descarga",
+    "noEmailWarningText": "Sin dirección de email, tu certificado solo estará disponible para descargar inmediatamente después del pago. No hay forma de recuperarlo más tarde.",
+    "noEmailContinue": "Continuar sin email",
+    "noEmailAddEmail": "Añadir dirección de email",
     "promoCodeLabel": "Código promocional (opcional)",
     "promoCodePlaceholder": "ej. SHATEST",
     "stripeSecure": "Pago seguro vía Stripe",
@@ -546,9 +552,11 @@
   "registry": {
     "title": "El Registro Diplomático",
     "subtitle": "Un registro más o menos oficial de cada humano que ha logrado reconocimiento simbólico de los tiburones.",
-    "description": "A continuación se listan todos los diplomáticos reconocidos de la Shark Human Alliance. Ordenados por fecha de logro diplomático. Ningún tiburón fue consultado en la creación de esta lista.",
+    "description": "Todas las personas listadas a continuación han sido formalmente evaluadas y declaradas no aptas para el consumo por tiburones. Esta determinación es completamente simbólica, legalmente insignificante y científicamente no verificada. Los tiburones han sido notificados (no respondieron).",
     "loadingText": "Buscando en los archivos oceánicos... Cuidado, algunos registros pueden haber sido mordisqueados.",
     "countLabel": "diplomáticos registrados",
+    "searchPlaceholder": "Buscar por nombre o código de referencia...",
+    "searchNoResults": "Ningún diplomático coincide con tu búsqueda. Quizás se esconden de los tiburones.",
     "filterAll": "Todos los diplomáticos",
     "filterBasic": "Básico",
     "filterProtected": "Amigos Protegidos",
@@ -565,8 +573,6 @@
     "filterBusiness": "Zonas Aprobadas",
     "copyLink": "Copiar enlace del perfil",
     "viralNewest": "Diplomáticos más recientes",
-    "viralNotFood": "Oficialmente No Comida",
-    "viralNotFoodDesc": "Estos humanos han sido formalmente designados como no comestibles por la Alianza. Los tiburones han sido notificados (simbólicamente).",
     "viralWanted": "Se buscan: Aún sin protección",
     "viralWantedDesc": "Miles de millones de humanos permanecen sin ninguna forma de protección simbólica de tiburones. ¿Conoces a alguien que necesite autorización diplomática? Regálale un certificado antes de que sea demasiado tarde (simbólicamente).",
     "viralWantedCta": "Protege a alguien que conoces",
@@ -575,8 +581,6 @@
     "viralRecruitersDesc": "Estos diplomáticos han reclutado a más humanos para la Alianza. Finnley Mako lee personalmente sus nombres en voz alta (supuestamente).",
     "viralRecruitersCount": "reclutas",
     "viralRecruitersRank": "Ver rango",
-    "viralFounders": "Amigos Fundadores",
-    "viralFoundersDesc": "Los primeros humanos lo suficientemente valientes como para buscar reconocimiento diplomático de los tiburones.",
     "joinCta": "¿Quieres unirte a la lista?",
     "joinCtaButton": "Obtén tu certificado",
     "disclaimerTitle": "Descargo de responsabilidad del registro",

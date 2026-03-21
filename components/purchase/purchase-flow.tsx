@@ -2,8 +2,9 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
+import { trackEvent } from "@/components/analytics";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
 
@@ -39,6 +40,7 @@ function PurchaseFlowInner() {
   const [promoCode, setPromoCode] = useState("");
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState("");
+  const [showEmailWarning, setShowEmailWarning] = useState(false);
 
   const tierPrices: Record<Tier, string> = {
     basic: "$9",
@@ -46,6 +48,40 @@ function PurchaseFlowInner() {
     nonsnack: "$29",
     business: "$99",
   };
+
+  const tierValues: Record<Tier, number> = {
+    basic: 9,
+    protected: 9,
+    nonsnack: 29,
+    business: 99,
+  };
+
+  // Track view_item on initial load
+  const viewedRef = useRef(false);
+  useEffect(() => {
+    if (viewedRef.current) return;
+    viewedRef.current = true;
+    trackEvent("view_item", {
+      item_id: initialTier,
+      item_name: initialTier,
+      value: tierValues[initialTier],
+      currency: "USD",
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Track select_item when tier changes (skip initial render)
+  const isFirstTierRender = useRef(true);
+  useEffect(() => {
+    if (isFirstTierRender.current) { isFirstTierRender.current = false; return; }
+    trackEvent("select_item", {
+      item_id: tier,
+      item_name: tier,
+      value: tierValues[tier],
+      currency: "USD",
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tier]);
 
   const tierIcons: Record<Tier, string> = {
     basic: "🐟",
@@ -141,8 +177,30 @@ function PurchaseFlowInner() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
+    if (!name.trim()) return;
 
+    // If no email and warning not yet confirmed, show warning instead of submitting
+    if (!email.trim() && !showEmailWarning) {
+      setShowEmailWarning(true);
+      trackEvent("no_email_warning_shown", { tier });
+      return;
+    }
+
+    if (!email.trim() && showEmailWarning) {
+      trackEvent("no_email_confirmed", { tier });
+    }
+
+    trackEvent("begin_checkout", {
+      item_id: tier,
+      item_name: tier,
+      value: tierValues[tier],
+      currency: "USD",
+      is_gift: isGift,
+      has_promo: promoCode.trim().length > 0,
+      has_email: email.trim().length > 0,
+    });
+
+    setShowEmailWarning(false);
     setIsRedirecting(true);
     setError("");
 
@@ -214,7 +272,7 @@ function PurchaseFlowInner() {
 
         {/* Canceled notice */}
         {wasCanceled && (
-          <div className="mt-6 mx-auto max-w-md rounded-2xl border border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm text-amber-800">
+          <div className="mt-6 mx-auto max-w-md rounded-xl border border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm text-amber-800">
             {t("canceledNotice")}
           </div>
         )}
@@ -228,7 +286,7 @@ function PurchaseFlowInner() {
 
         {/* Error */}
         {error && (
-          <div className="mt-6 mx-auto max-w-md rounded-2xl border border-red-200 bg-red-50/50 px-5 py-4 text-center text-sm text-red-700">
+          <div className="mt-6 mx-auto max-w-md rounded-xl border border-red-200 bg-red-50/50 px-5 py-4 text-center text-sm text-red-700">
             {error}
           </div>
         )}
@@ -255,7 +313,7 @@ function PurchaseFlowInner() {
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`rounded-2xl border-2 ${colors[tierOption]} p-4 text-center transition hover:shadow-md`}
+                      className={`rounded-xl border ${colors[tierOption]} p-4 text-center transition hover:shadow-md`}
                     >
                       <p className="text-xl">{tierIcons[tierOption]}</p>
                       <p className="mt-1 text-lg font-semibold text-[var(--brand-dark)]">
@@ -271,10 +329,10 @@ function PurchaseFlowInner() {
             </div>
 
             {/* Gift toggle */}
-            <div className="flex items-center gap-3 rounded-2xl border border-sky-100 bg-sky-50/50 p-4">
+            <div className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
               <button
                 type="button"
-                onClick={() => setIsGift(!isGift)}
+                onClick={() => { const next = !isGift; setIsGift(next); trackEvent("gift_toggle", { tier, enabled: next }); }}
                 className={`relative h-6 w-11 rounded-full transition ${
                   isGift ? "bg-[var(--brand)]" : "bg-gray-300"
                 }`}
@@ -302,7 +360,7 @@ function PurchaseFlowInner() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={tier === "business" ? t("businessNamePlaceholder") : t("namePlaceholder")}
-                className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
             </div>
 
@@ -317,7 +375,7 @@ function PurchaseFlowInner() {
                 value={dedication}
                 onChange={(e) => setDedication(e.target.value)}
                 placeholder={tier === "business" ? t("businessDedicationPlaceholder") : t("dedicationPlaceholder")}
-                className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
               {tier !== "business" && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -326,7 +384,7 @@ function PurchaseFlowInner() {
                       key={suggestion}
                       type="button"
                       onClick={() => setDedication(suggestion)}
-                      className="rounded-full border border-sky-100 bg-sky-50/50 px-3 py-1 text-xs text-[var(--muted)] transition hover:border-sky-300 hover:bg-sky-50 hover:text-[var(--brand-dark)]"
+                      className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1 text-xs text-[var(--muted)] transition hover:border-sky-300 hover:bg-sky-50 hover:text-[var(--brand-dark)]"
                     >
                       {suggestion}
                     </button>
@@ -337,23 +395,26 @@ function PurchaseFlowInner() {
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="text-sm font-semibold text-[var(--brand-dark)]">
-                {t("emailLabel")}
-              </label>
+              <div className="flex items-baseline justify-between gap-2">
+                <label htmlFor="email" className="text-sm font-semibold text-[var(--brand-dark)]">
+                  {t("emailLabel")}
+                </label>
+                <span className="text-xs text-[var(--muted)]">{t("emailOptionalTag")}</span>
+              </div>
               <input
                 id="email"
                 type="email"
-                required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => { setEmail(e.target.value); setShowEmailWarning(false); }}
                 placeholder={t("emailPlaceholder")}
-                className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
+              <p className="mt-1.5 text-xs text-[var(--muted)]">{t("emailOptionalHint")}</p>
             </div>
 
             {/* Gift fields */}
             {isGift && (
-              <div className="space-y-4 rounded-2xl border border-orange-100 bg-orange-50/30 p-5">
+              <div className="space-y-4 rounded-xl border border-orange-100 bg-orange-50/30 p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-orange-700">🎁 {t("giftDetailsTitle")}</p>
                 <div>
                   <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -365,7 +426,7 @@ function PurchaseFlowInner() {
                     value={recipientEmail}
                     onChange={(e) => setRecipientEmail(e.target.value)}
                     placeholder={t("recipientEmailPlaceholder")}
-                    className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                   />
                 </div>
                 <div>
@@ -378,7 +439,7 @@ function PurchaseFlowInner() {
                     value={giftDeliveryDate}
                     onChange={(e) => setGiftDeliveryDate(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
-                    className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                   />
                 </div>
                 <div>
@@ -391,7 +452,7 @@ function PurchaseFlowInner() {
                     onChange={(e) => setGiftMessage(e.target.value)}
                     placeholder={t("giftMessagePlaceholder")}
                     rows={3}
-                    className="mt-2 w-full resize-none rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                    className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                   />
                 </div>
               </div>
@@ -415,12 +476,12 @@ function PurchaseFlowInner() {
                 spellCheck={false}
                 data-form-type="other"
                 data-lpignore="true"
-                className="mt-2 w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase"
               />
             </div>
 
             {/* Stripe secure payment note */}
-            <div className="flex items-center gap-3 rounded-2xl border border-teal-100 bg-teal-50/30 p-4">
+            <div className="flex items-center gap-3 rounded-xl border border-teal-100 bg-teal-50/30 p-4">
               <span className="text-lg">🔒</span>
               <div>
                 <p className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -432,11 +493,37 @@ function PurchaseFlowInner() {
               </div>
             </div>
 
+            {/* No-email warning */}
+            {showEmailWarning && (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+                <p className="text-sm font-semibold text-amber-800">⚠️ {t("noEmailWarningTitle")}</p>
+                <p className="mt-1 text-sm leading-6 text-amber-700">{t("noEmailWarningText")}</p>
+                <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                  <button
+                    type="submit"
+                    className="flex-1 rounded-lg bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-800"
+                  >
+                    {t("noEmailContinue")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowEmailWarning(false);
+                      document.getElementById("email")?.focus();
+                    }}
+                    className="flex-1 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-50"
+                  >
+                    {t("noEmailAddEmail")}
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Submit */}
             <button
               type="submit"
-              disabled={!name.trim() || !email.trim() || isRedirecting}
-              className="w-full rounded-full bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={!name.trim() || isRedirecting}
+              className="w-full rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {promoCode.trim()
                 ? t("submitButtonPromo")

@@ -2,9 +2,10 @@
 
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { generateCertificatePDF } from "@/lib/generate-certificate";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
+import { trackEvent } from "@/components/analytics";
 
 interface MemberData {
   id: string;
@@ -26,6 +27,7 @@ function SuccessContentInner() {
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
   const [pageFormat, setPageFormat] = useState<"a4" | "letter">("a4");
+  const purchaseTrackedRef = useRef(false);
 
   useEffect(() => {
     if (!sessionId) {
@@ -45,6 +47,18 @@ function SuccessContentInner() {
           const data = await res.json();
           setMember(data);
           setLoading(false);
+          // Fire GA4 purchase event once
+          if (!purchaseTrackedRef.current) {
+            purchaseTrackedRef.current = true;
+            const tierValues: Record<string, number> = { basic: 9, protected: 9, nonsnack: 29, business: 99 };
+            trackEvent("purchase", {
+              transaction_id: sessionId,
+              value: tierValues[data.tier] ?? 9,
+              currency: "USD",
+              item_id: data.tier,
+              item_name: data.tier,
+            });
+          }
           return true;
         }
       } catch {
@@ -162,6 +176,7 @@ function SuccessContentInner() {
 
   async function handleDownloadCertificate(format: "a4" | "letter" = pageFormat) {
     if (!member) return;
+    trackEvent("certificate_download", { tier: member.tier, format });
     const certT = getCertTranslations(member.tier);
     const doc = await generateCertificatePDF({
       name: member.name,
@@ -213,7 +228,7 @@ function SuccessContentInner() {
           </p>
           <a
             href="/"
-            className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+            className="mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
           >
             {t("backHome")}
           </a>
@@ -259,10 +274,10 @@ function SuccessContentInner() {
         {/* Actions */}
         <div className="mt-8 flex flex-col items-center gap-4">
           {/* Format selector */}
-          <div className="flex items-center gap-2 rounded-full border border-sky-200 bg-white p-1">
+          <div className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white p-1">
             <button
               onClick={() => setPageFormat("a4")}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
                 pageFormat === "a4"
                   ? "bg-[var(--brand)] text-white"
                   : "text-[var(--muted)] hover:text-[var(--brand-dark)]"
@@ -272,7 +287,7 @@ function SuccessContentInner() {
             </button>
             <button
               onClick={() => setPageFormat("letter")}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
                 pageFormat === "letter"
                   ? "bg-[var(--brand)] text-white"
                   : "text-[var(--muted)] hover:text-[var(--brand-dark)]"
@@ -285,14 +300,14 @@ function SuccessContentInner() {
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <button
               onClick={() => handleDownloadCertificate()}
-              className="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+              className="inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
             >
               {t("downloadCert")} ({pageFormat === "a4" ? "A4" : "US Letter"})
             </button>
 
             <a
               href={`/registry?highlight=${member.id}`}
-              className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+              className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
             >
               {t("viewRegistry")}
             </a>
@@ -302,14 +317,14 @@ function SuccessContentInner() {
         {/* Referral section */}
         {member.referralCode && (
           <div className="mt-10 mx-auto max-w-xl">
-            <div className="rounded-[2rem] border-2 border-dashed border-sky-200 bg-sky-50/50 p-6 text-center">
+            <div className="rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-6 text-center">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
                 {t("referralTitle")}
               </p>
               <p className="mt-2 text-sm text-[var(--muted)]">
                 {t("referralText")}
               </p>
-              <div className="mt-4 flex items-center gap-2 rounded-full border border-sky-200 bg-white px-4 py-3 mx-auto max-w-sm">
+              <div className="mt-4 flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 mx-auto max-w-sm">
                 <input
                   type="text"
                   value={`${typeof window !== "undefined" ? window.location.origin : ""}/purchase?tier=protected&ref=${member.referralCode}`}
@@ -322,9 +337,10 @@ function SuccessContentInner() {
                       `${window.location.origin}/purchase?tier=protected&ref=${member.referralCode}`
                     );
                     setLinkCopied(true);
+                    trackEvent("referral_link_copy", { tier: member.tier });
                     setTimeout(() => setLinkCopied(false), 2000);
                   }}
-                  className="shrink-0 rounded-full bg-[var(--brand)] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+                  className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--brand-dark)]"
                 >
                   {linkCopied ? "✓" : t("referralCopy")}
                 </button>

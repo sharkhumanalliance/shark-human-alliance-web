@@ -72,7 +72,7 @@ const TickerBar = ({ locale = 'en' }: { locale: 'en' | 'es' }) => {
   const extendedItems = [...allItems, ...allItems]; // Repeat for seamless scroll
 
   return (
-    <div className="w-full overflow-hidden bg-gradient-to-r from-blue-50 to-cyan-50 border-b border-blue-200 py-3">
+    <div className="w-full overflow-hidden bg-gradient-to-r from-blue-50 to-cyan-50 border-b border-[var(--border)] py-3">
       <style>{`
         @keyframes ticker-scroll {
           0% {
@@ -155,7 +155,7 @@ const Toast = ({
         }}
         data-toast-id={toast.id}
       >
-        <div className="bg-white rounded-lg shadow-lg backdrop-blur-sm bg-opacity-95 p-4 border border-blue-100 flex items-start gap-3 group hover:shadow-xl transition-shadow">
+        <div className="bg-white rounded-lg shadow-sm backdrop-blur-sm bg-opacity-95 p-4 border border-blue-100 flex items-start gap-3 group hover:shadow-md transition-shadow">
           {/* Emoji/Tier Icon */}
           <div className="text-2xl flex-shrink-0 mt-0.5">
             {getTierEmoji(toast.tier)}

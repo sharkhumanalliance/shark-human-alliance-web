@@ -9,6 +9,8 @@ type MembershipCardProps = {
   description: string;
   features: string[];
   ctaLabel: string;
+  popular?: boolean;
+  popularLabel?: string;
 };
 
 function getBadgeClass(variant: MembershipVariant) {
@@ -18,11 +20,19 @@ function getBadgeClass(variant: MembershipVariant) {
   return "bg-orange-100 text-orange-800";
 }
 
-function getBorderClass(variant: MembershipVariant) {
+function getBorderClass(variant: MembershipVariant, popular?: boolean) {
+  if (popular) return "border-teal-400/50";
   if (variant === "basic") return "border-sky-100";
   if (variant === "protected") return "border-teal-100";
   if (variant === "business") return "border-indigo-100";
   return "border-orange-100";
+}
+
+function getBulletClass(variant: MembershipVariant) {
+  if (variant === "basic") return "bg-sky-500";
+  if (variant === "protected") return "bg-teal-500";
+  if (variant === "business") return "bg-indigo-500";
+  return "bg-orange-500";
 }
 
 function getButtonClass(variant: MembershipVariant) {
@@ -31,14 +41,14 @@ function getButtonClass(variant: MembershipVariant) {
   }
 
   if (variant === "protected") {
-    return "border border-transparent bg-[var(--brand)] text-white hover:bg-[var(--brand-dark)]";
+    return "border border-transparent bg-sky-700 text-white hover:bg-sky-800";
   }
 
   if (variant === "business") {
     return "border border-transparent bg-indigo-600 text-white hover:bg-indigo-700";
   }
 
-  return "border border-transparent bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)]";
+  return "border border-transparent bg-[var(--accent-dark)] text-white hover:opacity-90";
 }
 
 export function MembershipCard({
@@ -50,48 +60,58 @@ export function MembershipCard({
   description,
   features,
   ctaLabel,
+  popular,
+  popularLabel,
 }: MembershipCardProps) {
   return (
-    <article
-      id={id}
-      className={`scroll-mt-28 rounded-[2rem] border ${getBorderClass(
-        variant
-      )} bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]`}
-    >
-      <div
-        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getBadgeClass(
-          variant
-        )}`}
+    <div className={popular ? "relative" : ""}>
+      {popular && popularLabel && (
+        <div className="absolute -top-3 left-6 z-10 inline-flex rounded-full bg-[var(--accent)] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
+          {popularLabel}
+        </div>
+      )}
+      <article
+        id={id}
+        className={`scroll-mt-28 rounded-xl border ${getBorderClass(
+          variant,
+          popular
+        )} bg-white p-6 ${popular ? "shadow-md ring-1 ring-teal-400/20" : "shadow-sm"} h-full flex flex-col`}
       >
-        {title}
-      </div>
+        <div
+          className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getBadgeClass(
+            variant
+          )}`}
+        >
+          {title}
+        </div>
 
-      <p className="mt-5 text-3xl font-semibold text-[var(--brand-dark)]">
-        {price}
-      </p>
+        <p className="mt-5 text-3xl font-semibold text-[var(--brand-dark)]">
+          {price}
+        </p>
 
-      <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{description}</p>
+        <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{description}</p>
 
-      <ul className="mt-6 space-y-3">
-        {features.map((feature) => (
-          <li
-            key={feature}
-            className="flex items-start gap-3 text-sm leading-6 text-[var(--foreground)]"
-          >
-            <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--brand)]" />
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
+        <ul className="mt-6 space-y-3 flex-grow">
+          {features.map((feature) => (
+            <li
+              key={feature}
+              className="flex items-start gap-3 text-sm leading-6 text-[var(--foreground)]"
+            >
+              <span className={`mt-2 h-2 w-2 shrink-0 rounded-full ${getBulletClass(variant)}`} />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
 
-      <a
-        href={href}
-        className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition ${getButtonClass(
-          variant
-        )}`}
-      >
-        {ctaLabel}
-      </a>
-    </article>
+        <a
+          href={href}
+          className={`mt-8 inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
+            variant
+          )}`}
+        >
+          {ctaLabel}
+        </a>
+      </article>
+    </div>
   );
 }

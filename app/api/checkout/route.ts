@@ -52,8 +52,8 @@ export async function POST(request: NextRequest) {
     if (!tier || !TIER_PRICES[tier]) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
     }
-    if (!name || !email) {
-      return NextResponse.json({ error: "Name and email are required" }, { status: 400 });
+    if (!name) {
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
     const loc = locale || "en";
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
         dedication: (dedication || "").trim(),
         referralCode,
         referralCount: 0,
-        email: email.trim(),
+        email: email ? email.trim() : undefined,
         stripeSessionId: freeSessionId,
       };
 
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
 
     const session = await getStripe().checkout.sessions.create({
       payment_method_types: ["card"],
-      customer_email: email,
+      customer_email: email || undefined,
       allow_promotion_codes: true,
       line_items: [
         {

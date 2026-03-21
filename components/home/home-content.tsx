@@ -1,9 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
+import { trackEvent } from "@/components/analytics";
 
 function useCertTranslations() {
   const ct = useTranslations("certificate");
@@ -43,19 +44,35 @@ export function HomeContent() {
   const certT = useCertTranslations();
   const [previewName, setPreviewName] = useState("");
 
+  // Track certificate preview interaction — debounced, fires once per typing session
+  const previewDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const previewTrackedRef = useRef(false);
+  useEffect(() => {
+    if (previewName.trim().length < 2) { previewTrackedRef.current = false; return; }
+    if (previewTrackedRef.current) return;
+    if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
+    previewDebounceRef.current = setTimeout(() => {
+      previewTrackedRef.current = true;
+      trackEvent("certificate_preview_interaction");
+    }, 2000);
+    return () => { if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current); };
+  }, [previewName]);
+
+  const reviewEmojis = ["🏄", "🐚", "🦈", "🌊", "🐠"];
   const reviews = Array.from({ length: 5 }, (_, i) => ({
     text: t(`reviews.items.${i}.text`),
     author: t(`reviews.items.${i}.author`),
     role: t(`reviews.items.${i}.role`),
+    emoji: reviewEmojis[i],
   }));
 
   return (
     <>
       {/* 1 — Value prop + impact hook */}
-      <section className="py-10 bg-white">
+      <section className="py-14">
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("valueHook.label")}
             </p>
             <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -84,7 +101,7 @@ export function HomeContent() {
       </section>
 
       {/* How it works strip */}
-      <div className="border-y border-sky-100 bg-white/80 backdrop-blur-sm">
+      <div className="border-y border-[var(--border)] bg-white">
         <div className="mx-auto grid max-w-4xl grid-cols-3 gap-6 px-6 py-5 text-center">
           {[
             { num: "1", text: t("howStep1"), icon: "📋" },
@@ -102,7 +119,7 @@ export function HomeContent() {
       </div>
 
       {/* 2 — Certificate Preview (interactive) */}
-      <section id="certificate-preview" className="py-10 bg-gradient-to-b from-sky-50/50 to-white">
+      <section id="certificate-preview" className="py-16 bg-[var(--surface-soft)]">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center max-w-lg mx-auto">
             <p className="text-base md:text-lg font-medium text-[var(--brand-dark)] leading-relaxed">
@@ -112,7 +129,7 @@ export function HomeContent() {
 
           {/* Live name input */}
           <div className="mx-auto mt-6 max-w-md">
-            <div className="flex items-center gap-3 rounded-2xl border-2 border-teal-200 bg-white px-5 py-4 shadow-[0_8px_30px_rgba(25,87,138,0.08)] transition focus-within:border-teal-400 focus-within:shadow-[0_8px_30px_rgba(25,87,138,0.15)]">
+            <div className="flex items-center gap-3 rounded-xl border border-teal-200 bg-white px-5 py-4 shadow-sm transition focus-within:border-teal-400 focus-within:shadow-md">
               <span className="text-lg" aria-hidden="true">✍️</span>
               <input
                 type="text"
@@ -138,13 +155,13 @@ export function HomeContent() {
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
               href={`/purchase?tier=protected${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               🛡️ {t("about.ctaBuy")}
             </a>
             <a
               href={`/purchase?tier=protected&gift=true${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-orange-200 bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-orange-300 hover:bg-orange-50"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50"
             >
               🎁 {t("about.ctaGift")}
             </a>
@@ -153,7 +170,7 @@ export function HomeContent() {
       </section>
 
       {/* 3 — Membership tiers (dark) */}
-      <section id="membership" className="py-10 bg-[var(--brand-dark)]">
+      <section id="membership" className="py-16 lg:py-20 bg-[var(--brand-dark)]">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-300">
@@ -167,37 +184,22 @@ export function HomeContent() {
             </p>
           </div>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <div className="relative">
-              <div className="absolute -top-3 left-6 z-10 inline-flex rounded-full bg-orange-500 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
-                {t("membershipSection.popularBadge")}
-              </div>
-              <div className="rounded-[2rem] border-2 border-teal-400/50 bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.2)] ring-2 ring-teal-400/20">
-                <div className="inline-flex rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-teal-800">
-                  {t("membershipSection.protectedTitle")}
-                </div>
-                <p className="mt-5 text-3xl font-semibold text-[var(--brand-dark)]">
-                  {t("membershipSection.protectedPrice")}
-                </p>
-                <p className="mt-4 text-sm leading-6 text-[var(--muted)]">
-                  {t("membershipSection.protectedDescription")}
-                </p>
-                <ul className="mt-6 space-y-3">
-                  {[0, 1, 2].map((i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm leading-6 text-[var(--foreground)]">
-                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-teal-500" />
-                      <span>{t(`membershipSection.protectedFeatures.${i}`)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="/purchase?tier=protected"
-                  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-                >
-                  {t("membershipSection.protectedCta")}
-                </a>
-              </div>
-            </div>
+          <div className="mt-8 grid gap-6 md:grid-cols-3 items-start">
+            <MembershipCard
+              variant="protected"
+              title={t("membershipSection.protectedTitle")}
+              price={t("membershipSection.protectedPrice")}
+              description={t("membershipSection.protectedDescription")}
+              features={[
+                t("membershipSection.protectedFeatures.0"),
+                t("membershipSection.protectedFeatures.1"),
+                t("membershipSection.protectedFeatures.2"),
+              ]}
+              ctaLabel={t("membershipSection.protectedCta")}
+              href="/purchase?tier=protected"
+              popular
+              popularLabel={t("membershipSection.popularBadge")}
+            />
 
             <MembershipCard
               variant="nonsnack"
@@ -232,33 +234,29 @@ export function HomeContent() {
       </section>
 
       {/* 4 — Stats */}
-      <section className="py-10 bg-white">
+      <section className="py-10">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            <div className="text-center">
-              <p className="text-4xl font-bold text-[var(--brand-dark)] md:text-5xl">{t("realImpact.stat1Value")}</p>
-              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat1Label")}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-[var(--accent)] md:text-5xl">{t("realImpact.stat2Value")}</p>
-              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat2Label")}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-[var(--brand-dark)] md:text-5xl">{t("realImpact.stat3Value")}</p>
-              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat3Label")}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-teal-600 md:text-5xl">{t("realImpact.stat4Value")}</p>
-              <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t("realImpact.stat4Label")}</p>
-            </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {[
+              { icon: "🦈", color: "text-[var(--brand-dark)]", key: "1" },
+              { icon: "🤝", color: "text-[var(--accent)]", key: "2" },
+              { icon: "⚠️", color: "text-[var(--brand-dark)]", key: "3" },
+              { icon: "🌍", color: "text-teal-600", key: "4" },
+            ].map((stat) => (
+              <div key={stat.key} className="rounded-xl border border-[var(--border)] bg-white p-5 text-center shadow-sm">
+                <span className="text-2xl">{stat.icon}</span>
+                <p className={`mt-2 text-3xl font-bold ${stat.color} md:text-4xl`}>{t(`realImpact.stat${stat.key}Value`)}</p>
+                <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t(`realImpact.stat${stat.key}Label`)}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* 5 — Impact teaser */}
-      <section id="real-impact" className="py-10">
+      <section id="real-impact" className="py-12 bg-white">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
             {t("realImpact.label")}
           </p>
           <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
@@ -296,7 +294,7 @@ export function HomeContent() {
       </section>
 
       {/* 6 — Gifting */}
-      <section className="py-10 bg-gradient-to-b from-white to-orange-50/30">
+      <section className="py-14 bg-orange-50/30">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-700">
@@ -309,7 +307,7 @@ export function HomeContent() {
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="rounded-[2rem] border border-orange-100 bg-white p-6 text-center shadow-[0_16px_50px_rgba(25,87,138,0.08)]">
+              <div key={i} className="rounded-xl border border-orange-100 bg-white p-6 text-center shadow-sm">
                 <p className="text-3xl">{t(`giftingSection.case${i}Icon`)}</p>
                 <h3 className="mt-3 text-lg font-semibold text-[var(--brand-dark)]">
                   {t(`giftingSection.case${i}Title`)}
@@ -324,13 +322,13 @@ export function HomeContent() {
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
               href="/purchase?tier=protected&gift=true"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-200/50 transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               🎁 {t("giftingSection.cta")}
             </a>
             <a
               href="/wanted"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-red-200 bg-white px-8 py-4 text-base font-semibold text-red-700 transition hover:border-red-300 hover:bg-red-50"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-8 py-4 text-base font-semibold text-red-700 transition hover:border-red-300 hover:bg-red-50"
             >
               🚨 {t("giftingSection.wantedCta")}
             </a>
@@ -339,10 +337,10 @@ export function HomeContent() {
       </section>
 
       {/* 7 — Reviews */}
-      <section className="py-10 bg-white">
+      <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("reviews.label")}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -354,19 +352,19 @@ export function HomeContent() {
             {reviews.slice(0, 3).map((review, i) => (
               <div
                 key={i}
-                className="rounded-[2rem] border border-sky-100 bg-[var(--surface-soft)] p-5 shadow-sm"
+                className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-5 shadow-sm"
               >
                 <div className="flex gap-1 text-orange-400" aria-label="5 stars">
                   {"★★★★★".split("").map((star, j) => (
                     <span key={j} className="text-lg" aria-hidden="true">{star}</span>
                   ))}
                 </div>
-                <p className="mt-3 text-sm leading-7 text-[var(--foreground)] italic">
+                <p className="mt-2 text-sm leading-6 text-[var(--foreground)] italic">
                   &ldquo;{review.text}&rdquo;
                 </p>
                 <div className="mt-3 flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--brand)] text-xs font-bold text-white">
-                    {review.author.charAt(0)}
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sky-50 text-lg">
+                    {review.emoji}
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-[var(--brand-dark)]">{review.author}</p>
@@ -380,10 +378,10 @@ export function HomeContent() {
       </section>
 
       {/* 8 — Mini FAQ (3 questions + link) */}
-      <section id="faq" className="py-10">
+      <section id="faq" className="py-14 bg-white">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("faq.label")}
             </p>
             <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
@@ -398,12 +396,12 @@ export function HomeContent() {
             })).map((item) => (
               <article
                 key={item.question}
-                className="rounded-[2rem] border border-sky-100 bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]"
+                className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-sm"
               >
                 <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
                   {item.question}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
                   {item.answer}
                 </p>
               </article>

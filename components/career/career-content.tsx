@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { trackEvent } from "@/components/analytics";
 
 interface RankInfo {
   name: string;
@@ -111,6 +112,7 @@ export function CareerContent() {
 
       const data: ReferralResponse = await response.json();
       setReferralData(data);
+      trackEvent("rank_lookup", { rank: data.rank, referral_count: data.referralCount, tier: data.tier });
     } catch (err) {
       setError(t("checkRank.error"));
     } finally {
@@ -172,7 +174,7 @@ export function CareerContent() {
             {RANKS.map((rank) => (
               <article
                 key={rank.name}
-                className={`rounded-[2rem] border ${rank.bgColor} p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]`}
+                className={`rounded-xl border ${rank.bgColor} p-6 shadow-sm`}
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -211,7 +213,7 @@ export function CareerContent() {
       {/* Check Your Rank Section */}
       <section className="py-14">
         <div className="mx-auto max-w-2xl px-6">
-          <div className="rounded-[2.25rem] border border-sky-200 bg-gradient-to-b from-sky-50/80 to-white p-8 shadow-[0_18px_60px_rgba(25,87,138,0.08)]">
+          <div className="rounded-xl border border-sky-200 bg-white p-8 shadow-sm">
             <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
               {t("checkRank.title")}
             </h2>
@@ -230,21 +232,21 @@ export function CareerContent() {
                   placeholder="SHA-XXXX"
                   value={referralCode}
                   onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
-                  className="mt-2 w-full rounded-full border border-sky-200 bg-white px-6 py-3 text-[var(--brand-dark)] placeholder-[var(--muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
+                  className="mt-2 w-full rounded-lg border border-sky-200 bg-white px-6 py-3 text-[var(--brand-dark)] placeholder-[var(--muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading || !referralCode}
-                className="w-full rounded-full bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition disabled:opacity-50 hover:bg-[var(--accent-dark)]"
+                className="w-full rounded-lg bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition disabled:opacity-50 hover:bg-[var(--accent-dark)]"
               >
                 {loading ? t("checkRank.loading") : t("checkRank.button")}
               </button>
             </form>
 
             {error && (
-              <div className="mt-6 rounded-[1.5rem] border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+              <div className="mt-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
                 {error}
               </div>
             )}
@@ -252,7 +254,7 @@ export function CareerContent() {
             {referralData && (
               <div className="mt-8 space-y-6">
                 {/* Current Rank Display */}
-                <div className="rounded-[1.5rem] border border-sky-200 bg-white p-6">
+                <div className="rounded-lg border border-sky-200 bg-white p-6">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
                     {t("checkRank.currentRank")}
                   </p>
@@ -273,7 +275,7 @@ export function CareerContent() {
 
                 {/* Progress to Next Rank */}
                 {nextRank && (
-                  <div className="rounded-[1.5rem] border border-sky-200 bg-white p-6">
+                  <div className="rounded-lg border border-sky-200 bg-white p-6">
                     <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
                       {t("checkRank.progressToNext")}
                     </p>
@@ -302,7 +304,7 @@ export function CareerContent() {
                 )}
 
                 {/* Referral Link */}
-                <div className="rounded-[1.5rem] border border-sky-200 bg-white p-6">
+                <div className="rounded-lg border border-sky-200 bg-white p-6">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
                     {t("checkRank.yourLink")}
                   </p>
@@ -311,13 +313,13 @@ export function CareerContent() {
                       type="text"
                       value={referralLink}
                       readOnly
-                      className="flex-grow rounded-full border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-mono text-[var(--brand-dark)]"
+                      className="flex-grow rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-mono text-[var(--brand-dark)]"
                     />
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(referralLink);
                       }}
-                      className="rounded-full bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                      className="rounded-lg bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--accent-dark)]"
                     >
                       {t("checkRank.copy")}
                     </button>
@@ -367,7 +369,7 @@ export function CareerContent() {
             ].map((item) => (
               <article
                 key={item.step}
-                className={`rounded-[2rem] border ${item.borderColor} bg-white p-6 shadow-[0_16px_50px_rgba(25,87,138,0.08)]`}
+                className={`rounded-xl border ${item.borderColor} bg-white p-6 shadow-sm`}
               >
                 <div className="text-4xl">{item.icon}</div>
                 <p className="mt-4 text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
@@ -376,7 +378,7 @@ export function CareerContent() {
                 <h3 className="mt-3 text-xl font-semibold text-[var(--brand-dark)]">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
                   {item.text}
                 </p>
               </article>
@@ -388,7 +390,7 @@ export function CareerContent() {
       {/* Bottom CTA Section */}
       <section className="pb-16 pt-4">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-[2.25rem] border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white shadow-[0_22px_80px_rgba(15,39,64,0.25)] sm:px-12">
+          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("cta.title")}
             </h2>
@@ -398,7 +400,7 @@ export function CareerContent() {
             <div className="mt-6">
               <a
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-orange-500/30 transition hover:bg-[var(--accent-dark)] hover:shadow-xl"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 🚀 {t("cta.button")}
               </a>
