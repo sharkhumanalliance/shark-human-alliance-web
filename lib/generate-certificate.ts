@@ -1,25 +1,34 @@
 import jsPDF from "jspdf";
 
-/** Cache the seal image as a base64 data URL so we only fetch once. */
+/* ─── Image caches ─── */
 let sealImageCache: string | null = null;
+let sharkImageCache: string | null = null;
 
-async function loadSealImage(): Promise<string | null> {
-  if (sealImageCache) return sealImageCache;
+async function loadImageAsBase64(url: string): Promise<string | null> {
   try {
-    const res = await fetch("/seal.png");
+    const res = await fetch(url);
     const blob = await res.blob();
     return new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        sealImageCache = reader.result as string;
-        resolve(sealImageCache);
-      };
+      reader.onloadend = () => resolve(reader.result as string);
       reader.onerror = () => resolve(null);
       reader.readAsDataURL(blob);
     });
   } catch {
     return null;
   }
+}
+
+async function loadSealImage(): Promise<string | null> {
+  if (sealImageCache) return sealImageCache;
+  sealImageCache = await loadImageAsBase64("/cert-seal.png");
+  return sealImageCache;
+}
+
+async function loadSharkImage(): Promise<string | null> {
+  if (sharkImageCache) return sharkImageCache;
+  sharkImageCache = await loadImageAsBase64("/cert-shark.jpg");
+  return sharkImageCache;
 }
 
 type PageFormat = "a4" | "letter";
@@ -31,9 +40,10 @@ type CertificateData = {
   dedication: string;
   registryId: string;
   format?: PageFormat;
-  /** Single pre-selected reason to display (instead of all reasons) */
   selectedReason?: string;
   t: {
+    photoHeadline: string;
+    photoTagline: string;
     header: string;
     subtitle: string;
     certTitle: string;
@@ -57,21 +67,11 @@ type CertificateData = {
   };
 };
 
-const TIER_COLORS: Record<string, [number, number, number]> = {
-  basic: [13, 148, 136],
-  protected: [13, 148, 136],    // teal-600
-  nonsnack: [234, 88, 12],      // orange-600
-  business: [124, 58, 237],     // violet-600
-};
+// All tiers use dark navy as the main accent to match the original design
+const NAVY: [number, number, number] = [26, 58, 92];
+const GRAY: [number, number, number] = [74, 95, 117];
+const LIGHT_GRAY: [number, number, number] = [160, 180, 197];
 
-const TIER_LIGHT: Record<string, [number, number, number]> = {
-  basic: [204, 251, 241],
-  protected: [204, 251, 241],   // teal-100
-  nonsnack: [255, 237, 213],    // orange-100
-  business: [237, 233, 254],    // violet-100
-};
-
-/** Pick a single reason from the pool, stable per name (same logic as the preview component). */
 function pickReason(name: string, reasons: string[]): string | null {
   if (!reasons || reasons.length === 0) return null;
   let hash = 0;
@@ -82,7 +82,9 @@ function pickReason(name: string, reasons: string[]): string | null {
   return reasons[Math.abs(hash) % reasons.length];
 }
 
-export async function generateCertificatePDF(data: CertificateData): Promise<jsPDF> {
+export async function generateCertificatePDF(
+  data: CertificateData
+): Promise<jsPDF> {
   const pageFormat = data.format || "a4";
   const doc = new jsPDF({
     orientation: "portrait",
@@ -90,234 +92,190 @@ export async function generateCertificatePDF(data: CertificateData): Promise<jsP
     format: pageFormat,
   });
 
-  const W = doc.internal.pageSize.getWidth();   // ~210 for A4
-  const H = doc.internal.pageSize.getHeight();  // ~297 for A4
+  const W = doc.internal.pageSize.getWidth();  // 210mm for A4
+  const H = doc.internal.pageSize.getHeight(); // 297mm for A4
   const cx = W / 2;
-  const color = TIER_COLORS[data.tier] || TIER_COLORS.protected;
-  const light = TIER_LIGHT[data.tier] || TIER_LIGHT.protected;
+  const margin = 13; // left/right margin for body text
 
-  // ─── Background ───
-  doc.setFillColor(light[0], light[1], light[2]);
+  // ═══════ BACKGROUND ═══════
+  // Light blue-gray body background matching the original design
+  doc.setFillColor(238, 242, 247);
   doc.rect(0, 0, W, H, "F");
-  doc.setFillColor(
-    Math.min(255, light[0] + 15),
-    Math.min(255, light[1] + 15),
-    Math.min(255, light[2] + 15)
-  );
-  doc.rect(16, 16, W - 32, H - 32, "F");
 
-  // ─── Borders ───
-  doc.setDrawColor(color[0], color[1], color[2]);
-  doc.setLineWidth(1.5);
-  doc.rect(8, 8, W - 16, H - 16);
-  doc.setLineWidth(0.4);
-  doc.rect(12, 12, W - 24, H - 24);
+  // ═══════ SHARK PHOTO — full width, 3:2 ratio ═══════
+  const sharkImg = await loadSharkImage();
+  const photoH = W / (1536 / 1024); // ≈ 140mm on A4
+  if (sharkImg) {
+    const isJpg = sharkImg.includes("image/jpeg") || sharkImg.includes("image/jpg");
+    doc.addImage(sharkImg, isJpg ? "JPEG" : "PNG", 0, 0, W, photoH);
+  } else {
+    doc.setFillColor(180, 205, 230);
+    doc.rect(0, 0, W, photoH, "F");
+    doc.setTextColor(...GRAY);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "italic");
+    doc.text("[cert-shark.jpg]", cx, photoH / 2, { align: "center" });
+  }
 
-  // Corner ornaments
-  const corners = [[14, 14], [W - 14, 14], [14, H - 14], [W - 14, H - 14]];
-  doc.setFillColor(color[0], color[1], color[2]);
-  corners.forEach(([x, y]) => doc.circle(x, y, 1.5, "F"));
+  let y = photoH;
 
-  // Shark watermark
-  doc.setTextColor(color[0], color[1], color[2]);
-  doc.setFontSize(140);
-  doc.setGState(new (doc as any).GState({ opacity: 0.04 }));
-  doc.text("🦈", cx, H / 2, { align: "center" });
-  doc.setGState(new (doc as any).GState({ opacity: 1 }));
+  // Blue accent line
+  doc.setDrawColor(26, 111, 160);
+  doc.setLineWidth(1.2);
+  doc.line(0, y + 0.5, W, y + 0.5);
+  y += 5;
 
-  // ─── Header ───
-  let y = 30;
-  doc.setTextColor(color[0], color[1], color[2]);
-  doc.setFontSize(11);
+  // ═══════ HEADER ═══════
+  doc.setTextColor(...NAVY);
+  doc.setFontSize(10.5);
   doc.setFont("helvetica", "bold");
   doc.text(data.t.header, cx, y, { align: "center" });
-  y += 5;
+  y += 4.5;
 
-  doc.setTextColor(100, 120, 140);
-  doc.setFontSize(7);
+  doc.setTextColor(...GRAY);
+  doc.setFontSize(6.5);
   doc.setFont("helvetica", "normal");
   doc.text(data.t.subtitle, cx, y, { align: "center" });
+  y += 3.5;
+
+  // Thin divider
+  doc.setDrawColor(160, 180, 197);
+  doc.setLineWidth(0.2);
+  doc.line(cx - 30, y, cx + 30, y);
   y += 5;
 
-  // Divider
-  doc.setDrawColor(color[0], color[1], color[2]);
-  doc.setLineWidth(0.3);
-  doc.line(cx - 35, y, cx + 35, y);
-  y += 10;
-
-  // ─── Certificate title ───
-  doc.setTextColor(23, 61, 99);
-  doc.setFontSize(18);
+  // ═══════ CERTIFICATE TITLE ═══════
+  doc.setTextColor(...NAVY);
+  doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  const titleLines = doc.splitTextToSize(data.t.certTitle, W - 50);
+  const titleLines = doc.splitTextToSize(data.t.certTitle, W - 36);
   doc.text(titleLines, cx, y, { align: "center" });
-  y += titleLines.length * 8 + 6;
+  y += titleLines.length * 5.5 + 4;
 
-  // ─── "This certifies that" ───
-  doc.setTextColor(100, 120, 140);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
+  // ═══════ "This document officially certifies..." ═══════
+  doc.setTextColor(...GRAY);
+  doc.setFontSize(8);
+  doc.setFont("times", "italic");
   doc.text(data.t.certifies, cx, y, { align: "center" });
-  y += 10;
-
-  // ─── Name ───
-  doc.setTextColor(color[0], color[1], color[2]);
-  doc.setFontSize(28);
-  doc.setFont("helvetica", "bold");
-  doc.text(data.name, cx, y, { align: "center" });
-  y += 4;
-
-  // Decorative line under name
-  const nameW = doc.getTextWidth(data.name);
-  doc.setDrawColor(color[0], color[1], color[2]);
-  doc.setLineWidth(0.5);
-  doc.line(cx - nameW / 2 - 5, y, cx + nameW / 2 + 5, y);
-  y += 8;
-
-  // ─── Status + Tier badge ───
-  doc.setTextColor(100, 120, 140);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
-  doc.text(data.t.statusLabel, cx, y, { align: "center" });
   y += 7;
 
-  const tierNameW = doc.getTextWidth(data.t.tierName) * 14 / doc.getFontSize();
-  doc.setFillColor(light[0], light[1], light[2]);
-  doc.setDrawColor(color[0], color[1], color[2]);
-  doc.setLineWidth(0.5);
-  doc.roundedRect(cx - tierNameW / 2 - 8, y - 2, tierNameW + 16, 10, 3, 3, "FD");
-  doc.setTextColor(color[0], color[1], color[2]);
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text(data.t.tierName, cx, y + 5, { align: "center" });
-  y += 18;
+  // ═══════ NAME + SEAL — two-column layout ═══════
+  const sealImg = await loadSealImage();
+  const sealSize = 48; // mm — large, prominent seal
+  const leftW = W - margin * 2 - sealSize - 5; // text column width
+  const sealX = W - margin - sealSize;          // seal X position (right)
+  const nameStartY = y;
 
-  // ─── Seal (image) ───
-  const sealDataUrl = await loadSealImage();
-  const sealSize = 28; // mm
-  if (sealDataUrl) {
-    doc.addImage(sealDataUrl, "PNG", cx - sealSize / 2, y, sealSize, sealSize);
-  } else {
-    // Fallback: draw circles if image can't be loaded
-    doc.setDrawColor(color[0], color[1], color[2]);
-    doc.setLineWidth(0.8);
-    doc.circle(cx, y + sealSize / 2, 14);
-    doc.setLineWidth(0.3);
-    doc.circle(cx, y + sealSize / 2, 12);
-  }
-  doc.setTextColor(color[0], color[1], color[2]);
-  doc.setFontSize(3.5);
-  doc.setFont("helvetica", "bold");
-  const sealLines = doc.splitTextToSize(data.t.sealText, 20);
-  doc.text(sealLines, cx, y + sealSize + 3, { align: "center" });
-  y += sealSize + 8;
+  // Name
+  doc.setTextColor(...NAVY);
+  doc.setFontSize(20);
+  doc.setFont("times", "bold");
+  const nameStr = data.name;
+  const nameLines = doc.splitTextToSize(nameStr, leftW);
+  doc.text(nameLines, margin, y);
+  y += nameLines.length * 9 + 2;
 
-  // ─── Single reason (matching preview) ───
-  const reason = data.selectedReason || pickReason(data.name, data.t.reasons);
-  if (reason) {
-    doc.setTextColor(100, 120, 140);
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
-    const reasonLabel = doc.splitTextToSize(data.t.reasonsLabel, W - 60);
-    doc.text(reasonLabel, cx, y, { align: "center" });
-    y += reasonLabel.length * 4 + 2;
-
-    doc.setTextColor(color[0], color[1], color[2]);
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "bold");
-    const reasonLines = doc.splitTextToSize(reason, W - 60);
-    doc.text(reasonLines, cx, y, { align: "center" });
-    y += reasonLines.length * 4 + 4;
-  }
-
-  // ─── Privileges ───
-  if (data.t.privileges) {
-    doc.setTextColor(80, 100, 120);
-    doc.setFontSize(7);
-    doc.setFont("helvetica", "italic");
-    const privLines = doc.splitTextToSize(data.t.privileges, W - 60);
-    doc.text(privLines, cx, y, { align: "center" });
-    y += privLines.length * 3.5 + 4;
-  }
-
-  // ─── Dedication ───
-  if (data.dedication) {
-    doc.setDrawColor(color[0], color[1], color[2]);
-    doc.setLineWidth(0.2);
-    doc.line(cx - 30, y, cx + 30, y);
-    y += 5;
-    doc.setTextColor(color[0], color[1], color[2]);
-    doc.setFontSize(7);
-    doc.setFont("helvetica", "bold");
-    doc.text(data.t.dedicationLabel, cx, y, { align: "center" });
-    y += 5;
-    doc.setTextColor(80, 100, 120);
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "italic");
-    const dedLines = doc.splitTextToSize(`"${data.dedication}"`, W - 60);
-    doc.text(dedLines, cx, y, { align: "center" });
-    y += dedLines.length * 4 + 4;
-  }
-
-  // ─── Bottom section (pinned from bottom) ───
-
-  // Date + Registry (two columns)
-  const bottomStart = H - 60;
-  const leftCol = W / 4;
-  const rightCol = (W * 3) / 4;
-
-  doc.setTextColor(100, 120, 140);
+  // "has been granted the status of"
+  doc.setTextColor(...GRAY);
   doc.setFontSize(7);
+  doc.setFont("times", "italic");
+  doc.text(data.t.statusLabel, margin, y);
+  y += 6;
+
+  // "Protected Friend" — large bold
+  doc.setTextColor(...NAVY);
+  doc.setFontSize(16);
+  doc.setFont("times", "bold");
+  doc.text(data.t.tierName, margin, y);
+  y += 8;
+
+  // Seal — right column, transparent PNG on body background
+  if (sealImg) {
+    doc.addImage(sealImg, "PNG", sealX, nameStartY - 5, sealSize, sealSize);
+  } else {
+    const sealCenterX = sealX + sealSize / 2;
+    const sealCenterY = nameStartY - 5 + sealSize / 2;
+    doc.setDrawColor(...NAVY);
+    doc.setLineWidth(0.5);
+    doc.circle(sealCenterX, sealCenterY, sealSize / 2);
+  }
+
+  // ═══════ BODY TEXT — left aligned ═══════
+  const reason = data.selectedReason || pickReason(data.name, data.t.reasons);
+  const bodyParts: string[] = [];
+  if (reason) bodyParts.push(`${data.t.reasonsLabel} ${reason}`);
+  if (data.t.privileges) bodyParts.push(data.t.privileges);
+  const fullBody = bodyParts.join(" ");
+
+  if (fullBody) {
+    doc.setTextColor(...GRAY);
+    doc.setFontSize(7.5);
+    doc.setFont("times", "normal");
+    const bodyLines = doc.splitTextToSize(fullBody, W - margin * 2);
+    doc.text(bodyLines, margin, y);
+    y += bodyLines.length * 3.5 + 3;
+  }
+
+  // Dedication
+  if (data.dedication) {
+    doc.setTextColor(...GRAY);
+    doc.setFontSize(6);
+    doc.setFont("times", "italic");
+    const dedLines = doc.splitTextToSize(
+      `${data.t.dedicationLabel}: "${data.dedication}"`,
+      W - margin * 2
+    );
+    doc.text(dedLines, margin, y);
+    y += dedLines.length * 3 + 3;
+  }
+
+  // ═══════ BOTTOM SECTION — pinned from page bottom ═══════
+  const sigY = H - 33;
+  const leftCol = margin + 18;
+  const rightCol = W / 2 + 18;
+
+  // Date + Registry labels
+  doc.setTextColor(...GRAY);
+  doc.setFontSize(6.5);
   doc.setFont("helvetica", "normal");
-  doc.text(data.t.dateLabel, leftCol, bottomStart, { align: "center" });
-  doc.text(data.t.registryIdLabel, rightCol, bottomStart, { align: "center" });
+  doc.text(data.t.dateLabel, margin, sigY - 12);
+  doc.text(data.t.registryIdLabel, W / 2 + margin / 2, sigY - 12);
 
-  doc.setDrawColor(color[0], color[1], color[2]);
-  doc.setLineWidth(0.2);
-  doc.line(leftCol - 25, bottomStart + 2, leftCol + 25, bottomStart + 2);
-  doc.line(rightCol - 25, bottomStart + 2, rightCol + 25, bottomStart + 2);
-
-  doc.setTextColor(23, 61, 99);
+  // Date + Registry values
+  doc.setTextColor(...NAVY);
   doc.setFontSize(9);
   doc.setFont("helvetica", "bold");
-  doc.text(data.date, leftCol, bottomStart + 7, { align: "center" });
-  doc.text(data.registryId, rightCol, bottomStart + 7, { align: "center" });
+  doc.text(data.date, margin, sigY - 7);
+  doc.text(data.registryId, W / 2 + margin / 2, sigY - 7);
 
-  // Validity note
-  if (data.t.validityNote) {
-    doc.setTextColor(160, 170, 180);
-    doc.setFontSize(6);
-    doc.setFont("helvetica", "italic");
-    doc.text(data.t.validityNote, cx, bottomStart + 14, { align: "center" });
-  }
-
-  // Signatures
-  const sigY = bottomStart + 22;
-  doc.setTextColor(80, 100, 120);
-  doc.setFontSize(10);
+  // Signature names — italic Times (simulates handwriting)
+  doc.setTextColor(...NAVY);
+  doc.setFontSize(13);
   doc.setFont("times", "italic");
   doc.text(data.t.sig1Name, leftCol, sigY, { align: "center" });
   doc.text(data.t.sig2Name, rightCol, sigY, { align: "center" });
 
-  doc.setDrawColor(150, 160, 170);
-  doc.setLineWidth(0.2);
-  doc.line(leftCol - 25, sigY + 2, leftCol + 25, sigY + 2);
-  doc.line(rightCol - 25, sigY + 2, rightCol + 25, sigY + 2);
+  // Signature lines
+  doc.setDrawColor(138, 159, 181);
+  doc.setLineWidth(0.3);
+  doc.line(leftCol - 22, sigY + 1.5, leftCol + 22, sigY + 1.5);
+  doc.line(rightCol - 22, sigY + 1.5, rightCol + 22, sigY + 1.5);
 
-  doc.setTextColor(160, 170, 180);
+  // Sig titles
+  doc.setTextColor(...LIGHT_GRAY);
   doc.setFontSize(5.5);
   doc.setFont("helvetica", "normal");
-  const sig1Lines = doc.splitTextToSize(data.t.sig1Title, 50);
-  const sig2Lines = doc.splitTextToSize(data.t.sig2Title, 50);
-  doc.text(sig1Lines, leftCol, sigY + 6, { align: "center" });
-  doc.text(sig2Lines, rightCol, sigY + 6, { align: "center" });
+  const sig1Lines = doc.splitTextToSize(data.t.sig1Title, 44);
+  const sig2Lines = doc.splitTextToSize(data.t.sig2Title, 44);
+  doc.text(sig1Lines, leftCol, sigY + 5, { align: "center" });
+  doc.text(sig2Lines, rightCol, sigY + 5, { align: "center" });
 
   // Disclaimer
-  doc.setTextColor(180, 185, 190);
+  doc.setTextColor(...LIGHT_GRAY);
   doc.setFontSize(5);
   doc.setFont("helvetica", "italic");
-  const disclaimerLines = doc.splitTextToSize(data.t.disclaimer, W - 40);
-  doc.text(disclaimerLines, cx, H - 18, { align: "center" });
+  const disclaimerLines = doc.splitTextToSize(data.t.disclaimer, W - margin * 2);
+  doc.text(disclaimerLines, cx, H - 4, { align: "center" });
 
   return doc;
 }

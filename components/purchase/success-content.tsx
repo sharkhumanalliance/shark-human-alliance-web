@@ -91,6 +91,8 @@ function SuccessContentInner() {
 
     if (tier === "business") {
       return {
+        photoHeadline: ct("photoHeadline"),
+        photoTagline: ct("photoTagline"),
         header: ct("businessHeader"),
         subtitle: ct("businessSubtitle"),
         certTitle: ct("businessCertTitle"),
@@ -116,6 +118,8 @@ function SuccessContentInner() {
 
     if (tier === "nonsnack") {
       return {
+        photoHeadline: ct("photoHeadline"),
+        photoTagline: ct("photoTagline"),
         header: ct("header"),
         subtitle: ct("nonsnackSubtitle"),
         certTitle: ct("nonsnackCertTitle"),
@@ -140,6 +144,8 @@ function SuccessContentInner() {
     }
 
     return {
+      photoHeadline: ct("photoHeadline"),
+      photoTagline: ct("photoTagline"),
       header: ct("header"),
       subtitle: ct("subtitle"),
       certTitle: ct("certTitle"),

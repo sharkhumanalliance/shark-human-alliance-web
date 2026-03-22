@@ -10,6 +10,8 @@ interface CertificatePreviewProps {
   date: string;
   registryId: string;
   t: {
+    photoHeadline: string;
+    photoTagline: string;
     header: string;
     subtitle: string;
     certTitle: string;
@@ -33,73 +35,14 @@ interface CertificatePreviewProps {
   };
 }
 
-const getTierColors = (tier: string) => {
-  switch (tier) {
-    case 'basic':
-    case 'protected':
-      return {
-        borderColor: '#5eead4',
-        accentColor: '#0d9488',
-        accentBg: '#f0fdfa',
-        sealColor: '#14b8a6',
-        gradientFrom: '#f0fdfa',
-        gradientTo: '#ecfeff',
-        sharkOpacity: '0.04',
-      };
-    case 'nonsnack':
-      return {
-        borderColor: '#fdba74',
-        accentColor: '#ea580c',
-        accentBg: '#fff7ed',
-        sealColor: '#f97316',
-        gradientFrom: '#fff7ed',
-        gradientTo: '#fffbeb',
-        sharkOpacity: '0.04',
-      };
-    case 'business':
-      return {
-        borderColor: '#c4b5fd',
-        accentColor: '#7c3aed',
-        accentBg: '#f5f3ff',
-        sealColor: '#8b5cf6',
-        gradientFrom: '#f5f3ff',
-        gradientTo: '#eef2ff',
-        sharkOpacity: '0.04',
-      };
-    default:
-      return {
-        borderColor: '#5eead4',
-        accentColor: '#0d9488',
-        accentBg: '#f0fdfa',
-        sealColor: '#14b8a6',
-        gradientFrom: '#f0fdfa',
-        gradientTo: '#ecfeff',
-        sharkOpacity: '0.04',
-      };
+function hashName(name: string): number {
+  let hash = 0;
+  const seed = name || 'default';
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
   }
-};
-
-/* Inline SVG shark silhouette as a watermark */
-const SharkWatermark = ({ color, opacity }: { color: string; opacity: string }) => (
-  <svg
-    className="absolute inset-0 w-full h-full pointer-events-none"
-    viewBox="0 0 800 600"
-    preserveAspectRatio="xMidYMid slice"
-    aria-hidden="true"
-  >
-    <g transform="translate(400, 300) scale(2.2)" opacity={opacity}>
-      <path
-        d="M-80,0 C-70,-15 -50,-25 -30,-28 C-10,-31 10,-28 25,-20 C35,-15 45,-8 55,-3 C65,2 80,5 95,3 C85,8 70,10 60,8 C50,12 40,15 30,14 C20,13 10,10 0,8 C-10,6 -25,8 -35,12 C-45,16 -55,12 -65,8 C-75,4 -85,5 -80,0Z"
-        fill={color}
-      />
-      <path d="M-10,-28 C-5,-45 5,-50 10,-28" fill={color} />
-      <path
-        d="M-80,0 C-90,-12 -100,-20 -105,-25 C-95,-15 -90,-5 -80,0 C-90,5 -95,15 -105,25 C-100,20 -90,12 -80,0Z"
-        fill={color}
-      />
-    </g>
-  </svg>
-);
+  return Math.abs(hash);
+}
 
 export const CertificatePreview: React.FC<CertificatePreviewProps> = ({
   name,
@@ -109,195 +52,311 @@ export const CertificatePreview: React.FC<CertificatePreviewProps> = ({
   registryId,
   t,
 }) => {
-  const colors = getTierColors(tier);
-
-  // Pick one random reason from the pool (stable per name to avoid flicker)
   const selectedReason = useMemo(() => {
     if (!t.reasons || t.reasons.length === 0) return null;
-    let hash = 0;
-    const seed = name || 'default';
-    for (let i = 0; i < seed.length; i++) {
-      hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
-    }
-    const idx = Math.abs(hash) % t.reasons.length;
-    return t.reasons[idx];
+    return t.reasons[hashName(name) % t.reasons.length];
   }, [name, t.reasons]);
 
+  // Tier colours
+  const accentColor =
+    tier === 'nonsnack' ? '#b85c00' :
+    tier === 'business' ? '#5b21b6' :
+    '#1a3a5c';
+
+  const tierBgColor =
+    tier === 'nonsnack' ? '#fff3e0' :
+    tier === 'business' ? '#ede9fe' :
+    '#e8f0fb';
+
+  const tierBorderColor =
+    tier === 'nonsnack' ? '#f97316' :
+    tier === 'business' ? '#8b5cf6' :
+    '#2563eb';
+
+  // Body text combining reason + privileges (left-aligned as in original)
+  const bodyText = [
+    selectedReason ? `${t.reasonsLabel} ${selectedReason}` : null,
+    t.privileges || null,
+  ].filter(Boolean).join(' ');
+
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center w-full">
       <div
-        className="w-full max-w-lg rounded-[1.5rem] shadow-2xl relative overflow-hidden"
+        className="w-full max-w-lg shadow-2xl overflow-hidden"
         style={{
           aspectRatio: '210 / 297',
-          background: `linear-gradient(135deg, ${colors.gradientFrom}, ${colors.gradientTo})`,
-          border: `3px solid ${colors.borderColor}`,
+          fontFamily: 'Georgia, "Times New Roman", serif',
+          position: 'relative',
         }}
       >
-        {/* Shark watermark background */}
-        <SharkWatermark color={colors.accentColor} opacity={colors.sharkOpacity} />
+        {/* ══════ TOP — Shark photo (headline + tagline baked in) ══════ */}
+        <div style={{ position: 'relative', height: '38%' }}>
+          <Image
+            src="/cert-shark.jpg"
+            alt={`${t.photoHeadline} — ${t.photoTagline}`}
+            fill
+            className="object-cover object-top"
+            sizes="(max-width: 512px) 100vw, 512px"
+            priority
+          />
+        </div>
 
-        {/* Inner decorative border */}
+        {/* ══════ CERTIFICATE BODY ══════ */}
         <div
-          className="absolute inset-[6%] rounded-[0.75rem] pointer-events-none"
-          style={{ border: `1px solid ${colors.borderColor}` }}
-        />
+          style={{
+            position: 'relative',
+            height: '62%',
+            background: 'linear-gradient(180deg, #eef2f7 0%, #e8edf5 40%, #eef2f7 100%)',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '2.5% 7% 2%',
+          }}
+        >
+          {/* Top blue accent line */}
+          <div style={{
+            height: '2px',
+            background: 'linear-gradient(90deg, transparent, #1a6fa0 20%, #1a6fa0 80%, transparent)',
+            marginBottom: '2%',
+          }} />
 
-        {/* Corner ornaments */}
-        <div className="absolute top-[3%] left-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
-        <div className="absolute top-[3%] right-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
-        <div className="absolute bottom-[3%] left-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
-        <div className="absolute bottom-[3%] right-[3%] text-base opacity-20" style={{ color: colors.accentColor }}>❖</div>
+          {/* UNITED OCEANS DIPLOMATIC CORPS */}
+          <p style={{
+            textAlign: 'center',
+            fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+            fontWeight: 700,
+            fontSize: 'clamp(7px, 1.7vw, 11.5px)',
+            letterSpacing: '0.18em',
+            color: '#1a3a5c',
+            textTransform: 'uppercase',
+            marginBottom: '0.5%',
+          }}>
+            {t.header}
+          </p>
 
-        {/* Content — matches PDF layout order and proportions */}
-        <div className="relative z-10 flex flex-col h-full px-[11%] py-[9%]" style={{ gap: '2.5%' }}>
+          {/* Subtitle */}
+          <p style={{
+            textAlign: 'center',
+            fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+            fontSize: 'clamp(5.5px, 1.15vw, 7.5px)',
+            color: '#6b7e94',
+            marginBottom: '1.2%',
+          }}>
+            {t.subtitle}
+          </p>
 
-          {/* Header */}
-          <div className="text-center">
-            <p
-              className="text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase"
-              style={{ color: colors.accentColor }}
-            >
-              {t.header}
-            </p>
-            <p className="mt-0.5 text-[7px] sm:text-[8px] text-gray-400 tracking-wide">
-              {t.subtitle}
-            </p>
-            <div className="mt-1.5 mx-auto w-[35%] h-px" style={{ backgroundColor: colors.borderColor }} />
-          </div>
+          {/* Thin divider */}
+          <div style={{
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, #a0b4c8 20%, #a0b4c8 80%, transparent)',
+            marginBottom: '1.5%',
+          }} />
 
-          {/* Cert Title */}
-          <div className="text-center">
-            <p className="text-sm sm:text-base font-bold text-gray-800 leading-tight tracking-tight">
-              {t.certTitle}
-            </p>
-          </div>
+          {/* CERTIFICATE TITLE */}
+          <p style={{
+            textAlign: 'center',
+            fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+            fontWeight: 700,
+            fontSize: 'clamp(8px, 2.1vw, 14px)',
+            letterSpacing: '0.04em',
+            color: '#1a3a5c',
+            textTransform: 'uppercase',
+            lineHeight: 1.25,
+            marginBottom: '1.5%',
+          }}>
+            {t.certTitle}
+          </p>
 
-          {/* Certifies + Name + Status */}
-          <div className="text-center">
-            <p className="text-[10px] text-gray-500">
-              {t.certifies}
-            </p>
-            <p
-              className="mt-1 text-xl sm:text-2xl font-bold leading-tight"
-              style={{ color: colors.accentColor }}
-            >
-              {name}
-            </p>
-            <div
-              className="mt-1.5 mx-auto w-[50%] h-px"
-              style={{ backgroundColor: colors.borderColor }}
-            />
-            <p className="mt-1.5 text-[10px] text-gray-500">{t.statusLabel}</p>
-            <div className="mt-1 inline-block px-4 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase"
-              style={{
-                backgroundColor: colors.accentBg,
-                color: colors.accentColor,
-                border: `2px solid ${colors.borderColor}`,
-              }}
-            >
-              {t.tierName}
+          {/* "This document officially certifies that the esteemed" */}
+          <p style={{
+            textAlign: 'center',
+            fontFamily: 'Georgia, "Times New Roman", serif',
+            fontStyle: 'italic',
+            fontSize: 'clamp(5.5px, 1.2vw, 8px)',
+            color: '#4a5f75',
+            marginBottom: '1%',
+          }}>
+            {t.certifies}
+          </p>
+
+          {/* NAME + SEAL — two columns */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3%', marginBottom: '1%' }}>
+
+            {/* Left: name, status, tier */}
+            <div style={{ flex: '1 1 60%' }}>
+              {/* Name */}
+              <p style={{
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                fontSize: 'clamp(11px, 3vw, 20px)',
+                fontWeight: 700,
+                color: '#1a3a5c',
+                lineHeight: 1.1,
+                marginBottom: '1%',
+              }}>
+                {name || 'Your Name Here'}
+              </p>
+
+              {/* "has been granted the status of" */}
+              <p style={{
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                fontStyle: 'italic',
+                fontSize: 'clamp(5.5px, 1.15vw, 7.5px)',
+                color: '#4a5f75',
+                marginBottom: '0.8%',
+              }}>
+                {t.statusLabel}
+              </p>
+
+              {/* PROTECTED FRIEND — large bold */}
+              <p style={{
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                fontSize: 'clamp(10px, 2.6vw, 18px)',
+                fontWeight: 700,
+                color: '#1a3a5c',
+                lineHeight: 1.1,
+              }}>
+                {t.tierName}
+              </p>
             </div>
-          </div>
 
-          {/* Seal — mascot image */}
-          <div className="flex flex-col items-center">
-            <div className="relative" style={{ width: '22%' }}>
+            {/* Right: Seal — transparent PNG flows naturally, no box container */}
+            <div style={{ flex: '0 0 42%', display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
               <Image
-                src="/seal.png"
-                alt="SHA Seal"
+                src="/cert-seal.png"
+                alt={t.sealText}
                 width={200}
                 height={200}
-                className="w-full h-auto"
+                style={{ width: '100%', height: 'auto' }}
               />
             </div>
-            <p
-              className="text-center text-[6px] sm:text-[7px] font-bold uppercase tracking-widest mt-1 max-w-[40%]"
-              style={{ color: colors.sealColor }}
-            >
-              {t.sealText}
-            </p>
           </div>
 
-          {/* Reason */}
-          {selectedReason && (
-            <p className="text-center text-[10px] sm:text-[11px] leading-relaxed text-gray-600 max-w-[80%] mx-auto">
-              {t.reasonsLabel}{' '}
-              <span className="font-semibold" style={{ color: colors.accentColor }}>
-                {selectedReason}
-              </span>
-            </p>
-          )}
-
-          {/* Privileges */}
-          {t.privileges && (
-            <p className="text-center text-[8px] sm:text-[9px] text-gray-400 italic leading-relaxed max-w-[80%] mx-auto">
-              {t.privileges}
+          {/* Body text — left-aligned as in original */}
+          {bodyText && (
+            <p style={{
+              fontFamily: 'Georgia, "Times New Roman", serif',
+              fontSize: 'clamp(5.5px, 1.15vw, 8px)',
+              color: '#2c3e50',
+              lineHeight: 1.45,
+              marginBottom: '1.2%',
+            }}>
+              {bodyText}
             </p>
           )}
 
           {/* Dedication */}
           {dedication && (
-            <div className="text-center pt-1.5 mx-[8%]" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
-              <p className="text-[8px] text-gray-400 mb-0.5">{t.dedicationLabel}</p>
-              <p className="text-[10px] text-gray-600 italic">&ldquo;{dedication}&rdquo;</p>
-            </div>
-          )}
-
-          {/* Spacer to push bottom section down */}
-          <div className="flex-1" />
-
-          {/* Date + Registry — two columns */}
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="pt-1.5" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
-              <p className="text-[8px] text-gray-400 mb-0.5">{t.dateLabel}</p>
-              <p className="text-[10px] font-semibold text-gray-600">{date}</p>
-            </div>
-            <div className="pt-1.5" style={{ borderTop: `1px solid ${colors.borderColor}` }}>
-              <p className="text-[8px] text-gray-400 mb-0.5">{t.registryIdLabel}</p>
-              <p className="text-[10px] font-mono font-semibold text-gray-600">{registryId}</p>
-            </div>
-          </div>
-
-          {/* Validity note */}
-          {t.validityNote && (
-            <p className="text-center text-[7px] text-gray-400 italic">
-              {t.validityNote}
+            <p style={{
+              fontFamily: 'Georgia, "Times New Roman", serif',
+              fontStyle: 'italic',
+              fontSize: 'clamp(5px, 1.05vw, 7px)',
+              color: '#4a5f75',
+              marginBottom: '1%',
+            }}>
+              {t.dedicationLabel}: &ldquo;{dedication}&rdquo;
             </p>
           )}
 
-          {/* Signatures — two columns */}
-          <div className="grid grid-cols-2 gap-6 text-center">
+          {/* Spacer */}
+          <div style={{ flex: 1 }} />
+
+          {/* Date + Registry — two columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4%', marginBottom: '1%' }}>
             <div>
-              <div className="font-serif italic text-[11px] sm:text-xs text-gray-500 mb-0.5">
-                {t.sig1Name}
-              </div>
-              <div className="mx-auto w-[80%] h-px bg-gray-300 mb-0.5" />
-              <p className="text-[7px] text-gray-400 leading-tight">
-                {t.sig1Title}
+              <p style={{
+                fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+                fontSize: 'clamp(5px, 1vw, 6.5px)',
+                color: '#4a5f75',
+                marginBottom: '0.3%',
+              }}>
+                {t.dateLabel}
+              </p>
+              <p style={{
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                fontWeight: 700,
+                fontSize: 'clamp(6.5px, 1.35vw, 9px)',
+                color: '#1a3a5c',
+              }}>
+                {date}
               </p>
             </div>
             <div>
-              <div className="font-serif italic text-[11px] sm:text-xs text-gray-500 mb-0.5">
+              <p style={{
+                fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+                fontSize: 'clamp(5px, 1vw, 6.5px)',
+                color: '#4a5f75',
+                marginBottom: '0.3%',
+              }}>
+                {t.registryIdLabel}
+              </p>
+              <p style={{
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                fontWeight: 700,
+                fontSize: 'clamp(6.5px, 1.35vw, 9px)',
+                color: '#1a3a5c',
+              }}>
+                {registryId}
+              </p>
+            </div>
+          </div>
+
+          {/* Signatures — two columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4%', marginBottom: '0.8%' }}>
+            {/* Sig 1 */}
+            <div>
+              <p style={{
+                fontFamily: '"Brush Script MT", "Segoe Script", "Dancing Script", cursive',
+                fontSize: 'clamp(10px, 2.2vw, 15px)',
+                color: '#1a3a5c',
+                lineHeight: 1,
+                marginBottom: '0.3%',
+              }}>
+                {t.sig1Name}
+              </p>
+              <div style={{ height: '1px', background: '#8a9fb5', marginBottom: '0.5%' }} />
+              <p style={{
+                fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+                fontSize: 'clamp(4.5px, 0.9vw, 6px)',
+                color: '#4a5f75',
+                lineHeight: 1.3,
+              }}>
+                {t.sig1Title}
+              </p>
+            </div>
+            {/* Sig 2 */}
+            <div>
+              <p style={{
+                fontFamily: '"Brush Script MT", "Segoe Script", "Dancing Script", cursive',
+                fontSize: 'clamp(10px, 2.2vw, 15px)',
+                color: '#1a3a5c',
+                lineHeight: 1,
+                marginBottom: '0.3%',
+              }}>
                 {t.sig2Name}
-              </div>
-              <div className="mx-auto w-[80%] h-px bg-gray-300 mb-0.5" />
-              <p className="text-[7px] text-gray-400 leading-tight">
+              </p>
+              <div style={{ height: '1px', background: '#8a9fb5', marginBottom: '0.5%' }} />
+              <p style={{
+                fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+                fontSize: 'clamp(4.5px, 0.9vw, 6px)',
+                color: '#4a5f75',
+                lineHeight: 1.3,
+              }}>
                 {t.sig2Title}
               </p>
             </div>
           </div>
 
-          {/* Legal disclaimer */}
-          <div
-            className="text-center text-[6px] sm:text-[7px] rounded-md px-3 py-1.5"
-            style={{
-              backgroundColor: colors.accentBg,
-              border: `1px solid ${colors.borderColor}`,
-              color: '#b0b8c4',
-            }}
-          >
-            <p>{t.disclaimer}</p>
-          </div>
+          {/* Disclaimer */}
+          <p style={{
+            fontFamily: '"Arial", "Helvetica Neue", sans-serif',
+            fontSize: 'clamp(4px, 0.75vw, 5.5px)',
+            color: '#8a9fb5',
+            lineHeight: 1.3,
+            textAlign: 'center',
+            borderTop: '1px solid #c5d5e5',
+            paddingTop: '0.8%',
+          }}>
+            {t.disclaimer}
+          </p>
         </div>
       </div>
     </div>

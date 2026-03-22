@@ -519,7 +519,7 @@
     "noEmailContinue": "Continue without email",
     "noEmailAddEmail": "Add email address",
     "promoCodeLabel": "Promo code (optional)",
-    "promoCodePlaceholder": "e.g. SHATEST",
+    "promoCodePlaceholder": "Enter code",
     "stripeSecure": "Secure payment via Stripe",
     "stripeSecureNote": "Sharks can't read card numbers — your payment info is safe. You'll be redirected to Stripe's secure checkout.",
     "submitButton": "Proceed to Payment",
@@ -587,6 +587,8 @@
     "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, make you part of a very exclusive list of people who paid money to be told they are not food."
   },
   "certificate": {
+    "photoHeadline": "Are you afraid of sharks?",
+    "photoTagline": "Don't worry, sharks are your friends now.",
     "header": "UNITED OCEANS DIPLOMATIC CORPS",
     "subtitle": "Shark Human Alliance | Bureau of Not Being Eaten",
     "certTitle": "CERTIFICATE OF DIPLOMATIC PROTECTION FROM SHARK ENCOUNTERS",

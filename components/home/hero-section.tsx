@@ -15,7 +15,7 @@ export function HeroSection() {
             {t("giftBadge")}
           </div>
 
-          <h1 className="max-w-2xl text-5xl font-bold tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+          <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
             {t("titleLine1")}
             <br />
             <span className="text-[var(--brand)]">{t("titleLine2")}</span>

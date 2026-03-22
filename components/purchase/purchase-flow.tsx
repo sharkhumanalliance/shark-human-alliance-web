@@ -103,6 +103,8 @@ function PurchaseFlowInner() {
 
     if (tier === "business") {
       return {
+        photoHeadline: ct("photoHeadline"),
+        photoTagline: ct("photoTagline"),
         header: ct("businessHeader"),
         subtitle: ct("businessSubtitle"),
         certTitle: ct("businessCertTitle"),
@@ -128,6 +130,8 @@ function PurchaseFlowInner() {
 
     if (tier === "nonsnack") {
       return {
+        photoHeadline: ct("photoHeadline"),
+        photoTagline: ct("photoTagline"),
         header: ct("header"),
         subtitle: ct("nonsnackSubtitle"),
         certTitle: ct("nonsnackCertTitle"),
@@ -152,6 +156,8 @@ function PurchaseFlowInner() {
     }
 
     return {
+      photoHeadline: ct("photoHeadline"),
+      photoTagline: ct("photoTagline"),
       header: ct("header"),
       subtitle: ct("subtitle"),
       certTitle: ct("certTitle"),

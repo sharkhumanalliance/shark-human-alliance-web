@@ -519,7 +519,7 @@
     "noEmailContinue": "Continuar sin email",
     "noEmailAddEmail": "Añadir dirección de email",
     "promoCodeLabel": "Código promocional (opcional)",
-    "promoCodePlaceholder": "ej. SHATEST",
+    "promoCodePlaceholder": "Introduce el código",
     "stripeSecure": "Pago seguro vía Stripe",
     "stripeSecureNote": "Los tiburones no pueden leer números de tarjeta — tu información de pago está segura. Serás redirigido al checkout seguro de Stripe.",
     "submitButton": "Proceder al Pago",
@@ -587,6 +587,8 @@
     "disclaimerText": "Este registro no proporciona estatus legal, marino ni nutricional. La inclusión no reduce tu probabilidad estadística de ser el almuerzo de un tiburón. Sin embargo, te convierte en parte de una lista muy exclusiva de personas que pagaron dinero para que les dijeran que no son comida."
   },
   "certificate": {
+    "photoHeadline": "¿Tienes miedo a los tiburones?",
+    "photoTagline": "No te preocupes, los tiburones son tus amigos ahora.",
     "header": "CUERPO DIPLOMÁTICO DE OCÉANOS UNIDOS",
     "subtitle": "Alianza Tiburón-Humano | Oficina de No Ser Comido",
     "certTitle": "CERTIFICADO DE PROTECCIÓN DIPLOMÁTICA ANTE ENCUENTROS CON TIBURONES",

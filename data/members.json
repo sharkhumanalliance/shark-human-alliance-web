@@ -138,5 +138,15 @@
     "referralCode": "SHA-Y73Z",
     "referralCount": 0,
     "stripeSessionId": "promo_1774095617869_me7buk"
+  },
+  {
+    "id": "m-1774102417791-k8z4yn",
+    "name": "Jim Bean",
+    "tier": "protected",
+    "date": "2026-03-21",
+    "dedication": "Because you always said 'something touched my foot'",
+    "referralCode": "SHA-NGTA",
+    "referralCount": 0,
+    "stripeSessionId": "promo_1774102417791_fzhwf3"
   }
 ]

@@ -9,6 +9,8 @@ import { trackEvent } from "@/components/analytics";
 function useCertTranslations() {
   const ct = useTranslations("certificate");
   return {
+    photoHeadline: ct("photoHeadline"),
+    photoTagline: ct("photoTagline"),
     header: ct("header"),
     subtitle: ct("subtitle"),
     certTitle: ct("certTitle"),
@@ -69,7 +71,7 @@ export function HomeContent() {
   return (
     <>
       {/* 1 — Value prop + impact hook */}
-      <section className="py-14">
+      <section className="py-14 bg-[var(--surface-soft)]">
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
