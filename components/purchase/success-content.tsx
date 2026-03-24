@@ -1,10 +1,11 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef, Suspense } from "react";
-import { generateCertificatePDF } from "@/lib/generate-certificate";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
+import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { trackEvent } from "@/components/analytics";
 
 interface MemberData {
@@ -15,18 +16,19 @@ interface MemberData {
   dedication: string;
   referralCode: string;
   referralCount: number;
+  accessToken?: string;
 }
 
 function SuccessContentInner() {
   const t = useTranslations("purchase");
-  const ct = useTranslations("certificate");
+  const locale = useLocale();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id") || "";
 
   const [member, setMember] = useState<MemberData | null>(null);
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [pageFormat, setPageFormat] = useState<"a4" | "letter">("a4");
+  const [template, setTemplate] = useState<CertificateTemplate>("hero");
   const purchaseTrackedRef = useRef(false);
 
   useEffect(() => {
@@ -80,125 +82,20 @@ function SuccessContentInner() {
     poll();
   }, [sessionId]);
 
-  function getCertTranslations(tier: string) {
-    function readReasons(prefix: string, max: number) {
-      const arr: string[] = [];
-      for (let i = 0; i < max; i++) {
-        try { arr.push(ct(`${prefix}.${i}`)); } catch { break; }
-      }
-      return arr;
-    }
-
-    if (tier === "business") {
-      return {
-        photoHeadline: ct("photoHeadline"),
-        photoTagline: ct("photoTagline"),
-        header: ct("businessHeader"),
-        subtitle: ct("businessSubtitle"),
-        certTitle: ct("businessCertTitle"),
-        certifies: ct("certifies"),
-        statusLabel: ct("statusLabel"),
-        tierName: ct("tierNames.business"),
-        body: ct("businessBody"),
-        reasonsLabel: ct("businessReasonsLabel"),
-        reasons: readReasons("businessReasons", 10),
-        privileges: ct("businessPrivileges"),
-        validityNote: ct("businessValidityNote"),
-        sig1Name: ct("sig1Name"),
-        sig1Title: ct("sig1Title"),
-        sig2Name: ct("sig2Name"),
-        sig2Title: ct("sig2Title"),
-        sealText: ct("sealText"),
-        dedicationLabel: ct("dedication"),
-        dateLabel: ct("dateLabel"),
-        registryIdLabel: ct("registryId"),
-        disclaimer: ct("businessDisclaimer"),
-      };
-    }
-
-    if (tier === "nonsnack") {
-      return {
-        photoHeadline: ct("photoHeadline"),
-        photoTagline: ct("photoTagline"),
-        header: ct("header"),
-        subtitle: ct("nonsnackSubtitle"),
-        certTitle: ct("nonsnackCertTitle"),
-        certifies: ct("certifies"),
-        statusLabel: ct("statusLabel"),
-        tierName: ct("tierNames.nonsnack"),
-        body: ct("nonsnackBody"),
-        reasonsLabel: ct("nonsnackReasonsLabel"),
-        reasons: readReasons("nonsnackReasons", 10),
-        privileges: ct("nonsnackPrivileges"),
-        validityNote: ct("validityNote"),
-        sig1Name: ct("sig1Name"),
-        sig1Title: ct("sig1Title"),
-        sig2Name: ct("sig2Name"),
-        sig2Title: ct("sig2Title"),
-        sealText: ct("sealText"),
-        dedicationLabel: ct("dedication"),
-        dateLabel: ct("dateLabel"),
-        registryIdLabel: ct("registryId"),
-        disclaimer: ct("nonsnackDisclaimer"),
-      };
-    }
-
-    return {
-      photoHeadline: ct("photoHeadline"),
-      photoTagline: ct("photoTagline"),
-      header: ct("header"),
-      subtitle: ct("subtitle"),
-      certTitle: ct("certTitle"),
-      certifies: ct("certifies"),
-      statusLabel: ct("statusLabel"),
-      tierName: ct("tierNames.protected"),
-      body: ct("body"),
-      reasonsLabel: ct("reasonsLabel"),
-      reasons: readReasons("reasons", 10),
-      privileges: ct("privileges"),
-      validityNote: ct("validityNote"),
-      sig1Name: ct("sig1Name"),
-      sig1Title: ct("sig1Title"),
-      sig2Name: ct("sig2Name"),
-      sig2Title: ct("sig2Title"),
-      sealText: ct("sealText"),
-      dedicationLabel: ct("dedication"),
-      dateLabel: ct("dateLabel"),
-      registryIdLabel: ct("registryId"),
-      disclaimer: ct("disclaimer"),
-    };
-  }
-
-  /** Pick one reason — same hash logic as CertificatePreview so preview and PDF match. */
-  function pickReason(name: string, reasons: string[]): string | undefined {
-    if (!reasons || reasons.length === 0) return undefined;
-    let hash = 0;
-    const seed = name || "default";
-    for (let i = 0; i < seed.length; i++) {
-      hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
-    }
-    return reasons[Math.abs(hash) % reasons.length];
-  }
-
-  async function handleDownloadCertificate(format: "a4" | "letter" = pageFormat) {
+  function handleDownloadCertificate() {
     if (!member) return;
-    trackEvent("certificate_download", { tier: member.tier, format });
-    const certT = getCertTranslations(member.tier);
-    const doc = await generateCertificatePDF({
-      name: member.name,
-      tier: member.tier,
-      date: new Date(member.date).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-      dedication: member.dedication,
-      registryId: member.id.toUpperCase(),
-      format,
-      selectedReason: pickReason(member.name, certT.reasons),
-      t: certT,
-    });
-    doc.save(`SHA-Certificate-${member.name.replace(/\s+/g, "-")}.pdf`);
+    trackEvent("certificate_download", { tier: member.tier, format: "a4" });
+    if (!member.accessToken) {
+      // Token not available — certificate not ready or legacy member without token.
+      // Do not fall back to ID-based URL to avoid exposing predictable routes.
+      alert("Certificate is not ready yet. Please try again in a moment.");
+      return;
+    }
+    window.open(
+      `/${locale}/certificate/view?token=${member.accessToken}&template=${template}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   }
 
   // Loading state
@@ -233,7 +130,7 @@ function SuccessContentInner() {
             {t("successPendingText")}
           </p>
           <a
-            href="/"
+            href={`/${locale}`}
             className="mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
           >
             {t("backHome")}
@@ -265,59 +162,38 @@ function SuccessContentInner() {
           </p>
         </div>
 
-        {/* Certificate visual preview */}
+        {/* Template selector */}
         <div className="mt-10">
+          <CertificateTemplateSelector value={template} onChange={setTemplate} />
+        </div>
+
+        {/* Certificate visual preview */}
+        <div className="mt-6">
           <CertificatePreview
             name={member.name}
             tier={member.tier}
             dedication={member.dedication}
             date={displayDate}
             registryId={member.id.toUpperCase()}
-            t={getCertTranslations(member.tier)}
+            template={template}
           />
         </div>
 
         {/* Actions */}
-        <div className="mt-8 flex flex-col items-center gap-4">
-          {/* Format selector */}
-          <div className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white p-1">
-            <button
-              onClick={() => setPageFormat("a4")}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
-                pageFormat === "a4"
-                  ? "bg-[var(--brand)] text-white"
-                  : "text-[var(--muted)] hover:text-[var(--brand-dark)]"
-              }`}
-            >
-              A4
-            </button>
-            <button
-              onClick={() => setPageFormat("letter")}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
-                pageFormat === "letter"
-                  ? "bg-[var(--brand)] text-white"
-                  : "text-[var(--muted)] hover:text-[var(--brand-dark)]"
-              }`}
-            >
-              US Letter
-            </button>
-          </div>
+        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <button
+            onClick={handleDownloadCertificate}
+            className="inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+          >
+            {t("downloadCert")} (A4)
+          </button>
 
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <button
-              onClick={() => handleDownloadCertificate()}
-              className="inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-            >
-              {t("downloadCert")} ({pageFormat === "a4" ? "A4" : "US Letter"})
-            </button>
-
-            <a
-              href={`/registry?highlight=${member.id}`}
-              className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
-            >
-              {t("viewRegistry")}
-            </a>
-          </div>
+          <a
+            href={`/${locale}/registry?highlight=${member.id}`}
+            className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+          >
+            {t("viewRegistry")}
+          </a>
         </div>
 
         {/* Referral section */}
@@ -333,14 +209,14 @@ function SuccessContentInner() {
               <div className="mt-4 flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 mx-auto max-w-sm">
                 <input
                   type="text"
-                  value={`${typeof window !== "undefined" ? window.location.origin : ""}/purchase?tier=protected&ref=${member.referralCode}`}
+                  value={`${typeof window !== "undefined" ? window.location.origin : ""}/${locale}/purchase?tier=protected&ref=${member.referralCode}`}
                   readOnly
                   className="flex-grow bg-transparent text-sm font-mono text-[var(--brand-dark)] focus:outline-none truncate"
                 />
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `${window.location.origin}/purchase?tier=protected&ref=${member.referralCode}`
+                      `${window.location.origin}/${locale}/purchase?tier=protected&ref=${member.referralCode}`
                     );
                     setLinkCopied(true);
                     trackEvent("referral_link_copy", { tier: member.tier });
@@ -352,7 +228,7 @@ function SuccessContentInner() {
                 </button>
               </div>
               <a
-                href="/career"
+                href={`/${locale}/career`}
                 className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
               >
                 {t("referralCareerLink")} →
@@ -370,7 +246,7 @@ function SuccessContentInner() {
 
         <div className="mt-4 text-center">
           <a
-            href="/"
+            href={`/${locale}`}
             className="text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
           >
             {t("backHome")}

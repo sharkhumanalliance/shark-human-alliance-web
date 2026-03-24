@@ -1,10 +1,16 @@
 import jsPDF from "jspdf";
 
-/* ─── Image caches ─── */
+/* ─── Image loading — supports both browser (fetch) and server (fs) ─── */
+
 let sealImageCache: string | null = null;
 let sharkImageCache: string | null = null;
 
-async function loadImageAsBase64(url: string): Promise<string | null> {
+/**
+ * Browser-side: fetch from relative URL and convert via FileReader.
+ * Falls back gracefully if not in browser context.
+ */
+async function loadImageAsBase64Browser(url: string): Promise<string | null> {
+  if (typeof window === "undefined") return null;
   try {
     const res = await fetch(url);
     const blob = await res.blob();
@@ -19,21 +25,66 @@ async function loadImageAsBase64(url: string): Promise<string | null> {
   }
 }
 
+/**
+ * Server-side: read from public/ directory via fs.
+ */
+async function loadImageFromFilesystem(filename: string): Promise<string | null> {
+  try {
+    const fs = await import("fs/promises");
+    const path = await import("path");
+    const filePath = path.join(process.cwd(), "public", filename);
+    const buffer = await fs.readFile(filePath);
+    const ext = filename.endsWith(".png") ? "png" : "jpeg";
+    return `data:image/${ext};base64,${buffer.toString("base64")}`;
+  } catch {
+    return null;
+  }
+}
+
 async function loadSealImage(): Promise<string | null> {
   if (sealImageCache) return sealImageCache;
-  sealImageCache = await loadImageAsBase64("/cert-seal.png");
+  sealImageCache =
+    (await loadImageAsBase64Browser("/cert-seal.png")) ??
+    (await loadImageFromFilesystem("cert-seal.png"));
   return sealImageCache;
 }
 
 async function loadSharkImage(): Promise<string | null> {
   if (sharkImageCache) return sharkImageCache;
-  sharkImageCache = await loadImageAsBase64("/cert-shark.jpg");
+  sharkImageCache =
+    (await loadImageAsBase64Browser("/cert-shark.jpg")) ??
+    (await loadImageFromFilesystem("cert-shark.jpg"));
   return sharkImageCache;
 }
 
 type PageFormat = "a4" | "letter";
 
-type CertificateData = {
+export type CertificateTranslationsForPDF = {
+  photoHeadline: string;
+  photoTagline: string;
+  header: string;
+  subtitle: string;
+  certTitle: string;
+  certifies: string;
+  statusLabel: string;
+  tierName: string;
+  body: string;
+  reasonsLabel: string;
+  reasons: string[];
+  privileges: string;
+  validityNote: string;
+  sig1Name: string;
+  sig1Title: string;
+  sig2Name: string;
+  sig2Title: string;
+  sealText: string;
+  dedicationLabel: string;
+  dateLabel: string;
+  registryIdLabel: string;
+  disclaimer: string;
+};
+
+export type CertificateData = {
   name: string;
   tier: "basic" | "protected" | "nonsnack" | "business";
   date: string;
@@ -41,30 +92,7 @@ type CertificateData = {
   registryId: string;
   format?: PageFormat;
   selectedReason?: string;
-  t: {
-    photoHeadline: string;
-    photoTagline: string;
-    header: string;
-    subtitle: string;
-    certTitle: string;
-    certifies: string;
-    statusLabel: string;
-    tierName: string;
-    body: string;
-    reasonsLabel: string;
-    reasons: string[];
-    privileges: string;
-    validityNote: string;
-    sig1Name: string;
-    sig1Title: string;
-    sig2Name: string;
-    sig2Title: string;
-    sealText: string;
-    dedicationLabel: string;
-    dateLabel: string;
-    registryIdLabel: string;
-    disclaimer: string;
-  };
+  t: CertificateTranslationsForPDF;
 };
 
 // All tiers use dark navy as the main accent to match the original design
@@ -92,19 +120,18 @@ export async function generateCertificatePDF(
     format: pageFormat,
   });
 
-  const W = doc.internal.pageSize.getWidth();  // 210mm for A4
-  const H = doc.internal.pageSize.getHeight(); // 297mm for A4
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
   const cx = W / 2;
-  const margin = 13; // left/right margin for body text
+  const margin = 13;
 
   // ═══════ BACKGROUND ═══════
-  // Light blue-gray body background matching the original design
   doc.setFillColor(238, 242, 247);
   doc.rect(0, 0, W, H, "F");
 
   // ═══════ SHARK PHOTO — full width, 3:2 ratio ═══════
   const sharkImg = await loadSharkImage();
-  const photoH = W / (1536 / 1024); // ≈ 140mm on A4
+  const photoH = W / (1536 / 1024);
   if (sharkImg) {
     const isJpg = sharkImg.includes("image/jpeg") || sharkImg.includes("image/jpg");
     doc.addImage(sharkImg, isJpg ? "JPEG" : "PNG", 0, 0, W, photoH);
@@ -161,9 +188,9 @@ export async function generateCertificatePDF(
 
   // ═══════ NAME + SEAL — two-column layout ═══════
   const sealImg = await loadSealImage();
-  const sealSize = 48; // mm — large, prominent seal
-  const leftW = W - margin * 2 - sealSize - 5; // text column width
-  const sealX = W - margin - sealSize;          // seal X position (right)
+  const sealSize = 48;
+  const leftW = W - margin * 2 - sealSize - 5;
+  const sealX = W - margin - sealSize;
   const nameStartY = y;
 
   // Name
@@ -189,7 +216,7 @@ export async function generateCertificatePDF(
   doc.text(data.t.tierName, margin, y);
   y += 8;
 
-  // Seal — right column, transparent PNG on body background
+  // Seal
   if (sealImg) {
     doc.addImage(sealImg, "PNG", sealX, nameStartY - 5, sealSize, sealSize);
   } else {
@@ -200,7 +227,7 @@ export async function generateCertificatePDF(
     doc.circle(sealCenterX, sealCenterY, sealSize / 2);
   }
 
-  // ═══════ BODY TEXT — left aligned ═══════
+  // ═══════ BODY TEXT ═══════
   const reason = data.selectedReason || pickReason(data.name, data.t.reasons);
   const bodyParts: string[] = [];
   if (reason) bodyParts.push(`${data.t.reasonsLabel} ${reason}`);
@@ -229,7 +256,7 @@ export async function generateCertificatePDF(
     y += dedLines.length * 3 + 3;
   }
 
-  // ═══════ BOTTOM SECTION — pinned from page bottom ═══════
+  // ═══════ BOTTOM SECTION ═══════
   const sigY = H - 33;
   const leftCol = margin + 18;
   const rightCol = W / 2 + 18;
@@ -248,7 +275,7 @@ export async function generateCertificatePDF(
   doc.text(data.date, margin, sigY - 7);
   doc.text(data.registryId, W / 2 + margin / 2, sigY - 7);
 
-  // Signature names — italic Times (simulates handwriting)
+  // Signature names
   doc.setTextColor(...NAVY);
   doc.setFontSize(13);
   doc.setFont("times", "italic");

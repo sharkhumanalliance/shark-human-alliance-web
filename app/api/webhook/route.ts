@@ -1,47 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
-import fs from "fs/promises";
-import path from "path";
+import {
+  Member,
+  readMembers,
+  writeMembers,
+  generateReferralCode,
+  generateAccessToken,
+} from "@/lib/members";
 
-const DATA_PATH = path.join(process.cwd(), "data", "members.json");
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
-
-interface Member {
-  id: string;
-  name: string;
-  tier: string;
-  date: string;
-  dedication: string;
-  referralCode: string;
-  referredBy?: string;
-  referralCount: number;
-  email?: string;
-  stripeSessionId?: string;
-}
-
-async function readMembers(): Promise<Member[]> {
-  try {
-    const raw = await fs.readFile(DATA_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-async function writeMembers(members: Member[]): Promise<void> {
-  await fs.writeFile(DATA_PATH, JSON.stringify(members, null, 2), "utf-8");
-}
-
-function generateReferralCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "";
-  for (let i = 0; i < 4; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return `SHA-${code}`;
-}
 
 /**
  * Stripe sends webhook events as raw body — we must read it as text, not JSON.
@@ -90,6 +59,8 @@ export async function POST(request: NextRequest) {
       referralCode = generateReferralCode();
     }
 
+    const accessToken = generateAccessToken();
+
     const newMember: Member = {
       id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       name: name.trim(),
@@ -100,6 +71,7 @@ export async function POST(request: NextRequest) {
       referralCount: 0,
       email: email.trim(),
       stripeSessionId: session.id,
+      accessToken,
     };
 
     if (referredBy) {
@@ -113,8 +85,9 @@ export async function POST(request: NextRequest) {
     members.push(newMember);
     await writeMembers(members);
 
-    // 2. Send certificate email
+    // 2. Send certificate email (link only — no PDF attachment)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
+    const certificateUrl = `${BASE_URL}/en/certificate/view?token=${accessToken}`;
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {
@@ -127,7 +100,7 @@ export async function POST(request: NextRequest) {
             tier,
             registryId: newMember.id.toUpperCase(),
             referralCode,
-            downloadUrl: `${BASE_URL}/purchase/success?member=${newMember.id}`,
+            downloadUrl: certificateUrl,
             registryUrl: `${BASE_URL}/registry?highlight=${newMember.id}`,
             careerUrl: `${BASE_URL}/career`,
           }),

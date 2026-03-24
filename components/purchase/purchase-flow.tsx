@@ -4,6 +4,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef, Suspense } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
+import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { trackEvent } from "@/components/analytics";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
@@ -19,7 +21,6 @@ const DEDICATION_SUGGESTIONS = [
 
 function PurchaseFlowInner() {
   const t = useTranslations("purchase");
-  const ct = useTranslations("certificate");
   const searchParams = useSearchParams();
   const locale = useLocale();
 
@@ -41,6 +42,7 @@ function PurchaseFlowInner() {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState("");
   const [showEmailWarning, setShowEmailWarning] = useState(false);
+  const [template, setTemplate] = useState<CertificateTemplate>("hero");
 
   const tierPrices: Record<Tier, string> = {
     basic: "$9",
@@ -89,97 +91,6 @@ function PurchaseFlowInner() {
     nonsnack: "🚫",
     business: "🏢",
   };
-
-  function getCertTranslations() {
-    const tierKey = tier === "basic" ? "protected" : tier;
-
-    function readReasons(prefix: string, max: number) {
-      const arr: string[] = [];
-      for (let i = 0; i < max; i++) {
-        try { arr.push(ct(`${prefix}.${i}`)); } catch { break; }
-      }
-      return arr;
-    }
-
-    if (tier === "business") {
-      return {
-        photoHeadline: ct("photoHeadline"),
-        photoTagline: ct("photoTagline"),
-        header: ct("businessHeader"),
-        subtitle: ct("businessSubtitle"),
-        certTitle: ct("businessCertTitle"),
-        certifies: ct("certifies"),
-        statusLabel: ct("statusLabel"),
-        tierName: ct("tierNames.business"),
-        body: ct("businessBody"),
-        reasonsLabel: ct("businessReasonsLabel"),
-        reasons: readReasons("businessReasons", 10),
-        privileges: ct("businessPrivileges"),
-        validityNote: ct("businessValidityNote"),
-        sig1Name: ct("sig1Name"),
-        sig1Title: ct("sig1Title"),
-        sig2Name: ct("sig2Name"),
-        sig2Title: ct("sig2Title"),
-        sealText: ct("sealText"),
-        dedicationLabel: ct("dedication"),
-        dateLabel: ct("dateLabel"),
-        registryIdLabel: ct("registryId"),
-        disclaimer: ct("businessDisclaimer"),
-      };
-    }
-
-    if (tier === "nonsnack") {
-      return {
-        photoHeadline: ct("photoHeadline"),
-        photoTagline: ct("photoTagline"),
-        header: ct("header"),
-        subtitle: ct("nonsnackSubtitle"),
-        certTitle: ct("nonsnackCertTitle"),
-        certifies: ct("certifies"),
-        statusLabel: ct("statusLabel"),
-        tierName: ct("tierNames.nonsnack"),
-        body: ct("nonsnackBody"),
-        reasonsLabel: ct("nonsnackReasonsLabel"),
-        reasons: readReasons("nonsnackReasons", 10),
-        privileges: ct("nonsnackPrivileges"),
-        validityNote: ct("validityNote"),
-        sig1Name: ct("sig1Name"),
-        sig1Title: ct("sig1Title"),
-        sig2Name: ct("sig2Name"),
-        sig2Title: ct("sig2Title"),
-        sealText: ct("sealText"),
-        dedicationLabel: ct("dedication"),
-        dateLabel: ct("dateLabel"),
-        registryIdLabel: ct("registryId"),
-        disclaimer: ct("nonsnackDisclaimer"),
-      };
-    }
-
-    return {
-      photoHeadline: ct("photoHeadline"),
-      photoTagline: ct("photoTagline"),
-      header: ct("header"),
-      subtitle: ct("subtitle"),
-      certTitle: ct("certTitle"),
-      certifies: ct("certifies"),
-      statusLabel: ct("statusLabel"),
-      tierName: ct(`tierNames.${tierKey}`),
-      body: ct("body"),
-      reasonsLabel: ct("reasonsLabel"),
-      reasons: readReasons("reasons", 10),
-      privileges: ct("privileges"),
-      validityNote: ct("validityNote"),
-      sig1Name: ct("sig1Name"),
-      sig1Title: ct("sig1Title"),
-      sig2Name: ct("sig2Name"),
-      sig2Title: ct("sig2Title"),
-      sealText: ct("sealText"),
-      dedicationLabel: ct("dedication"),
-      dateLabel: ct("dateLabel"),
-      registryIdLabel: ct("registryId"),
-      disclaimer: ct("disclaimer"),
-    };
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -542,14 +453,15 @@ function PurchaseFlowInner() {
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("livePreview")}
             </p>
-            <div className="sticky top-28">
+            <CertificateTemplateSelector value={template} onChange={setTemplate} />
+            <div className="sticky top-28 mt-4">
               <CertificatePreview
                 name={name.trim() || t("previewName")}
                 tier={tier}
                 dedication={dedication.trim()}
                 date={currentDate}
                 registryId="SHA-XXXX"
-                t={getCertTranslations()}
+                template={template}
               />
             </div>
           </div>

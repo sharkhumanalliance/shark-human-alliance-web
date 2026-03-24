@@ -1,61 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
-
-const DATA_PATH = path.join(process.cwd(), "data", "members.json");
-
-export type Member = {
-  id: string;
-  name: string;
-  tier: "basic" | "protected" | "nonsnack" | "business";
-  date: string;
-  dedication: string;
-  referralCode: string;
-  referredBy?: string;
-  referralCount: number;
-  email?: string;
-};
-
-async function readMembers(): Promise<Member[]> {
-  try {
-    const raw = await fs.readFile(DATA_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-async function writeMembers(members: Member[]): Promise<void> {
-  await fs.writeFile(DATA_PATH, JSON.stringify(members, null, 2), "utf-8");
-}
-
-function generateReferralCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "";
-  for (let i = 0; i < 4; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return `SHA-${code}`;
-}
-
-async function isReferralCodeUnique(code: string): Promise<boolean> {
-  const members = await readMembers();
-  return !members.some((m) => m.referralCode === code);
-}
+import {
+  Member,
+  readMembers,
+  writeMembers,
+  generateReferralCode,
+  generateAccessToken,
+} from "@/lib/members";
 
 async function generateUniqueReferralCode(): Promise<string> {
+  const members = await readMembers();
   let code: string;
-  let isUnique = false;
   do {
     code = generateReferralCode();
-    isUnique = await isReferralCodeUnique(code);
-  } while (!isUnique);
+  } while (members.some((m) => m.referralCode === code));
   return code;
 }
 
 export async function GET() {
   const members = await readMembers();
-  return NextResponse.json(members);
+  // Strip sensitive fields from public response
+  const publicMembers = members.map(({ accessToken, stripeSessionId, email, ...rest }) => rest);
+  return NextResponse.json(publicMembers);
 }
 
 export async function POST(request: NextRequest) {
@@ -81,6 +46,7 @@ export async function POST(request: NextRequest) {
     dedication: (dedication || "").trim(),
     referralCode,
     referralCount: 0,
+    accessToken: generateAccessToken(),
   };
 
   if (email && typeof email === "string") {
@@ -108,5 +74,7 @@ export async function POST(request: NextRequest) {
   members.push(newMember);
   await writeMembers(members);
 
-  return NextResponse.json(newMember, { status: 201 });
+  // Don't expose accessToken in POST response
+  const { accessToken, ...publicMember } = newMember;
+  return NextResponse.json(publicMember, { status: 201 });
 }

@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
+import { readMembers } from "@/lib/members";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { to, name, tier, dedication, memberId, referralCode } = body;
+  const { to, name, tier, memberId, referralCode } = body;
 
   if (!to || !name || !tier) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -20,6 +21,19 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // Look up member to get their accessToken for the certificate URL
+    const members = await readMembers();
+    const member = members.find((m) => m.id === memberId);
+
+    if (!member?.accessToken) {
+      return NextResponse.json(
+        { error: "Member not found or certificate not available" },
+        { status: 404 }
+      );
+    }
+
+    const certificateUrl = `${BASE_URL}/en/certificate/view?token=${member.accessToken}`;
+
     await getResend().emails.send({
       from: EMAIL_FROM,
       to,
@@ -29,7 +43,7 @@ export async function POST(request: NextRequest) {
         tier,
         registryId: (memberId || "SHA-XXXX").toUpperCase(),
         referralCode: referralCode || "",
-        downloadUrl: `${BASE_URL}/purchase/success?member=${memberId}`,
+        downloadUrl: certificateUrl,
         registryUrl: `${BASE_URL}/registry?highlight=${memberId}`,
         careerUrl: `${BASE_URL}/career`,
       }),

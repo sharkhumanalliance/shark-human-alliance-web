@@ -6,34 +6,6 @@ import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { trackEvent } from "@/components/analytics";
 
-function useCertTranslations() {
-  const ct = useTranslations("certificate");
-  return {
-    photoHeadline: ct("photoHeadline"),
-    photoTagline: ct("photoTagline"),
-    header: ct("header"),
-    subtitle: ct("subtitle"),
-    certTitle: ct("certTitle"),
-    certifies: ct("certifies"),
-    statusLabel: ct("statusLabel"),
-    tierName: ct("tierNames.protected"),
-    body: ct("body"),
-    reasonsLabel: ct("reasonsLabel"),
-    reasons: Array.from({ length: 8 }, (_, i) => { try { return ct(`reasons.${i}`); } catch { return ''; } }).filter(Boolean),
-    privileges: ct("privileges"),
-    validityNote: ct("validityNote"),
-    sig1Name: ct("sig1Name"),
-    sig1Title: ct("sig1Title"),
-    sig2Name: ct("sig2Name"),
-    sig2Title: ct("sig2Title"),
-    sealText: ct("sealText"),
-    dedicationLabel: ct("dedication"),
-    dateLabel: ct("dateLabel"),
-    registryIdLabel: ct("registryId"),
-    disclaimer: ct("disclaimer"),
-  };
-}
-
 const PARTNERS = [
   { i: 1, icon: "🦈", url: "https://www.sharktrust.org" },
   { i: 2, icon: "🌊", url: "https://oceana.org" },
@@ -43,7 +15,6 @@ const PARTNERS = [
 
 export function HomeContent() {
   const t = useTranslations("home");
-  const certT = useCertTranslations();
   const [previewName, setPreviewName] = useState("");
 
   // Track certificate preview interaction — debounced, fires once per typing session
@@ -149,7 +120,6 @@ export function HomeContent() {
               tier="protected"
               date={new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
               registryId="SHA-XXXX-DIP"
-              t={certT}
             />
           </div>
 

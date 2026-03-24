@@ -1,30 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
+import { readMembers } from "@/lib/members";
 import { getRank } from "@/lib/referral-ranks";
-
-const DATA_PATH = path.join(process.cwd(), "data", "members.json");
-
-interface Member {
-  id: string;
-  name: string;
-  tier: "basic" | "protected" | "nonsnack" | "business";
-  date: string;
-  dedication: string;
-  referralCode: string;
-  referredBy?: string;
-  referralCount: number;
-  email?: string;
-}
-
-async function readMembers(): Promise<Member[]> {
-  try {
-    const raw = await fs.readFile(DATA_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
 
 export async function GET(
   request: NextRequest,

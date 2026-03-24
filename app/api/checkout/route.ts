@@ -1,48 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
-import fs from "fs/promises";
-import path from "path";
+import {
+  Member,
+  readMembers,
+  writeMembers,
+  generateReferralCode,
+  generateAccessToken,
+} from "@/lib/members";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
-const DATA_PATH = path.join(process.cwd(), "data", "members.json");
 
 /** Promo codes that bypass Stripe entirely (100% off). */
 const FREE_PROMO_CODES = ["SHATEST"];
-
-interface Member {
-  id: string;
-  name: string;
-  tier: string;
-  date: string;
-  dedication: string;
-  referralCode: string;
-  referredBy?: string;
-  referralCount: number;
-  email?: string;
-  stripeSessionId?: string;
-}
-
-async function readMembers(): Promise<Member[]> {
-  try {
-    const raw = await fs.readFile(DATA_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-async function writeMembers(members: Member[]): Promise<void> {
-  await fs.writeFile(DATA_PATH, JSON.stringify(members, null, 2), "utf-8");
-}
-
-function generateReferralCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "";
-  for (let i = 0; i < 4; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return `SHA-${code}`;
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -79,6 +48,7 @@ export async function POST(request: NextRequest) {
         referralCount: 0,
         email: email ? email.trim() : undefined,
         stripeSessionId: freeSessionId,
+        accessToken: generateAccessToken(),
       };
 
       if (referredBy) {

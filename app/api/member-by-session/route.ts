@@ -1,30 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
-
-const DATA_PATH = path.join(process.cwd(), "data", "members.json");
-
-interface Member {
-  id: string;
-  name: string;
-  tier: string;
-  date: string;
-  dedication: string;
-  referralCode: string;
-  referredBy?: string;
-  referralCount: number;
-  email?: string;
-  stripeSessionId?: string;
-}
-
-async function readMembers(): Promise<Member[]> {
-  try {
-    const raw = await fs.readFile(DATA_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
+import { readMembers } from "@/lib/members";
 
 /**
  * GET /api/member-by-session?session_id=cs_xxx
@@ -52,5 +27,6 @@ export async function GET(request: NextRequest) {
     dedication: member.dedication,
     referralCode: member.referralCode,
     referralCount: member.referralCount,
+    accessToken: member.accessToken,
   });
 }

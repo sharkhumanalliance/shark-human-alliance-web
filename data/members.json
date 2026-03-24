@@ -148,5 +148,15 @@
     "referralCode": "SHA-NGTA",
     "referralCount": 0,
     "stripeSessionId": "promo_1774102417791_fzhwf3"
+  },
+  {
+    "id": "m-1774291487661-js40iz",
+    "name": "Filip Cave",
+    "tier": "protected",
+    "date": "2026-03-23",
+    "dedication": "Because you always said 'something touched my foot'",
+    "referralCode": "SHA-ONCQ",
+    "referralCount": 0,
+    "stripeSessionId": "promo_1774291487661_xhd382"
   }
 ]
