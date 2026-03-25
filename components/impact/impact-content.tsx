@@ -9,6 +9,48 @@ const PARTNERS = [
   { key: 4, icon: "🏝️", url: "https://www.fundacionmalpelo.org" },
 ];
 
+const TIERS = [
+  {
+    emoji: "🛡️",
+    colorBorder: "border-teal-200",
+    colorBg: "from-teal-50",
+    colorIcon: "bg-teal-100",
+    colorAmount: "text-teal-700",
+    colorBar: "bg-teal-500",
+    barPercent: 20, // 1/5
+    amountKey: "splitProtectedAmount",
+    priceKey: "splitProtectedPrice",
+    labelKey: "splitProtectedLabel",
+    textKey: "splitProtectedText",
+  },
+  {
+    emoji: "🚫🍽️",
+    colorBorder: "border-orange-200",
+    colorBg: "from-orange-50",
+    colorIcon: "bg-orange-100",
+    colorAmount: "text-orange-700",
+    colorBar: "bg-orange-400",
+    barPercent: 63, // 12/19
+    amountKey: "splitNonsnackAmount",
+    priceKey: "splitNonsnackPrice",
+    labelKey: "splitNonsnackLabel",
+    textKey: "splitNonsnackText",
+  },
+  {
+    emoji: "🏢",
+    colorBorder: "border-indigo-200",
+    colorBg: "from-indigo-50",
+    colorIcon: "bg-indigo-100",
+    colorAmount: "text-indigo-700",
+    colorBar: "bg-indigo-500",
+    barPercent: 71, // 70/99
+    amountKey: "splitBusinessAmount",
+    priceKey: "splitBusinessPrice",
+    labelKey: "splitBusinessLabel",
+    textKey: "splitBusinessText",
+  },
+];
+
 export function ImpactContent() {
   const t = useTranslations("impact");
 
@@ -42,34 +84,62 @@ export function ImpactContent() {
           </p>
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {/* Protected / Non-Snack */}
-            <div className="rounded-xl border border-teal-200 bg-gradient-to-b from-teal-50 to-white p-8">
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-teal-100 text-2xl">
-                🛡️
-              </div>
-              <p className="mt-4 text-3xl font-bold text-teal-700">{t("splitPersonalPercent")}</p>
-              <p className="mt-1 text-sm font-semibold text-[var(--brand-dark)]">{t("splitPersonalLabel")}</p>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{t("splitPersonalText")}</p>
-            </div>
+            {TIERS.map((tier) => (
+              <div
+                key={tier.amountKey}
+                className={`rounded-xl border ${tier.colorBorder} bg-gradient-to-b ${tier.colorBg} to-white p-8`}
+              >
+                <div
+                  className={`flex h-14 w-14 items-center justify-center rounded-lg ${tier.colorIcon} text-2xl`}
+                >
+                  {tier.emoji}
+                </div>
 
-            {/* Business */}
-            <div className="rounded-xl border border-indigo-200 bg-gradient-to-b from-indigo-50 to-white p-8">
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-indigo-100 text-2xl">
-                🏢
-              </div>
-              <p className="mt-4 text-3xl font-bold text-indigo-700">{t("splitBusinessPercent")}</p>
-              <p className="mt-1 text-sm font-semibold text-[var(--brand-dark)]">{t("splitBusinessLabel")}</p>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{t("splitBusinessText")}</p>
-            </div>
+                {/* Dollar amount + price */}
+                <div className="mt-4 flex items-baseline gap-2">
+                  <p className={`text-4xl font-bold ${tier.colorAmount}`}>
+                    {t(tier.amountKey)}
+                  </p>
+                  <p className="text-sm text-[var(--muted)]">
+                    {t("splitOf")} {t(tier.priceKey)}
+                  </p>
+                </div>
 
-            {/* Operations */}
-            <div className="rounded-xl border border-sky-200 bg-gradient-to-b from-sky-50 to-white p-8">
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sky-100 text-2xl">
+                {/* Progress bar */}
+                <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-black/8">
+                  <div
+                    className={`h-full rounded-full ${tier.colorBar}`}
+                    style={{ width: `${tier.barPercent}%` }}
+                  />
+                </div>
+                <p className="mt-1 text-xs text-[var(--muted)]">
+                  {tier.barPercent}% {t("splitGoesToOcean")}
+                </p>
+
+                <p className="mt-3 text-sm font-semibold text-[var(--brand-dark)]">
+                  {t(tier.labelKey)}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                  {t(tier.textKey)}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Operations note */}
+          <div className="mt-6 rounded-xl border border-sky-200 bg-sky-50/50 p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sky-100 text-lg">
                 ⚙️
               </div>
-              <p className="mt-4 text-3xl font-bold text-sky-700">{t("splitOpsPercent")}</p>
-              <p className="mt-1 text-sm font-semibold text-[var(--brand-dark)]">{t("splitOpsLabel")}</p>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{t("splitOpsText")}</p>
+              <div>
+                <p className="text-sm font-semibold text-[var(--brand-dark)]">
+                  {t("splitOpsLabel")}
+                </p>
+                <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
+                  {t("splitOpsText")}
+                </p>
+              </div>
             </div>
           </div>
         </div>

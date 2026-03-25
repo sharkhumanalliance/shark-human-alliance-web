@@ -4,6 +4,7 @@ import { getMemberById } from "@/lib/members";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { VerifyContent } from "@/components/verify/verify-content";
+import { VerifySampleContent } from "@/components/verify/verify-sample-content";
 import type { Metadata } from "next";
 
 type Props = {
@@ -26,6 +27,19 @@ export default async function VerifyPage({ params, searchParams }: Props) {
   setRequestLocale(locale);
 
   if (!id) notFound();
+
+  // Sample certificate preview — not a real member
+  if (id === "sample") {
+    return (
+      <>
+        <SiteHeader />
+        <main id="main" className="pb-20 md:pb-0">
+          <VerifySampleContent />
+        </main>
+        <SiteFooter />
+      </>
+    );
+  }
 
   const member = await getMemberById(id);
   if (!member) notFound();

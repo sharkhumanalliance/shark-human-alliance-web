@@ -111,7 +111,7 @@ export function WantedContent() {
       ctx.roundRect(mx + 46, my + 46, pw - 92, ph - 92, 8);
       ctx.stroke();
 
-      let y = my + 140;
+      let y = my + 120;
       const cx = w / 2;
 
       // "SHARK HUMAN ALLIANCE" header
@@ -121,13 +121,13 @@ export function WantedContent() {
       ctx.letterSpacing = "10px";
       ctx.fillText(t("posterHeader").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 100;
+      y += 180;
 
       // "WANTED" — big bold
       ctx.fillStyle = POSTER_RED;
       ctx.font = "900 200px 'Geist', sans-serif";
       ctx.fillText(t("wantedTitle"), cx, y);
-      y += 36;
+      y += 40;
 
       // Decorative line
       ctx.strokeStyle = POSTER_RED;
@@ -165,7 +165,7 @@ export function WantedContent() {
         ctx.beginPath();
         ctx.arc(cx, y + sealSize / 2, sealSize / 2 + 16, 0, Math.PI * 2);
         ctx.stroke();
-        y += sealSize + 80;
+        y += sealSize + 60;
       } catch {
         y += 60;
       }
@@ -188,7 +188,7 @@ export function WantedContent() {
       ctx.moveTo(cx - nameW / 2, y);
       ctx.lineTo(cx + nameW / 2, y);
       ctx.stroke();
-      y += 90;
+      y += 70;
 
       // "CHARGES:" label
       ctx.fillStyle = POSTER_RED;

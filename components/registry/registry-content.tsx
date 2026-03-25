@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { RANKS, getRankInfo } from "@/lib/referral-ranks";
 
 type Member = {
@@ -41,11 +42,15 @@ const TIER_STYLES: Record<string, { badge: string; border: string; icon: string 
 
 export function RegistryContent() {
   const t = useTranslations("registry");
+  const router = useRouter();
   const [members, setMembers] = useState<Member[]>([]);
   const [filter, setFilter] = useState<TierFilter>("all");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [verifyInput, setVerifyInput] = useState("");
+  const [verifyError, setVerifyError] = useState("");
+  const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
     fetch("/api/members")
@@ -65,6 +70,33 @@ export function RegistryContent() {
       setTimeout(() => setCopiedId(null), 2000);
     });
   }, []);
+
+  const handleVerify = useCallback(async () => {
+    const q = verifyInput.trim();
+    if (!q) return;
+    setVerifyError("");
+    setVerifying(true);
+    try {
+      // Try to find the member — first check if input looks like a member ID (m-...)
+      // or search by referral code (SHA-...)
+      const res = await fetch("/api/members");
+      const data: Member[] = await res.json();
+      const match = data.find(
+        (m) =>
+          m.id.toLowerCase() === q.toLowerCase() ||
+          (m.referralCode && m.referralCode.toLowerCase() === q.toLowerCase())
+      );
+      if (match) {
+        router.push(`/verify?id=${encodeURIComponent(match.id)}`);
+      } else {
+        setVerifyError(t("verifyNotFound"));
+      }
+    } catch {
+      setVerifyError(t("verifyError"));
+    } finally {
+      setVerifying(false);
+    }
+  }, [verifyInput, router, t]);
 
   const filtered = useMemo(() => {
     let result = filter === "all" ? members : members.filter((m) => m.tier === filter);
@@ -123,6 +155,62 @@ export function RegistryContent() {
               </span>
             </div>
           )}
+
+          {/* Verify Certificate */}
+          <div className="mt-10 rounded-xl border border-teal-200 bg-gradient-to-br from-teal-50/60 to-white p-6">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-100 text-lg">
+                ✅
+              </div>
+              <div className="min-w-0 flex-grow">
+                <h3 className="text-base font-semibold text-[var(--brand-dark)]">
+                  {t("verifyTitle")}
+                </h3>
+                <p className="mt-1 text-sm text-[var(--muted)]">
+                  {t("verifyDescription")}
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 flex gap-3">
+              <div className="relative min-w-0 flex-grow">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-[var(--muted)]" aria-hidden="true">🔎</span>
+                <input
+                  type="text"
+                  value={verifyInput}
+                  onChange={(e) => { setVerifyInput(e.target.value); setVerifyError(""); }}
+                  onKeyDown={(e) => { if (e.key === "Enter" && verifyInput.trim()) handleVerify(); }}
+                  placeholder={t("verifyPlaceholder")}
+                  className="w-full rounded-lg border border-teal-200 bg-white py-3 pl-10 pr-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400/20"
+                />
+              </div>
+              <button
+                onClick={handleVerify}
+                disabled={!verifyInput.trim() || verifying}
+                className="shrink-0 rounded-lg bg-teal-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                {verifying ? t("verifyLoading") : t("verifyButton")}
+              </button>
+            </div>
+            {verifyError && (
+              <div className="mt-3">
+                <p className="text-sm text-red-600">{verifyError}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a
+                    href="/purchase?tier=protected"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                  >
+                    🛡️ {t("verifyBuyCta")}
+                  </a>
+                  <a
+                    href="/wanted"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-4 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-50"
+                  >
+                    🚨 {t("verifyWantedCta")}
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Search */}
           <div className="mt-6">
@@ -341,6 +429,29 @@ export function RegistryContent() {
                 </div>
               </div>
             )}
+
+            {/* Career ladder promo */}
+            <div className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-white p-6">
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-100 text-2xl">
+                  🎖️
+                </div>
+                <div className="min-w-0 flex-grow">
+                  <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
+                    {t("careerPromoTitle")}
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
+                    {t("careerPromoDesc")}
+                  </p>
+                  <a
+                    href="/career"
+                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
+                  >
+                    {t("careerPromoLink")} →
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       )}

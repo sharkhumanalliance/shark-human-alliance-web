@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect, useRef } from "react";
 import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
+import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
+import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import { trackEvent } from "@/components/analytics";
 
 const PARTNERS = [
@@ -16,6 +18,7 @@ const PARTNERS = [
 export function HomeContent() {
   const t = useTranslations("home");
   const [previewName, setPreviewName] = useState("");
+  const [previewTemplate, setPreviewTemplate] = useState<CertificateTemplate>("hero");
 
   // Track certificate preview interaction — debounced, fires once per typing session
   const previewDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -114,12 +117,17 @@ export function HomeContent() {
             </div>
           </div>
 
+          <div className="mx-auto mt-6 max-w-md">
+            <CertificateTemplateSelector value={previewTemplate} onChange={setPreviewTemplate} />
+          </div>
+
           <div className="mt-6 mx-auto max-w-2xl">
             <CertificatePreview
               name={previewName.trim() || t("about.certName")}
               tier="protected"
               date={new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
               registryId="SHA-XXXX-DIP"
+              template={previewTemplate}
             />
           </div>
 

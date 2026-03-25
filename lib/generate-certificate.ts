@@ -257,7 +257,7 @@ export async function generateCertificatePDF(
   }
 
   // ═══════ BOTTOM SECTION ═══════
-  const sigY = H - 33;
+  const sigY = H - 38;
   const leftCol = margin + 18;
   const rightCol = W / 2 + 18;
 
@@ -265,15 +265,15 @@ export async function generateCertificatePDF(
   doc.setTextColor(...GRAY);
   doc.setFontSize(6.5);
   doc.setFont("helvetica", "normal");
-  doc.text(data.t.dateLabel, margin, sigY - 12);
-  doc.text(data.t.registryIdLabel, W / 2 + margin / 2, sigY - 12);
+  doc.text(data.t.dateLabel, margin, sigY - 14);
+  doc.text(data.t.registryIdLabel, W / 2 + margin / 2, sigY - 14);
 
   // Date + Registry values
   doc.setTextColor(...NAVY);
   doc.setFontSize(9);
   doc.setFont("helvetica", "bold");
-  doc.text(data.date, margin, sigY - 7);
-  doc.text(data.registryId, W / 2 + margin / 2, sigY - 7);
+  doc.text(data.date, margin, sigY - 8);
+  doc.text(data.registryId, W / 2 + margin / 2, sigY - 8);
 
   // Signature names
   doc.setTextColor(...NAVY);
@@ -302,7 +302,7 @@ export async function generateCertificatePDF(
   doc.setFontSize(5);
   doc.setFont("helvetica", "italic");
   const disclaimerLines = doc.splitTextToSize(data.t.disclaimer, W - margin * 2);
-  doc.text(disclaimerLines, cx, H - 4, { align: "center" });
+  doc.text(disclaimerLines, cx, H - 7, { align: "center" });
 
   return doc;
 }

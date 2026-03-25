@@ -27,6 +27,8 @@ export function getQrCodeUrl(data: string, size = 200): string {
 
 /**
  * Build the full verification URL for a member.
+ * If the registryId looks like a sample/placeholder (e.g. SHA-XXXX),
+ * returns a link to the sample verification page instead.
  */
 export function getVerificationUrl(
   memberId: string,
@@ -37,5 +39,11 @@ export function getVerificationUrl(
     (typeof window !== "undefined"
       ? window.location.origin
       : process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com");
-  return `${base}/en/verify?id=${encodeURIComponent(memberId)}`;
+
+  const isSample =
+    memberId.includes("xxxx") ||
+    memberId.includes("XXXX") ||
+    memberId === "sample";
+
+  return `${base}/en/verify?id=${isSample ? "sample" : encodeURIComponent(memberId)}`;
 }

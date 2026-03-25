@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
@@ -10,13 +10,22 @@ import { trackEvent } from "@/components/analytics";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
 
-const DEDICATION_SUGGESTIONS = [
+const DEDICATION_POOL = [
   "For surviving every beach vacation since 1987",
   "Because you always said 'something touched my foot'",
   "Officially no longer snack material",
   "In honor of watching Jaws 47 times",
   "May the sharks remember your generosity",
   "To the bravest ankle-deep swimmer I know",
+  "Diplomatically immune since today",
+  "Still not food. Now it's official.",
+  "For the one who always exits the ocean running",
+  "A small price for not being a snack",
+  "In recognition of outstanding non-edibility",
+  "Because someone had to be first",
+  "For making eye contact with a fish and panicking",
+  "To the human least likely to be mistaken for a seal",
+  "Protected by bureaucracy and good vibes",
 ];
 
 function PurchaseFlowInner() {
@@ -33,6 +42,18 @@ function PurchaseFlowInner() {
   const [tier, setTier] = useState<Tier>(initialTier);
   const [name, setName] = useState(initialName);
   const [dedication, setDedication] = useState("");
+
+  // Pick 3 random dedication suggestions from the pool (stable per mount)
+  const dedicationSuggestions = useMemo(() => {
+    const pool = [...DEDICATION_POOL];
+    const picked: string[] = [];
+    for (let i = 0; i < 3 && pool.length > 0; i++) {
+      const idx = Math.floor(Math.random() * pool.length);
+      picked.push(pool[idx]);
+      pool.splice(idx, 1);
+    }
+    return picked;
+  }, []);
   const [email, setEmail] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [giftMessage, setGiftMessage] = useState("");
@@ -296,7 +317,7 @@ function PurchaseFlowInner() {
               />
               {tier !== "business" && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
-                  {DEDICATION_SUGGESTIONS.slice(0, 3).map((suggestion) => (
+                  {dedicationSuggestions.map((suggestion) => (
                     <button
                       key={suggestion}
                       type="button"
