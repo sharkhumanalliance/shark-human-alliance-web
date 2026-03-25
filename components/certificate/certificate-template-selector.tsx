@@ -15,14 +15,14 @@ const OPTIONS: Array<{
 }> = [
   {
     value: "hero",
-    label: "Classic Certificate",
-    description: "Bold and playful — with the iconic shark-floor photo.",
+    label: "Playful Official",
+    description: "Bold and fun — with the iconic shark-floor photo.",
     icon: "🦈",
   },
   {
     value: "formal",
-    label: "Diplomatic Edition",
-    description: "Ceremonial and frameable — pure diplomatic elegance.",
+    label: "Ceremonial Official",
+    description: "Elegant and frameable — pure diplomatic ceremony.",
     icon: "📜",
   },
 ];

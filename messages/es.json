@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Shark Human Alliance — Certificados Oficiales de Protección de Tiburones",
-      "description": "Obtén tu certificado oficial de Amigo Protegido. Un regalo personalizado y divertido que financia la conservación real de tiburones. Entrega digital, desde $9."
+      "description": "Obtén tu certificado oficial de Amigo Protegido. Un regalo personalizado y divertido que financia la conservación real de tiburones. Entrega digital, desde $5."
     },
     "purchase": {
       "title": "Obtén tu Certificado — Shark Human Alliance",
@@ -18,7 +18,7 @@
     },
     "membership": {
       "title": "Certificados y Niveles de Membresía — Shark Human Alliance",
-      "description": "Elige tu nivel de diplomacia con tiburones. Amigo Protegido ($9), Reconocimiento No-Snack ($29), o Zona Aprobada ($99). Cada certificado financia la conservación."
+      "description": "Elige tu nivel de diplomacia con tiburones. Amigo Protegido ($5), Reconocimiento No-Snack ($19), o Zona Aprobada ($99). Cada certificado financia la conservación."
     },
     "protectedFriend": {
       "title": "Estatus de Amigo Protegido — Shark Human Alliance",
@@ -82,7 +82,7 @@
     "titleLine2": "Amigo Protegido.",
     "brandLine": "Los tiburones merecen mejor imagen. Y protección real.",
     "description": "Un certificado personalizado y sorprendentemente oficial. El regalo broma perfecto para cualquiera que haya mirado el océano con desconfianza.",
-    "ctaPrimary": "Obtén Amigo Protegido — $9",
+    "ctaPrimary": "Obtén Amigo Protegido — $5",
     "ctaSecondary": "Ver el certificado",
     "socialProof": "Únete a la Alianza",
     "giftBadge": "🎁 El regalo broma #1 para los que temen a los tiburones",
@@ -147,7 +147,7 @@
       "case4Icon": "🤷",
       "case4Title": "Gente que tiene de todo",
       "case4Text": "No tienen reconocimiento diplomático de tiburones. Nadie lo tiene. Por eso es perfecto.",
-      "cta": "Regalar Amigo Protegido — $9",
+      "cta": "Regalar Amigo Protegido — $5",
       "wantedCta": "Genera un Póster de Búsqueda"
     },
     "about": {
@@ -157,8 +157,8 @@
       "certName": "[ Tu nombre aquí ]",
       "certText": "es oficialmente reconocido por la Shark Human Alliance como un defensor de las relaciones pacíficas entre tiburones y humanos y un contribuyente a la conservación marina real.",
       "inputPlaceholder": "Tu nombre (los tiburones esperan)",
-      "ctaBuy": "Comprar para ti — $9",
-      "ctaGift": "Comprar como regalo — $9"
+      "ctaBuy": "Comprar para ti — $5",
+      "ctaGift": "Comprar como regalo — $5"
     },
     "impactTeaser": {
       "donationsIntro": "Cada venta de certificados financia conservación verificada a través de",
@@ -172,16 +172,16 @@
       "description": "Cada certificado financia la conservación real de tiburones. El resto es papeleo con un aspecto sorprendentemente bueno.",
       "popularBadge": "Más Popular",
       "protectedTitle": "Estatus de Amigo Protegido",
-      "protectedPrice": "$9",
+      "protectedPrice": "$5",
       "protectedDescription": "El regalo estrella — elegante, personal y sorprendentemente enmarcable. Ideal para regalos rápidos, divertidos y con estilo.",
       "protectedFeatures": [
         "Certificado personalizado",
         "Reconocimiento de Amigo Protegido",
         "Entrega digital"
       ],
-      "protectedCta": "Obtén Amigo Protegido — $9",
+      "protectedCta": "Obtén Amigo Protegido — $5",
       "nonsnackTitle": "Reconocimiento No-Snack",
-      "nonsnackPrice": "$29",
+      "nonsnackPrice": "$19",
       "nonsnackDescription": "Prestigio simbólico máximo con certificado deluxe, ubicación exclusiva en el registro e insignia descargable. Para quienes quieren el nivel más absurdo posible.",
       "nonsnackFeatures": [
         "Certificado premium deluxe",
@@ -189,7 +189,7 @@
         "Insignia descargable",
         "Ubicación destacada en el registro"
       ],
-      "nonsnackCta": "Elegir No-Snack — $29",
+      "nonsnackCta": "Elegir No-Snack — $19",
       "businessTitle": "Zona Aprobada por Tiburones",
       "businessPrice": "$99",
       "businessDescription": "Para cualquier negocio lo suficientemente valiente como para reclamar aprobación oficial de tiburones. El 70% va a conservación. Ideal para oficinas, cafés, estudios y negocios amigos de los tiburones.",
@@ -323,7 +323,7 @@
     ],
     "ctaTitle": "¿Aún tienes preguntas?",
     "ctaText": "La mejor manera de entender el certificado es verlo. Prueba la vista previa en vivo en nuestra página principal — o simplemente hazlo.",
-    "ctaButton": "Obtén Amigo Protegido — $9"
+    "ctaButton": "Obtén Amigo Protegido — $5"
   },
   "membershipPage": {
     "badge": "Paquetes de reconocimiento simbólico",
@@ -343,7 +343,7 @@
       "Reconocimiento de Amigo Protegido",
       "Insignia de la Alianza"
     ],
-    "protectedCta": "Elegir protegido — $9",
+    "protectedCta": "Elegir protegido — $5",
     "nonsnackTitle": "Reconocimiento No-Snack",
     "nonsnackDescription": "Un nivel de prestigio más absurdo para humanos que preferirían firmemente no ser considerados adyacentes al menú.",
     "nonsnackFeatures": [
@@ -351,7 +351,7 @@
       "Designación oficial No-Snack",
       "Insignia de reconocimiento descargable"
     ],
-    "nonsnackCta": "Elegir no-snack — $29",
+    "nonsnackCta": "Elegir no-snack — $19",
     "businessBadge": "Para negocios",
     "businessTitle": "Certificación Zona Aprobada por Tiburones",
     "businessDescription": "Para cualquier negocio lo suficientemente valiente como para reclamar aprobación oficial de tiburones. Exhibe el certificado con orgullo. El 70% de este nivel va a conservación.",
@@ -394,8 +394,8 @@
       },
       {
         "label": "Precio",
-        "protected": "$9",
-        "nonsnack": "$29",
+        "protected": "$5",
+        "nonsnack": "$19",
         "business": "$99"
       },
       {
@@ -431,20 +431,20 @@
       },
       {
         "question": "¿Qué opción debería elegir?",
-        "answer": "El Estatus de Amigo Protegido ($9) es el más popular — es el equilibrio perfecto entre divertido, elegante y regalable."
+        "answer": "El Estatus de Amigo Protegido ($5) es el más popular — es el equilibrio perfecto entre divertido, elegante y regalable."
       }
     ],
     "joinLabel": "¿Listo?",
     "joinTitle": "Regala el Estatus de Amigo Protegido.",
     "joinText": "El regalo más popular de la alianza. Divertido, elegante y entregado al instante.",
-    "joinCtaPrimary": "Obtén Amigo Protegido — $9",
+    "joinCtaPrimary": "Obtén Amigo Protegido — $5",
     "joinCtaSecondary": "Volver a la página principal"
   },
   "protectedPage": {
     "badge": "Producto estrella de membresía",
     "title": "Estatus de Amigo Protegido",
     "description": "Un nivel de reconocimiento simbólico para humanos que merecen una recepción ligeramente más cálida de los tiburones y un certificado con aspecto significativamente más oficial.",
-    "ctaPrimary": "Obtén Amigo Protegido — $9",
+    "ctaPrimary": "Obtén Amigo Protegido — $5",
     "ctaSecondary": "Volver a membresía",
     "recommended": "Recomendado como el producto principal de lanzamiento para Shark Human Alliance.",
     "includedLabel": "Qué incluye",
@@ -492,9 +492,9 @@
     "subtitle": "Un formulario. Un pago. Un paso más cerca de no ser un snack.",
     "tierLabel": "Nivel seleccionado",
     "tiers": {
-      "basic": "Membresía Básica — $9",
-      "protected": "Estatus de Amigo Protegido — $9",
-      "nonsnack": "Reconocimiento No-Snack — $29",
+      "basic": "Membresía Básica — $5",
+      "protected": "Estatus de Amigo Protegido — $5",
+      "nonsnack": "Reconocimiento No-Snack — $19",
       "business": "Zona Aprobada por Tiburones — $99"
     },
     "nameLabel": "Nombre completo del futuro diplomático",
@@ -711,11 +711,11 @@
     "preReportText": "La Shark Human Alliance aún está en sus primeras etapas. Los informes se publicarán trimestralmente una vez que el volumen de donaciones sea suficiente para hacer contribuciones significativas. Preferimos esperar y donar algo sustancial que repartir cantidades pequeñas. Esta página se actualizará con nuestro primer informe de impacto tan pronto como esté listo.",
     "ctaTitle": "Cada certificado ayuda.",
     "ctaText": "El chiste es ficticio. La financiación es real. Obtén un certificado y ayuda a proteger a los tiburones que definitivamente no están tramando nada.",
-    "ctaButton": "Obtén tu certificado — desde $9"
+    "ctaButton": "Obtén tu certificado — desde $5"
   },
   "mobileCta": {
     "label": "Obtén Amigo Protegido",
-    "price": "$9"
+    "price": "$5"
   },
   "wanted": {
     "label": "Oficina de Seguridad de la Alianza",
@@ -750,7 +750,7 @@
       "Decirle a la gente que Tiburón es una 'gran película' (es propaganda)"
     ],
     "rewardLabel": "Recompensa",
-    "rewardText": "Un Certificado de Amigo Protegido ($9)",
+    "rewardText": "Un Certificado de Amigo Protegido ($5)",
     "ctaButton": "PROTEGE A ESTA PERSONA AHORA",
     "posterFooter": "sharkhumanalliance.com — Paz entre humanos y tiburones",
     "downloadButton": "Descargar Póster (formato Stories)",
@@ -758,7 +758,7 @@
     "shareButton": "Compartir en Stories / Mensajes",
     "shareTitle": "SE BUSCA: Humano Desprotegido",
     "shareText": "{name} ha sido identificado como un humano desprotegido. Haz lo correcto.",
-    "giftCta": "Regalar a {name} un Certificado de Amigo Protegido — $9",
+    "giftCta": "Regalar a {name} un Certificado de Amigo Protegido — $5",
     "newPoster": "Crear otro póster",
     "viralPrompt": "Compártelo en Instagram Stories, envíalo al grupo de chat, o imprímelo y pégalo en su escritorio.",
     "viralSubtext": "Cada póster compartido es un paso hacia la cobertura diplomática universal entre tiburones y humanos.",
@@ -772,7 +772,7 @@
     "howStep3Icon": "🛡️",
     "howStep3Title": "Regálale protección",
     "howStep3Text": "Resuelve la situación regalándole un certificado oficial de Amigo Protegido. Diplomacia restaurada.",
-    "bottomCta": "Regalar Estatus de Amigo Protegido — $9"
+    "bottomCta": "Regalar Estatus de Amigo Protegido — $5"
   },
   "career": {
     "hero": {

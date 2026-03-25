@@ -1,31 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  Member,
-  readMembers,
-  writeMembers,
-  generateReferralCode,
+  listMembers,
+  createMember,
+  generateMemberId,
+  generateUniqueReferralCode,
   generateAccessToken,
+  getMemberByReferralCode,
+  incrementReferralCount,
 } from "@/lib/members";
 
-async function generateUniqueReferralCode(): Promise<string> {
-  const members = await readMembers();
-  let code: string;
-  do {
-    code = generateReferralCode();
-  } while (members.some((m) => m.referralCode === code));
-  return code;
-}
-
 export async function GET() {
-  const members = await readMembers();
+  const members = await listMembers();
   // Strip sensitive fields from public response
-  const publicMembers = members.map(({ accessToken, stripeSessionId, email, ...rest }) => rest);
+  const publicMembers = members.map(
+    ({ accessToken, stripeSessionId, email, template, locale, ...rest }) => rest
+  );
   return NextResponse.json(publicMembers);
 }
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-
   const { name, tier, dedication, referredBy, email } = body;
 
   if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -36,43 +30,34 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
   }
 
-  const referralCode = await generateUniqueReferralCode();
-
-  const newMember: Member = {
-    id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-    name: name.trim(),
-    tier,
-    date: new Date().toISOString().split("T")[0],
-    dedication: (dedication || "").trim(),
-    referralCode,
-    referralCount: 0,
-    accessToken: generateAccessToken(),
-  };
-
-  if (email && typeof email === "string") {
-    newMember.email = email.trim();
-  }
-
+  // Validate referral code before creating member
   if (referredBy && typeof referredBy === "string") {
-    newMember.referredBy = referredBy.trim();
-  }
-
-  const members = await readMembers();
-
-  // If referredBy is provided, validate it and increment the referrer's count
-  if (newMember.referredBy) {
-    const referrer = members.find((m) => m.referralCode === newMember.referredBy);
+    const referrer = await getMemberByReferralCode(referredBy.trim());
     if (!referrer) {
       return NextResponse.json(
         { error: "Invalid referral code" },
         { status: 400 }
       );
     }
-    referrer.referralCount += 1;
   }
 
-  members.push(newMember);
-  await writeMembers(members);
+  const referralCode = await generateUniqueReferralCode();
+
+  const newMember = await createMember({
+    id: generateMemberId(),
+    name: name.trim(),
+    tier,
+    date: new Date().toISOString(),
+    dedication: (dedication || "").trim(),
+    referralCode,
+    referredBy: referredBy ? referredBy.trim() : undefined,
+    email: email && typeof email === "string" ? email.trim() : undefined,
+    accessToken: generateAccessToken(),
+  });
+
+  if (referredBy) {
+    await incrementReferralCount(referredBy.trim());
+  }
 
   // Don't expose accessToken in POST response
   const { accessToken, ...publicMember } = newMember;

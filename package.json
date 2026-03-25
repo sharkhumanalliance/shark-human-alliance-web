@@ -14,12 +14,13 @@
     "next-intl": "^4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "stripe": "^17",
-    "resend": "^4"
+    "resend": "^4",
+    "stripe": "^17"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

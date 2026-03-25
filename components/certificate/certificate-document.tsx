@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getQrCodeUrl, getVerificationUrl } from "@/lib/qr-svg";
 
 export type CertificateTemplate = "hero" | "formal";
 
@@ -88,13 +89,15 @@ export function CertificateDocument({
   const footerAside = getFooterAside(tokenBase);
   const isFormal = template === "formal";
 
+  const verifyUrl = getVerificationUrl(registryId.toLowerCase());
+  const qrSrc = getQrCodeUrl(verifyUrl, 200);
+
   return (
     <div className={`certificate-page certificate-page--${template}`}>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={isFormal ? "/background-formal.png" : "/background-final.PNG"}
         alt=""
-        fill
-        priority={priorityImages}
         className={`certificate-bg${isFormal ? " certificate-bg--formal" : ""}`}
       />
 
@@ -137,7 +140,7 @@ export function CertificateDocument({
         <div className="certificate-rule" />
 
         <h1 className={`certificate-title${isFormal ? " certificate-title--formal" : ""}`}>
-Certificate of Alliance Membership
+          Certificate of Alliance Membership
         </h1>
 
         <div className="certificate-rule" />
@@ -222,23 +225,35 @@ Certificate of Alliance Membership
           </div>
         </div>
 
-        <div className="certificate-signatures">
-          <div className="certificate-signature">
-            <div className="certificate-signature-name">Finnley Mako</div>
-            <div className="certificate-signature-role">
-              Chief Diplomat SHA &amp; Press Spokesperson
-              <br />
-              (and Optimist)
+        <div className="certificate-bottom-row">
+          <div className="certificate-signatures">
+            <div className="certificate-signature">
+              <div className="certificate-signature-name">Finnley Mako</div>
+              <div className="certificate-signature-role">
+                Chief Diplomat SHA &amp; Press Spokesperson
+                <br />
+                (and Optimist)
+              </div>
+            </div>
+
+            <div className="certificate-signature">
+              <div className="certificate-signature-name">Luna Reef</div>
+              <div className="certificate-signature-role">
+                Head of Culinary Inspection
+                <br />
+                &amp; Dept. of Misunderstanding Prevention
+              </div>
             </div>
           </div>
 
-          <div className="certificate-signature">
-            <div className="certificate-signature-name">Luna Reef</div>
-            <div className="certificate-signature-role">
-              Head of Culinary Inspection
-              <br />
-              &amp; Dept. of Misunderstanding Prevention
-            </div>
+          <div className="certificate-qr">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={qrSrc}
+              alt="Verify membership"
+              className="certificate-qr-image"
+            />
+            <div className="certificate-qr-label">Verify membership</div>
           </div>
         </div>
 
@@ -247,11 +262,13 @@ Certificate of Alliance Membership
             This document is officially symbolic and diplomatically
             non-binding. Sharks cannot read, do not recognize human
             bureaucracy, and remain largely unaware of our existence.
-            Your purchase does, however, support very real ocean
-            conservation — which is more than most certificates can say.
           </div>
 
-          <div className="certificate-footer-aside">&ldquo;{footerAside}&rdquo;</div>
+          <div className="certificate-footer-aside">
+            Your purchase does, however, support very real ocean
+            conservation — which is more than most certificates can say.
+            &ldquo;{footerAside}&rdquo;
+          </div>
         </footer>
       </section>
     </div>

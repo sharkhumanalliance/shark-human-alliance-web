@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readMembers } from "@/lib/members";
+import { getMemberByStripeSession } from "@/lib/members";
 
 /**
  * GET /api/member-by-session?session_id=cs_xxx
@@ -12,8 +12,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
   }
 
-  const members = await readMembers();
-  const member = members.find((m) => m.stripeSessionId === sessionId);
+  const member = await getMemberByStripeSession(sessionId);
 
   if (!member) {
     return NextResponse.json({ error: "Member not found" }, { status: 404 });

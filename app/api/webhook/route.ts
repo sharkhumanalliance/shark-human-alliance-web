@@ -2,19 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
 import {
-  Member,
-  readMembers,
-  writeMembers,
-  generateReferralCode,
+  generateMemberId,
+  generateUniqueReferralCode,
   generateAccessToken,
+  createMember,
+  incrementReferralCount,
+  getMemberByStripeSession,
 } from "@/lib/members";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
 
-/**
- * Stripe sends webhook events as raw body — we must read it as text, not JSON.
- */
 export async function POST(request: NextRequest) {
   let event;
 
@@ -33,9 +31,21 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  // Handle checkout.session.completed
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
+
+    // ── Idempotency guard ──────────────────────────────────────────────
+    // Stripe webhooks can be delivered more than once. If we already
+    // processed this session, acknowledge and return early.
+    const existing = await getMemberByStripeSession(session.id);
+    if (existing) {
+      console.log(
+        `[SHA Webhook] Duplicate delivery for session ${session.id} — skipping`
+      );
+      return NextResponse.json({ received: true });
+    }
+    // ───────────────────────────────────────────────────────────────────
+
     const meta = session.metadata || {};
 
     const {
@@ -46,46 +56,33 @@ export async function POST(request: NextRequest) {
       isGift = "false",
       recipientEmail = "",
       referredBy = "",
+      locale = "en",
     } = meta;
 
     console.log(`[SHA Webhook] Payment completed for ${name} (${tier})`);
 
-    // 1. Register member
-    const members = await readMembers();
-
-    // Generate unique referral code
-    let referralCode = generateReferralCode();
-    while (members.some((m) => m.referralCode === referralCode)) {
-      referralCode = generateReferralCode();
-    }
-
+    const referralCode = await generateUniqueReferralCode();
     const accessToken = generateAccessToken();
 
-    const newMember: Member = {
-      id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    const newMember = await createMember({
+      id: generateMemberId(),
       name: name.trim(),
       tier,
-      date: new Date().toISOString().split("T")[0],
+      date: new Date().toISOString(),
       dedication: dedication.trim(),
       referralCode,
-      referralCount: 0,
-      email: email.trim(),
+      referredBy: referredBy || undefined,
+      email: email.trim() || undefined,
       stripeSessionId: session.id,
       accessToken,
-    };
+      locale,
+    });
 
     if (referredBy) {
-      newMember.referredBy = referredBy;
-      const referrer = members.find((m) => m.referralCode === referredBy);
-      if (referrer) {
-        referrer.referralCount += 1;
-      }
+      await incrementReferralCount(referredBy);
     }
 
-    members.push(newMember);
-    await writeMembers(members);
-
-    // 2. Send certificate email (link only — no PDF attachment)
+    // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
     const certificateUrl = `${BASE_URL}/en/certificate/view?token=${accessToken}`;
 
@@ -108,11 +105,10 @@ export async function POST(request: NextRequest) {
         console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);
       } catch (emailError) {
         console.error("[SHA Webhook] Email send failed:", emailError);
-        // Don't fail the webhook — payment was successful
       }
     }
 
-    // 3. Also send to buyer if gift
+    // Also notify buyer if gift
     if (isGift === "true" && recipientEmail && email && email !== recipientEmail && process.env.RESEND_API_KEY) {
       try {
         await getResend().emails.send({

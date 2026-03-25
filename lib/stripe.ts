@@ -2,10 +2,18 @@ import Stripe from "stripe";
 
 /** Price in cents for each tier */
 export const TIER_PRICES: Record<string, number> = {
-  basic: 900,
-  protected: 900,
-  nonsnack: 2900,
+  basic: 500,
+  protected: 500,
+  nonsnack: 1900,
   business: 9900,
+};
+
+/** How much of each sale goes to shark conservation (in cents). */
+export const TIER_DONATIONS: Record<string, number> = {
+  basic: 100,
+  protected: 100,
+  nonsnack: 1200,
+  business: 7000,
 };
 
 /** Human-readable tier names for Stripe line items */

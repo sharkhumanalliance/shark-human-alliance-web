@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
 import {
-  Member,
-  readMembers,
-  writeMembers,
-  generateReferralCode,
+  generateMemberId,
+  generateUniqueReferralCode,
   generateAccessToken,
+  createMember,
+  incrementReferralCount,
 } from "@/lib/members";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
@@ -16,7 +16,18 @@ const FREE_PROMO_CODES = ["SHATEST"];
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { tier, name, dedication, email, isGift, recipientEmail, referredBy, locale, promoCode } = body;
+    const {
+      tier,
+      name,
+      dedication,
+      email,
+      isGift,
+      recipientEmail,
+      referredBy,
+      locale,
+      promoCode,
+      template,
+    } = body;
 
     if (!tier || !TIER_PRICES[tier]) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
@@ -29,42 +40,30 @@ export async function POST(request: NextRequest) {
 
     // ─── Free promo code: skip Stripe, register member directly ───
     if (promoCode && FREE_PROMO_CODES.includes(promoCode.toUpperCase().trim())) {
-      const members = await readMembers();
-
-      let referralCode = generateReferralCode();
-      while (members.some((m) => m.referralCode === referralCode)) {
-        referralCode = generateReferralCode();
-      }
-
+      const referralCode = await generateUniqueReferralCode();
       const freeSessionId = `promo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
-      const newMember: Member = {
-        id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      const newMember = await createMember({
+        id: generateMemberId(),
         name: name.trim(),
         tier,
-        date: new Date().toISOString().split("T")[0],
+        date: new Date().toISOString(),
         dedication: (dedication || "").trim(),
         referralCode,
-        referralCount: 0,
+        referredBy: referredBy || undefined,
         email: email ? email.trim() : undefined,
         stripeSessionId: freeSessionId,
         accessToken: generateAccessToken(),
-      };
+        template: template || undefined,
+        locale: loc,
+      });
 
       if (referredBy) {
-        newMember.referredBy = referredBy;
-        const referrer = members.find((m) => m.referralCode === referredBy);
-        if (referrer) {
-          referrer.referralCount += 1;
-        }
+        await incrementReferralCount(referredBy);
       }
 
-      members.push(newMember);
-      await writeMembers(members);
+      console.log(`[SHA Checkout] Promo code ${promoCode} used — free registration for ${newMember.name}`);
 
-      console.log(`[SHA Checkout] Promo code ${promoCode} used — free registration for ${name}`);
-
-      // Use relative URL so it works in both dev and production
       const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}`;
       return NextResponse.json({ url: successUrl });
     }
@@ -103,6 +102,7 @@ export async function POST(request: NextRequest) {
         recipientEmail: recipientEmail || "",
         referredBy: referredBy || "",
         locale: loc,
+        template: template || "",
       },
     });
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readMembers } from "@/lib/members";
+import { getMemberByReferralCode } from "@/lib/members";
 import { getRank } from "@/lib/referral-ranks";
 
 export async function GET(
@@ -7,9 +7,7 @@ export async function GET(
   { params }: { params: Promise<{ code: string }> }
 ) {
   const { code } = await params;
-  const members = await readMembers();
-
-  const member = members.find((m) => m.referralCode === code);
+  const member = await getMemberByReferralCode(code);
 
   if (!member) {
     return NextResponse.json(

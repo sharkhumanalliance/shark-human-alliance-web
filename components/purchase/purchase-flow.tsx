@@ -45,16 +45,16 @@ function PurchaseFlowInner() {
   const [template, setTemplate] = useState<CertificateTemplate>("hero");
 
   const tierPrices: Record<Tier, string> = {
-    basic: "$9",
-    protected: "$9",
-    nonsnack: "$29",
+    basic: "$5",
+    protected: "$5",
+    nonsnack: "$19",
     business: "$99",
   };
 
   const tierValues: Record<Tier, number> = {
-    basic: 9,
-    protected: 9,
-    nonsnack: 29,
+    basic: 5,
+    protected: 5,
+    nonsnack: 19,
     business: 99,
   };
 

@@ -28,17 +28,29 @@ Each page follows a consistent pattern:
 
 ### Data Layer
 
-Members are stored in **`data/members.json`** — a flat JSON array, no database. This file is read/written directly by API routes using `fs/promises`. On Vercel, writes persist only within a single serverless invocation (the filesystem is ephemeral in production). A proper database migration is a known future need.
+Members are stored in **PostgreSQL** (e.g. Neon, Supabase, Vercel Postgres). Connection is managed via `lib/db.ts` (lazy `pg.Pool` singleton). Data-access functions live in `lib/members.ts`:
+
+- `listMembers()`, `getMemberById(id)`, `getMemberByAccessToken(token)`, `getMemberByStripeSession(sessionId)`, `getMemberByReferralCode(code)`
+- `createMember(data)`, `incrementReferralCount(code)`
+- `generateMemberId()`, `generateUniqueReferralCode()`, `generateAccessToken()`
+
+Migrations: `db/migration-001.sql` (initial schema), `db/migration-002.sql` (issue_date → timestamptz, add template/locale columns). Run sequentially against your database.
 
 Member schema:
 ```ts
-{ id, name, tier, date, dedication, referralCode, referredBy?, referralCount, email?, stripeSessionId? }
+{ id, name, tier, date, dedication, referralCode, referredBy?, referralCount, email?, stripeSessionId?, accessToken?, template?, locale? }
 ```
+
+Key patterns:
+- **Member IDs** use `crypto.randomUUID()` (via `generateMemberId()`).
+- **Webhook idempotency**: `/api/webhook` checks `getMemberByStripeSession()` before creating a member.
+- **Referral code collision retry**: `createMember()` retries with a new code on unique constraint violation (up to 5 times).
+- **Verification page**: `/[locale]/verify?id=MEMBER_ID` shows a verified membership card with funny quips.
 
 ### API Routes
 
 - `POST /api/checkout` — creates Stripe Checkout session or bypasses Stripe entirely for free promo codes (currently `SHATEST`). Returns `{ url }`.
-- `POST /api/webhook` — Stripe webhook: registers member in JSON, sends certificate email via Resend.
+- `POST /api/webhook` — Stripe webhook: registers member in DB, sends certificate email via Resend.
 - `GET /api/members` — returns the member list (used by the registry page).
 - `GET /api/member-by-session?session_id=` — polls for a member by Stripe session ID (success page polls this until webhook fires).
 - `GET /api/referral/[code]` — looks up a member by referral code.
@@ -83,6 +95,7 @@ See `.env.example`. Required for full functionality:
 
 | Variable | Purpose |
 |---|---|
+| `DATABASE_URL` | PostgreSQL connection string (e.g. Neon, Supabase) |
 | `STRIPE_SECRET_KEY` | Stripe API (server-side, lazy-loaded) |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe public key (client-side) |
 | `STRIPE_WEBHOOK_SECRET` | Webhook signature verification |
@@ -97,5 +110,5 @@ Members get a unique `SHA-XXXX` referral code. The `/career` page shows the rank
 ### Known Constraints
 
 - `middleware.ts` uses the deprecated `middleware` file convention (Next.js 16 wants `proxy`). It's a warning, not a build error, but worth migrating eventually.
-- `data/members.json` writes do not persist on Vercel between deployments/invocations. Suitable for MVP/demo; replace with a database for production.
 - `lib/email.ts` still uses eager Resend initialization (same pattern as the old Stripe bug). If Resend starts failing builds, apply the same lazy-init pattern used in `lib/stripe.ts`.
+- `data/members.json` is no longer used — kept as historical reference. All data now lives in PostgreSQL.

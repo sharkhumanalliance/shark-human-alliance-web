@@ -76,7 +76,7 @@ export function MembershipPageContent() {
               id="protected"
               variant="protected"
               title={t("protectedTitle")}
-              price="$19"
+              price="$5"
               description={t("protectedDescription")}
               features={[t("protectedFeatures.0"), t("protectedFeatures.1"), t("protectedFeatures.2")]}
               ctaLabel={t("protectedCta")}
@@ -87,7 +87,7 @@ export function MembershipPageContent() {
               id="nonsnack"
               variant="nonsnack"
               title={t("nonsnackTitle")}
-              price="$29"
+              price="$19"
               description={t("nonsnackDescription")}
               features={[t("nonsnackFeatures.0"), t("nonsnackFeatures.1"), t("nonsnackFeatures.2")]}
               ctaLabel={t("nonsnackCta")}

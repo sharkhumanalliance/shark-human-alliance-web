@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
-import { readMembers } from "@/lib/members";
+import { getMemberById } from "@/lib/members";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
 
@@ -21,9 +21,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Look up member to get their accessToken for the certificate URL
-    const members = await readMembers();
-    const member = members.find((m) => m.id === memberId);
+    const member = await getMemberById(memberId);
 
     if (!member?.accessToken) {
       return NextResponse.json(

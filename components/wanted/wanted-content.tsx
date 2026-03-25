@@ -78,7 +78,7 @@ export function WantedContent() {
         resolve(img);
       };
       img.onerror = reject;
-      img.src = "/seal.png";
+      img.src = "/cert-seal.png";
     });
   }, []);
 

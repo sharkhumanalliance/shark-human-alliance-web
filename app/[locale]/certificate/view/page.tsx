@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { CertificateDocument, type CertificateTemplate } from "@/components/certificate/certificate-document";
-import { readMembers } from "@/lib/members";
+import { getMemberByAccessToken } from "@/lib/members";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -15,13 +15,18 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
 
   if (!token) notFound();
 
-  const template: CertificateTemplate =
-    templateParam === "formal" ? "formal" : "hero";
-
-  // Look up member by accessToken
-  const members = await readMembers();
-  const member = members.find((m) => m.accessToken === token);
+  const member = await getMemberByAccessToken(token);
   if (!member) notFound();
+
+  // Query param overrides DB value; DB value overrides default "hero".
+  const template: CertificateTemplate =
+    templateParam === "formal"
+      ? "formal"
+      : templateParam === "hero"
+        ? "hero"
+        : member.template === "formal"
+          ? "formal"
+          : "hero";
 
   const displayDate = new Date(member.date).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",

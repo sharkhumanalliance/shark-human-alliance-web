@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | Shark Human Alliance",
   },
   description:
-    "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $9.",
+    "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $5.",
   metadataBase: new URL("https://sharkhumanalliance.com"),
   openGraph: {
     type: "website",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shark Human Alliance",
     description:
-      "Official shark protection certificates + real conservation funding. From $9.",
+      "Official shark protection certificates + real conservation funding. From $5.",
     images: ["/mascots/finnley-luna-hero.png"],
   },
   robots: {
