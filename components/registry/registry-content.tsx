@@ -1,6 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { LocalizedLink } from "@/components/ui/localized-link";
+import { buildLocalizedPath } from "@/lib/navigation";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { RANKS, getRankInfo } from "@/lib/referral-ranks";
@@ -42,6 +44,7 @@ const TIER_STYLES: Record<string, { badge: string; border: string; icon: string 
 
 export function RegistryContent() {
   const t = useTranslations("registry");
+  const locale = useLocale();
   const router = useRouter();
   const [members, setMembers] = useState<Member[]>([]);
   const [filter, setFilter] = useState<TierFilter>("all");
@@ -61,10 +64,10 @@ export function RegistryContent() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [locale]);
 
   const copyProfileLink = useCallback((memberId: string) => {
-    const url = `${window.location.origin}/registry?highlight=${memberId}`;
+    const url = `${window.location.origin}${buildLocalizedPath(locale, `/registry?highlight=${memberId}`)}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopiedId(memberId);
       setTimeout(() => setCopiedId(null), 2000);
@@ -87,7 +90,7 @@ export function RegistryContent() {
           (m.referralCode && m.referralCode.toLowerCase() === q.toLowerCase())
       );
       if (match) {
-        router.push(`/verify?id=${encodeURIComponent(match.id)}`);
+        router.push(buildLocalizedPath(locale, `/verify?id=${encodeURIComponent(match.id)}`));
       } else {
         setVerifyError(t("verifyNotFound"));
       }
@@ -96,7 +99,7 @@ export function RegistryContent() {
     } finally {
       setVerifying(false);
     }
-  }, [verifyInput, router, t]);
+  }, [locale, verifyInput, router, t]);
 
   const filtered = useMemo(() => {
     let result = filter === "all" ? members : members.filter((m) => m.tier === filter);
@@ -195,18 +198,18 @@ export function RegistryContent() {
               <div className="mt-3">
                 <p className="text-sm text-red-600">{verifyError}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <a
+                  <LocalizedLink
                     href="/purchase?tier=protected"
                     className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--accent-dark)]"
                   >
                     🛡️ {t("verifyBuyCta")}
-                  </a>
-                  <a
+                  </LocalizedLink>
+                  <LocalizedLink
                     href="/wanted"
                     className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-4 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-50"
                   >
                     🚨 {t("verifyWantedCta")}
-                  </a>
+                  </LocalizedLink>
                 </div>
               </div>
             )}
@@ -267,12 +270,12 @@ export function RegistryContent() {
               {!search.trim() && (
                 <>
                   <p className="mt-2 text-sm text-[var(--muted)]">{t("emptyStateFounders")}</p>
-                  <a
+                  <LocalizedLink
                     href="/purchase?tier=protected"
                     className="mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
                   >
                     {t("joinCtaButton")}
-                  </a>
+                  </LocalizedLink>
                 </>
               )}
             </div>
@@ -381,18 +384,18 @@ export function RegistryContent() {
                 {t("viralWantedDesc")}
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
-                <a
+                <LocalizedLink
                   href="/purchase?tier=protected&gift=true"
                   className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
                 >
                   {t("viralWantedCta")}
-                </a>
-                <a
+                </LocalizedLink>
+                <LocalizedLink
                   href="/wanted"
                   className="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-700 transition hover:bg-red-50"
                 >
                   🚨 {t("viralWantedPoster")}
-                </a>
+                </LocalizedLink>
               </div>
             </div>
 
@@ -417,12 +420,12 @@ export function RegistryContent() {
                             {m.referralCount} {t("viralRecruitersCount")} · {rank.icon} {rank.label}
                           </p>
                         </div>
-                        <a
+                        <LocalizedLink
                           href="/career"
                           className="shrink-0 text-xs font-semibold text-amber-700 hover:text-amber-900"
                         >
                           {t("viralRecruitersRank")} →
-                        </a>
+                        </LocalizedLink>
                       </div>
                     );
                   })}
@@ -443,12 +446,12 @@ export function RegistryContent() {
                   <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
                     {t("careerPromoDesc")}
                   </p>
-                  <a
+                  <LocalizedLink
                     href="/career"
                     className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
                   >
                     {t("careerPromoLink")} →
-                  </a>
+                  </LocalizedLink>
                 </div>
               </div>
             </div>
@@ -464,12 +467,12 @@ export function RegistryContent() {
               {t("joinCta")}
             </h2>
             <div className="mt-8">
-              <a
+              <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 🛡️ {t("joinCtaButton")}
-              </a>
+              </LocalizedLink>
             </div>
           </div>
         </div>

@@ -1,11 +1,13 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useMessages, useTranslations } from "next-intl";
+import { LocalizedLink } from "@/components/ui/localized-link";
 
 export function FaqContent() {
   const t = useTranslations("faqPage");
-
-  const items = Array.from({ length: 8 }, (_, i) => ({
+  const messages = useMessages() as Record<string, unknown>;
+  const faqItems = ((messages.faqPage as { items?: Array<{ question: string; answer: string }> })?.items ?? []);
+  const items = faqItems.map((_, i) => ({
     question: t(`items.${i}.question`),
     answer: t(`items.${i}.answer`),
   }));
@@ -61,12 +63,12 @@ export function FaqContent() {
               {t("ctaText")}
             </p>
             <div className="mt-6">
-              <a
+              <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 🛡️ {t("ctaButton")}
-              </a>
+              </LocalizedLink>
             </div>
           </div>
         </div>

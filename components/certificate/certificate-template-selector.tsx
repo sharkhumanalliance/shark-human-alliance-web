@@ -25,6 +25,12 @@ const OPTIONS: Array<{
     description: "Elegant and frameable — pure diplomatic ceremony.",
     icon: "📜",
   },
+  {
+    value: "luxury",
+    label: "Luxury Edition",
+    description: "Premium framed design with ornate borders and seal.",
+    icon: "🏅",
+  },
 ];
 
 export function CertificateTemplateSelector({ value, onChange }: Props) {

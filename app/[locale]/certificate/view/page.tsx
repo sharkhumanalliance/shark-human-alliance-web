@@ -19,14 +19,13 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
   if (!member) notFound();
 
   // Query param overrides DB value; DB value overrides default "hero".
+  const validTemplates: CertificateTemplate[] = ["hero", "formal", "luxury"];
   const template: CertificateTemplate =
-    templateParam === "formal"
-      ? "formal"
-      : templateParam === "hero"
-        ? "hero"
-        : member.template === "formal"
-          ? "formal"
-          : "hero";
+    validTemplates.includes(templateParam as CertificateTemplate)
+      ? (templateParam as CertificateTemplate)
+      : validTemplates.includes(member.template as CertificateTemplate)
+        ? (member.template as CertificateTemplate)
+        : "hero";
 
   const displayDate = new Date(member.date).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",

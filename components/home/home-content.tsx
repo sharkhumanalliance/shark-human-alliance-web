@@ -1,12 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import { trackEvent } from "@/components/analytics";
+import { LocalizedLink } from "@/components/ui/localized-link";
 
 const PARTNERS = [
   { i: 1, icon: "🦈", url: "https://www.sharktrust.org" },
@@ -20,18 +21,26 @@ export function HomeContent() {
   const [previewName, setPreviewName] = useState("");
   const [previewTemplate, setPreviewTemplate] = useState<CertificateTemplate>("hero");
 
-  // Track certificate preview interaction — debounced, fires once per typing session
   const previewDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const previewTrackedRef = useRef(false);
+
   useEffect(() => {
-    if (previewName.trim().length < 2) { previewTrackedRef.current = false; return; }
+    if (previewName.trim().length < 2) {
+      previewTrackedRef.current = false;
+      return;
+    }
+
     if (previewTrackedRef.current) return;
     if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
+
     previewDebounceRef.current = setTimeout(() => {
       previewTrackedRef.current = true;
       trackEvent("certificate_preview_interaction");
     }, 2000);
-    return () => { if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current); };
+
+    return () => {
+      if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
+    };
   }, [previewName]);
 
   const reviewEmojis = ["🏄", "🐚", "🦈", "🌊", "🐠"];
@@ -42,10 +51,12 @@ export function HomeContent() {
     emoji: reviewEmojis[i],
   }));
 
+  const previewPurchaseHref = `/purchase?tier=protected${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`;
+  const previewGiftHref = `/purchase?tier=protected&gift=true${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`;
+
   return (
     <>
-      {/* 1 — Value prop + impact hook */}
-      <section className="py-14 bg-[var(--surface-soft)]">
+      <section className="bg-[var(--surface-soft)] py-14">
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
@@ -76,15 +87,14 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* How it works strip */}
       <div className="border-y border-[var(--border)] bg-white">
         <div className="mx-auto grid max-w-4xl grid-cols-3 gap-6 px-6 py-5 text-center">
           {[
-            { num: "1", text: t("howStep1"), icon: "📋" },
-            { num: "2", text: t("howStep2"), icon: "🌊" },
-            { num: "3", text: t("howStep3"), icon: "🎁" },
+            { text: t("howStep1"), icon: "📋" },
+            { text: t("howStep2"), icon: "🌊" },
+            { text: t("howStep3"), icon: "🎁" },
           ].map((step) => (
-            <div key={step.num} className="flex flex-col items-center gap-2">
+            <div key={step.text} className="flex flex-col items-center gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-50 text-lg">
                 {step.icon}
               </div>
@@ -94,20 +104,22 @@ export function HomeContent() {
         </div>
       </div>
 
-      {/* 2 — Certificate Preview (interactive) */}
-      <section id="certificate-preview" className="py-16 bg-[var(--surface-soft)]">
+      <section id="certificate-preview" className="bg-[var(--surface-soft)] py-16">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center max-w-lg mx-auto">
-            <p className="text-base md:text-lg font-medium text-[var(--brand-dark)] leading-relaxed">
+          <div className="mx-auto max-w-lg text-center">
+            <p className="text-base font-medium leading-relaxed text-[var(--brand-dark)] md:text-lg">
               {t("about.certPreviewLabel")}
             </p>
           </div>
 
-          {/* Live name input */}
           <div className="mx-auto mt-6 max-w-md">
+            <label htmlFor="homepage-preview-name" className="sr-only">
+              {t("about.inputPlaceholder")}
+            </label>
             <div className="flex items-center gap-3 rounded-xl border border-teal-200 bg-white px-5 py-4 shadow-sm transition focus-within:border-teal-400 focus-within:shadow-md">
               <span className="text-lg" aria-hidden="true">✍️</span>
               <input
+                id="homepage-preview-name"
                 type="text"
                 value={previewName}
                 onChange={(e) => setPreviewName(e.target.value)}
@@ -121,7 +133,7 @@ export function HomeContent() {
             <CertificateTemplateSelector value={previewTemplate} onChange={setPreviewTemplate} />
           </div>
 
-          <div className="mt-6 mx-auto max-w-2xl">
+          <div className="mx-auto mt-6 max-w-2xl">
             <CertificatePreview
               name={previewName.trim() || t("about.certName")}
               tier="protected"
@@ -131,26 +143,24 @@ export function HomeContent() {
             />
           </div>
 
-          {/* Dual CTA */}
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <a
-              href={`/purchase?tier=protected${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`}
+            <LocalizedLink
+              href={previewPurchaseHref}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               🛡️ {t("about.ctaBuy")}
-            </a>
-            <a
-              href={`/purchase?tier=protected&gift=true${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`}
+            </LocalizedLink>
+            <LocalizedLink
+              href={previewGiftHref}
               className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50"
             >
               🎁 {t("about.ctaGift")}
-            </a>
+            </LocalizedLink>
           </div>
         </div>
       </section>
 
-      {/* 3 — Membership tiers (dark) */}
-      <section id="membership" className="py-16 lg:py-20 bg-[var(--brand-dark)]">
+      <section id="membership" className="bg-[var(--brand-dark)] py-16 lg:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-300">
@@ -164,7 +174,7 @@ export function HomeContent() {
             </p>
           </div>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-3 items-start">
+          <div className="mt-8 grid items-start gap-6 md:grid-cols-2">
             <MembershipCard
               variant="protected"
               title={t("membershipSection.protectedTitle")}
@@ -195,25 +205,32 @@ export function HomeContent() {
               ctaLabel={t("membershipSection.nonsnackCta")}
               href="/purchase?tier=nonsnack"
             />
+          </div>
 
-            <MembershipCard
-              variant="business"
-              title={t("membershipSection.businessTitle")}
-              price={t("membershipSection.businessPrice")}
-              description={t("membershipSection.businessDescription")}
-              features={[
-                t("membershipSection.businessFeatures.0"),
-                t("membershipSection.businessFeatures.1"),
-                t("membershipSection.businessFeatures.2"),
-              ]}
-              ctaLabel={t("membershipSection.businessCta")}
-              href="/purchase?tier=business"
-            />
+          <div className="mt-6 rounded-2xl border border-indigo-200/30 bg-white/10 p-5 text-sky-50">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-300">
+              {t("membershipSection.businessEyebrow")}
+            </p>
+            <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-3xl">
+                <h3 className="text-2xl font-semibold text-white">
+                  {t("membershipSection.businessTitle")} — {t("membershipSection.businessPrice")}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-sky-100/80">
+                  {t("membershipSection.businessDescription")}
+                </p>
+              </div>
+              <LocalizedLink
+                href="/purchase?tier=business"
+                className="inline-flex items-center justify-center rounded-lg border border-indigo-300/40 bg-indigo-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-400"
+              >
+                {t("membershipSection.businessCta")}
+              </LocalizedLink>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4 — Stats */}
       <section className="py-10">
         <div className="mx-auto max-w-5xl px-6">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -225,16 +242,19 @@ export function HomeContent() {
             ].map((stat) => (
               <div key={stat.key} className="rounded-xl border border-[var(--border)] bg-white p-5 text-center shadow-sm">
                 <span className="text-2xl">{stat.icon}</span>
-                <p className={`mt-2 text-3xl font-bold ${stat.color} md:text-4xl`}>{t(`realImpact.stat${stat.key}Value`)}</p>
-                <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{t(`realImpact.stat${stat.key}Label`)}</p>
+                <p className={`mt-2 text-3xl font-bold md:text-4xl ${stat.color}`}>
+                  {t(`realImpact.stat${stat.key}Value`)}
+                </p>
+                <p className="mt-2 text-sm leading-5 text-[var(--muted)]">
+                  {t(`realImpact.stat${stat.key}Label`)}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 5 — Impact teaser */}
-      <section id="real-impact" className="py-12 bg-white">
+      <section id="real-impact" className="bg-white py-12">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
             {t("realImpact.label")}
@@ -243,9 +263,8 @@ export function HomeContent() {
             {t("realImpact.title")}
           </h2>
 
-          {/* Partner links inline */}
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--muted)]">
-            {t("impactTeaser.donationsIntro")}{" "}
+            {t("impactTeaser.donationsIntro")} {" "}
             {PARTNERS.map(({ i, url }, idx) => (
               <span key={i}>
                 <a
@@ -263,18 +282,17 @@ export function HomeContent() {
           </p>
 
           <div className="mt-6">
-            <a
+            <LocalizedLink
               href="/impact"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
             >
               {t("impactTeaser.linkText")} →
-            </a>
+            </LocalizedLink>
           </div>
         </div>
       </section>
 
-      {/* 6 — Gifting */}
-      <section className="py-14 bg-orange-50/30">
+      <section className="bg-orange-50/30 py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-700">
@@ -300,23 +318,22 @@ export function HomeContent() {
           </div>
 
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <a
+            <LocalizedLink
               href="/purchase?tier=protected&gift=true"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               🎁 {t("giftingSection.cta")}
-            </a>
-            <a
+            </LocalizedLink>
+            <LocalizedLink
               href="/wanted"
               className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-8 py-4 text-base font-semibold text-red-700 transition hover:border-red-300 hover:bg-red-50"
             >
               🚨 {t("giftingSection.wantedCta")}
-            </a>
+            </LocalizedLink>
           </div>
         </div>
       </section>
 
-      {/* 7 — Reviews */}
       <section className="py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center">
@@ -330,16 +347,11 @@ export function HomeContent() {
 
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {reviews.slice(0, 3).map((review, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-5 shadow-sm"
-              >
-                <div className="flex gap-1 text-orange-400" aria-label="5 stars">
-                  {"★★★★★".split("").map((star, j) => (
-                    <span key={j} className="text-lg" aria-hidden="true">{star}</span>
-                  ))}
+              <div key={i} className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-5 shadow-sm">
+                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand)]">
+                  {t("reviews.kicker")}
                 </div>
-                <p className="mt-2 text-sm leading-6 text-[var(--foreground)] italic">
+                <p className="mt-3 text-sm italic leading-6 text-[var(--foreground)]">
                   &ldquo;{review.text}&rdquo;
                 </p>
                 <div className="mt-3 flex items-center gap-3">
@@ -357,8 +369,7 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* 8 — Mini FAQ (3 questions + link) */}
-      <section id="faq" className="py-14 bg-white">
+      <section id="faq" className="bg-white py-14">
         <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
@@ -374,27 +385,20 @@ export function HomeContent() {
               question: t(`faq.items.${i}.question`),
               answer: t(`faq.items.${i}.answer`),
             })).map((item) => (
-              <article
-                key={item.question}
-                className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-sm"
-              >
-                <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
-                  {item.question}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-                  {item.answer}
-                </p>
+              <article key={item.question} className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-sm">
+                <h3 className="text-lg font-semibold text-[var(--brand-dark)]">{item.question}</h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{item.answer}</p>
               </article>
             ))}
           </div>
 
           <div className="mt-6 text-center">
-            <a
+            <LocalizedLink
               href="/faq"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
             >
               {t("faq.allQuestions")} →
-            </a>
+            </LocalizedLink>
           </div>
         </div>
       </section>

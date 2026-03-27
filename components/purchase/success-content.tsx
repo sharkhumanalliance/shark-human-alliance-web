@@ -7,6 +7,8 @@ import { CertificatePreview } from "@/components/certificate/certificate-preview
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { trackEvent } from "@/components/analytics";
+import { LocalizedLink } from "@/components/ui/localized-link";
+import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
 
 interface MemberData {
   id: string;
@@ -17,6 +19,7 @@ interface MemberData {
   referralCode: string;
   referralCount: number;
   accessToken?: string;
+  email?: string;
 }
 
 function SuccessContentInner() {
@@ -52,10 +55,10 @@ function SuccessContentInner() {
           // Fire GA4 purchase event once
           if (!purchaseTrackedRef.current) {
             purchaseTrackedRef.current = true;
-            const tierValues: Record<string, number> = { basic: 9, protected: 9, nonsnack: 29, business: 99 };
+            const tierValues: Record<string, number> = { basic: 5, protected: 5, nonsnack: 19, business: 99 };
             trackEvent("purchase", {
               transaction_id: sessionId,
-              value: tierValues[data.tier] ?? 9,
+              value: tierValues[data.tier] ?? 5,
               currency: "USD",
               item_id: data.tier,
               item_name: data.tier,
@@ -129,12 +132,12 @@ function SuccessContentInner() {
           <p className="mt-3 text-sm text-[var(--muted)]">
             {t("successPendingText")}
           </p>
-          <a
-            href={`/${locale}`}
+          <LocalizedLink
+            href="/"
             className="mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
           >
             {t("backHome")}
-          </a>
+          </LocalizedLink>
         </div>
       </section>
     );
@@ -188,12 +191,12 @@ function SuccessContentInner() {
             {t("downloadCert")} (A4)
           </button>
 
-          <a
-            href={`/${locale}/registry?highlight=${member.id}`}
+          <LocalizedLink
+            href={`/registry?highlight=${member.id}`}
             className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
           >
             {t("viewRegistry")}
-          </a>
+          </LocalizedLink>
         </div>
 
         {/* Referral section */}
@@ -209,14 +212,14 @@ function SuccessContentInner() {
               <div className="mt-4 flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 mx-auto max-w-sm">
                 <input
                   type="text"
-                  value={`${typeof window !== "undefined" ? window.location.origin : ""}/${locale}/purchase?tier=protected&ref=${member.referralCode}`}
+                  value={`${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`}
                   readOnly
                   className="flex-grow bg-transparent text-sm font-mono text-[var(--brand-dark)] focus:outline-none truncate"
                 />
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `${window.location.origin}/${locale}/purchase?tier=protected&ref=${member.referralCode}`
+                      `${window.location.origin}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`
                     );
                     setLinkCopied(true);
                     trackEvent("referral_link_copy", { tier: member.tier });
@@ -227,30 +230,36 @@ function SuccessContentInner() {
                   {linkCopied ? "✓" : t("referralCopy")}
                 </button>
               </div>
-              <a
-                href={`/${locale}/career`}
+              <LocalizedLink
+                href="/career"
                 className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
               >
                 {t("referralCareerLink")} →
-              </a>
+              </LocalizedLink>
             </div>
           </div>
         )}
 
         {/* Email notice */}
         <div className="mt-8 mx-auto max-w-md text-center">
-          <p className="text-sm text-[var(--muted)]">
-            {t("emailSentAutomatic")}
-          </p>
+          {member.email ? (
+            <p className="text-sm text-[var(--muted)]">
+              {t("emailSentAutomatic")}
+            </p>
+          ) : (
+            <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm font-semibold text-amber-800">
+              {t("downloadOnlyNotice")}
+            </div>
+          )}
         </div>
 
         <div className="mt-4 text-center">
-          <a
-            href={`/${locale}`}
+          <LocalizedLink
+            href="/"
             className="text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
           >
             {t("backHome")}
-          </a>
+          </LocalizedLink>
         </div>
       </div>
     </section>

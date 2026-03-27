@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getQrCodeUrl, getVerificationUrl } from "@/lib/qr-svg";
 
-export type CertificateTemplate = "hero" | "formal";
+export type CertificateTemplate = "hero" | "formal" | "luxury";
 
 export type CertificateDocumentProps = {
   name: string;
@@ -14,6 +14,7 @@ export type CertificateDocumentProps = {
   priorityImages?: boolean;
   className?: string;
   template?: CertificateTemplate;
+  assetMode?: "preview" | "full";
 };
 
 const HUMOR_NOTES = [
@@ -81,6 +82,7 @@ export function CertificateDocument({
   registryId,
   priorityImages = false,
   template = "hero",
+  assetMode = priorityImages ? "full" : "preview",
 }: CertificateDocumentProps) {
   const statusText = getTierLabel(tier);
   const tierColorClass = getTierColorClass(tier);
@@ -88,33 +90,40 @@ export function CertificateDocument({
   const diplomaticNote = getDiplomaticNote(tokenBase);
   const footerAside = getFooterAside(tokenBase);
   const isFormal = template === "formal";
+  const isLuxury = template === "luxury";
 
   const verifyUrl = getVerificationUrl(registryId.toLowerCase());
+  const backgroundSrc = isLuxury
+    ? assetMode === "preview" ? "/background-luxury-preview.webp" : "/background-luxury.png"
+    : isFormal
+      ? assetMode === "preview" ? "/background-formal-preview.webp" : "/background-formal.png"
+      : assetMode === "preview" ? "/background-final-preview.webp" : "/background-final.PNG";
+  const heroImageSrc = assetMode === "preview" ? "/cert-shark.webp" : "/cert-shark.jpg";
   const qrSrc = getQrCodeUrl(verifyUrl, 200);
 
   return (
     <div className={`certificate-page certificate-page--${template}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={isFormal ? "/background-formal.png" : "/background-final.PNG"}
+        src={backgroundSrc}
         alt=""
-        className={`certificate-bg${isFormal ? " certificate-bg--formal" : ""}`}
+        className={`certificate-bg${isFormal ? " certificate-bg--formal" : ""}${isLuxury ? " certificate-bg--luxury" : ""}`}
       />
 
       <div className="certificate-inner-frame" />
 
-      {isFormal ? (
+      {isLuxury ? null : isFormal ? (
         <section className="certificate-formal-top">
           <div className="certificate-formal-kicker">SHARK HUMAN ALLIANCE</div>
           <div className="certificate-formal-ornament" />
           <div className="certificate-formal-subtitle">
-            Office of Interspecies Diplomatic Affairs
+            Department of Interspecies Diplomatic Affairs
           </div>
         </section>
       ) : (
         <section className="certificate-hero">
           <Image
-            src="/cert-shark.jpg"
+            src={heroImageSrc}
             alt=""
             fill
             priority={priorityImages}
@@ -127,152 +136,239 @@ export function CertificateDocument({
         </section>
       )}
 
-      <section className="certificate-content">
-        {!isFormal && (
-          <header className="certificate-header">
-            <div className="certificate-org">SHARK HUMAN ALLIANCE</div>
-            <div className="certificate-org-subtitle">
-              Office of Interspecies Diplomatic Affairs
-            </div>
-          </header>
-        )}
-
-        <div className="certificate-rule" />
-
-        <h1 className={`certificate-title${isFormal ? " certificate-title--formal" : ""}`}>
-          Certificate of Alliance Membership
-        </h1>
-
-        <div className="certificate-rule" />
-
-        <p className="certificate-intro">
-          {isFormal
-            ? "This certifies that"
-            : "This document officially certifies that the esteemed"}
-        </p>
-
-        <div className="certificate-name-wrap">
-          <div className="certificate-name">{name}</div>
-        </div>
-
-        <p className="certificate-status-label">
-          {isFormal
-            ? "has been designated a"
-            : "has been granted the status of"}
-        </p>
-
-        <div className={`certificate-status ${tierColorClass}`}>{statusText}</div>
-
-        <div className={`certificate-main${isFormal ? " certificate-main--formal" : ""}`}>
-          <div className="certificate-copy-column">
-            <p className="certificate-body">
-              This certifies that the holder is officially recognized by the
-              Shark Human Alliance as a supporter of peaceful shark-human
-              relations and a contributor to real ocean conservation.
-            </p>
-
-            <div className={`certificate-verdict ${tierColorClass}`}>
-              <div className="certificate-box-label">Diplomatic assessment</div>
-              <p>
-                Any shark considering the holder a meal would be demonstrating
-                exceptionally poor judgment.
-              </p>
-            </div>
-
-            {dedication ? (
-              <div className="certificate-note">
-                <div className="certificate-box-label">
-                  Recorded dedication
-                </div>
-                <p>{dedication}</p>
-              </div>
-            ) : (
-              <div className="certificate-note">
-                <div className="certificate-box-label">
-                  Supplementary marine note
-                </div>
-                <p>{diplomaticNote}</p>
-              </div>
-            )}
+      {/* ── LUXURY LAYOUT — absolutely positioned overlay blocks ── */}
+      {isLuxury && (
+        <>
+          {/* Title block */}
+          <div className="lux-title-block">
+            <span className="lux-title-certificate">Certificate</span>
+            <span className="lux-title-of">of</span>
+            <span className="lux-title-recognition">Official Recognition</span>
           </div>
 
-          <div className="certificate-seal-column">
-            <Image
-              src="/cert-seal.png"
-              alt="SHA seal"
-              width={420}
-              height={420}
-              className="certificate-seal"
-              priority={priorityImages}
-            />
-            <div className="certificate-seal-caption">
-              Filed under: Non-snack diplomacy
-            </div>
-          </div>
-        </div>
-
-        <div className="certificate-meta">
-          <div className="certificate-meta-item">
-            <div className="certificate-meta-label">
-              Date of Diplomatic Recognition
-            </div>
-            <div className="certificate-meta-value">{date}</div>
+          {/* Issuer block */}
+          <div className="lux-issuer-block">
+            <span className="lux-issuer-intro">Issued by the</span>
+            <span className="lux-issuer-org">Shark Human Alliance</span>
+            <span className="lux-issuer-dept">Department of Interspecies Diplomacy</span>
           </div>
 
-          <div className="certificate-meta-item">
-            <div className="certificate-meta-label">Registry ID</div>
-            <div className="certificate-meta-value">{registryId}</div>
-          </div>
-        </div>
-
-        <div className="certificate-bottom-row">
-          <div className="certificate-signatures">
-            <div className="certificate-signature">
-              <div className="certificate-signature-name">Finnley Mako</div>
-              <div className="certificate-signature-role">
-                Chief Diplomat SHA &amp; Press Spokesperson
-                <br />
-                (and Optimist)
-              </div>
-            </div>
-
-            <div className="certificate-signature">
-              <div className="certificate-signature-name">Luna Reef</div>
-              <div className="certificate-signature-role">
-                Head of Culinary Inspection
-                <br />
-                &amp; Dept. of Misunderstanding Prevention
-              </div>
-            </div>
-          </div>
-
-          <div className="certificate-qr">
+          {/* QR block — top right */}
+          <div className="lux-qr-block">
+            <span className="lux-qr-label">Verify</span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={qrSrc}
               alt="Verify membership"
-              className="certificate-qr-image"
+              className="lux-qr-image"
             />
-            <div className="certificate-qr-label">Verify membership</div>
-          </div>
-        </div>
-
-        <footer className="certificate-footer">
-          <div className="certificate-footer-main">
-            This document is officially symbolic and diplomatically
-            non-binding. Sharks cannot read, do not recognize human
-            bureaucracy, and remain largely unaware of our existence.
           </div>
 
-          <div className="certificate-footer-aside">
-            Your purchase does, however, support very real ocean
+          {/* Recipient name */}
+          <div className="lux-recipient-block">
+            <span className="lux-recipient-name">{name}</span>
+          </div>
+
+          {/* Status label */}
+          <div className="lux-status-label-block">
+            has earned the trust and respect of the wider marine<br />
+            community and is hereby declared a:
+          </div>
+
+          {/* Status title */}
+          <div className={`lux-status-block ${tierColorClass}`}>
+            {statusText}
+          </div>
+
+          {/* Body text — short, max 3 lines */}
+          <div className="lux-body-block">
+            This certifies that the holder is officially recognized by the
+            Shark Human Alliance as a supporter of peaceful shark-human
+            relations and a contributor to real ocean conservation.
+            {dedication && <>{" "}{dedication}</>}
+          </div>
+
+          {/* Signature labels — over background fin + Luna Reef */}
+          <div className="lux-sig-finnley">
+            <span className="lux-sig-name">Finnley Mako</span>
+            <span className="lux-sig-role">Shark Spokesperson</span>
+          </div>
+          <div className="lux-sig-luna">
+            <span className="lux-sig-name">Luna Reef</span>
+            <span className="lux-sig-role">Dept. of Misunderstanding Prevention</span>
+          </div>
+
+          {/* Meta — date + registry, small */}
+          <div className="lux-meta-block">
+            <span className="lux-meta-label">Date of Recognition</span>
+            <span className="lux-meta-date">{date}</span>
+            <span className="lux-meta-sep">·</span>
+            <span className="lux-meta-label" style={{ marginTop: "0.4cqi" }}>Registry ID</span>
+            <span className="lux-meta-id">{registryId}</span>
+          </div>
+
+          {/* Footer — micro-text, left, below frame */}
+          <footer className="lux-footer-block">
+            This document is officially symbolic and diplomatically non-binding.
+            Sharks cannot read, do not recognize human bureaucracy, and remain
+            largely unaware of our existence. Your purchase supports real ocean
             conservation — which is more than most certificates can say.
             &ldquo;{footerAside}&rdquo;
+          </footer>
+        </>
+      )}
+
+      {/* ── HERO / FORMAL LAYOUT ── */}
+      {!isLuxury && (
+        <section className="certificate-content">
+          {!isFormal && (
+            <header className="certificate-header">
+              <div className="certificate-org">SHARK HUMAN ALLIANCE</div>
+              <div className="certificate-org-subtitle">
+                Department of Interspecies Diplomatic Affairs
+              </div>
+            </header>
+          )}
+
+          <div className="certificate-rule" />
+
+          <h1 className={`certificate-title${isFormal ? " certificate-title--formal" : ""}`}>
+            Certificate of Official Recognition
+          </h1>
+
+          <div className="certificate-rule" />
+
+          <p className="certificate-intro">
+            {isFormal
+              ? "This certifies that"
+              : "This document officially certifies that the esteemed"}
+          </p>
+
+          <div className="certificate-name-wrap">
+            <div className="certificate-name">{name}</div>
           </div>
-        </footer>
-      </section>
+
+          <p className="certificate-status-label">
+            has earned the trust and respect of the wider marine community
+            and is hereby declared a:
+          </p>
+
+          <div className={`certificate-status ${tierColorClass}`}>
+            {statusText}
+          </div>
+
+          <div className={`certificate-main${isFormal ? " certificate-main--formal" : ""}`}>
+            <div className="certificate-copy-column">
+              <p className="certificate-body">
+                This certifies that the holder is officially recognized by the
+                Shark Human Alliance as a supporter of peaceful shark-human
+                relations and a contributor to real ocean conservation.
+              </p>
+
+              <div className={`certificate-verdict ${tierColorClass}`}>
+                <div className="certificate-box-label">Diplomatic assessment</div>
+                <p>
+                  Any shark considering the holder a meal would be demonstrating
+                  exceptionally poor judgment.
+                </p>
+              </div>
+
+              {dedication ? (
+                <div className="certificate-note">
+                  <div className="certificate-box-label">
+                    Recorded dedication
+                  </div>
+                  <p>{dedication}</p>
+                </div>
+              ) : (
+                <div className="certificate-note">
+                  <div className="certificate-box-label">
+                    Supplementary marine note
+                  </div>
+                  <p>{diplomaticNote}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="certificate-seal-column">
+              <Image
+                src="/cert-seal.png"
+                alt="SHA seal"
+                width={420}
+                height={420}
+                className="certificate-seal"
+                priority={priorityImages}
+              />
+              <div className="certificate-seal-caption">
+                Filed under: Non-snack diplomacy
+              </div>
+            </div>
+          </div>
+
+          <div className="certificate-meta">
+            <div className="certificate-meta-item">
+              <div className="certificate-meta-label">
+                Date of Diplomatic Recognition
+              </div>
+              <div className="certificate-meta-value">{date}</div>
+            </div>
+
+            <div className="certificate-meta-item">
+              <div className="certificate-meta-label">Registry ID</div>
+              <div className="certificate-meta-value">{registryId}</div>
+            </div>
+          </div>
+
+          <div className="certificate-bottom-row">
+            <div className="certificate-signatures">
+              <div className="certificate-signature">
+                <div className="certificate-signature-name">Finnley Mako</div>
+                <div className="certificate-signature-role">
+                  Chief Diplomat SHA &amp; Press Spokesperson
+                  <br />
+                  (and Optimist)
+                </div>
+              </div>
+
+              <div className="certificate-signature">
+                <div className="certificate-signature-name">Luna Reef</div>
+                <div className="certificate-signature-role">
+                  Head of Culinary Inspection
+                  <br />
+                  &amp; Dept. of Misunderstanding Prevention
+                </div>
+              </div>
+            </div>
+
+            <div className="certificate-qr">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={qrSrc}
+                alt="Verify membership"
+                className="certificate-qr-image"
+              />
+              <div className="certificate-qr-label">Verify membership</div>
+            </div>
+          </div>
+
+          <footer className="certificate-footer">
+            <div className="certificate-footer-main">
+              This document is officially symbolic and diplomatically
+              non-binding. Sharks cannot read, do not recognize human
+              bureaucracy, and remain largely unaware of our existence.
+            </div>
+
+            <div className="certificate-footer-aside">
+              Your purchase does, however, support very real ocean
+              conservation — which is more than most certificates can say.
+              &ldquo;{footerAside}&rdquo;
+            </div>
+          </footer>
+        </section>
+      )}
     </div>
   );
 }
 
 export default CertificateDocument;
+    

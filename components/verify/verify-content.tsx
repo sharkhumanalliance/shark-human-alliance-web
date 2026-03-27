@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocalizedLink } from "@/components/ui/localized-link";
 
 type VerifyContentProps = {
   name: string;
@@ -172,20 +172,20 @@ export function VerifyContent({
 
       {/* CTA */}
       <div className="mt-8 flex flex-col items-center gap-3">
-        <Link
-          href="/en/registry"
+        <LocalizedLink
+          href="/registry"
           className="rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors"
           style={{ background: "var(--brand)" }}
         >
           View Diplomatic Registry
-        </Link>
-        <Link
+        </LocalizedLink>
+        <LocalizedLink
           href="/"
           className="text-sm font-medium transition-colors hover:underline"
           style={{ color: "var(--brand)" }}
         >
           Join the Alliance
-        </Link>
+        </LocalizedLink>
       </div>
     </section>
   );

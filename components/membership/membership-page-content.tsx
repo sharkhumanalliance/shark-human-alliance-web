@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { LocalizedLink } from "@/components/ui/localized-link";
 import { MembershipCard } from "@/components/home/membership-card";
 
 export function MembershipPageContent() {
@@ -35,18 +36,18 @@ export function MembershipPageContent() {
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="#membership"
+              <LocalizedLink
+                href="/membership#membership"
                 className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 {t("ctaTiers")}
-              </a>
-              <a
-                href="#comparison"
+              </LocalizedLink>
+              <LocalizedLink
+                href="/membership#comparison"
                 className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
               >
                 {t("ctaCompare")}
-              </a>
+              </LocalizedLink>
             </div>
 
             <p className="mt-5 text-sm text-[var(--muted)]">
@@ -228,12 +229,12 @@ export function MembershipPageContent() {
                     </li>
                   ))}
                 </ul>
-                <a
+                <LocalizedLink
                   href="/purchase?tier=business"
                   className="mt-8 inline-flex items-center justify-center rounded-lg bg-indigo-600 px-6 py-4 text-base font-semibold text-white transition hover:bg-indigo-700"
                 >
                   {t("businessCta")}
-                </a>
+                </LocalizedLink>
               </div>
               <div className="flex items-center justify-center">
                 <div className="w-full max-w-sm rounded-xl border-2 border-dashed border-indigo-200 bg-indigo-50/50 p-8 text-center">
@@ -268,18 +269,18 @@ export function MembershipPageContent() {
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <a
+              <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
               >
                 {t("joinCtaPrimary")}
-              </a>
-              <a
+              </LocalizedLink>
+              <LocalizedLink
                 href="/"
                 className="inline-flex items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 {t("joinCtaSecondary")}
-              </a>
+              </LocalizedLink>
             </div>
           </div>
         </div>

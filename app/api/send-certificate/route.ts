@@ -1,3 +1,4 @@
+import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
 import { getMemberById } from "@/lib/members";
@@ -30,7 +31,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const certificateUrl = `${BASE_URL}/en/certificate/view?token=${member.accessToken}`;
+    const locale = member.locale || "en";
+    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${member.accessToken}`);
 
     await getResend().emails.send({
       from: EMAIL_FROM,
@@ -42,8 +44,9 @@ export async function POST(request: NextRequest) {
         registryId: (memberId || "SHA-XXXX").toUpperCase(),
         referralCode: referralCode || "",
         downloadUrl: certificateUrl,
-        registryUrl: `${BASE_URL}/registry?highlight=${memberId}`,
-        careerUrl: `${BASE_URL}/career`,
+        registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${memberId}`),
+        careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
+        referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode || "")),
       }),
     });
 

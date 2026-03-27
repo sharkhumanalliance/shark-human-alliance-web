@@ -1,6 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { LocalizedLink } from "@/components/ui/localized-link";
+import { buildLocalizedPath } from "@/lib/navigation";
 import { useState } from "react";
 import { trackEvent } from "@/components/analytics";
 
@@ -398,12 +400,12 @@ export function CareerContent() {
               {t("cta.text")}
             </p>
             <div className="mt-6">
-              <a
+              <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 🚀 {t("cta.button")}
-              </a>
+              </LocalizedLink>
             </div>
           </div>
         </div>

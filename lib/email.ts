@@ -1,3 +1,4 @@
+import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { Resend } from "resend";
 
 export const EMAIL_FROM =
@@ -33,8 +34,9 @@ export function certificateEmailHtml(params: {
   downloadUrl: string;
   registryUrl: string;
   careerUrl: string;
+  referralUrl?: string;
 }): string {
-  const { name, tier, registryId, referralCode, downloadUrl, registryUrl, careerUrl } = params;
+  const { name, tier, registryId, referralCode, downloadUrl, registryUrl, careerUrl, referralUrl } = params;
 
   const tierLabel: Record<string, string> = {
     basic: "Protected Friend",
@@ -82,7 +84,7 @@ export function certificateEmailHtml(params: {
         <p style="margin:0;font-size:12px;color:#15324d;text-transform:uppercase;letter-spacing:2px;font-weight:600;">Your Alliance Career Starts Now</p>
         <p style="margin:8px 0;font-size:14px;color:#5f7892;">Share your referral link. Every recruit moves you up the ranks.</p>
         <div style="margin:12px auto;padding:12px 20px;background-color:white;border:1px solid #d4e8f7;border-radius:50px;font-family:monospace;font-size:13px;color:#15324d;max-width:360px;word-break:break-all;">
-          https://sharkhumanalliance.com/purchase?tier=protected&amp;ref=${referralCode}
+          ${referralUrl || buildAbsoluteLocalizedUrl("https://sharkhumanalliance.com", "en", buildReferralHref(referralCode))}
         </div>
         <a href="${careerUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">See the full career ladder &rarr;</a>
       </div>

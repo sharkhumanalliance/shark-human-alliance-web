@@ -2,9 +2,26 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { LocalizedLink } from "@/components/ui/localized-link";
 
 export function HeroSection() {
   const t = useTranslations("hero");
+  const [diplomatCount, setDiplomatCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/members")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled && Array.isArray(data)) setDiplomatCount(data.length);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="relative overflow-hidden">
@@ -25,20 +42,43 @@ export function HeroSection() {
             {t("description")}
           </p>
 
+          <div className="mt-5 flex flex-wrap gap-2.5 text-sm text-[var(--brand-dark)]">
+            {[t("bullet1"), t("bullet2"), t("bullet3")].map((bullet) => (
+              <span
+                key={bullet}
+                className="inline-flex items-center gap-2 rounded-full border border-sky-100 bg-sky-50 px-3 py-1.5"
+              >
+                <span className="text-teal-700">•</span>
+                {bullet}
+              </span>
+            ))}
+          </div>
+
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
+            <LocalizedLink
               href="/purchase?tier=protected"
               className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               {t("ctaPrimary")}
-            </a>
+            </LocalizedLink>
 
-            <a
+            <LocalizedLink
               href="#certificate-preview"
               className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] transition hover:border-gray-300 hover:bg-gray-50"
             >
               {t("ctaSecondary")}
-            </a>
+            </LocalizedLink>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-2 text-sm text-[var(--muted)]">
+            <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5">{t("proofPrice")}</span>
+            <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5">{t("proofDelivery")}</span>
+            <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5">
+              {diplomatCount !== null ? `${diplomatCount} ${t("proofDiplomats")}` : t("proofRegistry")}
+            </span>
+            <LocalizedLink href="/impact" className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5 transition hover:border-sky-300 hover:text-[var(--brand-dark)]">
+              {t("proofTransparency")}
+            </LocalizedLink>
           </div>
 
           <p className="mt-4 text-sm italic text-[var(--brand)]">
@@ -51,7 +91,7 @@ export function HeroSection() {
           <div className="relative overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-sm">
             <div className="p-3">
               <Image
-                src="/mascots/finnley-luna-hero.png"
+                src="/mascots/finnley-luna-hero.webp"
                 alt={t("imageAlt")}
                 width={1400}
                 height={1100}

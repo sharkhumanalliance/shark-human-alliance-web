@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { LocalizedLink } from "@/components/ui/localized-link";
 
 export function ProtectedFriendContent() {
   const t = useTranslations("protectedPage");
@@ -30,18 +31,18 @@ export function ProtectedFriendContent() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a
+              <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
               >
                 {t("ctaPrimary")}
-              </a>
-              <a
+              </LocalizedLink>
+              <LocalizedLink
                 href="/membership"
                 className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
               >
                 {t("ctaSecondary")}
-              </a>
+              </LocalizedLink>
             </div>
 
             <p className="mt-5 text-sm text-[var(--muted)]">
@@ -55,7 +56,7 @@ export function ProtectedFriendContent() {
             </p>
 
             <p className="mt-4 text-4xl font-semibold text-[var(--brand-dark)]">
-              $9
+              $5
             </p>
 
             <ul className="mt-8 space-y-4">
@@ -132,18 +133,18 @@ export function ProtectedFriendContent() {
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <a
+              <LocalizedLink
                 href="/membership"
                 className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
               >
                 {t("buyCtaPrimary")}
-              </a>
-              <a
+              </LocalizedLink>
+              <LocalizedLink
                 href="/#faq"
                 className="inline-flex items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
               >
                 {t("buyCtaSecondary")}
-              </a>
+              </LocalizedLink>
             </div>
           </div>
         </div>

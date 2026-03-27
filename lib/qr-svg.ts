@@ -32,7 +32,8 @@ export function getQrCodeUrl(data: string, size = 200): string {
  */
 export function getVerificationUrl(
   memberId: string,
-  baseUrl?: string
+  baseUrl?: string,
+  locale = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en"
 ): string {
   const base =
     baseUrl ||
@@ -45,5 +46,5 @@ export function getVerificationUrl(
     memberId.includes("XXXX") ||
     memberId === "sample";
 
-  return `${base}/en/verify?id=${isSample ? "sample" : encodeURIComponent(memberId)}`;
+  return `${base}/${locale}/verify?id=${isSample ? "sample" : encodeURIComponent(memberId)}`;
 }

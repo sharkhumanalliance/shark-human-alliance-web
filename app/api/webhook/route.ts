@@ -1,3 +1,4 @@
+import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
@@ -72,7 +73,7 @@ export async function POST(request: NextRequest) {
       dedication: dedication.trim(),
       referralCode,
       referredBy: referredBy || undefined,
-      email: email.trim() || undefined,
+      email: (email.trim() || recipientEmail.trim()) || undefined,
       stripeSessionId: session.id,
       accessToken,
       locale,
@@ -84,7 +85,7 @@ export async function POST(request: NextRequest) {
 
     // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
-    const certificateUrl = `${BASE_URL}/en/certificate/view?token=${accessToken}`;
+    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${accessToken}`);
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {
@@ -98,8 +99,9 @@ export async function POST(request: NextRequest) {
             registryId: newMember.id.toUpperCase(),
             referralCode,
             downloadUrl: certificateUrl,
-            registryUrl: `${BASE_URL}/registry?highlight=${newMember.id}`,
-            careerUrl: `${BASE_URL}/career`,
+            registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`),
+            careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
+            referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
           }),
         });
         console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);
@@ -129,7 +131,7 @@ export async function POST(request: NextRequest) {
       Your referral code: <strong>${referralCode}</strong><br>
       Share it with friends to climb the Alliance career ladder!
     </p>
-    <a href="${BASE_URL}/career" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
+    <a href="${buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career")}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
   </div>
   <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
 </div>

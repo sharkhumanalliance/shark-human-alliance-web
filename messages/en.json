@@ -78,12 +78,12 @@
     "operator": "Operated by JEEL Wekeza s.r.o."
   },
   "hero": {
-    "titleLine1": "Give someone official",
-    "titleLine2": "Protected Friend Status.",
+    "titleLine1": "Official shark protection.",
+    "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
-    "description": "A personalized, surprisingly official-looking certificate. The perfect gag gift for anyone who's ever side-eyed the ocean.",
+    "description": "A personalized digital certificate that looks absurdly official, makes a perfect gift, and funds real shark conservation. Delivered in minutes.",
     "ctaPrimary": "Get Protected Friend Status — $5",
-    "ctaSecondary": "See the certificate",
+    "ctaSecondary": "Preview your certificate",
     "socialProof": "Join the Alliance",
     "giftBadge": "🎁 The #1 gag gift for shark-fearers",
     "finnleyName": "Finnley Mako",
@@ -93,12 +93,20 @@
     "imageAlt": "Finnley Mako and Luna Reef — the Alliance ambassadors",
     "howStep1": "Pick a certificate",
     "howStep2": "Fund real conservation",
-    "howStep3": "Send the gift"
+    "howStep3": "Send the gift",
+    "bullet1": "Instant digital delivery",
+    "bullet2": "Personalized in 60 seconds",
+    "bullet3": "Real conservation funding",
+    "proofPrice": "From $5",
+    "proofDelivery": "Delivered in minutes",
+    "proofDiplomats": "diplomats enrolled",
+    "proofRegistry": "Public registry",
+    "proofTransparency": "Transparency & impact"
   },
   "home": {
     "reviews": {
-      "label": "From real diplomats",
-      "title": "What our members say.",
+      "label": "Alliance field reports",
+      "title": "Reports from the field.",
       "items": [
         {
           "text": "Bought a certificate yesterday. Went diving today. A passing shark looked at me and just... nodded. Coincidence? I think not.",
@@ -130,7 +138,8 @@
           "role": "Gift buyer",
           "stars": 5
         }
-      ]
+      ],
+      "kicker": "In-universe field note"
     },
     "giftingSection": {
       "label": "Perfect for gifting",
@@ -151,7 +160,7 @@
       "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
-      "donationsIntro": "Every certificate sale funds verified conservation through",
+      "donationsIntro": "Every certificate contributes to a shark conservation fund we track publicly. As donations scale, funds are distributed to vetted conservation organizations and reported here, including organizations such as",
       "and": "and",
       "opsJoke": "The rest keeps the Alliance's one-person land-based operations department running (barely).",
       "linkText": "See full impact report and partner details"
@@ -198,7 +207,8 @@
         "Digital badge for your website",
         "Premium Diplomatic Registry placement"
       ],
-      "businessCta": "Get Certified — $99"
+      "businessCta": "Get Certified — $99",
+      "businessEyebrow": "For businesses"
     },
     "realImpact": {
       "label": "Real Impact",
@@ -286,39 +296,47 @@
     "items": [
       {
         "question": "Is the alliance real?",
-        "answer": "The alliance is fictional and intentionally humorous. The conservation donations are real and verifiable. Think of it as a comedy show where the ticket price goes to charity."
+        "answer": "The alliance is fictional and intentionally humorous. The conservation funding is real. Think of it as a comedy product with a real conservation budget behind it."
       },
       {
         "question": "Does membership protect me from sharks?",
-        "answer": "No. Your certificate provides zero marine protection. It does, however, help protect actual sharks from us. Which, statistically, is the direction protection is actually needed."
+        "answer": "No. Your certificate provides zero marine protection. It does, however, help protect actual sharks from humans — which is statistically the more urgent direction."
       },
       {
         "question": "Where does the money actually go?",
-        "answer": "Every sale funds verified ocean and shark conservation organizations including Shark Trust, Oceana, Shark Conservation Fund, and Malpelo Foundation. We publish quarterly reports showing exactly where the money went — reports begin once the first donations are made."
+        "answer": "Every certificate contributes to a shark conservation fund we track publicly. As donations scale, funds are distributed to vetted conservation organizations and reported on the impact page."
+      },
+      {
+        "question": "How much does each certificate cost?",
+        "answer": "Protected Friend is $5. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
+      },
+      {
+        "question": "Will I receive a certificate immediately?",
+        "answer": "Yes. You receive a personalized digital certificate. If you provide an email address, we also send the delivery link by email."
+      },
+      {
+        "question": "What do I receive immediately after purchase?",
+        "answer": "A success page with your certificate preview and a download link. If you entered an email address, we also send the certificate link to that inbox."
+      },
+      {
+        "question": "Can I access my certificate later?",
+        "answer": "Yes, if you provide an email address during checkout. If you skip email, the certificate is only available for immediate download after purchase and the link is not stored for later retrieval."
+      },
+      {
+        "question": "How does gift delivery work?",
+        "answer": "You can buy a certificate as a gift and enter the recipient details during checkout. If you want reliable later access, include an email address in the purchase flow."
       },
       {
         "question": "Why sharks?",
-        "answer": "Humans kill an estimated 100 million sharks per year. Human fatalities from sharks remain in the single digits in most years. They need better PR, and they need real help. We do both — one surprisingly official-looking certificate at a time."
-      },
-      {
-        "question": "Will I receive a certificate?",
-        "answer": "Yes. A personalized digital certificate with your name, membership tier, and an air of surprisingly official diplomatic recognition. Delivered instantly to your email."
-      },
-      {
-        "question": "Can I give this as a gift?",
-        "answer": "Absolutely. Protected Friend Status is the most popular gift option — funny enough to share, polished enough to frame. You can add a recipient email, delivery date, and personal message during checkout."
-      },
-      {
-        "question": "How much goes to conservation?",
-        "answer": "For personal certificates (Protected Friend, Non-Snack), 50% goes directly to conservation. For business certificates (Shark-Approved Zone), it's 70%. The rest keeps the servers running and the founder fed."
+        "answer": "Humans kill an estimated 100 million sharks per year. Human fatalities from sharks remain extremely rare in most years. They need better PR and real help. We aim to do both."
       },
       {
         "question": "Is this tax-deductible?",
-        "answer": "No. This is a purchase of a humorous digital product, not a charitable donation. The conservation funding happens on our end — you get a certificate and the warm glow of knowing you helped sharks."
+        "answer": "No. This is a purchase of a humorous digital product, not a direct charitable donation. The conservation funding happens on our side."
       },
       {
-        "question": "How big is the certificate?",
-        "answer": "Certificates are optimized for A4 (for the rest of the world) or US Letter (for the USA) — you choose when downloading. Large enough to conceal the fact that sharks cannot read, but small enough to fit into a standard frame you can buy from us here on land."
+        "question": "What size is the certificate?",
+        "answer": "Certificates are optimized for A4 or US Letter download and printing."
       }
     ],
     "ctaTitle": "Still have questions?",
@@ -547,7 +565,8 @@
     "referralTitle": "Your Alliance Career Starts Now",
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks.",
     "referralCopy": "Copy",
-    "referralCareerLink": "See the full career ladder"
+    "referralCareerLink": "See the full career ladder",
+    "downloadOnlyNotice": "Download now — this link won’t be stored."
   },
   "registry": {
     "title": "The Diplomatic Registry",
@@ -682,9 +701,9 @@
   "impact": {
     "label": "Our Impact",
     "title": "Where the money actually goes.",
-    "subtitle": "The alliance is fictional. The conservation funding is not. Here's exactly how every dollar is split, tracked, and reported.",
+    "subtitle": "The alliance is fictional. The conservation funding is not. Here is how certificate prices, conservation allocations, delivery, and reporting are communicated publicly.",
     "splitTitle": "How funds are split",
-    "splitDescription": "Every certificate sold generates a direct contribution to ocean conservation. The amount depends on which tier you choose.",
+    "splitDescription": "Certificate prices are fixed at $5, $19, and $99. Conservation allocations are tracked publicly and reported here as donations scale.",
     "splitOf": "of",
     "splitGoesToOcean": "goes to conservation",
     "splitProtectedAmount": "$1",
@@ -702,7 +721,7 @@
     "splitOpsLabel": "Land-based operations (the boring part)",
     "splitOpsText": "The rest funds the critically unglamorous work of keeping the Alliance afloat on dry land: servers, hosting, certificate rendering, and one human who does all of this in a bathrobe. No sharks were consulted on the budget.",
     "partnersTitle": "Where the money goes",
-    "partnersSubtitle": "These are the organizations we aim to support. Each has been selected for their direct impact on shark conservation, scientific research, and ocean protection.",
+    "partnersSubtitle": "These are organizations we aim to support as the conservation fund scales. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
     "partner1Name": "Shark Trust",
     "partner1Desc": "UK-based charity dedicated to safeguarding the future of sharks through science, education and policy influence.",
     "partner1Focus": "Focus: UK & European shark policy, science-led conservation, public education campaigns.",
@@ -715,7 +734,7 @@
     "partner4Name": "Malpelo Foundation",
     "partner4Desc": "Protecting marine fauna and one of the world's most important shark sanctuaries off Colombia's Pacific coast.",
     "partner4Focus": "Focus: Malpelo Island sanctuary protection, hammerhead shark research, marine patrols.",
-    "partnersDisclaimer": "Listed as planned partners. Formal partnerships will be established and announced as donation volume begins. We will not claim a partnership until it is confirmed.",
+    "partnersDisclaimer": "Listed as planned recipients. Formal partnerships or confirmed recipient relationships will only be announced once they are actually in place.",
     "visitWebsite": "Visit website",
     "selectionTitle": "How we choose partners",
     "selectionCriteria1Title": "Direct shark impact",
@@ -727,7 +746,7 @@
     "selectionCriteria4Title": "Global & local balance",
     "selectionCriteria4Text": "We aim for a mix of global organizations and local sanctuaries to ensure funding reaches where it's needed most.",
     "reportingTitle": "Reporting & transparency",
-    "reportingSubtitle": "Every dollar is tracked and reported. If a shark could read a spreadsheet, they would approve.",
+    "reportingSubtitle": "Every conservation allocation is tracked and reported publicly.",
     "reporting1Icon": "📊",
     "reporting1Title": "Quarterly reports",
     "reporting1Text": "Published publicly on this page. How much was raised, where it went, and what impact it had.",
@@ -738,7 +757,7 @@
     "reporting3Title": "Community updates",
     "reporting3Text": "Email updates to all certificate holders showing exactly how their purchase contributed.",
     "preReportTitle": "We haven't published our first report yet",
-    "preReportText": "The Shark Human Alliance is still in its early stages. Reports will be published quarterly once donation volume is sufficient to make meaningful contributions. We'd rather wait and donate something substantial than spread tiny amounts too thin. This page will be updated with our first impact report as soon as it's ready.",
+    "preReportText": "The Shark Human Alliance is still in its early stages. This page will publish public reporting as donations scale and distributions are made. Until then, we will describe recipient organizations as planned recipients rather than confirmed partners.",
     "ctaTitle": "Every certificate helps.",
     "ctaText": "The joke is fictional. The funding is real. Get a certificate and help protect the sharks who definitely aren't plotting anything.",
     "ctaButton": "Get your certificate — from $5"
@@ -782,6 +801,7 @@
     "rewardLabel": "Reward",
     "rewardText": "One official certificate + eternal gratitude from sharks",
     "ctaButton": "PROTECT THIS PERSON NOW",
+    "qrLabel": "Scan to protect",
     "posterFooter": "sharkhumanalliance.com — Diplomacy is not optional",
     "downloadButton": "Download Poster (Stories format)",
     "downloadingButton": "Preparing poster...",

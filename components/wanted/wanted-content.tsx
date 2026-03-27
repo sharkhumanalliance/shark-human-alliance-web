@@ -1,10 +1,12 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState, useRef, useCallback, useMemo } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
+import { getQrCodeUrl } from "@/lib/qr-svg";
+import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
 
 /* ── helpers ────────────────────────────────────────────── */
 
@@ -30,6 +32,7 @@ const POSTER_MUTED = "#8b7355";
 
 export function WantedContent() {
   const t = useTranslations("wanted");
+  const locale = useLocale();
   const [name, setName] = useState("");
   const [generated, setGenerated] = useState(false);
   const [downloading, setDownloading] = useState(false);
@@ -82,6 +85,17 @@ export function WantedContent() {
     });
   }, []);
 
+  // Load QR code image from external API
+  const loadQrImage = useCallback((url: string): Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = getQrCodeUrl(url, 300);
+    });
+  }, []);
+
   /* ── Canvas drawing (A4 portrait = 2100×2970) ────── */
 
   const drawPoster = useCallback(
@@ -111,66 +125,53 @@ export function WantedContent() {
       ctx.roundRect(mx + 46, my + 46, pw - 92, ph - 92, 8);
       ctx.stroke();
 
-      let y = my + 120;
+      let y = my + 110;
       const cx = w / 2;
 
-      // "SHARK HUMAN ALLIANCE" header
+      // ── TOP SECTION: header → WANTED → subtitle (no seal here) ──
+
+      // "SHARK HUMAN ALLIANCE" header — small, tracking-heavy
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "600 36px 'Geist', sans-serif";
+      ctx.font = "600 32px 'Geist', sans-serif";
       ctx.textAlign = "center";
-      ctx.letterSpacing = "10px";
+      ctx.letterSpacing = "12px";
       ctx.fillText(t("posterHeader").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 180;
+      y += 60;
+
+      // Thin decorative line above WANTED
+      ctx.strokeStyle = POSTER_MUTED;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - 260, y);
+      ctx.lineTo(cx + 260, y);
+      ctx.stroke();
+      y += 130;
 
       // "WANTED" — big bold
       ctx.fillStyle = POSTER_RED;
       ctx.font = "900 200px 'Geist', sans-serif";
       ctx.fillText(t("wantedTitle"), cx, y);
-      y += 40;
+      y += 30;
 
-      // Decorative line
+      // Red decorative line below WANTED
       ctx.strokeStyle = POSTER_RED;
       ctx.lineWidth = 5;
       ctx.beginPath();
       ctx.moveTo(cx - 340, y);
       ctx.lineTo(cx + 340, y);
       ctx.stroke();
-      y += 80;
+      y += 70;
 
-      // Subtitle
+      // Subtitle — "DANGEROUSLY UNPROTECTED"
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 46px 'Geist', sans-serif";
+      ctx.font = "600 44px 'Geist', sans-serif";
       ctx.letterSpacing = "6px";
       ctx.fillText(t("wantedSubtitle").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 110;
+      y += 100;
 
-      // Seal image (circular area)
-      try {
-        const sealImg = await ensureSealLoaded();
-        const sealSize = 420;
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(cx, y + sealSize / 2, sealSize / 2 + 16, 0, Math.PI * 2);
-        ctx.fillStyle = "#e8d5b0";
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(cx, y + sealSize / 2, sealSize / 2, 0, Math.PI * 2);
-        ctx.clip();
-        ctx.drawImage(sealImg, cx - sealSize / 2, y, sealSize, sealSize);
-        ctx.restore();
-        ctx.strokeStyle = POSTER_GOLD;
-        ctx.lineWidth = 6;
-        ctx.beginPath();
-        ctx.arc(cx, y + sealSize / 2, sealSize / 2 + 16, 0, Math.PI * 2);
-        ctx.stroke();
-        y += sealSize + 60;
-      } catch {
-        y += 60;
-      }
-
-      // NAME — large display
+      // ── NAME — large display ──
       ctx.fillStyle = POSTER_INK;
       ctx.font = "900 108px 'Geist', sans-serif";
       let fontSize = 108;
@@ -180,6 +181,7 @@ export function WantedContent() {
       }
       ctx.fillText(displayName, cx, y);
       y += 28;
+
       // Underline
       const nameW = Math.min(ctx.measureText(displayName).width + 60, pw - 200);
       ctx.strokeStyle = POSTER_GOLD;
@@ -190,17 +192,16 @@ export function WantedContent() {
       ctx.stroke();
       y += 70;
 
-      // "CHARGES:" label
+      // ── CHARGES ──
       ctx.fillStyle = POSTER_RED;
-      ctx.font = "700 40px 'Geist', sans-serif";
+      ctx.font = "700 38px 'Geist', sans-serif";
       ctx.letterSpacing = "5px";
       ctx.fillText(t("chargesLabel").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 64;
+      y += 58;
 
-      // Charges list
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "500 36px 'Geist', sans-serif";
+      ctx.font = "500 34px 'Geist', sans-serif";
       ctx.textAlign = "center";
       for (const charge of selectedCharges) {
         const words = charge.split(" ");
@@ -218,42 +219,100 @@ export function WantedContent() {
         if (line) lines.push(line);
         for (const l of lines) {
           ctx.fillText(l, cx, y);
-          y += 52;
+          y += 48;
         }
-        y += 14;
+        y += 12;
       }
-      y += 36;
+      y += 30;
 
-      // Reward section
+      // ── REWARD ──
       ctx.fillStyle = POSTER_GOLD;
-      ctx.font = "700 36px 'Geist', sans-serif";
+      ctx.font = "700 34px 'Geist', sans-serif";
       ctx.letterSpacing = "4px";
       ctx.fillText(t("rewardLabel").toUpperCase(), cx, y);
       ctx.letterSpacing = "0px";
-      y += 60;
+      y += 54;
 
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 42px 'Geist', sans-serif";
+      ctx.font = "600 38px 'Geist', sans-serif";
       ctx.fillText(t("rewardText"), cx, y);
-      y += 110;
+      y += 90;
 
-      // Footer CTA
-      const btnW = 1000, btnH = 110;
-      const btnX = cx - btnW / 2, btnY = y - 16;
+      // ── CTA BUTTON ──
+      const btnW = 1000, btnH = 100;
+      const btnX = cx - btnW / 2, btnY = y - 10;
       ctx.fillStyle = POSTER_RED;
       ctx.beginPath();
-      ctx.roundRect(btnX, btnY, btnW, btnH, 55);
+      ctx.roundRect(btnX, btnY, btnW, btnH, 50);
       ctx.fill();
       ctx.fillStyle = "#ffffff";
-      ctx.font = "700 42px 'Geist', sans-serif";
-      ctx.fillText(t("ctaButton"), cx, btnY + btnH / 2 + 14);
+      ctx.font = "700 40px 'Geist', sans-serif";
+      ctx.fillText(t("ctaButton"), cx, btnY + btnH / 2 + 13);
+
+      // ── BOTTOM SECTION: seal (right) + QR (left) + footer ──
+      const bottomY = h - my - 240;
+      const sealSize = 260;
+      const qrSize = 200;
+
+      // Seal — bottom right
+      try {
+        const sealImg = await ensureSealLoaded();
+        const sealX = mx + pw - 60 - sealSize;
+        const sealCY = bottomY + sealSize / 2;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(sealX + sealSize / 2, sealCY, sealSize / 2 + 10, 0, Math.PI * 2);
+        ctx.fillStyle = "#e8d5b0";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(sealX + sealSize / 2, sealCY, sealSize / 2, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(sealImg, sealX, bottomY, sealSize, sealSize);
+        ctx.restore();
+        ctx.strokeStyle = POSTER_GOLD;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(sealX + sealSize / 2, sealCY, sealSize / 2 + 10, 0, Math.PI * 2);
+        ctx.stroke();
+      } catch {
+        // seal failed to load — skip
+      }
+
+      // QR code — bottom left
+      const purchaseUrl = typeof window !== "undefined"
+        ? buildAbsoluteLocalizedUrl(window.location.origin, locale, "/verify?id=sample")
+        : buildAbsoluteLocalizedUrl("https://sharkhumanalliance.com", locale, "/verify?id=sample");
+      try {
+        const qrImg = await loadQrImage(purchaseUrl);
+        const qrX = mx + 60;
+        const qrY = bottomY + (sealSize - qrSize) / 2;
+        // White background behind QR
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 10);
+        ctx.fill();
+        ctx.strokeStyle = POSTER_MUTED;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 10);
+        ctx.stroke();
+        ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
+        // Label under QR
+        ctx.fillStyle = POSTER_MUTED;
+        ctx.font = "500 22px 'Geist', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(t("qrLabel"), qrX + qrSize / 2, qrY + qrSize + 36);
+      } catch {
+        // QR failed to load — skip
+      }
 
       // Alliance branding at bottom
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "400 30px 'Geist', sans-serif";
-      ctx.fillText(t("posterFooter"), cx, h - my - 80);
+      ctx.font = "400 28px 'Geist', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(t("posterFooter"), cx, h - my - 60);
     },
-    [name, selectedCharges, t, ensureSealLoaded]
+    [name, selectedCharges, t, ensureSealLoaded, loadQrImage]
   );
 
   const handleGenerate = useCallback(async () => {
@@ -439,12 +498,12 @@ export function WantedContent() {
                   {t("shareButton")}
                 </button>
 
-                <Link
+                <LocalizedLink
                   href={giftUrl}
                   className="block w-full rounded-lg bg-red-600 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-red-700"
                 >
                   🛡️ {t("giftCta", { name: name.trim() || t("defaultName") })}
-                </Link>
+                </LocalizedLink>
 
                 <button
                   onClick={handleRegenerate}
@@ -490,12 +549,12 @@ export function WantedContent() {
             ))}
           </div>
           <div className="mt-10">
-            <Link
+            <LocalizedLink
               href="/purchase?tier=protected&gift=true"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               🎁 {t("bottomCta")}
-            </Link>
+            </LocalizedLink>
           </div>
         </div>
       </section>

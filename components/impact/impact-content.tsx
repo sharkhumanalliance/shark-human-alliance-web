@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { LocalizedLink } from "@/components/ui/localized-link";
 
 const PARTNERS = [
   { key: 1, icon: "🦈", url: "https://www.sharktrust.org" },
@@ -273,12 +274,12 @@ export function ImpactContent() {
               {t("ctaText")}
             </p>
             <div className="mt-6">
-              <a
+              <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
               >
                 {t("ctaButton")}
-              </a>
+              </LocalizedLink>
             </div>
           </div>
         </div>

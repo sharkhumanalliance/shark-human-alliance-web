@@ -1,3 +1,5 @@
+import { LocalizedLink } from "@/components/ui/localized-link";
+
 type MembershipVariant = "basic" | "protected" | "nonsnack" | "business";
 
 type MembershipCardProps = {
@@ -103,14 +105,14 @@ export function MembershipCard({
           ))}
         </ul>
 
-        <a
+        <LocalizedLink
           href={href}
           className={`mt-8 inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
             variant
           )}`}
         >
           {ctaLabel}
-        </a>
+        </LocalizedLink>
       </article>
     </div>
   );

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Dancing_Script, Cormorant_Garamond } from "next/font/google";
+import { Geist, Geist_Mono, Dancing_Script, Cormorant_Garamond, Cinzel, Roboto_Condensed } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -29,6 +29,18 @@ const cormorantGaramond = Cormorant_Garamond({
   weight: ["600", "700"],
 });
 
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+  weight: ["400", "700", "800", "900"],
+});
+
+const robotoCondensed = Roboto_Condensed({
+  variable: "--font-roboto-condensed",
+  subsets: ["latin"],
+  weight: ["300", "400"],
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Shark Human Alliance — Official Shark Protection Certificates",
@@ -45,7 +57,7 @@ export const metadata: Metadata = {
       "Get official Protected Friend status and fund real shark conservation. The perfect gag gift for anyone who's ever side-eyed the ocean.",
     images: [
       {
-        url: "/mascots/finnley-luna-hero.png",
+        url: "/mascots/finnley-luna-hero.webp",
         width: 1400,
         height: 1100,
         alt: "Finnley Mako and Luna Reef — Shark Human Alliance ambassadors",
@@ -57,7 +69,7 @@ export const metadata: Metadata = {
     title: "Shark Human Alliance",
     description:
       "Official shark protection certificates + real conservation funding. From $5.",
-    images: ["/mascots/finnley-luna-hero.png"],
+    images: ["/mascots/finnley-luna-hero.webp"],
   },
   robots: {
     index: true,
@@ -98,7 +110,7 @@ function JsonLd() {
     "@type": "Organization",
     name: "Shark Human Alliance",
     url: "https://sharkhumanalliance.com",
-    logo: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.png",
+    logo: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.webp",
     description:
       "A fictional alliance helping humans and sharks build better relations. Every certificate sale funds real ocean conservation.",
     email: "sharkhumanalliance@gmail.com",
@@ -110,13 +122,13 @@ function JsonLd() {
     name: "Protected Friend Status Certificate",
     description:
       "A personalized, surprisingly official-looking shark protection certificate. The perfect gag gift that funds real ocean conservation.",
-    image: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.png",
+    image: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.webp",
     brand: { "@type": "Brand", name: "Shark Human Alliance" },
     offers: [
       {
         "@type": "Offer",
         name: "Protected Friend Status",
-        price: "9.00",
+        price: "5.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: "https://sharkhumanalliance.com/purchase?tier=protected",
@@ -124,7 +136,7 @@ function JsonLd() {
       {
         "@type": "Offer",
         name: "Non-Snack Recognition",
-        price: "29.00",
+        price: "19.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: "https://sharkhumanalliance.com/purchase?tier=nonsnack",
@@ -175,7 +187,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <link rel="alternate" hrefLang="x-default" href="https://sharkhumanalliance.com/en" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${cormorantGaramond.variable} bg-[var(--background)] text-[var(--foreground)] antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${cormorantGaramond.variable} ${cinzel.variable} ${robotoCondensed.variable} bg-[var(--background)] text-[var(--foreground)] antialiased`}
       >
         {/* Skip to content — accessibility */}
         <a

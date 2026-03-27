@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocalizedLink } from "@/components/ui/localized-link";
 import { useTranslations } from "next-intl";
 
 export function VerifySampleContent() {
@@ -47,24 +47,24 @@ export function VerifySampleContent() {
 
         {/* CTAs */}
         <div className="mt-6 space-y-3">
-          <Link
+          <LocalizedLink
             href="/purchase?tier=protected"
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--accent-dark)]"
           >
             🛡️ {t("buyCta")}
-          </Link>
-          <Link
+          </LocalizedLink>
+          <LocalizedLink
             href="/purchase?tier=protected&gift=true"
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-bold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50"
           >
             🎁 {t("giftCta")}
-          </Link>
-          <Link
+          </LocalizedLink>
+          <LocalizedLink
             href="/wanted"
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-6 py-4 text-base font-bold text-red-700 transition hover:bg-red-50"
           >
             🚨 {t("wantedCta")}
-          </Link>
+          </LocalizedLink>
         </div>
       </div>
 
@@ -75,12 +75,12 @@ export function VerifySampleContent() {
 
       {/* Secondary links */}
       <div className="mt-8 flex flex-col items-center gap-3">
-        <Link
+        <LocalizedLink
           href="/registry"
           className="text-sm font-medium text-[var(--brand)] transition-colors hover:underline"
         >
           {t("registryLink")}
-        </Link>
+        </LocalizedLink>
       </div>
     </section>
   );

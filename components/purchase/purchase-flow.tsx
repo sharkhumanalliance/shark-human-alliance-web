@@ -156,6 +156,7 @@ function PurchaseFlowInner() {
           referredBy: referredByCode || undefined,
           locale,
           promoCode: promoCode.trim() || undefined,
+          template,
         }),
       });
 
@@ -232,12 +233,30 @@ function PurchaseFlowInner() {
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.1fr]">
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            <details className="overflow-hidden rounded-xl border border-[var(--border)] bg-white lg:hidden">
+              <summary className="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-[var(--brand-dark)]">
+                {t("livePreview")}
+              </summary>
+              <div className="border-t border-[var(--border)] px-4 py-4">
+                <CertificateTemplateSelector value={template} onChange={setTemplate} />
+                <div className="mt-4">
+                  <CertificatePreview
+                    name={name.trim() || t("previewName")}
+                    tier={tier}
+                    dedication={dedication.trim()}
+                    date={currentDate}
+                    registryId="SHA-XXXX"
+                    template={template}
+                  />
+                </div>
+              </div>
+            </details>
             {/* Tier selector */}
             <div>
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("tierLabel")}
               </label>
-              <div className="mt-2 grid gap-3 grid-cols-3">
+              <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {(["protected", "nonsnack", "business"] as Tier[]).map((tierOption) => {
                   const isSelected = tier === tierOption;
                   const colors: Record<Tier, string> = {

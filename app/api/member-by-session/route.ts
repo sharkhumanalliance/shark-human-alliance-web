@@ -27,5 +27,6 @@ export async function GET(request: NextRequest) {
     referralCode: member.referralCode,
     referralCount: member.referralCount,
     accessToken: member.accessToken,
+    email: member.email,
   });
 }
