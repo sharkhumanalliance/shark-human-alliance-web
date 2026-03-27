@@ -35,24 +35,31 @@ const OPTIONS: Array<{
 
 export function CertificateTemplateSelector({ value, onChange }: Props) {
   return (
-    <div className="certificate-template-selector">
-      {OPTIONS.map((option) => (
-        <button
-          key={option.value}
-          type="button"
-          className={`certificate-template-card${
-            value === option.value ? " certificate-template-card--active" : ""
-          }`}
-          onClick={() => onChange(option.value)}
-        >
-          <div className="certificate-template-card__title">
-            {option.icon} {option.label}
-          </div>
-          <div className="certificate-template-card__desc">
-            {option.description}
-          </div>
-        </button>
-      ))}
+    <div className="certificate-template-selector" role="radiogroup" aria-label="Certificate style selector">
+      {OPTIONS.map((option) => {
+        const isActive = value === option.value;
+
+        return (
+          <button
+            key={option.value}
+            type="button"
+            role="radio"
+            aria-checked={isActive}
+            aria-pressed={isActive}
+            className={`certificate-template-card${
+              isActive ? " certificate-template-card--active" : ""
+            }`}
+            onClick={() => onChange(option.value)}
+          >
+            <div className="certificate-template-card__title">
+              {option.icon} {option.label}
+            </div>
+            <div className="certificate-template-card__desc">
+              {option.description}
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }

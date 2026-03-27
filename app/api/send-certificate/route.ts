@@ -32,7 +32,8 @@ export async function POST(request: NextRequest) {
     }
 
     const locale = member.locale || "en";
-    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${member.accessToken}`);
+    const templateParam = member.template ? `&template=${encodeURIComponent(member.template)}` : "";
+    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${member.accessToken}${templateParam}`);
     const badgeUrl = member.tier === "nonsnack" ? `${BASE_URL}/api/badge?token=${member.accessToken}&download=1` : undefined;
 
     await getResend().emails.send({

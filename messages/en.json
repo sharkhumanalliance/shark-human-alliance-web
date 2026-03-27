@@ -87,9 +87,9 @@
     "titleLine1": "Official shark protection.",
     "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
-    "description": "A personalized digital certificate that looks absurdly official, makes a perfect gift, and funds real shark conservation.",
-    "ctaPrimary": "Get Protected Friend Status — $5",
-    "ctaSecondary": "Preview your certificate",
+    "description": "A personalized digital certificate that looks absurdly official, works as a genuinely great gift, and funds real shark conservation.",
+    "ctaPrimary": "Get Protected Friend — $5",
+    "ctaSecondary": "Preview the certificate",
     "socialProof": "Join the Alliance",
     "giftBadge": "🎁 The #1 gag gift for shark-fearers",
     "finnleyName": "Finnley Mako",
@@ -107,7 +107,11 @@
     "proofDelivery": "Delivered in minutes",
     "proofDiplomats": "diplomats enrolled",
     "proofRegistry": "Public registry",
-    "proofTransparency": "Transparency & impact"
+    "proofTransparency": "Transparency & impact",
+    "imageBadge": "Shark diplomacy office",
+    "proofLabel1": "Delivery",
+    "proofLabel2": "Certificate",
+    "proofLabel3": "Trust"
   },
   "home": {
     "reviews": {
@@ -178,8 +182,9 @@
       "certName": "[ Your Name Here ]",
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
       "inputPlaceholder": "Your name (the sharks are waiting)",
-      "ctaBuy": "Buy for yourself — $5",
-      "ctaGift": "Buy as a gift — $5"
+      "ctaBuy": "Get yours — $5",
+      "ctaGift": "Send as a gift — $5",
+      "livePreviewLabel": "Live preview"
     },
     "membershipSection": {
       "label": "Certificates",
@@ -214,7 +219,8 @@
         "Premium Diplomatic Registry placement"
       ],
       "businessCta": "Get Certified — $99",
-      "businessEyebrow": "For businesses"
+      "businessEyebrow": "For businesses",
+      "mobileHint": "Swipe to compare the certificate tiers."
     },
     "realImpact": {
       "label": "Real Impact",
@@ -513,7 +519,7 @@
   },
   "purchase": {
     "title": "Proceed to Diplomatic Clearance.",
-    "subtitle": "One form. One payment. One step closer to not being a snack.",
+    "subtitle": "One form. One payment. One surprisingly official result.",
     "tierLabel": "Selected tier",
     "tiers": {
       "basic": "Basic Membership — $5",
@@ -780,8 +786,9 @@
     "ctaButton": "Get your certificate — from $5"
   },
   "mobileCta": {
-    "label": "Get Protected Friend Status",
-    "price": "$5"
+    "label": "Get Protected Friend",
+    "price": "$5",
+    "note": "Instant digital delivery · Personalized in 60 seconds"
   },
   "wanted": {
     "label": "Alliance Security Bureau",

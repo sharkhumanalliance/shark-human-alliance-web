@@ -13,6 +13,7 @@ type MembershipCardProps = {
   ctaLabel: string;
   popular?: boolean;
   popularLabel?: string;
+  className?: string;
 };
 
 function getBadgeClass(variant: MembershipVariant) {
@@ -64,6 +65,7 @@ export function MembershipCard({
   ctaLabel,
   popular,
   popularLabel,
+  className = "",
 }: MembershipCardProps) {
   return (
     <div className={popular ? "relative" : ""}>
@@ -74,26 +76,31 @@ export function MembershipCard({
       )}
       <article
         id={id}
-        className={`scroll-mt-28 rounded-xl border ${getBorderClass(
+        className={`flex h-full min-w-[82vw] snap-start scroll-mt-28 flex-col rounded-2xl border ${getBorderClass(
           variant,
           popular
-        )} bg-white p-5 sm:p-6 ${popular ? "shadow-md ring-1 ring-teal-400/20" : "shadow-sm"} h-full flex flex-col`}
+        )} bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg sm:min-w-[360px] sm:p-7 lg:min-w-0 ${
+          popular ? "ring-1 ring-teal-400/20 shadow-md" : ""
+        } ${className}`}
       >
-        <div
-          className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getBadgeClass(
-            variant
-          )}`}
-        >
-          {title}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div
+            className={`inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] ${getBadgeClass(
+              variant
+            )}`}
+          >
+            {title}
+          </div>
+          <p className="shrink-0 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-[2rem]">
+            {price}
+          </p>
         </div>
 
-        <p className="mt-4 text-3xl font-semibold text-[var(--brand-dark)]">
-          {price}
+        <p className="mt-4 text-sm leading-6 text-[var(--muted)] md:min-h-[4.75rem]">
+          {description}
         </p>
 
-        <p className="mt-3 min-h-[4rem] text-sm leading-6 text-[var(--muted)] md:min-h-[4.5rem]">{description}</p>
-
-        <ul className="mt-5 space-y-2.5 flex-grow">
+        <ul className="mt-6 flex-grow space-y-3 border-t border-[var(--border)] pt-5">
           {features.map((feature) => (
             <li
               key={feature}
@@ -107,7 +114,7 @@ export function MembershipCard({
 
         <LocalizedLink
           href={href}
-          className={`mt-6 inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
+          className={`mt-7 inline-flex w-full items-center justify-center rounded-xl px-5 py-3.5 text-sm font-semibold transition ${getButtonClass(
             variant
           )}`}
         >

@@ -28,6 +28,20 @@ const DEDICATION_POOL = [
   "Protected by bureaucracy and good vibes",
 ];
 
+const VALID_TEMPLATES: CertificateTemplate[] = ["luxury", "formal", "hero"];
+
+type PurchaseDraft = {
+  tier?: Tier;
+  name?: string;
+  dedication?: string;
+  email?: string;
+  recipientEmail?: string;
+  giftMessage?: string;
+  isGift?: boolean;
+  promoCode?: string;
+  template?: CertificateTemplate;
+};
+
 function PurchaseFlowInner() {
   const t = useTranslations("purchase");
   const searchParams = useSearchParams();
@@ -38,13 +52,13 @@ function PurchaseFlowInner() {
   const initialGift = searchParams.get("gift") === "true";
   const referredByFromUrl = searchParams.get("ref") || "";
   const wasCanceled = searchParams.get("canceled") === "true";
+  const draftStorageKey = `sha_purchase_draft_${locale}`;
 
   const [referredByCode, setReferredByCode] = useState(referredByFromUrl);
   const [tier, setTier] = useState<Tier>(initialTier);
   const [name, setName] = useState(initialName);
   const [dedication, setDedication] = useState("");
 
-  // Pick 3 random dedication suggestions from the pool (stable per mount)
   const dedicationSuggestions = useMemo(() => {
     const pool = [...DEDICATION_POOL];
     const picked: string[] = [];
@@ -55,17 +69,16 @@ function PurchaseFlowInner() {
     }
     return picked;
   }, []);
+
   const [email, setEmail] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [giftMessage, setGiftMessage] = useState("");
-  const [giftDeliveryDate, setGiftDeliveryDate] = useState("");
   const [isGift, setIsGift] = useState(initialGift);
   const [promoCode, setPromoCode] = useState("");
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState("");
   const [showEmailWarning, setShowEmailWarning] = useState(false);
   const [template, setTemplate] = useState<CertificateTemplate>("luxury");
-
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -82,6 +95,62 @@ function PurchaseFlowInner() {
     }
   }, [referredByFromUrl]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const rawDraft = window.localStorage.getItem(draftStorageKey);
+    if (!rawDraft) return;
+
+    try {
+      const draft = JSON.parse(rawDraft) as PurchaseDraft;
+
+      if (!searchParams.get("tier") && draft.tier) setTier(draft.tier);
+      if (!searchParams.get("name") && draft.name) setName(draft.name);
+      if (draft.dedication) setDedication(draft.dedication);
+      if (draft.email) setEmail(draft.email);
+      if (draft.recipientEmail) setRecipientEmail(draft.recipientEmail);
+      if (draft.giftMessage) setGiftMessage(draft.giftMessage);
+      if (!searchParams.get("gift") && typeof draft.isGift === "boolean") {
+        setIsGift(draft.isGift);
+      }
+      if (draft.promoCode) setPromoCode(draft.promoCode);
+      if (draft.template && VALID_TEMPLATES.includes(draft.template)) {
+        setTemplate(draft.template);
+      }
+    } catch {
+      window.localStorage.removeItem(draftStorageKey);
+    }
+  }, [draftStorageKey, searchParams]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const draft: PurchaseDraft = {
+      tier,
+      name,
+      dedication,
+      email,
+      recipientEmail,
+      giftMessage,
+      isGift,
+      promoCode,
+      template,
+    };
+
+    window.localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+  }, [
+    dedication,
+    draftStorageKey,
+    email,
+    giftMessage,
+    isGift,
+    name,
+    promoCode,
+    recipientEmail,
+    template,
+    tier,
+  ]);
+
   const tierPrices: Record<Tier, string> = {
     basic: "$5",
     protected: "$5",
@@ -96,7 +165,6 @@ function PurchaseFlowInner() {
     business: 99,
   };
 
-  // Track view_item on initial load
   const viewedRef = useRef(false);
   useEffect(() => {
     if (viewedRef.current) return;
@@ -110,10 +178,12 @@ function PurchaseFlowInner() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Track select_item when tier changes (skip initial render)
   const isFirstTierRender = useRef(true);
   useEffect(() => {
-    if (isFirstTierRender.current) { isFirstTierRender.current = false; return; }
+    if (isFirstTierRender.current) {
+      isFirstTierRender.current = false;
+      return;
+    }
     trackEvent("select_item", {
       item_id: tier,
       item_name: tier,
@@ -134,7 +204,6 @@ function PurchaseFlowInner() {
     e.preventDefault();
     if (!name.trim()) return;
 
-    // If no email and warning not yet confirmed, show warning instead of submitting
     if (!email.trim() && !showEmailWarning) {
       setShowEmailWarning(true);
       trackEvent("no_email_warning_shown", { tier });
@@ -196,15 +265,14 @@ function PurchaseFlowInner() {
     }
   }
 
+  const includedItems = {
+    protected: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
+    nonsnack: [t("includedPremiumCertificate"), t("includedPersonalizedBadge"), t("includedRegistry"), t("includedConservation")],
+    business: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
+    basic: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
+  } as const;
 
-const includedItems = {
-  protected: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
-  nonsnack: [t("includedPremiumCertificate"), t("includedPersonalizedBadge"), t("includedRegistry"), t("includedConservation")],
-  business: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
-  basic: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
-} as const;
-
-const currentDate = new Date().toLocaleDateString("en-US", {
+  const currentDate = new Date().toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -235,31 +303,27 @@ const currentDate = new Date().toLocaleDateString("en-US", {
           </p>
         </div>
 
-        {/* Canceled notice */}
         {wasCanceled && (
-          <div className="mt-6 mx-auto max-w-md rounded-xl border border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm text-amber-800">
+          <div className="mx-auto mt-6 max-w-md rounded-xl border border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm text-amber-800">
             {t("canceledNotice")}
           </div>
         )}
 
-        {/* Referral badge */}
         {referredByCode && (
-          <div className="mt-6 mx-auto max-w-md rounded-full border border-teal-200 bg-teal-50/50 px-5 py-3 text-center text-sm text-teal-700">
+          <div className="mx-auto mt-6 max-w-md rounded-full border border-teal-200 bg-teal-50/50 px-5 py-3 text-center text-sm text-teal-700">
             🤝 {t("referredByBadge")}
           </div>
         )}
 
-        {/* Error */}
         {error && (
-          <div className="mt-6 mx-auto max-w-md rounded-xl border border-red-200 bg-red-50/50 px-5 py-4 text-center text-sm text-red-700">
+          <div className="mx-auto mt-6 max-w-md rounded-xl border border-red-200 bg-red-50/50 px-5 py-4 text-center text-sm text-red-700">
             {error}
           </div>
         )}
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.1fr]">
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <details className="overflow-hidden rounded-xl border border-[var(--border)] bg-white lg:hidden">
+            <details className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white lg:hidden">
               <summary className="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-[var(--brand-dark)]">
                 {t("livePreview")}
               </summary>
@@ -277,7 +341,7 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                 </div>
               </div>
             </details>
-            {/* Tier selector */}
+
             <div>
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("tierLabel")}
@@ -296,7 +360,8 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`rounded-xl border ${colors[tierOption]} p-4 text-center transition hover:shadow-md`}
+                      className={`rounded-2xl border ${colors[tierOption]} p-4 text-center transition hover:shadow-md`}
+                      aria-pressed={isSelected}
                     >
                       <p className="text-xl">{tierIcons[tierOption]}</p>
                       <p className="mt-1 text-lg font-semibold text-[var(--brand-dark)]">
@@ -311,7 +376,7 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               </div>
             </div>
 
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-5">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-800">{t("orderSummary")}</p>
               <div className="mt-3 flex items-start justify-between gap-3">
                 <div>
@@ -337,11 +402,17 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               ) : null}
             </div>
 
-            {/* Gift toggle */}
-            <div className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+            <div className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
               <button
                 type="button"
-                onClick={() => { const next = !isGift; setIsGift(next); trackEvent("gift_toggle", { tier, enabled: next }); }}
+                role="switch"
+                aria-checked={isGift}
+                aria-pressed={isGift}
+                onClick={() => {
+                  const next = !isGift;
+                  setIsGift(next);
+                  trackEvent("gift_toggle", { tier, enabled: next });
+                }}
                 className={`relative h-6 w-11 rounded-full transition ${
                   isGift ? "bg-[var(--brand)]" : "bg-gray-300"
                 }`}
@@ -357,7 +428,6 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               </span>
             </div>
 
-            {/* Name */}
             <div>
               <label htmlFor="name" className="text-sm font-semibold text-[var(--brand-dark)]">
                 {tier === "business" ? t("businessNameLabel") : t("nameLabel")}
@@ -369,11 +439,10 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={tier === "business" ? t("businessNamePlaceholder") : t("namePlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
             </div>
 
-            {/* Dedication */}
             <div>
               <label htmlFor="dedication" className="text-sm font-semibold text-[var(--brand-dark)]">
                 {tier === "business" ? t("businessDedicationLabel") : t("dedicationLabel")}
@@ -384,7 +453,7 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                 value={dedication}
                 onChange={(e) => setDedication(e.target.value)}
                 placeholder={tier === "business" ? t("businessDedicationPlaceholder") : t("dedicationPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
               {tier !== "business" && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -402,7 +471,6 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               )}
             </div>
 
-            {/* Email */}
             <div>
               <div className="flex items-baseline justify-between gap-2">
                 <label htmlFor="email" className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -414,16 +482,18 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => { setEmail(e.target.value); setShowEmailWarning(false); }}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setShowEmailWarning(false);
+                }}
                 placeholder={t("emailPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
               <p className="mt-1.5 text-xs text-[var(--muted)]">{t("emailOptionalHint")}</p>
             </div>
 
-            {/* Gift fields */}
             {isGift && (
-              <div className="space-y-4 rounded-xl border border-orange-100 bg-orange-50/30 p-5">
+              <div className="space-y-4 rounded-2xl border border-orange-100 bg-orange-50/30 p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-orange-700">🎁 {t("giftDetailsTitle")}</p>
                 <div>
                   <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -435,20 +505,7 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                     value={recipientEmail}
                     onChange={(e) => setRecipientEmail(e.target.value)}
                     placeholder={t("recipientEmailPlaceholder")}
-                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="giftDeliveryDate" className="text-sm font-semibold text-[var(--brand-dark)]">
-                    {t("giftDeliveryDateLabel")}
-                  </label>
-                  <input
-                    id="giftDeliveryDate"
-                    type="date"
-                    value={giftDeliveryDate}
-                    onChange={(e) => setGiftDeliveryDate(e.target.value)}
-                    min={new Date().toISOString().split("T")[0]}
-                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                    className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                   />
                 </div>
                 <div>
@@ -461,13 +518,12 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                     onChange={(e) => setGiftMessage(e.target.value)}
                     placeholder={t("giftMessagePlaceholder")}
                     rows={3}
-                    className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                    className="mt-2 w-full resize-none rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                   />
                 </div>
               </div>
             )}
 
-            {/* Promo code */}
             <div>
               <label htmlFor="promoCode" className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("promoCodeLabel")}
@@ -485,12 +541,11 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                 spellCheck={false}
                 data-form-type="other"
                 data-lpignore="true"
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-sm font-mono uppercase text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
             </div>
 
-            {/* Stripe secure payment note */}
-            <div className="flex items-center gap-3 rounded-xl border border-teal-100 bg-teal-50/30 p-4">
+            <div className="flex items-center gap-3 rounded-2xl border border-teal-100 bg-teal-50/30 p-4">
               <span className="text-lg">🔒</span>
               <div>
                 <p className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -502,15 +557,14 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               </div>
             </div>
 
-            {/* No-email warning */}
             {showEmailWarning && (
-              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
                 <p className="text-sm font-semibold text-amber-800">⚠️ {t("noEmailWarningTitle")}</p>
                 <p className="mt-1 text-sm leading-6 text-amber-700">{t("noEmailWarningText")}</p>
                 <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                   <button
                     type="submit"
-                    className="flex-1 rounded-lg bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-800"
+                    className="flex-1 rounded-xl bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-800"
                   >
                     {t("noEmailContinue")}
                   </button>
@@ -520,7 +574,7 @@ const currentDate = new Date().toLocaleDateString("en-US", {
                       setShowEmailWarning(false);
                       document.getElementById("email")?.focus();
                     }}
-                    className="flex-1 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-50"
+                    className="flex-1 rounded-xl border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-50"
                   >
                     {t("noEmailAddEmail")}
                   </button>
@@ -528,11 +582,10 @@ const currentDate = new Date().toLocaleDateString("en-US", {
               </div>
             )}
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={!name.trim() || isRedirecting}
-              className="w-full rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {promoCode.trim()
                 ? t("submitButtonPromo")
@@ -540,13 +593,12 @@ const currentDate = new Date().toLocaleDateString("en-US", {
             </button>
           </form>
 
-          {/* Live certificate preview */}
           <div className="hidden lg:block">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("livePreview")}
             </p>
             <CertificateTemplateSelector value={template} onChange={setTemplate} />
-            <div className="sticky top-28 mt-4">
+            <div className="sticky top-28 mt-4 rounded-[28px] border border-white/70 bg-white p-4 shadow-[0_22px_70px_rgba(18,38,56,0.08)]">
               <CertificatePreview
                 name={name.trim() || t("previewName")}
                 tier={tier}

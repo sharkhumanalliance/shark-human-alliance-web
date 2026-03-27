@@ -20,6 +20,7 @@ interface MemberData {
   referralCount: number;
   accessToken?: string;
   email?: string;
+  template?: string;
 }
 
 function SuccessContentInner() {
@@ -51,6 +52,9 @@ function SuccessContentInner() {
         if (res.ok) {
           const data = await res.json();
           setMember(data);
+          if (["luxury", "formal", "hero"].includes(data.template)) {
+            setTemplate(data.template as CertificateTemplate);
+          }
           setLoading(false);
           // Fire GA4 purchase event once
           if (!purchaseTrackedRef.current) {
@@ -84,6 +88,12 @@ function SuccessContentInner() {
 
     poll();
   }, [sessionId]);
+
+
+  useEffect(() => {
+    if (!member || typeof window === "undefined") return;
+    window.localStorage.removeItem(`sha_purchase_draft_${locale}`);
+  }, [locale, member]);
 
   function handleDownloadCertificate() {
     if (!member) return;
@@ -154,7 +164,7 @@ function handleDownloadBadge() {
   }
 
   // Success!
-  const displayDate = new Date(member.date).toLocaleDateString("en-US", {
+  const displayDate = new Date(member.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",

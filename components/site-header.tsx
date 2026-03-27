@@ -48,9 +48,9 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5 sm:px-6 sm:py-3">
         <LocalizedLink href="/" className="flex shrink-0 items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white shadow-sm">
             SHA
           </div>
           <div className="hidden min-[400px]:block">
@@ -90,14 +90,14 @@ export function SiteHeader() {
           <LanguageSwitcher />
           <LocalizedLink
             href="/purchase?tier=protected"
-            className="hidden whitespace-nowrap rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:inline-flex"
+            className="hidden whitespace-nowrap rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:inline-flex"
           >
             {t("cta")}
           </LocalizedLink>
 
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-[var(--brand-dark)] transition hover:bg-gray-100 lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--brand-dark)] transition hover:bg-gray-100 lg:hidden"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
           >
@@ -113,15 +113,15 @@ export function SiteHeader() {
       </div>
 
       {menuOpen && (
-        <div className="border-t border-[var(--border)] bg-white lg:hidden">
-          <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
+        <div className="border-t border-[var(--border)] bg-white/95 backdrop-blur lg:hidden">
+          <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
             {navItems.map((item) =>
               item.hash ? (
                 <LocalizedLink
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e as React.MouseEvent<HTMLAnchorElement>, item)}
-                  className="rounded-lg px-3 py-2.5 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
+                  className="rounded-xl px-3 py-3 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
                 >
                   {item.label}
                 </LocalizedLink>
@@ -130,7 +130,7 @@ export function SiteHeader() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
+                  className="rounded-xl px-3 py-3 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
                 >
                   {item.label}
                 </LocalizedLink>
@@ -139,7 +139,7 @@ export function SiteHeader() {
             <LocalizedLink
               href="/purchase?tier=protected"
               onClick={() => setMenuOpen(false)}
-              className="mt-2 flex items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:hidden"
+              className="mt-2 flex items-center justify-center rounded-xl bg-[var(--accent)] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:hidden"
             >
               {t("cta")}
             </LocalizedLink>
