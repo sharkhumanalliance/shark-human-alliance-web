@@ -19,7 +19,7 @@ const PARTNERS = [
 export function HomeContent() {
   const t = useTranslations("home");
   const [previewName, setPreviewName] = useState("");
-  const [previewTemplate, setPreviewTemplate] = useState<CertificateTemplate>("hero");
+  const [previewTemplate, setPreviewTemplate] = useState<CertificateTemplate>("luxury");
 
   const previewDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const previewTrackedRef = useRef(false);

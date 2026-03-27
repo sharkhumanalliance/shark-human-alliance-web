@@ -63,7 +63,7 @@ function PurchaseFlowInner() {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState("");
   const [showEmailWarning, setShowEmailWarning] = useState(false);
-  const [template, setTemplate] = useState<CertificateTemplate>("hero");
+  const [template, setTemplate] = useState<CertificateTemplate>("luxury");
 
   const tierPrices: Record<Tier, string> = {
     basic: "$5",

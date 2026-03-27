@@ -31,7 +31,7 @@ function SuccessContentInner() {
   const [member, setMember] = useState<MemberData | null>(null);
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [template, setTemplate] = useState<CertificateTemplate>("hero");
+  const [template, setTemplate] = useState<CertificateTemplate>("luxury");
   const purchaseTrackedRef = useRef(false);
 
   useEffect(() => {

@@ -14,10 +14,10 @@ const OPTIONS: Array<{
   icon: string;
 }> = [
   {
-    value: "hero",
-    label: "Playful Official",
-    description: "Bold and fun — with the iconic shark-floor photo.",
-    icon: "🦈",
+    value: "luxury",
+    label: "Luxury Edition",
+    description: "Premium framed design with ornate borders and seal.",
+    icon: "🏅",
   },
   {
     value: "formal",
@@ -26,10 +26,10 @@ const OPTIONS: Array<{
     icon: "📜",
   },
   {
-    value: "luxury",
-    label: "Luxury Edition",
-    description: "Premium framed design with ornate borders and seal.",
-    icon: "🏅",
+    value: "hero",
+    label: "Playful Official",
+    description: "Bold and fun — with the iconic shark-floor photo.",
+    icon: "🦈",
   },
 ];
 

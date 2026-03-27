@@ -81,7 +81,7 @@ export function CertificateDocument({
   date,
   registryId,
   priorityImages = false,
-  template = "hero",
+  template = "luxury",
   assetMode = priorityImages ? "full" : "preview",
 }: CertificateDocumentProps) {
   const statusText = getTierLabel(tier);

@@ -18,14 +18,14 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
   const member = await getMemberByAccessToken(token);
   if (!member) notFound();
 
-  // Query param overrides DB value; DB value overrides default "hero".
+  // Query param overrides DB value; DB value overrides default "luxury".
   const validTemplates: CertificateTemplate[] = ["hero", "formal", "luxury"];
   const template: CertificateTemplate =
     validTemplates.includes(templateParam as CertificateTemplate)
       ? (templateParam as CertificateTemplate)
       : validTemplates.includes(member.template as CertificateTemplate)
         ? (member.template as CertificateTemplate)
-        : "hero";
+        : "luxury";
 
   const displayDate = new Date(member.date).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",
