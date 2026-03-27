@@ -39,6 +39,10 @@
     "purchaseSuccess": {
       "title": "Welcome to the Alliance!",
       "description": "Your shark protection certificate is ready. Download your PDF and share your referral link."
+    },
+    "terms": {
+      "title": "Terms & Purchase Conditions — Shark Human Alliance",
+      "description": "Read how ordering, digital delivery, support, complaints and refund handling work for Shark Human Alliance certificates."
     }
   },
   "header": {
@@ -55,11 +59,11 @@
   },
   "footer": {
     "brand": "Shark Human Alliance",
-    "tagline": "A fictional alliance for better shark-human relations. Every sale funds real ocean conservation.",
+    "tagline": "Personalized gift certificates that fund real shark conservation.",
     "aboutTitle": "Our Story",
     "aboutText": "The Shark Human Alliance is a playful fictional universe with a dead-serious mission: turn fear into curiosity, fund real conservation, and give sharks the PR they deserve.",
     "legalTitle": "Legal",
-    "legalText": "Fictional brand. Real donations. Your certificate provides zero marine protection but helps protect actual sharks from us.",
+    "legalText": "Read our Terms & Purchase Conditions for ordering, digital delivery, complaints and refund handling.",
     "transparencyTitle": "Transparency",
     "transparencyText": "Full transparency on every dollar. Reports published quarterly once donations begin.",
     "nav": {
@@ -74,14 +78,16 @@
     "navTitle": "Explore",
     "madeWith": "Made with ❤️ for sharks",
     "email": "sharkhumanalliance@gmail.com",
-    "copyright": "© 2026 Shark Human Alliance. A fictional brand with a very real mission.",
-    "operator": "Operated by JEEL Wekeza s.r.o."
+    "copyright": "© 2026 Shark Human Alliance.",
+    "operator": "Operated by JEEL Wekeza s.r.o.",
+    "termsLink": "Terms & Purchase Conditions",
+    "supportLink": "Support & complaints"
   },
   "hero": {
     "titleLine1": "Official shark protection.",
     "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
-    "description": "A personalized digital certificate that looks absurdly official, makes a perfect gift, and funds real shark conservation. Delivered in minutes.",
+    "description": "A personalized digital certificate that looks absurdly official, makes a perfect gift, and funds real shark conservation.",
     "ctaPrimary": "Get Protected Friend Status — $5",
     "ctaSecondary": "Preview your certificate",
     "socialProof": "Join the Alliance",
@@ -182,7 +188,7 @@
       "popularBadge": "Most Popular",
       "protectedTitle": "Protected Friend Status",
       "protectedPrice": "$5",
-      "protectedDescription": "The flagship gift — polished, personal, and surprisingly frameable. Best for quick, funny, polished gifting.",
+      "protectedDescription": "The best everyday gift — polished, personal, and easy to frame. Ideal for birthdays, office laughs, and first-time shark diplomacy.",
       "protectedFeatures": [
         "Personalized certificate",
         "Protected Friend recognition",
@@ -191,7 +197,7 @@
       "protectedCta": "Get Protected Friend — $5",
       "nonsnackTitle": "Non-Snack Recognition",
       "nonsnackPrice": "$19",
-      "nonsnackDescription": "Peak symbolic prestige with a deluxe certificate, exclusive registry placement, and downloadable badge. For people who want the most absurd tier possible.",
+      "nonsnackDescription": "The premium symbolic upgrade — more theatrical, more absurd, and more display-worthy. Ideal for deluxe gifting and maximum status.",
       "nonsnackFeatures": [
         "Premium deluxe certificate",
         "Official Non-Snack designation",
@@ -865,6 +871,43 @@
       "title": "Start your Alliance career.",
       "text": "Every career in shark diplomacy starts with a single certificate. Get yours now and receive your personal referral code.",
       "button": "Get your certificate"
+    }
+  },
+  "termsPage": {
+    "eyebrow": "Legal & support",
+    "title": "Terms & Purchase Conditions",
+    "intro": "These terms explain how ordering, delivery, support, complaints and refund handling work for Shark Human Alliance certificates. This page is meant to make the purchase process clearer and more trustworthy.",
+    "updatedLabel": "Last updated",
+    "updatedValue": "March 27, 2026",
+    "sections": {
+      "operator": {
+        "title": "1. Operator",
+        "body": "This website is operated by JEEL Wekeza s.r.o. If you need help with an order, delivery issue, file defect, duplicate payment, or complaint, contact us at sharkhumanalliance@gmail.com."
+      },
+      "products": {
+        "title": "2. What is being sold",
+        "body": "The website sells digital, personalized certificates and related digital assets within the Shark Human Alliance project. Unless explicitly stated otherwise on the product page, the product is delivered digitally and no physical framed certificate is shipped."
+      },
+      "ordering": {
+        "title": "3. How ordering works",
+        "body": "To place an order, choose a certificate tier, enter the requested details, and complete payment through the checkout flow. The order is treated as placed once payment is successfully confirmed."
+      },
+      "delivery": {
+        "title": "4. Delivery and access",
+        "body": "Certificates are generated digitally after successful payment. If an email address is provided, delivery details may also be sent by email. If no email address is provided, the certificate should be downloaded immediately from the success page because the link may not be stored for later retrieval."
+      },
+      "complaints": {
+        "title": "5. Complaints and technical issues",
+        "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, or another appropriate remedy."
+      },
+      "refunds": {
+        "title": "6. Refunds and corrections",
+        "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help."
+      },
+      "contact": {
+        "title": "7. Contact",
+        "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
+      }
     }
   }
 }

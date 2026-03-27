@@ -2,31 +2,14 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { LocalizedLink } from "@/components/ui/localized-link";
 
 export function HeroSection() {
   const t = useTranslations("hero");
-  const [diplomatCount, setDiplomatCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/members")
-      .then((res) => res.json())
-      .then((data) => {
-        if (!cancelled && Array.isArray(data)) setDiplomatCount(data.length);
-      })
-      .catch(() => undefined);
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto grid max-w-6xl items-center gap-8 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
-        {/* Left — copy */}
         <div className="flex flex-col justify-center">
           <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-lg border border-orange-200 bg-orange-50 px-3 py-1.5 text-sm font-semibold text-orange-800">
             {t("giftBadge")}
@@ -70,23 +53,11 @@ export function HeroSection() {
             </LocalizedLink>
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-2 text-sm text-[var(--muted)]">
-            <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5">{t("proofPrice")}</span>
-            <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5">{t("proofDelivery")}</span>
-            <span className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5">
-              {diplomatCount !== null ? `${diplomatCount} ${t("proofDiplomats")}` : t("proofRegistry")}
-            </span>
-            <LocalizedLink href="/impact" className="rounded-full border border-[var(--border)] bg-white px-3 py-1.5 transition hover:border-sky-300 hover:text-[var(--brand-dark)]">
-              {t("proofTransparency")}
-            </LocalizedLink>
-          </div>
-
           <p className="mt-4 text-sm italic text-[var(--brand)]">
             {t("brandLine")}
           </p>
         </div>
 
-        {/* Right — image + ambassadors */}
         <div className="relative">
           <div className="relative overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-sm">
             <div className="p-3">
@@ -121,7 +92,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }

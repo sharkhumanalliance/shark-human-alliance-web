@@ -16,19 +16,19 @@ const OPTIONS: Array<{
   {
     value: "luxury",
     label: "Luxury Edition",
-    description: "Premium framed design with ornate borders and seal.",
+    description: "Refined premium styling with ornate framing, a formal seal, and gallery presence.",
     icon: "🏅",
   },
   {
     value: "formal",
     label: "Ceremonial Official",
-    description: "Elegant and frameable — pure diplomatic ceremony.",
+    description: "Classic diplomatic styling with balanced typography, clean framing, and formal polish.",
     icon: "📜",
   },
   {
     value: "hero",
     label: "Playful Official",
-    description: "Bold and fun — with the iconic shark-floor photo.",
+    description: "Brighter flagship styling with mascot energy, bold contrast, and playful authority.",
     icon: "🦈",
   },
 ];

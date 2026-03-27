@@ -9,7 +9,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-[var(--border)] bg-[var(--surface-soft)]">
       <div className="mx-auto max-w-6xl px-6 py-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.9fr]">
           <div>
             <div className="flex items-center gap-2.5">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white">
@@ -44,6 +44,17 @@ export function SiteFooter() {
             <div>
               <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("legalTitle")}</h4>
               <p className="mt-1 text-xs leading-5 text-[var(--muted)]">{t("legalText")}</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <LocalizedLink href="/terms" className="inline-flex rounded-full border border-[var(--border)] bg-white px-3 py-1 text-[11px] font-medium text-[var(--brand-dark)] transition hover:border-sky-300 hover:text-[var(--brand)]">
+                  {t("termsLink")}
+                </LocalizedLink>
+                <a
+                  href={`mailto:${t("email")}`}
+                  className="inline-flex rounded-full border border-[var(--border)] bg-white px-3 py-1 text-[11px] font-medium text-[var(--brand-dark)] transition hover:border-sky-300 hover:text-[var(--brand)]"
+                >
+                  {t("supportLink")}
+                </a>
+              </div>
             </div>
             <div>
               <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("transparencyTitle")}</h4>

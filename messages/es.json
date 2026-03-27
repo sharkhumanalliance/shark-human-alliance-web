@@ -39,6 +39,10 @@
     "purchaseSuccess": {
       "title": "¡Bienvenido a la Alianza!",
       "description": "Tu certificado de protección de tiburones está listo. Descarga tu PDF y comparte tu enlace de referido."
+    },
+    "terms": {
+      "title": "Condiciones de compra — Shark Human Alliance",
+      "description": "Lee cómo funcionan los pedidos, la entrega digital, el soporte, las reclamaciones y la gestión de reembolsos de los certificados Shark Human Alliance."
     }
   },
   "header": {
@@ -55,11 +59,11 @@
   },
   "footer": {
     "brand": "Shark Human Alliance",
-    "tagline": "Una alianza ficticia para mejores relaciones entre tiburones y humanos. Cada venta financia la conservación marina real.",
+    "tagline": "Certificados de regalo personalizados que financian conservación real de tiburones.",
     "aboutTitle": "Nuestra historia",
     "aboutText": "La Shark Human Alliance es un universo ficticio y lúdico con una misión absolutamente seria: convertir el miedo en curiosidad, financiar conservación real y darles a los tiburones la imagen que merecen.",
     "legalTitle": "Legal",
-    "legalText": "Marca ficticia. Donaciones reales. Tu certificado no te protege de tiburones pero sí ayuda a proteger a los tiburones de nosotros.",
+    "legalText": "Consulta nuestras Condiciones de compra para pedidos, entrega digital, reclamaciones y gestión de reembolsos.",
     "transparencyTitle": "Transparencia",
     "transparencyText": "Transparencia total en cada dólar. Los informes se publicarán trimestralmente una vez que comiencen las donaciones.",
     "nav": {
@@ -74,14 +78,16 @@
     "navTitle": "Explorar",
     "madeWith": "Hecho con ❤️ para los tiburones",
     "email": "sharkhumanalliance@gmail.com",
-    "copyright": "© 2026 Shark Human Alliance. Una marca ficticia con una misión muy real.",
-    "operator": "Operado por JEEL Wekeza s.r.o."
+    "copyright": "© 2026 Shark Human Alliance.",
+    "operator": "Operado por JEEL Wekeza s.r.o.",
+    "termsLink": "Condiciones de compra",
+    "supportLink": "Soporte y reclamaciones"
   },
   "hero": {
     "titleLine1": "Protección oficial contra tiburones.",
     "titleLine2": "Para humanos.",
     "brandLine": "Los tiburones merecen mejor imagen. Y protección real.",
-    "description": "Un certificado digital personalizado que parece absurdamente oficial, funciona como regalo y financia conservación real de tiburones. Entregado en minutos.",
+    "description": "Un certificado digital personalizado que se ve absurdamente oficial, funciona como un regalo perfecto y financia conservación real de tiburones.",
     "ctaPrimary": "Obtén Amigo Protegido — $5",
     "ctaSecondary": "Vista previa de tu certificado",
     "socialProof": "Únete a la Alianza",
@@ -182,7 +188,7 @@
       "popularBadge": "Más Popular",
       "protectedTitle": "Estatus de Amigo Protegido",
       "protectedPrice": "$5",
-      "protectedDescription": "El regalo estrella — elegante, personal y sorprendentemente enmarcable. Ideal para regalos rápidos, divertidos y con estilo.",
+      "protectedDescription": "El mejor regalo cotidiano: cuidado, personal y fácil de enmarcar. Ideal para cumpleaños, regalos de oficina y una primera diplomacia con tiburones.",
       "protectedFeatures": [
         "Certificado personalizado",
         "Reconocimiento de Amigo Protegido",
@@ -191,7 +197,7 @@
       "protectedCta": "Obtén Amigo Protegido — $5",
       "nonsnackTitle": "Reconocimiento No-Snack",
       "nonsnackPrice": "$19",
-      "nonsnackDescription": "Prestigio simbólico máximo con certificado deluxe, ubicación exclusiva en el registro e insignia descargable. Para quienes quieren el nivel más absurdo posible.",
+      "nonsnackDescription": "La mejora simbólica premium: más teatral, más absurda y más digna de exhibirse. Ideal para regalos deluxe y máximo estatus.",
       "nonsnackFeatures": [
         "Certificado premium deluxe",
         "Designación oficial No-Snack",
@@ -865,6 +871,43 @@
       "title": "Comienza tu carrera en la Alianza.",
       "text": "Toda carrera en la diplomacia con tiburones comienza con un solo certificado. Obtén el tuyo ahora y recibe tu código personal de referido.",
       "button": "Obtén tu certificado"
+    }
+  },
+  "termsPage": {
+    "eyebrow": "Legal y soporte",
+    "title": "Condiciones de compra",
+    "intro": "Estas condiciones explican cómo funcionan los pedidos, la entrega, el soporte, las reclamaciones y la gestión de reembolsos de los certificados Shark Human Alliance. Esta página busca hacer el proceso de compra más claro y más confiable.",
+    "updatedLabel": "Última actualización",
+    "updatedValue": "27 de marzo de 2026",
+    "sections": {
+      "operator": {
+        "title": "1. Operador",
+        "body": "Este sitio web es operado por JEEL Wekeza s.r.o. Si necesitas ayuda con un pedido, un problema de entrega, un archivo defectuoso, un pago duplicado o una reclamación, contáctanos en sharkhumanalliance@gmail.com."
+      },
+      "products": {
+        "title": "2. Qué se vende",
+        "body": "El sitio vende certificados digitales personalizados y activos digitales relacionados dentro del proyecto Shark Human Alliance. Salvo que se indique expresamente lo contrario en la página del producto, el producto se entrega en formato digital y no se envía ningún certificado físico enmarcado."
+      },
+      "ordering": {
+        "title": "3. Cómo funciona el pedido",
+        "body": "Para realizar un pedido, elige un nivel de certificado, introduce los datos solicitados y completa el pago mediante el flujo de compra. El pedido se considera realizado una vez que el pago se confirma correctamente."
+      },
+      "delivery": {
+        "title": "4. Entrega y acceso",
+        "body": "Los certificados se generan digitalmente después del pago correcto. Si se facilita una dirección de correo electrónico, los detalles de entrega también pueden enviarse por correo. Si no se facilita un correo, el certificado debe descargarse inmediatamente desde la página de confirmación porque el enlace puede no guardarse para recuperarlo más tarde."
+      },
+      "complaints": {
+        "title": "5. Reclamaciones y problemas técnicos",
+        "body": "Si el archivo entregado es defectuoso, no se puede descargar el certificado, se genera un nivel incorrecto o aparece otro problema técnico o de pago, contacta con soporte sin demora innecesaria e incluye los datos del pedido si los tienes. Revisaremos el problema y propondremos una solución práctica, como una nueva entrega, una corrección, una sustitución u otra medida adecuada."
+      },
+      "refunds": {
+        "title": "6. Reembolsos y correcciones",
+        "body": "Como el producto es un artículo digital personalizado, las solicitudes de reembolso y corrección se gestionan individualmente según el problema concreto. Si existe un cargo duplicado, un fallo técnico de entrega o un defecto causado por nuestra parte, contáctanos y revisaremos la solicitud con prontitud. Si el certificado contiene un error causado por los datos introducidos, aun así te animamos a contactarnos e intentaremos ayudarte."
+      },
+      "contact": {
+        "title": "7. Contacto",
+        "body": "Para soporte, reclamaciones o preguntas de compra, escribe a sharkhumanalliance@gmail.com."
+      }
     }
   }
 }

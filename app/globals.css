@@ -976,13 +976,24 @@ textarea:focus-visible {
 /* ── Template selector ── */
 .certificate-template-selector {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   margin-bottom: 20px;
 }
 
+@media (min-width: 560px) {
+  .certificate-template-selector {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .certificate-template-card {
   appearance: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 116px;
+  height: 100%;
   border: 2px solid var(--border, rgba(23, 50, 75, 0.14));
   border-radius: 12px;
   background: white;
@@ -1007,6 +1018,7 @@ textarea:focus-visible {
 }
 
 .certificate-template-card__title {
+  min-height: 2.6em;
   color: #17324b;
   font-size: 14px;
   font-weight: 700;
@@ -1014,6 +1026,7 @@ textarea:focus-visible {
 }
 
 .certificate-template-card__desc {
+  min-height: 4.2em;
   color: #5f7892;
   font-size: 12px;
   line-height: 1.4;

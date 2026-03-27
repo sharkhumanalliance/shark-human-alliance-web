@@ -91,7 +91,7 @@ export function MembershipCard({
           {price}
         </p>
 
-        <p className="mt-4 text-sm leading-6 text-[var(--muted)]">{description}</p>
+        <p className="mt-4 min-h-[4.5rem] text-sm leading-6 text-[var(--muted)] md:min-h-[5rem]">{description}</p>
 
         <ul className="mt-6 space-y-3 flex-grow">
           {features.map((feature) => (
