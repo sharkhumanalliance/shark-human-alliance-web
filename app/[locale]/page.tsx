@@ -46,7 +46,7 @@ export default async function Home({ params }: Props) {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pb-32 md:pb-0">
+      <main id="main" className="pb-16 md:pb-0">
         <HeroSection />
         <HomeContent />
       </main>

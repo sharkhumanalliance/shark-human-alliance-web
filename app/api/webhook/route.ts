@@ -14,15 +14,6 @@ import {
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
 
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
 export async function POST(request: NextRequest) {
   let event;
 
@@ -44,6 +35,9 @@ export async function POST(request: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
 
+    // ── Idempotency guard ──────────────────────────────────────────────
+    // Stripe webhooks can be delivered more than once. If we already
+    // processed this session, acknowledge and return early.
     const existing = await getMemberByStripeSession(session.id);
     if (existing) {
       console.log(
@@ -51,6 +45,7 @@ export async function POST(request: NextRequest) {
       );
       return NextResponse.json({ received: true });
     }
+    // ───────────────────────────────────────────────────────────────────
 
     const meta = session.metadata || {};
 
@@ -61,10 +56,8 @@ export async function POST(request: NextRequest) {
       email = "",
       isGift = "false",
       recipientEmail = "",
-      giftMessage = "",
       referredBy = "",
       locale = "en",
-      template = "",
     } = meta;
 
     console.log(`[SHA Webhook] Payment completed for ${name} (${tier})`);
@@ -83,7 +76,6 @@ export async function POST(request: NextRequest) {
       email: (email.trim() || recipientEmail.trim()) || undefined,
       stripeSessionId: session.id,
       accessToken,
-      template: template || undefined,
       locale,
     });
 
@@ -91,14 +83,9 @@ export async function POST(request: NextRequest) {
       await incrementReferralCount(referredBy);
     }
 
+    // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
-    const templateParam = template ? `&template=${encodeURIComponent(template)}` : "";
-    const certificateUrl = buildAbsoluteLocalizedUrl(
-      BASE_URL,
-      locale,
-      `/certificate/view?token=${accessToken}${templateParam}`
-    );
-    const badgeUrl = tier === "nonsnack" ? `${BASE_URL}/api/badge?token=${accessToken}&download=1` : undefined;
+    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${accessToken}`);
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {
@@ -115,8 +102,6 @@ export async function POST(request: NextRequest) {
             registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`),
             careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
             referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
-            badgeUrl,
-            giftMessage: giftMessage || undefined,
           }),
         });
         console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);
@@ -125,11 +110,9 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Also notify buyer if gift
     if (isGift === "true" && recipientEmail && email && email !== recipientEmail && process.env.RESEND_API_KEY) {
       try {
-        const safeName = escapeHtml(name);
-        const safeRecipientEmail = escapeHtml(recipientEmail);
-        const safeGiftMessage = giftMessage ? escapeHtml(giftMessage) : "";
         await getResend().emails.send({
           from: EMAIL_FROM,
           to: email,
@@ -141,10 +124,9 @@ export async function POST(request: NextRequest) {
     <div style="font-size:48px;">🎁</div>
     <h1 style="color:#15324d;font-size:24px;margin:16px 0 8px;">Gift Delivered!</h1>
     <p style="color:#5f7892;font-size:14px;line-height:1.6;">
-      Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.
+      Your gift for <strong>${name}</strong> has been sent to <strong>${recipientEmail}</strong>.
       They'll receive their certificate and a warm welcome from the Alliance.
     </p>
-    ${giftMessage ? `<p style="margin:16px auto 0;max-width:420px;padding:14px 16px;background:#fff7ed;border:1px solid #fdba74;border-radius:16px;color:#7c2d12;font-size:13px;line-height:1.6;"><strong style="display:block;margin-bottom:6px;color:#c2410c;">Your note</strong>${safeGiftMessage}</p>` : ""}
     <p style="color:#5f7892;font-size:13px;margin-top:16px;">
       Your referral code: <strong>${referralCode}</strong><br>
       Share it with friends to climb the Alliance career ladder!

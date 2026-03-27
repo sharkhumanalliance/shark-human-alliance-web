@@ -20,7 +20,6 @@ interface MemberData {
   referralCount: number;
   accessToken?: string;
   email?: string;
-  template?: string;
 }
 
 function SuccessContentInner() {
@@ -52,9 +51,6 @@ function SuccessContentInner() {
         if (res.ok) {
           const data = await res.json();
           setMember(data);
-          if (["luxury", "formal", "hero"].includes(data.template)) {
-            setTemplate(data.template as CertificateTemplate);
-          }
           setLoading(false);
           // Fire GA4 purchase event once
           if (!purchaseTrackedRef.current) {
@@ -89,12 +85,6 @@ function SuccessContentInner() {
     poll();
   }, [sessionId]);
 
-
-  useEffect(() => {
-    if (!member || typeof window === "undefined") return;
-    window.localStorage.removeItem(`sha_purchase_draft_${locale}`);
-  }, [locale, member]);
-
   function handleDownloadCertificate() {
     if (!member) return;
     trackEvent("certificate_download", { tier: member.tier, format: "a4" });
@@ -110,16 +100,6 @@ function SuccessContentInner() {
       "noopener,noreferrer"
     );
   }
-
-
-function handleDownloadBadge() {
-  if (!member?.accessToken) {
-    alert("Badge is not ready yet. Please try again in a moment.");
-    return;
-  }
-  trackEvent("badge_download", { tier: member.tier, format: "svg" });
-  window.open(`/api/badge?token=${member.accessToken}&download=1`, "_blank", "noopener,noreferrer");
-}
 
   // Loading state
   if (loading) {
@@ -164,7 +144,7 @@ function handleDownloadBadge() {
   }
 
   // Success!
-  const displayDate = new Date(member.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
+  const displayDate = new Date(member.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -203,24 +183,6 @@ function handleDownloadBadge() {
           />
         </div>
 
-        {member.tier === "nonsnack" && member.accessToken ? (
-          <div className="mt-8 rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-800">{t("badgeReadyLabel")}</p>
-                <h2 className="mt-2 text-xl font-semibold text-[var(--brand-dark)]">{t("badgeReadyTitle")}</h2>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{t("badgeReadyText")}</p>
-              </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/api/badge?token=${member.accessToken}`}
-                alt={`${member.name} Non-Snack badge`}
-                className="w-full max-w-xl rounded-xl border border-[var(--border)] bg-slate-950/5"
-              />
-            </div>
-          </div>
-        ) : null}
-
         {/* Actions */}
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <button
@@ -229,15 +191,6 @@ function handleDownloadBadge() {
           >
             {t("downloadCert")} (A4)
           </button>
-
-          {member.tier === "nonsnack" ? (
-            <button
-              onClick={handleDownloadBadge}
-              className="inline-flex items-center justify-center rounded-lg bg-orange-500 px-6 py-4 text-base font-semibold text-white transition hover:bg-orange-600"
-            >
-              {t("downloadBadge")}
-            </button>
-          ) : null}
 
           <LocalizedLink
             href={`/registry?highlight=${member.id}`}

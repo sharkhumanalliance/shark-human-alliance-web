@@ -87,9 +87,9 @@
     "titleLine1": "Protección oficial contra tiburones.",
     "titleLine2": "Para humanos.",
     "brandLine": "Los tiburones merecen mejor imagen. Y protección real.",
-    "description": "Un certificado digital personalizado que parece absurdamente oficial, funciona como un regalo realmente bueno y financia conservación real de tiburones.",
-    "ctaPrimary": "Consigue Protected Friend — $5",
-    "ctaSecondary": "Ver el certificado",
+    "description": "Un certificado digital personalizado que se ve absurdamente oficial, funciona como un regalo perfecto y financia conservación real de tiburones.",
+    "ctaPrimary": "Obtén Amigo Protegido — $5",
+    "ctaSecondary": "Vista previa de tu certificado",
     "socialProof": "Únete a la Alianza",
     "giftBadge": "🎁 El regalo broma #1 para los que temen a los tiburones",
     "finnleyName": "Finnley Mako",
@@ -100,18 +100,14 @@
     "howStep1": "Elige un certificado",
     "howStep2": "Financia conservación real",
     "howStep3": "Envía el regalo",
-    "bullet1": "Entrega digital instantánea",
-    "bullet2": "Personalizado en 60 segundos",
-    "bullet3": "Financiación real para conservación",
+    "bullet1": "Enviado digitalmente en minutos",
+    "bullet2": "Personalizado en unos 60 segundos",
+    "bullet3": "Financia conservación real de tiburones",
     "proofPrice": "Desde $5",
     "proofDelivery": "Entregado en minutos",
     "proofDiplomats": "diplomáticos registrados",
     "proofRegistry": "Registro público",
-    "proofTransparency": "Transparencia e impacto",
-    "imageBadge": "Oficina diplomática marina",
-    "proofLabel1": "Entrega",
-    "proofLabel2": "Certificado",
-    "proofLabel3": "Confianza"
+    "proofTransparency": "Transparencia e impacto"
   },
   "home": {
     "reviews": {
@@ -176,9 +172,8 @@
       "certName": "[ Tu nombre aquí ]",
       "certText": "es oficialmente reconocido por la Shark Human Alliance como un defensor de las relaciones pacíficas entre tiburones y humanos y un contribuyente a la conservación marina real.",
       "inputPlaceholder": "Tu nombre (los tiburones esperan)",
-      "ctaBuy": "Consigue el tuyo — $5",
-      "ctaGift": "Enviar como regalo — $5",
-      "livePreviewLabel": "Vista previa en vivo"
+      "ctaBuy": "Comprar para ti — $5",
+      "ctaGift": "Comprar como regalo — $5"
     },
     "impactTeaser": {
       "donationsIntro": "Cada certificado contribuye a un fondo de conservación de tiburones que seguimos públicamente. A medida que crecen las donaciones, los fondos se distribuyen a organizaciones evaluadas y se informan aquí, incluidas organizaciones como",
@@ -219,8 +214,7 @@
         "Ubicación premium en el Registro Diplomático"
       ],
       "businessCta": "Obtener Certificación — $99",
-      "businessEyebrow": "Para empresas",
-      "mobileHint": "Desliza para comparar los niveles de certificado."
+      "businessEyebrow": "Para empresas"
     },
     "realImpact": {
       "label": "Impacto Real",
@@ -519,7 +513,7 @@
   },
   "purchase": {
     "title": "Procede a la Autorización Diplomática.",
-    "subtitle": "Un formulario. Un pago. Un resultado sorprendentemente oficial.",
+    "subtitle": "Un formulario. Un pago. Un paso más cerca de no ser un snack.",
     "tierLabel": "Nivel seleccionado",
     "tiers": {
       "basic": "Membresía Básica — $5",
@@ -578,18 +572,7 @@
     "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango.",
     "referralCopy": "Copiar",
     "referralCareerLink": "Ver el escalafón completo",
-    "downloadOnlyNotice": "Descarga ahora — este enlace no se guardará.",
-    "includedTitle": "Qué incluye",
-    "includedCertificate": "Certificado personalizado",
-    "includedPremiumCertificate": "Certificado premium personalizado",
-    "includedPersonalizedBadge": "Badge personalizado Non-Snack",
-    "includedRegistry": "Entrada en el Registro Diplomático",
-    "includedConservation": "Contribución real a la conservación",
-    "badgePersonalizedNote": "Tu badge Non-Snack se genera automáticamente con el nombre de quien compra el certificado y estará listo justo después del pago.",
-    "downloadBadge": "Descargar badge",
-    "badgeReadyLabel": "Badge listo",
-    "badgeReadyTitle": "Tu badge personalizado Non-Snack está listo",
-    "badgeReadyText": "Este badge se genera con el nombre del miembro y funciona bien para firmas, perfiles, stories y otras presentaciones diplomáticamente importantes."
+    "downloadOnlyNotice": "Descarga ahora — este enlace no se guardará."
   },
   "registry": {
     "title": "El Registro Diplomático",
@@ -786,9 +769,8 @@
     "ctaButton": "Obtén tu certificado — desde $5"
   },
   "mobileCta": {
-    "label": "Consigue tu Protected Friend",
-    "price": "$5",
-    "note": "Entrega digital inmediata · Personalizado en 60 segundos"
+    "label": "Obtén Amigo Protegido",
+    "price": "$5"
   },
   "wanted": {
     "label": "Oficina de Seguridad de la Alianza",
@@ -846,9 +828,7 @@
     "howStep3Icon": "🛡️",
     "howStep3Title": "Regálale protección",
     "howStep3Text": "Resuelve la situación regalándole un certificado oficial de Amigo Protegido. Diplomacia restaurada.",
-    "bottomCta": "Regalar Estatus de Amigo Protegido — $5",
-    "stampText": "Administrativamente alarmante",
-    "stampSubline": "Visto por última vez actuando con total normalidad y de forma catastróficamente poco certificada."
+    "bottomCta": "Regalar Estatus de Amigo Protegido — $5"
   },
   "career": {
     "hero": {

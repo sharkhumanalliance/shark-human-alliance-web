@@ -75,28 +75,6 @@ function getTierColorClass(tier: string) {
   return "certificate-tier--protected";
 }
 
-function getFormalSealCaption(tier: string) {
-  const normalized = tier?.toLowerCase() ?? "";
-  if (normalized === "nonsnack" || normalized.includes("non-snack")) {
-    return "Filed under: Non-Snack Register";
-  }
-  if (normalized === "business" || normalized.includes("zone")) {
-    return "Filed under: Approved Waters";
-  }
-  return "Filed under: Protected Friend Protocol";
-}
-
-function getFormalVerdict(tier: string) {
-  const normalized = tier?.toLowerCase() ?? "";
-  if (normalized === "nonsnack" || normalized.includes("non-snack")) {
-    return "Review of the holder suggests no reasonable shark would classify them as a worthwhile snack candidate.";
-  }
-  if (normalized === "business" || normalized.includes("zone")) {
-    return "The holder is recognized as maintaining conditions fit for calm coexistence, administrative optimism, and reduced marine suspicion.";
-  }
-  return "Any shark treating the holder as lunch would be acting beneath accepted standards of marine judgment and diplomatic restraint.";
-}
-
 export function CertificateDocument({
   name,
   tier,
@@ -115,13 +93,6 @@ export function CertificateDocument({
   const footerAside = getFooterAside(tokenBase);
   const isFormal = template === "formal";
   const isLuxury = template === "luxury";
-  const certificateBody = isFormal
-    ? "By authority of the Shark Human Alliance, the holder is entered into the diplomatic register as a recognized supporter of peaceful shark-human relations and meaningful ocean conservation."
-    : "This certifies that the holder is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.";
-  const verdictText = isFormal
-    ? getFormalVerdict(tier)
-    : "Any shark considering the holder a meal would be demonstrating exceptionally poor judgment.";
-  const sealCaption = isFormal ? getFormalSealCaption(tier) : "Filed under: Non-snack diplomacy";
 
   const verifyUrl = getVerificationUrl(registryId.toLowerCase(), undefined, undefined, referralCode);
   const backgroundSrc = isLuxury
@@ -271,7 +242,7 @@ export function CertificateDocument({
 
           <p className="certificate-intro">
             {isFormal
-              ? "Be it formally recorded that"
+              ? "This certifies that"
               : "This document officially certifies that the esteemed"}
           </p>
 
@@ -291,13 +262,16 @@ export function CertificateDocument({
           <div className={`certificate-main${isFormal ? " certificate-main--formal" : ""}`}>
             <div className="certificate-copy-column">
               <p className="certificate-body">
-                {certificateBody}
+                This certifies that the holder is officially recognized by the
+                Shark Human Alliance as a supporter of peaceful shark-human
+                relations and a contributor to real ocean conservation.
               </p>
 
               <div className={`certificate-verdict ${tierColorClass}`}>
                 <div className="certificate-box-label">Diplomatic assessment</div>
                 <p>
-                  {verdictText}
+                  Any shark considering the holder a meal would be demonstrating
+                  exceptionally poor judgment.
                 </p>
               </div>
 
@@ -328,7 +302,7 @@ export function CertificateDocument({
                 priority={priorityImages}
               />
               <div className="certificate-seal-caption">
-                {sealCaption}
+                Filed under: Non-snack diplomacy
               </div>
             </div>
           </div>

@@ -87,9 +87,9 @@
     "titleLine1": "Official shark protection.",
     "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
-    "description": "A personalized digital certificate that looks absurdly official, works as a genuinely great gift, and funds real shark conservation.",
-    "ctaPrimary": "Get Protected Friend — $5",
-    "ctaSecondary": "Preview the certificate",
+    "description": "A personalized digital certificate that looks absurdly official, makes a perfect gift, and funds real shark conservation.",
+    "ctaPrimary": "Get Protected Friend Status — $5",
+    "ctaSecondary": "Preview your certificate",
     "socialProof": "Join the Alliance",
     "giftBadge": "🎁 The #1 gag gift for shark-fearers",
     "finnleyName": "Finnley Mako",
@@ -100,18 +100,14 @@
     "howStep1": "Pick a certificate",
     "howStep2": "Fund real conservation",
     "howStep3": "Send the gift",
-    "bullet1": "Instant digital delivery",
-    "bullet2": "Personalized in 60 seconds",
-    "bullet3": "Real conservation funding",
+    "bullet1": "Sent digitally in minutes",
+    "bullet2": "Personalized in about 60 seconds",
+    "bullet3": "Funds real shark conservation",
     "proofPrice": "From $5",
     "proofDelivery": "Delivered in minutes",
     "proofDiplomats": "diplomats enrolled",
     "proofRegistry": "Public registry",
-    "proofTransparency": "Transparency & impact",
-    "imageBadge": "Shark diplomacy office",
-    "proofLabel1": "Delivery",
-    "proofLabel2": "Certificate",
-    "proofLabel3": "Trust"
+    "proofTransparency": "Transparency & impact"
   },
   "home": {
     "reviews": {
@@ -182,9 +178,8 @@
       "certName": "[ Your Name Here ]",
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
       "inputPlaceholder": "Your name (the sharks are waiting)",
-      "ctaBuy": "Get yours — $5",
-      "ctaGift": "Send as a gift — $5",
-      "livePreviewLabel": "Live preview"
+      "ctaBuy": "Buy for yourself — $5",
+      "ctaGift": "Buy as a gift — $5"
     },
     "membershipSection": {
       "label": "Certificates",
@@ -219,8 +214,7 @@
         "Premium Diplomatic Registry placement"
       ],
       "businessCta": "Get Certified — $99",
-      "businessEyebrow": "For businesses",
-      "mobileHint": "Swipe to compare the certificate tiers."
+      "businessEyebrow": "For businesses"
     },
     "realImpact": {
       "label": "Real Impact",
@@ -519,7 +513,7 @@
   },
   "purchase": {
     "title": "Proceed to Diplomatic Clearance.",
-    "subtitle": "One form. One payment. One surprisingly official result.",
+    "subtitle": "One form. One payment. One step closer to not being a snack.",
     "tierLabel": "Selected tier",
     "tiers": {
       "basic": "Basic Membership — $5",
@@ -578,18 +572,7 @@
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks.",
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
-    "downloadOnlyNotice": "Download now — this link won’t be stored.",
-    "includedTitle": "What's included",
-    "includedCertificate": "Personalized certificate",
-    "includedPremiumCertificate": "Premium personalized certificate",
-    "includedPersonalizedBadge": "Personalized Non-Snack badge",
-    "includedRegistry": "Diplomatic Registry entry",
-    "includedConservation": "Real conservation contribution",
-    "badgePersonalizedNote": "Your Non-Snack badge is generated automatically with the buyer's name and will be ready right after checkout.",
-    "downloadBadge": "Download badge",
-    "badgeReadyLabel": "Badge ready",
-    "badgeReadyTitle": "Your personalized Non-Snack badge is ready",
-    "badgeReadyText": "This badge is generated with the member name and works well for signatures, profiles, stories, and other diplomatically important displays."
+    "downloadOnlyNotice": "Download now — this link won’t be stored."
   },
   "registry": {
     "title": "The Diplomatic Registry",
@@ -786,9 +769,8 @@
     "ctaButton": "Get your certificate — from $5"
   },
   "mobileCta": {
-    "label": "Get Protected Friend",
-    "price": "$5",
-    "note": "Instant digital delivery · Personalized in 60 seconds"
+    "label": "Get Protected Friend Status",
+    "price": "$5"
   },
   "wanted": {
     "label": "Alliance Security Bureau",
@@ -846,9 +828,7 @@
     "howStep3Icon": "🛡️",
     "howStep3Title": "Gift them protection",
     "howStep3Text": "Resolve the situation by gifting them an official Protected Friend certificate. Diplomacy restored.",
-    "bottomCta": "Gift Protected Friend Status — $5",
-    "stampText": "Administratively alarming",
-    "stampSubline": "Last seen being completely normal and catastrophically under-certified."
+    "bottomCta": "Gift Protected Friend Status — $5"
   },
   "career": {
     "hero": {
