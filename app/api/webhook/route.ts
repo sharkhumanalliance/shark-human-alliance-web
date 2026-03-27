@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
     // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
     const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${accessToken}`);
+    const badgeUrl = tier === "nonsnack" ? `${BASE_URL}/api/badge?token=${accessToken}&download=1` : undefined;
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {
@@ -102,6 +103,7 @@ export async function POST(request: NextRequest) {
             registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`),
             careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
             referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
+            badgeUrl,
           }),
         });
         console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);

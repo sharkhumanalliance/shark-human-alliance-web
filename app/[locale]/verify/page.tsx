@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ id?: string }>;
+  searchParams: Promise<{ id?: string; ref?: string }>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function VerifyPage({ params, searchParams }: Props) {
   const { locale } = await params;
-  const { id } = await searchParams;
+  const { id, ref } = await searchParams;
   setRequestLocale(locale);
 
   if (!id) notFound();
@@ -59,6 +59,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
           date={displayDate}
           registryId={member.id.toUpperCase()}
           referralCode={member.referralCode}
+          referralSourceCode={ref || member.referralCode}
         />
       </main>
       <SiteFooter />

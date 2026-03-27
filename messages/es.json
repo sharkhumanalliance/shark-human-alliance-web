@@ -572,7 +572,18 @@
     "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango.",
     "referralCopy": "Copiar",
     "referralCareerLink": "Ver el escalafón completo",
-    "downloadOnlyNotice": "Descarga ahora — este enlace no se guardará."
+    "downloadOnlyNotice": "Descarga ahora — este enlace no se guardará.",
+    "includedTitle": "Qué incluye",
+    "includedCertificate": "Certificado personalizado",
+    "includedPremiumCertificate": "Certificado premium personalizado",
+    "includedPersonalizedBadge": "Badge personalizado Non-Snack",
+    "includedRegistry": "Entrada en el Registro Diplomático",
+    "includedConservation": "Contribución real a la conservación",
+    "badgePersonalizedNote": "Tu badge Non-Snack se genera automáticamente con el nombre de quien compra el certificado y estará listo justo después del pago.",
+    "downloadBadge": "Descargar badge",
+    "badgeReadyLabel": "Badge listo",
+    "badgeReadyTitle": "Tu badge personalizado Non-Snack está listo",
+    "badgeReadyText": "Este badge se genera con el nombre del miembro y funciona bien para firmas, perfiles, stories y otras presentaciones diplomáticamente importantes."
   },
   "registry": {
     "title": "El Registro Diplomático",
@@ -828,7 +839,9 @@
     "howStep3Icon": "🛡️",
     "howStep3Title": "Regálale protección",
     "howStep3Text": "Resuelve la situación regalándole un certificado oficial de Amigo Protegido. Diplomacia restaurada.",
-    "bottomCta": "Regalar Estatus de Amigo Protegido — $5"
+    "bottomCta": "Regalar Estatus de Amigo Protegido — $5",
+    "stampText": "Administrativamente alarmante",
+    "stampSubline": "Visto por última vez actuando con total normalidad y de forma catastróficamente poco certificada."
   },
   "career": {
     "hero": {
@@ -909,5 +922,20 @@
         "body": "Para soporte, reclamaciones o preguntas de compra, escribe a sharkhumanalliance@gmail.com."
       }
     }
+  },
+  "verify": {
+    "verifiedMember": "Miembro verificado",
+    "membershipSince": "Miembro desde",
+    "registryId": "ID de registro",
+    "referralCode": "Código de referido",
+    "diplomaticStatus": "Estado diplomático",
+    "active": "Activo",
+    "disclaimer": "Este registro es mantenido por la Oficina de Asuntos Diplomáticos Interespecies de Shark Human Alliance. Es oficialmente simbólico, diplomáticamente no vinculante y bastante más divertido que la mayoría de las bases de datos gubernamentales.",
+    "referralCreditActive": "Crédito de referido activo",
+    "referralBoxText": "Unirte a través de este certificado da crédito a este diplomático en el Registro Diplomático y le ayuda a subir de nivel dentro de la Alianza.",
+    "referralCodeLabel": "Código de referido:",
+    "viewRegistry": "Ver Registro Diplomático",
+    "joinThroughReferral": "Únete a la Alianza con el referido de este diplomático",
+    "joinAlliance": "Únete a la Alianza"
   }
 }

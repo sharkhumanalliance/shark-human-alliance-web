@@ -36,9 +36,10 @@ function PurchaseFlowInner() {
   const initialTier = (searchParams.get("tier") as Tier) || "protected";
   const initialName = searchParams.get("name") || "";
   const initialGift = searchParams.get("gift") === "true";
-  const referredByCode = searchParams.get("ref") || "";
+  const referredByFromUrl = searchParams.get("ref") || "";
   const wasCanceled = searchParams.get("canceled") === "true";
 
+  const [referredByCode, setReferredByCode] = useState(referredByFromUrl);
   const [tier, setTier] = useState<Tier>(initialTier);
   const [name, setName] = useState(initialName);
   const [dedication, setDedication] = useState("");
@@ -64,6 +65,22 @@ function PurchaseFlowInner() {
   const [error, setError] = useState("");
   const [showEmailWarning, setShowEmailWarning] = useState(false);
   const [template, setTemplate] = useState<CertificateTemplate>("luxury");
+
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if (referredByFromUrl) {
+      window.localStorage.setItem("sha_referral_code", referredByFromUrl);
+      setReferredByCode(referredByFromUrl);
+      return;
+    }
+
+    const storedReferralCode = window.localStorage.getItem("sha_referral_code") || "";
+    if (storedReferralCode) {
+      setReferredByCode(storedReferralCode);
+    }
+  }, [referredByFromUrl]);
 
   const tierPrices: Record<Tier, string> = {
     basic: "$5",
@@ -153,6 +170,7 @@ function PurchaseFlowInner() {
           email: email.trim(),
           isGift,
           recipientEmail: recipientEmail.trim(),
+          giftMessage: giftMessage.trim(),
           referredBy: referredByCode || undefined,
           locale,
           promoCode: promoCode.trim() || undefined,
@@ -178,7 +196,15 @@ function PurchaseFlowInner() {
     }
   }
 
-  const currentDate = new Date().toLocaleDateString("en-US", {
+
+const includedItems = {
+  protected: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
+  nonsnack: [t("includedPremiumCertificate"), t("includedPersonalizedBadge"), t("includedRegistry"), t("includedConservation")],
+  business: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
+  basic: [t("includedCertificate"), t("includedRegistry"), t("includedConservation")],
+} as const;
+
+const currentDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -283,6 +309,32 @@ function PurchaseFlowInner() {
                   );
                 })}
               </div>
+            </div>
+
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sky-800">{t("orderSummary")}</p>
+              <div className="mt-3 flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-base font-semibold text-[var(--brand-dark)]">{t(`tiers.${tier}`)}</p>
+                  <p className="mt-1 text-sm text-[var(--muted)]">{tierPrices[tier]}</p>
+                </div>
+              </div>
+              <div className="mt-4">
+                <p className="text-sm font-semibold text-[var(--brand-dark)]">{t("includedTitle")}</p>
+                <ul className="mt-2 space-y-2 text-sm text-[var(--muted)]">
+                  {includedItems[tier].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-0.5 text-[var(--accent)]">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {tier === "nonsnack" ? (
+                <p className="mt-4 rounded-xl border border-orange-100 bg-orange-50/50 px-4 py-3 text-sm text-orange-800">
+                  {t("badgePersonalizedNote")}
+                </p>
+              ) : null}
             </div>
 
             {/* Gift toggle */}

@@ -249,9 +249,32 @@ export function WantedContent() {
       ctx.font = "700 40px 'Geist', sans-serif";
       ctx.fillText(t("ctaButton"), cx, btnY + btnH / 2 + 13);
 
+      // Comedic stamp callout
+      const stampText = t("stampText").toUpperCase();
+      ctx.save();
+      ctx.translate(cx + 240, btnY + 170);
+      ctx.rotate(-0.11);
+      ctx.strokeStyle = "rgba(192, 57, 43, 0.78)";
+      ctx.lineWidth = 7;
+      ctx.setLineDash([18, 12]);
+      ctx.strokeRect(-275, -48, 550, 96);
+      ctx.setLineDash([]);
+      ctx.fillStyle = "rgba(192, 57, 43, 0.14)";
+      ctx.fillRect(-275, -48, 550, 96);
+      ctx.fillStyle = POSTER_RED;
+      ctx.font = "900 34px 'Geist', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(stampText, 0, 12);
+      ctx.restore();
+
+      ctx.fillStyle = POSTER_MUTED;
+      ctx.font = "600 24px 'Geist', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(t("stampSubline"), cx, btnY + 185);
+
       // ── BOTTOM SECTION: seal (right) + QR (left) + footer ──
-      const bottomY = h - my - 240;
-      const sealSize = 260;
+      const bottomY = h - my - 305;
+      const sealSize = 310;
       const qrSize = 200;
 
       // Seal — bottom right

@@ -572,7 +572,18 @@
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks.",
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
-    "downloadOnlyNotice": "Download now — this link won’t be stored."
+    "downloadOnlyNotice": "Download now — this link won’t be stored.",
+    "includedTitle": "What's included",
+    "includedCertificate": "Personalized certificate",
+    "includedPremiumCertificate": "Premium personalized certificate",
+    "includedPersonalizedBadge": "Personalized Non-Snack badge",
+    "includedRegistry": "Diplomatic Registry entry",
+    "includedConservation": "Real conservation contribution",
+    "badgePersonalizedNote": "Your Non-Snack badge is generated automatically with the buyer's name and will be ready right after checkout.",
+    "downloadBadge": "Download badge",
+    "badgeReadyLabel": "Badge ready",
+    "badgeReadyTitle": "Your personalized Non-Snack badge is ready",
+    "badgeReadyText": "This badge is generated with the member name and works well for signatures, profiles, stories, and other diplomatically important displays."
   },
   "registry": {
     "title": "The Diplomatic Registry",
@@ -828,7 +839,9 @@
     "howStep3Icon": "🛡️",
     "howStep3Title": "Gift them protection",
     "howStep3Text": "Resolve the situation by gifting them an official Protected Friend certificate. Diplomacy restored.",
-    "bottomCta": "Gift Protected Friend Status — $5"
+    "bottomCta": "Gift Protected Friend Status — $5",
+    "stampText": "Administratively alarming",
+    "stampSubline": "Last seen being completely normal and catastrophically under-certified."
   },
   "career": {
     "hero": {
@@ -909,5 +922,20 @@
         "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
       }
     }
+  },
+  "verify": {
+    "verifiedMember": "Verified Member",
+    "membershipSince": "Membership Since",
+    "registryId": "Registry ID",
+    "referralCode": "Referral Code",
+    "diplomaticStatus": "Diplomatic Status",
+    "active": "Active",
+    "disclaimer": "This record is maintained by the Shark Human Alliance Office of Interspecies Diplomatic Affairs. It is officially symbolic, diplomatically non-binding, and entirely more fun than most government databases.",
+    "referralCreditActive": "Referral credit active",
+    "referralBoxText": "Joining through this certificate credits this diplomat in the Diplomatic Registry and helps them level up their Alliance rank.",
+    "referralCodeLabel": "Referral code:",
+    "viewRegistry": "View Diplomatic Registry",
+    "joinThroughReferral": "Join the Alliance through this diplomat's referral",
+    "joinAlliance": "Join the Alliance"
   }
 }

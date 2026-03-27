@@ -174,7 +174,7 @@ export function HomeContent() {
             </p>
           </div>
 
-          <div className="mt-8 grid items-start gap-6 md:grid-cols-2">
+          <div className="mt-8 grid gap-6 md:grid-cols-2 md:items-stretch">
             <MembershipCard
               variant="protected"
               title={t("membershipSection.protectedTitle")}

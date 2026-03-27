@@ -276,7 +276,7 @@ export function ImpactContent() {
             <div className="mt-6">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
+                className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 {t("ctaButton")}
               </LocalizedLink>

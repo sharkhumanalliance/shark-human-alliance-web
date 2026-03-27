@@ -40,6 +40,7 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
         dedication={member.dedication}
         date={displayDate}
         registryId={member.id.toUpperCase()}
+        referralCode={member.referralCode}
         priorityImages
         template={template}
       />

@@ -561,7 +561,7 @@ textarea:focus-visible {
 }
 
 .certificate-page--formal .certificate-content {
-  padding: 0 22mm 6mm;
+  padding: 0 21mm 6.5mm;
 }
 
 .certificate-page--formal .certificate-rule {
@@ -573,7 +573,10 @@ textarea:focus-visible {
 }
 
 .certificate-page--formal .certificate-name {
-  font-size: 28px;
+  font-size: 29px;
+  letter-spacing: 0.01em;
+  padding-top: 1mm;
+  padding-bottom: 1.7mm;
 }
 
 .certificate-page--formal .certificate-name-wrap {
@@ -585,13 +588,14 @@ textarea:focus-visible {
 }
 
 .certificate-page--formal .certificate-status {
-  font-size: 21px;
-  margin-top: 1.5mm;
-  margin-bottom: 4mm;
+  font-size: 22px;
+  margin-top: 1.7mm;
+  margin-bottom: 4.2mm;
+  letter-spacing: 0.15em;
 }
 
 .certificate-page--formal .certificate-main {
-  margin-bottom: 4mm;
+  margin-bottom: 4.2mm;
 }
 
 .certificate-main--formal {
@@ -609,12 +613,12 @@ textarea:focus-visible {
 }
 
 .certificate-page--formal .certificate-meta {
-  margin-top: 1.5mm;
+  margin-top: 1.8mm;
   gap: 8mm;
 }
 
 .certificate-page--formal .certificate-bottom-row {
-  margin-top: 5mm;
+  margin-top: 5.5mm;
 }
 
 .certificate-page--formal .certificate-signatures {
@@ -622,8 +626,207 @@ textarea:focus-visible {
 }
 
 .certificate-page--formal .certificate-footer {
-  margin-top: 3mm;
+  margin-top: 3.3mm;
+  padding-top: 2.7mm;
+}
+
+
+.certificate-page--formal .certificate-verdict,
+.certificate-page--formal .certificate-note {
+  border-radius: 1.4mm;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.certificate-page--formal .certificate-verdict.certificate-tier--protected,
+.certificate-page--formal .certificate-verdict.certificate-tier--nonsnack,
+.certificate-page--formal .certificate-verdict.certificate-tier--business {
+  border-left-width: 1.2mm;
+}
+
+.certificate-page--formal .certificate-main--formal {
+  grid-template-columns: minmax(0, 1fr) 41mm;
+  gap: 5.5mm;
+}
+
+.certificate-page--formal .certificate-seal-column {
+  padding-top: 10.4mm;
+}
+
+.certificate-page--formal .certificate-seal {
+  width: 41mm;
+  height: 41mm;
+}
+
+.certificate-page--formal .certificate-signature-name {
+  min-width: 60mm;
+  margin-bottom: 2.6mm;
+  font-size: 22px;
+  opacity: 0.9;
+}
+
+.certificate-page--formal .certificate-signature-role {
+  font-size: 7.1px;
+  line-height: 1.42;
+  color: #506577;
+}
+
+.certificate-page--formal .certificate-qr {
+  padding-top: 6.3mm;
+  opacity: 0.86;
+}
+
+.certificate-page--formal .certificate-qr-image {
+  width: 22mm;
+  height: 22mm;
+  border: 0.5pt solid rgba(23, 50, 75, 0.06);
+}
+
+.certificate-page--formal .certificate-qr-label {
+  font-size: 5.9px;
+  letter-spacing: 0.06em;
+}
+
+/* Playful Official / hero certificate polish */
+.certificate-page--hero .certificate-hero {
+  margin: 7.5mm 9mm 4.4mm;
+  height: 81mm;
+  border-radius: 9px 9px 16px 16px;
+  box-shadow: 0 8px 24px rgba(17, 47, 71, 0.10);
+}
+
+.certificate-page--hero .certificate-hero-image {
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(0.98) contrast(1.01);
+}
+
+.certificate-page--hero .certificate-hero-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 55%,
+    rgba(17, 47, 71, 0.05) 100%
+  );
+}
+
+.certificate-page--hero .certificate-hero-question {
+  display: none;
+}
+
+.certificate-page--hero .certificate-content {
+  padding: 0 20.5mm 8.2mm;
+}
+
+.certificate-page--hero .certificate-title {
+  font-size: 24px;
+  letter-spacing: 0.045em;
+}
+
+.certificate-page--hero .certificate-intro {
+  margin: 3.2mm 0 2.5mm;
+  font-size: 10.2px;
+}
+
+.certificate-page--hero .certificate-name {
+  font-size: 31px;
+  line-height: 1.01;
+  padding-top: 0.9mm;
+  padding-bottom: 1.8mm;
+}
+
+.certificate-page--hero .certificate-status-label {
+  font-size: 10.2px;
+}
+
+.certificate-page--hero .certificate-status {
+  font-size: 23px;
+  letter-spacing: 0.11em;
+  margin-top: 1.8mm;
+  margin-bottom: 4.6mm;
+}
+
+.certificate-page--hero .certificate-status.certificate-tier--protected {
+  color: #1d6a68;
+}
+
+.certificate-page--hero .certificate-status.certificate-tier--nonsnack {
+  color: #96501d;
+}
+
+.certificate-page--hero .certificate-status.certificate-tier--business {
+  color: #46307f;
+}
+
+.certificate-page--hero .certificate-main {
+  gap: 5.5mm;
+}
+
+.certificate-page--hero .certificate-body {
+  font-size: 10.1px;
+  line-height: 1.56;
+  margin-bottom: 3.2mm;
+}
+
+.certificate-page--hero .certificate-verdict,
+.certificate-page--hero .certificate-note {
+  border-radius: 2.1mm;
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.certificate-page--hero .certificate-box-label {
+  font-size: 7.8px;
+}
+
+.certificate-page--hero .certificate-verdict p,
+.certificate-page--hero .certificate-note p {
+  font-size: 9.35px;
+  line-height: 1.5;
+}
+
+.certificate-page--hero .certificate-seal-column {
+  padding-top: 10.4mm;
+}
+
+.certificate-page--hero .certificate-seal {
+  width: 40mm;
+  height: 40mm;
+}
+
+.certificate-page--hero .certificate-seal-caption {
+  font-size: 6.8px;
+  color: #587082;
+}
+
+.certificate-page--hero .certificate-meta {
+  margin-top: 1.6mm;
+}
+
+.certificate-page--hero .certificate-bottom-row {
+  margin-top: 7.2mm;
+}
+
+.certificate-page--hero .certificate-signature-name {
+  font-size: 21.5px;
+}
+
+.certificate-page--hero .certificate-signature-role {
+  font-size: 7.25px;
+}
+
+.certificate-page--hero .certificate-footer {
+  margin-top: 3.5mm;
   padding-top: 2.5mm;
+}
+
+.certificate-page--hero .certificate-footer-main {
+  font-size: 6.95px;
+  line-height: 1.4;
+}
+
+.certificate-page--hero .certificate-footer-aside {
+  margin-top: 1.1mm;
+  font-size: 6.45px;
+  line-height: 1.35;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -871,7 +1074,7 @@ textarea:focus-visible {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-top: calc(0.52 * var(--u));
+  padding-top: calc(0.56 * var(--u));
 }
 
 .lux-sig-finnley::before {
@@ -880,13 +1083,13 @@ textarea:focus-visible {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(22.7 * var(--u));
-  border-top: calc(0.13 * var(--u)) solid rgba(16, 41, 65, 0.84);
+  width: calc(23.15 * var(--u));
+  border-top: calc(0.16 * var(--u)) solid rgba(16, 41, 65, 0.88);
 }
 
 .lux-sig-luna {
-  top: 85.2%;
-  left: 15.1%;
+  top: 85.82%;
+  left: 15.25%;
   width: 27.5%;
   display: flex;
   flex-direction: column;
@@ -904,12 +1107,12 @@ textarea:focus-visible {
 }
 
 .lux-sig-luna .lux-sig-name {
-  margin-top: calc(-0.08 * var(--u));
+  margin-top: calc(0.34 * var(--u));
 }
 
 .lux-sig-role {
   display: block;
-  margin-top: calc(0.08 * var(--u));
+  margin-top: calc(0.10 * var(--u));
   font-family: var(--font-cormorant), "Cormorant Garamond", serif;
   font-size: calc(1.6 * var(--u));
   font-weight: 700;
@@ -959,14 +1162,14 @@ textarea:focus-visible {
 
 /* ── Footer — micro disclaimer, left, under the frame ── */
 .lux-footer-block {
-  top: 96.2%;
-  left: 2.95%;
-  width: 53.8%;
+  top: 96.68%;
+  left: 3.35%;
+  width: 53.4%;
   text-align: left;
   font-family: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
   font-size: calc(0.97 * var(--u));
   font-weight: 700;
-  line-height: 0.98;
+  line-height: 1.02;
   color: #111111;
   letter-spacing: -0.04em;
   white-space: normal;
@@ -1071,4 +1274,452 @@ textarea:focus-visible {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+}
+
+.certificate-page--formal .certificate-formal-kicker {
+  font-size: 21px;
+  letter-spacing: 0.11em;
+}
+
+.certificate-page--formal .certificate-formal-subtitle {
+  font-size: 10.2px;
+  letter-spacing: 0.03em;
+}
+
+.certificate-page--formal .certificate-body {
+  font-size: 10.1px;
+  line-height: 1.56;
+}
+
+.certificate-page--formal .certificate-box-label {
+  font-size: 7.7px;
+  letter-spacing: 0.06em;
+}
+
+.certificate-page--formal .certificate-verdict p,
+.certificate-page--formal .certificate-note p {
+  font-size: 9.25px;
+  line-height: 1.48;
+}
+
+.certificate-page--hero .certificate-org {
+  font-size: 22px;
+  letter-spacing: 0.09em;
+}
+
+.certificate-page--hero .certificate-org-subtitle {
+  font-size: 9.6px;
+  letter-spacing: 0.025em;
+}
+
+.certificate-page--hero .certificate-title {
+  font-size: 25px;
+  letter-spacing: 0.04em;
+}
+
+.certificate-page--hero .certificate-intro,
+.certificate-page--hero .certificate-status-label {
+  font-size: 10.1px;
+}
+
+.certificate-page--hero .certificate-body {
+  font-size: 9.85px;
+  line-height: 1.5;
+}
+
+.certificate-page--hero .certificate-box-label {
+  font-size: 7.7px;
+}
+
+.certificate-page--hero .certificate-verdict,
+.certificate-page--hero .certificate-note {
+  padding: 2.3mm 2.8mm 2.4mm 4.5mm;
+}
+
+.certificate-page--hero .certificate-verdict p,
+.certificate-page--hero .certificate-note p {
+  font-size: 9.2px;
+  line-height: 1.46;
+}
+
+
+/* Formal certificate final polish */
+.certificate-page--formal .certificate-formal-top {
+  margin: 49.5mm 22mm 1.4mm;
+}
+
+.certificate-page--formal .certificate-formal-kicker {
+  color: #163248;
+  font-size: 19px;
+  letter-spacing: 0.14em;
+}
+
+.certificate-page--formal .certificate-formal-ornament {
+  width: 94mm;
+  margin: 2.6mm auto 2.2mm;
+  background: linear-gradient(
+    90deg,
+    rgba(23, 50, 75, 0),
+    rgba(23, 50, 75, 0.18) 18%,
+    rgba(23, 50, 75, 0.28) 50%,
+    rgba(23, 50, 75, 0.18) 82%,
+    rgba(23, 50, 75, 0)
+  );
+}
+
+.certificate-page--formal .certificate-formal-ornament::before {
+  width: 11px;
+  height: 11px;
+  border-color: rgba(23, 50, 75, 0.22);
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.45);
+}
+
+.certificate-page--formal .certificate-formal-subtitle {
+  color: #486173;
+  font-size: 9.8px;
+  letter-spacing: 0.035em;
+}
+
+.certificate-page--formal .certificate-title--formal {
+  font-size: 31px;
+  line-height: 1.02;
+}
+
+.certificate-page--formal .certificate-content {
+  padding: 0 20.5mm 6.6mm;
+}
+
+.certificate-page--formal .certificate-rule {
+  margin: 2.6mm 12mm 2.2mm;
+}
+
+.certificate-page--formal .certificate-intro {
+  margin: 1.9mm 0 3.1mm;
+  color: #566c7d;
+  font-size: 10px;
+  letter-spacing: 0.015em;
+}
+
+.certificate-page--formal .certificate-name {
+  min-width: 108mm;
+  font-size: 31px;
+  letter-spacing: 0.015em;
+  padding-top: 1.05mm;
+  padding-bottom: 2.1mm;
+  border-top-color: rgba(23, 50, 75, 0.12);
+  border-bottom-color: rgba(23, 50, 75, 0.18);
+}
+
+.certificate-page--formal .certificate-name-wrap {
+  margin-bottom: 1.8mm;
+}
+
+.certificate-page--formal .certificate-status-label {
+  margin-top: 1.2mm;
+  color: #52687a;
+  font-size: 9.7px;
+}
+
+.certificate-page--formal .certificate-status {
+  font-size: 23px;
+  margin-top: 1.9mm;
+  margin-bottom: 4.6mm;
+  letter-spacing: 0.17em;
+}
+
+.certificate-page--formal .certificate-main {
+  margin-bottom: 4.5mm;
+}
+
+.certificate-page--formal .certificate-main--formal {
+  grid-template-columns: minmax(0, 1fr) 42mm;
+  gap: 6.2mm;
+}
+
+.certificate-page--formal .certificate-body {
+  margin: 0 0 4.2mm;
+  color: #22313f;
+  font-size: 9.8px;
+  line-height: 1.62;
+}
+
+.certificate-page--formal .certificate-box-label {
+  margin-bottom: 1.35mm;
+  color: #627789;
+  font-size: 7.2px;
+  letter-spacing: 0.085em;
+}
+
+.certificate-page--formal .certificate-verdict,
+.certificate-page--formal .certificate-note {
+  padding: 2.7mm 3.1mm 2.7mm 4.2mm;
+  border-radius: 1.1mm;
+  background: rgba(255, 255, 255, 0.17);
+  backdrop-filter: blur(0.2px);
+}
+
+.certificate-page--formal .certificate-verdict {
+  border-color: rgba(23, 50, 75, 0.10);
+}
+
+.certificate-page--formal .certificate-note {
+  border-color: rgba(23, 50, 75, 0.08);
+}
+
+.certificate-page--formal .certificate-verdict.certificate-tier--protected,
+.certificate-page--formal .certificate-verdict.certificate-tier--nonsnack,
+.certificate-page--formal .certificate-verdict.certificate-tier--business {
+  border-left-width: 0.95mm;
+}
+
+.certificate-page--formal .certificate-verdict p,
+.certificate-page--formal .certificate-note p {
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.certificate-page--formal .certificate-seal-column {
+  padding-top: 11.2mm;
+}
+
+.certificate-page--formal .certificate-seal {
+  width: 42mm;
+  height: 42mm;
+  filter: drop-shadow(0 9px 16px rgba(20, 34, 52, 0.12));
+}
+
+.certificate-page--formal .certificate-seal-caption {
+  margin-top: 1.6mm;
+  font-size: 6.8px;
+  line-height: 1.28;
+  color: #5b7385;
+  letter-spacing: 0.035em;
+}
+
+.certificate-page--formal .certificate-meta {
+  margin-top: 2.1mm;
+  gap: 8.5mm;
+}
+
+.certificate-page--formal .certificate-meta-label {
+  font-size: 7.4px;
+  letter-spacing: 0.08em;
+}
+
+.certificate-page--formal .certificate-meta-value {
+  font-size: 12.3px;
+  letter-spacing: 0.01em;
+}
+
+.certificate-page--formal .certificate-bottom-row {
+  margin-top: 6.4mm;
+  gap: 3.4mm;
+}
+
+.certificate-page--formal .certificate-signatures {
+  gap: 8.5mm;
+}
+
+.certificate-page--formal .certificate-signature-name {
+  min-width: 59mm;
+  margin-bottom: 2.4mm;
+  padding-bottom: 1.1mm;
+  border-bottom-color: rgba(23, 50, 75, 0.18);
+  color: #1e3a54;
+  font-size: 21.3px;
+  opacity: 0.94;
+}
+
+.certificate-page--formal .certificate-signature-role {
+  font-size: 6.9px;
+  line-height: 1.45;
+  color: #5a6f80;
+}
+
+.certificate-page--formal .certificate-qr {
+  padding-top: 5.7mm;
+  opacity: 0.82;
+}
+
+.certificate-page--formal .certificate-qr-image {
+  width: 21mm;
+  height: 21mm;
+  border: 0.5pt solid rgba(23, 50, 75, 0.05);
+}
+
+.certificate-page--formal .certificate-qr-label {
+  font-size: 5.7px;
+  letter-spacing: 0.07em;
+}
+
+.certificate-page--formal .certificate-footer {
+  margin-top: 3.8mm;
+  padding-top: 2.9mm;
+  border-top-color: rgba(23, 50, 75, 0.12);
+}
+
+.certificate-page--formal .certificate-footer-main {
+  font-size: 7.1px;
+  line-height: 1.46;
+  color: #516879;
+}
+
+.certificate-page--formal .certificate-footer-aside {
+  margin-top: 1.2mm;
+  font-size: 6.7px;
+  line-height: 1.42;
+  color: #627789;
+}
+
+
+/* Playful + Classic certificate refinement v16 */
+.certificate-page--hero {
+  position: relative;
+  background: linear-gradient(180deg, #f8fafc 0%, #f5f8fb 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 18px 42px rgba(17, 47, 71, 0.08);
+}
+
+.certificate-page--hero::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 14px;
+  border: 2px solid rgba(17, 47, 71, 0.24);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62),
+    0 0 0 1px rgba(17, 47, 71, 0.04);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.certificate-page--hero::after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 0 0 1px rgba(17, 47, 71, 0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.certificate-page--hero .certificate-inner-frame {
+  inset: 15mm 12mm 11mm;
+  border-color: rgba(17, 47, 71, 0.08);
+  border-radius: 10px;
+}
+
+.certificate-page--hero .certificate-hero {
+  margin: 9.5mm 12mm 5.2mm;
+  height: 80mm;
+  border-radius: 10px 10px 18px 18px;
+  box-shadow: 0 12px 32px rgba(17, 47, 71, 0.10);
+}
+
+.certificate-page--hero .certificate-content {
+  padding: 0 22mm 8.4mm;
+}
+
+.certificate-page--hero .certificate-rule {
+  margin: 3.1mm 10mm 2.8mm;
+}
+
+.certificate-page--hero .certificate-title {
+  font-size: 30px;
+  letter-spacing: 0.07em;
+  line-height: 1.03;
+  text-transform: uppercase;
+}
+
+.certificate-page--hero .certificate-intro {
+  margin: 3.4mm 0 2.8mm;
+  font-size: 10.25px;
+  color: #42586b;
+}
+
+.certificate-page--hero .certificate-name {
+  min-width: 108mm;
+  font-size: 31.5px;
+  letter-spacing: 0.01em;
+  padding-top: 1.05mm;
+  padding-bottom: 1.9mm;
+}
+
+.certificate-page--hero .certificate-status-label {
+  font-size: 10px;
+  color: #4c6274;
+}
+
+.certificate-page--hero .certificate-status {
+  font-size: 29px;
+  letter-spacing: 0.155em;
+  font-weight: 700;
+  margin-top: 2.2mm;
+  margin-bottom: 5.2mm;
+}
+
+.certificate-page--hero .certificate-body {
+  font-size: 9.95px;
+  line-height: 1.56;
+  color: #223645;
+}
+
+.certificate-page--hero .certificate-box-label {
+  font-size: 7.5px;
+  letter-spacing: 0.09em;
+  color: #5f7587;
+}
+
+.certificate-page--hero .certificate-verdict,
+.certificate-page--hero .certificate-note {
+  padding: 2.5mm 3.2mm 2.6mm 4.6mm;
+  border-radius: 1.4mm;
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(17, 47, 71, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+.certificate-page--hero .certificate-verdict p,
+.certificate-page--hero .certificate-note p {
+  font-size: 9.15px;
+  line-height: 1.5;
+}
+
+.certificate-page--formal .certificate-title,
+.certificate-page--formal .certificate-title--formal {
+  font-size: 36px;
+  line-height: 1.01;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.certificate-page--formal .certificate-status {
+  font-size: 29px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  margin-top: 2.1mm;
+  margin-bottom: 5.1mm;
+}
+
+.certificate-page--formal .certificate-intro {
+  font-size: 10.1px;
+}
+
+.certificate-page--formal .certificate-body {
+  font-size: 9.9px;
+  line-height: 1.6;
+}
+
+.certificate-page--formal .certificate-name {
+  font-size: 31.5px;
+}
+
+
+/* Explicit safeguard so the Classic/Formal title always renders in caps and with stronger authority */
+.certificate-page--formal .certificate-title--formal {
+  text-transform: uppercase;
+  font-weight: 700;
 }

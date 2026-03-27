@@ -35,8 +35,9 @@ export function certificateEmailHtml(params: {
   registryUrl: string;
   careerUrl: string;
   referralUrl?: string;
+  badgeUrl?: string;
 }): string {
-  const { name, tier, registryId, referralCode, downloadUrl, registryUrl, careerUrl, referralUrl } = params;
+  const { name, tier, registryId, referralCode, downloadUrl, registryUrl, careerUrl, referralUrl, badgeUrl } = params;
 
   const tierLabel: Record<string, string> = {
     basic: "Protected Friend",
@@ -74,6 +75,8 @@ export function certificateEmailHtml(params: {
       <div style="margin-top:24px;text-align:center;">
         <a href="${downloadUrl}" style="display:inline-block;padding:14px 32px;background-color:#2f80ed;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">Download Your Certificate (PDF)</a>
       </div>
+
+      ${badgeUrl ? `<div style="margin-top:16px;text-align:center;"><a href="${badgeUrl}" style="display:inline-block;padding:12px 28px;background-color:#f97316;color:white;text-decoration:none;font-weight:600;font-size:15px;border-radius:50px;">Download Your Personalized Badge</a></div>` : ""}
 
       <div style="margin-top:24px;text-align:center;">
         <a href="${registryUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">View yourself in the Diplomatic Registry &rarr;</a>

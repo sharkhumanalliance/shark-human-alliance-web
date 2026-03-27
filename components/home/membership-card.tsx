@@ -43,14 +43,14 @@ function getButtonClass(variant: MembershipVariant) {
   }
 
   if (variant === "protected") {
-    return "border border-transparent bg-sky-700 text-white hover:bg-sky-800";
+    return "border border-transparent bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)]";
   }
 
   if (variant === "business") {
     return "border border-transparent bg-indigo-600 text-white hover:bg-indigo-700";
   }
 
-  return "border border-transparent bg-[var(--accent-dark)] text-white hover:opacity-90";
+  return "border border-transparent bg-sky-700 text-white hover:bg-sky-800";
 }
 
 export function MembershipCard({
@@ -77,7 +77,7 @@ export function MembershipCard({
         className={`scroll-mt-28 rounded-xl border ${getBorderClass(
           variant,
           popular
-        )} bg-white p-6 ${popular ? "shadow-md ring-1 ring-teal-400/20" : "shadow-sm"} h-full flex flex-col`}
+        )} bg-white p-5 sm:p-6 ${popular ? "shadow-md ring-1 ring-teal-400/20" : "shadow-sm"} h-full flex flex-col`}
       >
         <div
           className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getBadgeClass(
@@ -87,13 +87,13 @@ export function MembershipCard({
           {title}
         </div>
 
-        <p className="mt-5 text-3xl font-semibold text-[var(--brand-dark)]">
+        <p className="mt-4 text-3xl font-semibold text-[var(--brand-dark)]">
           {price}
         </p>
 
-        <p className="mt-4 min-h-[4.5rem] text-sm leading-6 text-[var(--muted)] md:min-h-[5rem]">{description}</p>
+        <p className="mt-3 min-h-[4rem] text-sm leading-6 text-[var(--muted)] md:min-h-[4.5rem]">{description}</p>
 
-        <ul className="mt-6 space-y-3 flex-grow">
+        <ul className="mt-5 space-y-2.5 flex-grow">
           {features.map((feature) => (
             <li
               key={feature}
@@ -107,7 +107,7 @@ export function MembershipCard({
 
         <LocalizedLink
           href={href}
-          className={`mt-8 inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
+          className={`mt-6 inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
             variant
           )}`}
         >

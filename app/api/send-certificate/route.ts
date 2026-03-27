@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
 
     const locale = member.locale || "en";
     const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${member.accessToken}`);
+    const badgeUrl = member.tier === "nonsnack" ? `${BASE_URL}/api/badge?token=${member.accessToken}&download=1` : undefined;
 
     await getResend().emails.send({
       from: EMAIL_FROM,
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
         registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${memberId}`),
         careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
         referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode || "")),
+        badgeUrl,
       }),
     });
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
 
 type VerifyContentProps = {
@@ -8,6 +9,7 @@ type VerifyContentProps = {
   date: string;
   registryId: string;
   referralCode: string;
+  referralSourceCode?: string;
 };
 
 function getTierLabel(tier: string) {
@@ -51,10 +53,15 @@ export function VerifyContent({
   date,
   registryId,
   referralCode,
+  referralSourceCode,
 }: VerifyContentProps) {
+  const t = useTranslations("verify");
   const tierLabel = getTierLabel(tier);
   const tierColor = getTierColor(tier);
   const quip = getQuip(registryId);
+  const purchaseHref = referralSourceCode
+    ? `/purchase?tier=protected&ref=${encodeURIComponent(referralSourceCode)}`
+    : "/purchase?tier=protected";
 
   return (
     <section className="mx-auto max-w-xl px-5 py-16 md:py-24">
@@ -77,7 +84,7 @@ export function VerifyContent({
           className="text-sm font-bold uppercase tracking-wider"
           style={{ color: tierColor }}
         >
-          Verified Member
+          {t("verifiedMember")}
         </span>
       </div>
 
@@ -112,7 +119,7 @@ export function VerifyContent({
               className="mb-0.5 text-xs font-bold uppercase tracking-wider"
               style={{ color: "var(--muted)" }}
             >
-              Membership Since
+              {t("membershipSince")}
             </dt>
             <dd style={{ color: "var(--foreground)" }} className="font-semibold">
               {date}
@@ -123,7 +130,7 @@ export function VerifyContent({
               className="mb-0.5 text-xs font-bold uppercase tracking-wider"
               style={{ color: "var(--muted)" }}
             >
-              Registry ID
+              {t("registryId")}
             </dt>
             <dd
               style={{ color: "var(--foreground)" }}
@@ -137,7 +144,7 @@ export function VerifyContent({
               className="mb-0.5 text-xs font-bold uppercase tracking-wider"
               style={{ color: "var(--muted)" }}
             >
-              Referral Code
+              {t("referralCode")}
             </dt>
             <dd
               style={{ color: "var(--foreground)" }}
@@ -151,10 +158,10 @@ export function VerifyContent({
               className="mb-0.5 text-xs font-bold uppercase tracking-wider"
               style={{ color: "var(--muted)" }}
             >
-              Diplomatic Status
+              {t("diplomaticStatus")}
             </dt>
             <dd style={{ color: tierColor }} className="font-semibold">
-              Active
+              {t("active")}
             </dd>
           </div>
         </dl>
@@ -165,10 +172,31 @@ export function VerifyContent({
         className="mx-auto mt-6 max-w-md text-center text-xs leading-relaxed"
         style={{ color: "var(--muted)" }}
       >
-        This record is maintained by the Shark Human Alliance Office of
-        Interspecies Diplomatic Affairs. It is officially symbolic, diplomatically
-        non-binding, and entirely more fun than most government databases.
+        {t("disclaimer")}
       </p>
+
+      {referralSourceCode ? (
+        <div className="mt-8 rounded-2xl border border-[color:rgba(16,185,129,0.24)] bg-[color:rgba(16,185,129,0.08)] p-5 text-center shadow-sm">
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.24em]"
+            style={{ color: "var(--brand)" }}
+          >
+            {t("referralCreditActive")}
+          </p>
+          <p
+            className="mt-2 text-sm leading-relaxed"
+            style={{ color: "var(--foreground)" }}
+          >
+            {t("referralBoxText")}
+          </p>
+          <p
+            className="mt-2 text-xs leading-relaxed"
+            style={{ color: "var(--muted)" }}
+          >
+            {t("referralCodeLabel")} <span className="font-mono font-semibold">{referralSourceCode}</span>
+          </p>
+        </div>
+      ) : null}
 
       {/* CTA */}
       <div className="mt-8 flex flex-col items-center gap-3">
@@ -177,14 +205,16 @@ export function VerifyContent({
           className="rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors"
           style={{ background: "var(--brand)" }}
         >
-          View Diplomatic Registry
+          {t("viewRegistry")}
         </LocalizedLink>
         <LocalizedLink
-          href="/"
-          className="text-sm font-medium transition-colors hover:underline"
+          href={purchaseHref}
+          className="text-center text-sm font-medium transition-colors hover:underline"
           style={{ color: "var(--brand)" }}
         >
-          Join the Alliance
+          {referralSourceCode
+            ? t("joinThroughReferral")
+            : t("joinAlliance")}
         </LocalizedLink>
       </div>
     </section>
