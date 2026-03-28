@@ -106,56 +106,60 @@ export function HomeContent() {
 
       <section id="certificate-preview" className="bg-[var(--surface-soft)] py-16">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="mx-auto max-w-lg text-center">
-            <p className="text-base font-medium leading-relaxed text-[var(--brand-dark)] md:text-lg">
-              {t("about.certPreviewLabel")}
-            </p>
-          </div>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
+            <div className="lg:sticky lg:top-24">
+              <p className="max-w-md text-base font-medium leading-relaxed text-[var(--brand-dark)] md:text-lg">
+                {t("about.certPreviewLabel")}
+              </p>
 
-          <div className="mx-auto mt-6 max-w-md">
-            <label htmlFor="homepage-preview-name" className="sr-only">
-              {t("about.inputPlaceholder")}
-            </label>
-            <div className="flex items-center gap-3 rounded-xl border border-teal-200 bg-white px-5 py-4 shadow-sm transition focus-within:border-teal-400 focus-within:shadow-md">
-              <span className="text-lg" aria-hidden="true">✍️</span>
-              <input
-                id="homepage-preview-name"
-                type="text"
-                value={previewName}
-                onChange={(e) => setPreviewName(e.target.value)}
-                placeholder={t("about.inputPlaceholder")}
-                className="w-full bg-transparent text-base text-[var(--brand-dark)] placeholder:text-[var(--muted)]/50 focus:outline-none"
-              />
+              <div className="mt-6 max-w-md">
+                <label htmlFor="homepage-preview-name" className="sr-only">
+                  {t("about.inputPlaceholder")}
+                </label>
+                <div className="flex items-center gap-3 rounded-xl border border-teal-200 bg-white px-5 py-4 shadow-sm transition focus-within:border-teal-400 focus-within:shadow-md">
+                  <span className="text-lg" aria-hidden="true">✍️</span>
+                  <input
+                    id="homepage-preview-name"
+                    type="text"
+                    value={previewName}
+                    onChange={(e) => setPreviewName(e.target.value)}
+                    placeholder={t("about.inputPlaceholder")}
+                    className="w-full bg-transparent text-base text-[var(--brand-dark)] placeholder:text-[var(--muted)]/50 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5 max-w-md">
+                <CertificateTemplateSelector value={previewTemplate} onChange={setPreviewTemplate} />
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col xl:flex-row">
+                <LocalizedLink
+                  href={previewPurchaseHref}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                >
+                  🛡️ {t("about.ctaBuy")}
+                </LocalizedLink>
+                <LocalizedLink
+                  href={previewGiftHref}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50"
+                >
+                  🎁 {t("about.ctaGift")}
+                </LocalizedLink>
+              </div>
             </div>
-          </div>
 
-          <div className="mx-auto mt-6 max-w-md">
-            <CertificateTemplateSelector value={previewTemplate} onChange={setPreviewTemplate} />
-          </div>
-
-          <div className="mx-auto mt-6 max-w-2xl">
-            <CertificatePreview
-              name={previewName.trim() || t("about.certName")}
-              tier="protected"
-              date={new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-              registryId="SHA-XXXX-DIP"
-              template={previewTemplate}
-            />
-          </div>
-
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <LocalizedLink
-              href={previewPurchaseHref}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
-            >
-              🛡️ {t("about.ctaBuy")}
-            </LocalizedLink>
-            <LocalizedLink
-              href={previewGiftHref}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50"
-            >
-              🎁 {t("about.ctaGift")}
-            </LocalizedLink>
+            <div className="min-w-0">
+              <div className="mx-auto max-w-2xl lg:mx-0">
+                <CertificatePreview
+                  name={previewName.trim() || t("about.certName")}
+                  tier="protected"
+                  date={new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                  registryId="SHA-XXXX-DIP"
+                  template={previewTemplate}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -200,7 +204,6 @@ export function HomeContent() {
                 t("membershipSection.nonsnackFeatures.0"),
                 t("membershipSection.nonsnackFeatures.1"),
                 t("membershipSection.nonsnackFeatures.2"),
-                t("membershipSection.nonsnackFeatures.3"),
               ]}
               ctaLabel={t("membershipSection.nonsnackCta")}
               href="/purchase?tier=nonsnack"

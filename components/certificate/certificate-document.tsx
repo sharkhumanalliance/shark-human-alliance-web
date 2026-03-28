@@ -22,7 +22,7 @@ const HUMOR_NOTES = [
   "The holder has been classified as diplomatically uninteresting from a shark culinary perspective.",
   "Independent review suggests the holder is more valuable as a conversation partner than as a meal.",
   "The Alliance has reason to believe that most sharks would simply swim past and continue minding their business.",
-  "Current diplomatic intelligence indicates that eating the holder would reflect poorly on shark judgment and table manners.",
+  "Current diplomatic guidance suggests the holder would make a poor culinary decision.",
   "The holder is provisionally recognized as a low-priority snack candidate pending further marine review.",
   "No shark has formally objected to the holder's Protected Friend status at the time of issuance.",
   "The Office notes that the holder appears statistically more useful alive, framed, and mildly reassured.",

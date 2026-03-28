@@ -17,6 +17,7 @@ export function MembershipPageContent() {
     question: t(`faqItems.${i}.question`),
     answer: t(`faqItems.${i}.answer`),
   }));
+  const businessFeatures = t.raw("businessFeatures") as string[];
 
   return (
     <>
@@ -222,10 +223,10 @@ export function MembershipPageContent() {
                 </p>
                 <p className="mt-6 text-4xl font-semibold text-[var(--brand-dark)]">$99</p>
                 <ul className="mt-6 space-y-3">
-                  {[0, 1, 2, 3].map((i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm leading-6 text-[var(--foreground)]">
+                  {businessFeatures.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3 text-sm leading-6 text-[var(--foreground)]">
                       <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-indigo-500" />
-                      <span>{t(`businessFeatures.${i}`)}</span>
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>

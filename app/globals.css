@@ -1119,43 +1119,39 @@ textarea:focus-visible {
   appearance: none;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   justify-content: flex-start;
-  min-height: 116px;
+  min-height: 98px;
   height: 100%;
-  border: 2px solid var(--border, rgba(23, 50, 75, 0.14));
-  border-radius: 12px;
+  border: 1.5px solid var(--border, rgba(23, 50, 75, 0.14));
+  border-radius: 14px;
   background: white;
-  padding: 13px 14px;
+  padding: 14px 15px;
   text-align: left;
   cursor: pointer;
   transition:
     border-color 140ms ease,
     box-shadow 140ms ease,
-    background 140ms ease;
+    background 140ms ease,
+    transform 140ms ease;
 }
 
 .certificate-template-card:hover {
   border-color: rgba(23, 50, 75, 0.28);
-  box-shadow: 0 6px 18px rgba(18, 38, 56, 0.08);
+  box-shadow: 0 8px 22px rgba(18, 38, 56, 0.08);
+  transform: translateY(-1px);
 }
 
 .certificate-template-card--active {
   border-color: var(--brand, #2f80ed);
   background: rgba(239, 246, 252, 0.95);
-  box-shadow: 0 8px 20px rgba(18, 38, 56, 0.10);
-}
-
-.certificate-template-card__titleWrap {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-bottom: 6px;
+  box-shadow: 0 10px 24px rgba(18, 38, 56, 0.10);
 }
 
 .certificate-template-card__title {
   color: #17324b;
   font-size: 15px;
-  line-height: 1.18;
+  line-height: 1.15;
   font-weight: 700;
   white-space: normal;
   overflow-wrap: anywhere;
@@ -1163,6 +1159,7 @@ textarea:focus-visible {
 }
 
 .certificate-template-card__desc {
+  margin-top: auto;
   color: #5f7892;
   font-size: 11.5px;
   line-height: 1.35;
@@ -1173,8 +1170,7 @@ textarea:focus-visible {
 
 @media (min-width: 560px) {
   .certificate-template-card {
-    min-height: 124px;
-    padding: 14px 15px;
+    min-height: 106px;
   }
 
   .certificate-template-card__title {

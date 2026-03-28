@@ -401,6 +401,7 @@ function PurchaseFlowInner() {
                     placeholder={t("recipientEmailPlaceholder")}
                     className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                   />
+                  <p className="mt-1.5 text-xs text-[var(--muted)]">{t("recipientEmailHint")}</p>
                 </div>
                 <div>
                   <label htmlFor="giftDeliveryDate" className="text-sm font-semibold text-[var(--brand-dark)]">

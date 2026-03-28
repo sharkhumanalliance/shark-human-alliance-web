@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { CertificateTemplate } from "./certificate-document";
 
 type Props = {
@@ -7,32 +8,34 @@ type Props = {
   onChange: (value: CertificateTemplate) => void;
 };
 
-const OPTIONS: Array<{
-  value: CertificateTemplate;
-  title: string;
-  description: string;
-}> = [
-  {
-    value: "luxury",
-    title: "Luxury Edition",
-    description: "Refined premium styling with ornate framing, formal seal details, and gallery presence.",
-  },
-  {
-    value: "hero",
-    title: "Playful Official",
-    description: "Bright flagship styling with mascot energy, bold contrast, and playful authority.",
-  },
-  {
-    value: "formal",
-    title: "Ceremonial Official",
-    description: "Classic diplomatic styling with balanced typography, clean framing, and formal polish.",
-  },
-];
-
 export function CertificateTemplateSelector({ value, onChange }: Props) {
+  const t = useTranslations("certificateTemplates");
+
+  const options: Array<{
+    value: CertificateTemplate;
+    title: string;
+    description: string;
+  }> = [
+    {
+      value: "luxury",
+      title: t("luxury.title"),
+      description: t("luxury.description"),
+    },
+    {
+      value: "formal",
+      title: t("classic.title"),
+      description: t("classic.description"),
+    },
+    {
+      value: "hero",
+      title: t("playful.title"),
+      description: t("playful.description"),
+    },
+  ];
+
   return (
     <div className="certificate-template-selector">
-      {OPTIONS.map((option) => (
+      {options.map((option) => (
         <button
           key={option.value}
           type="button"
@@ -41,9 +44,7 @@ export function CertificateTemplateSelector({ value, onChange }: Props) {
           }`}
           onClick={() => onChange(option.value)}
         >
-          <div className="certificate-template-card__titleWrap">
-            <div className="certificate-template-card__title">{option.title}</div>
-          </div>
+          <div className="certificate-template-card__title">{option.title}</div>
           <div className="certificate-template-card__desc">{option.description}</div>
         </button>
       ))}

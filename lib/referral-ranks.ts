@@ -7,11 +7,11 @@ export interface RankInfo {
 
 export const RANKS: RankInfo[] = [
   { id: "civilian", minReferrals: 0, icon: "👤", label: "Civilian" },
-  { id: "intern", minReferrals: 1, icon: "🔰", label: "Intern" },
-  { id: "fieldAgent", minReferrals: 3, icon: "🕵️", label: "Field Agent" },
+  { id: "intern", minReferrals: 1, icon: "🔰", label: "Probationary Liaison" },
+  { id: "fieldAgent", minReferrals: 3, icon: "🕵️", label: "Field Operative" },
   { id: "seniorDiplomat", minReferrals: 5, icon: "🎖️", label: "Senior Diplomat" },
-  { id: "ambassador", minReferrals: 10, icon: "👑", label: "Ambassador" },
-  { id: "chiefWhisperer", minReferrals: 25, icon: "🌟", label: "Chief Whisperer" },
+  { id: "ambassador", minReferrals: 10, icon: "👑", label: "Special Envoy" },
+  { id: "chiefWhisperer", minReferrals: 25, icon: "🌟", label: "Chief Shark Whisperer" },
 ];
 
 /**

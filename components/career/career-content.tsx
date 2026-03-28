@@ -1,8 +1,7 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
-import { buildLocalizedPath } from "@/lib/navigation";
 import { useState } from "react";
 import { trackEvent } from "@/components/analytics";
 
@@ -15,57 +14,6 @@ interface RankInfo {
   description: string;
 }
 
-const RANKS: RankInfo[] = [
-  {
-    name: "Civilian",
-    referralsNeeded: 0,
-    icon: "👤",
-    color: "text-gray-600",
-    bgColor: "bg-gray-50 border-gray-200",
-    description: "Just getting started in the Alliance",
-  },
-  {
-    name: "Intern",
-    referralsNeeded: 1,
-    icon: "📋",
-    color: "text-sky-600",
-    bgColor: "bg-sky-50 border-sky-200",
-    description: "Your first diplomatic mission complete",
-  },
-  {
-    name: "Field Agent",
-    referralsNeeded: 3,
-    icon: "🕵️",
-    color: "text-teal-600",
-    bgColor: "bg-teal-50 border-teal-200",
-    description: "Deep cover operations initiated",
-  },
-  {
-    name: "Senior Diplomat",
-    referralsNeeded: 5,
-    icon: "🎖️",
-    color: "text-orange-600",
-    bgColor: "bg-orange-50 border-orange-200",
-    description: "Seasoned shark-human relations expert",
-  },
-  {
-    name: "Ambassador",
-    referralsNeeded: 10,
-    icon: "🏛️",
-    color: "text-indigo-600",
-    bgColor: "bg-indigo-50 border-indigo-200",
-    description: "Official representative of the Alliance",
-  },
-  {
-    name: "Chief Shark Whisperer",
-    referralsNeeded: 25,
-    icon: "🦈👑",
-    color: "text-amber-600",
-    bgColor: "bg-amber-50 border-amber-200",
-    description: "The sharks listen when you speak",
-  },
-];
-
 interface ReferralResponse {
   name: string;
   tier: string;
@@ -76,6 +24,56 @@ interface ReferralResponse {
 
 export function CareerContent() {
   const t = useTranslations("career");
+  const RANKS: RankInfo[] = [
+    {
+      name: t("ranks.civilian.name"),
+      referralsNeeded: 0,
+      icon: "👤",
+      color: "text-gray-600",
+      bgColor: "bg-gray-50 border-gray-200",
+      description: t("ranks.civilian.description"),
+    },
+    {
+      name: t("ranks.probationaryLiaison.name"),
+      referralsNeeded: 1,
+      icon: "📋",
+      color: "text-sky-600",
+      bgColor: "bg-sky-50 border-sky-200",
+      description: t("ranks.probationaryLiaison.description"),
+    },
+    {
+      name: t("ranks.fieldOperative.name"),
+      referralsNeeded: 3,
+      icon: "🕵️",
+      color: "text-teal-600",
+      bgColor: "bg-teal-50 border-teal-200",
+      description: t("ranks.fieldOperative.description"),
+    },
+    {
+      name: t("ranks.seniorDiplomat.name"),
+      referralsNeeded: 5,
+      icon: "🎖️",
+      color: "text-orange-600",
+      bgColor: "bg-orange-50 border-orange-200",
+      description: t("ranks.seniorDiplomat.description"),
+    },
+    {
+      name: t("ranks.specialEnvoy.name"),
+      referralsNeeded: 10,
+      icon: "🏛️",
+      color: "text-indigo-600",
+      bgColor: "bg-indigo-50 border-indigo-200",
+      description: t("ranks.specialEnvoy.description"),
+    },
+    {
+      name: t("ranks.chiefSharkWhisperer.name"),
+      referralsNeeded: 25,
+      icon: "🦈👑",
+      color: "text-amber-600",
+      bgColor: "bg-amber-50 border-amber-200",
+      description: t("ranks.chiefSharkWhisperer.description"),
+    },
+  ];
   const [referralCode, setReferralCode] = useState("");
   const [referralData, setReferralData] = useState<ReferralResponse | null>(
     null
