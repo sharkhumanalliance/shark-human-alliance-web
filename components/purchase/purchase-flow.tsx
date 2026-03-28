@@ -404,19 +404,6 @@ function PurchaseFlowInner() {
                   <p className="mt-1.5 text-xs text-[var(--muted)]">{t("recipientEmailHint")}</p>
                 </div>
                 <div>
-                  <label htmlFor="giftDeliveryDate" className="text-sm font-semibold text-[var(--brand-dark)]">
-                    {t("giftDeliveryDateLabel")}
-                  </label>
-                  <input
-                    id="giftDeliveryDate"
-                    type="date"
-                    value={giftDeliveryDate}
-                    onChange={(e) => setGiftDeliveryDate(e.target.value)}
-                    min={new Date().toISOString().split("T")[0]}
-                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
-                  />
-                </div>
-                <div>
                   <label htmlFor="giftMessage" className="text-sm font-semibold text-[var(--brand-dark)]">
                     {t("giftMessageLabel")}
                   </label>
