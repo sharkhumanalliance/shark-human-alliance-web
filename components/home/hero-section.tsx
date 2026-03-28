@@ -42,7 +42,7 @@ export function HeroSection() {
           <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
             <LocalizedLink
               href="/purchase?tier=protected"
-              className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               {t("ctaPrimary")}
             </LocalizedLink>

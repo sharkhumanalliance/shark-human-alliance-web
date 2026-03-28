@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Shark Human Alliance — Official Shark Protection Certificates",
-      "description": "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $5."
+      "description": "Personalized certificates declaring diplomatic immunity from sharks. Every sale funds real ocean conservation. Instant digital delivery, from $5."
     },
     "purchase": {
       "title": "Get Your Certificate — Shark Human Alliance",
@@ -10,7 +10,7 @@
     },
     "registry": {
       "title": "Diplomatic Registry — Shark Human Alliance",
-      "description": "Browse the official registry of humans who have achieved symbolic diplomatic recognition from sharks. Join the list and fund real conservation."
+      "description": "Browse the official registry of humans whose shark-related paperwork is in order. Join the list and fund real conservation."
     },
     "impact": {
       "title": "Our Impact — Where the Money Goes | Shark Human Alliance",
@@ -22,7 +22,7 @@
     },
     "protectedFriend": {
       "title": "Protected Friend Status — Shark Human Alliance",
-      "description": "The flagship shark protection certificate. Personalized, polished, and surprisingly frameable. The perfect gag gift that funds real ocean conservation."
+      "description": "The flagship shark protection certificate. Personalized, surprisingly frameable, and delivered instantly. Every sale funds real ocean conservation."
     },
     "faq": {
       "title": "FAQ — Shark Human Alliance",
@@ -50,12 +50,12 @@
     "tagline": "Bureaucratic progress in shark-human relations.",
     "nav": {
       "membership": "Certificates",
-      "about": "Our Mission",
       "impact": "Impact",
+      "wanted": "Wanted Poster",
       "faq": "FAQ",
-      "registry": "Diplomatic Registry"
+      "registry": "Registry"
     },
-    "cta": "Get the Certificate"
+    "cta": "Get your certificate — $5"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -68,7 +68,6 @@
     "transparencyText": "Full transparency on every dollar. Reports published quarterly once donations begin.",
     "nav": {
       "membership": "Certificates",
-      "about": "Our Mission",
       "impact": "Impact",
       "faq": "FAQ",
       "registry": "Registry",
@@ -88,7 +87,7 @@
     "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
     "description": "A personalized certificate for people who love sharks, fear sharks, or simply appreciate excellent paperwork. It also funds real shark conservation.",
-    "ctaPrimary": "Get Protected Friend Status — $5",
+    "ctaPrimary": "Get your certificate — $5",
     "ctaSecondary": "Preview your certificate",
     "socialProof": "Join the Alliance",
     "giftBadge": "For shark lovers, shark-fearers, and dramatic gift buyers.",
@@ -127,7 +126,7 @@
           "stars": 5
         },
         {
-          "text": "Best gag gift I've ever given. My friend is now genuinely convinced sharks can sense her Protected status.",
+          "text": "Got this for my friend as a joke. She now genuinely believes sharks can sense her Protected status.",
           "author": "Jake R.",
           "role": "Repeat buyer",
           "stars": 5
@@ -147,6 +146,13 @@
       ],
       "kicker": "In-universe field note"
     },
+    "earlyAdopter": {
+      "label": "Join the Alliance",
+      "title": "Be among the first wave of diplomats.",
+      "text": "The Diplomatic Registry is open. Every certificate issued is logged, every dollar tracked. The earlier you join, the more impressive your seniority will look in the archives.",
+      "cta": "Get your certificate — $5",
+      "registryCta": "View the Registry"
+    },
     "giftingSection": {
       "label": "Perfect for gifting",
       "title": "Everyone knows someone who needs this.",
@@ -162,7 +168,7 @@
       "case4Icon": "🤷",
       "case4Title": "People who have everything",
       "case4Text": "They don't have diplomatic recognition from sharks. Nobody does. That's why it's perfect.",
-      "cta": "Gift Protected Friend Status — $5",
+      "cta": "Gift a certificate — $5",
       "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
@@ -188,7 +194,7 @@
       "popularBadge": "Most Popular",
       "protectedTitle": "Protected Friend Status",
       "protectedPrice": "$5",
-      "protectedDescription": "The sharpest entry point: personal, polished, and funny without trying too hard. Ideal for birthdays, desk drops, and first-time shark diplomacy.",
+      "protectedDescription": "A polished entry point for people who want something personal, funny, and surprisingly frameable. Ideal for birthdays, desk drops, and first-time shark diplomacy.",
       "protectedFeatures": [
         "Personalized certificate",
         "Protected Friend status",
@@ -211,7 +217,7 @@
         "Website badge",
         "Premium registry placement"
       ],
-      "businessCta": "Get Certified — $99",
+      "businessCta": "Get business certification — $99",
       "businessEyebrow": "For businesses"
     },
     "realImpact": {
@@ -270,7 +276,7 @@
         },
         {
           "question": "Can I give this as a gift?",
-          "answer": "Absolutely. Protected Friend Status is the most popular gift option — funny enough to share, polished enough to frame."
+          "answer": "Absolutely. Protected Friend Status is the most popular gift option. People frame it, share it, and nobody can explain why it works so well."
         }
       ],
       "allQuestions": "All questions answered"
@@ -279,7 +285,7 @@
       "label": "Why this exists",
       "title": "A joke for humans. A better deal for sharks.",
       "point1Icon": "📄",
-      "point1Title": "Looks official. Legally useless.",
+      "point1Title": "Looks official. Impressively non-binding.",
       "point1Text": "Personalized, printable, and polished enough to make people ask follow-up questions.",
       "point2Icon": "🦈",
       "point2Title": "Real money. Real conservation.",
@@ -345,27 +351,27 @@
     ],
     "ctaTitle": "Still have questions?",
     "ctaText": "The best way to understand the certificate is to see it. Try the live preview on our homepage — or just go for it.",
-    "ctaButton": "Get Protected Friend — $5"
+    "ctaButton": "Get your certificate — $5"
   },
   "membershipPage": {
-    "badge": "Symbolic recognition packages",
+    "badge": "Diplomatic clearance levels",
     "title": "Choose your shark diplomacy level.",
-    "description": "Every membership tier is fictional, humorous, and designed to feel oddly official. The goal is simple: better shark-human vibes, better gifts, and dramatically improved symbolic relations.",
+    "description": "Each certificate helps fund real shark conservation. The rest is just unusually good-looking paperwork.",
     "ctaTiers": "See membership tiers",
     "ctaCompare": "Compare options",
     "recommended": "Recommended flagship product:",
     "recommendedProduct": "Protected Friend Status",
     "tiersLabel": "Membership tiers",
     "tiersTitle": "Choose your level of shark diplomacy.",
-    "tiersDescription": "Pick the tier that matches your gifting ambition and desired level of symbolic prestige.",
+    "tiersDescription": "Each certificate helps fund real shark conservation. The rest is just unusually good-looking paperwork.",
     "protectedTitle": "Protected Friend Status",
-    "protectedDescription": "The sharpest entry point: personal, polished, and funny without trying too hard.",
+    "protectedDescription": "A polished entry point for people who want something personal, funny, and surprisingly frameable. Ideal for birthdays, desk drops, and first-time shark diplomacy.",
     "protectedFeatures": [
       "Personalized certificate",
       "Protected Friend status",
       "Instant digital delivery"
     ],
-    "protectedCta": "Choose protected — $5",
+    "protectedCta": "Get Protected Friend — $5",
     "nonsnackTitle": "Non-Snack Recognition",
     "nonsnackDescription": "For people who want the joke to land harder and look better framed.",
     "nonsnackFeatures": [
@@ -409,7 +415,7 @@
       {
         "label": "Best for",
         "protected": "Personal gifts",
-        "nonsnack": "Peak symbolic diplomacy",
+        "nonsnack": "Maximum diplomatic clearance",
         "business": "Venues & businesses"
       },
       {
@@ -426,20 +432,20 @@
       }
     ],
     "step1Title": "Pick a tier",
-    "step1Text": "Choose the version that best matches the gift, joke intensity, and symbolic prestige you want.",
+    "step1Text": "Choose the version that best matches the gift, commitment level, and desired diplomatic standing.",
     "step2Title": "Personalize the certificate",
     "step2Text": "Add the recipient name and optional dedication so the membership feels like a real gift, not just a joke.",
-    "step3Title": "Deliver symbolic recognition",
-    "step3Text": "The recipient receives an official-looking alliance document and a major boost in shark diplomacy aesthetics.",
+    "step3Title": "Deliver the paperwork",
+    "step3Text": "The recipient receives an official-looking alliance document and an immediate upgrade in diplomatic standing.",
     "clarificationLabel": "Important clarification",
-    "clarificationTitle": "This is a fictional symbolic product.",
+    "clarificationTitle": "This is a fictional product.",
     "clarificationText": "Membership in the Shark Human Alliance does not provide legal, physical, spiritual, maritime, biological, emotional, or anti-bite protection. It is a humorous product concept designed for gifts, certificates and brand storytelling.",
     "faqLabel": "FAQ",
     "faqTitle": "Product questions worth answering clearly.",
     "faqItems": [
       {
         "question": "Is this a real protective product?",
-        "answer": "No. All memberships are fictional, symbolic, and intended as humorous gifts or fan-style participation in the Shark Human Alliance universe."
+        "answer": "No. All memberships are fictional and intended as gifts or fan-style participation in the Shark Human Alliance universe. The conservation funding is real."
       },
       {
         "question": "Will I receive something after payment?",
@@ -451,19 +457,19 @@
       },
       {
         "question": "Which option should I pick?",
-        "answer": "Protected Friend Status ($5) is the most popular — it's the perfect balance between funny, polished and giftable."
+        "answer": "Protected Friend Status ($5) is the most popular. People frame it, gift it, and bring it up at dinner. It just works."
       }
     ],
     "joinLabel": "Ready?",
-    "joinTitle": "Get someone their Protected Friend Status.",
-    "joinText": "The most popular gift in the alliance. Funny, polished, and delivered instantly.",
-    "joinCtaPrimary": "Get Protected Friend — $5",
+    "joinTitle": "The paperwork won't file itself.",
+    "joinText": "Protected Friend Status. $5. Delivered in minutes. Conservation funded immediately.",
+    "joinCtaPrimary": "Get your certificate — $5",
     "joinCtaSecondary": "Back to homepage"
   },
   "protectedPage": {
     "badge": "Flagship membership product",
     "title": "Protected Friend Status",
-    "description": "A symbolic recognition tier for humans who deserve a slightly warmer reception from sharks and a significantly more official-looking certificate.",
+    "description": "Diplomatic clearance for humans who deserve a slightly warmer reception from sharks and a significantly more official-looking certificate.",
     "ctaPrimary": "Get Protected Friend — $5",
     "ctaSecondary": "Back to membership",
     "recommended": "Recommended as the core launch product for Shark Human Alliance.",
@@ -472,15 +478,15 @@
       "Personalized digital certificate",
       "Protected Friend Status designation",
       "Alliance badge",
-      "Giftable symbolic recognition"
+      "Ready-to-gift diplomatic paperwork"
     ],
     "bestUseTitle": "Best use case",
     "bestUseText": "This is the best tier for gifting, brand clarity and certificate-led monetization.",
     "whyLabel": "Why this product works",
-    "whyTitle": "Funny enough to be shareable. Clean enough to feel premium.",
-    "whyDescription": "Protected Friend Status sits exactly where the concept works best: clearly humorous, clearly fictional, but still polished enough to feel like a real gift product rather than a throwaway joke.",
-    "reason1Title": "Clear concept",
-    "reason1Text": "The name is funny, but still readable and gift-worthy.",
+    "whyTitle": "People frame it. People share it. Nobody can explain why.",
+    "whyDescription": "Protected Friend Status sits exactly where the concept works best: absurd enough to start a conversation, polished enough to hang on a wall.",
+    "reason1Title": "Instantly understood",
+    "reason1Text": "The name says everything. No explanation needed, no awkward unwrapping silence.",
     "reason2Title": "Strong certificate fit",
     "reason2Text": "It naturally supports a personalized certificate and recognition badge.",
     "reason3Title": "Best launch product",
@@ -495,11 +501,11 @@
     "faqItems": [
       {
         "question": "Is this actual protection from sharks?",
-        "answer": "No. Protected Friend Status is a fictional symbolic product and does not provide real-world protection of any kind."
+        "answer": "No. Protected Friend Status is a fictional product and does not provide real-world protection of any kind. It does fund real conservation."
       },
       {
         "question": "Why is this the main product?",
-        "answer": "Because it is the clearest balance between funny, polished and giftable."
+        "answer": "Because it is the clearest entry point: one name, one certificate, instant delivery. People frame it, gift it, and talk about it."
       },
       {
         "question": "What happens after purchase?",
@@ -540,9 +546,9 @@
     "noEmailAddEmail": "Add email address",
     "promoCodeLabel": "Promo code (optional)",
     "promoCodePlaceholder": "Enter code",
-    "stripeSecure": "Secure checkout powered by Stripe.",
+    "stripeSecure": "Encrypted checkout. Powered by Stripe.",
     "stripeSecureNote": "Even sharks know not to mess with payment infrastructure.",
-    "submitButton": "Proceed to Payment",
+    "submitButton": "Complete purchase",
     "submitButtonPromo": "Apply Promo Code & Continue",
     "orderSummary": "Diplomatic Briefing",
     "redirecting": "Redirecting to secure checkout...",
@@ -765,7 +771,7 @@
     "ctaButton": "Get your certificate — from $5"
   },
   "mobileCta": {
-    "label": "Get Protected Friend Status",
+    "label": "Get your certificate",
     "price": "$5"
   },
   "wanted": {
@@ -807,7 +813,8 @@
     "posterFooter": "sharkhumanalliance.com — Diplomacy is not optional",
     "downloadButton": "Download Poster (Stories format)",
     "downloadingButton": "Preparing poster...",
-    "shareButton": "Share to Stories / Messages",
+    "shareButton": "Share poster",
+    "linkCopied": "Link copied!",
     "shareTitle": "WANTED: Unprotected Human",
     "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
     "giftCta": "Gift {name} a Protected Friend Certificate — $5",

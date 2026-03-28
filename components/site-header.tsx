@@ -11,8 +11,6 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const isHome = pathname === "/" || /^\/[a-z]{2}\/?$/.test(pathname);
-
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
@@ -25,26 +23,12 @@ export function SiteHeader() {
   }, [menuOpen]);
 
   const navItems = [
-    { label: t("nav.membership"), hash: "#membership", href: "/#membership" },
-    { label: t("nav.about"), hash: "#real-impact", href: "/#real-impact" },
-    { label: t("nav.impact"), hash: "", href: "/impact" },
-    { label: t("nav.faq"), hash: "", href: "/faq" },
-    { label: t("nav.registry"), hash: "", href: "/registry" },
+    { label: t("nav.membership"), href: "/membership" },
+    { label: t("nav.impact"), href: "/impact" },
+    { label: t("nav.registry"), href: "/registry" },
+    { label: t("nav.wanted"), href: "/wanted" },
+    { label: t("nav.faq"), href: "/faq" },
   ];
-
-  function handleNavClick(
-    e: React.MouseEvent<HTMLAnchorElement>,
-    item: (typeof navItems)[0]
-  ) {
-    if (item.hash && isHome) {
-      e.preventDefault();
-      setMenuOpen(false);
-      document.querySelector(item.hash)?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-
-    setMenuOpen(false);
-  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/90 backdrop-blur">
@@ -64,26 +48,15 @@ export function SiteHeader() {
         </LocalizedLink>
 
         <nav className="hidden items-center gap-6 lg:flex">
-          {navItems.map((item) =>
-            item.hash ? (
-              <LocalizedLink
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleNavClick(e as React.MouseEvent<HTMLAnchorElement>, item)}
-                className="whitespace-nowrap text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
-              >
-                {item.label}
-              </LocalizedLink>
-            ) : (
-              <LocalizedLink
-                key={item.href}
-                href={item.href}
-                className="whitespace-nowrap text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
-              >
-                {item.label}
-              </LocalizedLink>
-            )
-          )}
+          {navItems.map((item) => (
+            <LocalizedLink
+              key={item.href}
+              href={item.href}
+              className="whitespace-nowrap text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+            >
+              {item.label}
+            </LocalizedLink>
+          ))}
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
@@ -112,40 +85,31 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {menuOpen && (
-        <div className="border-t border-[var(--border)] bg-white lg:hidden">
+      <div
+        className={`grid border-t border-[var(--border)] bg-white transition-[grid-template-rows] duration-300 ease-in-out lg:hidden ${menuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+      >
+        <div className="overflow-hidden">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
-            {navItems.map((item) =>
-              item.hash ? (
-                <LocalizedLink
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e as React.MouseEvent<HTMLAnchorElement>, item)}
-                  className="rounded-lg px-3 py-2.5 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
-                >
-                  {item.label}
-                </LocalizedLink>
-              ) : (
-                <LocalizedLink
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
-                >
-                  {item.label}
-                </LocalizedLink>
-              )
-            )}
             <LocalizedLink
               href="/purchase?tier=protected"
               onClick={() => setMenuOpen(false)}
-              className="mt-2 flex items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:hidden"
+              className="mb-2 flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               {t("cta")}
             </LocalizedLink>
+            {navItems.map((item) => (
+              <LocalizedLink
+                key={item.href}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-3 py-2.5 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
+              >
+                {item.label}
+              </LocalizedLink>
+            ))}
           </nav>
         </div>
-      )}
+      </div>
     </header>
   );
 }

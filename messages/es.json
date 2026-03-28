@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Shark Human Alliance — Certificados Oficiales de Protección de Tiburones",
-      "description": "Obtén tu certificado oficial de Amigo Protegido. Un regalo personalizado y divertido que financia la conservación real de tiburones. Entrega digital, desde $5."
+      "description": "Certificados personalizados que declaran inmunidad diplomática ante tiburones. Cada venta financia la conservación real del océano. Entrega digital instantánea, desde $5."
     },
     "purchase": {
       "title": "Obtén tu Certificado — Shark Human Alliance",
@@ -50,12 +50,12 @@
     "tagline": "Progreso burocrático en las relaciones tiburón-humano.",
     "nav": {
       "membership": "Certificados",
-      "about": "Nuestra Misión",
       "impact": "Impacto",
+      "wanted": "Póster de Búsqueda",
       "faq": "FAQ",
-      "registry": "Registro Diplomático"
+      "registry": "Registro"
     },
-    "cta": "Obtén el Certificado"
+    "cta": "Obtén tu certificado — $5"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -68,7 +68,6 @@
     "transparencyText": "Transparencia total en cada dólar. Los informes se publicarán trimestralmente una vez que comiencen las donaciones.",
     "nav": {
       "membership": "Certificados",
-      "about": "Nuestra Misión",
       "impact": "Impacto",
       "faq": "FAQ",
       "registry": "Registro",
@@ -88,7 +87,7 @@
     "titleLine2": "Para humanos.",
     "brandLine": "Los tiburones merecen mejor imagen. Y protección real.",
     "description": "Un certificado personalizado para personas que aman a los tiburones, les temen o simplemente aprecian un papeleo excelente. También financia conservación real de tiburones.",
-    "ctaPrimary": "Obtén Amigo Protegido — $5",
+    "ctaPrimary": "Obtén tu certificado — $5",
     "ctaSecondary": "Vista previa de tu certificado",
     "socialProof": "Únete a la Alianza",
     "giftBadge": "Para amantes de los tiburones, personas que les temen y compradores de regalos con gusto por el drama.",
@@ -147,6 +146,13 @@
       ],
       "kicker": "Nota de campo in-universe"
     },
+    "earlyAdopter": {
+      "label": "Únete a la Alianza",
+      "title": "Sé parte de la primera ola de diplomáticos.",
+      "text": "El Registro Diplomático está abierto. Cada certificado emitido queda registrado, cada dólar rastreado. Cuanto antes te unas, más impresionante será tu antigüedad en los archivos.",
+      "cta": "Obtén tu certificado — $5",
+      "registryCta": "Ver el Registro"
+    },
     "giftingSection": {
       "label": "Perfecto para regalar",
       "title": "Todos conocen a alguien que necesita esto.",
@@ -162,7 +168,7 @@
       "case4Icon": "🤷",
       "case4Title": "Gente que tiene de todo",
       "case4Text": "No tienen reconocimiento diplomático de tiburones. Nadie lo tiene. Por eso es perfecto.",
-      "cta": "Regalar Amigo Protegido — $5",
+      "cta": "Regalar un certificado — $5",
       "wantedCta": "Genera un Póster de Búsqueda"
     },
     "about": {
@@ -184,11 +190,11 @@
     "membershipSection": {
       "label": "Certificados",
       "title": "Elige tu nivel de diplomacia con tiburones.",
-      "description": "Cada certificado ayuda a financiar la conservación real de los tiburones. El resto es solo papeleo inusualmente bonito.",
+      "description": "Cada certificado ayuda a financiar la conservación real de los tiburones. El resto es simplemente papeleo inusualmente atractivo.",
       "popularBadge": "Más Popular",
       "protectedTitle": "Estatus de Amigo Protegido",
       "protectedPrice": "$5",
-      "protectedDescription": "La entrada más afilada: personal, elegante y graciosa sin esforzarse demasiado. Ideal para cumpleaños, regalos de escritorio y una primera incursión en la diplomacia con tiburones.",
+      "protectedDescription": "Una puerta de entrada pulida para quienes quieren algo personal, divertido y sorprendentemente digno de enmarcar. Ideal para cumpleaños, regalos de escritorio y una primera incursión en la diplomacia con tiburones.",
       "protectedFeatures": [
         "Certificado personalizado",
         "Estatus de Amigo Protegido",
@@ -211,7 +217,7 @@
         "Insignia para el sitio web",
         "Ubicación premium en el registro"
       ],
-      "businessCta": "Obtener Certificación — $99",
+      "businessCta": "Obtén certificación empresarial — $99",
       "businessEyebrow": "Para empresas"
     },
     "realImpact": {
@@ -279,7 +285,7 @@
       "label": "Por qué existe esto",
       "title": "Un chiste para humanos. Un mejor trato para los tiburones.",
       "point1Icon": "📄",
-      "point1Title": "Parece oficial. Legalmente inútil.",
+      "point1Title": "Parece oficial. Impresionantemente no vinculante.",
       "point1Text": "Personalizado, imprimible y lo bastante pulido como para que la gente haga preguntas de seguimiento.",
       "point2Icon": "🦈",
       "point2Title": "Dinero real. Conservación real.",
@@ -345,27 +351,27 @@
     ],
     "ctaTitle": "¿Aún tienes preguntas?",
     "ctaText": "La mejor manera de entender el certificado es verlo. Prueba la vista previa en vivo en nuestra página principal — o simplemente hazlo.",
-    "ctaButton": "Obtén Amigo Protegido — $5"
+    "ctaButton": "Obtén tu certificado — $5"
   },
   "membershipPage": {
     "badge": "Paquetes de reconocimiento simbólico",
     "title": "Elige tu nivel de diplomacia con tiburones.",
-    "description": "Cada nivel de membresía es ficticio, humorístico y diseñado para sentirse extrañamente oficial. El objetivo es simple: mejores vibraciones tiburón-humano, mejores regalos y relaciones simbólicas dramáticamente mejoradas.",
+    "description": "Cada certificado ayuda a financiar la conservación real de los tiburones. El resto es simplemente papeleo inusualmente atractivo.",
     "ctaTiers": "Ver niveles de membresía",
     "ctaCompare": "Comparar opciones",
     "recommended": "Producto estrella recomendado:",
     "recommendedProduct": "Estatus de Amigo Protegido",
     "tiersLabel": "Niveles de membresía",
     "tiersTitle": "Elige tu nivel de diplomacia con tiburones.",
-    "tiersDescription": "Elige el nivel que mejor se ajuste a tu ambición de regalo y el grado deseado de prestigio simbólico.",
+    "tiersDescription": "Cada certificado ayuda a financiar la conservación real de los tiburones. El resto es simplemente papeleo inusualmente atractivo.",
     "protectedTitle": "Estatus de Amigo Protegido",
-    "protectedDescription": "La entrada más afilada: personal, elegante y graciosa sin esforzarse demasiado.",
+    "protectedDescription": "Una puerta de entrada pulida para quienes quieren algo personal, divertido y sorprendentemente digno de enmarcar. Ideal para cumpleaños, regalos de escritorio y una primera incursión en la diplomacia con tiburones.",
     "protectedFeatures": [
       "Certificado personalizado",
       "Estatus de Amigo Protegido",
       "Entrega digital instantánea"
     ],
-    "protectedCta": "Elegir protegido — $5",
+    "protectedCta": "Obtén Amigo Protegido — $5",
     "nonsnackTitle": "Reconocimiento No-Snack",
     "nonsnackDescription": "Para quienes quieren que el chiste golpee más fuerte y quede mejor enmarcado.",
     "nonsnackFeatures": [
@@ -381,7 +387,7 @@
       "Insignia para el sitio web",
       "Ubicación premium en el registro"
     ],
-    "businessCta": "Obtener certificación — $99",
+    "businessCta": "Obtén certificación empresarial — $99",
     "businessCertLabel": "Zona Aprobada por Tiburones",
     "businessCertName": "Nombre de tu negocio",
     "businessCertText": "ha sido oficialmente designado como Zona Aprobada por Tiburones por la Shark Human Alliance",
@@ -455,16 +461,16 @@
       }
     ],
     "joinLabel": "¿Listo?",
-    "joinTitle": "Regala el Estatus de Amigo Protegido.",
-    "joinText": "El regalo más popular de la alianza. Divertido, elegante y entregado al instante.",
-    "joinCtaPrimary": "Obtén Amigo Protegido — $5",
+    "joinTitle": "El papeleo no se archiva solo.",
+    "joinText": "Estatus de Amigo Protegido. $5. Entregado en minutos. Conservación financiada de inmediato.",
+    "joinCtaPrimary": "Obtén tu certificado — $5",
     "joinCtaSecondary": "Volver a la página principal"
   },
   "protectedPage": {
     "badge": "Producto estrella de membresía",
     "title": "Estatus de Amigo Protegido",
-    "description": "Un nivel de reconocimiento simbólico para humanos que merecen una recepción ligeramente más cálida de los tiburones y un certificado con aspecto significativamente más oficial.",
-    "ctaPrimary": "Obtén Amigo Protegido — $5",
+    "description": "Autorización diplomática para humanos que merecen una recepción ligeramente más cálida de los tiburones y un certificado con aspecto significativamente más oficial.",
+    "ctaPrimary": "Obtén tu certificado — $5",
     "ctaSecondary": "Volver a membresía",
     "recommended": "Recomendado como el producto principal de lanzamiento para Shark Human Alliance.",
     "includedLabel": "Qué incluye",
@@ -540,9 +546,9 @@
     "noEmailAddEmail": "Añadir dirección de email",
     "promoCodeLabel": "Código promocional (opcional)",
     "promoCodePlaceholder": "Introduce el código",
-    "stripeSecure": "Checkout seguro con Stripe.",
+    "stripeSecure": "Checkout encriptado. Procesado por Stripe.",
     "stripeSecureNote": "Hasta los tiburones saben que no se juega con la infraestructura de pagos.",
-    "submitButton": "Proceder al Pago",
+    "submitButton": "Completar compra",
     "submitButtonPromo": "Aplicar Código Promo y Continuar",
     "orderSummary": "Informe Diplomático",
     "redirecting": "Redirigiendo al checkout seguro...",
@@ -765,7 +771,7 @@
     "ctaButton": "Obtén tu certificado — desde $5"
   },
   "mobileCta": {
-    "label": "Obtén Amigo Protegido",
+    "label": "Obtén tu certificado",
     "price": "$5"
   },
   "wanted": {
@@ -807,7 +813,8 @@
     "posterFooter": "sharkhumanalliance.com — La diplomacia no es opcional",
     "downloadButton": "Descargar Póster (formato Stories)",
     "downloadingButton": "Preparando póster...",
-    "shareButton": "Compartir en Stories / Mensajes",
+    "shareButton": "Compartir póster",
+    "linkCopied": "¡Enlace copiado!",
     "shareTitle": "SE BUSCA: Humano Desprotegido",
     "shareText": "{name} ha sido identificado como un humano desprotegido. Haz lo correcto.",
     "giftCta": "Regalar a {name} un Certificado de Amigo Protegido — $5",

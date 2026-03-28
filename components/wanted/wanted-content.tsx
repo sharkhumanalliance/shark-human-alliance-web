@@ -36,6 +36,7 @@ export function WantedContent() {
   const [name, setName] = useState("");
   const [generated, setGenerated] = useState(false);
   const [downloading, setDownloading] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sealImgRef = useRef<HTMLImageElement | null>(null);
 
@@ -356,6 +357,7 @@ export function WantedContent() {
   const handleShare = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    trackEvent("wanted_poster_share");
     try {
       const blob = await new Promise<Blob | null>((resolve) =>
         canvas.toBlob(resolve, "image/png")
@@ -370,13 +372,23 @@ export function WantedContent() {
           text: t("shareText", { name: name.trim() || t("defaultName") }),
         });
       } else {
-        // Fallback: download
-        handleDownload();
+        // Fallback: copy page link to clipboard
+        const shareUrl = window.location.href;
+        await navigator.clipboard.writeText(shareUrl);
+        setLinkCopied(true);
+        setTimeout(() => setLinkCopied(false), 2500);
       }
     } catch {
-      // User cancelled share or error
+      // User cancelled share or error — try clipboard as last resort
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        setLinkCopied(true);
+        setTimeout(() => setLinkCopied(false), 2500);
+      } catch {
+        // clipboard also failed — silently ignore
+      }
     }
-  }, [name, t, handleDownload]);
+  }, [name, t]);
 
   const handleRegenerate = useCallback(() => {
     setGenerated(false);
@@ -483,27 +495,29 @@ export function WantedContent() {
 
               {/* Action buttons */}
               <div className="space-y-3">
-                <button
-                  onClick={handleDownload}
-                  disabled={downloading}
-                  className="w-full rounded-lg bg-[var(--brand-dark)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--brand-dark)]/90 disabled:opacity-60"
-                >
-                  {downloading ? t("downloadingButton") : t("downloadButton")}
-                </button>
-
-                <button
-                  onClick={handleShare}
-                  className="w-full rounded-lg border border-[var(--brand-dark)] bg-white px-6 py-4 text-base font-bold text-[var(--brand-dark)] transition hover:bg-sky-50"
-                >
-                  {t("shareButton")}
-                </button>
-
                 <LocalizedLink
                   href={giftUrl}
-                  className="block w-full rounded-lg bg-red-600 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-red-700"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition hover:bg-[var(--accent-dark)]"
                 >
                   🛡️ {t("giftCta", { name: name.trim() || t("defaultName") })}
                 </LocalizedLink>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={handleDownload}
+                    disabled={downloading}
+                    className="rounded-lg border border-[var(--border)] bg-white px-4 py-3.5 text-sm font-semibold text-[var(--brand-dark)] transition hover:bg-gray-50 disabled:opacity-60"
+                  >
+                    {downloading ? t("downloadingButton") : t("downloadButton")}
+                  </button>
+
+                  <button
+                    onClick={handleShare}
+                    className={`rounded-lg border px-4 py-3.5 text-sm font-semibold transition ${linkCopied ? "border-teal-300 bg-teal-50 text-teal-700" : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"}`}
+                  >
+                    {linkCopied ? t("linkCopied") : t("shareButton")}
+                  </button>
+                </div>
 
                 <button
                   onClick={handleRegenerate}
