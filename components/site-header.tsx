@@ -86,7 +86,7 @@ export function SiteHeader() {
       </div>
 
       <div
-        className={`grid border-t border-[var(--border)] bg-white transition-[grid-template-rows] duration-300 ease-in-out lg:hidden ${menuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+        className={`grid bg-white transition-[grid-template-rows] duration-300 ease-in-out lg:hidden ${menuOpen ? "grid-rows-[1fr] border-t border-[var(--border)]" : "grid-rows-[0fr]"}`}
       >
         <div className="overflow-hidden">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">

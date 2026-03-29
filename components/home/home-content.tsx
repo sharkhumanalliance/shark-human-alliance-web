@@ -50,7 +50,7 @@ export function HomeContent() {
     <>
       <section className="border-y border-[var(--border)] bg-white/80 py-10 lg:py-12">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="max-w-3xl">
+          <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("valueHook.label")}
             </p>
@@ -224,8 +224,8 @@ export function HomeContent() {
       </section>
 
       <section id="real-impact" className="py-14">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="max-w-3xl">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("realImpact.label")}
             </p>
@@ -253,7 +253,7 @@ export function HomeContent() {
             ))}
           </div>
 
-          <p className="mt-8 max-w-3xl text-base leading-7 text-[var(--muted)]">
+          <p className="mt-8 max-w-2xl text-base leading-7 text-[var(--muted)]">
             {t("impactTeaser.donationsIntro")}{" "}
             {PARTNERS.map(({ i, url }, idx) => (
               <span key={i}>
@@ -283,31 +283,30 @@ export function HomeContent() {
       </section>
 
       <section className="bg-[var(--brand-dark)] py-14">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              {t("earlyAdopter.title")}
-            </h2>
-            <p className="mt-4 max-w-xl text-base leading-7 text-sky-100/80">
-              {t("earlyAdopter.text")}
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <LocalizedLink
-                href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
-              >
-                {t("earlyAdopter.cta")}
-              </LocalizedLink>
-              <LocalizedLink
-                href="/faq"
-                className="inline-flex items-center justify-center rounded-lg border border-sky-300/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/20"
-              >
-                {t("faq.allQuestions")} →
-              </LocalizedLink>
-            </div>
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            {t("earlyAdopter.title")}
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-sky-100/80">
+            {t("earlyAdopter.text")}
+          </p>
+          <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <LocalizedLink
+              href="/purchase?tier=protected"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+            >
+              {t("earlyAdopter.cta")}
+            </LocalizedLink>
+            <LocalizedLink
+              href="/faq"
+              className="inline-flex items-center justify-center rounded-lg border border-sky-300/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/20"
+            >
+              {t("faq.allQuestions")} →
+            </LocalizedLink>
           </div>
         </div>
       </section>
     </>
   );
 }
+                

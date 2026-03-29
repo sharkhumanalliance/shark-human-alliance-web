@@ -110,8 +110,8 @@ export function MembershipPageContent() {
             </h2>
           </div>
 
-          <div className="mt-10 overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-sm">
-            <div className="grid grid-cols-4 border-b border-[var(--border)] bg-[var(--surface-soft)] text-sm font-semibold text-[var(--brand-dark)]">
+          <div className="mt-10 overflow-x-auto rounded-xl border border-[var(--border)] bg-white shadow-sm">
+            <div className="grid min-w-[600px] grid-cols-4 border-b border-[var(--border)] bg-[var(--surface-soft)] text-sm font-semibold text-[var(--brand-dark)]">
               <div className="p-4">{t("comparisonHeaders.feature")}</div>
               <div className="p-4">{t("comparisonHeaders.protected")}</div>
               <div className="p-4">{t("comparisonHeaders.nonsnack")}</div>
@@ -121,7 +121,7 @@ export function MembershipPageContent() {
             {comparisonRows.map((row, index) => (
               <div
                 key={row.label}
-                className={`grid grid-cols-4 text-sm ${
+                className={`grid min-w-[600px] grid-cols-4 text-sm ${
                   index !== comparisonRows.length - 1
                     ? "border-b border-[var(--border)]"
                     : ""
