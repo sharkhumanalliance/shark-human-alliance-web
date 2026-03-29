@@ -28,14 +28,14 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
       {locales.map((loc) => (
         <button
           key={loc.code}
           onClick={() => switchLocale(loc.code)}
           disabled={isPending}
           title={loc.label}
-          className={`flex h-9 w-9 items-center justify-center rounded-full text-lg transition ${
+          className={`flex h-8 w-8 items-center justify-center rounded-full text-base transition sm:h-9 sm:w-9 sm:text-lg ${
             locale === loc.code
               ? "bg-sky-100 shadow-sm"
               : "opacity-50 hover:opacity-100 hover:bg-sky-50"

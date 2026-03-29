@@ -31,17 +31,17 @@ export function SiteHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-        <LocalizedLink href="/" className="flex shrink-0 items-center gap-3">
+    <header className="sticky top-0 z-50 overflow-x-clip border-b border-[var(--border)] bg-white/90 backdrop-blur">
+      <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between px-4 py-3 sm:px-6">
+        <LocalizedLink href="/" className="flex min-w-0 shrink items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white">
             SHA
           </div>
-          <div className="hidden min-[400px]:block">
-            <p className="whitespace-nowrap text-sm font-semibold tracking-wide text-[var(--brand-dark)]">
+          <div className="hidden min-[420px]:block min-w-0">
+            <p className="truncate text-sm font-semibold tracking-wide text-[var(--brand-dark)] sm:whitespace-nowrap">
               {t("brand")}
             </p>
-            <p className="whitespace-nowrap text-[11px] text-[var(--muted)]">
+            <p className="hidden text-[11px] text-[var(--muted)] md:block md:whitespace-nowrap">
               {t("tagline")}
             </p>
           </div>
@@ -59,7 +59,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <LanguageSwitcher />
           <LocalizedLink
             href="/purchase?tier=protected"
@@ -70,7 +70,7 @@ export function SiteHeader() {
 
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-[var(--brand-dark)] transition hover:bg-gray-100 lg:hidden"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-[var(--brand-dark)] transition hover:bg-gray-100 lg:hidden"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
           >

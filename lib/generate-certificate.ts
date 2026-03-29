@@ -52,8 +52,8 @@ async function loadSealImage(): Promise<string | null> {
 async function loadSharkImage(): Promise<string | null> {
   if (sharkImageCache) return sharkImageCache;
   sharkImageCache =
-    (await loadImageAsBase64Browser("/cert-shark.jpg")) ??
-    (await loadImageFromFilesystem("cert-shark.jpg"));
+    (await loadImageAsBase64Browser("/are-you-afraid.png")) ??
+    (await loadImageFromFilesystem("are-you-afraid.png"));
   return sharkImageCache;
 }
 
@@ -129,9 +129,9 @@ export async function generateCertificatePDF(
   doc.setFillColor(238, 242, 247);
   doc.rect(0, 0, W, H, "F");
 
-  // ═══════ SHARK PHOTO — full width, 3:2 ratio ═══════
+  // ═══════ SHARK PHOTO — wide banner art ═══════
   const sharkImg = await loadSharkImage();
-  const photoH = W / (1536 / 1024);
+  const photoH = W / (1999 / 722);
   if (sharkImg) {
     const isJpg = sharkImg.includes("image/jpeg") || sharkImg.includes("image/jpg");
     doc.addImage(sharkImg, isJpg ? "JPEG" : "PNG", 0, 0, W, photoH);
@@ -141,7 +141,7 @@ export async function generateCertificatePDF(
     doc.setTextColor(...GRAY);
     doc.setFontSize(9);
     doc.setFont("helvetica", "italic");
-    doc.text("[cert-shark.jpg]", cx, photoH / 2, { align: "center" });
+    doc.text("[are-you-afraid.png]", cx, photoH / 2, { align: "center" });
   }
 
   let y = photoH;

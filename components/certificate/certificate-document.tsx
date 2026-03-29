@@ -100,7 +100,7 @@ export function CertificateDocument({
     : isFormal
       ? assetMode === "preview" ? "/background-formal-preview.webp" : "/background-formal.png"
       : assetMode === "preview" ? "/background-final-preview.webp" : "/background-final.PNG";
-  const heroImageSrc = assetMode === "preview" ? "/cert-shark.webp" : "/cert-shark.jpg";
+  const heroImageSrc = "/are-you-afraid.png";
   const qrSrc = getQrCodeUrl(verifyUrl, 200);
 
   return (
@@ -131,10 +131,6 @@ export function CertificateDocument({
             priority={priorityImages}
             className="certificate-hero-image"
           />
-          <div className="certificate-hero-overlay" />
-          <div className="certificate-hero-question">
-            Are you afraid of sharks?
-          </div>
         </section>
       )}
 
