@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
       promoCode,
       template,
       paperFormat = "a4",
+      giftMessage = "",
     } = body;
 
     if (!tier || !TIER_PRICES[tier]) {
@@ -105,6 +106,7 @@ export async function POST(request: NextRequest) {
         locale: loc,
         template: template || "",
         paperFormat: paperFormat === "letter" ? "letter" : "a4",
+        giftMessage: giftMessage || "",
       },
     });
 

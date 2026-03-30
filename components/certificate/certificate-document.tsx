@@ -174,7 +174,7 @@ export function CertificateDocument({
           </div>
 
           {/* Status title */}
-          <div className={`lux-status-block ${tierColorClass}`}>
+          <div className={`lux-status-block ${tierColorClass}${tier.toLowerCase().includes("nonsnack") || tier.toLowerCase().includes("non-snack") ? " lux-status-block--nonsnack" : ""}${tier.toLowerCase().includes("business") || tier.toLowerCase().includes("zone") ? " lux-status-block--business" : ""}`}>
             {statusText}
           </div>
 

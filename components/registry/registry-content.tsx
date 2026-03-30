@@ -74,6 +74,10 @@ export function RegistryContent() {
     });
   }, []);
 
+  const openMember = useCallback((memberId: string) => {
+    router.push(buildLocalizedPath(locale, `/verify?id=${encodeURIComponent(memberId)}`));
+  }, [router, locale]);
+
   const handleVerify = useCallback(async () => {
     const q = verifyInput.trim();
     if (!q) return;
@@ -144,6 +148,9 @@ export function RegistryContent() {
             </p>
             <p className="mt-4 text-sm text-[var(--muted)]">
               {t("description")}
+            </p>
+            <p className="mt-2 text-xs font-medium text-[var(--muted)]/80">
+              {t("clickHint")}
             </p>
           </div>
 
@@ -287,7 +294,16 @@ export function RegistryContent() {
                 return (
                   <article
                     key={member.id}
-                    className={`rounded-xl border ${style.border} bg-white p-6 shadow-sm transition hover:shadow-md`}
+                    onClick={() => openMember(member.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        openMember(member.id);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    className={`cursor-pointer rounded-xl border ${style.border} bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
@@ -304,7 +320,7 @@ export function RegistryContent() {
                         </div>
                       </div>
                       <button
-                        onClick={() => copyProfileLink(member.id)}
+                        onClick={(e) => { e.stopPropagation(); copyProfileLink(member.id); }}
                         className="shrink-0 rounded-full p-2 text-xs text-[var(--muted)] transition hover:bg-sky-50 hover:text-[var(--brand)]"
                         title={t("copyLink")}
                       >
@@ -359,7 +375,7 @@ export function RegistryContent() {
                     const s = TIER_STYLES[m.tier];
                     const rank = getRankInfo(m.referralCount || 0);
                     return (
-                      <div key={m.id} className={`flex items-center gap-3 rounded-xl border ${s.border} bg-white p-4`}>
+                      <div key={m.id} onClick={() => openMember(m.id)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMember(m.id); } }} className={`flex cursor-pointer items-center gap-3 rounded-xl border ${s.border} bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20`}>
                         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-sm">
                           {s.icon}
                         </div>
@@ -410,7 +426,7 @@ export function RegistryContent() {
                   {topRecruiters.map((m, idx) => {
                     const rank = getRankInfo(m.referralCount || 0);
                     return (
-                      <div key={m.id} className="flex items-center gap-4 rounded-xl border border-amber-100 bg-white p-4">
+                      <div key={m.id} onClick={() => openMember(m.id)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMember(m.id); } }} className="flex cursor-pointer items-center gap-4 rounded-xl border border-amber-100 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-orange-300 text-sm font-bold text-white">
                           #{idx + 1}
                         </div>

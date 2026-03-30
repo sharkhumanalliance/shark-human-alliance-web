@@ -59,6 +59,7 @@ export async function POST(request: NextRequest) {
       referredBy = "",
       locale = "en",
       paperFormat = "a4",
+      giftMessage = "",
     } = meta;
 
     console.log(`[SHA Webhook] Payment completed for ${name} (${tier})`);
@@ -103,6 +104,8 @@ export async function POST(request: NextRequest) {
             registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`),
             careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
             referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
+            giftMessage: giftMessage || undefined,
+            isGift: isGift === "true",
           }),
         });
         console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);
@@ -127,6 +130,7 @@ export async function POST(request: NextRequest) {
     <p style="color:#5f7892;font-size:14px;line-height:1.6;">
       Your gift for <strong>${name}</strong> has been sent to <strong>${recipientEmail}</strong>.
       They'll receive their certificate and a warm welcome from the Alliance.
+      ${giftMessage ? `<br><br><em>Included message:</em> ${giftMessage}` : ""}
     </p>
     <p style="color:#5f7892;font-size:13px;margin-top:16px;">
       Your referral code: <strong>${referralCode}</strong><br>

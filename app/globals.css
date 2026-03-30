@@ -1079,6 +1079,21 @@ textarea:focus-visible {
   text-wrap: balance;
 }
 
+.lux-status-block--nonsnack {
+  width: 83%;
+  font-size: calc(6.08 * var(--u));
+  letter-spacing: 0.004em;
+  line-height: 0.94;
+  text-wrap: nowrap;
+}
+
+.lux-status-block--business {
+  width: 82%;
+  font-size: calc(6.3 * var(--u));
+  letter-spacing: 0.008em;
+  text-wrap: nowrap;
+}
+
 /* Override coloured tier classes — luxury always dark navy */
 .certificate-page--luxury .certificate-tier--protected,
 .certificate-page--luxury .certificate-tier--nonsnack,

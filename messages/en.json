@@ -568,7 +568,7 @@
     "giftDetailsTitle": "Gift details",
     "giftMessageLabel": "Personal message (optional)",
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
-    "referredByBadge": "You were referred by a fellow diplomat. Welcome to the Alliance!",
+    "referredByBadge": "Referral credit is active for this purchase.",
     "referralTitle": "Your Alliance Career Starts Now",
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks.",
     "referralCopy": "Copy",
@@ -586,7 +586,11 @@
         "label": "US Letter",
         "description": "Best for the US and Canada. No cropping, slightly wider margins."
       }
-    }
+    },
+    "referredByLabel": "Referral code (optional)",
+    "referredByOptionalTag": "Optional",
+    "referredByPlaceholder": "e.g. SHA-ABCD",
+    "referredByHint": "Paste someone else's referral code if you want to credit their diplomatic career."
   },
   "registry": {
     "title": "The Diplomatic Registry",
@@ -635,7 +639,8 @@
     "careerPromoDesc": "Every diplomat starts as a Civilian. Refer friends, rise through the ranks, and maybe — just maybe — Finnley Mako will learn your name. From Probationary Liaison to Chief Shark Whisperer, your career in shark diplomacy awaits.",
     "careerPromoLink": "View the career ladder",
     "disclaimerTitle": "Registry disclaimer",
-    "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, make you part of a very exclusive list of people who paid money to be told they are not food."
+    "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, make you part of a very exclusive list of people who paid money to be told they are not food.",
+    "clickHint": "Click any diplomat to open their verification card."
   },
   "verifySample": {
     "badge": "Sample Certificate",

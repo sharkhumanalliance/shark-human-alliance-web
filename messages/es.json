@@ -568,7 +568,7 @@
     "giftDetailsTitle": "Detalles del regalo",
     "giftMessageLabel": "Mensaje personal (opcional)",
     "giftMessagePlaceholder": "ej. ¡Feliz cumpleaños! Ahora los tiburones saben que no estás en el menú.",
-    "referredByBadge": "Fuiste referido por un diplomático aliado. ¡Bienvenido a la Alianza!",
+    "referredByBadge": "El crédito por referido está activo para esta compra.",
     "referralTitle": "Tu carrera en la Alianza comienza ahora",
     "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango.",
     "referralCopy": "Copiar",
@@ -586,7 +586,11 @@
         "label": "US Letter",
         "description": "Ideal para EE. UU. y Canadá. Sin recortes, con márgenes ligeramente más amplios."
       }
-    }
+    },
+    "referredByLabel": "Código de referido (opcional)",
+    "referredByOptionalTag": "Opcional",
+    "referredByPlaceholder": "p. ej. SHA-ABCD",
+    "referredByHint": "Pega el código de referido de otra persona si quieres acreditar su carrera diplomática."
   },
   "registry": {
     "title": "El Registro Diplomático",
@@ -635,7 +639,8 @@
     "careerPromoDesc": "Todo diplomático empieza como Civil. Recomienda amigos, sube de rango y quizás — solo quizás — Finnley Mako aprenda tu nombre. De Enlace en Prácticas a Susurrador Jefe de Tiburones, tu carrera en diplomacia tiburonesca te espera.",
     "careerPromoLink": "Ver la escalera de rangos",
     "disclaimerTitle": "Descargo de responsabilidad del registro",
-    "disclaimerText": "Este registro no proporciona estatus legal, marino ni nutricional. La inclusión no reduce tu probabilidad estadística de ser el almuerzo de un tiburón. Sin embargo, te convierte en parte de una lista muy exclusiva de personas que pagaron dinero para que les dijeran que no son comida."
+    "disclaimerText": "Este registro no proporciona estatus legal, marino ni nutricional. La inclusión no reduce tu probabilidad estadística de ser el almuerzo de un tiburón. Sin embargo, te convierte en parte de una lista muy exclusiva de personas que pagaron dinero para que les dijeran que no son comida.",
+    "clickHint": "Haz clic en cualquier diplomático para abrir su tarjeta de verificación."
   },
   "verifySample": {
     "badge": "Certificado de muestra",

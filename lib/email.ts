@@ -35,8 +35,10 @@ export function certificateEmailHtml(params: {
   registryUrl: string;
   careerUrl: string;
   referralUrl?: string;
+  giftMessage?: string;
+  isGift?: boolean;
 }): string {
-  const { name, tier, registryId, referralCode, downloadUrl, registryUrl, careerUrl, referralUrl } = params;
+  const { name, tier, registryId, referralCode, downloadUrl, registryUrl, careerUrl, referralUrl, giftMessage, isGift } = params;
 
   const tierLabel: Record<string, string> = {
     basic: "Protected Friend",
@@ -59,8 +61,8 @@ export function certificateEmailHtml(params: {
     <!-- Header -->
     <div style="text-align:center;padding:32px 24px;background-color:#15324d;border-radius:24px 24px 0 0;">
       <div style="display:inline-block;width:56px;height:56px;line-height:56px;background-color:#2f80ed;border-radius:16px;color:white;font-weight:bold;font-size:18px;">SHA</div>
-      <h1 style="margin:16px 0 0;color:white;font-size:24px;font-weight:600;">Welcome to the Alliance, ${name}.</h1>
-      <p style="margin:8px 0 0;color:#a3c4e0;font-size:14px;">Your diplomatic status has been registered. The sharks have been notified (symbolically).</p>
+      <h1 style="margin:16px 0 0;color:white;font-size:24px;font-weight:600;">${isGift ? `A certificate has arrived for ${name}.` : `Welcome to the Alliance, ${name}.`}</h1>
+      <p style="margin:8px 0 0;color:#a3c4e0;font-size:14px;">${isGift ? `A fellow diplomat has arranged your paperwork.` : `Your diplomatic status has been registered. The sharks have been notified (symbolically).`}</p>
     </div>
 
     <!-- Body -->
@@ -78,6 +80,12 @@ export function certificateEmailHtml(params: {
       <div style="margin-top:24px;text-align:center;">
         <a href="${registryUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">View yourself in the Diplomatic Registry &rarr;</a>
       </div>
+
+      ${giftMessage ? `
+      <div style="margin-top:24px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:16px;">
+        <p style="margin:0 0 8px;font-size:12px;color:#9a3412;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Personal message</p>
+        <p style="margin:0;font-size:14px;line-height:1.7;color:#7c2d12;">${giftMessage}</p>
+      </div>` : ""}
 
       <!-- Referral section -->
       <div style="margin-top:32px;padding:24px;background-color:#edf8ff;border-radius:16px;text-align:center;">

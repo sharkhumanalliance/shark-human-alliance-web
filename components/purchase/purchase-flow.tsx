@@ -84,6 +84,16 @@ function PurchaseFlowInner() {
     }
   }, [referredByFromUrl]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const normalized = referredByCode.trim().toUpperCase();
+    if (normalized) {
+      window.localStorage.setItem("sha_referral_code", normalized);
+    } else {
+      window.localStorage.removeItem("sha_referral_code");
+    }
+  }, [referredByCode]);
+
   const tierPrices: Record<Tier, string> = {
     basic: "$5",
     protected: "$5",
@@ -172,11 +182,12 @@ function PurchaseFlowInner() {
           email: email.trim(),
           isGift,
           recipientEmail: recipientEmail.trim(),
-          referredBy: referredByCode || undefined,
+          referredBy: referredByCode.trim().toUpperCase() || undefined,
           locale,
           promoCode: promoCode.trim() || undefined,
           template,
           paperFormat,
+          giftMessage: giftMessage.trim(),
         }),
       });
 
@@ -419,6 +430,25 @@ function PurchaseFlowInner() {
                 className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
               <p className="mt-1.5 text-xs text-[var(--muted)]">{t("emailOptionalHint")}</p>
+            </div>
+
+            {/* Referral code */}
+            <div>
+              <div className="flex items-baseline justify-between gap-2">
+                <label htmlFor="referredByCode" className="text-sm font-semibold text-[var(--brand-dark)]">
+                  {t("referredByLabel")}
+                </label>
+                <span className="text-xs text-[var(--muted)]">{t("referredByOptionalTag")}</span>
+              </div>
+              <input
+                id="referredByCode"
+                type="text"
+                value={referredByCode}
+                onChange={(e) => setReferredByCode(e.target.value.toUpperCase().replace(/\s+/g, ""))}
+                placeholder={t("referredByPlaceholder")}
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm font-mono uppercase text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+              />
+              <p className="mt-1.5 text-xs text-[var(--muted)]">{t("referredByHint")}</p>
             </div>
 
             {/* Gift fields */}
