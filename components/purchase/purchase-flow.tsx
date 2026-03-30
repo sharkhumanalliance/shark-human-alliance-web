@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { trackEvent } from "@/components/analytics";
 
@@ -36,6 +37,7 @@ function PurchaseFlowInner() {
   const initialTier = (searchParams.get("tier") as Tier) || "protected";
   const initialName = searchParams.get("name") || "";
   const initialGift = searchParams.get("gift") === "true";
+  const initialPaper = (searchParams.get("paper") as PaperFormat) === "letter" ? "letter" : "a4";
   const referredByFromUrl = searchParams.get("ref") || "";
   const wasCanceled = searchParams.get("canceled") === "true";
 
@@ -64,6 +66,7 @@ function PurchaseFlowInner() {
   const [error, setError] = useState("");
   const [showEmailWarning, setShowEmailWarning] = useState(false);
   const [template, setTemplate] = useState<CertificateTemplate>("luxury");
+  const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
 
 
   useEffect(() => {
@@ -173,6 +176,7 @@ function PurchaseFlowInner() {
           locale,
           promoCode: promoCode.trim() || undefined,
           template,
+          paperFormat,
         }),
       });
 
@@ -263,6 +267,7 @@ function PurchaseFlowInner() {
                     date={currentDate}
                     registryId="SHA-XXXX"
                     template={template}
+                    paperFormat={paperFormat}
                   />
                 </div>
               </div>
@@ -295,6 +300,37 @@ function PurchaseFlowInner() {
                       <p className="mt-1 text-xs text-[var(--muted)]">
                         {t(`tiers.${tierOption}`)}
                       </p>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Paper size */}
+            <div>
+              <label className="text-sm font-semibold text-[var(--brand-dark)]">
+                {t("paperSizeLabel")}
+              </label>
+              <div className="mt-2 grid grid-cols-2 gap-3">
+                {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
+                  const isSelected = paperFormat === formatOption;
+                  return (
+                    <button
+                      key={formatOption}
+                      type="button"
+                      onClick={() => setPaperFormat(formatOption)}
+                      className={`rounded-xl border px-4 py-3 text-left transition ${
+                        isSelected
+                          ? "border-sky-400 bg-sky-50 shadow-sm"
+                          : "border-[var(--border)] bg-white hover:border-sky-200 hover:bg-sky-50/50"
+                      }`}
+                    >
+                      <div className="text-sm font-semibold text-[var(--brand-dark)]">
+                        {t(`paperSizes.${formatOption}.label`)}
+                      </div>
+                      <div className="mt-1 text-xs text-[var(--muted)]">
+                        {t(`paperSizes.${formatOption}.description`)}
+                      </div>
                     </button>
                   );
                 })}
@@ -506,6 +542,7 @@ function PurchaseFlowInner() {
                 date={currentDate}
                 registryId="SHA-XXXX"
                 template={template}
+                paperFormat={paperFormat}
               />
             </div>
           </div>

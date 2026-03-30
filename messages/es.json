@@ -574,7 +574,19 @@
     "referralCopy": "Copiar",
     "referralCareerLink": "Ver el escalafón completo",
     "downloadOnlyNotice": "Descarga ahora — este enlace no se guardará.",
-    "recipientEmailHint": "Úsalo si quieres que enviemos el certificado directamente."
+    "recipientEmailHint": "Úsalo si quieres que enviemos el certificado directamente.",
+    "paperSizeLabel": "Tamaño del papel",
+    "paperSizeHint": "Imprime en Tamaño real / 100% para obtener el mejor resultado.",
+    "paperSizes": {
+      "a4": {
+        "label": "A4",
+        "description": "Ideal para Europa y la mayoría de impresoras domésticas fuera de Norteamérica."
+      },
+      "letter": {
+        "label": "US Letter",
+        "description": "Ideal para EE. UU. y Canadá. Sin recortes, con márgenes ligeramente más amplios."
+      }
+    }
   },
   "registry": {
     "title": "El Registro Diplomático",

@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
       recipientEmail = "",
       referredBy = "",
       locale = "en",
+      paperFormat = "a4",
     } = meta;
 
     console.log(`[SHA Webhook] Payment completed for ${name} (${tier})`);
@@ -85,7 +86,7 @@ export async function POST(request: NextRequest) {
 
     // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
-    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${accessToken}`);
+    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${accessToken}&paper=${paperFormat === "letter" ? "letter" : "a4"}`);
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {

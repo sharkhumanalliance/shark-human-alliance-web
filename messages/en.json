@@ -574,7 +574,19 @@
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
     "downloadOnlyNotice": "Download now — this link won’t be stored.",
-    "recipientEmailHint": "Use this if you’d like us to send the certificate directly."
+    "recipientEmailHint": "Use this if you’d like us to send the certificate directly.",
+    "paperSizeLabel": "Paper size",
+    "paperSizeHint": "Print at Actual Size / 100% for the best result.",
+    "paperSizes": {
+      "a4": {
+        "label": "A4",
+        "description": "Best for Europe and most home printers outside North America."
+      },
+      "letter": {
+        "label": "US Letter",
+        "description": "Best for the US and Canada. No cropping, slightly wider margins."
+      }
+    }
   },
   "registry": {
     "title": "The Diplomatic Registry",

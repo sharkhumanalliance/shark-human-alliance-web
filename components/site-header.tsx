@@ -34,14 +34,14 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 overflow-x-clip border-b border-[var(--border)] bg-white/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between px-4 py-3 sm:px-6">
         <LocalizedLink href="/" className="flex min-w-0 shrink items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white">
             SHA
           </div>
-          <div className="hidden min-[420px]:block min-w-0">
+          <div className="min-w-0">
             <p className="truncate text-sm font-semibold tracking-wide text-[var(--brand-dark)] sm:whitespace-nowrap">
               {t("brand")}
             </p>
-            <p className="hidden text-[11px] text-[var(--muted)] md:block md:whitespace-nowrap">
+            <p className="hidden text-[11px] text-[var(--muted)] sm:block sm:whitespace-nowrap">
               {t("tagline")}
             </p>
           </div>

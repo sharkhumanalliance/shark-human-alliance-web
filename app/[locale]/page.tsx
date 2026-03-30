@@ -1,7 +1,6 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { MobileStickyCta } from "@/components/mobile-sticky-cta";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { HomeContent } from "@/components/home/home-content";
 import type { Metadata } from "next";
@@ -46,12 +45,11 @@ export default async function Home({ params }: Props) {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pb-16 md:pb-0">
+      <main id="main">
         <HeroSection />
         <HomeContent />
       </main>
       <SiteFooter />
-      <MobileStickyCta />
     </>
   );
 }

@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef, Suspense } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
@@ -31,7 +32,9 @@ function SuccessContentInner() {
   const [member, setMember] = useState<MemberData | null>(null);
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
+  const initialPaper = (searchParams.get("paper") as PaperFormat) === "letter" ? "letter" : "a4";
   const [template, setTemplate] = useState<CertificateTemplate>("luxury");
+  const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
   const purchaseTrackedRef = useRef(false);
 
   useEffect(() => {
@@ -87,7 +90,7 @@ function SuccessContentInner() {
 
   function handleDownloadCertificate() {
     if (!member) return;
-    trackEvent("certificate_download", { tier: member.tier, format: "a4" });
+    trackEvent("certificate_download", { tier: member.tier, format: paperFormat });
     if (!member.accessToken) {
       // Token not available — certificate not ready or legacy member without token.
       // Do not fall back to ID-based URL to avoid exposing predictable routes.
@@ -95,7 +98,7 @@ function SuccessContentInner() {
       return;
     }
     window.open(
-      `/${locale}/certificate/view?token=${member.accessToken}&template=${template}`,
+      `/${locale}/certificate/view?token=${member.accessToken}&template=${template}&paper=${paperFormat}`,
       "_blank",
       "noopener,noreferrer"
     );
@@ -170,6 +173,28 @@ function SuccessContentInner() {
           <CertificateTemplateSelector value={template} onChange={setTemplate} />
         </div>
 
+        {/* Paper size selector */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
+            const isSelected = paperFormat === formatOption;
+            return (
+              <button
+                key={formatOption}
+                type="button"
+                onClick={() => setPaperFormat(formatOption)}
+                className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                  isSelected
+                    ? "border-sky-400 bg-sky-50 text-[var(--brand-dark)] shadow-sm"
+                    : "border-[var(--border)] bg-white text-[var(--muted)] hover:border-sky-200 hover:text-[var(--brand-dark)]"
+                }`}
+              >
+                {formatOption === "letter" ? t("paperSizes.letter.label") : t("paperSizes.a4.label")}
+              </button>
+            );
+          })}
+          <p className="text-xs text-[var(--muted)]">{t("paperSizeHint")}</p>
+        </div>
+
         {/* Certificate visual preview */}
         <div className="mt-6">
           <CertificatePreview
@@ -180,6 +205,7 @@ function SuccessContentInner() {
             registryId={member.id.toUpperCase()}
             referralCode={member.referralCode}
             template={template}
+            paperFormat={paperFormat}
           />
         </div>
 
@@ -189,7 +215,7 @@ function SuccessContentInner() {
             onClick={handleDownloadCertificate}
             className="inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
           >
-            {t("downloadCert")} (A4)
+            {t("downloadCert")} ({paperFormat === "letter" ? t("paperSizes.letter.label") : t("paperSizes.a4.label")})
           </button>
 
           <LocalizedLink

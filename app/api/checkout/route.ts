@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
       locale,
       promoCode,
       template,
+      paperFormat = "a4",
     } = body;
 
     if (!tier || !TIER_PRICES[tier]) {
@@ -64,7 +65,7 @@ export async function POST(request: NextRequest) {
 
       console.log(`[SHA Checkout] Promo code ${promoCode} used — free registration for ${newMember.name}`);
 
-      const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}`;
+      const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}&paper=${paperFormat === "letter" ? "letter" : "a4"}`;
       return NextResponse.json({ url: successUrl });
     }
 
@@ -91,8 +92,8 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: "payment",
-      success_url: `${BASE_URL}/${loc}/purchase/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${BASE_URL}/${loc}/purchase?tier=${tier}&name=${encodeURIComponent(name)}&canceled=true`,
+      success_url: `${BASE_URL}/${loc}/purchase/success?session_id={CHECKOUT_SESSION_ID}&paper=${paperFormat === "letter" ? "letter" : "a4"}`,
+      cancel_url: `${BASE_URL}/${loc}/purchase?tier=${tier}&name=${encodeURIComponent(name)}&canceled=true&paper=${paperFormat === "letter" ? "letter" : "a4"}`,
       metadata: {
         tier,
         name,
@@ -103,6 +104,7 @@ export async function POST(request: NextRequest) {
         referredBy: referredBy || "",
         locale: loc,
         template: template || "",
+        paperFormat: paperFormat === "letter" ? "letter" : "a4",
       },
     });
 

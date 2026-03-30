@@ -5,19 +5,30 @@ import {
   CertificateDocument,
   type CertificateDocumentProps,
 } from "./certificate-document";
+import {
+  CertificateSheet,
+  getPaperDimensions,
+  type PaperFormat,
+} from "./certificate-sheet";
 
 /**
  * Preview wrapper that scales the 210 mm × 297 mm certificate artboard
  * into the available container width using CSS transform.
  */
 
-const PAPER_WIDTH_PX = 794; // 210 mm at 96 dpi
+const MM_TO_PX = 96 / 25.4;
 
-export function CertificatePreview(
-  props: Omit<CertificateDocumentProps, "className" | "priorityImages">
-) {
+type CertificatePreviewProps = Omit<CertificateDocumentProps, "className" | "priorityImages"> & {
+  paperFormat?: PaperFormat;
+};
+
+export function CertificatePreview(props: CertificatePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
+  const paperFormat = props.paperFormat || "a4";
+  const paper = getPaperDimensions(paperFormat);
+  const paperWidthPx = paper.width * MM_TO_PX;
+  const aspectRatio = (paper.height / paper.width) * 100;
 
   useEffect(() => {
     const el = containerRef.current;
@@ -25,7 +36,7 @@ export function CertificatePreview(
 
     function measure() {
       if (!el) return;
-      setScale(el.clientWidth / PAPER_WIDTH_PX);
+      setScale(el.clientWidth / paperWidthPx);
     }
 
     measure();
@@ -33,11 +44,11 @@ export function CertificatePreview(
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, []);
+  }, [paperWidthPx]);
 
   return (
     <div className="certificate-preview-shell">
-      <div className="certificate-preview-inner" ref={containerRef}>
+      <div className="certificate-preview-inner" ref={containerRef} style={{ paddingTop: `${aspectRatio}%` }}>
         {scale > 0 && (
           <div
             style={{
@@ -48,7 +59,9 @@ export function CertificatePreview(
               transformOrigin: "top left",
             }}
           >
-            <CertificateDocument {...props} />
+            <CertificateSheet paperFormat={paperFormat}>
+              <CertificateDocument {...props} />
+            </CertificateSheet>
           </div>
         )}
       </div>
@@ -57,3 +70,4 @@ export function CertificatePreview(
 }
 
 export { type CertificateDocumentProps, type CertificateTemplate } from "./certificate-document";
+export { type PaperFormat } from "./certificate-sheet";
