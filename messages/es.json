@@ -640,7 +640,8 @@
     "careerPromoLink": "Ver la escalera de rangos",
     "disclaimerTitle": "Descargo de responsabilidad del registro",
     "disclaimerText": "Este registro no proporciona estatus legal, marino ni nutricional. La inclusión no reduce tu probabilidad estadística de ser el almuerzo de un tiburón. Sin embargo, te convierte en parte de una lista muy exclusiva de personas que pagaron dinero para que les dijeran que no son comida.",
-    "clickHint": "Haz clic en cualquier diplomático para abrir su tarjeta de verificación."
+    "clickHint": "Haz clic en cualquier diplomático para abrir su tarjeta de verificación.",
+    "rankLabel": "Rango diplomático"
   },
   "verifySample": {
     "badge": "Certificado de muestra",
@@ -969,7 +970,9 @@
     "referralCodeLabel": "Código de referido:",
     "viewRegistry": "Ver Registro Diplomático",
     "joinThroughReferral": "Únete a la Alianza con el referido de este diplomático",
-    "joinAlliance": "Únete a la Alianza"
+    "joinAlliance": "Únete a la Alianza",
+    "allianceRank": "Rango en la alianza",
+    "rankProgress": "{count, plural, one {# referido exitoso} other {# referidos exitosos}}"
   },
   "certificateTemplates": {
     "luxury": {

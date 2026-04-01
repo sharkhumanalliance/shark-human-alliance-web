@@ -59,6 +59,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
           date={displayDate}
           registryId={member.id.toUpperCase()}
           referralCode={member.referralCode}
+          referralCount={member.referralCount}
           referralSourceCode={ref || member.referralCode}
         />
       </main>

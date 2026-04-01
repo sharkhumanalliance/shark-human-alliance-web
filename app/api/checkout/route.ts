@@ -1,5 +1,7 @@
+import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
+import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
 import {
   generateMemberId,
   generateUniqueReferralCode,
@@ -44,6 +46,7 @@ export async function POST(request: NextRequest) {
     if (promoCode && FREE_PROMO_CODES.includes(promoCode.toUpperCase().trim())) {
       const referralCode = await generateUniqueReferralCode();
       const freeSessionId = `promo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      const accessToken = generateAccessToken();
 
       const newMember = await createMember({
         id: generateMemberId(),
@@ -53,15 +56,79 @@ export async function POST(request: NextRequest) {
         dedication: (dedication || "").trim(),
         referralCode,
         referredBy: referredBy || undefined,
-        email: email ? email.trim() : undefined,
+        email: (email?.trim() || recipientEmail?.trim()) || undefined,
         stripeSessionId: freeSessionId,
-        accessToken: generateAccessToken(),
+        accessToken,
         template: template || undefined,
         locale: loc,
       });
 
       if (referredBy) {
         await incrementReferralCount(referredBy);
+      }
+
+      const targetEmail = isGift && recipientEmail ? recipientEmail.trim() : email?.trim();
+      const certificateUrl = buildAbsoluteLocalizedUrl(
+        BASE_URL,
+        loc,
+        `/certificate/view?token=${accessToken}&paper=${paperFormat === "letter" ? "letter" : "a4"}`
+      );
+
+      if (targetEmail && process.env.RESEND_API_KEY) {
+        try {
+          await getResend().emails.send({
+            from: EMAIL_FROM,
+            to: targetEmail,
+            subject: `Your Alliance Certificate — Welcome, ${name}!`,
+            html: certificateEmailHtml({
+              name,
+              tier,
+              registryId: newMember.id.toUpperCase(),
+              referralCode,
+              downloadUrl: certificateUrl,
+              registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, `/registry?highlight=${newMember.id}`),
+              careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career"),
+              referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, buildReferralHref(referralCode)),
+              giftMessage: giftMessage || undefined,
+              isGift,
+            }),
+          });
+          console.log(`[SHA Checkout] Promo certificate email sent to ${targetEmail}`);
+        } catch (emailError) {
+          console.error("[SHA Checkout] Promo email send failed:", emailError);
+        }
+      }
+
+      if (isGift && recipientEmail && email && email.trim() !== recipientEmail.trim() && process.env.RESEND_API_KEY) {
+        try {
+          await getResend().emails.send({
+            from: EMAIL_FROM,
+            to: email.trim(),
+            subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,
+            html: `<!DOCTYPE html>
+<html><body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
+<div style="max-width:600px;margin:0 auto;padding:40px 20px;">
+  <div style="background:white;border-radius:24px;padding:32px;text-align:center;border:1px solid #d4e8f7;">
+    <div style="font-size:48px;">🎁</div>
+    <h1 style="color:#15324d;font-size:24px;margin:16px 0 8px;">Gift Delivered!</h1>
+    <p style="color:#5f7892;font-size:14px;line-height:1.6;">
+      Your gift for <strong>${name}</strong> has been sent to <strong>${recipientEmail}</strong>.
+      They'll receive their certificate and a warm welcome from the Alliance.
+      ${giftMessage ? `<br><br><em>Included message:</em> ${giftMessage}` : ""}
+    </p>
+    <p style="color:#5f7892;font-size:13px;margin-top:16px;">
+      Your referral code: <strong>${referralCode}</strong><br>
+      Share it with friends to climb the Alliance career ladder!
+    </p>
+    <a href="${buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career")}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
+  </div>
+  <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
+</div>
+</body></html>`,
+          });
+        } catch (emailError) {
+          console.error("[SHA Checkout] Promo buyer notification failed:", emailError);
+        }
       }
 
       console.log(`[SHA Checkout] Promo code ${promoCode} used — free registration for ${newMember.name}`);

@@ -640,7 +640,8 @@
     "careerPromoLink": "View the career ladder",
     "disclaimerTitle": "Registry disclaimer",
     "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, make you part of a very exclusive list of people who paid money to be told they are not food.",
-    "clickHint": "Click any diplomat to open their verification card."
+    "clickHint": "Click any diplomat to open their verification card.",
+    "rankLabel": "Diplomatic rank"
   },
   "verifySample": {
     "badge": "Sample Certificate",
@@ -969,7 +970,9 @@
     "referralCodeLabel": "Referral code:",
     "viewRegistry": "View Diplomatic Registry",
     "joinThroughReferral": "Join the Alliance through this diplomat's referral",
-    "joinAlliance": "Join the Alliance"
+    "joinAlliance": "Join the Alliance",
+    "allianceRank": "Alliance rank",
+    "rankProgress": "{count, plural, one {# successful referral} other {# successful referrals}}"
   },
   "certificateTemplates": {
     "luxury": {

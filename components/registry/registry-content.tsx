@@ -334,11 +334,26 @@ export function RegistryContent() {
                       >
                         {t(`tierLabels.${member.tier}`)}
                       </span>
-                      {/* Rank badge */}
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[var(--surface-soft)] px-2.5 py-1 text-xs font-medium text-[var(--muted)]">
-                        <span>{rank.icon}</span>
-                        <span>{rank.label}</span>
-                      </span>
+                    </div>
+
+                    <div className="mt-4 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-3 shadow-sm">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-amber-700/80">
+                        {t("rankLabel")}
+                      </p>
+                      <div className="mt-1.5 flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="flex items-center gap-2 text-sm font-semibold text-[var(--brand-dark)]">
+                            <span className="text-lg" aria-hidden="true">{rank.icon}</span>
+                            <span className="truncate">{rank.label}</span>
+                          </p>
+                          <p className="mt-1 text-xs text-amber-700/80">
+                            {member.referralCount || 0} {t("viralRecruitersCount")}
+                          </p>
+                        </div>
+                        <span className="shrink-0 rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-amber-800">
+                          VIP
+                        </span>
+                      </div>
                     </div>
 
                     {member.dedication && (

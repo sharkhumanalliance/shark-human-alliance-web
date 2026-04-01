@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { getRankInfo } from "@/lib/referral-ranks";
 
 type VerifyContentProps = {
   name: string;
@@ -9,6 +10,7 @@ type VerifyContentProps = {
   date: string;
   registryId: string;
   referralCode: string;
+  referralCount?: number;
   referralSourceCode?: string;
 };
 
@@ -53,12 +55,14 @@ export function VerifyContent({
   date,
   registryId,
   referralCode,
+  referralCount,
   referralSourceCode,
 }: VerifyContentProps) {
   const t = useTranslations("verify");
   const tierLabel = getTierLabel(tier);
   const tierColor = getTierColor(tier);
   const quip = getQuip(registryId);
+  const rank = getRankInfo(referralCount || 0);
   const purchaseHref = referralSourceCode
     ? `/purchase?tier=protected&ref=${encodeURIComponent(referralSourceCode)}`
     : "/purchase?tier=protected";
@@ -103,6 +107,22 @@ export function VerifyContent({
         >
           {tierLabel}
         </p>
+
+        <div className="mb-6 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-5 text-center shadow-sm">
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.24em]"
+            style={{ color: "#9a6700" }}
+          >
+            {t("allianceRank")}
+          </p>
+          <div className="mt-2 flex items-center justify-center gap-2 text-[var(--brand-dark)]">
+            <span className="text-2xl" aria-hidden="true">{rank.icon}</span>
+            <span className="text-lg font-semibold">{rank.label}</span>
+          </div>
+          <p className="mt-2 text-xs" style={{ color: "var(--muted)" }}>
+            {t("rankProgress", { count: referralCount || 0 })}
+          </p>
+        </div>
 
         <div className="mb-6 rounded-xl bg-[var(--surface-soft)] p-5">
           <p
