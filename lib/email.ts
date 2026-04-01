@@ -2,7 +2,7 @@ import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { Resend } from "resend";
 
 export const EMAIL_FROM =
-  process.env.EMAIL_FROM || "Shark Human Alliance <diplomacy@sharkhumanalliance.com>";
+  process.env.EMAIL_FROM || "Shark Human Alliance <hello@updates.sharkhumanalliance.com>";
 
 /**
  * Returns a Resend client instance.

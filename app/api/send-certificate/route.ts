@@ -14,11 +14,11 @@ export async function POST(request: NextRequest) {
   }
 
   if (!process.env.RESEND_API_KEY) {
-    console.warn("[SHA Email] RESEND_API_KEY not set — skipping email send");
-    return NextResponse.json({
-      success: true,
-      message: "Email sending not configured (no API key).",
-    });
+    console.warn("[SHA Email] RESEND_API_KEY not set");
+    return NextResponse.json(
+      { error: "Email sending is not configured" },
+      { status: 500 }
+    );
   }
 
   try {
