@@ -108,7 +108,7 @@ function SuccessContentInner() {
   if (loading) {
     return (
       <section className="py-32">
-        <div className="mx-auto max-w-lg px-6 text-center">
+        <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
           <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
             {t("processing")}
@@ -125,7 +125,7 @@ function SuccessContentInner() {
   if (!member) {
     return (
       <section className="py-14">
-        <div className="mx-auto max-w-lg px-6 text-center">
+        <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-amber-100 text-4xl">
             ⏳
           </div>
@@ -155,7 +155,7 @@ function SuccessContentInner() {
 
   return (
     <section className="py-14">
-      <div className="mx-auto max-w-4xl px-6">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <div className="text-center">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-teal-100 text-4xl">
             🦈
@@ -298,7 +298,7 @@ export function SuccessContent() {
     <Suspense
       fallback={
         <section className="py-32">
-          <div className="mx-auto max-w-lg px-6 text-center">
+          <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
             <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>
         </section>

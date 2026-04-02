@@ -22,7 +22,7 @@ export function MembershipPageContent() {
   return (
     <>
       <section className="relative overflow-hidden py-14 lg:py-16">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <div className="inline-flex rounded-lg border border-[var(--border)] bg-white px-3 py-1.5 text-sm font-medium text-[var(--brand-dark)]">
               {t("badge")}
@@ -60,7 +60,7 @@ export function MembershipPageContent() {
       </section>
 
       <section id="membership" className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("tiersLabel")}
@@ -100,7 +100,7 @@ export function MembershipPageContent() {
       </section>
 
       <section id="comparison" className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("comparisonLabel")}
@@ -110,7 +110,29 @@ export function MembershipPageContent() {
             </h2>
           </div>
 
-          <div className="mt-10 overflow-x-auto rounded-xl border border-[var(--border)] bg-white shadow-sm">
+          <div className="mt-10 space-y-4 md:hidden">
+            {comparisonRows.map((row) => (
+              <article key={row.label} className="rounded-xl border border-[var(--border)] bg-white p-5 shadow-sm">
+                <h3 className="text-sm font-semibold text-[var(--brand-dark)]">{row.label}</h3>
+                <dl className="mt-4 space-y-3 text-sm">
+                  <div className="flex items-start justify-between gap-4">
+                    <dt className="text-[var(--muted)]">{t("comparisonHeaders.protected")}</dt>
+                    <dd className="max-w-[60%] text-right text-[var(--brand-dark)]">{row.protected}</dd>
+                  </div>
+                  <div className="flex items-start justify-between gap-4">
+                    <dt className="text-[var(--muted)]">{t("comparisonHeaders.nonsnack")}</dt>
+                    <dd className="max-w-[60%] text-right text-[var(--brand-dark)]">{row.nonsnack}</dd>
+                  </div>
+                  <div className="flex items-start justify-between gap-4">
+                    <dt className="text-[var(--muted)]">{t("comparisonHeaders.business")}</dt>
+                    <dd className="max-w-[60%] text-right text-[var(--brand-dark)]">{row.business}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-10 hidden overflow-x-auto rounded-xl border border-[var(--border)] bg-white shadow-sm md:block">
             <div className="grid min-w-[600px] grid-cols-4 border-b border-[var(--border)] bg-[var(--surface-soft)] text-sm font-semibold text-[var(--brand-dark)]">
               <div className="p-4">{t("comparisonHeaders.feature")}</div>
               <div className="p-4">{t("comparisonHeaders.protected")}</div>
@@ -138,7 +160,7 @@ export function MembershipPageContent() {
       </section>
 
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 md:grid-cols-3">
             {[
               { step: "01", title: t("step1Title"), text: t("step1Text"), borderColor: "border-sky-100", stepColor: "text-sky-700" },
@@ -162,7 +184,7 @@ export function MembershipPageContent() {
       </section>
 
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("clarificationLabel")}
@@ -178,7 +200,7 @@ export function MembershipPageContent() {
       </section>
 
       <section id="faq" className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("faqLabel")}
@@ -208,7 +230,7 @@ export function MembershipPageContent() {
 
       {/* Business certification */}
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="rounded-xl border border-indigo-200 bg-gradient-to-b from-indigo-50 to-white p-8 shadow-sm sm:p-12">
             <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
               <div>
@@ -257,7 +279,7 @@ export function MembershipPageContent() {
       </section>
 
       <section id="join" className="pb-16 pt-4">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
               {t("joinLabel")}

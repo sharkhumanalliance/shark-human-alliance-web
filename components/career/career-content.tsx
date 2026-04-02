@@ -143,7 +143,7 @@ export function CareerContent() {
     <>
       {/* Hero Section */}
       <section className="py-14 lg:py-16">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("hero.label")}
@@ -160,7 +160,7 @@ export function CareerContent() {
 
       {/* Career Ladder Section */}
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("ladder.label")}
@@ -212,7 +212,7 @@ export function CareerContent() {
 
       {/* Check Your Rank Section */}
       <section className="py-14">
-        <div className="mx-auto max-w-2xl px-6">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-200 bg-white p-8 shadow-sm">
             <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
               {t("checkRank.title")}
@@ -333,7 +333,7 @@ export function CareerContent() {
 
       {/* How Referrals Work Section */}
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("howWorks.label")}
@@ -389,7 +389,7 @@ export function CareerContent() {
 
       {/* Bottom CTA Section */}
       <section className="pb-16 pt-4">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("cta.title")}

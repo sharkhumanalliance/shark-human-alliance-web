@@ -16,7 +16,7 @@ export function FaqContent() {
     <>
       {/* Hero */}
       <section className="py-14 lg:py-16">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("label")}
@@ -33,7 +33,7 @@ export function FaqContent() {
 
       {/* Questions */}
       <section className="pb-14">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="space-y-4">
             {items.map((item) => (
               <article
@@ -54,7 +54,7 @@ export function FaqContent() {
 
       {/* CTA */}
       <section className="pb-16">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("ctaTitle")}

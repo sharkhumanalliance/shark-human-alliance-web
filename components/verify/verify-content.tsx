@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
-import { getRankInfo } from "@/lib/referral-ranks";
+import { getRankInfo, getRankUi } from "@/lib/referral-ranks";
 
 type VerifyContentProps = {
   name: string;
@@ -63,12 +63,13 @@ export function VerifyContent({
   const tierColor = getTierColor(tier);
   const quip = getQuip(registryId);
   const rank = getRankInfo(referralCount || 0);
+  const rankUi = getRankUi(rank.id);
   const purchaseHref = referralSourceCode
     ? `/purchase?tier=protected&ref=${encodeURIComponent(referralSourceCode)}`
     : "/purchase?tier=protected";
 
   return (
-    <section className="mx-auto max-w-xl px-5 py-16 md:py-24">
+    <section className="mx-auto max-w-xl px-4 py-14 sm:px-5 md:py-24">
       {/* Badge */}
       <div className="mb-6 flex items-center justify-center gap-2">
         <svg
@@ -93,7 +94,7 @@ export function VerifyContent({
       </div>
 
       {/* Card */}
-      <div className="rounded-2xl border border-[var(--border)] bg-white p-8 shadow-lg">
+      <div className="rounded-2xl border border-[var(--border)] bg-white p-6 shadow-lg sm:p-8">
         <h1
           className="mb-1 text-center text-2xl font-bold"
           style={{ color: "var(--brand-dark)" }}
@@ -108,18 +109,22 @@ export function VerifyContent({
           {tierLabel}
         </p>
 
-        <div className="mb-6 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-5 text-center shadow-sm">
-          <p
-            className="text-[11px] font-bold uppercase tracking-[0.24em]"
-            style={{ color: "#9a6700" }}
-          >
-            {t("allianceRank")}
-          </p>
-          <div className="mt-2 flex items-center justify-center gap-2 text-[var(--brand-dark)]">
+        <div className={`mb-6 rounded-2xl p-5 text-center ${rankUi.panelClass}`}>
+          <div className="flex items-center justify-center gap-2">
+            <p className={`text-[11px] font-bold uppercase tracking-[0.24em] ${rankUi.eyebrowClass}`}>
+              {t("allianceRank")}
+            </p>
+            {rankUi.chipLabel ? (
+              <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${rankUi.chipClass}`}>
+                {rankUi.chipLabel}
+              </span>
+            ) : null}
+          </div>
+          <div className={`mt-2 flex items-center justify-center gap-2 ${rankUi.labelClass}`}>
             <span className="text-2xl" aria-hidden="true">{rank.icon}</span>
             <span className="text-lg font-semibold">{rank.label}</span>
           </div>
-          <p className="mt-2 text-xs" style={{ color: "var(--muted)" }}>
+          <p className={`mt-2 text-xs ${rankUi.metaClass}`}>
             {t("rankProgress", { count: referralCount || 0 })}
           </p>
         </div>
@@ -133,7 +138,7 @@ export function VerifyContent({
           </p>
         </div>
 
-        <dl className="grid grid-cols-2 gap-4 text-sm">
+        <dl className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
           <div>
             <dt
               className="mb-0.5 text-xs font-bold uppercase tracking-wider"
@@ -222,7 +227,7 @@ export function VerifyContent({
       <div className="mt-8 flex flex-col items-center gap-3">
         <LocalizedLink
           href="/registry"
-          className="rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors"
+          className="rounded-full px-6 py-3 text-sm font-bold text-white transition-colors"
           style={{ background: "var(--brand)" }}
         >
           {t("viewRegistry")}

@@ -218,7 +218,7 @@ function PurchaseFlowInner() {
   if (isRedirecting) {
     return (
       <section className="py-32">
-        <div className="mx-auto max-w-lg px-6 text-center">
+        <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
           <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
             {t("redirecting")}
@@ -230,7 +230,7 @@ function PurchaseFlowInner() {
 
   return (
     <section className="py-14 lg:py-16">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
             {t("title")}
@@ -587,7 +587,7 @@ export function PurchaseFlow() {
     <Suspense
       fallback={
         <section className="py-32">
-          <div className="mx-auto max-w-lg px-6 text-center">
+          <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
             <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>
         </section>

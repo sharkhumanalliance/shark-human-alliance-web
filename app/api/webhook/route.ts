@@ -1,7 +1,7 @@
 import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
-import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
+import { EMAIL_FROM, certificateEmailHtml, sendEmailStrict } from "@/lib/email";
 import {
   generateMemberId,
   generateUniqueReferralCode,
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {
-        await getResend().emails.send({
+        await sendEmailStrict({
           from: EMAIL_FROM,
           to: targetEmail,
           subject: `Your Alliance Certificate — Welcome, ${name}!`,
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
     // Also notify buyer if gift
     if (isGift === "true" && recipientEmail && email && email !== recipientEmail && process.env.RESEND_API_KEY) {
       try {
-        await getResend().emails.send({
+        await sendEmailStrict({
           from: EMAIL_FROM,
           to: email,
           subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,

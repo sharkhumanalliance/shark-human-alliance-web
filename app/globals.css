@@ -24,6 +24,28 @@
   box-sizing: border-box;
 }
 
+html, body {
+  max-width: 100%;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+select,
+textarea {
+  min-height: 44px;
+}
+
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;

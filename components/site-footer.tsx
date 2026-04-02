@@ -8,7 +8,7 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-[var(--border)] bg-[var(--surface-soft)]">
-      <div className="mx-auto max-w-6xl px-6 py-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-2.5">

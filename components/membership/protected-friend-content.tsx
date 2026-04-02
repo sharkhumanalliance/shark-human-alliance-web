@@ -16,7 +16,7 @@ export function ProtectedFriendContent() {
   return (
     <>
       <section className="py-14 lg:py-16">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <div className="inline-flex rounded-lg border border-teal-200 bg-white px-3 py-1.5 text-sm font-medium text-[var(--brand-dark)]">
               {t("badge")}
@@ -84,7 +84,7 @@ export function ProtectedFriendContent() {
       </section>
 
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
               {t("whyLabel")}
@@ -120,7 +120,7 @@ export function ProtectedFriendContent() {
       </section>
 
       <section id="buy" className="py-14">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
               {t("buyLabel")}
@@ -151,7 +151,7 @@ export function ProtectedFriendContent() {
       </section>
 
       <section className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
               {t("faqLabel")}

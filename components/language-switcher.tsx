@@ -35,10 +35,11 @@ export function LanguageSwitcher() {
           onClick={() => switchLocale(loc.code)}
           disabled={isPending}
           title={loc.label}
-          className={`flex h-8 w-8 items-center justify-center rounded-full text-base transition sm:h-9 sm:w-9 sm:text-lg ${
+          aria-label={loc.label}
+          className={`flex h-10 w-10 items-center justify-center rounded-full text-lg transition sm:h-11 sm:w-11 sm:text-lg ${
             locale === loc.code
               ? "bg-sky-100 shadow-sm"
-              : "opacity-50 hover:opacity-100 hover:bg-sky-50"
+              : "opacity-65 hover:opacity-100 hover:bg-sky-50"
           } ${isPending ? "cursor-wait" : "cursor-pointer"}`}
         >
           {loc.flag}

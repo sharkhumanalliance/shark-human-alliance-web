@@ -57,7 +57,7 @@ export default async function TermsPage({ params }: Props) {
       <SiteHeader />
       <main id="main" className="pb-20 md:pb-0">
         <section className="bg-white py-14 lg:py-20">
-          <div className="mx-auto max-w-4xl px-6">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("eyebrow")}
             </p>
@@ -74,7 +74,7 @@ export default async function TermsPage({ params }: Props) {
         </section>
 
         <section className="bg-[var(--surface-soft)] py-12 lg:py-16">
-          <div className="mx-auto max-w-4xl px-6">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <div className="space-y-5">
               {sections.map((section) => (
                 <article key={section} className="rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">

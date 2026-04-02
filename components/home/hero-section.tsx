@@ -10,7 +10,7 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-center gap-8 px-6 py-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12 lg:py-14">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 py-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12 lg:py-14">
         <div className="flex max-w-xl flex-col justify-center lg:pr-3">
           <div className="mb-3 inline-flex w-fit items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-xs font-semibold text-orange-800 sm:text-sm">
             {t("giftBadge")}
@@ -42,7 +42,7 @@ export function HeroSection() {
           <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
             <LocalizedLink
               href="/purchase?tier=protected"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
             >
               {t("ctaPrimary")}
             </LocalizedLink>

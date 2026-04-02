@@ -5,7 +5,7 @@ import { LocalizedLink } from "@/components/ui/localized-link";
 import { buildLocalizedPath } from "@/lib/navigation";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { RANKS, getRankInfo } from "@/lib/referral-ranks";
+import { RANKS, getRankInfo, getRankUi } from "@/lib/referral-ranks";
 
 type Member = {
   id: string;
@@ -138,7 +138,7 @@ export function RegistryContent() {
     <>
       {/* Hero */}
       <section className="py-14 lg:py-16">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <h1 className="text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
@@ -156,7 +156,7 @@ export function RegistryContent() {
 
           {/* Counter */}
           {!loading && (
-            <div className="mt-10 inline-flex items-center gap-3 rounded-lg border border-[var(--border)] bg-white px-6 py-3 shadow-sm">
+            <div className="mt-10 inline-flex items-center gap-3 rounded-lg border border-[var(--border)] bg-white px-5 py-3 shadow-sm sm:px-6">
               <span className="text-3xl font-semibold text-[var(--brand-dark)]">
                 {members.length}
               </span>
@@ -181,7 +181,7 @@ export function RegistryContent() {
                 </p>
               </div>
             </div>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <div className="relative min-w-0 flex-grow">
                 <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-[var(--muted)]" aria-hidden="true">🔎</span>
                 <input
@@ -196,7 +196,7 @@ export function RegistryContent() {
               <button
                 onClick={handleVerify}
                 disabled={!verifyInput.trim() || verifying}
-                className="shrink-0 rounded-lg bg-teal-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="shrink-0 rounded-lg bg-teal-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed sm:py-3"
               >
                 {verifying ? t("verifyLoading") : t("verifyButton")}
               </button>
@@ -262,7 +262,7 @@ export function RegistryContent() {
 
       {/* Members grid */}
       <section className="pb-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           {loading ? (
             <div className="py-14 text-center" role="status" aria-live="polite">
               <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" aria-hidden="true" />
@@ -291,6 +291,7 @@ export function RegistryContent() {
               {filtered.map((member) => {
                 const style = TIER_STYLES[member.tier];
                 const rank = getRankInfo(member.referralCount || 0);
+                const rankUi = getRankUi(rank.id);
                 return (
                   <article
                     key={member.id}
@@ -336,23 +337,25 @@ export function RegistryContent() {
                       </span>
                     </div>
 
-                    <div className="mt-4 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-3 shadow-sm">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-amber-700/80">
-                        {t("rankLabel")}
-                      </p>
-                      <div className="mt-1.5 flex items-center justify-between gap-3">
-                        <div className="min-w-0">
-                          <p className="flex items-center gap-2 text-sm font-semibold text-[var(--brand-dark)]">
-                            <span className="text-lg" aria-hidden="true">{rank.icon}</span>
-                            <span className="truncate">{rank.label}</span>
-                          </p>
-                          <p className="mt-1 text-xs text-amber-700/80">
-                            {member.referralCount || 0} {t("viralRecruitersCount")}
-                          </p>
-                        </div>
-                        <span className="shrink-0 rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-amber-800">
-                          VIP
-                        </span>
+                    <div className={`mt-4 rounded-2xl p-3 ${rankUi.panelClass}`}>
+                      <div className="flex items-center justify-between gap-3">
+                        <p className={`text-[10px] font-bold uppercase tracking-[0.24em] ${rankUi.eyebrowClass}`}>
+                          {t("rankLabel")}
+                        </p>
+                        {rankUi.chipLabel ? (
+                          <span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${rankUi.chipClass}`}>
+                            {rankUi.chipLabel}
+                          </span>
+                        ) : null}
+                      </div>
+                      <div className="mt-1.5 min-w-0">
+                        <p className={`flex items-center gap-2 text-sm font-semibold ${rankUi.labelClass}`}>
+                          <span className="text-lg" aria-hidden="true">{rank.icon}</span>
+                          <span className="truncate">{rank.label}</span>
+                        </p>
+                        <p className={`mt-1 text-xs ${rankUi.metaClass}`}>
+                          {member.referralCount || 0} {t("viralRecruitersCount")}
+                        </p>
                       </div>
                     </div>
 
@@ -378,7 +381,7 @@ export function RegistryContent() {
       {/* Viral sections — only shown when members exist */}
       {!loading && members.length > 0 && (
         <section className="pb-16">
-          <div className="mx-auto max-w-6xl px-6 space-y-12">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-12">
             {/* Newest Diplomats */}
             {newestDiplomats.length > 0 && (
               <div>
@@ -390,7 +393,7 @@ export function RegistryContent() {
                     const s = TIER_STYLES[m.tier];
                     const rank = getRankInfo(m.referralCount || 0);
                     return (
-                      <div key={m.id} onClick={() => openMember(m.id)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMember(m.id); } }} className={`flex cursor-pointer items-center gap-3 rounded-xl border ${s.border} bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20`}>
+                      <div key={m.id} onClick={() => openMember(m.id)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMember(m.id); } }} className={`flex cursor-pointer items-center gap-3 rounded-xl border ${s.border} bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:p-4`}>
                         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-sm">
                           {s.icon}
                         </div>
@@ -453,7 +456,7 @@ export function RegistryContent() {
                         </div>
                         <LocalizedLink
                           href="/career"
-                          className="shrink-0 text-xs font-semibold text-amber-700 hover:text-amber-900"
+                          className="shrink-0 rounded-lg px-2 py-2 text-xs font-semibold text-amber-700 transition hover:bg-amber-50 hover:text-amber-900"
                         >
                           {t("viralRecruitersRank")} →
                         </LocalizedLink>
@@ -492,7 +495,7 @@ export function RegistryContent() {
 
       {/* Join CTA */}
       <section className="pb-16">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-10 text-center text-white sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight text-white">
               {t("joinCta")}
@@ -511,7 +514,7 @@ export function RegistryContent() {
 
       {/* Disclaimer */}
       <section className="pb-14">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-6">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("disclaimerTitle")}

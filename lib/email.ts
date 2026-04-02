@@ -23,6 +23,25 @@ export function getResend(): Resend {
   return _resend;
 }
 
+
+
+export async function sendEmailStrict(
+  payload: Parameters<Resend["emails"]["send"]>[0]
+) {
+  const { data, error } = await getResend().emails.send(payload);
+
+  if (error) {
+    const details = typeof error === "object" ? JSON.stringify(error) : String(error);
+    throw new Error(`[SHA Email] Resend rejected email: ${details}`);
+  }
+
+  if (!data?.id) {
+    throw new Error("[SHA Email] Resend did not return a message id.");
+  }
+
+  return data;
+}
+
 /**
  * Generate the HTML email template for a certificate delivery.
  */

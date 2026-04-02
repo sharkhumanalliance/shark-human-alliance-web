@@ -401,7 +401,7 @@ export function WantedContent() {
     <div className="min-h-screen bg-[var(--background)]">
       {/* Hero */}
       <section className="py-14 bg-gradient-to-b from-red-950/5 to-transparent">
-        <div className="mx-auto max-w-3xl px-6 text-center">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
             {t("label")}
           </p>
@@ -416,7 +416,7 @@ export function WantedContent() {
 
       {/* Generator */}
       <section className="pb-14">
-        <div className="mx-auto max-w-xl px-6">
+        <div className="mx-auto max-w-xl px-4 sm:px-6">
           {!generated ? (
             /* ── Form state ──────────────────────────── */
             <div className="rounded-xl border border-red-100 bg-white p-8 shadow-sm">
@@ -502,7 +502,7 @@ export function WantedContent() {
                   🛡️ {t("giftCta", { name: name.trim() || t("defaultName") })}
                 </LocalizedLink>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <button
                     onClick={handleDownload}
                     disabled={downloading}
@@ -543,7 +543,7 @@ export function WantedContent() {
 
       {/* How it works strip */}
       <section className="border-t border-[var(--border)] bg-white py-14">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
             {t("howTitle")}
           </h2>

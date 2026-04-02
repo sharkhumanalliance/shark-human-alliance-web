@@ -1,6 +1,6 @@
 import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
-import { getResend, EMAIL_FROM, certificateEmailHtml } from "@/lib/email";
+import { EMAIL_FROM, certificateEmailHtml, sendEmailStrict } from "@/lib/email";
 import { getMemberById } from "@/lib/members";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     const locale = member.locale || "en";
     const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${member.accessToken}`);
 
-    await getResend().emails.send({
+    await sendEmailStrict({
       from: EMAIL_FROM,
       to,
       subject: `Your Alliance Certificate — Welcome, ${name}!`,

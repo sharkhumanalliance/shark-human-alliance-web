@@ -59,7 +59,7 @@ export function ImpactContent() {
     <>
       {/* Hero */}
       <section className="py-14 lg:py-16">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
               {t("label")}
@@ -76,7 +76,7 @@ export function ImpactContent() {
 
       {/* Fund split */}
       <section className="pb-12">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
             {t("splitTitle")}
           </h2>
@@ -148,7 +148,7 @@ export function ImpactContent() {
 
       {/* Partner organizations */}
       <section className="py-12 bg-[var(--surface-soft)]">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
             {t("partnersTitle")}
           </h2>
@@ -194,7 +194,7 @@ export function ImpactContent() {
 
       {/* How we select partners */}
       <section className="py-12">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
             {t("selectionTitle")}
           </h2>
@@ -218,7 +218,7 @@ export function ImpactContent() {
 
       {/* Reporting & Transparency */}
       <section className="py-12 bg-[var(--brand-dark)]">
-        <div className="mx-auto max-w-6xl px-6 text-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 text-white">
           <h2 className="text-3xl font-semibold tracking-tight">
             {t("reportingTitle")}
           </h2>
@@ -244,7 +244,7 @@ export function ImpactContent() {
 
       {/* Pre-first-report notice */}
       <section className="py-12">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-8">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-xl">
@@ -265,7 +265,7 @@ export function ImpactContent() {
 
       {/* CTA */}
       <section className="pb-16">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("ctaTitle")}
