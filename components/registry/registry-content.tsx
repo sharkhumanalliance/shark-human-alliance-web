@@ -140,7 +140,7 @@ export function RegistryContent() {
       <section className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
-            <h1 className="text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
             <p className="mt-3 text-lg text-[var(--muted)]">
@@ -156,7 +156,7 @@ export function RegistryContent() {
 
           {/* Counter */}
           {!loading && (
-            <div className="mt-10 inline-flex items-center gap-3 rounded-lg border border-[var(--border)] bg-white px-5 py-3 shadow-sm sm:px-6">
+            <div className="mt-10 flex w-full flex-col items-start gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 shadow-sm sm:inline-flex sm:w-auto sm:flex-row sm:items-center sm:gap-3 sm:px-6">
               <span className="text-3xl font-semibold text-[var(--brand-dark)]">
                 {members.length}
               </span>
@@ -322,7 +322,7 @@ export function RegistryContent() {
                       </div>
                       <button
                         onClick={(e) => { e.stopPropagation(); copyProfileLink(member.id); }}
-                        className="shrink-0 rounded-full p-2 text-xs text-[var(--muted)] transition hover:bg-sky-50 hover:text-[var(--brand)]"
+                        className="shrink-0 rounded-full p-2.5 text-sm text-[var(--muted)] transition hover:bg-sky-50 hover:text-[var(--brand)]"
                         title={t("copyLink")}
                       >
                         {copiedId === member.id ? "✓" : "🔗"}
@@ -417,7 +417,7 @@ export function RegistryContent() {
               <p className="mt-2 text-sm leading-6 text-red-700/70">
                 {t("viralWantedDesc")}
               </p>
-              <div className="mt-4 flex flex-wrap gap-3">
+              <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <LocalizedLink
                   href="/purchase?tier=protected&gift=true"
                   className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
@@ -444,7 +444,7 @@ export function RegistryContent() {
                   {topRecruiters.map((m, idx) => {
                     const rank = getRankInfo(m.referralCount || 0);
                     return (
-                      <div key={m.id} onClick={() => openMember(m.id)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMember(m.id); } }} className="flex cursor-pointer items-center gap-4 rounded-xl border border-amber-100 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20">
+                      <div key={m.id} onClick={() => openMember(m.id)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMember(m.id); } }} className="flex cursor-pointer flex-col items-start gap-3 rounded-xl border border-amber-100 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:flex-row sm:items-center sm:gap-4">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-orange-300 text-sm font-bold text-white">
                           #{idx + 1}
                         </div>
@@ -456,7 +456,7 @@ export function RegistryContent() {
                         </div>
                         <LocalizedLink
                           href="/career"
-                          className="shrink-0 rounded-lg px-2 py-2 text-xs font-semibold text-amber-700 transition hover:bg-amber-50 hover:text-amber-900"
+                          className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-3 py-2 text-xs font-semibold text-amber-700 transition hover:bg-amber-50 hover:text-amber-900 sm:shrink-0"
                         >
                           {t("viralRecruitersRank")} →
                         </LocalizedLink>
@@ -469,7 +469,7 @@ export function RegistryContent() {
 
             {/* Career ladder promo */}
             <div className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-white p-6">
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-100 text-2xl">
                   🎖️
                 </div>
@@ -503,7 +503,7 @@ export function RegistryContent() {
             <div className="mt-8">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
                 🛡️ {t("joinCtaButton")}
               </LocalizedLink>

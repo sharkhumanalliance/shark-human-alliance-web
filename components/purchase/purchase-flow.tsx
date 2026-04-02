@@ -217,7 +217,7 @@ function PurchaseFlowInner() {
 
   if (isRedirecting) {
     return (
-      <section className="py-32">
+      <section className="py-24 sm:py-32">
         <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
           <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
@@ -229,13 +229,13 @@ function PurchaseFlowInner() {
   }
 
   return (
-    <section className="py-14 lg:py-16">
+    <section className="py-10 sm:py-12 lg:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+        <div className="mx-auto max-w-2xl text-center">
+          <h1 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl lg:text-4xl">
             {t("title")}
           </h1>
-          <p className="mt-3 text-lg text-[var(--muted)]">
+          <p className="mt-3 text-base leading-7 text-[var(--muted)] sm:text-lg">
             {t("subtitle")}
           </p>
         </div>
@@ -261,14 +261,17 @@ function PurchaseFlowInner() {
           </div>
         )}
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.1fr]">
+        <div className="mt-10 grid gap-8 md:gap-10 lg:mt-12 lg:grid-cols-[1fr_1.1fr]">
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <details className="overflow-hidden rounded-xl border border-[var(--border)] bg-white lg:hidden">
-              <summary className="cursor-pointer list-none px-5 py-4 text-sm font-semibold text-[var(--brand-dark)]">
-                {t("livePreview")}
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+            <details className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm lg:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 text-sm font-semibold text-[var(--brand-dark)] sm:px-5">
+                <span>{t("livePreview")}</span>
+                <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  PDF
+                </span>
               </summary>
-              <div className="border-t border-[var(--border)] px-4 py-4">
+              <div className="border-t border-[var(--border)] bg-[var(--surface-soft)]/50 px-3 py-4 sm:px-4">
                 <CertificateTemplateSelector value={template} onChange={setTemplate} />
                 <div className="mt-4">
                   <CertificatePreview
@@ -302,7 +305,7 @@ function PurchaseFlowInner() {
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`rounded-xl border ${colors[tierOption]} p-4 text-center transition hover:shadow-md`}
+                      className={`min-h-[108px] rounded-2xl border ${colors[tierOption]} px-4 py-4 text-center transition hover:shadow-md`}
                     >
                       <p className="text-xl">{tierIcons[tierOption]}</p>
                       <p className="mt-1 text-lg font-semibold text-[var(--brand-dark)]">
@@ -322,7 +325,7 @@ function PurchaseFlowInner() {
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("paperSizeLabel")}
               </label>
-              <div className="mt-2 grid grid-cols-2 gap-3">
+              <div className="mt-2 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
                 {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
                   const isSelected = paperFormat === formatOption;
                   return (
@@ -349,7 +352,7 @@ function PurchaseFlowInner() {
             </div>
 
             {/* Gift toggle */}
-            <div className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+            <div className="flex min-h-[56px] items-center justify-between gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4">
               <button
                 type="button"
                 onClick={() => { const next = !isGift; setIsGift(next); trackEvent("gift_toggle", { tier, enabled: next }); }}
@@ -363,7 +366,7 @@ function PurchaseFlowInner() {
                   }`}
                 />
               </button>
-              <span className="text-sm font-medium text-[var(--brand-dark)]">
+              <span className="flex-1 text-sm font-medium text-[var(--brand-dark)]">
                 {t("giftToggle")}
               </span>
             </div>
@@ -398,13 +401,13 @@ function PurchaseFlowInner() {
                 className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
               />
               {tier !== "business" && (
-                <div className="mt-2 flex flex-wrap gap-1.5">
+                <div className="mt-2 flex flex-wrap gap-2">
                   {dedicationSuggestions.map((suggestion) => (
                     <button
                       key={suggestion}
                       type="button"
                       onClick={() => setDedication(suggestion)}
-                      className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1 text-xs text-[var(--muted)] transition hover:border-sky-300 hover:bg-sky-50 hover:text-[var(--brand-dark)]"
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition hover:border-sky-300 hover:bg-sky-50 hover:text-[var(--brand-dark)] sm:w-auto sm:py-1"
                     >
                       {suggestion}
                     </button>
@@ -415,7 +418,7 @@ function PurchaseFlowInner() {
 
             {/* Email */}
             <div>
-              <div className="flex items-baseline justify-between gap-2">
+              <div className="flex flex-col gap-1 min-[420px]:flex-row min-[420px]:items-baseline min-[420px]:justify-between">
                 <label htmlFor="email" className="text-sm font-semibold text-[var(--brand-dark)]">
                   {t("emailLabel")}
                 </label>
@@ -434,7 +437,7 @@ function PurchaseFlowInner() {
 
             {/* Referral code */}
             <div>
-              <div className="flex items-baseline justify-between gap-2">
+              <div className="flex flex-col gap-1 min-[420px]:flex-row min-[420px]:items-baseline min-[420px]:justify-between">
                 <label htmlFor="referredByCode" className="text-sm font-semibold text-[var(--brand-dark)]">
                   {t("referredByLabel")}
                 </label>
@@ -453,7 +456,7 @@ function PurchaseFlowInner() {
 
             {/* Gift fields */}
             {isGift && (
-              <div className="space-y-4 rounded-xl border border-orange-100 bg-orange-50/30 p-5">
+              <div className="space-y-4 rounded-2xl border border-orange-100 bg-orange-50/30 p-4 sm:p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-orange-700">🎁 {t("giftDetailsTitle")}</p>
                 <div>
                   <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -508,7 +511,7 @@ function PurchaseFlowInner() {
             </div>
 
             {/* Stripe secure payment note */}
-            <div className="flex items-center gap-3 rounded-xl border border-teal-100 bg-teal-50/30 p-4">
+            <div className="flex items-start gap-3 rounded-2xl border border-teal-100 bg-teal-50/30 p-4">
               <span className="text-lg">🔒</span>
               <div>
                 <p className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -528,7 +531,7 @@ function PurchaseFlowInner() {
                 <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                   <button
                     type="submit"
-                    className="flex-1 rounded-lg bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-800"
+                    className="min-h-[44px] flex-1 rounded-lg bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-800"
                   >
                     {t("noEmailContinue")}
                   </button>
@@ -538,7 +541,7 @@ function PurchaseFlowInner() {
                       setShowEmailWarning(false);
                       document.getElementById("email")?.focus();
                     }}
-                    className="flex-1 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-50"
+                    className="min-h-[44px] flex-1 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-50"
                   >
                     {t("noEmailAddEmail")}
                   </button>
@@ -550,7 +553,7 @@ function PurchaseFlowInner() {
             <button
               type="submit"
               disabled={!name.trim() || isRedirecting}
-              className="w-full rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {promoCode.trim()
                 ? t("submitButtonPromo")
@@ -559,7 +562,7 @@ function PurchaseFlowInner() {
           </form>
 
           {/* Live certificate preview */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:block lg:self-start">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("livePreview")}
             </p>
@@ -586,7 +589,7 @@ export function PurchaseFlow() {
   return (
     <Suspense
       fallback={
-        <section className="py-32">
+        <section className="py-24 sm:py-32">
           <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
             <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>

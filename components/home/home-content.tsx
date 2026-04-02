@@ -48,13 +48,13 @@ export function HomeContent() {
 
   return (
     <>
-      <section className="border-y border-[var(--border)] bg-white/80 py-10 lg:py-12">
+      <section className="border-y border-[var(--border)] bg-white/80 py-8 sm:py-10 lg:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("valueHook.label")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("valueHook.title")}
             </h2>
           </div>
@@ -77,7 +77,7 @@ export function HomeContent() {
                 text: t("valueHook.point3Text"),
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-5 shadow-sm">
+              <div key={item.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 shadow-sm sm:p-5">
                 <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-lg shadow-sm" aria-hidden="true">
                   {item.icon}
                 </div>
@@ -93,11 +93,11 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section id="certificate-preview" className="bg-[var(--surface-soft)] py-16">
+      <section id="certificate-preview" className="bg-[var(--surface-soft)] py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
-            <div className="lg:sticky lg:top-24">
-              <p className="max-w-md text-base font-medium leading-relaxed text-[var(--brand-dark)] md:text-lg">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
+            <div className="rounded-2xl border border-[var(--border)] bg-white/70 p-4 shadow-sm sm:p-5 lg:sticky lg:top-24 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
+              <p className="max-w-md text-sm font-medium leading-7 text-[var(--brand-dark)] sm:text-base md:text-lg">
                 {t("about.certPreviewLabel")}
               </p>
 
@@ -105,7 +105,7 @@ export function HomeContent() {
                 <label htmlFor="homepage-preview-name" className="sr-only">
                   {t("about.inputPlaceholder")}
                 </label>
-                <div className="flex items-center gap-3 rounded-xl border border-teal-200 bg-white px-5 py-4 shadow-sm transition focus-within:border-teal-400 focus-within:shadow-md">
+                <div className="flex items-center gap-3 rounded-xl border border-teal-200 bg-white px-4 py-3.5 shadow-sm transition focus-within:border-teal-400 focus-within:shadow-md sm:px-5 sm:py-4">
                   <span className="text-lg" aria-hidden="true">✍️</span>
                   <input
                     id="homepage-preview-name"
@@ -125,13 +125,13 @@ export function HomeContent() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col xl:flex-row">
                 <LocalizedLink
                   href={previewPurchaseHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto lg:w-full xl:w-auto"
                 >
                   🛡️ {t("about.ctaBuy")}
                 </LocalizedLink>
                 <LocalizedLink
                   href={previewGiftHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50 sm:w-auto lg:w-full xl:w-auto"
                 >
                   🎁 {t("about.ctaGift")}
                 </LocalizedLink>
@@ -153,21 +153,21 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section id="membership" className="bg-[var(--brand-dark)] py-16 lg:py-20">
+      <section id="membership" className="bg-[var(--brand-dark)] py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-300">
               {t("membershipSection.label")}
             </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-white">
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
               {t("membershipSection.title")}
             </h2>
-            <p className="mt-3 text-lg leading-8 text-sky-100/80">
+            <p className="mt-3 text-base leading-7 text-sky-100/80 sm:text-lg sm:leading-8">
               {t("membershipSection.description")}
             </p>
           </div>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-2 md:items-stretch">
+          <div className="mt-7 grid gap-5 md:mt-8 md:grid-cols-2 md:items-stretch md:gap-6">
             <MembershipCard
               variant="protected"
               title={t("membershipSection.protectedTitle")}
@@ -199,13 +199,13 @@ export function HomeContent() {
             />
           </div>
 
-          <div className="mt-6 rounded-2xl border border-indigo-200/30 bg-white/10 p-5 text-sky-50">
+          <div className="mt-6 rounded-2xl border border-indigo-200/30 bg-white/10 p-4 text-sky-50 sm:p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-300">
               {t("membershipSection.businessEyebrow")}
             </p>
             <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="max-w-3xl">
-                <h3 className="text-2xl font-semibold text-white">
+                <h3 className="text-xl font-semibold text-white sm:text-2xl">
                   {t("membershipSection.businessTitle")} — {t("membershipSection.businessPrice")}
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-sky-100/80">
@@ -214,7 +214,7 @@ export function HomeContent() {
               </div>
               <LocalizedLink
                 href="/purchase?tier=business"
-                className="inline-flex items-center justify-center rounded-lg border border-indigo-300/40 bg-indigo-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-400"
+                className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-indigo-300/40 bg-indigo-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-400 sm:w-auto"
               >
                 {t("membershipSection.businessCta")}
               </LocalizedLink>
@@ -223,25 +223,25 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section id="real-impact" className="py-14">
+      <section id="real-impact" className="py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("realImpact.label")}
             </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("realImpact.title")}
             </h2>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+          <div className="mt-7 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
             {[
               { icon: "🦈", color: "text-[var(--brand-dark)]", key: "1" },
               { icon: "🤝", color: "text-[var(--accent)]", key: "2" },
               { icon: "⚠️", color: "text-[var(--brand-dark)]", key: "3" },
               { icon: "🌍", color: "text-teal-600", key: "4" },
             ].map((stat) => (
-              <div key={stat.key} className="rounded-xl border border-[var(--border)] bg-white p-5 text-center shadow-sm">
+              <div key={stat.key} className="rounded-xl border border-[var(--border)] bg-white p-4 text-center shadow-sm sm:p-5">
                 <span className="text-2xl">{stat.icon}</span>
                 <p className={`mt-2 text-3xl font-bold md:text-4xl ${stat.color}`}>
                   {t(`realImpact.stat${stat.key}Value`)}
@@ -282,7 +282,7 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section className="bg-[var(--brand-dark)] py-14">
+      <section className="bg-[var(--brand-dark)] py-12 sm:py-14">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             {t("earlyAdopter.title")}
@@ -293,13 +293,13 @@ export function HomeContent() {
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <LocalizedLink
               href="/purchase?tier=protected"
-              className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto"
             >
               {t("earlyAdopter.cta")}
             </LocalizedLink>
             <LocalizedLink
               href="/faq"
-              className="inline-flex items-center justify-center rounded-lg border border-sky-300/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/20"
+              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-sky-300/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/20 sm:w-auto"
             >
               {t("faq.allQuestions")} →
             </LocalizedLink>

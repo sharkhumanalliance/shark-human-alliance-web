@@ -38,7 +38,7 @@ export function FaqContent() {
             {items.map((item) => (
               <article
                 key={item.question}
-                className="rounded-xl border border-[var(--border)] bg-white px-6 py-5 shadow-sm"
+                className="rounded-xl border border-[var(--border)] bg-white px-5 py-5 shadow-sm sm:px-6"
               >
                 <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
                   {item.question}
@@ -55,7 +55,7 @@ export function FaqContent() {
       {/* CTA */}
       <section className="pb-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white sm:px-12">
+          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-5 py-10 text-center text-white sm:px-8 sm:py-12 sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("ctaTitle")}
             </h2>
@@ -65,7 +65,7 @@ export function FaqContent() {
             <div className="mt-6">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
                 🛡️ {t("ctaButton")}
               </LocalizedLink>

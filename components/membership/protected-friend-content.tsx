@@ -22,7 +22,7 @@ export function ProtectedFriendContent() {
               {t("badge")}
             </div>
 
-            <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+            <h1 className="mt-5 max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
 
@@ -33,13 +33,13 @@ export function ProtectedFriendContent() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)] sm:w-auto"
               >
                 {t("ctaPrimary")}
               </LocalizedLink>
               <LocalizedLink
                 href="/membership"
-                className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50 sm:w-auto"
               >
                 {t("ctaSecondary")}
               </LocalizedLink>
@@ -50,12 +50,12 @@ export function ProtectedFriendContent() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-[var(--border)] bg-white p-8 shadow-sm">
+          <div className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-sm sm:p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
               {t("includedLabel")}
             </p>
 
-            <p className="mt-4 text-4xl font-semibold text-[var(--brand-dark)]">
+            <p className="mt-4 text-3xl font-semibold text-[var(--brand-dark)] sm:text-4xl">
               $5
             </p>
 
@@ -89,7 +89,7 @@ export function ProtectedFriendContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
               {t("whyLabel")}
             </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("whyTitle")}
             </h2>
             <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
@@ -121,7 +121,7 @@ export function ProtectedFriendContent() {
 
       <section id="buy" className="py-14">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
+          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-5 py-10 text-white sm:px-8 sm:py-12 sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
               {t("buyLabel")}
             </p>
@@ -135,13 +135,13 @@ export function ProtectedFriendContent() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <LocalizedLink
                 href="/membership"
-                className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50 sm:w-auto"
               >
                 {t("buyCtaPrimary")}
               </LocalizedLink>
               <LocalizedLink
                 href="/#faq"
-                className="inline-flex items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10 sm:w-auto"
               >
                 {t("buyCtaSecondary")}
               </LocalizedLink>
@@ -156,7 +156,7 @@ export function ProtectedFriendContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
               {t("faqLabel")}
             </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("faqTitle")}
             </h2>
           </div>

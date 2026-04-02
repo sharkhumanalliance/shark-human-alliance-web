@@ -68,16 +68,16 @@ export function MembershipCard({
   return (
     <div className={popular ? "relative" : ""}>
       {popular && popularLabel && (
-        <div className="absolute -top-3 left-6 z-10 inline-flex rounded-full bg-[var(--accent)] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
+        <div className="absolute -top-3 left-4 z-10 inline-flex rounded-full bg-[var(--accent)] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white shadow-lg sm:left-6 sm:px-4 sm:text-xs">
           {popularLabel}
         </div>
       )}
       <article
         id={id}
-        className={`scroll-mt-28 rounded-xl border ${getBorderClass(
+        className={`scroll-mt-28 flex h-full flex-col rounded-xl border ${getBorderClass(
           variant,
           popular
-        )} bg-white p-5 sm:p-6 ${popular ? "shadow-md ring-1 ring-teal-400/20" : "shadow-sm"} h-full flex flex-col`}
+        )} bg-white p-4 sm:p-6 ${popular ? "shadow-md ring-1 ring-teal-400/20" : "shadow-sm"}`}
       >
         <div
           className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getBadgeClass(
@@ -91,9 +91,9 @@ export function MembershipCard({
           {price}
         </p>
 
-        <p className="mt-3 min-h-[4rem] text-sm leading-6 text-[var(--muted)] md:min-h-[4.5rem]">{description}</p>
+        <p className="mt-3 text-sm leading-6 text-[var(--muted)] sm:min-h-[4rem] md:min-h-[4.5rem]">{description}</p>
 
-        <ul className="mt-5 space-y-2.5 flex-grow">
+        <ul className="mt-5 flex-grow space-y-2.5">
           {features.map((feature) => (
             <li
               key={feature}
@@ -107,7 +107,7 @@ export function MembershipCard({
 
         <LocalizedLink
           href={href}
-          className={`mt-6 inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
+          className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
             variant
           )}`}
         >

@@ -25,7 +25,7 @@ export default async function PurchaseSuccessPage({ params }: Props) {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pb-20 md:pb-0">
+      <main id="main" className="pb-12 md:pb-0">
         <SuccessContent />
       </main>
       <SiteFooter />

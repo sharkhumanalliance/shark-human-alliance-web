@@ -405,7 +405,7 @@ export function WantedContent() {
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
             {t("label")}
           </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+          <h1 className="mt-3 text-3xl font-bold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
             {t("title")}
           </h1>
           <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
@@ -565,7 +565,7 @@ export function WantedContent() {
           <div className="mt-10">
             <LocalizedLink
               href="/purchase?tier=protected&gift=true"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8"
             >
               🎁 {t("bottomCta")}
             </LocalizedLink>

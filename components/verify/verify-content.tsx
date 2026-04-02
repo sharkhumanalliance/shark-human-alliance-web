@@ -69,9 +69,9 @@ export function VerifyContent({
     : "/purchase?tier=protected";
 
   return (
-    <section className="mx-auto max-w-xl px-4 py-14 sm:px-5 md:py-24">
+    <section className="mx-auto max-w-xl px-4 py-10 sm:px-5 sm:py-12 md:py-24">
       {/* Badge */}
-      <div className="mb-6 flex items-center justify-center gap-2">
+      <div className="mb-6 flex flex-wrap items-center justify-center gap-2 text-center">
         <svg
           width="28"
           height="28"
@@ -94,22 +94,22 @@ export function VerifyContent({
       </div>
 
       {/* Card */}
-      <div className="rounded-2xl border border-[var(--border)] bg-white p-6 shadow-lg sm:p-8">
+      <div className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-lg sm:p-8">
         <h1
-          className="mb-1 text-center text-2xl font-bold"
+          className="mb-1 text-center text-xl font-bold break-words sm:text-2xl"
           style={{ color: "var(--brand-dark)" }}
         >
           {name}
         </h1>
 
         <p
-          className="mb-6 text-center text-lg font-semibold"
+          className="mb-6 text-center text-base font-semibold sm:text-lg"
           style={{ color: tierColor, fontVariant: "small-caps" }}
         >
           {tierLabel}
         </p>
 
-        <div className={`mb-6 rounded-2xl p-5 text-center ${rankUi.panelClass}`}>
+        <div className={`mb-6 rounded-2xl p-4 text-center sm:p-5 ${rankUi.panelClass}`}>
           <div className="flex items-center justify-center gap-2">
             <p className={`text-[11px] font-bold uppercase tracking-[0.24em] ${rankUi.eyebrowClass}`}>
               {t("allianceRank")}
@@ -120,7 +120,7 @@ export function VerifyContent({
               </span>
             ) : null}
           </div>
-          <div className={`mt-2 flex items-center justify-center gap-2 ${rankUi.labelClass}`}>
+          <div className={`mt-2 flex flex-wrap items-center justify-center gap-2 ${rankUi.labelClass}`}>
             <span className="text-2xl" aria-hidden="true">{rank.icon}</span>
             <span className="text-lg font-semibold">{rank.label}</span>
           </div>
@@ -159,7 +159,7 @@ export function VerifyContent({
             </dt>
             <dd
               style={{ color: "var(--foreground)" }}
-              className="font-mono font-semibold"
+              className="font-mono font-semibold break-all"
             >
               {registryId}
             </dd>
@@ -173,7 +173,7 @@ export function VerifyContent({
             </dt>
             <dd
               style={{ color: "var(--foreground)" }}
-              className="font-mono font-semibold"
+              className="font-mono font-semibold break-all"
             >
               {referralCode}
             </dd>
@@ -201,7 +201,7 @@ export function VerifyContent({
       </p>
 
       {referralSourceCode ? (
-        <div className="mt-8 rounded-2xl border border-[color:rgba(16,185,129,0.24)] bg-[color:rgba(16,185,129,0.08)] p-5 text-center shadow-sm">
+        <div className="mt-8 rounded-2xl border border-[color:rgba(16,185,129,0.24)] bg-[color:rgba(16,185,129,0.08)] p-4 text-center shadow-sm sm:p-5">
           <p
             className="text-[11px] font-bold uppercase tracking-[0.24em]"
             style={{ color: "var(--brand)" }}
@@ -224,17 +224,17 @@ export function VerifyContent({
       ) : null}
 
       {/* CTA */}
-      <div className="mt-8 flex flex-col items-center gap-3">
+      <div className="mt-8 flex flex-col items-stretch gap-3 sm:items-center">
         <LocalizedLink
           href="/registry"
-          className="rounded-full px-6 py-3 text-sm font-bold text-white transition-colors"
+          className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-white transition-colors sm:w-auto"
           style={{ background: "var(--brand)" }}
         >
           {t("viewRegistry")}
         </LocalizedLink>
         <LocalizedLink
           href={purchaseHref}
-          className="text-center text-sm font-medium transition-colors hover:underline"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--border)] bg-white px-5 py-3 text-center text-sm font-medium transition-colors hover:border-sky-300 hover:no-underline sm:w-auto"
           style={{ color: "var(--brand)" }}
         >
           {referralSourceCode

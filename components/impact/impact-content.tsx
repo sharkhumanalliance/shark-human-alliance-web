@@ -64,7 +64,7 @@ export function ImpactContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">
               {t("label")}
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
             <p className="mt-3 text-lg leading-7 text-[var(--muted)]">
@@ -88,7 +88,7 @@ export function ImpactContent() {
             {TIERS.map((tier) => (
               <div
                 key={tier.amountKey}
-                className={`rounded-xl border ${tier.colorBorder} bg-gradient-to-b ${tier.colorBg} to-white p-8`}
+                className={`rounded-xl border ${tier.colorBorder} bg-gradient-to-b ${tier.colorBg} to-white p-6 sm:p-8`}
               >
                 <div
                   className={`flex h-14 w-14 items-center justify-center rounded-lg ${tier.colorIcon} text-2xl`}
@@ -129,7 +129,7 @@ export function ImpactContent() {
 
           {/* Operations note */}
           <div className="mt-6 rounded-xl border border-sky-200 bg-sky-50/50 p-6">
-            <div className="flex items-start gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sky-100 text-lg">
                 ⚙️
               </div>
@@ -163,7 +163,7 @@ export function ImpactContent() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex gap-5 rounded-xl border border-teal-100 bg-white p-6 shadow-sm transition hover:border-teal-300 hover:shadow-md"
+                className="group flex flex-col gap-4 rounded-xl border border-teal-100 bg-white p-5 shadow-sm transition hover:border-teal-300 hover:shadow-md sm:flex-row sm:gap-5 sm:p-6"
               >
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-2xl">
                   {icon}
@@ -245,7 +245,7 @@ export function ImpactContent() {
       {/* Pre-first-report notice */}
       <section className="py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-8">
+          <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-5 sm:p-8">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-xl">
                 📋
@@ -266,7 +266,7 @@ export function ImpactContent() {
       {/* CTA */}
       <section className="pb-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-center text-white sm:px-12">
+          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-5 py-10 text-center text-white sm:px-8 sm:py-12 sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("ctaTitle")}
             </h2>
@@ -276,7 +276,7 @@ export function ImpactContent() {
             <div className="mt-6">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto"
               >
                 {t("ctaButton")}
               </LocalizedLink>

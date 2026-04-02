@@ -148,7 +148,7 @@ export function CareerContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("hero.label")}
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("hero.title")}
             </h1>
             <p className="mt-3 text-lg leading-7 text-[var(--muted)]">
@@ -254,11 +254,11 @@ export function CareerContent() {
             {referralData && (
               <div className="mt-8 space-y-6">
                 {/* Current Rank Display */}
-                <div className="rounded-lg border border-sky-200 bg-white p-6">
+                <div className="rounded-lg border border-sky-200 bg-white p-5 sm:p-6">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
                     {t("checkRank.currentRank")}
                   </p>
-                  <div className="mt-4 flex items-center gap-4">
+                  <div className="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                     <div className="text-5xl">{currentRank?.icon}</div>
                     <div>
                       <h3 className="text-2xl font-bold text-[var(--brand-dark)]">
@@ -275,12 +275,12 @@ export function CareerContent() {
 
                 {/* Progress to Next Rank */}
                 {nextRank && (
-                  <div className="rounded-lg border border-sky-200 bg-white p-6">
+                  <div className="rounded-lg border border-sky-200 bg-white p-5 sm:p-6">
                     <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
                       {t("checkRank.progressToNext")}
                     </p>
                     <div className="mt-4">
-                      <div className="flex items-end justify-between">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl">{nextRank.icon}</span>
                           <span className="font-semibold text-[var(--brand-dark)]">
@@ -304,22 +304,22 @@ export function CareerContent() {
                 )}
 
                 {/* Referral Link */}
-                <div className="rounded-lg border border-sky-200 bg-white p-6">
+                <div className="rounded-lg border border-sky-200 bg-white p-5 sm:p-6">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
                     {t("checkRank.yourLink")}
                   </p>
-                  <div className="mt-4 flex gap-2">
+                  <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                     <input
                       type="text"
                       value={referralLink}
                       readOnly
-                      className="flex-grow rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-mono text-[var(--brand-dark)]"
+                      className="flex-grow rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-mono text-[var(--brand-dark)] sm:min-w-0"
                     />
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(referralLink);
                       }}
-                      className="rounded-lg bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                      className="min-h-[48px] rounded-lg bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:shrink-0"
                     >
                       {t("checkRank.copy")}
                     </button>
@@ -390,7 +390,7 @@ export function CareerContent() {
       {/* Bottom CTA Section */}
       <section className="pb-16 pt-4">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
+          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-5 py-10 text-white sm:px-8 sm:py-12 sm:px-12">
             <h2 className="text-3xl font-semibold tracking-tight">
               {t("cta.title")}
             </h2>
@@ -400,7 +400,7 @@ export function CareerContent() {
             <div className="mt-6">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-lg font-bold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
                 🚀 {t("cta.button")}
               </LocalizedLink>

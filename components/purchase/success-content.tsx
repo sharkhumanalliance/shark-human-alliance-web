@@ -107,8 +107,8 @@ function SuccessContentInner() {
   // Loading state
   if (loading) {
     return (
-      <section className="py-32">
-        <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
+      <section className="py-24 sm:py-32">
+        <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
           <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
             {t("processing")}
@@ -124,12 +124,12 @@ function SuccessContentInner() {
   // Member not found (webhook hasn't fired or invalid session)
   if (!member) {
     return (
-      <section className="py-14">
-        <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
+      <section className="py-10 sm:py-14">
+        <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-amber-100 text-4xl">
             ⏳
           </div>
-          <h1 className="mt-6 text-2xl font-semibold text-[var(--brand-dark)]">
+          <h1 className="mt-6 text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
             {t("successPending")}
           </h1>
           <p className="mt-3 text-sm text-[var(--muted)]">
@@ -137,7 +137,7 @@ function SuccessContentInner() {
           </p>
           <LocalizedLink
             href="/"
-            className="mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+            className="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
           >
             {t("backHome")}
           </LocalizedLink>
@@ -160,21 +160,21 @@ function SuccessContentInner() {
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-teal-100 text-4xl">
             🦈
           </div>
-          <h1 className="mt-6 text-3xl font-semibold text-[var(--brand-dark)]">
+          <h1 className="mt-6 text-2xl font-semibold text-[var(--brand-dark)] sm:text-3xl">
             {t("successTitle")}
           </h1>
-          <p className="mt-3 text-lg text-[var(--muted)]">
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg">
             {t("successText")}
           </p>
         </div>
 
         {/* Template selector */}
-        <div className="mt-10">
+        <div className="mt-8 sm:mt-10">
           <CertificateTemplateSelector value={template} onChange={setTemplate} />
         </div>
 
         {/* Paper size selector */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-6 mx-auto grid max-w-xl grid-cols-1 gap-3 min-[420px]:grid-cols-2">
           {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
             const isSelected = paperFormat === formatOption;
             return (
@@ -182,7 +182,7 @@ function SuccessContentInner() {
                 key={formatOption}
                 type="button"
                 onClick={() => setPaperFormat(formatOption)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                className={`min-h-[46px] rounded-full border px-4 py-2 text-sm font-semibold transition ${
                   isSelected
                     ? "border-sky-400 bg-sky-50 text-[var(--brand-dark)] shadow-sm"
                     : "border-[var(--border)] bg-white text-[var(--muted)] hover:border-sky-200 hover:text-[var(--brand-dark)]"
@@ -192,7 +192,7 @@ function SuccessContentInner() {
               </button>
             );
           })}
-          <p className="text-xs text-[var(--muted)]">{t("paperSizeHint")}</p>
+          <p className="min-[420px]:col-span-2 text-center text-xs text-[var(--muted)]">{t("paperSizeHint")}</p>
         </div>
 
         {/* Certificate visual preview */}
@@ -210,17 +210,17 @@ function SuccessContentInner() {
         </div>
 
         {/* Actions */}
-        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
           <button
             onClick={handleDownloadCertificate}
-            className="inline-flex items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)] sm:w-auto"
           >
             {t("downloadCert")} ({paperFormat === "letter" ? t("paperSizes.letter.label") : t("paperSizes.a4.label")})
           </button>
 
           <LocalizedLink
             href={`/registry?highlight=${member.id}`}
-            className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50 sm:w-auto"
           >
             {t("viewRegistry")}
           </LocalizedLink>
@@ -229,19 +229,19 @@ function SuccessContentInner() {
         {/* Referral section */}
         {member.referralCode && (
           <div className="mt-10 mx-auto max-w-xl">
-            <div className="rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-6 text-center">
+            <div className="rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-4 text-center sm:p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
                 {t("referralTitle")}
               </p>
               <p className="mt-2 text-sm text-[var(--muted)]">
                 {t("referralText")}
               </p>
-              <div className="mt-4 flex items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-3 mx-auto max-w-sm">
+              <div className="mx-auto mt-4 flex max-w-sm flex-col items-stretch gap-2 rounded-xl border border-[var(--border)] bg-white p-3 sm:flex-row sm:items-center sm:px-4 sm:py-3">
                 <input
                   type="text"
                   value={`${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`}
                   readOnly
-                  className="flex-grow bg-transparent text-sm font-mono text-[var(--brand-dark)] focus:outline-none truncate"
+                  className="min-w-0 flex-grow bg-transparent text-sm font-mono leading-6 text-[var(--brand-dark)] focus:outline-none"
                 />
                 <button
                   onClick={() => {
@@ -252,7 +252,7 @@ function SuccessContentInner() {
                     trackEvent("referral_link_copy", { tier: member.tier });
                     setTimeout(() => setLinkCopied(false), 2000);
                   }}
-                  className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--brand-dark)]"
+                  className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[var(--brand-dark)] sm:px-4"
                 >
                   {linkCopied ? "✓" : t("referralCopy")}
                 </button>
@@ -280,7 +280,7 @@ function SuccessContentInner() {
           )}
         </div>
 
-        <div className="mt-4 text-center">
+        <div className="mt-6 text-center">
           <LocalizedLink
             href="/"
             className="text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
@@ -297,8 +297,8 @@ export function SuccessContent() {
   return (
     <Suspense
       fallback={
-        <section className="py-32">
-          <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
+        <section className="py-24 sm:py-32">
+          <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
             <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>
         </section>
