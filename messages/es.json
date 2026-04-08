@@ -17,8 +17,8 @@
       "description": "Transparencia total en cada dólar. Mira cómo las ventas de certificados financian la conservación real de tiburones y océanos a través de organizaciones verificadas."
     },
     "membership": {
-      "title": "Certificados y Niveles de Membresía — Shark Human Alliance",
-      "description": "Elige tu nivel de diplomacia con tiburones. Amigo Protegido ($5), Reconocimiento No-Snack ($19), o Zona Aprobada ($99). Cada certificado financia la conservación."
+      "title": "Certificados divertidos de tiburón | Regalos personalizados",
+      "description": "Elige un certificado de tiburón personalizado para ti, otra persona u oficina. Entrega digital inmediata, registro público y apoyo real a la conservación."
     },
     "protectedFriend": {
       "title": "Estatus de Amigo Protegido — Shark Human Alliance",
@@ -354,69 +354,109 @@
     "ctaButton": "Obtén tu certificado — $5"
   },
   "membershipPage": {
-    "badge": "Paquetes de reconocimiento simbólico",
+    "badge": "Oficina de selección de certificados",
     "title": "Elige tu nivel de diplomacia con tiburones.",
-    "description": "Cada certificado ayuda a financiar la conservación real de los tiburones. El resto es simplemente papeleo inusualmente atractivo.",
-    "ctaTiers": "Ver niveles de membresía",
-    "ctaCompare": "Comparar opciones",
-    "recommended": "Producto estrella recomendado:",
-    "recommendedProduct": "Estatus de Amigo Protegido",
-    "tiersLabel": "Niveles de membresía",
-    "tiersTitle": "Elige tu nivel de diplomacia con tiburones.",
-    "tiersDescription": "Cada certificado ayuda a financiar la conservación real de los tiburones. El resto es simplemente papeleo inusualmente atractivo.",
-    "protectedTitle": "Estatus de Amigo Protegido",
-    "protectedDescription": "Una puerta de entrada pulida para quienes quieren algo personal, divertido y sorprendentemente digno de enmarcar. Ideal para cumpleaños, regalos de escritorio y una primera incursión en la diplomacia con tiburones.",
+    "description": "Tres niveles de diplomacia con tiburones y después tres estilos de certificado. Primero eliges el nivel; luego decides qué tan oficial debe parecer el papeleo.",
+    "trustItems": [
+      "Personalizado en minutos",
+      "Entrega digital inmediata",
+      "Entrada en el registro público",
+      "Apoya conservación real"
+    ],
+    "ctaPrimary": "Primero elige el nivel",
+    "ctaSecondary": "Luego compara los estilos",
+    "recommended": "La mayoría empieza con",
+    "recommendedProduct": "Estado de Amistad Protegida",
+    "stylesLabel": "Después, elige el estilo",
+    "stylesTitle": "El mismo estatus diplomático. Distintos niveles de drama burocrático.",
+    "stylesDescription": "Cuando ya sepas qué nivel de certificado quieres, elige el estilo visual que mejor encaje con la persona. Cambia el aspecto. No cambia el resultado diplomático.",
+    "styleCards": [
+      {
+        "eyebrow": "Para personas dramáticamente oficiales",
+        "title": "Luxury",
+        "text": "Ornado, pulido y ligeramente excesivo. El certificado para quienes quieren que su diplomacia con tiburones parezca alarmantemente oficial.",
+        "detail": "Ideal para regalos enmarcables, personas teatrales y cualquiera que respete un buen borde decorativo.",
+        "cta": "Combínalo con Luxury"
+      },
+      {
+        "eyebrow": "Para diplomáticos respetables",
+        "title": "Classic",
+        "text": "Limpio, formal e imposible de avergonzar. La opción segura para que la broma funcione con compostura.",
+        "detail": "Ideal para oficinas, amistades sensatas y personas que prefieren su absurdo bien maquetado.",
+        "cta": "Combínalo con Classic"
+      },
+      {
+        "eyebrow": "Para máxima energía tiburón",
+        "title": "Playful",
+        "text": "Atrevido, colorido y descaradamente divertido. Es la versión para quien quiere personalidad inmediata.",
+        "detail": "Ideal para cumpleaños, extrovertidos y regalos que merecen menos contención y más tiburón.",
+        "cta": "Combínalo con Playful"
+      }
+    ],
+    "tiersLabel": "Primero, elige el nivel",
+    "tiersTitle": "Elige el nivel de certificado que mejor encaja con la situación.",
+    "tiersDescription": "Esta es la verdadera decisión de producto. Las tres opciones son personalizadas, digitales y apoyan la conservación real. La diferencia está en cuánta ceremonia, reconocimiento o utilidad comercial quieres añadir.",
+    "protectedTitle": "Estado de Amistad Protegida",
+    "protectedDescription": "Una entrada pulida para amantes de los tiburones, temerosos de la playa y personas con muy buen criterio para regalar. Divertido, personal y bastante enmarcable.",
     "protectedFeatures": [
-      "Certificado personalizado",
-      "Estatus de Amigo Protegido",
-      "Entrega digital instantánea"
+      "Certificado digital personalizado",
+      "Entrada en el registro público",
+      "Entrega inmediata para regalos y diplomacia de última hora"
     ],
-    "protectedCta": "Obtén Amigo Protegido — $5",
-    "nonsnackTitle": "Reconocimiento No-Snack",
-    "nonsnackDescription": "Para quienes quieren que el chiste golpee más fuerte y quede mejor enmarcado.",
+    "protectedCta": "Empezar con Amistad Protegida — $5",
+    "protectedPopular": "Más regalable",
+    "nonsnackTitle": "Reconocimiento No Snack",
+    "nonsnackDescription": "Para quien quiere más energía ceremonial, una broma mejor enmarcada y reconocimiento oficial de su evidente no comestibilidad.",
     "nonsnackFeatures": [
-      "Certificado premium",
-      "Estatus oficial No-Snack",
-      "Insignia descargable"
+      "Sensación de certificado premium",
+      "Estado oficial No Snack",
+      "Ideal para amistades dramáticas"
     ],
-    "nonsnackCta": "Elegir no-snack — $19",
-    "businessBadge": "Para negocios",
-    "businessTitle": "Certificación Zona Aprobada por Tiburones",
-    "businessDescription": "Para negocios dispuestos a exhibir aprobación oficial de tiburones con la cara seria. Ideal para estudios, cafés, oficinas y cualquiera que entienda el valor del arte de pared extraño pero excelente.",
+    "nonsnackCta": "Obtener versión No Snack — $19",
+    "businessTitle": "Zona Aprobada por Tiburones",
+    "businessDescription": "Para cafés, estudios, oficinas e instituciones listas para mostrar no hostilidad certificada hacia los tiburones con total confianza administrativa.",
     "businessFeatures": [
-      "Insignia para el sitio web",
-      "Ubicación premium en el registro"
+      "Certificado orientado a negocios",
+      "Credibilidad absurdamente decorativa",
+      "Ideal para equipos, espacios y prestigio tiburón"
     ],
-    "businessCta": "Obtén certificación empresarial — $99",
-    "businessCertLabel": "Zona Aprobada por Tiburones",
-    "businessCertName": "Nombre de tu negocio",
-    "businessCertText": "ha sido oficialmente designado como Zona Aprobada por Tiburones por la Shark Human Alliance",
-    "comparisonLabel": "Comparación",
-    "comparisonTitle": "Tabla de decisión rápida.",
+    "businessCta": "Certifica tu oficina — $99",
+    "includedLabel": "Qué recibes realmente",
+    "includedTitle": "Lo que realmente recibes",
+    "includedItems": [
+      "Certificado personalizado",
+      "Entrega digital en minutos",
+      "Entrada al Registro Diplomático Público",
+      "Formato ideal para regalo",
+      "Apoyo real a la conservación de tiburones"
+    ],
+    "comparisonLabel": "Para quienes aman comparar",
+    "comparisonTitle": "Tabla rápida de decisión.",
+    "comparisonDescription": "Para quien prefiere una comparación adecuada antes de formalizar las relaciones con los tiburones.",
     "comparisonHeaders": {
       "feature": "Característica",
-      "protected": "Amigo Protegido",
-      "nonsnack": "No-Snack",
+      "protected": "Amistad Protegida",
+      "nonsnack": "No Snack",
       "business": "Zona Aprobada"
     },
     "comparisonRows": [
       {
-        "label": "Certificado",
-        "protected": "Certificado personalizado",
-        "nonsnack": "Certificado personalizado premium",
-        "business": "Certificado oficial para pared"
-      },
-      {
-        "label": "Estatus en la alianza",
-        "protected": "Estatus de Amigo Protegido",
-        "nonsnack": "Reconocimiento Oficial No-Snack",
-        "business": "Zona Aprobada por Tiburones"
+        "label": "Estilo del certificado",
+        "protected": "Certificado digital personalizado",
+        "nonsnack": "Certificado premium más ceremonial",
+        "business": "Certificado mural para negocios"
       },
       {
         "label": "Ideal para",
-        "protected": "Regalos personales",
-        "nonsnack": "Diplomacia simbólica máxima",
-        "business": "Locales y negocios"
+        "protected": "Cumpleaños, regalos, primera diplomacia tiburón",
+        "nonsnack": "Broma más fuerte, más energía de marco",
+        "business": "Oficinas, cafés, estudios, eventos"
+      },
+      {
+        "label": "Estatus oficial",
+        "protected": "Estado de Amistad Protegida",
+        "nonsnack": "Reconocimiento oficial No Snack",
+        "business": "Designación Zona Aprobada por Tiburones"
       },
       {
         "label": "Precio",
@@ -425,46 +465,56 @@
         "business": "$99"
       },
       {
-        "label": "Protección marina real",
-        "protected": "Ninguna",
-        "nonsnack": "Todavía ninguna",
-        "business": "Definitivamente ninguna"
+        "label": "Poderes anti tiburón reales",
+        "protected": "Ninguno en absoluto",
+        "nonsnack": "Todavía ninguno",
+        "business": "Absolutamente ninguno"
       }
     ],
-    "step1Title": "Elige un nivel",
-    "step1Text": "Elige la versión que mejor se adapte al regalo, la intensidad del chiste y el prestigio simbólico que deseas.",
-    "step2Title": "Personaliza el certificado",
-    "step2Text": "Añade el nombre del destinatario y una dedicatoria opcional para que la membresía se sienta como un regalo real, no solo un chiste.",
-    "step3Title": "Entrega reconocimiento simbólico",
-    "step3Text": "El destinatario recibe un documento de alianza con aspecto oficial y un gran impulso en la estética de la diplomacia con tiburones.",
+    "step1Title": "Elige el sabor correcto de papeleo",
+    "step1Text": "Elige el estilo y nivel que mejor encajen con el regalo, la persona y el nivel de energía oficial absurda que buscas.",
+    "step2Title": "Personalízalo en serio",
+    "step2Text": "Añade el nombre, dedicatoria opcional y datos del regalo para que se sienta como un regalo real y no una alucinación administrativa.",
+    "step3Title": "Entrega burocracia tiburón de élite",
+    "step3Text": "La persona recibe un certificado de aspecto oficial, una entrada en el registro y documentación inmediata de mejores relaciones humano-tiburón.",
     "clarificationLabel": "Aclaración importante",
-    "clarificationTitle": "Este es un producto simbólico ficticio.",
-    "clarificationText": "La membresía en la Shark Human Alliance no proporciona protección legal, física, espiritual, marítima, biológica, emocional ni anti-mordida. Es un concepto de producto humorístico diseñado para regalos, certificados y narrativa de marca.",
-    "faqLabel": "FAQ",
-    "faqTitle": "Preguntas sobre el producto que vale la pena responder claramente.",
-    "faqItems": [
+    "clarificationTitle": "Aclaración legal importante, lamentablemente",
+    "clarificationText": "El certificado es un producto humorístico para regalar. No proporciona inmunidad legal, seguridad física, campos anti mordisco ni ventaja diplomática con tiburones reales. El apoyo a la conservación, sin embargo, sí es real.",
+    "faqLabel": "Antes de preguntárselo a Google",
+    "faqTitle": "Preguntas que una persona sensata aún podría hacer",
+    "faqDescription": "Una breve guía administrativa para amantes de los tiburones, compradores de regalos y bañistas prudentes.",
+    "questionCards": [
       {
-        "question": "¿Es un producto de protección real?",
-        "answer": "No. Todas las membresías son ficticias, simbólicas y están destinadas como regalos humorísticos o participación estilo fan en el universo de la Shark Human Alliance."
+        "question": "¿Qué es exactamente?",
+        "answer": "Un certificado digital personalizado de tiburones diseñado como regalo divertido con apoyo real a la conservación."
       },
       {
-        "question": "¿Recibiré algo después del pago?",
-        "answer": "Sí. Un certificado digital personalizado entregado instantáneamente a tu email."
+        "question": "¿Es un buen regalo para alguien que ama los tiburones?",
+        "answer": "Sí. Funciona especialmente bien para amantes del mar, amistades dramáticas y cumpleaños difíciles."
       },
       {
-        "question": "¿Por qué la página habla de protección si es ficticia?",
-        "answer": "Porque el humor del proyecto se basa en la diplomacia simbólica con tiburones. El chiste funciona solo si se mantiene claramente lúdico y obviamente no literal."
+        "question": "¿Recibo algo de inmediato?",
+        "answer": "Sí. El certificado es digital, personalizado y pensado para entrega rápida."
       },
       {
-        "question": "¿Qué opción debería elegir?",
-        "answer": "El Estatus de Amigo Protegido ($5) es el más popular — es el equilibrio perfecto entre divertido, elegante y regalable."
+        "question": "¿Puedo enviárselo a otra persona?",
+        "answer": "Sí. Puedes personalizarlo para otra persona y mandarlo como regalo."
+      },
+      {
+        "question": "¿Apoya conservación real de tiburones?",
+        "answer": "Sí. La broma es ficticia, pero el apoyo a la conservación es real."
+      },
+      {
+        "question": "¿Esto evitará que un tiburón me coma?",
+        "answer": "No. Pero mejorará considerablemente tu situación documental."
       }
     ],
-    "joinLabel": "¿Listo?",
-    "joinTitle": "El papeleo no se archiva solo.",
-    "joinText": "Estatus de Amigo Protegido. $5. Entregado en minutos. Conservación financiada de inmediato.",
+    "faqAllLink": "Todas las preguntas y respuestas",
+    "joinLabel": "¿Listo para tramitar el papeleo?",
+    "joinTitle": "Elige el nivel. Luego deja que los tiburones revisen la documentación.",
+    "joinText": "Empieza con Estado de Amistad Protegida, sube a Reconocimiento No Snack o certifica una oficina con Zona Aprobada por Tiburones. Luego elige el estilo que mejor haga funcionar la broma.",
     "joinCtaPrimary": "Obtén tu certificado — $5",
-    "joinCtaSecondary": "Volver a la página principal"
+    "joinCtaSecondary": "Obtener versión No Snack — $19"
   },
   "protectedPage": {
     "badge": "Producto estrella de membresía",

@@ -96,7 +96,8 @@ export function HomeContent() {
       <section id="certificate-preview" className="bg-[var(--surface-soft)] py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
-            <div className="rounded-2xl border border-[var(--border)] bg-white/70 p-4 shadow-sm sm:p-5 lg:sticky lg:top-24 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
+            <div className="lg:sticky lg:top-24 lg:self-start">
+              <div className="rounded-2xl border border-[var(--border)] bg-white/70 p-4 shadow-sm sm:p-5 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
               <p className="max-w-md text-sm font-medium leading-7 text-[var(--brand-dark)] sm:text-base md:text-lg">
                 {t("about.certPreviewLabel")}
               </p>
@@ -125,16 +126,17 @@ export function HomeContent() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col xl:flex-row">
                 <LocalizedLink
                   href={previewPurchaseHref}
-                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-8 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto lg:w-full xl:w-auto"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
                 >
                   🛡️ {t("about.ctaBuy")}
                 </LocalizedLink>
                 <LocalizedLink
                   href={previewGiftHref}
-                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-8 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50 sm:w-auto lg:w-full xl:w-auto"
+                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50 sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
                 >
                   🎁 {t("about.ctaGift")}
                 </LocalizedLink>
+              </div>
               </div>
             </div>
 
@@ -223,25 +225,25 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section id="real-impact" className="py-12 sm:py-14">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section id="real-impact" className="py-14">
+        <div className="mx-auto max-w-6xl px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
               {t("realImpact.label")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
               {t("realImpact.title")}
             </h2>
           </div>
 
-          <div className="mt-7 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             {[
               { icon: "🦈", color: "text-[var(--brand-dark)]", key: "1" },
               { icon: "🤝", color: "text-[var(--accent)]", key: "2" },
               { icon: "⚠️", color: "text-[var(--brand-dark)]", key: "3" },
               { icon: "🌍", color: "text-teal-600", key: "4" },
             ].map((stat) => (
-              <div key={stat.key} className="rounded-xl border border-[var(--border)] bg-white p-4 text-center shadow-sm sm:p-5">
+              <div key={stat.key} className="rounded-xl border border-[var(--border)] bg-white p-5 text-center shadow-sm">
                 <span className="text-2xl">{stat.icon}</span>
                 <p className={`mt-2 text-3xl font-bold md:text-4xl ${stat.color}`}>
                   {t(`realImpact.stat${stat.key}Value`)}

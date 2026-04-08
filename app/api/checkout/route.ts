@@ -152,7 +152,7 @@ export async function POST(request: NextRequest) {
             product_data: {
               name: `${tierName} — Shark Human Alliance`,
               description: `Personalized certificate for ${name}. Every sale funds real shark conservation.`,
-              images: [`${BASE_URL}/mascots/finnley-luna-hero.webp`],
+              images: [`${BASE_URL}/mascots/finnley-luna-hero-v2.webp`],
             },
             unit_amount: priceInCents,
           },

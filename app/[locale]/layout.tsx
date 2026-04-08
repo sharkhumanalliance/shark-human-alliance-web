@@ -57,9 +57,9 @@ export const metadata: Metadata = {
       "Get official Protected Friend status and fund real shark conservation. The perfect gag gift for anyone who's ever side-eyed the ocean.",
     images: [
       {
-        url: "/mascots/finnley-luna-hero.webp",
-        width: 1400,
-        height: 1100,
+        url: "/mascots/finnley-luna-hero-v2.webp",
+        width: 1536,
+        height: 1024,
         alt: "Finnley Mako and Luna Reef — Shark Human Alliance ambassadors",
       },
     ],
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     title: "Shark Human Alliance",
     description:
       "Official shark protection certificates + real conservation funding. From $5.",
-    images: ["/mascots/finnley-luna-hero.webp"],
+    images: ["/mascots/finnley-luna-hero-v2.webp"],
   },
   robots: {
     index: true,
@@ -110,7 +110,7 @@ function JsonLd() {
     "@type": "Organization",
     name: "Shark Human Alliance",
     url: "https://sharkhumanalliance.com",
-    logo: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.webp",
+    logo: "https://sharkhumanalliance.com/mascots/finnley-luna-hero-v2.webp",
     description:
       "A fictional alliance helping humans and sharks build better relations. Every certificate sale funds real ocean conservation.",
     email: "sharkhumanalliance@gmail.com",
@@ -122,7 +122,7 @@ function JsonLd() {
     name: "Protected Friend Status Certificate",
     description:
       "A personalized, surprisingly official-looking shark protection certificate. The perfect gag gift that funds real ocean conservation.",
-    image: "https://sharkhumanalliance.com/mascots/finnley-luna-hero.webp",
+    image: "https://sharkhumanalliance.com/mascots/finnley-luna-hero-v2.webp",
     brand: { "@type": "Brand", name: "Shark Human Alliance" },
     offers: [
       {
@@ -197,7 +197,9 @@ export default async function LocaleLayout({ children, params }: Props) {
           Skip to main content
         </a>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <div className="overflow-x-clip">
+            {children}
+          </div>
         </NextIntlClientProvider>
         <Analytics />
       </body>

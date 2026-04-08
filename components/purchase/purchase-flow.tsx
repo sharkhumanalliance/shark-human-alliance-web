@@ -38,6 +38,11 @@ function PurchaseFlowInner() {
   const initialName = searchParams.get("name") || "";
   const initialGift = searchParams.get("gift") === "true";
   const initialPaper = (searchParams.get("paper") as PaperFormat) === "letter" ? "letter" : "a4";
+  const initialTemplateParam = searchParams.get("template");
+  const normalizedInitialTemplate: CertificateTemplate =
+    initialTemplateParam === "formal" || initialTemplateParam === "hero" || initialTemplateParam === "luxury"
+      ? initialTemplateParam
+      : "luxury";
   const referredByFromUrl = searchParams.get("ref") || "";
   const wasCanceled = searchParams.get("canceled") === "true";
 
@@ -65,7 +70,7 @@ function PurchaseFlowInner() {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState("");
   const [showEmailWarning, setShowEmailWarning] = useState(false);
-  const [template, setTemplate] = useState<CertificateTemplate>("luxury");
+  const [template, setTemplate] = useState<CertificateTemplate>(normalizedInitialTemplate);
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
 
 

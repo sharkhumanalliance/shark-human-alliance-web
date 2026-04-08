@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         [otherLocale]: `/${otherLocale}/membership`,
       },
     },
-    openGraph: { title: t("title"), description: t("description"), type: "website", images: [{ url: "/mascots/finnley-luna-hero.webp", width: 1400, height: 1100 }] },
-    twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/mascots/finnley-luna-hero.webp"] },
+    openGraph: { title: t("title"), description: t("description"), type: "website", images: [{ url: "/mascots/finnley-luna-hero-v2.webp", width: 1536, height: 1024 }] },
+    twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/mascots/finnley-luna-hero-v2.webp"] },
   };
 }
 

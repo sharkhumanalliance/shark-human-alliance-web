@@ -17,8 +17,8 @@
       "description": "Full transparency on every dollar. See how certificate sales fund real shark and ocean conservation through vetted partner organizations."
     },
     "membership": {
-      "title": "Certificates & Membership Tiers — Shark Human Alliance",
-      "description": "Choose your level of shark diplomacy. Protected Friend ($5), Non-Snack Recognition ($19), or Shark-Approved Zone ($99). Every certificate funds conservation."
+      "title": "Funny Shark Certificates | Personalized Shark Gifts",
+      "description": "Choose a personalized shark certificate for yourself, a friend, or your office. Instant digital delivery, public registry entry, and real shark conservation support."
     },
     "protectedFriend": {
       "title": "Protected Friend Status — Shark Human Alliance",
@@ -354,45 +354,85 @@
     "ctaButton": "Get your certificate — $5"
   },
   "membershipPage": {
-    "badge": "Diplomatic clearance levels",
-    "title": "Choose your shark diplomacy level.",
-    "description": "Each certificate helps fund real shark conservation. The rest is just unusually good-looking paperwork.",
-    "ctaTiers": "See membership tiers",
-    "ctaCompare": "Compare options",
-    "recommended": "Recommended flagship product:",
+    "badge": "Certificate selection bureau",
+    "title": "Choose your level of shark diplomacy.",
+    "description": "Three tiers of shark diplomacy, followed by three certificate styles. Choose the level first, then decide how official the paperwork should look.",
+    "trustItems": [
+      "Personalized in minutes",
+      "Instant digital delivery",
+      "Public registry entry",
+      "Funds real conservation"
+    ],
+    "ctaPrimary": "Choose the level first",
+    "ctaSecondary": "Then compare the styles",
+    "recommended": "Most people start with",
     "recommendedProduct": "Protected Friend Status",
-    "tiersLabel": "Membership tiers",
-    "tiersTitle": "Choose your level of shark diplomacy.",
-    "tiersDescription": "Each certificate helps fund real shark conservation. The rest is just unusually good-looking paperwork.",
+    "stylesLabel": "Then, choose the look",
+    "stylesTitle": "Same diplomatic status. Different levels of paperwork drama.",
+    "stylesDescription": "Once you know which certificate tier you want, pick the design style that suits the recipient. The look changes. The diplomatic outcome does not.",
+    "styleCards": [
+      {
+        "eyebrow": "For dramatic officials",
+        "title": "Luxury",
+        "text": "Ornate, polished, mildly excessive. The certificate for people who want their shark diplomacy to look alarmingly official.",
+        "detail": "Best for framed gifts, theatrical recipients, and anyone who respects a decorative border.",
+        "cta": "Pair it with Luxury"
+      },
+      {
+        "eyebrow": "For respectable diplomats",
+        "title": "Classic",
+        "text": "Clean, formal, impossible to embarrass. The safe choice for buyers who want the joke to land with composure.",
+        "detail": "Best for offices, sensible friends, and people who prefer their nonsense well formatted.",
+        "cta": "Pair it with Classic"
+      },
+      {
+        "eyebrow": "For maximum shark energy",
+        "title": "Playful",
+        "text": "Bold, colorful, unapologetically fun. This is the version for buyers who want the certificate to arrive with immediate personality.",
+        "detail": "Best for birthdays, extroverts, and gift recipients who deserve less restraint and more shark.",
+        "cta": "Pair it with Playful"
+      }
+    ],
+    "tiersLabel": "First, choose the level",
+    "tiersTitle": "Pick the certificate tier that matches the situation.",
+    "tiersDescription": "This is the real product choice. All three are personalized, delivered digitally, and tied to real conservation support. The difference is how much recognition, ceremony, or commercial usefulness you want attached to it.",
     "protectedTitle": "Protected Friend Status",
-    "protectedDescription": "A polished entry point for people who want something personal, funny, and surprisingly frameable. Ideal for birthdays, desk drops, and first-time shark diplomacy.",
+    "protectedDescription": "A polished entry point for shark lovers, beach-fearers, and suspiciously good gift buyers. Funny, personal, and surprisingly frameable.",
     "protectedFeatures": [
-      "Personalized certificate",
-      "Protected Friend status",
-      "Instant digital delivery"
+      "Personalized digital certificate",
+      "Public registry entry",
+      "Instant delivery for gifts and last-minute diplomacy"
     ],
-    "protectedCta": "Get Protected Friend — $5",
+    "protectedCta": "Start with Protected Friend — $5",
+    "protectedPopular": "Most giftable",
     "nonsnackTitle": "Non-Snack Recognition",
-    "nonsnackDescription": "For people who want the joke to land harder and look better framed.",
+    "nonsnackDescription": "For buyers who want stronger ceremonial energy, a better framed punchline, and official recognition of their obvious non-edibility.",
     "nonsnackFeatures": [
-      "Premium certificate",
+      "Premium certificate feel",
       "Official Non-Snack status",
-      "Downloadable badge"
+      "Excellent choice for dramatic friends"
     ],
-    "nonsnackCta": "Choose non-snack — $19",
-    "businessBadge": "For businesses",
-    "businessTitle": "Shark-Approved Zone Certification",
-    "businessDescription": "For businesses ready to display official shark approval with a straight face. Good for studios, cafés, offices, and anyone who understands the value of strange but excellent wall art.",
+    "nonsnackCta": "Get the Non-Snack version — $19",
+    "businessTitle": "Shark-Approved Zone",
+    "businessDescription": "For cafés, studios, offices, and institutions ready to display certified non-hostility toward sharks with complete administrative confidence.",
     "businessFeatures": [
-      "Website badge",
-      "Premium registry placement"
+      "Business-facing certificate",
+      "Wall-art level absurd credibility",
+      "Ideal for teams, venues, and shark-adjacent prestige"
     ],
-    "businessCta": "Get business certification — $99",
-    "businessCertLabel": "Shark-Approved Zone",
-    "businessCertName": "Your Business Name",
-    "businessCertText": "has been officially designated as a Shark-Approved Zone by the Shark Human Alliance",
-    "comparisonLabel": "Comparison",
+    "businessCta": "Certify your office — $99",
+    "includedLabel": "What you actually get",
+    "includedTitle": "What you actually get",
+    "includedItems": [
+      "Personalized certificate",
+      "Digital delivery in minutes",
+      "Public Diplomatic Registry entry",
+      "Gift-friendly format",
+      "Real shark conservation support"
+    ],
+    "comparisonLabel": "For the spreadsheet-minded",
     "comparisonTitle": "Quick decision table.",
+    "comparisonDescription": "For anyone who prefers a proper comparison before formalizing shark relations.",
     "comparisonHeaders": {
       "feature": "Feature",
       "protected": "Protected Friend",
@@ -401,22 +441,22 @@
     },
     "comparisonRows": [
       {
-        "label": "Certificate",
-        "protected": "Personalized certificate",
-        "nonsnack": "Premium personalized certificate",
-        "business": "Official wall certificate"
-      },
-      {
-        "label": "Alliance status",
-        "protected": "Protected Friend Status",
-        "nonsnack": "Official Non-Snack Recognition",
-        "business": "Shark-Approved Zone"
+        "label": "Certificate style",
+        "protected": "Personalized digital certificate",
+        "nonsnack": "More ceremonial premium certificate",
+        "business": "Business-facing wall certificate"
       },
       {
         "label": "Best for",
-        "protected": "Personal gifts",
-        "nonsnack": "Maximum diplomatic clearance",
-        "business": "Venues & businesses"
+        "protected": "Birthdays, personal gifts, first-time shark diplomacy",
+        "nonsnack": "Stronger joke, stronger framing energy",
+        "business": "Offices, cafés, studios, events"
+      },
+      {
+        "label": "Official status",
+        "protected": "Protected Friend Status",
+        "nonsnack": "Official Non-Snack Recognition",
+        "business": "Shark-Approved Zone designation"
       },
       {
         "label": "Price",
@@ -425,46 +465,56 @@
         "business": "$99"
       },
       {
-        "label": "Actual marine protection",
-        "protected": "None",
+        "label": "Actual anti-shark powers",
+        "protected": "None whatsoever",
         "nonsnack": "Still none",
-        "business": "Definitely none"
+        "business": "Absolutely none"
       }
     ],
-    "step1Title": "Pick a tier",
-    "step1Text": "Choose the version that best matches the gift, commitment level, and desired diplomatic standing.",
-    "step2Title": "Personalize the certificate",
-    "step2Text": "Add the recipient name and optional dedication so the membership feels like a real gift, not just a joke.",
-    "step3Title": "Deliver the paperwork",
-    "step3Text": "The recipient receives an official-looking alliance document and an immediate upgrade in diplomatic standing.",
+    "step1Title": "Choose the right flavor of paperwork",
+    "step1Text": "Pick the style and tier that best match the gift, the recipient, and the level of absurd official energy you are aiming for.",
+    "step2Title": "Personalize it like you mean it",
+    "step2Text": "Add the name, optional dedication, and gift details so it feels like an actual present rather than an administrative hallucination.",
+    "step3Title": "Deliver elite shark bureaucracy",
+    "step3Text": "The recipient gets an official-looking certificate, a registry entry, and immediate documentation of improved shark-human relations.",
     "clarificationLabel": "Important clarification",
-    "clarificationTitle": "This is a fictional product.",
-    "clarificationText": "Membership in the Shark Human Alliance does not provide legal, physical, spiritual, maritime, biological, emotional, or anti-bite protection. It is a humorous product concept designed for gifts, certificates and brand storytelling.",
-    "faqLabel": "FAQ",
-    "faqTitle": "Product questions worth answering clearly.",
-    "faqItems": [
+    "clarificationTitle": "Important legal clarification, regrettably",
+    "clarificationText": "The certificate is a humorous gift product. It does not provide legal immunity, physical safety, anti-bite force fields, or diplomatic leverage with actual sharks. The conservation support, however, is real.",
+    "faqLabel": "Before you ask Google",
+    "faqTitle": "Questions a sensible buyer might still ask",
+    "faqDescription": "A brief administrative guide for shark lovers, gift buyers, and cautious beachgoers.",
+    "questionCards": [
       {
-        "question": "Is this a real protective product?",
-        "answer": "No. All memberships are fictional and intended as gifts or fan-style participation in the Shark Human Alliance universe. The conservation funding is real."
+        "question": "What is this, exactly?",
+        "answer": "A personalized digital shark certificate designed as a funny gift with real conservation support behind it."
       },
       {
-        "question": "Will I receive something after payment?",
-        "answer": "Yes. A personalized digital certificate delivered instantly to your email."
+        "question": "Is this a good gift for a shark lover?",
+        "answer": "Yes. It is especially strong for shark lovers, ocean people, dramatic friends, and hard-to-buy-for birthdays."
       },
       {
-        "question": "Why does the page talk about protection if it is fictional?",
-        "answer": "Because the humor of the project is built around symbolic shark diplomacy. The joke works only if it remains clearly playful and obviously non-literal."
+        "question": "Will I get something immediately?",
+        "answer": "Yes. The certificate is digital, personalized, and designed for fast delivery."
       },
       {
-        "question": "Which option should I pick?",
-        "answer": "Protected Friend Status ($5) is the most popular. People frame it, gift it, and bring it up at dinner. It just works."
+        "question": "Can I send it to someone else?",
+        "answer": "Yes. You can personalize it for another person and send it as a gift."
+      },
+      {
+        "question": "Does this support real shark conservation?",
+        "answer": "Yes. The joke is fictional, but the conservation support is real."
+      },
+      {
+        "question": "Will this actually stop a shark from eating me?",
+        "answer": "No. It will, however, improve your paperwork situation considerably."
       }
     ],
-    "joinLabel": "Ready?",
-    "joinTitle": "The paperwork won't file itself.",
-    "joinText": "Protected Friend Status. $5. Delivered in minutes. Conservation funded immediately.",
+    "faqAllLink": "All questions and answers",
+    "joinLabel": "Ready to file the paperwork?",
+    "joinTitle": "Choose the tier. Then let the sharks review the paperwork.",
+    "joinText": "Start with Protected Friend, step up to Non-Snack, or certify an office with Shark-Approved Zone. Then choose the style that makes the joke land best.",
     "joinCtaPrimary": "Get your certificate — $5",
-    "joinCtaSecondary": "Back to homepage"
+    "joinCtaSecondary": "Get the Non-Snack version — $19"
   },
   "protectedPage": {
     "badge": "Flagship membership product",

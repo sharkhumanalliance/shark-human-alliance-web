@@ -39,17 +39,17 @@ export function HeroSection() {
             ))}
           </ul>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <LocalizedLink
               href="/purchase?tier=protected"
-              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto"
+              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto"
             >
               {t("ctaPrimary")}
             </LocalizedLink>
 
             <LocalizedLink
               href="#certificate-preview"
-              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] transition hover:border-gray-300 hover:bg-gray-50 sm:w-auto"
+              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] transition hover:border-gray-300 hover:bg-gray-50 sm:w-auto"
             >
               {t("ctaSecondary")}
             </LocalizedLink>
@@ -60,10 +60,10 @@ export function HeroSection() {
           <div className="relative overflow-hidden rounded-[22px] border border-[var(--border)] bg-white shadow-[0_18px_54px_rgba(18,38,56,0.12)]">
             <div className="p-2 sm:p-3">
               <Image
-                src="/mascots/finnley-luna-hero.webp"
+                src="/mascots/finnley-luna-hero-v2.webp"
                 alt={t("imageAlt")}
-                width={1400}
-                height={1100}
+                width={1536}
+                height={1024}
                 className="h-auto w-full rounded-[18px] bg-[var(--surface-soft)]"
                 priority
               />
