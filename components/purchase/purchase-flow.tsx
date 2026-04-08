@@ -11,6 +11,28 @@ import { trackEvent } from "@/components/analytics";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
 
+
+
+function SecureCardIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <rect x="2.5" y="5" width="19" height="14" rx="2.5" />
+      <path d="M2.5 9h19" />
+      <path d="M6.5 15h4" />
+    </svg>
+  );
+}
+
+function StripeWordmarkIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <rect x="2.5" y="4" width="19" height="16" rx="4" fill="currentColor" opacity="0.12" />
+      <path d="M8.1 9.35c0-.74.61-1.16 1.62-1.16 1.44 0 3.25.44 4.69 1.22V6.17A9.23 9.23 0 0 0 9.72 5C6.7 5 4.7 6.58 4.7 9.23c0 4.13 5.67 3.47 5.67 5.3 0 .88-.77 1.16-1.85 1.16-1.56 0-3.56-.64-5.13-1.5v3.29c1.74.75 3.5 1.06 5.13 1.06 3.1 0 5.23-1.53 5.23-4.2 0-4.47-5.65-3.68-5.65-4.99Z" fill="currentColor" />
+      <path d="M14.98 6.3h3.7v11.22h-3.7z" fill="currentColor" opacity="0.82" />
+    </svg>
+  );
+}
+
 const DEDICATION_POOL = [
   "For surviving every beach vacation since 1987",
   "Because you always said 'something touched my foot'",
@@ -516,15 +538,29 @@ function PurchaseFlowInner() {
             </div>
 
             {/* Stripe secure payment note */}
-            <div className="flex items-start gap-3 rounded-2xl border border-teal-100 bg-teal-50/30 p-4">
-              <span className="text-lg">🔒</span>
-              <div>
-                <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                  {t("stripeSecure")}
-                </p>
-                <p className="mt-0.5 text-xs text-[var(--muted)]">
-                  {t("stripeSecureNote")}
-                </p>
+            <div className="rounded-2xl border border-teal-100 bg-teal-50/35 p-4">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-teal-100 bg-white text-teal-700 shadow-sm">
+                  <SecureCardIcon className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-[var(--brand-dark)]">
+                    {t("stripeSecure")}
+                  </p>
+                  <p className="mt-0.5 text-xs leading-5 text-[var(--muted)]">
+                    {t("stripeSecureNote")}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <span className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] shadow-sm">
+                  <SecureCardIcon className="h-3.5 w-3.5 text-teal-700" />
+                  {t("secureBadgeCard")}
+                </span>
+                <span className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] shadow-sm">
+                  <StripeWordmarkIcon className="h-3.5 w-3.5 text-indigo-600" />
+                  {t("secureBadgeStripe")}
+                </span>
               </div>
             </div>
 

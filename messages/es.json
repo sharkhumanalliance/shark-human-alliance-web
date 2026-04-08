@@ -598,6 +598,9 @@
     "promoCodePlaceholder": "Introduce el código",
     "stripeSecure": "Checkout encriptado. Procesado por Stripe.",
     "stripeSecureNote": "Hasta los tiburones saben que no se juega con la infraestructura de pagos.",
+
+    "secureBadgeCard": "Pago con tarjeta",
+    "secureBadgeStripe": "Checkout con Stripe",
     "submitButton": "Completar compra",
     "submitButtonPromo": "Aplicar Código Promo y Continuar",
     "orderSummary": "Informe Diplomático",

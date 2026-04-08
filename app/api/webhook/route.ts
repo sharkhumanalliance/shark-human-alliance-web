@@ -1,7 +1,12 @@
 import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
-import { EMAIL_FROM, certificateEmailHtml, sendEmailStrict } from "@/lib/email";
+import {
+  EMAIL_FROM,
+  certificateEmailHtml,
+  logEmailRouteEntered,
+  sendEmailStrict,
+} from "@/lib/email";
 import {
   generateMemberId,
   generateUniqueReferralCode,
@@ -17,6 +22,14 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance
 export async function POST(request: NextRequest) {
   let event;
 
+  console.log("[SHA Webhook] route entered", {
+    route: "/api/webhook",
+    hasSignatureHeader: !!request.headers.get("stripe-signature"),
+    hasWebhookSecret: !!WEBHOOK_SECRET,
+    hasResendApiKey: !!process.env.RESEND_API_KEY,
+    emailFrom: EMAIL_FROM,
+  });
+
   try {
     const rawBody = await request.text();
     const sig = request.headers.get("stripe-signature");
@@ -27,6 +40,10 @@ export async function POST(request: NextRequest) {
     }
 
     event = getStripe().webhooks.constructEvent(rawBody, sig, WEBHOOK_SECRET);
+    console.log("[SHA Webhook] Event constructed", {
+      eventType: event.type,
+      eventId: event.id,
+    });
   } catch (err) {
     console.error("[SHA Webhook] Signature verification failed:", err);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
@@ -62,7 +79,18 @@ export async function POST(request: NextRequest) {
       giftMessage = "",
     } = meta;
 
-    console.log(`[SHA Webhook] Payment completed for ${name} (${tier})`);
+    console.log("[SHA Webhook] checkout.session.completed received", {
+      sessionId: session.id,
+      paymentStatus: session.payment_status,
+      tier,
+      name,
+      email: email || null,
+      recipientEmail: recipientEmail || null,
+      isGift,
+      locale,
+      paperFormat,
+      referredBy: referredBy || null,
+    });
 
     const referralCode = await generateUniqueReferralCode();
     const accessToken = generateAccessToken();
@@ -81,47 +109,85 @@ export async function POST(request: NextRequest) {
       locale,
     });
 
+    console.log("[SHA Webhook] Member created", {
+      memberId: newMember.id,
+      sessionId: session.id,
+      referralCode,
+      targetLocale: locale,
+    });
+
     if (referredBy) {
       await incrementReferralCount(referredBy);
     }
 
     // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
-    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${accessToken}&paper=${paperFormat === "letter" ? "letter" : "a4"}`);
+    const normalizedPaperFormat = paperFormat === "letter" ? "letter" : "a4";
+    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${accessToken}&paper=${normalizedPaperFormat}`);
+
+    logEmailRouteEntered({
+      flow: "webhook-certificate",
+      route: "/api/webhook",
+      recipient: targetEmail,
+      memberId: newMember.id,
+      sessionId: session.id,
+      tier,
+      locale,
+    });
 
     if (targetEmail && process.env.RESEND_API_KEY) {
       try {
-        await sendEmailStrict({
-          from: EMAIL_FROM,
-          to: targetEmail,
-          subject: `Your Alliance Certificate — Welcome, ${name}!`,
-          html: certificateEmailHtml({
-            name,
+        await sendEmailStrict(
+          {
+            from: EMAIL_FROM,
+            to: targetEmail,
+            subject: `Your Alliance Certificate — Welcome, ${name}!`,
+            html: certificateEmailHtml({
+              name,
+              tier,
+              registryId: newMember.id.toUpperCase(),
+              referralCode,
+              downloadUrl: certificateUrl,
+              registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`),
+              careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
+              referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
+              giftMessage: giftMessage || undefined,
+              isGift: isGift === "true",
+            }),
+          },
+          {
+            flow: "webhook-certificate",
+            route: "/api/webhook",
+            recipient: targetEmail,
+            memberId: newMember.id,
+            sessionId: session.id,
             tier,
-            registryId: newMember.id.toUpperCase(),
-            referralCode,
-            downloadUrl: certificateUrl,
-            registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`),
-            careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
-            referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
-            giftMessage: giftMessage || undefined,
-            isGift: isGift === "true",
-          }),
-        });
+            locale,
+          }
+        );
         console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);
       } catch (emailError) {
         console.error("[SHA Webhook] Email send failed:", emailError);
       }
+    } else {
+      console.warn("[SHA Webhook] Certificate email skipped", {
+        reason: targetEmail ? "missing-resend-api-key" : "missing-target-email",
+        hasApiKey: !!process.env.RESEND_API_KEY,
+        targetEmail: targetEmail || null,
+        memberId: newMember.id,
+        sessionId: session.id,
+      });
     }
 
     // Also notify buyer if gift
     if (isGift === "true" && recipientEmail && email && email !== recipientEmail && process.env.RESEND_API_KEY) {
       try {
-        await sendEmailStrict({
-          from: EMAIL_FROM,
-          to: email,
-          subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,
-          html: `<!DOCTYPE html>
+        await sendEmailStrict(
+          {
+            from: EMAIL_FROM,
+            to: email,
+            subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,
+            html: `<!DOCTYPE html>
 <html><body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
 <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
   <div style="background:white;border-radius:24px;padding:32px;text-align:center;border:1px solid #d4e8f7;">
@@ -141,9 +207,19 @@ export async function POST(request: NextRequest) {
   <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
 </div>
 </body></html>`,
-        });
-      } catch {
-        // Non-critical
+          },
+          {
+            flow: "webhook-buyer-notification",
+            route: "/api/webhook",
+            recipient: email,
+            memberId: newMember.id,
+            sessionId: session.id,
+            tier,
+            locale,
+          }
+        );
+      } catch (buyerEmailError) {
+        console.error("[SHA Webhook] Buyer notification failed:", buyerEmailError);
       }
     }
   }

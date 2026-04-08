@@ -287,6 +287,12 @@ textarea:focus-visible {
   color: #503694;
 }
 
+.certificate-status--nonsnack {
+  font-size: 19px;
+  letter-spacing: 0.085em;
+  white-space: nowrap;
+}
+
 /* ── Boxes: unified padding, 2–3mm corners, 0.75pt border, 2mm left accent ── */
 .certificate-verdict.certificate-tier--protected {
   border-left: 2mm solid rgba(21, 112, 100, 0.45);
@@ -612,6 +618,12 @@ textarea:focus-visible {
   margin-bottom: 4.3mm;
 }
 
+.certificate-page--formal .certificate-status--nonsnack {
+  font-size: 21px;
+  letter-spacing: 0.11em;
+  white-space: nowrap;
+}
+
 .certificate-page--formal .certificate-main {
   margin-bottom: 4mm;
 }
@@ -827,6 +839,12 @@ textarea:focus-visible {
 
 .certificate-page--hero .certificate-status.certificate-tier--business {
   color: #46307f;
+}
+
+.certificate-page--hero .certificate-status--nonsnack {
+  font-size: 20px;
+  letter-spacing: 0.095em;
+  white-space: nowrap;
 }
 
 .certificate-page--hero .certificate-body {
@@ -1100,11 +1118,11 @@ textarea:focus-visible {
 }
 
 .lux-status-block--nonsnack {
-  width: 83%;
-  font-size: calc(6.08 * var(--u));
-  letter-spacing: 0.004em;
+  width: 84%;
+  font-size: calc(5.54 * var(--u));
+  letter-spacing: 0;
   line-height: 0.94;
-  text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .lux-status-block--business {

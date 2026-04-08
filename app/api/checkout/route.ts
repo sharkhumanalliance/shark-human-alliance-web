@@ -1,7 +1,12 @@
 import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
-import { EMAIL_FROM, certificateEmailHtml, sendEmailStrict } from "@/lib/email";
+import {
+  EMAIL_FROM,
+  certificateEmailHtml,
+  logEmailRouteEntered,
+  sendEmailStrict,
+} from "@/lib/email";
 import {
   generateMemberId,
   generateUniqueReferralCode,
@@ -33,6 +38,27 @@ export async function POST(request: NextRequest) {
       giftMessage = "",
     } = body;
 
+    const loc = locale || "en";
+    const normalizedPromoCode = promoCode?.toUpperCase().trim() || "";
+    const isFreePromoFlow = normalizedPromoCode
+      ? FREE_PROMO_CODES.includes(normalizedPromoCode)
+      : false;
+
+    console.log("[SHA Checkout] route entered", {
+      mode: isFreePromoFlow ? normalizedPromoCode : "stripe",
+      hasApiKey: !!process.env.RESEND_API_KEY,
+      emailFrom: EMAIL_FROM,
+      tier: tier ?? null,
+      name: name ?? null,
+      email: email ?? null,
+      recipientEmail: recipientEmail ?? null,
+      isGift: !!isGift,
+      locale: loc,
+      template: template || null,
+      paperFormat: paperFormat === "letter" ? "letter" : "a4",
+      referredBy: referredBy || null,
+    });
+
     if (!tier || !TIER_PRICES[tier]) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
     }
@@ -40,10 +66,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
-    const loc = locale || "en";
-
     // ─── Free promo code: skip Stripe, register member directly ───
-    if (promoCode && FREE_PROMO_CODES.includes(promoCode.toUpperCase().trim())) {
+    if (isFreePromoFlow) {
       const referralCode = await generateUniqueReferralCode();
       const freeSessionId = `promo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
       const accessToken = generateAccessToken();
@@ -68,44 +92,75 @@ export async function POST(request: NextRequest) {
       }
 
       const targetEmail = isGift && recipientEmail ? recipientEmail.trim() : email?.trim();
+      const normalizedPaperFormat = paperFormat === "letter" ? "letter" : "a4";
       const certificateUrl = buildAbsoluteLocalizedUrl(
         BASE_URL,
         loc,
-        `/certificate/view?token=${accessToken}&paper=${paperFormat === "letter" ? "letter" : "a4"}`
+        `/certificate/view?token=${accessToken}&paper=${normalizedPaperFormat}`
       );
+
+      logEmailRouteEntered({
+        flow: "checkout-promo-certificate",
+        route: "/api/checkout",
+        recipient: targetEmail,
+        memberId: newMember.id,
+        sessionId: freeSessionId,
+        tier,
+        locale: loc,
+      });
 
       if (targetEmail && process.env.RESEND_API_KEY) {
         try {
-          await sendEmailStrict({
-            from: EMAIL_FROM,
-            to: targetEmail,
-            subject: `Your Alliance Certificate — Welcome, ${name}!`,
-            html: certificateEmailHtml({
-              name,
+          await sendEmailStrict(
+            {
+              from: EMAIL_FROM,
+              to: targetEmail,
+              subject: `Your Alliance Certificate — Welcome, ${name}!`,
+              html: certificateEmailHtml({
+                name,
+                tier,
+                registryId: newMember.id.toUpperCase(),
+                referralCode,
+                downloadUrl: certificateUrl,
+                registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, `/registry?highlight=${newMember.id}`),
+                careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career"),
+                referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, buildReferralHref(referralCode)),
+                giftMessage: giftMessage || undefined,
+                isGift,
+              }),
+            },
+            {
+              flow: "checkout-promo-certificate",
+              route: "/api/checkout",
+              recipient: targetEmail,
+              memberId: newMember.id,
+              sessionId: freeSessionId,
               tier,
-              registryId: newMember.id.toUpperCase(),
-              referralCode,
-              downloadUrl: certificateUrl,
-              registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, `/registry?highlight=${newMember.id}`),
-              careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career"),
-              referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, buildReferralHref(referralCode)),
-              giftMessage: giftMessage || undefined,
-              isGift,
-            }),
-          });
+              locale: loc,
+            }
+          );
           console.log(`[SHA Checkout] Promo certificate email sent to ${targetEmail}`);
         } catch (emailError) {
           console.error("[SHA Checkout] Promo email send failed:", emailError);
         }
+      } else {
+        console.warn("[SHA Checkout] Promo certificate email skipped", {
+          reason: targetEmail ? "missing-resend-api-key" : "missing-target-email",
+          hasApiKey: !!process.env.RESEND_API_KEY,
+          targetEmail: targetEmail ?? null,
+          memberId: newMember.id,
+          sessionId: freeSessionId,
+        });
       }
 
       if (isGift && recipientEmail && email && email.trim() !== recipientEmail.trim() && process.env.RESEND_API_KEY) {
         try {
-          await sendEmailStrict({
-            from: EMAIL_FROM,
-            to: email.trim(),
-            subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,
-            html: `<!DOCTYPE html>
+          await sendEmailStrict(
+            {
+              from: EMAIL_FROM,
+              to: email.trim(),
+              subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,
+              html: `<!DOCTYPE html>
 <html><body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
 <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
   <div style="background:white;border-radius:24px;padding:32px;text-align:center;border:1px solid #d4e8f7;">
@@ -125,15 +180,25 @@ export async function POST(request: NextRequest) {
   <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
 </div>
 </body></html>`,
-          });
+            },
+            {
+              flow: "checkout-promo-buyer-notification",
+              route: "/api/checkout",
+              recipient: email.trim(),
+              memberId: newMember.id,
+              sessionId: freeSessionId,
+              tier,
+              locale: loc,
+            }
+          );
         } catch (emailError) {
           console.error("[SHA Checkout] Promo buyer notification failed:", emailError);
         }
       }
 
-      console.log(`[SHA Checkout] Promo code ${promoCode} used — free registration for ${newMember.name}`);
+      console.log(`[SHA Checkout] Promo code ${normalizedPromoCode} used — free registration for ${newMember.name}`);
 
-      const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}&paper=${paperFormat === "letter" ? "letter" : "a4"}`;
+      const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}&paper=${normalizedPaperFormat}`;
       return NextResponse.json({ url: successUrl });
     }
 
@@ -175,6 +240,18 @@ export async function POST(request: NextRequest) {
         paperFormat: paperFormat === "letter" ? "letter" : "a4",
         giftMessage: giftMessage || "",
       },
+    });
+
+    console.log("[SHA Checkout] Stripe session created", {
+      sessionId: session.id,
+      hasUrl: !!session.url,
+      mode: "stripe",
+      tier,
+      name,
+      email: email || null,
+      recipientEmail: recipientEmail || null,
+      isGift: !!isGift,
+      locale: loc,
     });
 
     return NextResponse.json({ url: session.url });

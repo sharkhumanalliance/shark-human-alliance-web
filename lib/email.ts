@@ -4,6 +4,16 @@ import { Resend } from "resend";
 export const EMAIL_FROM =
   process.env.EMAIL_FROM || "Shark Human Alliance <hello@updates.sharkhumanalliance.com>";
 
+type EmailLogContext = {
+  flow: string;
+  route?: string;
+  recipient?: string | string[] | null;
+  memberId?: string | null;
+  sessionId?: string | null;
+  tier?: string | null;
+  locale?: string | null;
+};
+
 /**
  * Returns a Resend client instance.
  * Lazy-initialized to avoid crashing at build time when the API key
@@ -23,15 +33,58 @@ export function getResend(): Resend {
   return _resend;
 }
 
+function normalizeRecipient(recipient: string | string[] | null | undefined) {
+  if (!recipient) return null;
+  return Array.isArray(recipient) ? recipient.join(", ") : recipient;
+}
 
+export function logEmailRouteEntered(context: EmailLogContext) {
+  console.log("[SHA Email] route entered", {
+    flow: context.flow,
+    route: context.route ?? null,
+    hasApiKey: !!process.env.RESEND_API_KEY,
+    emailFrom: EMAIL_FROM,
+    recipient: normalizeRecipient(context.recipient),
+    memberId: context.memberId ?? null,
+    sessionId: context.sessionId ?? null,
+    tier: context.tier ?? null,
+    locale: context.locale ?? null,
+  });
+}
 
 export async function sendEmailStrict(
-  payload: Parameters<Resend["emails"]["send"]>[0]
+  payload: Parameters<Resend["emails"]["send"]>[0],
+  context?: EmailLogContext
 ) {
+  const resolvedContext = context ?? { flow: "unknown" };
+
+  console.log("[SHA Email] resend send start", {
+    flow: resolvedContext.flow,
+    route: resolvedContext.route ?? null,
+    hasApiKey: !!process.env.RESEND_API_KEY,
+    emailFrom: payload.from ?? EMAIL_FROM,
+    recipient: normalizeRecipient(resolvedContext.recipient) ?? normalizeRecipient(payload.to),
+    memberId: resolvedContext.memberId ?? null,
+    sessionId: resolvedContext.sessionId ?? null,
+    tier: resolvedContext.tier ?? null,
+    locale: resolvedContext.locale ?? null,
+    subject: payload.subject ?? null,
+  });
+
   const { data, error } = await getResend().emails.send(payload);
 
+  console.log("[SHA Email] resend result", {
+    flow: resolvedContext.flow,
+    route: resolvedContext.route ?? null,
+    hasData: !!data,
+    hasError: !!error,
+    data: data ?? null,
+    error: error ?? null,
+  });
+
   if (error) {
-    const details = typeof error === "object" ? JSON.stringify(error) : String(error);
+    const details =
+      typeof error === "object" ? JSON.stringify(error) : String(error);
     throw new Error(`[SHA Email] Resend rejected email: ${details}`);
   }
 

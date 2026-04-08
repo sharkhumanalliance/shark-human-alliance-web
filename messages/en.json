@@ -598,6 +598,9 @@
     "promoCodePlaceholder": "Enter code",
     "stripeSecure": "Encrypted checkout. Powered by Stripe.",
     "stripeSecureNote": "Even sharks know not to mess with payment infrastructure.",
+
+    "secureBadgeCard": "Card payment",
+    "secureBadgeStripe": "Stripe checkout",
     "submitButton": "Complete purchase",
     "submitButtonPromo": "Apply Promo Code & Continue",
     "orderSummary": "Diplomatic Briefing",

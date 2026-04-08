@@ -7,28 +7,55 @@
  * Requires DATABASE_URL in .env (or POSTGRES_URL on Vercel).
  * The pool is created once per cold start and reused across requests.
  */
-import { Pool, type QueryResultRow } from "pg";
+import { Pool, type QueryResultRow, type PoolConfig } from "pg";
 
 let pool: Pool | null = null;
 
+function normalizeConnectionString(connectionString: string): string {
+  try {
+    const url = new URL(connectionString);
+    const sslmode = url.searchParams.get("sslmode")?.toLowerCase();
+
+    // We provide TLS settings explicitly via the `ssl` option below.
+    // Stripping legacy sslmode parameters avoids the pg-connection-string
+    // compatibility warning seen in Vercel runtime logs.
+    if (sslmode && ["prefer", "require", "verify-ca"].includes(sslmode)) {
+      url.searchParams.delete("sslmode");
+      url.searchParams.delete("uselibpqcompat");
+      return url.toString();
+    }
+
+    return url.toString();
+  } catch {
+    return connectionString;
+  }
+}
+
+function getSslConfig(): PoolConfig["ssl"] | undefined {
+  if (process.env.NODE_ENV !== "production") {
+    return undefined;
+  }
+
+  return {
+    rejectUnauthorized: false,
+  };
+}
+
 function getPool(): Pool {
   if (!pool) {
-    const connectionString =
+    const rawConnectionString =
       process.env.DATABASE_URL || process.env.POSTGRES_URL;
 
-    if (!connectionString) {
+    if (!rawConnectionString) {
       throw new Error(
         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
       );
     }
 
     pool = new Pool({
-      connectionString,
+      connectionString: normalizeConnectionString(rawConnectionString),
       max: 10,
-      ssl:
-        process.env.NODE_ENV === "production"
-          ? { rejectUnauthorized: false }
-          : undefined,
+      ssl: getSslConfig(),
     });
   }
   return pool;

@@ -1,6 +1,11 @@
 import { buildAbsoluteLocalizedUrl, buildReferralHref } from "@/lib/navigation";
 import { NextRequest, NextResponse } from "next/server";
-import { EMAIL_FROM, certificateEmailHtml, sendEmailStrict } from "@/lib/email";
+import {
+  EMAIL_FROM,
+  certificateEmailHtml,
+  logEmailRouteEntered,
+  sendEmailStrict,
+} from "@/lib/email";
 import { getMemberById } from "@/lib/members";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
@@ -8,6 +13,14 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const { to, name, tier, memberId, referralCode } = body;
+
+  logEmailRouteEntered({
+    flow: "manual-send-certificate",
+    route: "/api/send-certificate",
+    recipient: to,
+    memberId: memberId || null,
+    tier: tier || null,
+  });
 
   if (!to || !name || !tier) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -25,6 +38,10 @@ export async function POST(request: NextRequest) {
     const member = await getMemberById(memberId);
 
     if (!member?.accessToken) {
+      console.warn("[SHA Email] Member missing or certificate unavailable", {
+        memberId: memberId || null,
+        recipient: to,
+      });
       return NextResponse.json(
         { error: "Member not found or certificate not available" },
         { status: 404 }
@@ -34,21 +51,31 @@ export async function POST(request: NextRequest) {
     const locale = member.locale || "en";
     const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${member.accessToken}`);
 
-    await sendEmailStrict({
-      from: EMAIL_FROM,
-      to,
-      subject: `Your Alliance Certificate — Welcome, ${name}!`,
-      html: certificateEmailHtml({
-        name,
+    await sendEmailStrict(
+      {
+        from: EMAIL_FROM,
+        to,
+        subject: `Your Alliance Certificate — Welcome, ${name}!`,
+        html: certificateEmailHtml({
+          name,
+          tier,
+          registryId: (memberId || "SHA-XXXX").toUpperCase(),
+          referralCode: referralCode || "",
+          downloadUrl: certificateUrl,
+          registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${memberId}`),
+          careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
+          referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode || "")),
+        }),
+      },
+      {
+        flow: "manual-send-certificate",
+        route: "/api/send-certificate",
+        recipient: to,
+        memberId,
         tier,
-        registryId: (memberId || "SHA-XXXX").toUpperCase(),
-        referralCode: referralCode || "",
-        downloadUrl: certificateUrl,
-        registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${memberId}`),
-        careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
-        referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode || "")),
-      }),
-    });
+        locale,
+      }
+    );
 
     return NextResponse.json({ success: true });
   } catch (err) {

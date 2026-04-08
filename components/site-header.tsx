@@ -1,19 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { LanguageSwitcher } from "./language-switcher";
 
 export function SiteHeader() {
   const t = useTranslations("header");
-  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -44,7 +39,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 overflow-x-clip border-b border-[var(--border)] bg-white/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between px-4 py-3 sm:px-6">
-        <LocalizedLink href="/" className="flex min-w-0 shrink items-center gap-3">
+        <LocalizedLink href="/" onClick={() => setMenuOpen(false)} className="flex min-w-0 shrink items-center gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white">
             SHA
           </div>

@@ -251,7 +251,7 @@ export function CertificateDocument({
             and is hereby declared a:
           </p>
 
-          <div className={`certificate-status ${tierColorClass}`}>
+          <div className={`certificate-status ${tierColorClass}${tier.toLowerCase().includes("nonsnack") || tier.toLowerCase().includes("non-snack") ? " certificate-status--nonsnack" : ""}`}>
             {statusText}
           </div>
 
