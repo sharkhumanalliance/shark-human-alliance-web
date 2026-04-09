@@ -598,7 +598,6 @@
     "promoCodePlaceholder": "Enter code",
     "stripeSecure": "Encrypted checkout. Powered by Stripe.",
     "stripeSecureNote": "Even sharks know not to mess with payment infrastructure.",
-
     "secureBadgeCard": "Card payment",
     "secureBadgeStripe": "Stripe checkout",
     "submitButton": "Complete purchase",
@@ -643,7 +642,37 @@
     "referredByLabel": "Referral code (optional)",
     "referredByOptionalTag": "Optional",
     "referredByPlaceholder": "e.g. SHA-ABCD",
-    "referredByHint": "Paste someone else's referral code if you want to credit their diplomatic career."
+    "referredByHint": "Paste someone else's referral code if you want to credit their diplomatic career.",
+    "share": {
+      "eyebrow": "After checkout",
+      "title": "Boast that you are not a snack.",
+      "description": "Do not leave with a dry thank-you page. Take a ready-made Story graphic, post it, and let the public witness your official shark diplomacy status.",
+      "shareButton": "Boast that you’re not a snack",
+      "downloadButton": "Download Story",
+      "copyButton": "Copy verification link",
+      "copySuccess": "Link copied",
+      "copyError": "Copy failed",
+      "tipTitle": "Best results on mobile.",
+      "tipText": "Tap the main button on your phone to open sharing. If your browser cannot send the Story directly, use Download Story and upload it to Instagram manually.",
+      "working": "Preparing your Story…",
+      "downloadReady": "Story downloaded. Open Instagram and add it to Stories.",
+      "downloadError": "The Story could not be prepared. Please try again.",
+      "nativeTitle": "Officially not a snack",
+      "nativeText": "I am officially recognized by Shark Human Alliance.",
+      "nativeSuccess": "Share sheet opened.",
+      "nativeFallback": "Link shared. For Instagram Stories, use the downloaded image as well.",
+      "storySubline": "Officially recognized as not a snack.",
+      "storyBadge": "Story ready",
+      "previewAlt": "Instagram Story preview for your Shark Human Alliance certificate",
+      "previewHeadline": "You are officially not a snack.",
+      "previewSubline": "Post it. The public deserves to know.",
+      "tierLabels": {
+        "basic": "Basic Membership",
+        "protected": "Protected Friend Status",
+        "nonsnack": "Non-Snack Recognition",
+        "business": "Shark-Approved Zone"
+      }
+    }
   },
   "registry": {
     "title": "The Diplomatic Registry",

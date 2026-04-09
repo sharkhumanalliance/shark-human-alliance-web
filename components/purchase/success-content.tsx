@@ -9,6 +9,7 @@ import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { PostPurchaseShare } from "@/components/purchase/post-purchase-share";
 import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
 
 interface MemberData {
@@ -167,6 +168,8 @@ function SuccessContentInner() {
             {t("successText")}
           </p>
         </div>
+
+        <PostPurchaseShare member={{ id: member.id, name: member.name, tier: member.tier }} />
 
         {/* Template selector */}
         <div className="mt-8 sm:mt-10">

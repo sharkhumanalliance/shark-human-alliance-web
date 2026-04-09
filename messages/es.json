@@ -598,7 +598,6 @@
     "promoCodePlaceholder": "Introduce el código",
     "stripeSecure": "Checkout encriptado. Procesado por Stripe.",
     "stripeSecureNote": "Hasta los tiburones saben que no se juega con la infraestructura de pagos.",
-
     "secureBadgeCard": "Pago con tarjeta",
     "secureBadgeStripe": "Checkout con Stripe",
     "submitButton": "Completar compra",
@@ -643,7 +642,37 @@
     "referredByLabel": "Código de referido (opcional)",
     "referredByOptionalTag": "Opcional",
     "referredByPlaceholder": "p. ej. SHA-ABCD",
-    "referredByHint": "Pega el código de referido de otra persona si quieres acreditar su carrera diplomática."
+    "referredByHint": "Pega el código de referido de otra persona si quieres acreditar su carrera diplomática.",
+    "share": {
+      "eyebrow": "Después del pago",
+      "title": "Presume que no eres un snack.",
+      "description": "No te vayas con una página seca de agradecimiento. Llévate una Story lista, publícala y deja que el público vea tu estatus oficial en diplomacia tiburón-humana.",
+      "shareButton": "Presume que no eres un snack",
+      "downloadButton": "Descargar Story",
+      "copyButton": "Copiar enlace de verificación",
+      "copySuccess": "Enlace copiado",
+      "copyError": "No se pudo copiar",
+      "tipTitle": "Mejor en móvil.",
+      "tipText": "Pulsa el botón principal en tu teléfono para abrir el menú de compartir. Si tu navegador no puede enviar la Story directamente, usa Descargar Story y súbela a Instagram manualmente.",
+      "working": "Preparando tu Story…",
+      "downloadReady": "Story descargada. Abre Instagram y súbela a Stories.",
+      "downloadError": "No se pudo preparar la Story. Inténtalo de nuevo.",
+      "nativeTitle": "Oficialmente no eres un snack",
+      "nativeText": "Shark Human Alliance me ha reconocido oficialmente.",
+      "nativeSuccess": "Menú de compartir abierto.",
+      "nativeFallback": "Enlace compartido. Para Instagram Stories, usa también la imagen descargada.",
+      "storySubline": "Reconocido oficialmente como no snack.",
+      "storyBadge": "Story lista",
+      "previewAlt": "Vista previa de Story de Instagram para tu certificado de Shark Human Alliance",
+      "previewHeadline": "Oficialmente no eres un snack.",
+      "previewSubline": "Publícalo. El público merece saberlo.",
+      "tierLabels": {
+        "basic": "Membresía básica",
+        "protected": "Estatus de amistad protegida",
+        "nonsnack": "Reconocimiento No-Snack",
+        "business": "Zona aprobada por tiburones"
+      }
+    }
   },
   "registry": {
     "title": "El Registro Diplomático",
