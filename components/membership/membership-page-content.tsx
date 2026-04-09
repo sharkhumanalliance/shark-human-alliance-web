@@ -62,7 +62,7 @@ export function MembershipPageContent() {
       id: "protected",
       variant: "protected" as const,
       title: t("protectedTitle"),
-      price: "$5",
+      price: "$4",
       description: t("protectedDescription"),
       features: [t("protectedFeatures.0"), t("protectedFeatures.1"), t("protectedFeatures.2")],
       ctaLabel: t("protectedCta"),

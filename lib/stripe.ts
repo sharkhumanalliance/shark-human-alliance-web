@@ -2,8 +2,8 @@ import Stripe from "stripe";
 
 /** Price in cents for each tier */
 export const TIER_PRICES: Record<string, number> = {
-  basic: 500,
-  protected: 500,
+  basic: 400,
+  protected: 400,
   nonsnack: 1900,
   business: 9900,
 };

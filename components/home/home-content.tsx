@@ -169,7 +169,7 @@ export function HomeContent() {
             </p>
           </div>
 
-          <div className="mt-7 grid gap-5 md:mt-8 md:grid-cols-2 md:items-stretch md:gap-6">
+          <div className="mt-7 grid gap-5 md:mt-8 md:grid-cols-3 md:items-stretch md:gap-6">
             <MembershipCard
               variant="protected"
               title={t("membershipSection.protectedTitle")}
@@ -199,28 +199,20 @@ export function HomeContent() {
               ctaLabel={t("membershipSection.nonsnackCta")}
               href="/purchase?tier=nonsnack"
             />
-          </div>
 
-          <div className="mt-6 rounded-2xl border border-indigo-200/30 bg-white/10 p-4 text-sky-50 sm:p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-300">
-              {t("membershipSection.businessEyebrow")}
-            </p>
-            <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-3xl">
-                <h3 className="text-xl font-semibold text-white sm:text-2xl">
-                  {t("membershipSection.businessTitle")} — {t("membershipSection.businessPrice")}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-sky-100/80">
-                  {t("membershipSection.businessDescription")}
-                </p>
-              </div>
-              <LocalizedLink
-                href="/purchase?tier=business"
-                className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-indigo-300/40 bg-indigo-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-400 sm:w-auto"
-              >
-                {t("membershipSection.businessCta")}
-              </LocalizedLink>
-            </div>
+            <MembershipCard
+              variant="business"
+              title={t("membershipSection.businessTitle")}
+              price={t("membershipSection.businessPrice")}
+              description={t("membershipSection.businessDescription")}
+              features={[
+                t("membershipSection.businessFeatures.0"),
+                t("membershipSection.businessFeatures.1"),
+                t("membershipSection.businessFeatures.2"),
+              ]}
+              ctaLabel={t("membershipSection.businessCta")}
+              href="/purchase?tier=business"
+            />
           </div>
         </div>
       </section>

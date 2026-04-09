@@ -56,7 +56,7 @@ export function ProtectedFriendContent() {
             </p>
 
             <p className="mt-4 text-3xl font-semibold text-[var(--brand-dark)] sm:text-4xl">
-              $5
+              $4
             </p>
 
             <ul className="mt-8 space-y-4">

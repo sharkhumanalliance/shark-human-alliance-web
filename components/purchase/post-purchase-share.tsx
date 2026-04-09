@@ -296,7 +296,9 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="button"
-              onClick={shareStory}
+              onClick={() => {
+                void shareStory();
+              }}
               disabled={isBusy}
               className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
             >
@@ -304,7 +306,9 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
             </button>
             <button
               type="button"
-              onClick={downloadStory}
+              onClick={() => {
+                void downloadStory();
+              }}
               disabled={isBusy}
               className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-70"
             >
@@ -312,7 +316,9 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
             </button>
             <button
               type="button"
-              onClick={copyLink}
+              onClick={() => {
+                void copyLink();
+              }}
               className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
             >
               {copyState === "done" ? t("copySuccess") : copyState === "error" ? t("copyError") : t("copyButton")}

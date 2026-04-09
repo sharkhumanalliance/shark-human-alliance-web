@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     template: "%s | Shark Human Alliance",
   },
   description:
-    "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $5.",
+    "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $4.",
   metadataBase: new URL("https://sharkhumanalliance.com"),
   openGraph: {
     type: "website",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shark Human Alliance",
     description:
-      "Official shark protection certificates + real conservation funding. From $5.",
+      "Official shark protection certificates + real conservation funding. From $4.",
     images: ["/mascots/finnley-luna-hero-v2.webp"],
   },
   robots: {
@@ -128,7 +128,7 @@ function JsonLd() {
       {
         "@type": "Offer",
         name: "Protected Friend Status",
-        price: "5.00",
+        price: "4.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: "https://sharkhumanalliance.com/purchase?tier=protected",

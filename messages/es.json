@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Shark Human Alliance — Certificados Oficiales de Protección de Tiburones",
-      "description": "Certificados personalizados que declaran inmunidad diplomática ante tiburones. Cada venta financia la conservación real del océano. Entrega digital instantánea, desde $5."
+      "description": "Certificados personalizados que declaran inmunidad diplomática ante tiburones. Cada venta financia la conservación real del océano. Entrega digital instantánea, desde $4."
     },
     "purchase": {
       "title": "Obtén tu Certificado — Shark Human Alliance",
@@ -55,7 +55,7 @@
       "faq": "FAQ",
       "registry": "Registro"
     },
-    "cta": "Obtén tu certificado — $5"
+    "cta": "Obtén tu certificado — $4"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -87,7 +87,7 @@
     "titleLine2": "Para humanos.",
     "brandLine": "Los tiburones merecen mejor imagen. Y protección real.",
     "description": "Un certificado personalizado para personas que aman a los tiburones, les temen o simplemente aprecian un papeleo excelente. También financia conservación real de tiburones.",
-    "ctaPrimary": "Obtén tu certificado — $5",
+    "ctaPrimary": "Obtén tu certificado — $4",
     "ctaSecondary": "Vista previa de tu certificado",
     "socialProof": "Únete a la Alianza",
     "giftBadge": "Para amantes de los tiburones, personas que les temen y compradores de regalos con gusto por el drama.",
@@ -102,7 +102,7 @@
     "bullet1": "Entrega digital instantánea",
     "bullet2": "Personalizado en 60 segundos",
     "bullet3": "Financia conservación real de tiburones",
-    "proofPrice": "Desde $5",
+    "proofPrice": "Desde $4",
     "proofDelivery": "Entregado en minutos",
     "proofDiplomats": "diplomáticos registrados",
     "proofRegistry": "Registro público",
@@ -150,7 +150,7 @@
       "label": "Únete a la Alianza",
       "title": "Sé parte de la primera ola de diplomáticos.",
       "text": "El Registro Diplomático está abierto. Cada certificado emitido queda registrado, cada dólar rastreado. Cuanto antes te unas, más impresionante será tu antigüedad en los archivos.",
-      "cta": "Obtén tu certificado — $5",
+      "cta": "Obtén tu certificado — $4",
       "registryCta": "Ver el Registro"
     },
     "giftingSection": {
@@ -168,7 +168,7 @@
       "case4Icon": "🤷",
       "case4Title": "Gente que tiene de todo",
       "case4Text": "No tienen reconocimiento diplomático de tiburones. Nadie lo tiene. Por eso es perfecto.",
-      "cta": "Regalar un certificado — $5",
+      "cta": "Regalar un certificado — $4",
       "wantedCta": "Genera un Póster de Búsqueda"
     },
     "about": {
@@ -178,8 +178,8 @@
       "certName": "[ Tu nombre aquí ]",
       "certText": "es oficialmente reconocido por la Shark Human Alliance como un defensor de las relaciones pacíficas entre tiburones y humanos y un contribuyente a la conservación marina real.",
       "inputPlaceholder": "Tu nombre (los tiburones esperan)",
-      "ctaBuy": "Consigue el tuyo — $5",
-      "ctaGift": "Regala uno — $5"
+      "ctaBuy": "Consigue el tuyo — $4",
+      "ctaGift": "Regala uno — $4"
     },
     "impactTeaser": {
       "donationsIntro": "Cada certificado contribuye a un fondo de conservación rastreado públicamente. A medida que ese fondo crece, publicamos adónde va el dinero y quién lo recibe.",
@@ -193,14 +193,14 @@
       "description": "Cada certificado ayuda a financiar la conservación real de los tiburones. El resto es simplemente papeleo inusualmente atractivo.",
       "popularBadge": "Más Popular",
       "protectedTitle": "Estatus de Amigo Protegido",
-      "protectedPrice": "$5",
+      "protectedPrice": "$4",
       "protectedDescription": "Una puerta de entrada pulida para quienes quieren algo personal, divertido y sorprendentemente digno de enmarcar. Ideal para cumpleaños, regalos de escritorio y una primera incursión en la diplomacia con tiburones.",
       "protectedFeatures": [
         "Certificado personalizado",
         "Estatus de Amigo Protegido",
         "Entrega digital instantánea"
       ],
-      "protectedCta": "Obtén Amigo Protegido — $5",
+      "protectedCta": "Obtén Amigo Protegido — $4",
       "nonsnackTitle": "Reconocimiento No-Snack",
       "nonsnackPrice": "$19",
       "nonsnackDescription": "Para quienes quieren que el chiste golpee más fuerte y quede mejor enmarcado. Más dramático, más prestigioso y bastante menos cercano al menú.",
@@ -318,7 +318,7 @@
       },
       {
         "question": "¿Cuánto cuesta cada certificado?",
-        "answer": "Protected Friend cuesta $5. Non-Snack Recognition cuesta $19. Shark-Approved Zone cuesta $99."
+        "answer": "Protected Friend cuesta $4. Non-Snack Recognition cuesta $19. Shark-Approved Zone cuesta $99."
       },
       {
         "question": "¿Recibiré un certificado de inmediato?",
@@ -351,7 +351,7 @@
     ],
     "ctaTitle": "¿Aún tienes preguntas?",
     "ctaText": "La mejor manera de entender el certificado es verlo. Prueba la vista previa en vivo en nuestra página principal — o simplemente hazlo.",
-    "ctaButton": "Obtén tu certificado — $5"
+    "ctaButton": "Obtén tu certificado — $4"
   },
   "membershipPage": {
     "badge": "Oficina de selección de certificados",
@@ -403,7 +403,7 @@
       "Entrada en el registro público",
       "Entrega inmediata para regalos y diplomacia de última hora"
     ],
-    "protectedCta": "Empezar con Amistad Protegida — $5",
+    "protectedCta": "Empezar con Amistad Protegida — $4",
     "protectedPopular": "Más regalable",
     "nonsnackTitle": "Reconocimiento No Snack",
     "nonsnackDescription": "Para quien quiere más energía ceremonial, una broma mejor enmarcada y reconocimiento oficial de su evidente no comestibilidad.",
@@ -460,7 +460,7 @@
       },
       {
         "label": "Precio",
-        "protected": "$5",
+        "protected": "$4",
         "nonsnack": "$19",
         "business": "$99"
       },
@@ -513,14 +513,14 @@
     "joinLabel": "¿Listo para tramitar el papeleo?",
     "joinTitle": "Elige el nivel. Luego deja que los tiburones revisen la documentación.",
     "joinText": "Empieza con Estado de Amistad Protegida, sube a Reconocimiento No Snack o certifica una oficina con Zona Aprobada por Tiburones. Luego elige el estilo que mejor haga funcionar la broma.",
-    "joinCtaPrimary": "Obtén tu certificado — $5",
+    "joinCtaPrimary": "Obtén tu certificado — $4",
     "joinCtaSecondary": "Obtener versión No Snack — $19"
   },
   "protectedPage": {
     "badge": "Producto estrella de membresía",
     "title": "Estatus de Amigo Protegido",
     "description": "Autorización diplomática para humanos que merecen una recepción ligeramente más cálida de los tiburones y un certificado con aspecto significativamente más oficial.",
-    "ctaPrimary": "Obtén tu certificado — $5",
+    "ctaPrimary": "Obtén tu certificado — $4",
     "ctaSecondary": "Volver a membresía",
     "recommended": "Recomendado como el producto principal de lanzamiento para Shark Human Alliance.",
     "includedLabel": "Qué incluye",
@@ -568,8 +568,8 @@
     "subtitle": "Un formulario. Un pago. Un paso más cerca de no ser un snack.",
     "tierLabel": "Nivel seleccionado",
     "tiers": {
-      "basic": "Membresía Básica — $5",
-      "protected": "Estatus de Amigo Protegido — $5",
+      "basic": "Membresía Básica — $4",
+      "protected": "Estatus de Amigo Protegido — $4",
       "nonsnack": "Reconocimiento No-Snack — $19",
       "business": "Zona Aprobada por Tiburones — $99"
     },
@@ -730,10 +730,10 @@
     "title": "Este es un certificado de vista previa",
     "description": "Escaneaste un código QR de un certificado de muestra. Esto no es una membresía real — todavía. Los tiburones están observando y juzgando levemente tu indecisión.",
     "quip": "Nuestra inteligencia diplomática sugiere que eres exactamente el tipo de persona que debería tener uno de estos. El hecho de que escaneaste un código QR de muestra demuestra que eres meticuloso, cauteloso y posiblemente un poco paranoico con los tiburones. Todas cualidades excelentes.",
-    "buyCta": "Obtén tu propio certificado — $5",
+    "buyCta": "Obtén tu propio certificado — $4",
     "giftCta": "Regala uno a alguien desprotegido",
     "wantedCta": "Genera un Póster de Búsqueda",
-    "disclaimer": "No se verificó ninguna diplomacia tiburonesca real durante esta interacción. Pero podría hacerse. Fácilmente. Por $5.",
+    "disclaimer": "No se verificó ninguna diplomacia tiburonesca real durante esta interacción. Pero podría hacerse. Fácilmente. Por $4.",
     "registryLink": "Explorar el Registro Diplomático"
   },
   "certificate": {
@@ -811,11 +811,11 @@
     "title": "Adónde va realmente el dinero.",
     "subtitle": "La Alianza es ficticia. La financiación no. Esta página explica qué aporta cada certificado, a quién pretendemos apoyar y cómo funcionarán los reportes.",
     "splitTitle": "Cómo se dividen los fondos",
-    "splitDescription": "Los precios de los certificados son $5, $19 y $99. Las asignaciones para conservación se rastrean públicamente y se reportan aquí a medida que se distribuyen.",
+    "splitDescription": "Los precios de los certificados son $4, $19 y $99. Las asignaciones para conservación se rastrean públicamente y se reportan aquí a medida que se distribuyen.",
     "splitOf": "de",
     "splitGoesToOcean": "va a conservación",
     "splitProtectedAmount": "$1",
-    "splitProtectedPrice": "$5",
+    "splitProtectedPrice": "$4",
     "splitProtectedLabel": "Amigo Protegido",
     "splitProtectedText": "$1 de cada venta de Protected Friend va a la conservación de tiburones. Certificado pequeño. Contribución real.",
     "splitNonsnackAmount": "$12",
@@ -868,11 +868,11 @@
     "preReportText": "Shark Human Alliance todavía está en una fase temprana. Esta página publicará reportes públicos a medida que las donaciones crezcan y se distribuyan. Hasta entonces, describiremos a las organizaciones como destinatarios previstos, no como socios confirmados.",
     "ctaTitle": "Cada certificado ayuda.",
     "ctaText": "El chiste es ficticio. La financiación es real. Obtén un certificado y ayuda a proteger a los tiburones que definitivamente no están tramando nada.",
-    "ctaButton": "Obtén tu certificado — desde $5"
+    "ctaButton": "Obtén tu certificado — desde $4"
   },
   "mobileCta": {
     "label": "Obtén tu certificado",
-    "price": "$5"
+    "price": "$4"
   },
   "wanted": {
     "label": "Oficina de Seguridad de la Alianza",
@@ -917,7 +917,7 @@
     "linkCopied": "¡Enlace copiado!",
     "shareTitle": "SE BUSCA: Humano Desprotegido",
     "shareText": "{name} ha sido identificado como un humano desprotegido. Haz lo correcto.",
-    "giftCta": "Regalar a {name} un Certificado de Amigo Protegido — $5",
+    "giftCta": "Regalar a {name} un Certificado de Amigo Protegido — $4",
     "newPoster": "Crear otro póster",
     "viralPrompt": "Compártelo en Instagram Stories, envíalo al grupo de chat, o imprímelo y pégalo en su escritorio.",
     "viralSubtext": "Cada póster compartido es un paso hacia la cobertura diplomática universal entre tiburones y humanos.",
@@ -931,7 +931,7 @@
     "howStep3Icon": "🛡️",
     "howStep3Title": "Regálale protección",
     "howStep3Text": "Resuelve la situación regalándole un certificado oficial de Amigo Protegido. Diplomacia restaurada.",
-    "bottomCta": "Regalar Estatus de Amigo Protegido — $5"
+    "bottomCta": "Regalar Estatus de Amigo Protegido — $4"
   },
   "career": {
     "hero": {

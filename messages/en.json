@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Shark Human Alliance — Official Shark Protection Certificates",
-      "description": "Personalized certificates declaring diplomatic immunity from sharks. Every sale funds real ocean conservation. Instant digital delivery, from $5."
+      "description": "Personalized certificates declaring diplomatic immunity from sharks. Every sale funds real ocean conservation. Instant digital delivery, from $4."
     },
     "purchase": {
       "title": "Get Your Certificate — Shark Human Alliance",
@@ -55,7 +55,7 @@
       "faq": "FAQ",
       "registry": "Registry"
     },
-    "cta": "Get your certificate — $5"
+    "cta": "Get your certificate — $4"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -87,7 +87,7 @@
     "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
     "description": "A personalized certificate for people who love sharks, fear sharks, or simply appreciate excellent paperwork. It also funds real shark conservation.",
-    "ctaPrimary": "Get your certificate — $5",
+    "ctaPrimary": "Get your certificate — $4",
     "ctaSecondary": "Preview your certificate",
     "socialProof": "Join the Alliance",
     "giftBadge": "For shark lovers, shark-fearers, and dramatic gift buyers.",
@@ -102,7 +102,7 @@
     "bullet1": "Instant digital delivery",
     "bullet2": "Personalized in 60 seconds",
     "bullet3": "Funds real shark conservation",
-    "proofPrice": "From $5",
+    "proofPrice": "From $4",
     "proofDelivery": "Delivered in minutes",
     "proofDiplomats": "diplomats enrolled",
     "proofRegistry": "Public registry",
@@ -150,7 +150,7 @@
       "label": "Join the Alliance",
       "title": "Be among the first wave of diplomats.",
       "text": "The Diplomatic Registry is open. Every certificate issued is logged, every dollar tracked. The earlier you join, the more impressive your seniority will look in the archives.",
-      "cta": "Get your certificate — $5",
+      "cta": "Get your certificate — $4",
       "registryCta": "View the Registry"
     },
     "giftingSection": {
@@ -168,7 +168,7 @@
       "case4Icon": "🤷",
       "case4Title": "People who have everything",
       "case4Text": "They don't have diplomatic recognition from sharks. Nobody does. That's why it's perfect.",
-      "cta": "Gift a certificate — $5",
+      "cta": "Gift a certificate — $4",
       "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
@@ -184,8 +184,8 @@
       "certName": "[ Your Name Here ]",
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
       "inputPlaceholder": "Your name (the sharks are waiting)",
-      "ctaBuy": "Get yours — $5",
-      "ctaGift": "Gift one — $5"
+      "ctaBuy": "Get yours — $4",
+      "ctaGift": "Gift one — $4"
     },
     "membershipSection": {
       "label": "Certificates",
@@ -193,14 +193,14 @@
       "description": "Every certificate helps fund real shark conservation. The rest is just unusually good-looking paperwork.",
       "popularBadge": "Most Popular",
       "protectedTitle": "Protected Friend Status",
-      "protectedPrice": "$5",
+      "protectedPrice": "$4",
       "protectedDescription": "A polished entry point for people who want something personal, funny, and surprisingly frameable. Ideal for birthdays, desk drops, and first-time shark diplomacy.",
       "protectedFeatures": [
         "Personalized certificate",
         "Protected Friend status",
         "Instant digital delivery"
       ],
-      "protectedCta": "Get Protected Friend — $5",
+      "protectedCta": "Get Protected Friend — $4",
       "nonsnackTitle": "Non-Snack Recognition",
       "nonsnackPrice": "$19",
       "nonsnackDescription": "For people who want the joke to land harder and look better framed. More dramatic, more prestigious, and significantly less snack-adjacent.",
@@ -318,7 +318,7 @@
       },
       {
         "question": "How much does each certificate cost?",
-        "answer": "Protected Friend is $5. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
+        "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
       },
       {
         "question": "Will I receive a certificate immediately?",
@@ -351,7 +351,7 @@
     ],
     "ctaTitle": "Still have questions?",
     "ctaText": "The best way to understand the certificate is to see it. Try the live preview on our homepage — or just go for it.",
-    "ctaButton": "Get your certificate — $5"
+    "ctaButton": "Get your certificate — $4"
   },
   "membershipPage": {
     "badge": "Certificate selection bureau",
@@ -403,7 +403,7 @@
       "Public registry entry",
       "Instant delivery for gifts and last-minute diplomacy"
     ],
-    "protectedCta": "Start with Protected Friend — $5",
+    "protectedCta": "Start with Protected Friend — $4",
     "protectedPopular": "Most giftable",
     "nonsnackTitle": "Non-Snack Recognition",
     "nonsnackDescription": "For buyers who want stronger ceremonial energy, a better framed punchline, and official recognition of their obvious non-edibility.",
@@ -460,7 +460,7 @@
       },
       {
         "label": "Price",
-        "protected": "$5",
+        "protected": "$4",
         "nonsnack": "$19",
         "business": "$99"
       },
@@ -513,14 +513,14 @@
     "joinLabel": "Ready to file the paperwork?",
     "joinTitle": "Choose the tier. Then let the sharks review the paperwork.",
     "joinText": "Start with Protected Friend, step up to Non-Snack, or certify an office with Shark-Approved Zone. Then choose the style that makes the joke land best.",
-    "joinCtaPrimary": "Get your certificate — $5",
+    "joinCtaPrimary": "Get your certificate — $4",
     "joinCtaSecondary": "Get the Non-Snack version — $19"
   },
   "protectedPage": {
     "badge": "Flagship membership product",
     "title": "Protected Friend Status",
     "description": "Diplomatic clearance for humans who deserve a slightly warmer reception from sharks and a significantly more official-looking certificate.",
-    "ctaPrimary": "Get Protected Friend — $5",
+    "ctaPrimary": "Get Protected Friend — $4",
     "ctaSecondary": "Back to membership",
     "recommended": "Recommended as the core launch product for Shark Human Alliance.",
     "includedLabel": "What is included",
@@ -568,8 +568,8 @@
     "subtitle": "One form. One payment. One step closer to not being a snack.",
     "tierLabel": "Selected tier",
     "tiers": {
-      "basic": "Basic Membership — $5",
-      "protected": "Protected Friend Status — $5",
+      "basic": "Basic Membership — $4",
+      "protected": "Protected Friend Status — $4",
       "nonsnack": "Non-Snack Recognition — $19",
       "business": "Shark-Approved Zone — $99"
     },
@@ -730,10 +730,10 @@
     "title": "This is a preview certificate",
     "description": "You scanned a QR code from a sample certificate. This is not a real membership — yet. The sharks are watching and mildly judging your hesitation.",
     "quip": "Our diplomatic intelligence suggests you are exactly the kind of person who should have one of these. The fact that you scanned a sample QR code proves you are thorough, cautious, and possibly a little paranoid about sharks. All excellent qualities.",
-    "buyCta": "Get your own certificate — $5",
+    "buyCta": "Get your own certificate — $4",
     "giftCta": "Gift one to someone unprotected",
     "wantedCta": "Generate a Wanted Poster instead",
-    "disclaimer": "No actual shark diplomacy was verified during this interaction. But it could be. Easily. For $5.",
+    "disclaimer": "No actual shark diplomacy was verified during this interaction. But it could be. Easily. For $4.",
     "registryLink": "Browse the Diplomatic Registry"
   },
   "certificate": {
@@ -811,11 +811,11 @@
     "title": "Where the money actually goes.",
     "subtitle": "The Alliance is fictional. The funding is not. This page explains what each certificate contributes, who we aim to support, and how reporting will work.",
     "splitTitle": "How funds are split",
-    "splitDescription": "Certificate prices are fixed at $5, $19, and $99. Conservation allocations are tracked publicly and reported here as donations scale.",
+    "splitDescription": "Certificate prices are fixed at $4, $19, and $99. Conservation allocations are tracked publicly and reported here as donations scale.",
     "splitOf": "of",
     "splitGoesToOcean": "goes to conservation",
     "splitProtectedAmount": "$1",
-    "splitProtectedPrice": "$5",
+    "splitProtectedPrice": "$4",
     "splitProtectedLabel": "Protected Friend",
     "splitProtectedText": "$1 from every Protected Friend sale goes to shark conservation. Small certificate. Real contribution.",
     "splitNonsnackAmount": "$12",
@@ -868,11 +868,11 @@
     "preReportText": "The Shark Human Alliance is still in its early stages. This page will publish public reporting as donations scale and distributions are made. Until then, we will describe recipient organizations as planned recipients rather than confirmed partners.",
     "ctaTitle": "Every certificate helps.",
     "ctaText": "The joke is fictional. The funding is real. Get a certificate and help protect the sharks who definitely aren't plotting anything.",
-    "ctaButton": "Get your certificate — from $5"
+    "ctaButton": "Get your certificate — from $4"
   },
   "mobileCta": {
     "label": "Get your certificate",
-    "price": "$5"
+    "price": "$4"
   },
   "wanted": {
     "label": "Alliance Security Bureau",
@@ -917,7 +917,7 @@
     "linkCopied": "Link copied!",
     "shareTitle": "WANTED: Unprotected Human",
     "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
-    "giftCta": "Gift {name} a Protected Friend Certificate — $5",
+    "giftCta": "Gift {name} a Protected Friend Certificate — $4",
     "newPoster": "Create another poster",
     "viralPrompt": "Share it on Instagram Stories, send it in a group chat, or print it and tape it to their desk.",
     "viralSubtext": "Every poster shared is a step toward universal shark-human diplomatic coverage.",
@@ -931,7 +931,7 @@
     "howStep3Icon": "🛡️",
     "howStep3Title": "Gift them protection",
     "howStep3Text": "Resolve the situation by gifting them an official Protected Friend certificate. Diplomacy restored.",
-    "bottomCta": "Gift Protected Friend Status — $5"
+    "bottomCta": "Gift Protected Friend Status — $4"
   },
   "career": {
     "hero": {

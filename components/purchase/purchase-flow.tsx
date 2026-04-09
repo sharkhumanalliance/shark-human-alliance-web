@@ -122,15 +122,15 @@ function PurchaseFlowInner() {
   }, [referredByCode]);
 
   const tierPrices: Record<Tier, string> = {
-    basic: "$5",
-    protected: "$5",
+    basic: "$4",
+    protected: "$4",
     nonsnack: "$19",
     business: "$99",
   };
 
   const tierValues: Record<Tier, number> = {
-    basic: 5,
-    protected: 5,
+    basic: 4,
+    protected: 4,
     nonsnack: 19,
     business: 99,
   };
