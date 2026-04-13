@@ -50,8 +50,6 @@ export function getRankInfo(referralCount: number): RankInfo {
 export function getNextRank(
   referralCount: number
 ): { rank: RankInfo; remaining: number } | null {
-  const currentRankId = getRank(referralCount);
-
   for (const rank of RANKS) {
     if (rank.minReferrals > referralCount) {
       return {

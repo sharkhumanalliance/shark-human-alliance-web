@@ -12,9 +12,15 @@ import {
 export async function GET() {
   const members = await listMembers();
   // Strip sensitive fields from public response
-  const publicMembers = members.map(
-    ({ accessToken, stripeSessionId, email, template, locale, ...rest }) => rest
-  );
+  const publicMembers = members.map((member) => {
+    const sanitized = { ...member };
+    delete sanitized.accessToken;
+    delete sanitized.stripeSessionId;
+    delete sanitized.email;
+    delete sanitized.template;
+    delete sanitized.locale;
+    return sanitized;
+  });
   return NextResponse.json(publicMembers);
 }
 
@@ -59,7 +65,10 @@ export async function POST(request: NextRequest) {
     await incrementReferralCount(referredBy.trim());
   }
 
-  // Don't expose accessToken in POST response
-  const { accessToken, ...publicMember } = newMember;
-  return NextResponse.json(publicMember, { status: 201 });
+  // Don't expose sensitive fields in response
+  const sanitized = { ...newMember };
+  delete sanitized.accessToken;
+  delete sanitized.stripeSessionId;
+
+  return NextResponse.json(sanitized, { status: 201 });
 }

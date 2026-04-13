@@ -9,20 +9,20 @@ export function HeroSection() {
   const bullets = [t("bullet1"), t("bullet2"), t("bullet3")];
 
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-start gap-6 px-4 py-8 sm:px-6 sm:py-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12 lg:py-14">
+    <section className="relative overflow-hidden bg-[var(--surface-soft)]">
+      <div className="mx-auto grid max-w-6xl items-start gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12 lg:py-16">
         <div className="flex max-w-xl flex-col justify-center lg:pr-3">
-          <div className="mb-3 inline-flex w-fit max-w-full items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-[11px] font-semibold leading-5 text-orange-800 sm:text-sm">
+          <div className="mb-3 inline-flex w-fit max-w-full items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-[11px] font-semibold leading-5 text-orange-800 sm:text-sm">
             {t("giftBadge")}
           </div>
 
           <h1 className="max-w-xl text-3xl font-bold leading-[1.03] tracking-tight text-[var(--brand-dark)] sm:text-5xl">
             {t("titleLine1")}
             <br />
-            <span className="text-[var(--brand)]">{t("titleLine2")}</span>
+            <span className="text-[var(--section-label)]">{t("titleLine2")}</span>
           </h1>
 
-          <p className="mt-3 max-w-lg text-base font-semibold leading-7 text-[var(--brand-dark)] sm:text-[1.15rem]">
+          <p className="mt-4 max-w-lg text-base font-semibold leading-7 text-[var(--brand-dark)] sm:text-[1.15rem]">
             {t("brandLine")}
           </p>
 
@@ -30,26 +30,28 @@ export function HeroSection() {
             {t("description")}
           </p>
 
-          <ul className="mt-5 flex flex-col gap-2.5 text-sm font-medium leading-6 text-[var(--brand-dark)] sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-2.5">
+          <ul className="mt-6 grid gap-3 text-sm font-medium leading-6 text-[var(--brand-dark)] sm:grid-cols-3">
             {bullets.map((bullet) => (
-              <li key={bullet} className="inline-flex items-start gap-2">
-                <span className="mt-[0.22rem] text-[var(--brand)]" aria-hidden="true">•</span>
-                <span>{bullet}</span>
+              <li
+                key={bullet}
+                className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3"
+              >
+                {bullet}
               </li>
             ))}
           </ul>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <LocalizedLink
               href="/purchase?tier=protected"
-              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto"
+              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
             >
               {t("ctaPrimary")}
             </LocalizedLink>
 
             <LocalizedLink
               href="#certificate-preview"
-              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] transition hover:border-gray-300 hover:bg-gray-50 sm:w-auto"
+              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto"
             >
               {t("ctaSecondary")}
             </LocalizedLink>
@@ -57,7 +59,7 @@ export function HeroSection() {
         </div>
 
         <div className="relative lg:pl-2">
-          <div className="relative overflow-hidden rounded-[22px] border border-[var(--border)] bg-white shadow-[0_18px_54px_rgba(18,38,56,0.12)]">
+          <div className="relative overflow-hidden rounded-[22px] border border-[var(--border)] bg-white shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
             <div className="p-2 sm:p-3">
               <Image
                 src="/mascots/finnley-luna-hero-v2.webp"

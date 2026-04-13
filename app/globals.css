@@ -1,16 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f9fb;
-  --foreground: #15324d;
+  --background: #ffffff;
+  --foreground: #162d50;
   --surface: #ffffff;
-  --surface-soft: #f1f5f9;
+  --surface-soft: #f8fafc;
+  --surface-footer: #f4f7fb;
   --border: #e2e8f0;
-  --brand: #2f80ed;
-  --brand-dark: #173d63;
-  --accent: #f97355;
-  --accent-dark: #e8613f;
+  --brand: #1e3a5f;
+  --brand-dark: #162d50;
+  --accent: #ee8a45;
+  --accent-soft: #f3a66c;
+  --accent-dark: #df7427;
   --muted: #64748b;
+  --section-label: #2563eb;
+
+  /* ── Tier: Protected (orange) ── */
+  --tier-protected: #f97316;
+  --tier-protected-dark: #ea580c;
+  --tier-protected-light: #fff7ed;
+  --tier-protected-surface: #ffedd5;
+  --tier-protected-border: #fed7aa;
+  --tier-protected-border-light: #ffedd5;
+  --tier-protected-text: #9a3412;
+  --tier-protected-muted: #c2410c;
+
+  /* ── Tier: Non-Snack (teal) ── */
+  --tier-nonsnack: #14b8a6;
+  --tier-nonsnack-dark: #0d9488;
+  --tier-nonsnack-darker: #0f766e;
+  --tier-nonsnack-light: #f0fdfa;
+  --tier-nonsnack-surface: #ccfbf1;
+  --tier-nonsnack-border: #99f6e4;
+  --tier-nonsnack-border-light: #ccfbf1;
+  --tier-nonsnack-text: #115e59;
+  --tier-nonsnack-muted: #0f766e;
+
+  /* ── Tier: Business (indigo) ── */
+  --tier-business: #818cf8;
+  --tier-business-dark: #4f46e5;
+  --tier-business-light: #eef2ff;
+  --tier-business-surface: #e0e7ff;
+  --tier-business-border: #c7d2fe;
+  --tier-business-border-light: #e0e7ff;
+  --tier-business-text: #3730a3;
+  --tier-business-muted: #4338ca;
 }
 
 @theme inline {
@@ -74,8 +108,34 @@ textarea:focus-visible {
 }
 
 ::selection {
-  background: rgba(47, 128, 237, 0.18);
+  background: rgba(51, 65, 85, 0.14);
   color: var(--brand-dark);
+}
+
+[data-reveal].reveal-pending {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal].reveal-pending,
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1264,7 +1324,7 @@ textarea:focus-visible {
   font-size: calc(0.97 * var(--u));
   font-weight: 700;
   line-height: 1.02;
-  color: #111111;
+  color: #0f172a;
   letter-spacing: -0.04em;
   white-space: normal;
   text-wrap: pretty;

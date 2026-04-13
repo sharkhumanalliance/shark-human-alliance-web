@@ -280,7 +280,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
   }
 
   return (
-    <section className="mt-10 rounded-[32px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-amber-50 px-4 py-5 shadow-[0_24px_80px_rgba(15,76,129,0.08)] sm:px-6 sm:py-7 lg:px-8">
+    <section data-reveal className="mt-10 rounded-[32px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-amber-50 px-4 py-5 shadow-[0_24px_80px_rgba(15,76,129,0.08)] sm:px-6 sm:py-7 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,360px)] lg:items-center">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-800">
@@ -300,7 +300,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
                 void shareStory();
               }}
               disabled={isBusy}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isBusy ? t("working") : t("shareButton")}
             </button>
@@ -310,7 +310,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
                 void downloadStory();
               }}
               disabled={isBusy}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {t("downloadButton")}
             </button>
@@ -319,7 +319,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
               onClick={() => {
                 void copyLink();
               }}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
             >
               {copyState === "done" ? t("copySuccess") : copyState === "error" ? t("copyError") : t("copyButton")}
             </button>

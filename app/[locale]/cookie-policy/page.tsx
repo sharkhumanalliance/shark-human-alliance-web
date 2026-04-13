@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -9,17 +9,17 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "seo.terms" });
+  const t = await getTranslations({ locale, namespace: "seo.cookiePolicy" });
   const otherLocale = locale === "en" ? "es" : "en";
 
   return {
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: `https://sharkhumanalliance.com/${locale}/terms`,
+      canonical: `https://sharkhumanalliance.com/${locale}/cookie-policy`,
       languages: {
-        [locale]: `/${locale}/terms`,
-        [otherLocale]: `/${otherLocale}/terms`,
+        [locale]: `/${locale}/cookie-policy`,
+        [otherLocale]: `/${otherLocale}/cookie-policy`,
       },
     },
     openGraph: {
@@ -37,19 +37,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function TermsPage({ params }: Props) {
+export default async function CookiePolicyPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: "termsPage" });
+  const t = await getTranslations({ locale, namespace: "cookiePolicyPage" });
 
   const sections = [
-    "operator",
-    "products",
-    "ordering",
-    "delivery",
-    "complaints",
-    "refunds",
-    "contact",
+    "whatAreCookies",
+    "categories",
+    "retention",
+    "thirdParties",
+    "changeConsent",
+    "controller",
   ] as const;
 
   return (
@@ -77,7 +76,7 @@ export default async function TermsPage({ params }: Props) {
           <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <div className="space-y-5">
               {sections.map((section) => (
-                <article data-reveal key={section} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-6 shadow-sm sm:p-7">
+                <article key={section} data-reveal className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-6 shadow-sm sm:p-7">
                   <h2 className="text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
                     {t(`sections.${section}.title`)}
                   </h2>

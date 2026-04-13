@@ -69,7 +69,7 @@ export function VerifyContent({
     : "/purchase?tier=protected";
 
   return (
-    <section className="mx-auto max-w-xl px-4 py-10 sm:px-5 sm:py-12 md:py-24">
+    <section data-reveal className="mx-auto max-w-xl px-4 py-10 sm:px-5 sm:py-12 md:py-24">
       {/* Badge */}
       <div className="mb-6 flex flex-wrap items-center justify-center gap-2 text-center">
         <svg
@@ -234,7 +234,7 @@ export function VerifyContent({
         </LocalizedLink>
         <LocalizedLink
           href={purchaseHref}
-          className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--border)] bg-white px-5 py-3 text-center text-sm font-medium transition-colors hover:border-sky-300 hover:no-underline sm:w-auto"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--border)] bg-white px-5 py-3 text-center text-sm font-medium transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] hover:no-underline sm:w-auto"
           style={{ color: "var(--brand)" }}
         >
           {referralSourceCode

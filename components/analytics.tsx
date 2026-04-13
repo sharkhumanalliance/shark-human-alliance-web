@@ -1,5 +1,3 @@
-"use client";
-
 import Script from "next/script";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -21,10 +19,18 @@ export function Analytics() {
       <Script id="gtag-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_ID}', {
+          window.gtag = function gtag(){window.dataLayer.push(arguments);};
+          window.gtag('consent', 'default', {
+            analytics_storage: 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            wait_for_update: 500,
+          });
+          window.gtag('js', new Date());
+          window.gtag('config', '${GA_ID}', {
             page_path: window.location.pathname,
+            anonymize_ip: true,
           });
         `}
       </Script>
@@ -40,14 +46,9 @@ export function Analytics() {
  *   trackEvent("purchase_complete", { tier: "nonsnack", value: 29 });
  */
 export function trackEvent(
-  eventName: string,
-  params?: Record<string, string | number | boolean>
+  action: string,
+  params?: Record<string, string | number | boolean>,
 ) {
-  if (typeof window !== "undefined" && "gtag" in window) {
-    (window as unknown as { gtag: (...args: unknown[]) => void }).gtag(
-      "event",
-      eventName,
-      params
-    );
-  }
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  window.gtag("event", action, params);
 }

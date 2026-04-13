@@ -43,6 +43,10 @@
     "terms": {
       "title": "Condiciones de compra — Shark Human Alliance",
       "description": "Lee cómo funcionan los pedidos, la entrega digital, el soporte, las reclamaciones y la gestión de reembolsos de los certificados Shark Human Alliance."
+    },
+    "cookiePolicy": {
+      "title": "Política de cookies — Shark Human Alliance",
+      "description": "Cómo usa Shark Human Alliance las cookies necesarias y analíticas, cómo funciona el consentimiento y cómo puedes cambiar tus preferencias."
     }
   },
   "header": {
@@ -75,12 +79,14 @@
       "career": "Carrera en la Alianza"
     },
     "navTitle": "Explorar",
-    "madeWith": "Hecho con ❤️ para los tiburones",
+    "madeWith": "Hecho para los tiburones con amor",
     "email": "sharkhumanalliance@gmail.com",
     "copyright": "© 2026 Shark Human Alliance.",
     "operator": "Operado por JEEL Wekeza s.r.o.",
     "termsLink": "Condiciones de compra",
-    "supportLink": "Soporte y reclamaciones"
+    "supportLink": "Soporte y reclamaciones",
+    "cookiePolicyLink": "Política de cookies",
+    "cookieSettingsLink": "Configuración de cookies"
   },
   "hero": {
     "titleLine1": "Protección oficial contra tiburones.",
@@ -151,15 +157,17 @@
       "title": "Sé parte de la primera ola de diplomáticos.",
       "text": "El Registro Diplomático está abierto. Cada certificado emitido queda registrado, cada dólar rastreado. Cuanto antes te unas, más impresionante será tu antigüedad en los archivos.",
       "cta": "Obtén tu certificado — $4",
-      "registryCta": "Ver el Registro"
+      "registryCta": "Ver el Registro",
+      "ctaNonSnack": "Hazte Non-Snack — $19",
+      "ctaBusiness": "Certifica tu oficina — $99"
     },
     "giftingSection": {
       "label": "Perfecto para regalar",
       "title": "Todos conocen a alguien que necesita esto.",
-      "case1Icon": "🦈",
+      "case1Icon": "01",
       "case1Title": "Amantes de los tiburones",
       "case1Text": "Por fin, el papeleo para demostrar que el sentimiento es mutuo.",
-      "case2Icon": "🏖️",
+      "case2Icon": "02",
       "case2Title": "Los que temen la playa",
       "case2Text": "El estatus de protección oficial quizás no detenga a una medusa, pero es un comienzo.",
       "case3Icon": "🎂",
@@ -179,7 +187,8 @@
       "certText": "es oficialmente reconocido por la Shark Human Alliance como un defensor de las relaciones pacíficas entre tiburones y humanos y un contribuyente a la conservación marina real.",
       "inputPlaceholder": "Tu nombre (los tiburones esperan)",
       "ctaBuy": "Consigue el tuyo — $4",
-      "ctaGift": "Regala uno — $4"
+      "ctaGift": "Regala uno — $4",
+      "previewSectionLabel": "Pruébalo en vivo"
     },
     "impactTeaser": {
       "donationsIntro": "Cada certificado contribuye a un fondo de conservación rastreado públicamente. A medida que ese fondo crece, publicamos adónde va el dinero y quién lo recibe.",
@@ -215,10 +224,13 @@
       "businessDescription": "Para negocios dispuestos a exhibir aprobación oficial de tiburones con la cara seria. Ideal para estudios, cafés, oficinas y cualquiera que entienda el valor del arte de pared extraño pero excelente.",
       "businessFeatures": [
         "Insignia para el sitio web",
-        "Ubicación premium en el registro"
+        "Ubicación premium en el registro",
+        "Certificado orientado a negocios"
       ],
       "businessCta": "Obtén certificación empresarial — $99",
-      "businessEyebrow": "Para empresas"
+      "businessEyebrow": "Para empresas",
+      "protectedEyebrow": "Nivel inicial",
+      "nonsnackEyebrow": "Nivel premium"
     },
     "realImpact": {
       "label": "Impacto Real",
@@ -284,13 +296,13 @@
     "valueHook": {
       "label": "Por qué existe esto",
       "title": "Un chiste para humanos. Un mejor trato para los tiburones.",
-      "point1Icon": "📄",
+      "point1Icon": "01",
       "point1Title": "Parece oficial. Impresionantemente no vinculante.",
       "point1Text": "Personalizado, imprimible y lo bastante pulido como para que la gente haga preguntas de seguimiento.",
-      "point2Icon": "🦈",
+      "point2Icon": "02",
       "point2Title": "Dinero real. Conservación real.",
       "point2Text": "Cada certificado ayuda a financiar la conservación de los tiburones. Sin promesas vagas. Sin vender la “concienciación” como modelo de negocio.",
-      "point3Icon": "📜",
+      "point3Icon": "03",
       "point3Title": "Tu nombre en los archivos",
       "point3Text": "Añadido al Registro Diplomático como humano con condición documentada de buena relación con los tiburones.",
       "impactLine": "Cada venta financia la conservación a través de Shark Trust, Oceana, Saving the Blue y Fundación Malpelo."
@@ -404,7 +416,7 @@
       "Entrega inmediata para regalos y diplomacia de última hora"
     ],
     "protectedCta": "Empezar con Amistad Protegida — $4",
-    "protectedPopular": "Más regalable",
+    "protectedPopular": "Más popular",
     "nonsnackTitle": "Reconocimiento No Snack",
     "nonsnackDescription": "Para quien quiere más energía ceremonial, una broma mejor enmarcada y reconocimiento oficial de su evidente no comestibilidad.",
     "nonsnackFeatures": [
@@ -514,7 +526,11 @@
     "joinTitle": "Elige el nivel. Luego deja que los tiburones revisen la documentación.",
     "joinText": "Empieza con Estado de Amistad Protegida, sube a Reconocimiento No Snack o certifica una oficina con Zona Aprobada por Tiburones. Luego elige el estilo que mejor haga funcionar la broma.",
     "joinCtaPrimary": "Obtén tu certificado — $4",
-    "joinCtaSecondary": "Obtener versión No Snack — $19"
+    "joinCtaSecondary": "Obtener versión No Snack — $19",
+    "joinCtaBusiness": "Certifica tu oficina — $99",
+    "protectedEyebrow": "Nivel inicial",
+    "nonsnackEyebrow": "Nivel premium",
+    "businessEyebrow": "Para empresas"
   },
   "protectedPage": {
     "badge": "Producto estrella de membresía",
@@ -566,6 +582,9 @@
   "purchase": {
     "title": "Procede a la Autorización Diplomática.",
     "subtitle": "Un formulario. Un pago. Un paso más cerca de no ser un snack.",
+    "stepCustomize": "Personalizar",
+    "stepPayment": "Pago",
+    "stepCertificate": "Certificado",
     "tierLabel": "Nivel seleccionado",
     "tiers": {
       "basic": "Membresía Básica — $4",
@@ -602,6 +621,14 @@
     "secureBadgeStripe": "Checkout con Stripe",
     "submitButton": "Completar compra",
     "submitButtonPromo": "Aplicar Código Promo y Continuar",
+    "confirmTitle": "Revisa tu pedido",
+    "confirmName": "Nombre en el certificado",
+    "confirmGiftFor": "Regalo para",
+    "confirmTier": "Nivel de membresía",
+    "confirmTemplate": "Estilo de certificado",
+    "confirmDedication": "Dedicatoria",
+    "confirmButton": "Confirmar y pagar",
+    "confirmBack": "Volver y editar",
     "orderSummary": "Informe Diplomático",
     "redirecting": "Redirigiendo al checkout seguro...",
     "checkoutError": "Algo salió mal al crear tu checkout. Por favor, inténtalo de nuevo.",
@@ -610,6 +637,9 @@
     "successLoading": "Confirmando tu pago con Stripe — esto suele tomar solo un momento.",
     "successPending": "¡Pago recibido!",
     "successPendingText": "Tu pago fue exitoso, pero aún estamos procesando tu certificado. Debería llegar a tu email en breve. Si no lo ves, contáctanos.",
+    "timeoutTitle": "Tu pago se procesó.",
+    "timeoutText": "Tu certificado está siendo preparado. Puede tardar un minuto. Revisa tu correo — si proporcionaste uno, ya lo enviamos allí.",
+    "timeoutRetry": "Verificar de nuevo",
     "successTitle": "Bienvenido a la Alianza, diplomático.",
     "successText": "Tu estatus ha sido registrado. El papeleo está completo. El océano sigue inescrutablemente en calma.",
     "downloadCert": "Descargar tu certificado (PDF)",
@@ -723,7 +753,9 @@
     "disclaimerTitle": "Descargo de responsabilidad del registro",
     "disclaimerText": "Este registro no proporciona estatus legal, marino ni nutricional. La inclusión no reduce tu probabilidad estadística de ser el almuerzo de un tiburón. Sin embargo, te convierte en parte de una lista muy exclusiva de personas que pagaron dinero para que les dijeran que no son comida.",
     "clickHint": "Haz clic en cualquier diplomático para abrir su tarjeta de verificación.",
-    "rankLabel": "Rango diplomático"
+    "rankLabel": "Rango diplomático",
+    "joinCtaSubtext": "Cada certificado emitido te añade a la lista, financia conservación real y hace que tu antigüedad en los archivos sea cada vez más impresionante.",
+    "disclaimerStamp": "Archivado y Sellado"
   },
   "verifySample": {
     "badge": "Certificado de muestra",
@@ -868,7 +900,8 @@
     "preReportText": "Shark Human Alliance todavía está en una fase temprana. Esta página publicará reportes públicos a medida que las donaciones crezcan y se distribuyan. Hasta entonces, describiremos a las organizaciones como destinatarios previstos, no como socios confirmados.",
     "ctaTitle": "Cada certificado ayuda.",
     "ctaText": "El chiste es ficticio. La financiación es real. Obtén un certificado y ayuda a proteger a los tiburones que definitivamente no están tramando nada.",
-    "ctaButton": "Obtén tu certificado — desde $4"
+    "ctaButton": "Obtén tu certificado — desde $4",
+    "partnerFocusLabel": "Enfoque"
   },
   "mobileCta": {
     "label": "Obtén tu certificado",
@@ -928,7 +961,7 @@
     "howStep2Icon": "📲",
     "howStep2Title": "Compártelo en todas partes",
     "howStep2Text": "Publícalo en Stories, envíalo al grupo de chat o pégalo en su monitor. Se recomienda máxima vergüenza.",
-    "howStep3Icon": "🛡️",
+    "howStep3Icon": "03",
     "howStep3Title": "Regálale protección",
     "howStep3Text": "Resuelve la situación regalándole un certificado oficial de Amigo Protegido. Diplomacia restaurada.",
     "bottomCta": "Regalar Estatus de Amigo Protegido — $4"
@@ -958,7 +991,8 @@
       "progressToNext": "Progreso al siguiente rango",
       "referralsRemaining": "más por conseguir",
       "yourLink": "Tu enlace de referido",
-      "copy": "Copiar"
+      "copy": "Copiar",
+      "terminalLabel": "Terminal de Personal SHA"
     },
     "howWorks": {
       "label": "Cómo funciona",
@@ -1058,16 +1092,71 @@
   },
   "certificateTemplates": {
     "luxury": {
-      "title": "Luxury",
-      "description": "Ornado, pulido y levemente excesivo."
+      "title": "Lujoso",
+      "description": "Ornamentado, elegante, ligeramente excesivo."
     },
     "classic": {
-      "title": "Classic",
+      "title": "Clásico",
       "description": "Limpio, formal, imposible de avergonzar."
     },
     "playful": {
-      "title": "Playful",
-      "description": "Audaz, colorido y sin disculpas divertido."
+      "title": "Divertido",
+      "description": "Audaz, colorido, divertido sin disculpas."
+    }
+  },
+  "cookies": {
+    "eyebrow": "Configuración de cookies",
+    "title": "Usamos cookies",
+    "description": "Usamos cookies necesarias para el sitio web, el pago y la seguridad. Con tu consentimiento, también habilitamos cookies de analítica para medir el tráfico y mejorar el sitio.",
+    "acceptAnalytics": "Aceptar analítica",
+    "necessaryOnly": "Solo necesarias",
+    "settings": "Configuración",
+    "settingsTitle": "Configuración de cookies",
+    "settingsDescription": "Elige qué categorías de cookies permites. Las cookies necesarias son obligatorias para el funcionamiento del sitio web y no se pueden desactivar.",
+    "close": "Cerrar configuración de cookies",
+    "alwaysActive": "Siempre activas",
+    "saveSettings": "Guardar configuración",
+    "acceptAll": "Aceptar todas",
+    "necessary": {
+      "title": "Cookies necesarias",
+      "description": "Estas cookies son necesarias para el funcionamiento del sitio web, la selección de idioma, la seguridad, el proceso de pago y el procesamiento de pagos."
+    },
+    "analytics": {
+      "title": "Cookies de analítica",
+      "description": "Estas cookies nos ayudan a medir el tráfico y entender cómo se usa el sitio. Solo las habilitamos con tu consentimiento."
+    }
+  },
+  "cookiePolicyPage": {
+    "eyebrow": "Privacidad y cookies",
+    "title": "Política de Cookies",
+    "intro": "Esta página explica cómo Shark Human Alliance usa cookies y tecnologías similares para mantener el sitio web funcionando, apoyar el proceso de pago y, con tu consentimiento, medir el tráfico mediante analítica.",
+    "updatedLabel": "Última actualización",
+    "updatedValue": "12 de abril de 2026",
+    "sections": {
+      "whatAreCookies": {
+        "title": "1. ¿Qué son las cookies?",
+        "body": "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Ayudan a los sitios a recordar configuraciones básicas, mantener sesiones seguras y, cuando está permitido, medir el tráfico y el rendimiento."
+      },
+      "categories": {
+        "title": "2. ¿Qué categorías usamos?",
+        "body": "Usamos cookies necesarias para la funcionalidad del sitio web, gestión del idioma, seguridad, proceso de pago y procesamiento de pagos. Con tu consentimiento, también usamos cookies de analítica a través de Google Analytics 4 para entender el tráfico y mejorar el sitio."
+      },
+      "retention": {
+        "title": "3. ¿Cuánto tiempo conservamos las preferencias de cookies?",
+        "body": "Tu preferencia de cookies se almacena hasta 180 días a menos que la cambies o elimines antes. Las cookies de terceros individuales pueden usar sus propios períodos de retención dentro de los límites de la ley aplicable y la configuración del proveedor."
+      },
+      "thirdParties": {
+        "title": "4. ¿Qué terceros están involucrados?",
+        "body": "Nuestro sitio web puede utilizar Google Analytics 4 para la medición del tráfico y Stripe para el procesamiento seguro de pagos. Las cookies y el almacenamiento relacionados con Stripe pueden ser necesarios para completar el pago y proteger la seguridad del mismo."
+      },
+      "changeConsent": {
+        "title": "5. ¿Cómo puedes cambiar o retirar el consentimiento?",
+        "body": "Puedes cambiar tus preferencias de cookies en cualquier momento usando el enlace \"Configuración de cookies\" en el pie de página. Si eliges solo cookies necesarias, las cookies de analítica permanecen desactivadas."
+      },
+      "controller": {
+        "title": "6. ¿Quién es el responsable del tratamiento?",
+        "body": "El sitio web es operado por JEEL Wekeza s.r.o. Si tienes preguntas sobre cookies o privacidad en este sitio web, puedes contactarnos en sharkhumanalliance@gmail.com."
+      }
     }
   }
 }

@@ -7,7 +7,7 @@ export function VerifySampleContent() {
   const t = useTranslations("verifySample");
 
   return (
-    <section className="mx-auto max-w-xl px-5 py-16 md:py-24">
+    <section data-reveal className="mx-auto max-w-xl px-5 py-16 md:py-24">
       {/* Badge */}
       <div className="mb-6 flex items-center justify-center gap-2">
         <svg
@@ -49,21 +49,21 @@ export function VerifySampleContent() {
         <div className="mt-6 space-y-3">
           <LocalizedLink
             href="/purchase?tier=protected"
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--accent-dark)]"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
           >
-            🛡️ {t("buyCta")}
+            {t("buyCta")}
           </LocalizedLink>
           <LocalizedLink
             href="/purchase?tier=protected&gift=true"
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-bold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-bold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-orange-50"
           >
-            🎁 {t("giftCta")}
+            {t("giftCta")}
           </LocalizedLink>
           <LocalizedLink
             href="/wanted"
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-6 py-4 text-base font-bold text-red-700 transition hover:bg-red-50"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-6 py-4 text-base font-bold text-red-700 transition-colors duration-300 ease-out hover:bg-red-50"
           >
-            🚨 {t("wantedCta")}
+            {t("wantedCta")}
           </LocalizedLink>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { CertificatePreview } from "@/components/certificate/certificate-preview
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
+import { StepIndicator } from "@/components/purchase/step-indicator";
 import { trackEvent } from "@/components/analytics";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
@@ -92,6 +93,7 @@ function PurchaseFlowInner() {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState("");
   const [showEmailWarning, setShowEmailWarning] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [template, setTemplate] = useState<CertificateTemplate>(normalizedInitialTemplate);
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
 
@@ -162,12 +164,6 @@ function PurchaseFlowInner() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tier]);
 
-  const tierIcons: Record<Tier, string> = {
-    basic: "🐟",
-    protected: "🛡️",
-    nonsnack: "🚫",
-    business: "🏢",
-  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -180,6 +176,21 @@ function PurchaseFlowInner() {
       return;
     }
 
+    // If email warning shown but confirmation not yet shown, show confirmation
+    if (showEmailWarning && !showConfirmation) {
+      setShowConfirmation(true);
+      trackEvent("confirmation_shown", { tier });
+      return;
+    }
+
+    // If no email warning needed but confirmation not yet shown, show confirmation
+    if (!showConfirmation) {
+      setShowConfirmation(true);
+      trackEvent("confirmation_shown", { tier });
+      return;
+    }
+
+    // At this point, confirmation has been shown
     if (!email.trim() && showEmailWarning) {
       trackEvent("no_email_confirmed", { tier });
     }
@@ -195,6 +206,7 @@ function PurchaseFlowInner() {
     });
 
     setShowEmailWarning(false);
+    setShowConfirmation(false);
     setIsRedirecting(true);
     setError("");
 
@@ -244,7 +256,7 @@ function PurchaseFlowInner() {
 
   if (isRedirecting) {
     return (
-      <section className="py-24 sm:py-32">
+      <section data-reveal className="py-24 sm:py-32">
         <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
           <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
@@ -256,7 +268,7 @@ function PurchaseFlowInner() {
   }
 
   return (
-    <section className="py-10 sm:py-12 lg:py-16">
+    <section data-reveal className="py-14 lg:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl lg:text-4xl">
@@ -265,6 +277,11 @@ function PurchaseFlowInner() {
           <p className="mt-3 text-base leading-7 text-[var(--muted)] sm:text-lg">
             {t("subtitle")}
           </p>
+        </div>
+
+        {/* Step indicator */}
+        <div className="mt-8">
+          <StepIndicator currentStep={1} />
         </div>
 
         {/* Canceled notice */}
@@ -276,8 +293,8 @@ function PurchaseFlowInner() {
 
         {/* Referral badge */}
         {referredByCode && (
-          <div className="mt-6 mx-auto max-w-md rounded-full border border-teal-200 bg-teal-50/50 px-5 py-3 text-center text-sm text-teal-700">
-            🤝 {t("referredByBadge")}
+          <div className="mt-6 mx-auto max-w-md rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-3 text-center text-sm text-[var(--brand-dark)]">
+            {t("referredByBadge")}
           </div>
         )}
 
@@ -322,20 +339,19 @@ function PurchaseFlowInner() {
                 {(["protected", "nonsnack", "business"] as Tier[]).map((tierOption) => {
                   const isSelected = tier === tierOption;
                   const colors: Record<Tier, string> = {
-                    basic: isSelected ? "border-sky-400 bg-sky-50" : "border-sky-100",
-                    protected: isSelected ? "border-teal-400 bg-teal-50" : "border-teal-100",
-                    nonsnack: isSelected ? "border-orange-400 bg-orange-50" : "border-orange-100",
-                    business: isSelected ? "border-indigo-400 bg-indigo-50" : "border-indigo-100",
+                    basic: isSelected ? "border-sky-400 bg-sky-50" : "border-sky-100 bg-white",
+                    protected: isSelected ? "border-[var(--tier-protected)] bg-[var(--tier-protected-light)]" : "border-[var(--tier-protected-border-light)] bg-white",
+                    nonsnack: isSelected ? "border-[var(--tier-nonsnack)] bg-[var(--tier-nonsnack-light)]" : "border-[var(--tier-nonsnack-border-light)] bg-white",
+                    business: isSelected ? "border-[var(--tier-business)] bg-[var(--tier-business-light)]/80" : "border-[var(--tier-business-border-light)] bg-white",
                   };
                   return (
                     <button
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`min-h-[108px] rounded-2xl border ${colors[tierOption]} px-4 py-4 text-center transition hover:shadow-md`}
+                      className={`min-h-[108px] rounded-2xl border ${colors[tierOption]} px-4 py-4 text-center transition-colors duration-300 ease-out`}
                     >
-                      <p className="text-xl">{tierIcons[tierOption]}</p>
-                      <p className="mt-1 text-lg font-semibold text-[var(--brand-dark)]">
+                      <p className="text-lg font-semibold text-[var(--brand-dark)]">
                         {tierPrices[tierOption]}
                       </p>
                       <p className="mt-1 text-xs text-[var(--muted)]">
@@ -363,7 +379,7 @@ function PurchaseFlowInner() {
                       className={`rounded-xl border px-4 py-3 text-left transition ${
                         isSelected
                           ? "border-sky-400 bg-sky-50 shadow-sm"
-                          : "border-[var(--border)] bg-white hover:border-sky-200 hover:bg-sky-50/50"
+                          : "border-[var(--border)] bg-white hover:bg-sky-50/50"
                       }`}
                     >
                       <div className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -434,7 +450,7 @@ function PurchaseFlowInner() {
                       key={suggestion}
                       type="button"
                       onClick={() => setDedication(suggestion)}
-                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition hover:border-sky-300 hover:bg-sky-50 hover:text-[var(--brand-dark)] sm:w-auto sm:py-1"
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto sm:py-1"
                     >
                       {suggestion}
                     </button>
@@ -483,8 +499,8 @@ function PurchaseFlowInner() {
 
             {/* Gift fields */}
             {isGift && (
-              <div className="space-y-4 rounded-2xl border border-orange-100 bg-orange-50/30 p-4 sm:p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-orange-700">🎁 {t("giftDetailsTitle")}</p>
+              <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 sm:p-5">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-dark)]">{t("giftDetailsTitle")}</p>
                 <div>
                   <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
                     {t("recipientEmailLabel")}
@@ -567,12 +583,12 @@ function PurchaseFlowInner() {
             {/* No-email warning */}
             {showEmailWarning && (
               <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
-                <p className="text-sm font-semibold text-amber-800">⚠️ {t("noEmailWarningTitle")}</p>
+                <p className="text-sm font-semibold text-amber-800">{t("noEmailWarningTitle")}</p>
                 <p className="mt-1 text-sm leading-6 text-amber-700">{t("noEmailWarningText")}</p>
                 <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                   <button
                     type="submit"
-                    className="min-h-[44px] flex-1 rounded-lg bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-800"
+                    className="min-h-[44px] flex-1 rounded-lg bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-amber-800"
                   >
                     {t("noEmailContinue")}
                   </button>
@@ -582,9 +598,74 @@ function PurchaseFlowInner() {
                       setShowEmailWarning(false);
                       document.getElementById("email")?.focus();
                     }}
-                    className="min-h-[44px] flex-1 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-50"
+                    className="min-h-[44px] flex-1 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition-colors duration-300 ease-out hover:bg-amber-50"
                   >
                     {t("noEmailAddEmail")}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Confirmation card */}
+            {showConfirmation && (
+              <div className="rounded-2xl border border-[var(--border)] bg-sky-50 p-5 sm:p-6">
+                <h3 className="text-base font-semibold text-[var(--brand-dark)]">
+                  {t("confirmTitle")}
+                </h3>
+                <div className="mt-4 space-y-3">
+                  {/* Name */}
+                  <div className="flex justify-between items-start">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                      {isGift ? t("confirmGiftFor") : t("confirmName")}
+                    </span>
+                    <span className="text-sm font-medium text-[var(--brand-dark)]">
+                      {name.trim()}
+                    </span>
+                  </div>
+                  {/* Tier */}
+                  <div className="flex justify-between items-start">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                      {t("confirmTier")}
+                    </span>
+                    <span className="text-sm font-medium text-[var(--brand-dark)]">
+                      {t(`tiers.${tier}`)}
+                    </span>
+                  </div>
+                  {/* Template */}
+                  <div className="flex justify-between items-start">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                      {t("confirmTemplate")}
+                    </span>
+                    <span className="text-sm font-medium text-[var(--brand-dark)] capitalize">
+                      {template}
+                    </span>
+                  </div>
+                  {/* Dedication (if provided) */}
+                  {dedication.trim() && (
+                    <div className="flex justify-between items-start gap-3">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                        {t("confirmDedication")}
+                      </span>
+                      <span className="text-sm font-medium text-[var(--brand-dark)] text-right max-w-[200px] line-clamp-2">
+                        {dedication.trim()}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                {/* Action buttons */}
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                  <button
+                    type="submit"
+                    className="flex-1 min-h-[44px] rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+                  >
+                    {t("confirmButton")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmation(false)}
+                    className="flex-1 min-h-[44px] rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
+                  >
+                    {t("confirmBack")}
                   </button>
                 </div>
               </div>
@@ -594,7 +675,7 @@ function PurchaseFlowInner() {
             <button
               type="submit"
               disabled={!name.trim() || isRedirecting}
-              className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {promoCode.trim()
                 ? t("submitButtonPromo")
@@ -630,7 +711,7 @@ export function PurchaseFlow() {
   return (
     <Suspense
       fallback={
-        <section className="py-24 sm:py-32">
+        <section data-reveal className="py-24 sm:py-32">
           <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
             <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>

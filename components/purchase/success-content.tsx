@@ -11,6 +11,7 @@ import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { PostPurchaseShare } from "@/components/purchase/post-purchase-share";
 import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
+import { StepIndicator } from "@/components/purchase/step-indicator";
 
 interface MemberData {
   id: string;
@@ -33,6 +34,7 @@ function SuccessContentInner() {
   const [member, setMember] = useState<MemberData | null>(null);
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
   const initialPaper = (searchParams.get("paper") as PaperFormat) === "letter" ? "letter" : "a4";
   const [template, setTemplate] = useState<CertificateTemplate>("luxury");
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
@@ -45,8 +47,7 @@ function SuccessContentInner() {
     }
 
     let attempts = 0;
-    const maxAttempts = 10;
-    const delay = 2000;
+    const maxAttempts = 8;
 
     // Webhook might not have fired yet — poll for the member
     async function fetchMember() {
@@ -80,14 +81,55 @@ function SuccessContentInner() {
       const found = await fetchMember();
       if (!found && attempts < maxAttempts) {
         attempts++;
+        // Faster initial polls (500ms for first 3 attempts), then slower (2s)
+        const delay = attempts <= 3 ? 500 : 2000;
         setTimeout(poll, delay);
       } else if (!found) {
         setLoading(false);
+        setTimedOut(true);
       }
     }
 
     poll();
   }, [sessionId]);
+
+  function handleRetryPolling() {
+    setTimedOut(false);
+    setLoading(true);
+    setMember(null);
+
+    let attempts = 0;
+    const maxAttempts = 8;
+
+    async function fetchMember() {
+      try {
+        const res = await fetch(`/api/member-by-session?session_id=${sessionId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setMember(data);
+          setLoading(false);
+          return true;
+        }
+      } catch {
+        // Retry
+      }
+      return false;
+    }
+
+    async function poll() {
+      const found = await fetchMember();
+      if (!found && attempts < maxAttempts) {
+        attempts++;
+        const delay = attempts <= 3 ? 500 : 2000;
+        setTimeout(poll, delay);
+      } else if (!found) {
+        setLoading(false);
+        setTimedOut(true);
+      }
+    }
+
+    poll();
+  }
 
   function handleDownloadCertificate() {
     if (!member) return;
@@ -108,40 +150,79 @@ function SuccessContentInner() {
   // Loading state
   if (loading) {
     return (
-      <section className="py-24 sm:py-32">
-        <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
-          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
-          <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
-            {t("processing")}
-          </p>
-          <p className="mt-2 text-sm text-[var(--muted)]">
-            {t("successLoading")}
-          </p>
+      <section data-reveal className="py-24 sm:py-32">
+        <div className="mx-auto max-w-lg px-4 sm:px-6">
+          <div className="mb-10">
+            <StepIndicator currentStep={3} />
+          </div>
+          <div className="text-center">
+            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
+            <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
+              {t("processing")}
+            </p>
+            <p className="mt-2 text-sm text-[var(--muted)]">
+              {t("successLoading")}
+            </p>
+          </div>
         </div>
       </section>
     );
   }
 
-  // Member not found (webhook hasn't fired or invalid session)
-  if (!member) {
+  // Member not found after polling timeout
+  if (!member && timedOut) {
     return (
-      <section className="py-10 sm:py-14">
+      <section data-reveal className="py-10 sm:py-14">
         <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-amber-100 text-4xl">
-            ⏳
-          </div>
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">Done</div>
           <h1 className="mt-6 text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
-            {t("successPending")}
+            {t("timeoutTitle")}
           </h1>
           <p className="mt-3 text-sm text-[var(--muted)]">
-            {t("successPendingText")}
+            {t("timeoutText")}
           </p>
-          <LocalizedLink
-            href="/"
-            className="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-          >
-            {t("backHome")}
-          </LocalizedLink>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+            <button
+              onClick={handleRetryPolling}
+              className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
+            >
+              {t("timeoutRetry")}
+            </button>
+            <LocalizedLink
+              href="/"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
+            >
+              {t("backHome")}
+            </LocalizedLink>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!member) {
+    return (
+      <section data-reveal className="py-10 sm:py-14">
+        <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">Done</div>
+          <h1 className="mt-6 text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
+            {t("timeoutTitle")}
+          </h1>
+          <p className="mt-3 text-sm text-[var(--muted)]">{t("timeoutText")}</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+            <LocalizedLink
+              href="/purchase"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
+            >
+              {t("purchaseCta")}
+            </LocalizedLink>
+            <LocalizedLink
+              href="/"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
+            >
+              {t("backHome")}
+            </LocalizedLink>
+          </div>
         </div>
       </section>
     );
@@ -155,12 +236,15 @@ function SuccessContentInner() {
   });
 
   return (
-    <section className="py-14">
+    <section data-reveal className="py-14">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
+        {/* Step indicator */}
+        <div className="mb-10">
+          <StepIndicator currentStep={3} />
+        </div>
+
         <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-teal-100 text-4xl">
-            🦈
-          </div>
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">Issued</div>
           <h1 className="mt-6 text-2xl font-semibold text-[var(--brand-dark)] sm:text-3xl">
             {t("successTitle")}
           </h1>
@@ -188,7 +272,7 @@ function SuccessContentInner() {
                 className={`min-h-[46px] rounded-full border px-4 py-2 text-sm font-semibold transition ${
                   isSelected
                     ? "border-sky-400 bg-sky-50 text-[var(--brand-dark)] shadow-sm"
-                    : "border-[var(--border)] bg-white text-[var(--muted)] hover:border-sky-200 hover:text-[var(--brand-dark)]"
+                    : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-[var(--surface-soft)]"
                 }`}
               >
                 {formatOption === "letter" ? t("paperSizes.letter.label") : t("paperSizes.a4.label")}
@@ -216,14 +300,14 @@ function SuccessContentInner() {
         <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
           <button
             onClick={handleDownloadCertificate}
-            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)] sm:w-auto"
+            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:w-auto"
           >
             {t("downloadCert")} ({paperFormat === "letter" ? t("paperSizes.letter.label") : t("paperSizes.a4.label")})
           </button>
 
           <LocalizedLink
             href={`/registry?highlight=${member.id}`}
-            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50 sm:w-auto"
+            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
           >
             {t("viewRegistry")}
           </LocalizedLink>
@@ -255,7 +339,7 @@ function SuccessContentInner() {
                     trackEvent("referral_link_copy", { tier: member.tier });
                     setTimeout(() => setLinkCopied(false), 2000);
                   }}
-                  className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[var(--brand-dark)] sm:px-4"
+                  className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:px-4"
                 >
                   {linkCopied ? "✓" : t("referralCopy")}
                 </button>
@@ -300,7 +384,7 @@ export function SuccessContent() {
   return (
     <Suspense
       fallback={
-        <section className="py-24 sm:py-32">
+        <section data-reveal className="py-24 sm:py-32">
           <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
             <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>

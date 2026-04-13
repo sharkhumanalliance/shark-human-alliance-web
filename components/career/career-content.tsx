@@ -28,7 +28,7 @@ export function CareerContent() {
     {
       name: t("ranks.civilian.name"),
       referralsNeeded: 0,
-      icon: "👤",
+      icon: "01",
       color: "text-gray-600",
       bgColor: "bg-gray-50 border-gray-200",
       description: t("ranks.civilian.description"),
@@ -36,7 +36,7 @@ export function CareerContent() {
     {
       name: t("ranks.probationaryLiaison.name"),
       referralsNeeded: 1,
-      icon: "📋",
+      icon: "02",
       color: "text-sky-600",
       bgColor: "bg-sky-50 border-sky-200",
       description: t("ranks.probationaryLiaison.description"),
@@ -44,7 +44,7 @@ export function CareerContent() {
     {
       name: t("ranks.fieldOperative.name"),
       referralsNeeded: 3,
-      icon: "🕵️",
+      icon: "03",
       color: "text-teal-600",
       bgColor: "bg-teal-50 border-teal-200",
       description: t("ranks.fieldOperative.description"),
@@ -52,7 +52,7 @@ export function CareerContent() {
     {
       name: t("ranks.seniorDiplomat.name"),
       referralsNeeded: 5,
-      icon: "🎖️",
+      icon: "04",
       color: "text-orange-600",
       bgColor: "bg-orange-50 border-orange-200",
       description: t("ranks.seniorDiplomat.description"),
@@ -60,7 +60,7 @@ export function CareerContent() {
     {
       name: t("ranks.specialEnvoy.name"),
       referralsNeeded: 10,
-      icon: "🏛️",
+      icon: "05",
       color: "text-indigo-600",
       bgColor: "bg-indigo-50 border-indigo-200",
       description: t("ranks.specialEnvoy.description"),
@@ -68,7 +68,7 @@ export function CareerContent() {
     {
       name: t("ranks.chiefSharkWhisperer.name"),
       referralsNeeded: 25,
-      icon: "🦈👑",
+      icon: "06",
       color: "text-amber-600",
       bgColor: "bg-amber-50 border-amber-200",
       description: t("ranks.chiefSharkWhisperer.description"),
@@ -113,7 +113,7 @@ export function CareerContent() {
       const data: ReferralResponse = await response.json();
       setReferralData(data);
       trackEvent("rank_lookup", { rank: data.rank, referral_count: data.referralCount, tier: data.tier });
-    } catch (err) {
+    } catch {
       setError(t("checkRank.error"));
     } finally {
       setLoading(false);
@@ -142,7 +142,7 @@ export function CareerContent() {
   return (
     <>
       {/* Hero Section */}
-      <section className="py-14 lg:py-16">
+      <section data-reveal className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -159,7 +159,7 @@ export function CareerContent() {
       </section>
 
       {/* Career Ladder Section */}
-      <section className="py-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -171,55 +171,88 @@ export function CareerContent() {
           </div>
 
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {RANKS.map((rank) => (
-              <article
-                key={rank.name}
-                className={`rounded-xl border ${rank.bgColor} p-6 shadow-sm`}
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className={`text-5xl`}>{rank.icon}</p>
-                    <h3 className="mt-4 text-xl font-semibold text-[var(--brand-dark)]">
-                      {rank.name}
-                    </h3>
+            {RANKS.map((rank, idx) => {
+              // Progressive opacity: 5% → 10% → 20% → 30% → 45% → 60%
+              const intensities = [5, 10, 20, 30, 45, 60];
+              const intensity = intensities[idx] || 60;
+              return (
+                <article
+                  key={rank.name}
+                  className={`relative rounded-xl border ${rank.bgColor} p-6 shadow-sm`}
+                  style={{ opacity: 1 }}
+                >
+                  {/* Rank progression indicator */}
+                  <div
+                    className="absolute inset-0 rounded-xl"
+                    style={{
+                      background: `linear-gradient(135deg, transparent 60%, currentColor ${100}%)`,
+                      opacity: intensity / 500,
+                    }}
+                  />
+                  <div className="relative">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className={`text-5xl font-light ${rank.color}`}>{rank.icon}</p>
+                        <h3 className="mt-4 text-xl font-semibold text-[var(--brand-dark)]">
+                          {rank.name}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <p className="mt-3 text-sm font-semibold text-[var(--muted)]">
+                      {rank.referralsNeeded === 0
+                        ? t("ladder.startingRank")
+                        : t("ladder.referralsNeeded", {
+                            count: rank.referralsNeeded,
+                          })}
+                    </p>
+
+                    <p className="mt-4 text-sm leading-6 text-[var(--muted)]">
+                      {rank.description}
+                    </p>
+
+                    {/* Visual progression bar — fills proportionally to rank level */}
+                    <div className="mt-6 flex items-center gap-2">
+                      <div className="h-2 flex-grow overflow-hidden rounded-full bg-gray-200">
+                        <div
+                          className={`h-full rounded-full transition-all duration-500`}
+                          style={{
+                            width: `${((idx + 1) / RANKS.length) * 100}%`,
+                            backgroundColor: `var(--accent)`,
+                            opacity: 0.4 + (idx / RANKS.length) * 0.6,
+                          }}
+                        />
+                      </div>
+                      <div className="text-xs font-semibold text-[var(--muted)]">
+                        {rank.referralsNeeded}+
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                <p className="mt-3 text-sm font-semibold text-[var(--muted)]">
-                  {rank.referralsNeeded === 0
-                    ? t("ladder.startingRank")
-                    : t("ladder.referralsNeeded", {
-                        count: rank.referralsNeeded,
-                      })}
-                </p>
-
-                <p className="mt-4 text-sm leading-6 text-[var(--muted)]">
-                  {rank.description}
-                </p>
-
-                {/* Visual progression */}
-                <div className="mt-6 flex items-center gap-2">
-                  <div className="h-2 flex-grow rounded-full bg-gray-200" />
-                  <div className="text-xs font-semibold text-[var(--muted)]">
-                    {rank.referralsNeeded}
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Check Your Rank Section */}
-      <section className="py-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-2xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-200 bg-white p-8 shadow-sm">
-            <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
-              {t("checkRank.title")}
-            </h2>
-            <p className="mt-3 text-base text-[var(--muted)]">
-              {t("checkRank.subtitle")}
-            </p>
+          <div className="relative overflow-hidden rounded-xl border-2 border-sky-200 bg-gradient-to-br from-sky-50/40 to-white p-8 shadow-lg">
+            {/* Decorative terminal-style header */}
+            <div className="absolute left-0 right-0 top-0 flex items-center gap-1.5 border-b border-sky-100 bg-sky-50/80 px-4 py-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-sky-300" />
+              <span className="h-2.5 w-2.5 rounded-full bg-sky-200" />
+              <span className="h-2.5 w-2.5 rounded-full bg-sky-100" />
+              <span className="ml-2 text-[10px] font-mono uppercase tracking-[0.3em] text-sky-400">{t("checkRank.terminalLabel")}</span>
+            </div>
+            <div className="mt-6">
+              <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
+                {t("checkRank.title")}
+              </h2>
+              <p className="mt-3 text-base text-[var(--muted)]">
+                {t("checkRank.subtitle")}
+              </p>
 
             <form onSubmit={handleCheckRank} className="mt-8 space-y-4">
               <div>
@@ -239,7 +272,7 @@ export function CareerContent() {
               <button
                 type="submit"
                 disabled={loading || !referralCode}
-                className="w-full rounded-lg bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition disabled:opacity-50 hover:bg-[var(--accent-dark)]"
+                className="w-full rounded-lg bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out disabled:opacity-50 hover:bg-[var(--accent-dark)]"
               >
                 {loading ? t("checkRank.loading") : t("checkRank.button")}
               </button>
@@ -319,7 +352,7 @@ export function CareerContent() {
                       onClick={() => {
                         navigator.clipboard.writeText(referralLink);
                       }}
-                      className="min-h-[48px] rounded-lg bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:shrink-0"
+                      className="min-h-[48px] rounded-lg bg-[var(--accent)] px-6 py-3 font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:shrink-0"
                     >
                       {t("checkRank.copy")}
                     </button>
@@ -327,12 +360,13 @@ export function CareerContent() {
                 </div>
               </div>
             )}
+            </div>
           </div>
         </div>
       </section>
 
       {/* How Referrals Work Section */}
-      <section className="py-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -347,21 +381,21 @@ export function CareerContent() {
             {[
               {
                 step: "01",
-                icon: "🛡️",
+                icon: "01",
                 title: t("howWorks.step1Title"),
                 text: t("howWorks.step1Text"),
                 borderColor: "border-sky-100",
               },
               {
                 step: "02",
-                icon: "🔗",
+                icon: "02",
                 title: t("howWorks.step2Title"),
                 text: t("howWorks.step2Text"),
                 borderColor: "border-cyan-100",
               },
               {
                 step: "03",
-                icon: "📈",
+                icon: "03",
                 title: t("howWorks.step3Title"),
                 text: t("howWorks.step3Text"),
                 borderColor: "border-orange-100",
@@ -388,21 +422,21 @@ export function CareerContent() {
       </section>
 
       {/* Bottom CTA Section */}
-      <section className="pb-16 pt-4">
+      <section data-reveal className="pb-16 pt-4">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-5 py-10 text-white sm:px-8 sm:py-12 sm:px-12">
-            <h2 className="text-3xl font-semibold tracking-tight">
+          <div className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-[var(--surface-soft)] px-5 py-10 sm:px-8 sm:py-12 sm:px-12">
+            <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
               {t("cta.title")}
             </h2>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-sky-100/80">
+            <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
               {t("cta.text")}
             </p>
             <div className="mt-6">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
-                🚀 {t("cta.button")}
+                {t("cta.button")}
               </LocalizedLink>
             </div>
           </div>

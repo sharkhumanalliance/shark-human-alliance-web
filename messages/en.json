@@ -43,6 +43,10 @@
     "terms": {
       "title": "Terms & Purchase Conditions — Shark Human Alliance",
       "description": "Read how ordering, digital delivery, support, complaints and refund handling work for Shark Human Alliance certificates."
+    },
+    "cookiePolicy": {
+      "title": "Cookie Policy — Shark Human Alliance",
+      "description": "How Shark Human Alliance uses necessary and analytics cookies, how consent works and how you can change your preferences."
     }
   },
   "header": {
@@ -75,12 +79,14 @@
       "career": "Alliance Career"
     },
     "navTitle": "Explore",
-    "madeWith": "Made with ❤️ for sharks",
+    "madeWith": "Made for sharks with love",
     "email": "sharkhumanalliance@gmail.com",
     "copyright": "© 2026 Shark Human Alliance.",
     "operator": "Operated by JEEL Wekeza s.r.o.",
     "termsLink": "Terms & Purchase Conditions",
-    "supportLink": "Support & complaints"
+    "supportLink": "Support & complaints",
+    "cookiePolicyLink": "Cookie Policy",
+    "cookieSettingsLink": "Cookies settings"
   },
   "hero": {
     "titleLine1": "Official shark protection.",
@@ -151,15 +157,17 @@
       "title": "Be among the first wave of diplomats.",
       "text": "The Diplomatic Registry is open. Every certificate issued is logged, every dollar tracked. The earlier you join, the more impressive your seniority will look in the archives.",
       "cta": "Get your certificate — $4",
-      "registryCta": "View the Registry"
+      "registryCta": "View the Registry",
+      "ctaNonSnack": "Go Non-Snack — $19",
+      "ctaBusiness": "Certify your office — $99"
     },
     "giftingSection": {
       "label": "Perfect for gifting",
       "title": "Everyone knows someone who needs this.",
-      "case1Icon": "🦈",
+      "case1Icon": "01",
       "case1Title": "Shark lovers",
       "case1Text": "Finally, the paperwork to prove the feeling is mutual.",
-      "case2Icon": "🏖️",
+      "case2Icon": "02",
       "case2Title": "Beach-fearers",
       "case2Text": "Official protection status might not stop a jellyfish, but it's a start.",
       "case3Icon": "🎂",
@@ -185,7 +193,8 @@
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
       "inputPlaceholder": "Your name (the sharks are waiting)",
       "ctaBuy": "Get yours — $4",
-      "ctaGift": "Gift one — $4"
+      "ctaGift": "Gift one — $4",
+      "previewSectionLabel": "Try it live"
     },
     "membershipSection": {
       "label": "Certificates",
@@ -215,10 +224,13 @@
       "businessDescription": "For businesses ready to display official shark approval with a straight face. Good for studios, cafés, offices, and anyone who understands the value of strange but excellent wall art.",
       "businessFeatures": [
         "Website badge",
-        "Premium registry placement"
+        "Premium registry placement",
+        "Business-facing certificate"
       ],
       "businessCta": "Get business certification — $99",
-      "businessEyebrow": "For businesses"
+      "businessEyebrow": "For businesses",
+      "protectedEyebrow": "Entry tier",
+      "nonsnackEyebrow": "Premium tier"
     },
     "realImpact": {
       "label": "Real Impact",
@@ -284,13 +296,13 @@
     "valueHook": {
       "label": "Why this exists",
       "title": "A joke for humans. A better deal for sharks.",
-      "point1Icon": "📄",
+      "point1Icon": "01",
       "point1Title": "Looks official. Impressively non-binding.",
       "point1Text": "Personalized, printable, and polished enough to make people ask follow-up questions.",
-      "point2Icon": "🦈",
+      "point2Icon": "02",
       "point2Title": "Real money. Real conservation.",
       "point2Text": "Every certificate helps fund shark conservation. No vague promises. No “raising awareness” as a business model.",
-      "point3Icon": "📜",
+      "point3Icon": "03",
       "point3Title": "Your name in the archives",
       "point3Text": "Added to the Diplomatic Registry as a human of documented shark-friendly standing.",
       "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Saving the Blue, and Fundación Malpelo."
@@ -404,7 +416,7 @@
       "Instant delivery for gifts and last-minute diplomacy"
     ],
     "protectedCta": "Start with Protected Friend — $4",
-    "protectedPopular": "Most giftable",
+    "protectedPopular": "Most popular",
     "nonsnackTitle": "Non-Snack Recognition",
     "nonsnackDescription": "For buyers who want stronger ceremonial energy, a better framed punchline, and official recognition of their obvious non-edibility.",
     "nonsnackFeatures": [
@@ -514,7 +526,11 @@
     "joinTitle": "Choose the tier. Then let the sharks review the paperwork.",
     "joinText": "Start with Protected Friend, step up to Non-Snack, or certify an office with Shark-Approved Zone. Then choose the style that makes the joke land best.",
     "joinCtaPrimary": "Get your certificate — $4",
-    "joinCtaSecondary": "Get the Non-Snack version — $19"
+    "joinCtaSecondary": "Get the Non-Snack version — $19",
+    "joinCtaBusiness": "Certify your office — $99",
+    "protectedEyebrow": "Entry tier",
+    "nonsnackEyebrow": "Premium tier",
+    "businessEyebrow": "For businesses"
   },
   "protectedPage": {
     "badge": "Flagship membership product",
@@ -566,6 +582,9 @@
   "purchase": {
     "title": "Proceed to Diplomatic Clearance.",
     "subtitle": "One form. One payment. One step closer to not being a snack.",
+    "stepCustomize": "Customize",
+    "stepPayment": "Payment",
+    "stepCertificate": "Certificate",
     "tierLabel": "Selected tier",
     "tiers": {
       "basic": "Basic Membership — $4",
@@ -602,6 +621,14 @@
     "secureBadgeStripe": "Stripe checkout",
     "submitButton": "Complete purchase",
     "submitButtonPromo": "Apply Promo Code & Continue",
+    "confirmTitle": "Review your order",
+    "confirmName": "Name on certificate",
+    "confirmGiftFor": "Gift for",
+    "confirmTier": "Membership tier",
+    "confirmTemplate": "Certificate style",
+    "confirmDedication": "Dedication",
+    "confirmButton": "Confirm & pay",
+    "confirmBack": "Go back and edit",
     "orderSummary": "Diplomatic Briefing",
     "redirecting": "Redirecting to secure checkout...",
     "checkoutError": "Something went wrong creating your checkout. Please try again.",
@@ -610,6 +637,9 @@
     "successLoading": "Confirming your payment with Stripe — this usually takes just a moment.",
     "successPending": "Payment received!",
     "successPendingText": "Your payment was successful, but we're still processing your certificate. It should arrive in your email shortly. If not, please contact us.",
+    "timeoutTitle": "Your payment went through.",
+    "timeoutText": "Your certificate is being prepared. It may take a minute. Check your email — if you provided one, we've already sent it there.",
+    "timeoutRetry": "Check again",
     "successTitle": "Welcome to the Alliance, diplomat.",
     "successText": "Your status has been registered. The paperwork is complete. The ocean remains unreadably calm.",
     "downloadCert": "Download your certificate (PDF)",
@@ -723,7 +753,9 @@
     "disclaimerTitle": "Registry disclaimer",
     "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, make you part of a very exclusive list of people who paid money to be told they are not food.",
     "clickHint": "Click any diplomat to open their verification card.",
-    "rankLabel": "Diplomatic rank"
+    "rankLabel": "Diplomatic rank",
+    "joinCtaSubtext": "Every certificate issued gets you on the list, funds real conservation, and makes your seniority in the archives increasingly impressive.",
+    "disclaimerStamp": "Filed & Archived"
   },
   "verifySample": {
     "badge": "Sample Certificate",
@@ -868,7 +900,8 @@
     "preReportText": "The Shark Human Alliance is still in its early stages. This page will publish public reporting as donations scale and distributions are made. Until then, we will describe recipient organizations as planned recipients rather than confirmed partners.",
     "ctaTitle": "Every certificate helps.",
     "ctaText": "The joke is fictional. The funding is real. Get a certificate and help protect the sharks who definitely aren't plotting anything.",
-    "ctaButton": "Get your certificate — from $4"
+    "ctaButton": "Get your certificate — from $4",
+    "partnerFocusLabel": "Focus"
   },
   "mobileCta": {
     "label": "Get your certificate",
@@ -928,7 +961,7 @@
     "howStep2Icon": "📲",
     "howStep2Title": "Share it everywhere",
     "howStep2Text": "Post it on Stories, drop it in the group chat, or tape it to their monitor. Maximum embarrassment encouraged.",
-    "howStep3Icon": "🛡️",
+    "howStep3Icon": "03",
     "howStep3Title": "Gift them protection",
     "howStep3Text": "Resolve the situation by gifting them an official Protected Friend certificate. Diplomacy restored.",
     "bottomCta": "Gift Protected Friend Status — $4"
@@ -958,7 +991,8 @@
       "progressToNext": "Progress to next rank",
       "referralsRemaining": "more to go",
       "yourLink": "Your referral link",
-      "copy": "Copy"
+      "copy": "Copy",
+      "terminalLabel": "SHA Personnel Terminal"
     },
     "howWorks": {
       "label": "How It Works",
@@ -1068,6 +1102,61 @@
     "playful": {
       "title": "Playful",
       "description": "Bold, colorful, unapologetically fun."
+    }
+  },
+  "cookies": {
+    "eyebrow": "Cookie settings",
+    "title": "We use cookies",
+    "description": "We use necessary cookies for the website, checkout and security. With your consent, we also enable analytics cookies to measure traffic and improve the site.",
+    "acceptAnalytics": "Accept analytics",
+    "necessaryOnly": "Necessary only",
+    "settings": "Settings",
+    "settingsTitle": "Cookie settings",
+    "settingsDescription": "Choose which categories of cookies you allow. Necessary cookies are required for the website to work and cannot be switched off.",
+    "close": "Close cookie settings",
+    "alwaysActive": "Always active",
+    "saveSettings": "Save settings",
+    "acceptAll": "Accept all",
+    "necessary": {
+      "title": "Necessary cookies",
+      "description": "These cookies are required for core website functionality, language selection, security, checkout and payment processing."
+    },
+    "analytics": {
+      "title": "Analytics cookies",
+      "description": "These cookies help us measure traffic and understand how people use the site. We only enable them with your consent."
+    }
+  },
+  "cookiePolicyPage": {
+    "eyebrow": "Privacy & cookies",
+    "title": "Cookie Policy",
+    "intro": "This page explains how Shark Human Alliance uses cookies and similar technologies to keep the website working, support checkout and, with your consent, measure traffic through analytics.",
+    "updatedLabel": "Last updated",
+    "updatedValue": "April 12, 2026",
+    "sections": {
+      "whatAreCookies": {
+        "title": "1. What are cookies?",
+        "body": "Cookies are small text files stored on your device when you visit a website. They help websites remember basic settings, keep sessions secure and, where allowed, measure traffic and performance."
+      },
+      "categories": {
+        "title": "2. Which categories do we use?",
+        "body": "We use necessary cookies for website functionality, language handling, security, checkout and payment processing. With your consent, we also use analytics cookies through Google Analytics 4 to understand traffic and improve the website."
+      },
+      "retention": {
+        "title": "3. How long do we keep cookie preferences?",
+        "body": "Your cookie preference is stored for up to 180 days unless you change or delete it sooner. Individual third-party cookies may use their own retention periods within the limits of applicable law and provider settings."
+      },
+      "thirdParties": {
+        "title": "4. Which third parties are involved?",
+        "body": "Our website may rely on Google Analytics 4 for traffic measurement and Stripe for secure payment processing. Stripe-related cookies and storage may be necessary to complete checkout and protect payment security."
+      },
+      "changeConsent": {
+        "title": "5. How can you change or withdraw consent?",
+        "body": "You can change your cookie preferences at any time by using the “Cookies settings” link in the footer. If you choose necessary cookies only, analytics cookies remain disabled."
+      },
+      "controller": {
+        "title": "6. Who is the controller?",
+        "body": "The website is operated by JEEL Wekeza s.r.o. If you have questions about cookies or privacy on this website, you can contact us at sharkhumanalliance@gmail.com."
+      }
     }
   }
 }

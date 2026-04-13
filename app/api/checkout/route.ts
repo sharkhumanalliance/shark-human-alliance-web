@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
 <html><body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
 <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
   <div style="background:white;border-radius:24px;padding:32px;text-align:center;border:1px solid #d4e8f7;">
-    <div style="font-size:48px;">🎁</div>
+    <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#64748b;">Gift</div>
     <h1 style="color:#15324d;font-size:24px;margin:16px 0 8px;">Gift Delivered!</h1>
     <p style="color:#5f7892;font-size:14px;line-height:1.6;">
       Your gift for <strong>${name}</strong> has been sent to <strong>${recipientEmail}</strong>.

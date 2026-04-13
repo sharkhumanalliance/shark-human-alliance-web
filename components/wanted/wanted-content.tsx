@@ -2,7 +2,6 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useState, useRef, useCallback, useMemo } from "react";
-import Image from "next/image";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { getQrCodeUrl } from "@/lib/qr-svg";
@@ -313,7 +312,7 @@ export function WantedContent() {
       ctx.textAlign = "center";
       ctx.fillText(t("posterFooter"), cx, h - my - 60);
     },
-    [name, selectedCharges, t, ensureSealLoaded, loadQrImage]
+    [locale, name, selectedCharges, t, ensureSealLoaded, loadQrImage]
   );
 
   const handleGenerate = useCallback(async () => {
@@ -328,7 +327,7 @@ export function WantedContent() {
     canvas.width = 2100;
     canvas.height = 2970;
     await drawPoster(ctx, 2100, 2970);
-  }, [drawPoster]);
+  }, [drawPoster, name]);
 
   const handleDownload = useCallback(async () => {
     const canvas = canvasRef.current;
@@ -400,7 +399,7 @@ export function WantedContent() {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Hero */}
-      <section className="py-14 bg-gradient-to-b from-red-950/5 to-transparent">
+      <section data-reveal className="py-14 lg:py-16 bg-gradient-to-b from-red-950/5 to-transparent">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
             {t("label")}
@@ -415,7 +414,7 @@ export function WantedContent() {
       </section>
 
       {/* Generator */}
-      <section className="pb-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-xl px-4 sm:px-6">
           {!generated ? (
             /* ── Form state ──────────────────────────── */
@@ -461,7 +460,7 @@ export function WantedContent() {
                       key={s}
                       type="button"
                       onClick={() => setName(s)}
-                      className="rounded-lg border border-red-100 bg-red-50/50 px-4 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-100"
+                      className="rounded-lg border border-red-100 bg-red-50/50 px-4 py-1.5 text-xs font-medium text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
                     >
                       {s}
                     </button>
@@ -471,7 +470,7 @@ export function WantedContent() {
                 <button
                   onClick={handleGenerate}
                   disabled={!name.trim()}
-                  className="mt-4 w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="mt-4 w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {t("generateButton")}
                 </button>
@@ -497,23 +496,23 @@ export function WantedContent() {
               <div className="space-y-3">
                 <LocalizedLink
                   href={giftUrl}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition hover:bg-[var(--accent-dark)]"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
                 >
-                  🛡️ {t("giftCta", { name: name.trim() || t("defaultName") })}
+                  {t("giftCta", { name: name.trim() || t("defaultName") })}
                 </LocalizedLink>
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <button
                     onClick={handleDownload}
                     disabled={downloading}
-                    className="rounded-lg border border-[var(--border)] bg-white px-4 py-3.5 text-sm font-semibold text-[var(--brand-dark)] transition hover:bg-gray-50 disabled:opacity-60"
+                    className="rounded-lg border border-[var(--border)] bg-white px-4 py-3.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-50 disabled:opacity-60"
                   >
                     {downloading ? t("downloadingButton") : t("downloadButton")}
                   </button>
 
                   <button
                     onClick={handleShare}
-                    className={`rounded-lg border px-4 py-3.5 text-sm font-semibold transition ${linkCopied ? "border-teal-300 bg-teal-50 text-teal-700" : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"}`}
+                    className={`rounded-lg border px-4 py-3.5 text-sm font-semibold transition-colors duration-300 ease-out ${linkCopied ? "border-teal-300 bg-teal-50 text-teal-700" : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"}`}
                   >
                     {linkCopied ? t("linkCopied") : t("shareButton")}
                   </button>
@@ -542,12 +541,12 @@ export function WantedContent() {
       </section>
 
       {/* How it works strip */}
-      <section className="border-t border-[var(--border)] bg-white py-14">
+      <section data-reveal className="border-t border-[var(--border)] bg-white pb-16 pt-4">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
             {t("howTitle")}
           </h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-3">
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
             {[1, 2, 3].map((i) => (
               <div key={i} className="flex flex-col items-center gap-3">
                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-2xl">
@@ -565,9 +564,9 @@ export function WantedContent() {
           <div className="mt-10">
             <LocalizedLink
               href="/purchase?tier=protected&gift=true"
-              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8"
+              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8"
             >
-              🎁 {t("bottomCta")}
+              {t("bottomCta")}
             </LocalizedLink>
           </div>
         </div>

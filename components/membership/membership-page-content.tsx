@@ -20,6 +20,7 @@ type StyleCard = {
 
 export function MembershipPageContent() {
   const t = useTranslations("membershipPage");
+  const homeTierT = useTranslations("home.membershipSection");
 
   const styleCards: StyleCard[] = [
     {
@@ -61,33 +62,36 @@ export function MembershipPageContent() {
     {
       id: "protected",
       variant: "protected" as const,
-      title: t("protectedTitle"),
-      price: "$4",
-      description: t("protectedDescription"),
-      features: [t("protectedFeatures.0"), t("protectedFeatures.1"), t("protectedFeatures.2")],
-      ctaLabel: t("protectedCta"),
+      title: homeTierT("protectedTitle"),
+      eyebrow: homeTierT("protectedEyebrow"),
+      price: homeTierT("protectedPrice"),
+      description: homeTierT("protectedDescription"),
+      features: [homeTierT("protectedFeatures.0"), homeTierT("protectedFeatures.1"), homeTierT("protectedFeatures.2")],
+      ctaLabel: homeTierT("protectedCta"),
       href: "/purchase?tier=protected",
       popular: true,
-      popularLabel: t("protectedPopular"),
+      popularLabel: homeTierT("popularBadge"),
     },
     {
       id: "nonsnack",
       variant: "nonsnack" as const,
-      title: t("nonsnackTitle"),
-      price: "$19",
-      description: t("nonsnackDescription"),
-      features: [t("nonsnackFeatures.0"), t("nonsnackFeatures.1"), t("nonsnackFeatures.2")],
-      ctaLabel: t("nonsnackCta"),
+      title: homeTierT("nonsnackTitle"),
+      eyebrow: homeTierT("nonsnackEyebrow"),
+      price: homeTierT("nonsnackPrice"),
+      description: homeTierT("nonsnackDescription"),
+      features: [homeTierT("nonsnackFeatures.0"), homeTierT("nonsnackFeatures.1"), homeTierT("nonsnackFeatures.2")],
+      ctaLabel: homeTierT("nonsnackCta"),
       href: "/purchase?tier=nonsnack",
     },
     {
       id: "business",
       variant: "business" as const,
-      title: t("businessTitle"),
-      price: "$99",
-      description: t("businessDescription"),
-      features: [t("businessFeatures.0"), t("businessFeatures.1"), t("businessFeatures.2")],
-      ctaLabel: t("businessCta"),
+      title: homeTierT("businessTitle"),
+      eyebrow: homeTierT("businessEyebrow"),
+      price: homeTierT("businessPrice"),
+      description: homeTierT("businessDescription"),
+      features: [homeTierT("businessFeatures.0"), homeTierT("businessFeatures.1"), homeTierT("businessFeatures.2")],
+      ctaLabel: homeTierT("businessCta"),
       href: "/purchase?tier=business",
     },
   ];
@@ -100,7 +104,7 @@ export function MembershipPageContent() {
   return (
     <>
       {/* ── 1. HERO — clean, one CTA ── */}
-      <section className="relative overflow-hidden pt-8 pb-10 lg:pt-10 lg:pb-12">
+      <section data-reveal className="relative overflow-hidden py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
@@ -114,7 +118,7 @@ export function MembershipPageContent() {
             <div className="mt-8">
               <LocalizedLink
                 href="#tiers"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
               >
                 {t("ctaPrimary")}
               </LocalizedLink>
@@ -124,10 +128,10 @@ export function MembershipPageContent() {
       </section>
 
       {/* ── 2. TIERS — core product decision ── */}
-      <section id="tiers" className="pt-8 pb-14">
+      <section data-reveal id="tiers" className="pb-12 pt-8 sm:pb-14 sm:pt-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("tiersLabel")}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -147,10 +151,10 @@ export function MembershipPageContent() {
       </section>
 
       {/* ── 3. STYLES — compact certificate previews ── */}
-      <section id="styles" className="border-t border-[var(--border)] bg-[var(--surface-soft)] py-14">
+      <section data-reveal id="styles" className="border-t border-[var(--border)] bg-[var(--surface-soft)] py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("stylesLabel")}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -160,7 +164,7 @@ export function MembershipPageContent() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {styleCards.map((card) => (
-              <article key={card.title} className={`overflow-hidden rounded-2xl border shadow-sm ${card.accent}`}>
+              <article data-reveal key={card.title} className={`overflow-hidden rounded-2xl border ${card.accent}`}>
                 <div className="border-b border-[var(--border)]/50 bg-white/80 p-4">
                   <div className="mx-auto max-w-[220px]">
                     <CertificatePreview
@@ -178,7 +182,7 @@ export function MembershipPageContent() {
                   <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{card.text}</p>
                   <LocalizedLink
                     href={card.href}
-                    className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50"
+                    className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-orange-50"
                   >
                     {card.cta}
                   </LocalizedLink>
@@ -190,10 +194,10 @@ export function MembershipPageContent() {
       </section>
 
       {/* ── 4. FAQ + LEGAL — merged, compact ── */}
-      <section className="py-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("faqLabel")}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -203,7 +207,7 @@ export function MembershipPageContent() {
 
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {faqItems.map((item) => (
-              <article key={item.question} className="rounded-xl border border-[var(--border)] bg-white p-5 shadow-sm">
+              <article data-reveal key={item.question} className="rounded-xl border border-[var(--border)] bg-white p-5">
                 <h3 className="text-lg font-semibold text-[var(--brand-dark)]">{item.question}</h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{item.answer}</p>
               </article>
@@ -219,7 +223,7 @@ export function MembershipPageContent() {
           <div className="mt-4">
             <LocalizedLink
               href="/faq"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
             >
               {t("faqAllLink")} →
             </LocalizedLink>
@@ -228,24 +232,30 @@ export function MembershipPageContent() {
       </section>
 
       {/* ── 5. FINAL CTA ── */}
-      <section id="join" className="pb-16 pt-4">
+      <section data-reveal id="join" className="pb-16 pt-4">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-12 text-white sm:px-12">
-            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">{t("joinTitle")}</h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-sky-100/90">{t("joinText")}</p>
+          <div className="rounded-xl border border-sky-200 bg-sky-50/35 px-5 py-10 sm:px-12 sm:py-12">
+            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">{t("joinTitle")}</h2>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]">{t("joinText")}</p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
               >
                 {t("joinCtaPrimary")}
               </LocalizedLink>
               <LocalizedLink
                 href="/purchase?tier=nonsnack"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-[var(--tier-nonsnack-border)] bg-[var(--tier-nonsnack-surface)] px-6 py-4 text-base font-semibold text-[var(--tier-nonsnack-text)] transition-colors duration-300 ease-out hover:bg-[var(--tier-nonsnack-border)] sm:w-auto"
               >
                 {t("joinCtaSecondary")}
+              </LocalizedLink>
+              <LocalizedLink
+                href="/purchase?tier=business"
+                className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border-2 border-[var(--tier-business-border)] bg-[var(--tier-business-light)] px-6 py-4 text-base font-semibold text-[var(--tier-business-text)] transition-colors duration-300 ease-out hover:bg-[var(--tier-business-surface)] sm:w-auto"
+              >
+                {t("joinCtaBusiness")}
               </LocalizedLink>
             </div>
           </div>

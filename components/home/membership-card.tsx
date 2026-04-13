@@ -11,46 +11,58 @@ type MembershipCardProps = {
   description: string;
   features: string[];
   ctaLabel: string;
+  eyebrow?: string;
   popular?: boolean;
   popularLabel?: string;
 };
 
 function getBadgeClass(variant: MembershipVariant) {
+  if (variant === "protected") return "bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)]";
+  if (variant === "nonsnack") return "bg-[var(--tier-nonsnack-surface)] text-[var(--tier-nonsnack-text)]";
+  if (variant === "business") return "bg-[var(--tier-business-surface)] text-[var(--tier-business-muted)]";
   if (variant === "basic") return "bg-sky-100 text-sky-800";
-  if (variant === "protected") return "bg-teal-100 text-teal-800";
-  if (variant === "business") return "bg-indigo-100 text-indigo-800";
-  return "bg-orange-100 text-orange-800";
+  return "bg-slate-100 text-slate-700";
+}
+
+function getSurfaceClass(variant: MembershipVariant) {
+  if (variant === "protected") return "bg-[var(--tier-protected-light)]/35";
+  if (variant === "nonsnack") return "bg-[var(--tier-nonsnack-light)]/30";
+  if (variant === "business") return "bg-[var(--tier-business-light)]/45";
+  if (variant === "basic") return "bg-sky-50/30";
+  return "bg-white";
 }
 
 function getBorderClass(variant: MembershipVariant, popular?: boolean) {
-  if (popular) return "border-teal-400/50";
-  if (variant === "basic") return "border-sky-100";
-  if (variant === "protected") return "border-teal-100";
-  if (variant === "business") return "border-indigo-100";
-  return "border-orange-100";
+  if (popular) return "border-[var(--tier-protected-border)]/70";
+  if (variant === "protected") return "border-[var(--tier-protected-border)]";
+  if (variant === "nonsnack") return "border-[var(--tier-nonsnack-border)]";
+  if (variant === "business") return "border-[var(--tier-business-border)]";
+  if (variant === "basic") return "border-sky-200";
+  return "border-[var(--border)]";
 }
 
 function getBulletClass(variant: MembershipVariant) {
+  if (variant === "protected") return "bg-[var(--tier-protected)]";
+  if (variant === "nonsnack") return "bg-[var(--tier-nonsnack)]";
+  if (variant === "business") return "bg-[var(--tier-business)]";
   if (variant === "basic") return "bg-sky-500";
-  if (variant === "protected") return "bg-teal-500";
-  if (variant === "business") return "bg-indigo-500";
-  return "bg-orange-500";
+  return "bg-slate-500";
 }
 
 function getButtonClass(variant: MembershipVariant) {
-  if (variant === "basic") {
-    return "border border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-sky-50";
-  }
-
   if (variant === "protected") {
     return "border border-transparent bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)]";
   }
-
-  if (variant === "business") {
-    return "border border-transparent bg-indigo-600 text-white hover:bg-indigo-700";
+  if (variant === "nonsnack") {
+    return "border border-[var(--tier-nonsnack-border)] bg-[var(--tier-nonsnack-surface)] text-[var(--tier-nonsnack-text)] hover:bg-[var(--tier-nonsnack-border)]";
   }
-
-  return "border border-transparent bg-sky-700 text-white hover:bg-sky-800";
+  if (variant === "business") {
+    return "border border-[var(--tier-business-border)] bg-[var(--tier-business-surface)] text-[var(--tier-business-text)] hover:bg-[var(--tier-business-border)]";
+  }
+  if (variant === "basic") {
+    return "border border-sky-200 bg-sky-100 text-sky-900 hover:bg-sky-200";
+  }
+  return "border border-transparent bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)]";
 }
 
 export function MembershipCard({
@@ -62,6 +74,7 @@ export function MembershipCard({
   description,
   features,
   ctaLabel,
+  eyebrow,
   popular,
   popularLabel,
 }: MembershipCardProps) {
@@ -77,27 +90,31 @@ export function MembershipCard({
         className={`scroll-mt-28 flex h-full flex-col rounded-xl border ${getBorderClass(
           variant,
           popular
-        )} bg-white p-4 sm:p-6 ${popular ? "shadow-md ring-1 ring-teal-400/20" : "shadow-sm"}`}
+        )} ${getSurfaceClass(variant)} p-5 sm:p-5`}
       >
         <div
-          className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getBadgeClass(
+          className={`inline-flex rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${getBadgeClass(
             variant
           )}`}
         >
-          {title}
+          {eyebrow ?? title}
         </div>
 
-        <p className="mt-4 text-3xl font-semibold text-[var(--brand-dark)]">
+        <h3 className="mt-3 text-xl font-semibold leading-tight text-[var(--brand-dark)] sm:min-h-[2.6rem]">
+          {title}
+        </h3>
+
+        <p className="mt-1.5 text-3xl font-semibold text-[var(--brand-dark)]">
           {price}
         </p>
 
-        <p className="mt-3 text-sm leading-6 text-[var(--muted)] sm:min-h-[4rem] md:min-h-[4.5rem]">{description}</p>
+        <p className="mt-2.5 text-sm leading-6 text-[var(--muted)] sm:min-h-[4rem]">{description}</p>
 
-        <ul className="mt-5 flex-grow space-y-2.5">
+        <ul className="mt-4 flex-grow space-y-2 sm:min-h-[6.75rem]">
           {features.map((feature) => (
             <li
               key={feature}
-              className="flex items-start gap-3 text-sm leading-6 text-[var(--foreground)]"
+              className="flex items-start gap-3 text-sm leading-6 text-[var(--brand-dark)]"
             >
               <span className={`mt-2 h-2 w-2 shrink-0 rounded-full ${getBulletClass(variant)}`} />
               <span>{feature}</span>
@@ -107,7 +124,7 @@ export function MembershipCard({
 
         <LocalizedLink
           href={href}
-          className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition ${getButtonClass(
+          className={`mt-3 inline-flex min-h-[48px] w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-colors duration-300 ease-out ${getButtonClass(
             variant
           )}`}
         >

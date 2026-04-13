@@ -15,10 +15,10 @@ export function ProtectedFriendContent() {
 
   return (
     <>
-      <section className="py-14 lg:py-16">
+      <section data-reveal className="py-14 lg:py-16">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <div className="inline-flex rounded-lg border border-teal-200 bg-white px-3 py-1.5 text-sm font-medium text-[var(--brand-dark)]">
+            <div className="inline-flex rounded-lg border border-[var(--border)] bg-white px-3 py-1.5 text-sm font-medium text-[var(--brand-dark)]">
               {t("badge")}
             </div>
 
@@ -33,13 +33,13 @@ export function ProtectedFriendContent() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition hover:bg-[var(--brand-dark)] sm:w-auto"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:w-auto"
               >
                 {t("ctaPrimary")}
               </LocalizedLink>
               <LocalizedLink
                 href="/membership"
-                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:border-sky-300 hover:bg-sky-50 sm:w-auto"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
               >
                 {t("ctaSecondary")}
               </LocalizedLink>
@@ -71,7 +71,7 @@ export function ProtectedFriendContent() {
               ))}
             </ul>
 
-            <div className="mt-8 rounded-lg border border-teal-100 bg-teal-50/60 p-5">
+            <div className="mt-8 rounded-lg border border-[var(--border)] bg-teal-50/60 p-5">
               <p className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("bestUseTitle")}
               </p>
@@ -83,7 +83,7 @@ export function ProtectedFriendContent() {
         </div>
       </section>
 
-      <section className="py-14">
+      <section data-reveal className="py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
@@ -99,11 +99,11 @@ export function ProtectedFriendContent() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[
-              { step: "01", title: t("reason1Title"), text: t("reason1Text"), borderColor: "border-sky-100", stepColor: "text-sky-700" },
-              { step: "02", title: t("reason2Title"), text: t("reason2Text"), borderColor: "border-cyan-100", stepColor: "text-cyan-700" },
-              { step: "03", title: t("reason3Title"), text: t("reason3Text"), borderColor: "border-orange-100", stepColor: "text-orange-700" },
+              { step: "01", title: t("reason1Title"), text: t("reason1Text"), borderColor: "border-[var(--border)]", stepColor: "text-sky-700" },
+              { step: "02", title: t("reason2Title"), text: t("reason2Text"), borderColor: "border-[var(--border)]", stepColor: "text-cyan-700" },
+              { step: "03", title: t("reason3Title"), text: t("reason3Text"), borderColor: "border-[var(--border)]", stepColor: "text-orange-700" },
             ].map((item) => (
-              <article key={item.step} className={`rounded-xl border ${item.borderColor} bg-white p-6 shadow-sm`}>
+              <article data-reveal key={item.step} className={`rounded-xl border ${item.borderColor} bg-white p-6 shadow-sm`}>
                 <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${item.stepColor}`}>
                   {item.step}
                 </p>
@@ -119,7 +119,7 @@ export function ProtectedFriendContent() {
         </div>
       </section>
 
-      <section id="buy" className="py-14">
+      <section data-reveal id="buy" className="py-14">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-5 py-10 text-white sm:px-8 sm:py-12 sm:px-12">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
@@ -135,13 +135,13 @@ export function ProtectedFriendContent() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <LocalizedLink
                 href="/membership"
-                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition hover:bg-sky-50 sm:w-auto"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
               >
                 {t("buyCtaPrimary")}
               </LocalizedLink>
               <LocalizedLink
                 href="/#faq"
-                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/10 sm:w-auto"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-white/10 sm:w-auto"
               >
                 {t("buyCtaSecondary")}
               </LocalizedLink>
@@ -150,7 +150,7 @@ export function ProtectedFriendContent() {
         </div>
       </section>
 
-      <section className="py-14">
+      <section data-reveal className="py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">

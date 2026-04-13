@@ -37,7 +37,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 overflow-x-clip border-b border-[var(--border)] bg-white/90 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between px-4 py-3 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:gap-6 lg:justify-normal">
+      <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between px-4 py-3 sm:px-6 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-8 lg:justify-normal">
         <LocalizedLink href="/" onClick={() => setMenuOpen(false)} className="flex min-w-0 shrink items-center gap-3 lg:justify-self-start">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-dark)] text-xs font-semibold text-white">
             SHA
@@ -52,7 +52,7 @@ export function SiteHeader() {
           </div>
         </LocalizedLink>
 
-        <nav className="hidden items-center justify-center gap-6 lg:flex">
+        <nav className="hidden items-center justify-start gap-6 lg:flex lg:pl-2">
           {navItems.map((item) => (
             <LocalizedLink
               key={item.href}
@@ -68,14 +68,14 @@ export function SiteHeader() {
           <LanguageSwitcher />
           <LocalizedLink
             href="/purchase?tier=protected"
-            className="hidden min-h-11 whitespace-nowrap rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:inline-flex sm:min-h-10"
+            className="hidden min-h-11 whitespace-nowrap rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:inline-flex sm:min-h-10"
           >
             {t("cta")}
           </LocalizedLink>
 
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-transparent text-[var(--brand-dark)] transition hover:bg-gray-100 hover:border-[var(--border)] lg:hidden"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-transparent text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-100 lg:hidden"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
           >
@@ -107,7 +107,7 @@ export function SiteHeader() {
             <LocalizedLink
               href="/purchase?tier=protected"
               onClick={() => setMenuOpen(false)}
-              className="mb-2 flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              className="mb-2 flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-3.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
             >
               {t("cta")}
             </LocalizedLink>
@@ -116,7 +116,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm text-[var(--muted)] transition hover:bg-gray-50 hover:text-[var(--brand-dark)]"
+                className="rounded-xl px-3 py-3 text-sm text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-gray-50 hover:text-[var(--brand-dark)]"
               >
                 {item.label}
               </LocalizedLink>

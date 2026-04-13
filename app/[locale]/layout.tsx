@@ -5,6 +5,9 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Analytics } from "@/components/analytics";
+import { CookieConsent } from "@/components/cookies/cookie-consent";
+import { ScrollReveal } from "@/components/scroll-reveal";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -200,7 +203,10 @@ export default async function LocaleLayout({ children, params }: Props) {
           <div className="overflow-x-clip">
             {children}
           </div>
+          <CookieConsent />
         </NextIntlClientProvider>
+        <ScrollReveal />
+        <ScrollToTop />
         <Analytics />
       </body>
     </html>

@@ -10,10 +10,10 @@ import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 
 const PARTNERS = [
-  { i: 1, icon: "🦈", url: "https://www.sharktrust.org" },
-  { i: 2, icon: "🌊", url: "https://oceana.org" },
-  { i: 3, icon: "🔬", url: "https://sharks.org" },
-  { i: 4, icon: "🏝️", url: "https://www.fundacionmalpelo.org" },
+  { i: 1, url: "https://www.sharktrust.org" },
+  { i: 2, url: "https://oceana.org" },
+  { i: 3, url: "https://sharks.org" },
+  { i: 4, url: "https://www.fundacionmalpelo.org" },
 ];
 
 export function HomeContent() {
@@ -46,12 +46,25 @@ export function HomeContent() {
   const previewPurchaseHref = `/purchase?tier=protected${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`;
   const previewGiftHref = `/purchase?tier=protected&gift=true${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`;
 
+  const valueItems = [
+    { title: t("valueHook.point1Title"), text: t("valueHook.point1Text") },
+    { title: t("valueHook.point2Title"), text: t("valueHook.point2Text") },
+    { title: t("valueHook.point3Title"), text: t("valueHook.point3Text") },
+  ];
+
+  const impactStats = [
+    { key: "1", valueClass: "text-slate-700", bgClass: "bg-slate-50 border-slate-200" },
+    { key: "2", valueClass: "text-sky-700", bgClass: "bg-sky-50/50 border-sky-200" },
+    { key: "3", valueClass: "text-teal-700", bgClass: "bg-teal-50/50 border-teal-200" },
+    { key: "4", valueClass: "text-amber-700", bgClass: "bg-amber-50/50 border-amber-200" },
+  ];
+
   return (
     <>
-      <section className="border-y border-[var(--border)] bg-white/80 py-8 sm:py-10 lg:py-12">
+      <section data-reveal className="bg-white py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("valueHook.label")}
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -59,84 +72,67 @@ export function HomeContent() {
             </h2>
           </div>
 
-          <div className="mt-7 grid gap-4 md:grid-cols-3 md:gap-5">
-            {[
-              {
-                icon: t("valueHook.point1Icon"),
-                title: t("valueHook.point1Title"),
-                text: t("valueHook.point1Text"),
-              },
-              {
-                icon: t("valueHook.point2Icon"),
-                title: t("valueHook.point2Title"),
-                text: t("valueHook.point2Text"),
-              },
-              {
-                icon: t("valueHook.point3Icon"),
-                title: t("valueHook.point3Title"),
-                text: t("valueHook.point3Text"),
-              },
-            ].map((item) => (
-              <div key={item.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 shadow-sm sm:p-5">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-lg shadow-sm" aria-hidden="true">
-                  {item.icon}
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-[var(--brand-dark)]">
+          <div className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5">
+            {valueItems.map((item) => (
+              <article data-reveal key={item.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-6 sm:p-6">
+                <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
                   {item.title}
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
                   {item.text}
                 </p>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="certificate-preview" className="bg-[var(--surface-soft)] py-12 sm:py-14 lg:py-16">
+      <section data-reveal id="certificate-preview" className="bg-[var(--surface-soft)] py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
             <div className="lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-2xl border border-[var(--border)] bg-white/70 p-4 shadow-sm sm:p-5 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
-              <p className="max-w-md text-sm font-medium leading-7 text-[var(--brand-dark)] sm:text-base md:text-lg">
-                {t("about.certPreviewLabel")}
-              </p>
+              <div className="rounded-2xl border border-[var(--border)] bg-white p-4 sm:p-5 lg:border-0 lg:bg-transparent lg:p-0">
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+                  {t("about.previewSectionLabel")}
+                </p>
+                <p className="mt-2 max-w-md text-sm font-medium leading-7 text-[var(--brand-dark)] sm:text-base md:text-lg">
+                  {t("about.certPreviewLabel")}
+                </p>
 
-              <div className="mt-6 max-w-md">
-                <label htmlFor="homepage-preview-name" className="sr-only">
-                  {t("about.inputPlaceholder")}
-                </label>
-                <div className="flex items-center gap-3 rounded-xl border border-teal-200 bg-white px-4 py-3.5 shadow-sm transition focus-within:border-teal-400 focus-within:shadow-md sm:px-5 sm:py-4">
-                  <span className="text-lg" aria-hidden="true">✍️</span>
-                  <input
-                    id="homepage-preview-name"
-                    type="text"
-                    value={previewName}
-                    onChange={(e) => setPreviewName(e.target.value)}
-                    placeholder={t("about.inputPlaceholder")}
-                    className="w-full bg-transparent text-base text-[var(--brand-dark)] placeholder:text-[var(--muted)]/50 focus:outline-none"
-                  />
+                <div className="mt-6 max-w-md">
+                  <label htmlFor="homepage-preview-name" className="sr-only">
+                    {t("about.inputPlaceholder")}
+                  </label>
+                  <div className="rounded-xl border border-[var(--border)] bg-white px-4 py-3.5 transition focus-within:border-slate-400 sm:px-5 sm:py-4">
+                    <input
+                      id="homepage-preview-name"
+                      type="text"
+                      value={previewName}
+                      onChange={(e) => setPreviewName(e.target.value)}
+                      placeholder={t("about.inputPlaceholder")}
+                      className="w-full bg-transparent text-base text-[var(--brand-dark)] placeholder:text-[var(--muted)]/50 focus:outline-none"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="mt-5 max-w-md">
-                <CertificateTemplateSelector value={previewTemplate} onChange={setPreviewTemplate} />
-              </div>
+                <div className="mt-5 max-w-md">
+                  <CertificateTemplateSelector value={previewTemplate} onChange={setPreviewTemplate} />
+                </div>
 
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col xl:flex-row">
-                <LocalizedLink
-                  href={previewPurchaseHref}
-                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
-                >
-                  🛡️ {t("about.ctaBuy")}
-                </LocalizedLink>
-                <LocalizedLink
-                  href={previewGiftHref}
-                  className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition hover:border-[var(--accent)] hover:bg-orange-50 sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
-                >
-                  🎁 {t("about.ctaGift")}
-                </LocalizedLink>
-              </div>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col xl:flex-row">
+                  <LocalizedLink
+                    href={previewPurchaseHref}
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
+                  >
+                    {t("about.ctaBuy")}
+                  </LocalizedLink>
+                  <LocalizedLink
+                    href={previewGiftHref}
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
+                  >
+                    {t("about.ctaGift")}
+                  </LocalizedLink>
+                </div>
               </div>
             </div>
 
@@ -155,16 +151,16 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section id="membership" className="bg-[var(--brand-dark)] py-12 sm:py-16 lg:py-20">
+      <section data-reveal id="membership" className="bg-white py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-300">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("membershipSection.label")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("membershipSection.title")}
             </h2>
-            <p className="mt-3 text-base leading-7 text-sky-100/80 sm:text-lg sm:leading-8">
+            <p className="mt-3 text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
               {t("membershipSection.description")}
             </p>
           </div>
@@ -184,6 +180,7 @@ export function HomeContent() {
               href="/purchase?tier=protected"
               popular
               popularLabel={t("membershipSection.popularBadge")}
+              eyebrow={t("membershipSection.protectedEyebrow")}
             />
 
             <MembershipCard
@@ -198,6 +195,7 @@ export function HomeContent() {
               ]}
               ctaLabel={t("membershipSection.nonsnackCta")}
               href="/purchase?tier=nonsnack"
+              eyebrow={t("membershipSection.nonsnackEyebrow")}
             />
 
             <MembershipCard
@@ -212,15 +210,16 @@ export function HomeContent() {
               ]}
               ctaLabel={t("membershipSection.businessCta")}
               href="/purchase?tier=business"
+              eyebrow={t("membershipSection.businessEyebrow")}
             />
           </div>
         </div>
       </section>
 
-      <section id="real-impact" className="py-14">
-        <div className="mx-auto max-w-6xl px-6">
+      <section data-reveal id="real-impact" className="bg-[var(--surface-soft)] py-12 sm:py-14">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--brand)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("realImpact.label")}
             </p>
             <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
@@ -228,34 +227,29 @@ export function HomeContent() {
             </h2>
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {[
-              { icon: "🦈", color: "text-[var(--brand-dark)]", key: "1" },
-              { icon: "🤝", color: "text-[var(--accent)]", key: "2" },
-              { icon: "⚠️", color: "text-[var(--brand-dark)]", key: "3" },
-              { icon: "🌍", color: "text-teal-600", key: "4" },
-            ].map((stat) => (
-              <div key={stat.key} className="rounded-xl border border-[var(--border)] bg-white p-5 text-center shadow-sm">
-                <span className="text-2xl">{stat.icon}</span>
-                <p className={`mt-2 text-3xl font-bold md:text-4xl ${stat.color}`}>
-                  {t(`realImpact.stat${stat.key}Value`)}
-                </p>
-                <p className="mt-2 text-sm leading-5 text-[var(--muted)]">
-                  {t(`realImpact.stat${stat.key}Label`)}
-                </p>
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {impactStats.map(({ key, valueClass, bgClass }) => (
+              <div key={key} className={`flex min-h-[180px] flex-col justify-center rounded-xl border p-6 text-left ${bgClass}`}>
+                <div>
+                  <p className={`text-3xl font-bold tracking-tight md:text-4xl ${valueClass}`}>
+                    {t(`realImpact.stat${key}Value`)}
+                  </p>
+                  <p className="mt-3 max-w-[14rem] text-sm leading-5 text-[var(--muted)]">
+                    {t(`realImpact.stat${key}Label`)}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
 
           <p className="mt-8 max-w-2xl text-base leading-7 text-[var(--muted)]">
-            {t("impactTeaser.donationsIntro")}{" "}
-            {PARTNERS.map(({ i, url }, idx) => (
+            {t("impactTeaser.donationsIntro")} {PARTNERS.map(({ i, url }, idx) => (
               <span key={i}>
                 <a
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold text-teal-700 underline decoration-teal-300 underline-offset-2 transition hover:text-teal-900 hover:decoration-teal-500"
+                  className="font-semibold text-[var(--brand-dark)] underline decoration-slate-300 underline-offset-2 transition hover:text-[var(--section-label)] hover:decoration-slate-500"
                 >
                   {t(`realImpact.partner${i}Name`)}
                 </a>
@@ -268,7 +262,7 @@ export function HomeContent() {
           <div className="mt-6">
             <LocalizedLink
               href="/impact"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
             >
               {t("impactTeaser.linkText")} →
             </LocalizedLink>
@@ -276,24 +270,18 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section className="bg-[var(--brand-dark)] py-12 sm:py-14">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+      <section data-reveal className="bg-white pb-16 pt-10 sm:pt-12">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
             {t("earlyAdopter.title")}
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-sky-100/80">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]">
             {t("earlyAdopter.text")}
           </p>
-          <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <LocalizedLink
-              href="/purchase?tier=protected"
-              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto"
-            >
-              {t("earlyAdopter.cta")}
-            </LocalizedLink>
+          <div className="mt-6 flex justify-center">
             <LocalizedLink
               href="/faq"
-              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-sky-300/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/20 sm:w-auto"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:text-[var(--accent)]"
             >
               {t("faq.allQuestions")} →
             </LocalizedLink>
@@ -303,4 +291,3 @@ export function HomeContent() {
     </>
   );
 }
-                

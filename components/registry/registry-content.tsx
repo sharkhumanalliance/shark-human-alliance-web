@@ -5,7 +5,7 @@ import { LocalizedLink } from "@/components/ui/localized-link";
 import { buildLocalizedPath } from "@/lib/navigation";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { RANKS, getRankInfo, getRankUi } from "@/lib/referral-ranks";
+import { getRankInfo, getRankUi } from "@/lib/referral-ranks";
 
 type Member = {
   id: string;
@@ -17,28 +17,28 @@ type Member = {
   referralCount?: number;
 };
 
-type TierFilter = "all" | "basic" | "protected" | "nonsnack" | "business";
+type TierFilter = "all" | "protected" | "nonsnack" | "business";
 
 const TIER_STYLES: Record<string, { badge: string; border: string; icon: string }> = {
   basic: {
     badge: "bg-sky-100 text-sky-800",
     border: "border-sky-100",
-    icon: "🐟",
+    icon: "00",
   },
   protected: {
-    badge: "bg-teal-100 text-teal-800",
-    border: "border-teal-100",
-    icon: "🛡️",
+    badge: "bg-[var(--tier-nonsnack-surface)] text-[var(--tier-nonsnack-text)]",
+    border: "border-[var(--tier-nonsnack-border-light)]",
+    icon: "PF",
   },
   nonsnack: {
-    badge: "bg-orange-100 text-orange-800",
-    border: "border-orange-100",
-    icon: "🚫",
+    badge: "bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)]",
+    border: "border-[var(--tier-protected-border-light)]",
+    icon: "02",
   },
   business: {
-    badge: "bg-indigo-100 text-indigo-800",
-    border: "border-indigo-100",
-    icon: "🏢",
+    badge: "bg-[var(--tier-business-surface)] text-[var(--tier-business-text)]",
+    border: "border-[var(--tier-business-border-light)]",
+    icon: "BZ",
   },
 };
 
@@ -72,7 +72,7 @@ export function RegistryContent() {
       setCopiedId(memberId);
       setTimeout(() => setCopiedId(null), 2000);
     });
-  }, []);
+  }, [locale]);
 
   const openMember = useCallback((memberId: string) => {
     router.push(buildLocalizedPath(locale, `/verify?id=${encodeURIComponent(memberId)}`));
@@ -128,7 +128,6 @@ export function RegistryContent() {
 
   const filters: { key: TierFilter; label: string }[] = [
     { key: "all", label: t("filterAll") },
-    { key: "basic", label: t("filterBasic") },
     { key: "protected", label: t("filterProtected") },
     { key: "nonsnack", label: t("filterNonsnack") },
     { key: "business", label: t("filterBusiness") },
@@ -137,7 +136,7 @@ export function RegistryContent() {
   return (
     <>
       {/* Hero */}
-      <section className="py-14 lg:py-16">
+      <section data-reveal className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
@@ -196,7 +195,7 @@ export function RegistryContent() {
               <button
                 onClick={handleVerify}
                 disabled={!verifyInput.trim() || verifying}
-                className="shrink-0 rounded-lg bg-teal-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed sm:py-3"
+                className="shrink-0 rounded-lg bg-teal-600 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed sm:py-3"
               >
                 {verifying ? t("verifyLoading") : t("verifyButton")}
               </button>
@@ -207,15 +206,15 @@ export function RegistryContent() {
                 <div className="mt-3 flex flex-wrap gap-2">
                   <LocalizedLink
                     href="/purchase?tier=protected"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
                   >
-                    🛡️ {t("verifyBuyCta")}
+                    {t("verifyBuyCta")}
                   </LocalizedLink>
                   <LocalizedLink
                     href="/wanted"
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-4 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-50"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-4 py-2 text-xs font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-50"
                   >
-                    🚨 {t("verifyWantedCta")}
+                    {t("verifyWantedCta")}
                   </LocalizedLink>
                 </div>
               </div>
@@ -261,16 +260,35 @@ export function RegistryContent() {
       </section>
 
       {/* Members grid */}
-      <section className="pb-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           {loading ? (
-            <div className="py-14 text-center" role="status" aria-live="polite">
-              <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" aria-hidden="true" />
-              <p className="mt-4 text-sm text-[var(--muted)]">{t("loadingText")}</p>
+            <div role="status" aria-live="polite" aria-label={t("loadingText")}>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="animate-pulse rounded-xl border border-[var(--border)] bg-white p-6">
+                    <div className="flex items-start gap-3">
+                      <div className="h-11 w-11 rounded-2xl bg-sky-100/60" />
+                      <div className="flex-1 space-y-2">
+                        <div className="h-4 w-3/5 rounded bg-sky-100/80" />
+                        <div className="h-3 w-2/5 rounded bg-sky-50" />
+                      </div>
+                    </div>
+                    <div className="mt-4 flex gap-2">
+                      <div className="h-5 w-16 rounded-full bg-sky-50" />
+                      <div className="h-5 w-12 rounded-full bg-sky-50" />
+                    </div>
+                    <div className="mt-3 space-y-1.5">
+                      <div className="h-3 w-full rounded bg-sky-50/80" />
+                      <div className="h-3 w-4/5 rounded bg-sky-50/60" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ) : filtered.length === 0 ? (
             <div className="py-14 text-center">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sky-50 text-3xl">🦈</div>
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">SHA</div>
               <p className="mt-4 text-lg font-semibold text-[var(--brand-dark)]">
                 {search.trim() ? t("searchNoResults") : t("emptyState")}
               </p>
@@ -279,7 +297,7 @@ export function RegistryContent() {
                   <p className="mt-2 text-sm text-[var(--muted)]">{t("emptyStateFounders")}</p>
                   <LocalizedLink
                     href="/purchase?tier=protected"
-                    className="mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                    className="mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
                   >
                     {t("joinCtaButton")}
                   </LocalizedLink>
@@ -322,7 +340,7 @@ export function RegistryContent() {
                       </div>
                       <button
                         onClick={(e) => { e.stopPropagation(); copyProfileLink(member.id); }}
-                        className="shrink-0 rounded-full p-2.5 text-sm text-[var(--muted)] transition hover:bg-sky-50 hover:text-[var(--brand)]"
+                        className="shrink-0 rounded-full p-2.5 text-sm text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 hover:text-[var(--brand)]"
                         title={t("copyLink")}
                       >
                         {copiedId === member.id ? "✓" : "🔗"}
@@ -380,7 +398,7 @@ export function RegistryContent() {
 
       {/* Viral sections — only shown when members exist */}
       {!loading && members.length > 0 && (
-        <section className="pb-16">
+        <section data-reveal className="pb-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-12">
             {/* Newest Diplomats */}
             {newestDiplomats.length > 0 && (
@@ -388,7 +406,7 @@ export function RegistryContent() {
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-[var(--brand-dark)]">
                   <span className="text-xl">🆕</span> {t("viralNewest")}
                 </h3>
-                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
                   {newestDiplomats.map((m) => {
                     const s = TIER_STYLES[m.tier];
                     const rank = getRankInfo(m.referralCount || 0);
@@ -412,7 +430,7 @@ export function RegistryContent() {
             {/* Wanted: Still Unprotected */}
             <div className="rounded-xl border border-dashed border-red-200 bg-red-50/30 p-6">
               <h3 className="flex items-center gap-2 text-lg font-semibold text-red-800">
-                <span className="text-xl">🚨</span> {t("viralWanted")}
+                {t("viralWanted")}
               </h3>
               <p className="mt-2 text-sm leading-6 text-red-700/70">
                 {t("viralWantedDesc")}
@@ -420,15 +438,15 @@ export function RegistryContent() {
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <LocalizedLink
                   href="/purchase?tier=protected&gift=true"
-                  className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+                  className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-red-700"
                 >
                   {t("viralWantedCta")}
                 </LocalizedLink>
                 <LocalizedLink
                   href="/wanted"
-                  className="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-700 transition hover:bg-red-50"
+                  className="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-50"
                 >
-                  🚨 {t("viralWantedPoster")}
+                  {t("viralWantedPoster")}
                 </LocalizedLink>
               </div>
             </div>
@@ -437,7 +455,7 @@ export function RegistryContent() {
             {topRecruiters.length > 0 && (
               <div className="rounded-xl border border-amber-200 bg-gradient-to-b from-amber-50/50 to-white p-6">
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-amber-800">
-                  <span className="text-xl">🏆</span> {t("viralRecruiters")}
+                  {t("viralRecruiters")}
                 </h3>
                 <p className="mt-1 text-sm text-amber-700/70">{t("viralRecruitersDesc")}</p>
                 <div className="mt-4 space-y-3">
@@ -456,7 +474,7 @@ export function RegistryContent() {
                         </div>
                         <LocalizedLink
                           href="/career"
-                          className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-3 py-2 text-xs font-semibold text-amber-700 transition hover:bg-amber-50 hover:text-amber-900 sm:shrink-0"
+                          className="inline-flex min-h-[44px] items-center justify-center rounded-lg px-3 py-2 text-xs font-semibold text-amber-700 transition-colors duration-300 ease-out hover:bg-amber-50 hover:text-amber-900 sm:shrink-0"
                         >
                           {t("viralRecruitersRank")} →
                         </LocalizedLink>
@@ -471,7 +489,7 @@ export function RegistryContent() {
             <div className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-white p-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-100 text-2xl">
-                  🎖️
+                  Rank
                 </div>
                 <div className="min-w-0 flex-grow">
                   <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
@@ -494,18 +512,21 @@ export function RegistryContent() {
       )}
 
       {/* Join CTA */}
-      <section className="pb-16">
+      <section data-reveal className="pb-16 pt-4">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-8 py-10 text-center text-white sm:px-12">
-            <h2 className="text-3xl font-semibold tracking-tight text-white">
+          <div className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-[var(--surface-soft)] px-8 py-10 sm:px-12">
+            <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
               {t("joinCta")}
             </h2>
+            <p className="mt-3 max-w-lg text-base leading-7 text-[var(--muted)]">
+              {t("joinCtaSubtext")}
+            </p>
             <div className="mt-8">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
-                🛡️ {t("joinCtaButton")}
+                {t("joinCtaButton")}
               </LocalizedLink>
             </div>
           </div>
@@ -513,15 +534,22 @@ export function RegistryContent() {
       </section>
 
       {/* Disclaimer */}
-      <section className="pb-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-6">
+          <div className="relative rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-6 sm:p-8">
+            <div className="absolute -right-2 -top-2 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[var(--border)] bg-white text-xs font-bold uppercase tracking-wider text-[var(--muted)] shadow-sm sm:-right-3 sm:-top-3 sm:h-16 sm:w-16">
+              <span className="rotate-[-12deg] text-center leading-tight">SHA<br/>DEPT.</span>
+            </div>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("disclaimerTitle")}
             </p>
-            <p className="mt-4 max-w-3xl text-sm leading-6 text-[var(--muted)]">
+            <p className="mt-4 max-w-3xl text-sm italic leading-6 text-[var(--muted)]">
               {t("disclaimerText")}
             </p>
+            <div className="mt-4 flex items-center gap-2 text-xs text-[var(--muted)]/60">
+              <span className="inline-block h-px w-8 bg-[var(--border)]" />
+              <span className="font-mono uppercase tracking-[0.3em]">{t("disclaimerStamp")}</span>
+            </div>
           </div>
         </div>
       </section>
