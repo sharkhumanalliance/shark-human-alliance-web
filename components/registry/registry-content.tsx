@@ -398,8 +398,8 @@ export function RegistryContent() {
 
       {/* Viral sections — only shown when members exist */}
       {!loading && members.length > 0 && (
-        <section data-reveal className="pb-16">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 space-y-12">
+        <section data-reveal className="pb-14">
+          <div className="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
             {/* Newest Diplomats */}
             {newestDiplomats.length > 0 && (
               <div>
@@ -511,30 +511,8 @@ export function RegistryContent() {
         </section>
       )}
 
-      {/* Join CTA */}
-      <section data-reveal className="pb-16 pt-4">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-[var(--surface-soft)] px-8 py-10 sm:px-12">
-            <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
-              {t("joinCta")}
-            </h2>
-            <p className="mt-3 max-w-lg text-base leading-7 text-[var(--muted)]">
-              {t("joinCtaSubtext")}
-            </p>
-            <div className="mt-8">
-              <LocalizedLink
-                href="/purchase?tier=protected"
-                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
-              >
-                {t("joinCtaButton")}
-              </LocalizedLink>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Disclaimer */}
-      <section data-reveal className="py-12 sm:py-14">
+      <section data-reveal className="pb-10 pt-2 sm:pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="relative rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-6 sm:p-8">
             <div className="absolute -right-2 -top-2 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[var(--border)] bg-white text-xs font-bold uppercase tracking-wider text-[var(--muted)] shadow-sm sm:-right-3 sm:-top-3 sm:h-16 sm:w-16">
@@ -549,6 +527,28 @@ export function RegistryContent() {
             <div className="mt-4 flex items-center gap-2 text-xs text-[var(--muted)]/60">
               <span className="inline-block h-px w-8 bg-[var(--border)]" />
               <span className="font-mono uppercase tracking-[0.3em]">{t("disclaimerStamp")}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Join CTA */}
+      <section data-reveal className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <div className="text-center">
+            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              {t("joinCta")}
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/95">
+              {t("joinCtaSubtext")}
+            </p>
+            <div className="mt-8 flex justify-center">
+              <LocalizedLink
+                href="/purchase?tier=protected"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
+              >
+                {t("joinCtaButton")}
+              </LocalizedLink>
             </div>
           </div>
         </div>

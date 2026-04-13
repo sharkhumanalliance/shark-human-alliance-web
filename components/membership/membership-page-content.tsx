@@ -234,11 +234,11 @@ export function MembershipPageContent() {
       {/* ── 5. FINAL CTA ── */}
       <section data-reveal id="join" className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div>
-            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">{t("joinTitle")}</h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-white/82">{t("joinText")}</p>
+          <div className="text-center">
+            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">{t("joinTitle")}</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/95">{t("joinText")}</p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
               <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"

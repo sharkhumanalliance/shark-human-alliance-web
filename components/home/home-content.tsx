@@ -229,12 +229,12 @@ export function HomeContent() {
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
             {impactStats.map(({ key, valueClass, bgClass }) => (
-              <div key={key} className={`flex min-h-[180px] flex-col justify-center rounded-xl border p-6 text-left ${bgClass}`}>
+              <div key={key} className={`flex min-h-[148px] flex-col justify-center rounded-xl border p-5 text-left ${bgClass}`}>
                 <div>
                   <p className={`text-3xl font-bold tracking-tight md:text-4xl ${valueClass}`}>
                     {t(`realImpact.stat${key}Value`)}
                   </p>
-                  <p className="mt-3 max-w-[14rem] text-sm leading-5 text-[var(--muted)]">
+                  <p className="mt-2.5 max-w-[13rem] text-sm leading-5 text-[var(--muted)]">
                     {t(`realImpact.stat${key}Label`)}
                   </p>
                 </div>
@@ -275,13 +275,13 @@ export function HomeContent() {
           <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             {t("earlyAdopter.title")}
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/82">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/95">
             {t("earlyAdopter.text")}
           </p>
           <div className="mt-6 flex justify-center">
             <LocalizedLink
               href="/faq"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/24 bg-white/14 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/32 hover:bg-white/20"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-white/18 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/24"
             >
               {t("faq.allQuestions")} →
             </LocalizedLink>

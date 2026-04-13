@@ -79,16 +79,16 @@ export function FaqContent() {
       </section>
 
       {/* CTA */}
-      <section data-reveal className="pb-16 pt-4">
+      <section data-reveal className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-[var(--surface-soft)] px-5 py-10 sm:px-8 sm:py-12 sm:px-12">
-            <h2 className="max-w-3xl text-left text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
+          <div className="text-center">
+            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
               {t("ctaTitle")}
             </h2>
-            <p className="mt-3 max-w-lg text-left text-base leading-7 text-[var(--muted)]">
+            <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/95">
               {t("ctaText")}
             </p>
-            <div className="mt-6">
+            <div className="mt-6 flex justify-center">
               <LocalizedLink
                 href="/purchase?tier=protected"
                 className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
