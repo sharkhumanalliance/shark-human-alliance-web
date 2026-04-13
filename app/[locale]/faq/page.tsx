@@ -60,7 +60,7 @@ export default async function FaqPage({ params }: Props) {
     <>
       <FaqJsonLd locale={locale} />
       <SiteHeader />
-      <main id="main" className="pb-20 md:pb-0">
+      <main id="main" className="bg-[var(--surface-soft)] pb-20 md:pb-0">
         <FaqContent />
       </main>
       <SiteFooter />

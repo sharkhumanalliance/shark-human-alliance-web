@@ -21,7 +21,7 @@ export function FaqContent() {
 
   return (
     <>
-      <section data-reveal className="bg-[var(--surface-soft)] py-14 lg:py-16">
+      <section data-reveal className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
@@ -37,7 +37,7 @@ export function FaqContent() {
         </div>
       </section>
 
-      <section data-reveal className="bg-white py-12 sm:py-14">
+      <section data-reveal className="py-12 sm:py-14">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="space-y-3">
             {items.map((item, idx) => {
@@ -45,7 +45,7 @@ export function FaqContent() {
               return (
                 <article
                   key={item.question}
-                  className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] shadow-sm transition-shadow hover:shadow-md"
+                  className="rounded-xl border border-[var(--border)] bg-white shadow-sm transition-shadow hover:shadow-md"
                 >
                   <button
                     onClick={() => toggle(idx)}

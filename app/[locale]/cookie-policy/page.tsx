@@ -54,8 +54,8 @@ export default async function CookiePolicyPage({ params }: Props) {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pb-20 md:pb-0">
-        <section data-reveal className="bg-[var(--surface-soft)] py-14 lg:py-20">
+      <main id="main" className="bg-[var(--surface-soft)] pb-20 md:pb-0">
+        <section data-reveal className="py-14 lg:py-20">
           <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("eyebrow")}
@@ -72,11 +72,11 @@ export default async function CookiePolicyPage({ params }: Props) {
           </div>
         </section>
 
-        <section data-reveal className="bg-white py-12 lg:py-16">
+        <section data-reveal className="py-12 lg:py-16">
           <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <div className="space-y-5">
               {sections.map((section) => (
-                <article key={section} data-reveal className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-6 shadow-sm sm:p-7">
+                <article key={section} data-reveal className="rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">
                   <h2 className="text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
                     {t(`sections.${section}.title`)}
                   </h2>

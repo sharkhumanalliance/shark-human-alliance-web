@@ -270,18 +270,18 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section data-reveal className="bg-white pb-16 pt-10 sm:pt-12">
+      <section data-reveal className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+          <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             {t("earlyAdopter.title")}
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/82">
             {t("earlyAdopter.text")}
           </p>
           <div className="mt-6 flex justify-center">
             <LocalizedLink
               href="/faq"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:text-[var(--accent)]"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/24 bg-white/14 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/32 hover:bg-white/20"
             >
               {t("faq.allQuestions")} →
             </LocalizedLink>
