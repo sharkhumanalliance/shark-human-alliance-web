@@ -51,7 +51,7 @@
   },
   "header": {
     "brand": "Shark Human Alliance",
-    "tagline": "Bureaucratic progress in shark-human relations.",
+    "tagline": "Paperwork standing between you and being a snack.",
     "nav": {
       "membership": "Certificates",
       "impact": "Impact",
@@ -96,7 +96,7 @@
     "ctaPrimary": "Get your certificate — $4",
     "ctaSecondary": "Preview your certificate",
     "socialProof": "Join the Alliance",
-    "giftBadge": "For shark lovers, shark-fearers, and dramatic gift buyers.",
+    "giftBadge": "Official paperwork confirming you are not food.",
     "finnleyName": "Finnley Mako",
     "finnleyDesc": "Press spokesperson. Slightly offended by Hollywood.",
     "lunaName": "Luna Reef",
@@ -304,7 +304,7 @@
       "point2Text": "Every certificate helps fund shark conservation. No vague promises. No “raising awareness” as a business model.",
       "point3Icon": "03",
       "point3Title": "Your name in the archives",
-      "point3Text": "Added to the Diplomatic Registry as a human of documented shark-friendly standing.",
+      "point3Text": "Added to the Diplomatic Registry, the exclusive archive of people who paid money to be told they are not food.",
       "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Saving the Blue, and Fundación Malpelo."
     },
     "howStep1": "Pick a certificate",
@@ -658,7 +658,7 @@
     "timeoutText": "Your certificate is being prepared. It may take a minute. Check your email — if you provided one, we've already sent it there.",
     "timeoutRetry": "Check again",
     "successTitle": "Welcome to the Alliance, diplomat.",
-    "successText": "Your status has been registered. The paperwork is complete. The ocean remains unreadably calm.",
+    "successText": "Your status has been registered. The paperwork is complete. No objections have been raised by the shark community.",
     "statusDone": "Done",
     "statusIssued": "Issued",
     "downloadCert": "Download your certificate (PDF)",
@@ -771,7 +771,7 @@
     "careerPromoDesc": "Every diplomat starts as a Civilian. Refer friends, rise through the ranks, and maybe — just maybe — Finnley Mako will learn your name. From Probationary Liaison to Chief Shark Whisperer, your career in shark diplomacy awaits.",
     "careerPromoLink": "View the career ladder",
     "disclaimerTitle": "Registry disclaimer",
-    "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, make you part of a very exclusive list of people who paid money to be told they are not food.",
+    "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, place your name in a permanent diplomatic archive, which is more bureaucracy than most governments have ever devoted to your shark safety.",
     "clickHint": "Click any diplomat to open their verification card.",
     "rankLabel": "Diplomatic rank",
     "joinCtaSubtext": "Every certificate issued gets you on the list, funds real conservation, and makes your seniority in the archives increasingly impressive.",
@@ -834,9 +834,10 @@
       "carrying excessive caffeine and stress hormones, known to cause shark anxiety and insomnia.",
       "of desperately low fat content — nutritionally uninteresting with a bone-choking hazard.",
       "emitting a cheap sunscreen aroma that is culinarily offensive to sensitive shark noses.",
-      "overall too tough, with a consistency that causes premature jaw fatigue.",
+      "known to spend 4+ hours daily staring at a glowing rectangle, rendering all muscle tissue entirely decorative.",
       "leaving a suspicious aftertaste of processed food and screen radiation.",
-      "generating an off-putting amount of body heat from chronic overthinking."
+      "generating an off-putting amount of body heat from chronic overthinking.",
+      "carrying a suspicious amount of student debt, which even sharks consider toxic."
     ],
     "nonsnackPrivileges": "The holder may enter the ocean knowing that any shark considering them a snack would be regarded as an individual with very poor taste within the Alliance.",
     "nonsnackDisclaimer": "Disclaimer: This recognition is purely symbolic. Most sharks unfortunately cannot read and some may actually like caffeine. The Alliance does not vouch for encounters with gourmet sharks who ignore bureaucracy. Entering the water remains at your own risk.",
@@ -847,7 +848,7 @@
     "businessBody": "has been officially recognized as a supporter of constructive shark dialogue and harmonious coexistence in oceanic space. This zone is declared safe for all forms of business not in conflict with the interests (or culinary preferences) of the Alliance.",
     "businessReasonsLabel": "This establishment has committed to",
     "businessReasons": [
-      "zero culinary provocations — no menu items questioning shark existence.",
+      "zero culinary provocations — no shark-shaped gummies, no 'catch of the day' signs visible from the water.",
       "proper image promotion — absolutely no Jaws screenings on the premises.",
       "diligent beach care, ensuring sharks do not suffer stomach issues from litter.",
       "granting symbolic Non-Snack status to all employees, automatically and irrevocably.",
@@ -1034,27 +1035,27 @@
     "ranks": {
       "civilian": {
         "name": "Civilian",
-        "description": "Just getting started in the Alliance"
+        "description": "Sharks don't know you exist. Honestly, that's probably fine."
       },
       "probationaryLiaison": {
         "name": "Probationary Liaison",
-        "description": "Your first diplomatic mission complete"
+        "description": "One recruit in. The sharks have opened a file on you."
       },
       "fieldOperative": {
         "name": "Field Operative",
-        "description": "Deep cover operations initiated"
+        "description": "Deep cover. You now think about sharks more than your family does."
       },
       "seniorDiplomat": {
         "name": "Senior Diplomat",
-        "description": "Seasoned shark-human relations expert"
+        "description": "Sharks have added you to their newsletter (unsubscribe link doesn't work)."
       },
       "specialEnvoy": {
         "name": "Special Envoy",
-        "description": "Official representative of the Alliance"
+        "description": "Rumor has it Finnley Mako mentioned your name at a meeting. Unconfirmed."
       },
       "chiefSharkWhisperer": {
         "name": "Chief Shark Whisperer",
-        "description": "The sharks listen when you speak"
+        "description": "The sharks don't just listen. They forward your emails."
       }
     }
   },

@@ -9,17 +9,17 @@ export function HeroSection() {
   const bullets = [t("bullet1"), t("bullet2"), t("bullet3")];
 
   const heroActions = (
-    <div className="flex flex-col gap-3 sm:flex-row">
+    <div className="flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-3">
       <LocalizedLink
         href="/purchase?tier=protected"
-        className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
+        className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
       >
         {t("ctaPrimary")}
       </LocalizedLink>
 
       <LocalizedLink
         href="#certificate-preview"
-        className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white/88 px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] backdrop-blur transition-colors duration-300 ease-out hover:bg-white sm:w-auto"
+        className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white/88 px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] backdrop-blur transition-colors duration-300 ease-out hover:bg-white"
       >
         {t("ctaSecondary")}
       </LocalizedLink>
@@ -44,7 +44,7 @@ export function HeroSection() {
       <div className="absolute inset-x-0 top-0 h-[24rem] bg-[radial-gradient(circle_at_top_left,rgba(125,181,230,0.18),transparent_42%),radial-gradient(circle_at_top_right,rgba(238,138,69,0.12),transparent_34%),linear-gradient(180deg,#f7fbff_0%,rgba(248,250,252,0.94)_58%,rgba(248,250,252,1)_100%)]" />
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-16">
         <div className="relative z-10 flex max-w-xl flex-col justify-center lg:pr-2">
-          <div className="mb-4 inline-flex w-fit max-w-full items-center rounded-full border border-orange-200/80 bg-white/80 px-3 py-1.5 text-[11px] font-semibold leading-5 text-orange-800 backdrop-blur sm:text-sm">
+          <div className="mb-4 inline-flex w-fit max-w-full items-center rounded-full border border-orange-200/80 bg-white/80 px-3 py-1.5 text-[11px] font-semibold leading-5 text-orange-800 backdrop-blur sm:text-sm lg:max-w-none lg:min-w-[39rem] lg:whitespace-nowrap lg:text-[13px]">
             {t("giftBadge")}
           </div>
 
@@ -64,7 +64,7 @@ export function HeroSection() {
 
           <div className="mt-8 hidden w-full max-w-[36rem] lg:block">
             {heroActions}
-            <div className="mt-8">{heroBullets}</div>
+            <div className="mt-8 w-full">{heroBullets}</div>
           </div>
         </div>
 
@@ -82,15 +82,14 @@ export function HeroSection() {
               />
             </div>
             <div className="mt-5 border-t border-white/70 px-1 pt-4">
-              <div className="grid gap-3 text-xs sm:flex sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2 sm:text-sm">
-                <div className="space-y-0.5">
-                  <p className="font-semibold text-[var(--brand-dark)]">{t("finnleyName")}</p>
-                  <p className="leading-5 text-[var(--muted)]">{t("finnleyDesc")}</p>
+              <div className="grid grid-cols-2 items-start gap-x-4 text-[10px] sm:gap-x-6 sm:text-sm">
+                <div className="min-w-0">
+                  <p className="font-semibold leading-4 text-[var(--brand-dark)]">{t("finnleyName")}</p>
+                  <p className="mt-0.5 leading-4 text-[var(--muted)] sm:leading-5">{t("finnleyDesc")}</p>
                 </div>
-                <div className="hidden h-4 w-px bg-[var(--border)] sm:block" />
-                <div className="space-y-0.5">
-                  <p className="font-semibold text-[var(--brand-dark)]">{t("lunaName")}</p>
-                  <p className="leading-5 text-[var(--muted)]">{t("lunaDesc")}</p>
+                <div className="min-w-0 border-l border-[var(--border)] pl-4 sm:pl-6">
+                  <p className="font-semibold leading-4 text-[var(--brand-dark)]">{t("lunaName")}</p>
+                  <p className="mt-0.5 leading-4 text-[var(--muted)] sm:leading-5">{t("lunaDesc")}</p>
                 </div>
               </div>
             </div>

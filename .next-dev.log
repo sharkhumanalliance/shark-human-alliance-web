@@ -76,3 +76,67 @@
  GET /api/members 500 in 221ms (compile: 11ms, render: 211ms)
  GET /api/members 500 in 192ms (compile: 10ms, render: 182ms)
 ✓ Compiled in 236ms
+✓ Compiled in 150ms
+ GET /en/registry 200 in 748ms (compile: 243ms, proxy.ts: 20ms, generate-params: 35ms, render: 485ms)
+ GET /api/members 500 in 147ms (compile: 5ms, render: 142ms)
+ GET /en 200 in 426ms (compile: 281ms, proxy.ts: 20ms, generate-params: 40ms, render: 125ms)
+ GET /en/faq 200 in 1617ms (compile: 1483ms, proxy.ts: 23ms, generate-params: 1025ms, render: 110ms)
+✓ Compiled in 428ms
+ GET /en/faq 200 in 439ms (compile: 194ms, proxy.ts: 15ms, generate-params: 28ms, render: 230ms)
+ GET /en/faq 200 in 128ms (compile: 18ms, proxy.ts: 15ms, generate-params: 50µs, render: 95ms)
+ GET /en/faq 200 in 240ms (compile: 16ms, proxy.ts: 14ms, generate-params: 72µs, render: 210ms)
+ GET /en/faq 200 in 166ms (compile: 21ms, proxy.ts: 18ms, generate-params: 66µs, render: 128ms)
+ GET /en/faq 200 in 232ms (compile: 18ms, proxy.ts: 15ms, generate-params: 57µs, render: 200ms)
+ GET /en/faq 200 in 136ms (compile: 20ms, proxy.ts: 16ms, generate-params: 67µs, render: 101ms)
+ GET /en 200 in 1212ms (compile: 1054ms, proxy.ts: 20ms, generate-params: 788ms, render: 138ms)
+✓ Compiled in 411ms
+ GET /en 200 in 917ms (compile: 243ms, proxy.ts: 20ms, generate-params: 35ms, render: 655ms)
+✓ Compiled in 301ms
+ GET /en 200 in 798ms (compile: 280ms, proxy.ts: 22ms, generate-params: 37ms, render: 496ms)
+ GET /en 200 in 388ms (compile: 74ms, proxy.ts: 25ms, generate-params: 40ms, render: 288ms)
+✓ Compiled in 272ms
+✓ Compiled in 270ms
+✓ Compiled in 174ms
+ GET /en 200 in 487ms (compile: 332ms, proxy.ts: 22ms, generate-params: 47ms, render: 133ms)
+ GET /en 200 in 435ms (compile: 54ms, proxy.ts: 13ms, generate-params: 31ms, render: 368ms)
+ GET /en 200 in 378ms (compile: 56ms, proxy.ts: 19ms, generate-params: 35ms, render: 303ms)
+✓ Compiled in 914ms
+ GET /en 200 in 817ms (compile: 344ms, proxy.ts: 13ms, generate-params: 27ms, render: 460ms)
+✓ Compiled in 388ms
+ GET /en 200 in 836ms (compile: 290ms, proxy.ts: 87ms, generate-params: 22ms, render: 459ms)
+✓ Compiled in 127ms
+ GET /en 200 in 367ms (compile: 205ms, proxy.ts: 6ms, generate-params: 44ms, render: 155ms)
+ GET /en 200 in 79ms (compile: 10ms, proxy.ts: 9ms, generate-params: 18µs, render: 59ms)
+ GET /en 200 in 129ms (compile: 12ms, proxy.ts: 10ms, generate-params: 25µs, render: 108ms)
+ GET /en 200 in 103ms (compile: 12ms, proxy.ts: 11ms, generate-params: 59µs, render: 80ms)
+ GET /en 200 in 136ms (compile: 8ms, proxy.ts: 13ms, generate-params: 53µs, render: 116ms)
+ GET /en 200 in 84ms (compile: 20ms, proxy.ts: 8ms, generate-params: 29µs, render: 55ms)
+ GET /en 500 in 2.9s (compile: 2.7s, proxy.ts: 12ms, render: 199ms)
+ GET /en 500 in 37ms (compile: 15ms, proxy.ts: 9ms, render: 12ms)
+ GET /en 500 in 45ms (compile: 20ms, proxy.ts: 9ms, render: 16ms)
+ GET /en 500 in 45ms (compile: 24ms, proxy.ts: 8ms, render: 13ms)
+ GET /en 500 in 31ms (compile: 13ms, proxy.ts: 8ms, render: 10ms)
+ GET /en 500 in 27ms (compile: 13ms, proxy.ts: 4ms, render: 10ms)
+ GET /en 500 in 39ms (compile: 16ms, proxy.ts: 11ms, render: 12ms)
+ GET /en 500 in 27ms (compile: 10ms, proxy.ts: 7ms, render: 10ms)
+ GET /en 500 in 43ms (compile: 19ms, proxy.ts: 9ms, render: 14ms)
+✓ Compiled in 32ms
+ GET /en 200 in 660ms (compile: 148ms, proxy.ts: 11ms, generate-params: 23ms, render: 501ms)
+ GET /en 200 in 649ms (compile: 367ms, proxy.ts: 12ms, generate-params: 31µs, render: 271ms)
+ GET /en 200 in 182ms (compile: 33ms, proxy.ts: 15ms, generate-params: 41µs, render: 134ms)
+ GET /en 200 in 89ms (compile: 16ms, proxy.ts: 12ms, generate-params: 36µs, render: 60ms)
+ GET /en 200 in 233ms (compile: 28ms, proxy.ts: 10ms, generate-params: 16ms, render: 195ms)
+ GET /en 200 in 158ms (compile: 14ms, proxy.ts: 10ms, generate-params: 34µs, render: 133ms)
+ GET /en 200 in 91ms (compile: 16ms, proxy.ts: 12ms, generate-params: 39µs, render: 63ms)
+✓ Compiled in 38ms
+ GET /en 200 in 387ms (compile: 94ms, proxy.ts: 11ms, generate-params: 15ms, render: 282ms)
+ GET /en 200 in 130ms (compile: 21ms, proxy.ts: 6ms, generate-params: 14ms, render: 103ms)
+✓ Compiled in 30ms
+ GET /en 200 in 272ms (compile: 123ms, proxy.ts: 11ms, generate-params: 19ms, render: 138ms)
+ GET /en 200 in 65ms (compile: 10ms, proxy.ts: 8ms, generate-params: 26µs, render: 46ms)
+ GET /en 200 in 185ms (compile: 23ms, proxy.ts: 8ms, generate-params: 14ms, render: 154ms)
+ GET /en 200 in 164ms (compile: 46ms, proxy.ts: 7ms, generate-params: 40ms, render: 111ms)
+ GET /en 200 in 112ms (compile: 16ms, proxy.ts: 6ms, generate-params: 10ms, render: 90ms)
+[?25h
+
+C:\Users\JanLangr\shark-human-alliance>
