@@ -4,6 +4,7 @@ import { getStripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
 import {
   EMAIL_FROM,
   certificateEmailHtml,
+  escapeHtml,
   logEmailRouteEntered,
   sendEmailStrict,
 } from "@/lib/email";
@@ -14,8 +15,13 @@ import {
   createMember,
   incrementReferralCount,
 } from "@/lib/members";
+import {
+  createSignedCheckoutSessionValue,
+  getCheckoutSessionCookieName,
+} from "@/lib/checkout-session";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
+const ENABLE_TEST_PROMO_CODES = process.env.ENABLE_TEST_PROMO_CODES === "true";
 
 /** Promo codes that bypass Stripe entirely (100% off). */
 const FREE_PROMO_CODES = ["SHATEST"];
@@ -41,7 +47,8 @@ export async function POST(request: NextRequest) {
     const loc = locale || "en";
     const normalizedPromoCode = promoCode?.toUpperCase().trim() || "";
     const isFreePromoFlow = normalizedPromoCode
-      ? FREE_PROMO_CODES.includes(normalizedPromoCode)
+      ? ENABLE_TEST_PROMO_CODES &&
+        FREE_PROMO_CODES.includes(normalizedPromoCode)
       : false;
 
     console.log("[SHA Checkout] route entered", {
@@ -155,6 +162,15 @@ export async function POST(request: NextRequest) {
 
       if (isGift && recipientEmail && email && email.trim() !== recipientEmail.trim() && process.env.RESEND_API_KEY) {
         try {
+          const safeName = escapeHtml(name);
+          const safeRecipientEmail = escapeHtml(recipientEmail);
+          const safeReferralCode = escapeHtml(referralCode);
+          const safeGiftMessage = giftMessage
+            ? escapeHtml(giftMessage).replace(/\r?\n/g, "<br>")
+            : "";
+          const safeCareerUrl = escapeHtml(
+            buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career")
+          );
           await sendEmailStrict(
             {
               from: EMAIL_FROM,
@@ -167,15 +183,15 @@ export async function POST(request: NextRequest) {
     <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#64748b;">Gift</div>
     <h1 style="color:#15324d;font-size:24px;margin:16px 0 8px;">Gift Delivered!</h1>
     <p style="color:#5f7892;font-size:14px;line-height:1.6;">
-      Your gift for <strong>${name}</strong> has been sent to <strong>${recipientEmail}</strong>.
+      Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.
       They'll receive their certificate and a warm welcome from the Alliance.
-      ${giftMessage ? `<br><br><em>Included message:</em> ${giftMessage}` : ""}
+      ${safeGiftMessage ? `<br><br><em>Included message:</em> ${safeGiftMessage}` : ""}
     </p>
     <p style="color:#5f7892;font-size:13px;margin-top:16px;">
-      Your referral code: <strong>${referralCode}</strong><br>
+      Your referral code: <strong>${safeReferralCode}</strong><br>
       Share it with friends to climb the Alliance career ladder!
     </p>
-    <a href="${buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career")}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
+    <a href="${safeCareerUrl}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
   </div>
   <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
 </div>
@@ -199,7 +215,17 @@ export async function POST(request: NextRequest) {
       console.log(`[SHA Checkout] Promo code ${normalizedPromoCode} used — free registration for ${newMember.name}`);
 
       const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}&paper=${normalizedPaperFormat}`;
-      return NextResponse.json({ url: successUrl });
+      const response = NextResponse.json({ url: successUrl });
+      response.cookies.set({
+        name: getCheckoutSessionCookieName(),
+        value: createSignedCheckoutSessionValue(freeSessionId),
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 30,
+      });
+      return response;
     }
 
     // ─── Normal Stripe Checkout ───
@@ -217,7 +243,7 @@ export async function POST(request: NextRequest) {
             product_data: {
               name: `${tierName} — Shark Human Alliance`,
               description: `Personalized certificate for ${name}. Every sale funds real shark conservation.`,
-              images: [`${BASE_URL}/mascots/finnley-luna-hero-v2.webp`],
+              images: [`${BASE_URL}/mascots/homepage-hero-plush.png`],
             },
             unit_amount: priceInCents,
           },
@@ -254,7 +280,17 @@ export async function POST(request: NextRequest) {
       locale: loc,
     });
 
-    return NextResponse.json({ url: session.url });
+    const response = NextResponse.json({ url: session.url });
+    response.cookies.set({
+      name: getCheckoutSessionCookieName(),
+      value: createSignedCheckoutSessionValue(session.id),
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 30,
+    });
+    return response;
   } catch (error) {
     console.error("[SHA Checkout] Error:", error);
     return NextResponse.json(

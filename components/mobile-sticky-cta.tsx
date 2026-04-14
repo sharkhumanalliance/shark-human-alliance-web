@@ -7,7 +7,10 @@ export function MobileStickyCta() {
   const t = useTranslations("mobileCta");
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--border)] bg-white/95 p-3 backdrop-blur-md md:hidden">
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--border)] bg-white/95 p-3 backdrop-blur-md md:hidden"
+      style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+    >
       <LocalizedLink
         href="/purchase?tier=protected"
         className="flex w-full items-center justify-center gap-3 rounded-lg bg-[var(--accent)] px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"

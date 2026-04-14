@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
@@ -8,6 +8,7 @@ import { CertificateTemplateSelector } from "@/components/certificate/certificat
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { formatCertificateDate } from "@/lib/dates";
 
 const PARTNERS = [
   { i: 1, url: "https://www.sharktrust.org" },
@@ -18,8 +19,10 @@ const PARTNERS = [
 
 export function HomeContent() {
   const t = useTranslations("home");
+  const locale = useLocale();
   const [previewName, setPreviewName] = useState("");
-  const [previewTemplate, setPreviewTemplate] = useState<CertificateTemplate>("luxury");
+  const [previewTemplate, setPreviewTemplate] =
+    useState<CertificateTemplate>("luxury");
 
   const previewDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const previewTrackedRef = useRef(false);
@@ -43,8 +46,12 @@ export function HomeContent() {
     };
   }, [previewName]);
 
-  const previewPurchaseHref = `/purchase?tier=protected${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`;
-  const previewGiftHref = `/purchase?tier=protected&gift=true${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`;
+  const previewPurchaseHref = `/purchase?tier=protected${
+    previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""
+  }`;
+  const previewGiftHref = `/purchase?tier=protected&gift=true${
+    previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""
+  }`;
 
   const valueItems = [
     { title: t("valueHook.point1Title"), text: t("valueHook.point1Text") },
@@ -53,11 +60,29 @@ export function HomeContent() {
   ];
 
   const impactStats = [
-    { key: "1", valueClass: "text-slate-700", bgClass: "bg-slate-50 border-slate-200" },
-    { key: "2", valueClass: "text-sky-700", bgClass: "bg-sky-50/50 border-sky-200" },
-    { key: "3", valueClass: "text-teal-700", bgClass: "bg-teal-50/50 border-teal-200" },
-    { key: "4", valueClass: "text-amber-700", bgClass: "bg-amber-50/50 border-amber-200" },
+    {
+      key: "1",
+      valueClass: "text-slate-700",
+      bgClass: "bg-slate-50 border-slate-200",
+    },
+    {
+      key: "2",
+      valueClass: "text-sky-700",
+      bgClass: "bg-sky-50/50 border-sky-200",
+    },
+    {
+      key: "3",
+      valueClass: "text-teal-700",
+      bgClass: "bg-teal-50/50 border-teal-200",
+    },
+    {
+      key: "4",
+      valueClass: "text-amber-700",
+      bgClass: "bg-amber-50/50 border-amber-200",
+    },
   ];
+
+  const previewDate = formatCertificateDate(new Date(), locale);
 
   return (
     <>
@@ -72,22 +97,32 @@ export function HomeContent() {
             </h2>
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5">
-            {valueItems.map((item) => (
-              <article data-reveal key={item.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-6 sm:p-6">
-                <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-                  {item.text}
-                </p>
-              </article>
-            ))}
+          <div className="mt-8 overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--surface-soft)]">
+            <div className="grid divide-y divide-[var(--border)] md:grid-cols-3 md:divide-x md:divide-y-0">
+              {valueItems.map((item) => (
+                <article
+                  data-reveal
+                  key={item.title}
+                  className="px-5 py-5 sm:px-6 sm:py-6"
+                >
+                  <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                    {item.text}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section data-reveal id="certificate-preview" className="bg-[var(--surface-soft)] py-12 sm:py-14 lg:py-16">
+        <section
+          data-reveal
+          id="certificate-preview"
+          className="scroll-mt-28 bg-[var(--surface-soft)] py-12 sm:py-14 lg:py-16"
+        >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
             <div className="lg:sticky lg:top-24 lg:self-start">
@@ -106,7 +141,10 @@ export function HomeContent() {
                   <div className="rounded-xl border border-[var(--border)] bg-white px-4 py-3.5 transition focus-within:border-slate-400 sm:px-5 sm:py-4">
                     <input
                       id="homepage-preview-name"
+                      name="homepage_preview_name"
                       type="text"
+                      autoComplete="name"
+                      inputMode="text"
                       value={previewName}
                       onChange={(e) => setPreviewName(e.target.value)}
                       placeholder={t("about.inputPlaceholder")}
@@ -116,7 +154,10 @@ export function HomeContent() {
                 </div>
 
                 <div className="mt-5 max-w-md">
-                  <CertificateTemplateSelector value={previewTemplate} onChange={setPreviewTemplate} />
+                  <CertificateTemplateSelector
+                    value={previewTemplate}
+                    onChange={setPreviewTemplate}
+                  />
                 </div>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col xl:flex-row">
@@ -141,7 +182,7 @@ export function HomeContent() {
                 <CertificatePreview
                   name={previewName.trim() || t("about.certName")}
                   tier="protected"
-                  date={new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                  date={previewDate}
                   registryId="SHA-XXXX-DIP"
                   template={previewTemplate}
                 />
@@ -216,7 +257,11 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section data-reveal id="real-impact" className="bg-[var(--surface-soft)] py-12 sm:py-14">
+      <section
+        data-reveal
+        id="real-impact"
+        className="bg-[var(--surface-soft)] py-12 sm:py-14"
+      >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
@@ -228,22 +273,30 @@ export function HomeContent() {
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-            {impactStats.map(({ key, valueClass, bgClass }) => (
-              <div key={key} className={`flex min-h-[148px] flex-col justify-center rounded-xl border p-5 text-left ${bgClass}`}>
-                <div>
-                  <p className={`text-3xl font-bold tracking-tight md:text-4xl ${valueClass}`}>
-                    {t(`realImpact.stat${key}Value`)}
-                  </p>
-                  <p className="mt-2.5 max-w-[13rem] text-sm leading-5 text-[var(--muted)]">
-                    {t(`realImpact.stat${key}Label`)}
-                  </p>
-                </div>
+            <div className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-white sm:col-span-2 md:col-span-4">
+              <div className="grid divide-y divide-[var(--border)] md:grid-cols-4 md:divide-x md:divide-y-0">
+                {impactStats.map(({ key, valueClass, bgClass }) => (
+                  <div
+                    key={key}
+                    className={`flex min-h-[132px] flex-col justify-center px-5 py-5 text-left sm:px-6 ${bgClass}`}
+                  >
+                    <p
+                      className={`text-3xl font-bold tracking-tight md:text-4xl ${valueClass}`}
+                    >
+                      {t(`realImpact.stat${key}Value`)}
+                    </p>
+                    <p className="mt-2.5 max-w-[13rem] text-sm leading-5 text-[var(--muted)]">
+                      {t(`realImpact.stat${key}Label`)}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
 
           <p className="mt-8 max-w-2xl text-base leading-7 text-[var(--muted)]">
-            {t("impactTeaser.donationsIntro")} {PARTNERS.map(({ i, url }, idx) => (
+            {t("impactTeaser.donationsIntro")}{" "}
+            {PARTNERS.map(({ i, url }, idx) => (
               <span key={i}>
                 <a
                   href={url}
@@ -253,7 +306,11 @@ export function HomeContent() {
                 >
                   {t(`realImpact.partner${i}Name`)}
                 </a>
-                {idx < PARTNERS.length - 1 ? (idx === PARTNERS.length - 2 ? ` ${t("impactTeaser.and")} ` : ", ") : ". "}
+                {idx < PARTNERS.length - 1
+                  ? idx === PARTNERS.length - 2
+                    ? ` ${t("impactTeaser.and")} `
+                    : ", "
+                  : ". "}
               </span>
             ))}
             {t("impactTeaser.opsJoke")}
@@ -264,7 +321,7 @@ export function HomeContent() {
               href="/impact"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
             >
-              {t("impactTeaser.linkText")} →
+              {t("impactTeaser.linkText")} {"\u2192"}
             </LocalizedLink>
           </div>
         </div>
@@ -281,9 +338,9 @@ export function HomeContent() {
           <div className="mt-6 flex justify-center">
             <LocalizedLink
               href="/faq"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-white/18 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/24"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/55 bg-white/88 px-5 py-3 text-sm font-semibold text-[#1d4467] shadow-sm transition-colors hover:border-white/70 hover:bg-white"
             >
-              {t("faq.allQuestions")} →
+              {t("faq.allQuestions")} {"\u2192"}
             </LocalizedLink>
           </div>
         </div>

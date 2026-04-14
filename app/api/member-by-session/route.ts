@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getMemberByStripeSession } from "@/lib/members";
+import {
+  getCheckoutSessionCookieName,
+  isValidSignedCheckoutSessionValue,
+} from "@/lib/checkout-session";
 
 /**
  * GET /api/member-by-session?session_id=cs_xxx
@@ -10,6 +14,14 @@ export async function GET(request: NextRequest) {
 
   if (!sessionId) {
     return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
+  }
+
+  const signedCookie = request.cookies.get(
+    getCheckoutSessionCookieName()
+  )?.value;
+
+  if (!isValidSignedCheckoutSessionValue(signedCookie, sessionId)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 
   const member = await getMemberByStripeSession(sessionId);
@@ -27,6 +39,6 @@ export async function GET(request: NextRequest) {
     referralCode: member.referralCode,
     referralCount: member.referralCount,
     accessToken: member.accessToken,
-    email: member.email,
+    hasEmail: !!member.email,
   });
 }

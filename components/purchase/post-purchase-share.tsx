@@ -18,7 +18,7 @@ interface PostPurchaseShareProps {
 
 const STORY_WIDTH = 1080;
 const STORY_HEIGHT = 1920;
-const STORY_IMAGE_SRC = "/mascots/finnley-luna-hero-v2.webp";
+const STORY_IMAGE_SRC = "/mascots/homepage-hero-plush.png";
 
 function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {

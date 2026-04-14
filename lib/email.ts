@@ -38,6 +38,19 @@ function normalizeRecipient(recipient: string | string[] | null | undefined) {
   return Array.isArray(recipient) ? recipient.join(", ") : recipient;
 }
 
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function escapeHtmlWithLineBreaks(value: string): string {
+  return escapeHtml(value).replace(/\r?\n/g, "<br>");
+}
+
 export function logEmailRouteEntered(context: EmailLogContext) {
   console.log("[SHA Email] route entered", {
     flow: context.flow,
@@ -120,6 +133,23 @@ export function certificateEmailHtml(params: {
   };
 
   const status = tierLabel[tier] || "Protected Friend";
+  const safeName = escapeHtml(name);
+  const safeStatus = escapeHtml(status);
+  const safeRegistryId = escapeHtml(registryId);
+  const safeDownloadUrl = escapeHtml(downloadUrl);
+  const safeRegistryUrl = escapeHtml(registryUrl);
+  const safeCareerUrl = escapeHtml(careerUrl);
+  const safeReferralUrl = escapeHtml(
+    referralUrl ||
+      buildAbsoluteLocalizedUrl(
+        "https://sharkhumanalliance.com",
+        "en",
+        buildReferralHref(referralCode)
+      )
+  );
+  const safeGiftMessage = giftMessage
+    ? escapeHtmlWithLineBreaks(giftMessage)
+    : "";
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -133,7 +163,7 @@ export function certificateEmailHtml(params: {
     <!-- Header -->
     <div style="text-align:center;padding:32px 24px;background-color:#15324d;border-radius:24px 24px 0 0;">
       <div style="display:inline-block;width:56px;height:56px;line-height:56px;background-color:#2f80ed;border-radius:16px;color:white;font-weight:bold;font-size:18px;">SHA</div>
-      <h1 style="margin:16px 0 0;color:white;font-size:24px;font-weight:600;">${isGift ? `A certificate has arrived for ${name}.` : `Welcome to the Alliance, ${name}.`}</h1>
+      <h1 style="margin:16px 0 0;color:white;font-size:24px;font-weight:600;">${isGift ? `A certificate has arrived for ${safeName}.` : `Welcome to the Alliance, ${safeName}.`}</h1>
       <p style="margin:8px 0 0;color:#a3c4e0;font-size:14px;">${isGift ? `A fellow diplomat has arranged your paperwork.` : `Your diplomatic status has been registered. The sharks have been notified (symbolically).`}</p>
     </div>
 
@@ -141,22 +171,22 @@ export function certificateEmailHtml(params: {
     <div style="background-color:white;padding:32px 24px;border-left:1px solid #d4e8f7;border-right:1px solid #d4e8f7;">
       <div style="text-align:center;padding:24px;background-color:#f0fdfa;border:2px solid #5eead4;border-radius:16px;">
         <p style="margin:0;font-size:12px;color:#0d9488;text-transform:uppercase;letter-spacing:3px;font-weight:600;">Your Status</p>
-        <p style="margin:12px 0 0;font-size:28px;font-weight:700;color:#15324d;">${status}</p>
-        <p style="margin:8px 0 0;font-size:13px;color:#5f7892;">Registry ID: ${registryId}</p>
+        <p style="margin:12px 0 0;font-size:28px;font-weight:700;color:#15324d;">${safeStatus}</p>
+        <p style="margin:8px 0 0;font-size:13px;color:#5f7892;">Registry ID: ${safeRegistryId}</p>
       </div>
 
       <div style="margin-top:24px;text-align:center;">
-        <a href="${downloadUrl}" style="display:inline-block;padding:14px 32px;background-color:#2f80ed;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">Download Your Certificate (PDF)</a>
+        <a href="${safeDownloadUrl}" style="display:inline-block;padding:14px 32px;background-color:#2f80ed;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">Download Your Certificate (PDF)</a>
       </div>
 
       <div style="margin-top:24px;text-align:center;">
-        <a href="${registryUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">View yourself in the Diplomatic Registry &rarr;</a>
+        <a href="${safeRegistryUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">View yourself in the Diplomatic Registry &rarr;</a>
       </div>
 
       ${giftMessage ? `
       <div style="margin-top:24px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:16px;">
         <p style="margin:0 0 8px;font-size:12px;color:#9a3412;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Personal message</p>
-        <p style="margin:0;font-size:14px;line-height:1.7;color:#7c2d12;">${giftMessage}</p>
+        <p style="margin:0;font-size:14px;line-height:1.7;color:#7c2d12;">${safeGiftMessage}</p>
       </div>` : ""}
 
       <!-- Referral section -->
@@ -164,9 +194,9 @@ export function certificateEmailHtml(params: {
         <p style="margin:0;font-size:12px;color:#15324d;text-transform:uppercase;letter-spacing:2px;font-weight:600;">Your Alliance Career Starts Now</p>
         <p style="margin:8px 0;font-size:14px;color:#5f7892;">Share your referral link. Every recruit moves you up the ranks.</p>
         <div style="margin:12px auto;padding:12px 20px;background-color:white;border:1px solid #d4e8f7;border-radius:50px;font-family:monospace;font-size:13px;color:#15324d;max-width:360px;word-break:break-all;">
-          ${referralUrl || buildAbsoluteLocalizedUrl("https://sharkhumanalliance.com", "en", buildReferralHref(referralCode))}
+          ${safeReferralUrl}
         </div>
-        <a href="${careerUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">See the full career ladder &rarr;</a>
+        <a href="${safeCareerUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">See the full career ladder &rarr;</a>
       </div>
     </div>
 

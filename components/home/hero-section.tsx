@@ -8,21 +8,53 @@ export function HeroSection() {
   const t = useTranslations("hero");
   const bullets = [t("bullet1"), t("bullet2"), t("bullet3")];
 
+  const heroActions = (
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <LocalizedLink
+        href="/purchase?tier=protected"
+        className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
+      >
+        {t("ctaPrimary")}
+      </LocalizedLink>
+
+      <LocalizedLink
+        href="#certificate-preview"
+        className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white/88 px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] backdrop-blur transition-colors duration-300 ease-out hover:bg-white sm:w-auto"
+      >
+        {t("ctaSecondary")}
+      </LocalizedLink>
+    </div>
+  );
+
+  const heroBullets = (
+    <ul className="overflow-hidden rounded-[22px] border border-white/70 bg-white/66 text-sm font-medium leading-6 text-[var(--brand-dark)] shadow-[0_10px_30px_rgba(15,23,42,0.05)] backdrop-blur sm:grid sm:grid-cols-3 sm:divide-x sm:divide-[var(--border)]">
+      {bullets.map((bullet) => (
+        <li
+          key={bullet}
+          className="border-b border-[var(--border)] px-4 py-3.5 last:border-b-0 sm:border-b-0 sm:px-5"
+        >
+          {bullet}
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <section className="relative overflow-hidden bg-[var(--surface-soft)]">
-      <div className="mx-auto grid max-w-6xl items-start gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12 lg:py-16">
-        <div className="flex max-w-xl flex-col justify-center lg:pr-3">
-          <div className="mb-3 inline-flex w-fit max-w-full items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-[11px] font-semibold leading-5 text-orange-800 sm:text-sm">
+      <div className="absolute inset-x-0 top-0 h-[24rem] bg-[radial-gradient(circle_at_top_left,rgba(125,181,230,0.18),transparent_42%),radial-gradient(circle_at_top_right,rgba(238,138,69,0.12),transparent_34%),linear-gradient(180deg,#f7fbff_0%,rgba(248,250,252,0.94)_58%,rgba(248,250,252,1)_100%)]" />
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-16">
+        <div className="relative z-10 flex max-w-xl flex-col justify-center lg:pr-2">
+          <div className="mb-4 inline-flex w-fit max-w-full items-center rounded-full border border-orange-200/80 bg-white/80 px-3 py-1.5 text-[11px] font-semibold leading-5 text-orange-800 backdrop-blur sm:text-sm">
             {t("giftBadge")}
           </div>
 
-          <h1 className="max-w-xl text-3xl font-bold leading-[1.03] tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+          <h1 className="max-w-xl text-3xl font-bold leading-[1.02] tracking-tight text-[var(--brand-dark)] sm:text-5xl">
             {t("titleLine1")}
             <br />
             <span className="text-[var(--section-label)]">{t("titleLine2")}</span>
           </h1>
 
-          <p className="mt-4 max-w-lg text-base font-semibold leading-7 text-[var(--brand-dark)] sm:text-[1.15rem]">
+          <p className="mt-5 max-w-lg text-base font-semibold leading-7 text-[var(--brand-dark)] sm:text-[1.15rem]">
             {t("brandLine")}
           </p>
 
@@ -30,66 +62,44 @@ export function HeroSection() {
             {t("description")}
           </p>
 
-          <ul className="mt-6 grid gap-3 text-sm font-medium leading-6 text-[var(--brand-dark)] sm:grid-cols-3">
-            {bullets.map((bullet) => (
-              <li
-                key={bullet}
-                className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3"
-              >
-                {bullet}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <LocalizedLink
-              href="/purchase?tier=protected"
-              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
-            >
-              {t("ctaPrimary")}
-            </LocalizedLink>
-
-            <LocalizedLink
-              href="#certificate-preview"
-              className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto"
-            >
-              {t("ctaSecondary")}
-            </LocalizedLink>
+          <div className="mt-8 hidden w-full max-w-[36rem] lg:block">
+            {heroActions}
+            <div className="mt-8">{heroBullets}</div>
           </div>
         </div>
 
-        <div className="relative lg:pl-2">
-          <div className="relative overflow-hidden rounded-[22px] border border-[var(--border)] bg-white shadow-[0_10px_24px_rgba(15,23,42,0.04)]">
-            <div className="p-2 sm:p-3">
+        <div className="relative z-10 min-w-0 lg:justify-self-end lg:w-full lg:max-w-[40rem] lg:pl-4 xl:max-w-[42rem] xl:pl-6">
+          <div className="pointer-events-none absolute inset-x-[10%] bottom-3 top-[14%] rounded-full bg-sky-200/35 blur-3xl" />
+          <div className="relative">
+            <div className="overflow-hidden rounded-[30px] shadow-[0_28px_80px_rgba(22,45,80,0.18)]">
               <Image
-                src="/mascots/finnley-luna-hero-v2.webp"
+                src="/mascots/homepage-hero-plush.png"
                 alt={t("imageAlt")}
-                width={1536}
-                height={1024}
-                className="h-auto w-full rounded-[18px] bg-[var(--surface-soft)]"
+                width={1152}
+                height={768}
+                className="h-auto w-full bg-[var(--surface-soft)] object-cover"
                 priority
               />
             </div>
-
-            <div className="grid grid-cols-1 gap-px border-t border-[var(--border)] bg-[var(--border)] sm:grid-cols-2">
-              <div className="bg-white p-3 sm:p-4">
-                <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                  {t("finnleyName")}
-                </p>
-                <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
-                  {t("finnleyDesc")}
-                </p>
-              </div>
-              <div className="bg-white p-3 sm:p-4">
-                <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                  {t("lunaName")}
-                </p>
-                <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
-                  {t("lunaDesc")}
-                </p>
+            <div className="mt-5 border-t border-white/70 px-1 pt-4">
+              <div className="grid gap-3 text-xs sm:flex sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2 sm:text-sm">
+                <div className="space-y-0.5">
+                  <p className="font-semibold text-[var(--brand-dark)]">{t("finnleyName")}</p>
+                  <p className="leading-5 text-[var(--muted)]">{t("finnleyDesc")}</p>
+                </div>
+                <div className="hidden h-4 w-px bg-[var(--border)] sm:block" />
+                <div className="space-y-0.5">
+                  <p className="font-semibold text-[var(--brand-dark)]">{t("lunaName")}</p>
+                  <p className="leading-5 text-[var(--muted)]">{t("lunaDesc")}</p>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="relative z-10 w-full lg:hidden">
+          {heroBullets}
+          <div className="mt-8">{heroActions}</div>
         </div>
       </div>
     </section>

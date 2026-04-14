@@ -1,13 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  listMembers,
-  createMember,
-  generateMemberId,
-  generateUniqueReferralCode,
-  generateAccessToken,
-  getMemberByReferralCode,
-  incrementReferralCount,
-} from "@/lib/members";
+import { listMembers } from "@/lib/members";
 
 export async function GET() {
   const members = await listMembers();
@@ -25,50 +17,13 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const { name, tier, dedication, referredBy, email } = body;
+  void request;
 
-  if (!name || typeof name !== "string" || name.trim().length === 0) {
-    return NextResponse.json({ error: "Name is required" }, { status: 400 });
-  }
-
-  if (!["basic", "protected", "nonsnack", "business"].includes(tier)) {
-    return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
-  }
-
-  // Validate referral code before creating member
-  if (referredBy && typeof referredBy === "string") {
-    const referrer = await getMemberByReferralCode(referredBy.trim());
-    if (!referrer) {
-      return NextResponse.json(
-        { error: "Invalid referral code" },
-        { status: 400 }
-      );
-    }
-  }
-
-  const referralCode = await generateUniqueReferralCode();
-
-  const newMember = await createMember({
-    id: generateMemberId(),
-    name: name.trim(),
-    tier,
-    date: new Date().toISOString(),
-    dedication: (dedication || "").trim(),
-    referralCode,
-    referredBy: referredBy ? referredBy.trim() : undefined,
-    email: email && typeof email === "string" ? email.trim() : undefined,
-    accessToken: generateAccessToken(),
-  });
-
-  if (referredBy) {
-    await incrementReferralCount(referredBy.trim());
-  }
-
-  // Don't expose sensitive fields in response
-  const sanitized = { ...newMember };
-  delete sanitized.accessToken;
-  delete sanitized.stripeSessionId;
-
-  return NextResponse.json(sanitized, { status: 201 });
+  return NextResponse.json(
+    {
+      error:
+        "Direct member creation is disabled. Use the checkout flow or an approved promo flow.",
+    },
+    { status: 403 }
+  );
 }

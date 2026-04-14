@@ -599,6 +599,23 @@
     "recipientEmailPlaceholder": "amigo@email.com",
     "dedicationLabel": "Dedicatoria (opcional)",
     "dedicationPlaceholder": "ej. Por sobrevivir cada vacación en la playa desde 1987",
+    "dedicationSuggestions": {
+      "0": "Por sobrevivir cada vacación en la playa desde 1987",
+      "1": "Porque siempre decías que algo me tocó el pie",
+      "2": "Oficialmente ya no eres material de snack",
+      "3": "En honor a ver Tiburon 47 veces",
+      "4": "Que los tiburones recuerden tu generosidad",
+      "5": "Para la persona más valiente que conozco en agua hasta los tobillos",
+      "6": "Inmune diplomáticamente desde hoy",
+      "7": "Sigues sin ser comida. Ahora es oficial.",
+      "8": "Para quien siempre sale corriendo del océano",
+      "9": "Un pequeño precio por no ser un snack",
+      "10": "En reconocimiento a una no-comestibilidad ejemplar",
+      "11": "Porque alguien tenía que ser el primero",
+      "12": "Por mirar a un pez a los ojos y entrar en pánico",
+      "13": "Para el humano con menos pinta de foca",
+      "14": "Protegido por la burocracia y las buenas vibras"
+    },
     "livePreview": "Vista previa del certificado",
     "previewName": "Tu nombre aquí",
     "businessNameLabel": "Nombre del negocio o local",
@@ -642,7 +659,10 @@
     "timeoutRetry": "Verificar de nuevo",
     "successTitle": "Bienvenido a la Alianza, diplomático.",
     "successText": "Tu estatus ha sido registrado. El papeleo está completo. El océano sigue inescrutablemente en calma.",
+    "statusDone": "Hecho",
+    "statusIssued": "Emitido",
     "downloadCert": "Descargar tu certificado (PDF)",
+    "downloadNotReady": "Tu certificado todavía se está preparando. Inténtalo de nuevo en un momento.",
     "viewRegistry": "Verte en el Registro Diplomático",
     "emailSentAutomatic": "Se ha enviado un email con tu certificado automáticamente. ¡Revisa spam si no lo ves!",
     "backHome": "Volver a la página principal",
@@ -875,6 +895,7 @@
     "partner4Desc": "Protección de la fauna marina y uno de los santuarios de tiburones más importantes del mundo frente a la costa pacífica de Colombia.",
     "partner4Focus": "Enfoque: Protección del santuario de la Isla Malpelo, investigación de tiburones martillo, patrullas marinas.",
     "partnersDisclaimer": "Listado de destinatarios previstos. Las alianzas formales o relaciones confirmadas solo se anunciarán cuando existan de verdad.",
+    "partnerStatusPlanned": "Destinatario previsto",
     "visitWebsite": "Visitar sitio web",
     "selectionTitle": "Cómo elegimos socios",
     "selectionCriteria1Title": "Impacto directo en tiburones",
@@ -894,8 +915,9 @@
     "reporting2Title": "Donaciones verificables",
     "reporting2Text": "Cada donación viene con recibos y confirmación de la organización receptora.",
     "reporting3Icon": "📢",
-    "reporting3Title": "Actualizaciones comunitarias",
-    "reporting3Text": "Actualizaciones por email a todos los titulares de certificados mostrando exactamente cómo contribuyó su compra.",
+    "reporting3Title": "Actualizaciones en redes",
+    "reporting3Text": "Actualizaciones públicas en nuestras redes sociales mostrando cómo se asignaron las contribuciones y qué ocurrió después.",
+    "preReportLabel": "Estado actual",
     "preReportTitle": "Aún no hemos publicado nuestro primer informe",
     "preReportText": "Shark Human Alliance todavía está en una fase temprana. Esta página publicará reportes públicos a medida que las donaciones crezcan y se distribuyan. Hasta entonces, describiremos a las organizaciones como destinatarios previstos, no como socios confirmados.",
     "ctaTitle": "Cada certificado ayuda.",
@@ -1158,5 +1180,8 @@
         "body": "El sitio web es operado por JEEL Wekeza s.r.o. Si tienes preguntas sobre cookies o privacidad en este sitio web, puedes contactarnos en sharkhumanalliance@gmail.com."
       }
     }
+  },
+  "accessibility": {
+    "skipToContent": "Saltar al contenido principal"
   }
 }

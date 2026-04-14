@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Dancing_Script, Cormorant_Garamond, Cinzel, Roboto_Condensed } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Dancing_Script,
+  Cormorant_Garamond,
+  Cinzel,
+  Roboto_Condensed,
+} from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Analytics } from "@/components/analytics";
@@ -60,9 +67,9 @@ export const metadata: Metadata = {
       "Get official Protected Friend status and fund real shark conservation. The perfect gag gift for anyone who's ever side-eyed the ocean.",
     images: [
       {
-        url: "/mascots/finnley-luna-hero-v2.webp",
-        width: 1536,
-        height: 1024,
+        url: "/mascots/homepage-hero-plush.png",
+        width: 1152,
+        height: 768,
         alt: "Finnley Mako and Luna Reef — Shark Human Alliance ambassadors",
       },
     ],
@@ -72,7 +79,7 @@ export const metadata: Metadata = {
     title: "Shark Human Alliance",
     description:
       "Official shark protection certificates + real conservation funding. From $4.",
-    images: ["/mascots/finnley-luna-hero-v2.webp"],
+    images: ["/mascots/homepage-hero-plush.png"],
   },
   robots: {
     index: true,
@@ -106,14 +113,13 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// JSON-LD structured data
 function JsonLd() {
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Shark Human Alliance",
     url: "https://sharkhumanalliance.com",
-    logo: "https://sharkhumanalliance.com/mascots/finnley-luna-hero-v2.webp",
+    logo: "https://sharkhumanalliance.com/mascots/homepage-hero-plush.png",
     description:
       "A fictional alliance helping humans and sharks build better relations. Every certificate sale funds real ocean conservation.",
     email: "sharkhumanalliance@gmail.com",
@@ -125,7 +131,7 @@ function JsonLd() {
     name: "Protected Friend Status Certificate",
     description:
       "A personalized, surprisingly official-looking shark protection certificate. The perfect gag gift that funds real ocean conservation.",
-    image: "https://sharkhumanalliance.com/mascots/finnley-luna-hero-v2.webp",
+    image: "https://sharkhumanalliance.com/mascots/homepage-hero-plush.png",
     brand: { "@type": "Brand", name: "Shark Human Alliance" },
     offers: [
       {
@@ -172,7 +178,6 @@ function JsonLd() {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
-  // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as "en" | "es")) {
     notFound();
   }
@@ -180,6 +185,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const t = await getTranslations({ locale, namespace: "accessibility" });
 
   return (
     <html lang={locale}>
@@ -187,22 +193,23 @@ export default async function LocaleLayout({ children, params }: Props) {
         <JsonLd />
         <link rel="alternate" hrefLang="en" href="https://sharkhumanalliance.com/en" />
         <link rel="alternate" hrefLang="es" href="https://sharkhumanalliance.com/es" />
-        <link rel="alternate" hrefLang="x-default" href="https://sharkhumanalliance.com/en" />
+        <link
+          rel="alternate"
+          hrefLang="x-default"
+          href="https://sharkhumanalliance.com/en"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${cormorantGaramond.variable} ${cinzel.variable} ${robotoCondensed.variable} bg-[var(--background)] text-[var(--foreground)] antialiased`}
       >
-        {/* Skip to content — accessibility */}
         <a
           href="#main"
-          className="absolute -top-12 left-4 z-[100] rounded-b-lg bg-[var(--brand-dark)] px-4 py-2 text-sm font-semibold text-white transition focus:top-0"
+          className="absolute -top-12 left-4 z-[100] rounded-b-lg bg-[var(--brand-dark)] px-4 py-2 text-sm font-semibold text-white transition focus-visible:top-0"
         >
-          Skip to main content
+          {t("skipToContent")}
         </a>
         <NextIntlClientProvider messages={messages}>
-          <div className="overflow-x-clip">
-            {children}
-          </div>
+          <div className="overflow-x-clip">{children}</div>
           <CookieConsent />
         </NextIntlClientProvider>
         <ScrollReveal />

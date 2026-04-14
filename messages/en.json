@@ -599,6 +599,23 @@
     "recipientEmailPlaceholder": "friend@email.com",
     "dedicationLabel": "Dedication (optional)",
     "dedicationPlaceholder": "e.g. For surviving every beach vacation since 1987",
+    "dedicationSuggestions": {
+      "0": "For surviving every beach vacation since 1987",
+      "1": "Because you always said something touched my foot",
+      "2": "Officially no longer snack material",
+      "3": "In honor of watching Jaws 47 times",
+      "4": "May the sharks remember your generosity",
+      "5": "To the bravest ankle-deep swimmer I know",
+      "6": "Diplomatically immune since today",
+      "7": "Still not food. Now it is official.",
+      "8": "For the one who always exits the ocean running",
+      "9": "A small price for not being a snack",
+      "10": "In recognition of outstanding non-edibility",
+      "11": "Because someone had to be first",
+      "12": "For making eye contact with a fish and panicking",
+      "13": "To the human least likely to be mistaken for a seal",
+      "14": "Protected by bureaucracy and good vibes"
+    },
     "livePreview": "Certificate preview",
     "previewName": "Your Name Here",
     "businessNameLabel": "Business or venue name",
@@ -642,7 +659,10 @@
     "timeoutRetry": "Check again",
     "successTitle": "Welcome to the Alliance, diplomat.",
     "successText": "Your status has been registered. The paperwork is complete. The ocean remains unreadably calm.",
+    "statusDone": "Done",
+    "statusIssued": "Issued",
     "downloadCert": "Download your certificate (PDF)",
+    "downloadNotReady": "Your certificate is still being prepared. Please try again in a moment.",
     "viewRegistry": "See yourself in the Diplomatic Registry",
     "emailSentAutomatic": "A certificate email has been sent to your inbox automatically. Check spam if you don't see it!",
     "backHome": "Back to homepage",
@@ -875,6 +895,7 @@
     "partner4Desc": "Protecting marine fauna and one of the world's most important shark sanctuaries off Colombia's Pacific coast.",
     "partner4Focus": "Focus: Malpelo Island sanctuary protection, hammerhead shark research, marine patrols.",
     "partnersDisclaimer": "Listed as planned recipients. Formal partnerships or confirmed recipient relationships will only be announced once they are actually in place.",
+    "partnerStatusPlanned": "Planned Recipient",
     "visitWebsite": "Visit website",
     "selectionTitle": "How we choose partners",
     "selectionCriteria1Title": "Direct shark impact",
@@ -894,8 +915,9 @@
     "reporting2Title": "Verifiable donations",
     "reporting2Text": "Every donation comes with receipts and confirmation from the receiving organization.",
     "reporting3Icon": "📢",
-    "reporting3Title": "Community updates",
-    "reporting3Text": "Email updates to all certificate holders showing exactly how their purchase contributed.",
+    "reporting3Title": "Social updates",
+    "reporting3Text": "Public updates on our social channels showing how contributions were allocated and what happened next.",
+    "preReportLabel": "Current status",
     "preReportTitle": "We haven't published our first report yet",
     "preReportText": "The Shark Human Alliance is still in its early stages. This page will publish public reporting as donations scale and distributions are made. Until then, we will describe recipient organizations as planned recipients rather than confirmed partners.",
     "ctaTitle": "Every certificate helps.",
@@ -1158,5 +1180,8 @@
         "body": "The website is operated by JEEL Wekeza s.r.o. If you have questions about cookies or privacy on this website, you can contact us at sharkhumanalliance@gmail.com."
       }
     }
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content"
   }
 }

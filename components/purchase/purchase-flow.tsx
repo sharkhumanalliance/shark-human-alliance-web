@@ -2,13 +2,14 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useRef, useMemo, Suspense } from "react";
+import { useState, useEffect, useRef, useMemo, Suspense, useId } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { StepIndicator } from "@/components/purchase/step-indicator";
 import { trackEvent } from "@/components/analytics";
+import { formatCertificateDate } from "@/lib/dates";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
 
@@ -34,24 +35,6 @@ function StripeWordmarkIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-const DEDICATION_POOL = [
-  "For surviving every beach vacation since 1987",
-  "Because you always said 'something touched my foot'",
-  "Officially no longer snack material",
-  "In honor of watching Jaws 47 times",
-  "May the sharks remember your generosity",
-  "To the bravest ankle-deep swimmer I know",
-  "Diplomatically immune since today",
-  "Still not food. Now it's official.",
-  "For the one who always exits the ocean running",
-  "A small price for not being a snack",
-  "In recognition of outstanding non-edibility",
-  "Because someone had to be first",
-  "For making eye contact with a fish and panicking",
-  "To the human least likely to be mistaken for a seal",
-  "Protected by bureaucracy and good vibes",
-];
-
 function PurchaseFlowInner() {
   const t = useTranslations("purchase");
   const searchParams = useSearchParams();
@@ -76,7 +59,9 @@ function PurchaseFlowInner() {
 
   // Pick 3 random dedication suggestions from the pool (stable per mount)
   const dedicationSuggestions = useMemo(() => {
-    const pool = [...DEDICATION_POOL];
+    const pool = Array.from({ length: 15 }, (_, index) =>
+      t(`dedicationSuggestions.${index}`)
+    );
     const picked: string[] = [];
     for (let i = 0; i < 3 && pool.length > 0; i++) {
       const idx = Math.floor(Math.random() * pool.length);
@@ -84,7 +69,7 @@ function PurchaseFlowInner() {
       pool.splice(idx, 1);
     }
     return picked;
-  }, []);
+  }, [t]);
   const [email, setEmail] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [giftMessage, setGiftMessage] = useState("");
@@ -96,6 +81,7 @@ function PurchaseFlowInner() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [template, setTemplate] = useState<CertificateTemplate>(normalizedInitialTemplate);
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
+  const giftToggleLabelId = useId();
 
 
   useEffect(() => {
@@ -248,11 +234,7 @@ function PurchaseFlowInner() {
     }
   }
 
-  const currentDate = new Date().toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const currentDate = formatCertificateDate(new Date(), locale);
 
   if (isRedirecting) {
     return (
@@ -286,7 +268,11 @@ function PurchaseFlowInner() {
 
         {/* Canceled notice */}
         {wasCanceled && (
-          <div className="mt-6 mx-auto max-w-md rounded-xl border border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm text-amber-800">
+          <div
+            className="mt-6 mx-auto max-w-md rounded-xl border border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm text-amber-800"
+            role="status"
+            aria-live="polite"
+          >
             {t("canceledNotice")}
           </div>
         )}
@@ -300,7 +286,11 @@ function PurchaseFlowInner() {
 
         {/* Error */}
         {error && (
-          <div className="mt-6 mx-auto max-w-md rounded-xl border border-red-200 bg-red-50/50 px-5 py-4 text-center text-sm text-red-700">
+          <div
+            className="mt-6 mx-auto max-w-md rounded-xl border border-red-200 bg-red-50/50 px-5 py-4 text-center text-sm text-red-700"
+            role="alert"
+            aria-live="polite"
+          >
             {error}
           </div>
         )}
@@ -399,6 +389,9 @@ function PurchaseFlowInner() {
               <button
                 type="button"
                 onClick={() => { const next = !isGift; setIsGift(next); trackEvent("gift_toggle", { tier, enabled: next }); }}
+                role="switch"
+                aria-checked={isGift}
+                aria-labelledby={giftToggleLabelId}
                 className={`relative h-6 w-11 rounded-full transition ${
                   isGift ? "bg-[var(--brand)]" : "bg-gray-300"
                 }`}
@@ -409,7 +402,7 @@ function PurchaseFlowInner() {
                   }`}
                 />
               </button>
-              <span className="flex-1 text-sm font-medium text-[var(--brand-dark)]">
+              <span id={giftToggleLabelId} className="flex-1 text-sm font-medium text-[var(--brand-dark)]">
                 {t("giftToggle")}
               </span>
             </div>
@@ -421,7 +414,10 @@ function PurchaseFlowInner() {
               </label>
               <input
                 id="name"
+                name="name"
                 type="text"
+                autoComplete={tier === "business" ? "organization" : "name"}
+                inputMode="text"
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -437,7 +433,10 @@ function PurchaseFlowInner() {
               </label>
               <input
                 id="dedication"
+                name="dedication"
                 type="text"
+                autoComplete="off"
+                inputMode="text"
                 value={dedication}
                 onChange={(e) => setDedication(e.target.value)}
                 placeholder={tier === "business" ? t("businessDedicationPlaceholder") : t("dedicationPlaceholder")}
@@ -469,7 +468,10 @@ function PurchaseFlowInner() {
               </div>
               <input
                 id="email"
+                name="email"
                 type="email"
+                autoComplete="email"
+                spellCheck={false}
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setShowEmailWarning(false); }}
                 placeholder={t("emailPlaceholder")}
@@ -488,7 +490,12 @@ function PurchaseFlowInner() {
               </div>
               <input
                 id="referredByCode"
+                name="referred_by_code"
                 type="text"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
                 value={referredByCode}
                 onChange={(e) => setReferredByCode(e.target.value.toUpperCase().replace(/\s+/g, ""))}
                 placeholder={t("referredByPlaceholder")}
@@ -507,7 +514,11 @@ function PurchaseFlowInner() {
                   </label>
                   <input
                     id="recipientEmail"
+                    name="recipient_email"
                     type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
                     value={recipientEmail}
                     onChange={(e) => setRecipientEmail(e.target.value)}
                     placeholder={t("recipientEmailPlaceholder")}
@@ -521,6 +532,8 @@ function PurchaseFlowInner() {
                   </label>
                   <textarea
                     id="giftMessage"
+                    name="gift_message"
+                    autoComplete="off"
                     value={giftMessage}
                     onChange={(e) => setGiftMessage(e.target.value)}
                     placeholder={t("giftMessagePlaceholder")}
@@ -543,7 +556,7 @@ function PurchaseFlowInner() {
                 value={promoCode}
                 onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                 placeholder={t("promoCodePlaceholder")}
-                autoComplete="new-password"
+                autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck={false}
@@ -582,7 +595,11 @@ function PurchaseFlowInner() {
 
             {/* No-email warning */}
             {showEmailWarning && (
-              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+              <div
+                className="rounded-xl border border-amber-200 bg-amber-50 p-4"
+                role="status"
+                aria-live="polite"
+              >
                 <p className="text-sm font-semibold text-amber-800">{t("noEmailWarningTitle")}</p>
                 <p className="mt-1 text-sm leading-6 text-amber-700">{t("noEmailWarningText")}</p>
                 <div className="mt-3 flex flex-col gap-2 sm:flex-row">
@@ -608,7 +625,11 @@ function PurchaseFlowInner() {
 
             {/* Confirmation card */}
             {showConfirmation && (
-              <div className="rounded-2xl border border-[var(--border)] bg-sky-50 p-5 sm:p-6">
+              <div
+                className="rounded-2xl border border-[var(--border)] bg-sky-50 p-5 sm:p-6"
+                role="status"
+                aria-live="polite"
+              >
                 <h3 className="text-base font-semibold text-[var(--brand-dark)]">
                   {t("confirmTitle")}
                 </h3>
@@ -674,12 +695,12 @@ function PurchaseFlowInner() {
             {/* Submit */}
             <button
               type="submit"
-              disabled={!name.trim() || isRedirecting}
+              disabled={isRedirecting}
               className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {promoCode.trim()
                 ? t("submitButtonPromo")
-                : `${t("submitButton")} — ${tierPrices[tier]}`}
+                : `${t("submitButton")} - ${tierPrices[tier]}`}
             </button>
           </form>
 
@@ -722,3 +743,4 @@ export function PurchaseFlow() {
     </Suspense>
   );
 }
+

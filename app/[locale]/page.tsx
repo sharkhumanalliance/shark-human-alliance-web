@@ -27,13 +27,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t("title"),
       description: t("description"),
       type: "website",
-      images: [{ url: "/mascots/finnley-luna-hero-v2.webp", width: 1536, height: 1024, alt: "Shark Human Alliance mascots Finnley and Luna" }],
+      images: [{ url: "/mascots/homepage-hero-plush.png", width: 1152, height: 768, alt: "Shark Human Alliance mascots Finnley and Luna" }],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["/mascots/finnley-luna-hero-v2.webp"],
+      images: ["/mascots/homepage-hero-plush.png"],
     },
   };
 }

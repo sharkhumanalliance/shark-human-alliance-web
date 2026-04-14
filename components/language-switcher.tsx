@@ -1,49 +1,41 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { buildLocalizedPath } from "@/lib/navigation";
 
 const locales = [
-  { code: "en", flag: "🇬🇧", label: "English" },
-  { code: "es", flag: "🇪🇸", label: "Español" },
+  { code: "en", shortLabel: "EN", label: "English" },
+  { code: "es", shortLabel: "ES", label: "Espa\u00f1ol" },
 ];
 
 export function LanguageSwitcher() {
   const locale = useLocale();
-  const router = useRouter();
   const pathname = usePathname();
-  const [isPending, startTransition] = useTransition();
-
-  function switchLocale(nextLocale: string) {
-    // Replace the current locale prefix in the pathname
-    // pathname is like /en/membership or /es/membership
-    const segments = pathname.split("/");
-    segments[1] = nextLocale;
-    const newPath = segments.join("/");
-
-    startTransition(() => {
-      router.replace(newPath);
-    });
-  }
+  const searchParams = useSearchParams();
+  const search = searchParams.toString();
 
   return (
     <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
       {locales.map((loc) => (
-        <button
+        <Link
           key={loc.code}
-          onClick={() => switchLocale(loc.code)}
-          disabled={isPending}
+          href={`${buildLocalizedPath(loc.code, pathname || "/")}${search ? `?${search}` : ""}`}
+          lang={loc.code}
+          hrefLang={loc.code}
           title={loc.label}
           aria-label={loc.label}
-          className={`flex h-10 w-10 items-center justify-center rounded-full text-lg transition sm:h-11 sm:w-11 sm:text-lg ${
+          aria-current={locale === loc.code ? "page" : undefined}
+          translate="no"
+          className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-semibold tracking-[0.18em] transition sm:h-11 sm:w-11 ${
             locale === loc.code
               ? "bg-sky-100 shadow-sm"
               : "opacity-65 hover:opacity-100 hover:bg-sky-50"
-          } ${isPending ? "cursor-wait" : "cursor-pointer"}`}
+          }`}
         >
-          {loc.flag}
-        </button>
+          {loc.shortLabel}
+        </Link>
       ))}
     </div>
   );

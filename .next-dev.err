@@ -1,0 +1,132 @@
+Error: MISSING_MESSAGE: Could not resolve `accessibility` in messages for locale `en`.
+    at async LocaleLayout (app\[locale]\layout.tsx:188:13)
+  186 |
+  187 |   const messages = await getMessages();
+> 188 |   const t = await getTranslations({ locale, namespace: "accessibility" });
+      |             ^
+  189 |
+  190 |   return (
+  191 |     <html lang={locale}> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `accessibility` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `accessibility` in messages for locale `en`.
+    at async LocaleLayout (app\[locale]\layout.tsx:188:13)
+  186 |
+  187 |   const messages = await getMessages();
+> 188 |   const t = await getTranslations({ locale, namespace: "accessibility" });
+      |             ^
+  189 |
+  190 |   return (
+  191 |     <html lang={locale}> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `accessibility` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `accessibility` in messages for locale `en`.
+    at async LocaleLayout (app\[locale]\layout.tsx:188:13)
+  186 |
+  187 |   const messages = await getMessages();
+> 188 |   const t = await getTranslations({ locale, namespace: "accessibility" });
+      |             ^
+  189 |
+  190 |   return (
+  191 |     <html lang={locale}> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `accessibility` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `accessibility` in messages for locale `en`.
+    at async LocaleLayout (app\[locale]\layout.tsx:188:13)
+  186 |
+  187 |   const messages = await getMessages();
+> 188 |   const t = await getTranslations({ locale, namespace: "accessibility" });
+      |             ^
+  189 |
+  190 |   return (
+  191 |     <html lang={locale}> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `accessibility` in messages for locale `en`.'
+}
+⨯ Error: DATABASE_URL (or POSTGRES_URL) environment variable is not set.
+    at getPool (lib\db.ts:50:13)
+    at query (lib\db.ts:69:26)
+    at listMembers (lib\members.ts:98:27)
+    at GET (app\api\members\route.ts:5:36)
+  48 |
+  49 |     if (!rawConnectionString) {
+> 50 |       throw new Error(
+     |             ^
+  51 |         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
+  52 |       );
+  53 |     }
+⨯ Error: DATABASE_URL (or POSTGRES_URL) environment variable is not set.
+    at getPool (lib\db.ts:50:13)
+    at query (lib\db.ts:69:26)
+    at listMembers (lib\members.ts:98:27)
+    at GET (app\api\members\route.ts:5:36)
+  48 |
+  49 |     if (!rawConnectionString) {
+> 50 |       throw new Error(
+     |             ^
+  51 |         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
+  52 |       );
+  53 |     }
+⨯ Error: DATABASE_URL (or POSTGRES_URL) environment variable is not set.
+    at getPool (lib\db.ts:50:13)
+    at query (lib\db.ts:69:26)
+    at listMembers (lib\members.ts:98:27)
+    at GET (app\api\members\route.ts:5:36)
+  48 |
+  49 |     if (!rawConnectionString) {
+> 50 |       throw new Error(
+     |             ^
+  51 |         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
+  52 |       );
+  53 |     }
+⨯ Error: DATABASE_URL (or POSTGRES_URL) environment variable is not set.
+    at getPool (lib\db.ts:50:13)
+    at query (lib\db.ts:69:26)
+    at listMembers (lib\members.ts:98:27)
+    at GET (app\api\members\route.ts:5:36)
+  48 |
+  49 |     if (!rawConnectionString) {
+> 50 |       throw new Error(
+     |             ^
+  51 |         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
+  52 |       );
+  53 |     }
+⨯ Error: DATABASE_URL (or POSTGRES_URL) environment variable is not set.
+    at getPool (lib\db.ts:50:13)
+    at query (lib\db.ts:69:26)
+    at listMembers (lib\members.ts:98:27)
+    at GET (app\api\members\route.ts:5:36)
+  48 |
+  49 |     if (!rawConnectionString) {
+> 50 |       throw new Error(
+     |             ^
+  51 |         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
+  52 |       );
+  53 |     }
+⨯ Error: DATABASE_URL (or POSTGRES_URL) environment variable is not set.
+    at getPool (lib\db.ts:50:13)
+    at query (lib\db.ts:69:26)
+    at listMembers (lib\members.ts:98:27)
+    at GET (app\api\members\route.ts:5:36)
+  48 |
+  49 |     if (!rawConnectionString) {
+> 50 |       throw new Error(
+     |             ^
+  51 |         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
+  52 |       );
+  53 |     }
+⨯ Error: DATABASE_URL (or POSTGRES_URL) environment variable is not set.
+    at getPool (lib\db.ts:50:13)
+    at query (lib\db.ts:69:26)
+    at listMembers (lib\members.ts:98:27)
+    at GET (app\api\members\route.ts:5:36)
+  48 |
+  49 |     if (!rawConnectionString) {
+> 50 |       throw new Error(
+     |             ^
+  51 |         "DATABASE_URL (or POSTGRES_URL) environment variable is not set."
+  52 |       );
+  53 |     }

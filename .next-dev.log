@@ -1,0 +1,78 @@
+
+> shark-human-alliance@0.1.0 dev
+> next dev --hostname 127.0.0.1 --port 3000
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 4.6s
+ GET /en 200 in 3.5s (compile: 3.0s, proxy.ts: 10ms, generate-params: 656ms, render: 492ms)
+✓ Compiled in 177ms
+ GET /en/purchase?tier=protected 200 in 523ms (compile: 463ms, proxy.ts: 14ms, generate-params: 385ms, render: 45ms)
+✓ Compiled in 109ms
+✓ Compiled in 88ms
+✓ Compiled in 85ms
+✓ Compiled in 84ms
+✓ Compiled in 110ms
+✓ Compiled in 76ms
+✓ Compiled in 180ms
+ GET /en/purchase?tier=protected 200 in 881ms (compile: 129ms, proxy.ts: 18ms, generate-params: 23ms, render: 734ms)
+ GET /en/purchase?tier=protected 200 in 325ms (compile: 40ms, proxy.ts: 11ms, generate-params: 14ms, render: 274ms)
+✓ Compiled in 109ms
+✓ Compiled in 93ms
+✓ Compiled in 104ms
+✓ Compiled in 132ms
+ GET /en/purchase?tier=protected 200 in 847ms (compile: 108ms, proxy.ts: 11ms, generate-params: 15ms, render: 729ms)
+ GET /en/purchase?tier=protected 200 in 357ms (compile: 30ms, proxy.ts: 9ms, generate-params: 18ms, render: 317ms)
+ GET /en/purchase?tier=protected 200 in 162ms (compile: 96ms, proxy.ts: 9ms, generate-params: 25ms, render: 57ms)
+ GET /en/purchase?tier=protected 200 in 58ms (compile: 9ms, proxy.ts: 8ms, generate-params: 37µs, render: 41ms)
+ GET /en/purchase?tier=protected 200 in 180ms (compile: 109ms, proxy.ts: 10ms, generate-params: 17ms, render: 61ms)
+ GET /en/purchase?tier=protected 200 in 81ms (compile: 18ms, proxy.ts: 14ms, generate-params: 38µs, render: 48ms)
+ GET /en/purchase?tier=protected 200 in 264ms (compile: 112ms, proxy.ts: 10ms, generate-params: 31ms, render: 142ms)
+ GET /en/purchase?tier=protected 200 in 82ms (compile: 13ms, proxy.ts: 10ms, generate-params: 33µs, render: 60ms)
+✓ Compiled in 92ms
+ GET /en/membership 200 in 522ms (compile: 485ms, proxy.ts: 6ms, generate-params: 352ms, render: 31ms)
+ GET /en/registry 200 in 476ms (compile: 442ms, proxy.ts: 4ms, generate-params: 337ms, render: 29ms)
+ GET /api/members 500 in 573ms (compile: 472ms, render: 101ms)
+ GET /api/members 500 in 53ms (compile: 3ms, render: 50ms)
+ GET /en/impact 200 in 512ms (compile: 475ms, proxy.ts: 7ms, generate-params: 346ms, render: 30ms)
+✓ Compiled in 78ms
+✓ Compiled in 143ms
+✓ Compiled in 74ms
+✓ Compiled in 149ms
+ GET /en/impact 200 in 299ms (compile: 103ms, proxy.ts: 10ms, generate-params: 33ms, render: 186ms)
+ GET /en/impact 200 in 152ms (compile: 13ms, proxy.ts: 12ms, generate-params: 35µs, render: 127ms)
+ GET /en/impact 200 in 147ms (compile: 12ms, proxy.ts: 9ms, generate-params: 34µs, render: 126ms)
+ GET /en/impact 200 in 124ms (compile: 12ms, proxy.ts: 10ms, generate-params: 33µs, render: 102ms)
+ GET /en/impact 200 in 62ms (compile: 11ms, proxy.ts: 11ms, generate-params: 29µs, render: 40ms)
+ GET /en/impact 200 in 148ms (compile: 83ms, proxy.ts: 8ms, generate-params: 12ms, render: 57ms)
+ GET /en/impact 200 in 71ms (compile: 9ms, proxy.ts: 9ms, generate-params: 30µs, render: 54ms)
+ GET /en/impact 200 in 87ms (compile: 11ms, proxy.ts: 9ms, generate-params: 41µs, render: 67ms)
+ GET /en/impact 200 in 55ms (compile: 8ms, proxy.ts: 7ms, generate-params: 23µs, render: 40ms)
+ GET /en/impact 200 in 57ms (compile: 8ms, proxy.ts: 8ms, generate-params: 30µs, render: 41ms)
+ GET /en/impact 200 in 263ms (compile: 31ms, proxy.ts: 9ms, generate-params: 18ms, render: 223ms)
+ GET /en 200 in 1208ms (compile: 1046ms, proxy.ts: 19ms, generate-params: 805ms, render: 142ms)
+ GET /en/impact 200 in 185ms (compile: 75ms, proxy.ts: 21ms, generate-params: 46ms, render: 89ms)
+ GET /en/registry 200 in 427ms (compile: 262ms, proxy.ts: 16ms, generate-params: 44ms, render: 148ms)
+ GET /api/members 500 in 190ms (compile: 6ms, render: 184ms)
+ GET /api/members 500 in 125ms (compile: 5ms, render: 120ms)
+✓ Compiled in 144ms
+ GET /en/impact 200 in 430ms (compile: 267ms, proxy.ts: 19ms, generate-params: 38ms, render: 144ms)
+✓ Compiled in 187ms
+ GET /en/impact 200 in 500ms (compile: 195ms, proxy.ts: 14ms, generate-params: 30ms, render: 291ms)
+ GET /en/impact 200 in 186ms (compile: 28ms, proxy.ts: 25ms, generate-params: 67µs, render: 133ms)
+ GET /en/impact 200 in 240ms (compile: 22ms, proxy.ts: 17ms, generate-params: 59µs, render: 201ms)
+ GET /en/impact 200 in 141ms (compile: 21ms, proxy.ts: 15ms, generate-params: 124µs, render: 106ms)
+ GET /en/impact 200 in 107ms (compile: 17ms, proxy.ts: 16ms, generate-params: 49µs, render: 75ms)
+ GET /en/impact 200 in 349ms (compile: 207ms, proxy.ts: 13ms, generate-params: 36ms, render: 129ms)
+ GET /en/impact 200 in 134ms (compile: 17ms, proxy.ts: 15ms, generate-params: 43µs, render: 102ms)
+ GET /en/impact 200 in 356ms (compile: 26ms, proxy.ts: 15ms, generate-params: 75µs, render: 315ms)
+ GET /en/impact 200 in 206ms (compile: 19ms, proxy.ts: 16ms, generate-params: 66µs, render: 172ms)
+ GET /en/impact 200 in 105ms (compile: 17ms, proxy.ts: 15ms, generate-params: 60µs, render: 73ms)
+ GET /en/registry 200 in 479ms (compile: 303ms, proxy.ts: 31ms, generate-params: 44ms, render: 145ms)
+ GET /api/members 500 in 221ms (compile: 11ms, render: 211ms)
+ GET /api/members 500 in 192ms (compile: 10ms, render: 182ms)
+✓ Compiled in 236ms

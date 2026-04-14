@@ -1,12 +1,16 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Suspense, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { LanguageSwitcher } from "./language-switcher";
+import { buildLocalizedPath } from "@/lib/navigation";
 
 export function SiteHeader() {
   const t = useTranslations("header");
+  const locale = useLocale();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
 
@@ -35,6 +39,24 @@ export function SiteHeader() {
     { label: t("nav.faq"), href: "/faq" },
   ];
 
+  function isActiveNavItem(href: string) {
+    const localizedHref = buildLocalizedPath(locale, href);
+    return (
+      pathname === localizedHref ||
+      (localizedHref !== `/${locale}` && pathname?.startsWith(`${localizedHref}/`))
+    );
+  }
+
+  const languageSwitcherFallback = (
+    <div
+      aria-hidden="true"
+      className="flex shrink-0 items-center gap-0.5 sm:gap-1"
+    >
+      <span className="h-10 w-10 rounded-full bg-sky-50 sm:h-11 sm:w-11" />
+      <span className="h-10 w-10 rounded-full bg-sky-50 sm:h-11 sm:w-11" />
+    </div>
+  );
+
   return (
     <header className="sticky top-0 z-50 overflow-x-clip border-b border-[var(--border)] bg-white/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between px-4 py-3 sm:px-6 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-8 lg:justify-normal">
@@ -57,7 +79,12 @@ export function SiteHeader() {
             <LocalizedLink
               key={item.href}
               href={item.href}
-              className="whitespace-nowrap text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+              aria-current={isActiveNavItem(item.href) ? "page" : undefined}
+              className={`whitespace-nowrap text-sm transition ${
+                isActiveNavItem(item.href)
+                  ? "font-semibold text-[var(--brand-dark)]"
+                  : "text-[var(--muted)] hover:text-[var(--brand-dark)]"
+              }`}
             >
               {item.label}
             </LocalizedLink>
@@ -65,7 +92,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-2.5 lg:justify-self-end">
-          <LanguageSwitcher />
+          <Suspense fallback={languageSwitcherFallback}>
+            <LanguageSwitcher />
+          </Suspense>
           <LocalizedLink
             href="/purchase?tier=protected"
             className="hidden min-h-11 whitespace-nowrap rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:inline-flex sm:min-h-10"
@@ -116,7 +145,12 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-gray-50 hover:text-[var(--brand-dark)]"
+                aria-current={isActiveNavItem(item.href) ? "page" : undefined}
+                className={`rounded-xl px-3 py-3 text-sm transition-colors duration-300 ease-out ${
+                  isActiveNavItem(item.href)
+                    ? "bg-sky-50 font-semibold text-[var(--brand-dark)]"
+                    : "text-[var(--muted)] hover:bg-gray-50 hover:text-[var(--brand-dark)]"
+                }`}
               >
                 {item.label}
               </LocalizedLink>

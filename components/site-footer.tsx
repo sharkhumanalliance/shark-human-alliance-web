@@ -18,7 +18,7 @@ export function SiteFooter() {
               </div>
               <p className="text-sm font-semibold text-[var(--brand-dark)]">{t("brand")}</p>
             </div>
-            <p className="mt-3 max-w-xs text-xs leading-5 text-[var(--muted)]">{t("aboutText")}</p>
+            <p className="mt-3 max-w-xs text-sm leading-6 text-[var(--muted)]">{t("aboutText")}</p>
             <div className="mt-3 flex items-center gap-3">
               <a href="https://www.facebook.com/Sharkhumanalliance/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-lg text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] hover:text-[var(--brand-dark)]">
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -33,8 +33,8 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("navTitle")}</h4>
-            <nav className="mt-2 flex flex-col gap-1.5 text-xs">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("navTitle")}</h4>
+            <nav className="mt-2 flex flex-col gap-1.5 text-sm">
               <LocalizedLink href="/membership" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">{t("nav.membership")}</LocalizedLink>
               <LocalizedLink href="/impact" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">{t("nav.impact")}</LocalizedLink>
               <LocalizedLink href="/faq" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">{t("nav.faq")}</LocalizedLink>
@@ -45,9 +45,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("legalTitle")}</h4>
-            <p className="mt-1 text-xs leading-5 text-[var(--muted)]">{t("legalText")}</p>
-            <div className="mt-3 flex flex-col items-start gap-2 text-xs">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("legalTitle")}</h4>
+            <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{t("legalText")}</p>
+            <div className="mt-3 flex flex-col items-start gap-2 text-sm">
               <LocalizedLink href="/terms" className="text-[var(--muted)] transition-colors duration-300 ease-out hover:text-[var(--brand-dark)]">
                 {t("termsLink")}
               </LocalizedLink>
@@ -71,16 +71,16 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("transparencyTitle")}</h4>
-            <p className="mt-1 text-xs leading-5 text-[var(--muted)]">{t("transparencyText")}</p>
-            <p className="mt-3 text-xs text-[var(--muted)]">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("transparencyTitle")}</h4>
+            <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{t("transparencyText")}</p>
+            <p className="mt-3 text-sm text-[var(--muted)]">
               {t("madeWith")}{" "}
               <span className="text-red-500">&#10084;</span>
             </p>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-5 text-[11px] text-[var(--muted)]">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-5 text-xs text-[var(--muted)]">
           <p>&copy; {new Date().getFullYear()} {t("brand")}.</p>
           <p>{t("operator")}</p>
         </div>

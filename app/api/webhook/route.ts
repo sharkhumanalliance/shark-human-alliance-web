@@ -4,6 +4,7 @@ import { getStripe } from "@/lib/stripe";
 import {
   EMAIL_FROM,
   certificateEmailHtml,
+  escapeHtml,
   logEmailRouteEntered,
   sendEmailStrict,
 } from "@/lib/email";
@@ -182,6 +183,15 @@ export async function POST(request: NextRequest) {
     // Also notify buyer if gift
     if (isGift === "true" && recipientEmail && email && email !== recipientEmail && process.env.RESEND_API_KEY) {
       try {
+        const safeName = escapeHtml(name);
+        const safeRecipientEmail = escapeHtml(recipientEmail);
+        const safeReferralCode = escapeHtml(referralCode);
+        const safeGiftMessage = giftMessage
+          ? escapeHtml(giftMessage).replace(/\r?\n/g, "<br>")
+          : "";
+        const safeCareerUrl = escapeHtml(
+          buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career")
+        );
         await sendEmailStrict(
           {
             from: EMAIL_FROM,
@@ -194,15 +204,15 @@ export async function POST(request: NextRequest) {
     <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#64748b;">Gift</div>
     <h1 style="color:#15324d;font-size:24px;margin:16px 0 8px;">Gift Delivered!</h1>
     <p style="color:#5f7892;font-size:14px;line-height:1.6;">
-      Your gift for <strong>${name}</strong> has been sent to <strong>${recipientEmail}</strong>.
+      Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.
       They'll receive their certificate and a warm welcome from the Alliance.
-      ${giftMessage ? `<br><br><em>Included message:</em> ${giftMessage}` : ""}
+      ${safeGiftMessage ? `<br><br><em>Included message:</em> ${safeGiftMessage}` : ""}
     </p>
     <p style="color:#5f7892;font-size:13px;margin-top:16px;">
-      Your referral code: <strong>${referralCode}</strong><br>
+      Your referral code: <strong>${safeReferralCode}</strong><br>
       Share it with friends to climb the Alliance career ladder!
     </p>
-    <a href="${buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career")}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
+    <a href="${safeCareerUrl}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
   </div>
   <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
 </div>
