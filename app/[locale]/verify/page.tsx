@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { getMemberById } from "@/lib/members";
+import { getMemberById, type Member } from "@/lib/members";
+import { getDemoMemberById, shouldUseDemoMembers } from "@/lib/demo-members";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { VerifyContent } from "@/components/verify/verify-content";
@@ -41,7 +42,20 @@ export default async function VerifyPage({ params, searchParams }: Props) {
     );
   }
 
-  const member = await getMemberById(id);
+  let member: Member | null = null;
+
+  try {
+    member = await getMemberById(id);
+  } catch (error) {
+    if (!shouldUseDemoMembers()) {
+      throw error;
+    }
+  }
+
+  if (!member && shouldUseDemoMembers()) {
+    member = getDemoMemberById(id);
+  }
+
   if (!member) notFound();
 
   const displayDate = new Date(member.date).toLocaleDateString(

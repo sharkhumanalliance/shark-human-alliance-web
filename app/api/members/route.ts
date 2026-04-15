@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { listMembers } from "@/lib/members";
+import { listMembers, type Member } from "@/lib/members";
+import { getDemoMembers, shouldUseDemoMembers } from "@/lib/demo-members";
 
 export async function GET() {
-  const members = await listMembers();
+  let members: Member[] = [];
+
+  try {
+    members = await listMembers();
+  } catch (error) {
+    if (!shouldUseDemoMembers()) {
+      throw error;
+    }
+  }
+
+  if (shouldUseDemoMembers() && members.length === 0) {
+    members = getDemoMembers();
+  }
+
   // Strip sensitive fields from public response
   const publicMembers = members.map((member) => {
     const sanitized = { ...member };

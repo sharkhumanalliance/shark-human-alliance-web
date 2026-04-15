@@ -227,8 +227,8 @@ export function VerifyContent({
       <div className="mt-8 flex flex-col items-stretch gap-3 sm:items-center">
         <LocalizedLink
           href="/registry"
-          className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-white transition-colors sm:w-auto"
-          style={{ background: "var(--brand)" }}
+          className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-bold !text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:w-auto"
+          style={{ color: "#ffffff" }}
         >
           {t("viewRegistry")}
         </LocalizedLink>
