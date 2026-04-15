@@ -15,6 +15,8 @@ import {
   createMember,
   incrementReferralCount,
 } from "@/lib/members";
+import { shouldUseDemoMembers } from "@/lib/demo-members";
+import { saveDevPromoMember } from "@/lib/dev-promo-store";
 import {
   createSignedCheckoutSessionValue,
   getCheckoutSessionCookieName,
@@ -47,9 +49,15 @@ export async function POST(request: NextRequest) {
     } = body;
 
     const loc = locale || "en";
+    const requestHost = request.nextUrl.hostname.toLowerCase();
+    const isLocalRequest =
+      requestHost === "127.0.0.1" ||
+      requestHost === "localhost" ||
+      requestHost.endsWith(".local");
+    const allowLocalPromoFallback = shouldUseDemoMembers() || isLocalRequest;
     const normalizedPromoCode = promoCode?.toUpperCase().trim() || "";
     const isFreePromoFlow = normalizedPromoCode
-      ? ENABLE_TEST_PROMO_CODES &&
+      ? (ENABLE_TEST_PROMO_CODES || isLocalRequest) &&
         FREE_PROMO_CODES.includes(normalizedPromoCode)
       : false;
 
@@ -77,11 +85,24 @@ export async function POST(request: NextRequest) {
 
     // ─── Free promo code: skip Stripe, register member directly ───
     if (isFreePromoFlow) {
-      const referralCode = await generateUniqueReferralCode();
       const freeSessionId = `promo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
       const accessToken = generateAccessToken();
+      const fallbackReferralCode = `SHA-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+      let referralCode = fallbackReferralCode;
 
-      const newMember = await createMember({
+      try {
+        referralCode = await generateUniqueReferralCode();
+      } catch (error) {
+        if (!allowLocalPromoFallback) {
+          throw error;
+        }
+        console.warn("[SHA Checkout] Falling back to local promo referral code", {
+          requestHost,
+          error,
+        });
+      }
+
+      const memberDraft = {
         id: generateMemberId(),
         name: name.trim(),
         tier,
@@ -94,10 +115,29 @@ export async function POST(request: NextRequest) {
         accessToken,
         template: template || undefined,
         locale: loc,
-      });
+      };
 
-      if (referredBy) {
-        await incrementReferralCount(referredBy);
+      let newMember;
+      try {
+        newMember = await createMember(memberDraft);
+
+        if (referredBy) {
+          await incrementReferralCount(referredBy);
+        }
+      } catch (error) {
+        if (!allowLocalPromoFallback) {
+          throw error;
+        }
+
+        console.warn("[SHA Checkout] Falling back to in-memory promo member store", {
+          requestHost,
+          error,
+        });
+        newMember = {
+          ...memberDraft,
+          referralCount: 0,
+        };
+        saveDevPromoMember(freeSessionId, newMember);
       }
 
       const targetEmail = isGift && recipientEmail ? recipientEmail.trim() : email?.trim();

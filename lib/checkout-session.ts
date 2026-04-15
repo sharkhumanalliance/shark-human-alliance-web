@@ -10,6 +10,9 @@ function getCheckoutSessionSecret(): string {
     process.env.STRIPE_SECRET_KEY;
 
   if (!secret) {
+    if (!process.env.VERCEL) {
+      return "sha-local-checkout-session-secret";
+    }
     throw new Error(
       "Missing checkout session signing secret. Set CHECKOUT_SESSION_SECRET, STRIPE_WEBHOOK_SECRET, or STRIPE_SECRET_KEY."
     );

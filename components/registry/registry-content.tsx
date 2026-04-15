@@ -189,11 +189,11 @@ export function RegistryContent() {
                       key={stat.label}
                       className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4"
                     >
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                      <p className="flex min-h-[2.5rem] items-start text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                         {stat.label}
                       </p>
                       <p
-                        className={`mt-2 text-xl font-semibold tracking-tight tabular-nums sm:text-2xl ${stat.accent}`}
+                        className={`mt-3 text-xl font-semibold tracking-tight tabular-nums sm:text-2xl ${stat.accent}`}
                       >
                         {stat.value}
                       </p>
@@ -336,7 +336,7 @@ export function RegistryContent() {
             </div>
           ) : (
             <>
-              <div className="hidden gap-4 lg:grid lg:grid-cols-2">
+              <div className="hidden gap-4 md:grid md:grid-cols-1 lg:grid-cols-2">
                 {filteredMembers.map((member) => {
                   const style = TIER_STYLES[member.tier];
                   const rank = getRankInfo(member.referralCount || 0);
@@ -356,14 +356,13 @@ export function RegistryContent() {
                           >
                             {member.name}
                           </LocalizedLink>
-                          <p className="mt-1 truncate text-xs text-[var(--muted)]">{member.id}</p>
-                          <div className="mt-3 flex flex-wrap items-center gap-2">
+                          <div className="mt-3 flex min-w-0 items-center gap-2 overflow-hidden">
                             <span
-                              className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${style.badge}`}
+                              className={`inline-flex shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${style.badge}`}
                             >
                               {t(`tierLabels.${member.tier}`)}
                             </span>
-                            <span className="text-sm font-medium text-[var(--brand-dark)]">
+                            <span className="truncate whitespace-nowrap text-sm font-medium text-[var(--brand-dark)]">
                               {rank.label}
                             </span>
                           </div>
@@ -417,7 +416,7 @@ export function RegistryContent() {
                 })}
               </div>
 
-              <div className="space-y-3 lg:hidden">
+              <div className="space-y-3 md:hidden">
                 {filteredMembers.map((member) => {
                   const style = TIER_STYLES[member.tier];
                   const rank = getRankInfo(member.referralCount || 0);

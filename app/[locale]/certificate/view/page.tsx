@@ -3,6 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { CertificateDocument, type CertificateTemplate } from "@/components/certificate/certificate-document";
 import { CertificateSheet, type PaperFormat } from "@/components/certificate/certificate-sheet";
 import { getMemberByAccessToken } from "@/lib/members";
+import { getDevPromoMemberByAccessToken } from "@/lib/dev-promo-store";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -16,7 +17,16 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
 
   if (!token) notFound();
 
-  const member = await getMemberByAccessToken(token);
+  let member = null;
+  try {
+    member = await getMemberByAccessToken(token);
+  } catch {
+    member = null;
+  }
+
+  if (!member) {
+    member = getDevPromoMemberByAccessToken(token);
+  }
   if (!member) notFound();
 
   // Query param overrides DB value; DB value overrides default "luxury".

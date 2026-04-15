@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getMemberByStripeSession } from "@/lib/members";
+import { shouldUseDemoMembers } from "@/lib/demo-members";
+import { getDevPromoMemberBySession } from "@/lib/dev-promo-store";
 import {
   getCheckoutSessionCookieName,
   isValidSignedCheckoutSessionValue,
@@ -11,6 +13,12 @@ import {
  */
 export async function GET(request: NextRequest) {
   const sessionId = request.nextUrl.searchParams.get("session_id");
+  const requestHost = request.nextUrl.hostname.toLowerCase();
+  const allowLocalPromoFallback =
+    shouldUseDemoMembers() ||
+    requestHost === "127.0.0.1" ||
+    requestHost === "localhost" ||
+    requestHost.endsWith(".local");
 
   if (!sessionId) {
     return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
@@ -24,7 +32,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 
-  const member = await getMemberByStripeSession(sessionId);
+  let member = null;
+  try {
+    member = await getMemberByStripeSession(sessionId);
+  } catch (error) {
+    if (!allowLocalPromoFallback) {
+      throw error;
+    }
+  }
+
+  if (!member && allowLocalPromoFallback) {
+    member = getDevPromoMemberBySession(sessionId);
+  }
 
   if (!member) {
     return NextResponse.json({ error: "Member not found" }, { status: 404 });

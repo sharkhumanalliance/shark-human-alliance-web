@@ -58,7 +58,7 @@ const DEMO_MEMBERS: Member[] = [
 ];
 
 export function shouldUseDemoMembers() {
-  return process.env.NODE_ENV !== "production";
+  return process.env.NODE_ENV !== "production" || !process.env.VERCEL;
 }
 
 export function getDemoMembers(): Member[] {

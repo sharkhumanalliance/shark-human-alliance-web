@@ -675,12 +675,12 @@ function PurchaseFlowInner() {
                 </div>
                 {/* Action buttons */}
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                  <button
-                    type="submit"
-                    className="flex-1 min-h-[44px] rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
-                  >
-                    {t("confirmButton")}
-                  </button>
+                    <button
+                      type="submit"
+                      className="flex-1 min-h-[44px] rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+                    >
+                      {promoCode.trim() ? t("confirmButtonPromo") : t("confirmButton")}
+                    </button>
                   <button
                     type="button"
                     onClick={() => setShowConfirmation(false)}
