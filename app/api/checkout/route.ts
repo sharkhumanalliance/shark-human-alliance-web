@@ -21,7 +21,9 @@ import {
 } from "@/lib/checkout-session";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
-const ENABLE_TEST_PROMO_CODES = process.env.ENABLE_TEST_PROMO_CODES === "true";
+const ENABLE_TEST_PROMO_CODES =
+  process.env.ENABLE_TEST_PROMO_CODES === "true" ||
+  process.env.NODE_ENV !== "production";
 
 /** Promo codes that bypass Stripe entirely (100% off). */
 const FREE_PROMO_CODES = ["SHATEST"];

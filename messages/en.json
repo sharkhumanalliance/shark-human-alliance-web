@@ -59,7 +59,7 @@
       "faq": "FAQ",
       "registry": "Registry"
     },
-    "cta": "Get your certificate — $4"
+    "cta": "Get your certificate"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -93,7 +93,7 @@
     "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
     "description": "A personalized certificate for people who love sharks, fear sharks, or simply appreciate excellent paperwork. It also funds real shark conservation.",
-    "ctaPrimary": "Get your certificate — $4",
+    "ctaPrimary": "Get your certificate",
     "ctaSecondary": "Preview your certificate",
     "socialProof": "Join the Alliance",
     "giftBadge": "Official paperwork confirming you are not food.",
@@ -192,8 +192,8 @@
       "certName": "[ Your Name Here ]",
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
       "inputPlaceholder": "Your name (the sharks are waiting)",
-      "ctaBuy": "Get yours — $4",
-      "ctaGift": "Gift one — $4",
+      "ctaBuy": "Get yours",
+      "ctaGift": "Gift one",
       "previewSectionLabel": "Try it live"
     },
     "membershipSection": {
@@ -304,7 +304,7 @@
       "point2Text": "Every certificate helps fund shark conservation. No vague promises. No “raising awareness” as a business model.",
       "point3Icon": "03",
       "point3Title": "Your name in the archives",
-      "point3Text": "Added to the Diplomatic Registry, the exclusive archive of people who paid money to be told they are not food.",
+      "point3Text": "Added to the Diplomatic Registry, the esclusive list of humans who paid money to be told they are not food.",
       "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Saving the Blue, and Fundación Malpelo."
     },
     "howStep1": "Pick a certificate",
