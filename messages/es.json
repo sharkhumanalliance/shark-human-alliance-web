@@ -909,6 +909,7 @@
     "partnersDisclaimer": "Listado de destinatarios previstos. Las alianzas formales o relaciones confirmadas solo se anunciarán cuando existan de verdad.",
     "partnerStatusPlanned": "Destinatario previsto",
     "visitWebsite": "Visitar sitio web",
+    "opensInNewTab": "se abre en una pestaña nueva",
     "selectionTitle": "Cómo elegimos socios",
     "selectionCriteria1Title": "Impacto directo en tiburones",
     "selectionCriteria1Text": "La organización debe trabajar directamente en conservación, investigación o protección de hábitat de tiburones — no en causas marinas generales.",
@@ -988,6 +989,9 @@
     "newPoster": "Crear otro póster",
     "viralPrompt": "Compártelo en Instagram Stories, envíalo al grupo de chat, o imprímelo y pégalo en su escritorio.",
     "viralSubtext": "Cada póster compartido es un paso hacia la cobertura diplomática universal entre tiburones y humanos.",
+    "previewLabel": "Vista previa del póster",
+    "previewHintBeforeGenerate": "La vista previa se actualiza mientras escribes. Genera el póster para desbloquear compartir y regalar.",
+    "previewHintAfterGenerate": "Póster generado. Descárgalo, compártelo o resuelve la situación con un certificado.",
     "howTitle": "Cómo funciona",
     "howStep1Icon": "🚨",
     "howStep1Title": "Genera un póster de Se Busca",
@@ -998,7 +1002,10 @@
     "howStep3Icon": "03",
     "howStep3Title": "Regálale protección",
     "howStep3Text": "Resuelve la situación regalándole un certificado oficial de Amigo Protegido. Diplomacia restaurada.",
-    "bottomCta": "Regalar Estatus de Amigo Protegido — $4"
+    "bottomCta": "Regalar Estatus de Amigo Protegido — $4",
+    "footerCtaTitle": "Empieza el papeleo antes de que sea incómodo.",
+    "footerCtaText": "Genera el póster, lanza la acusación y luego resuelve el problema con un certificado absurdamente oficial.",
+    "footerCtaButton": "Protege a alguien que conoces"
   },
   "career": {
     "hero": {
@@ -1009,6 +1016,7 @@
     "ladder": {
       "label": "Escalafón",
       "title": "Los rangos de la diplomacia con tiburones.",
+      "unlocksAt": "Se desbloquea en",
       "startingRank": "Rango inicial — todos empiezan aquí",
       "referralsNeeded": "{count}+ referidos para desbloquear"
     },
@@ -1109,6 +1117,9 @@
   },
   "verify": {
     "verifiedMember": "Miembro verificado",
+    "tierProtected": "Amigo protegido",
+    "tierNonsnack": "Reconocimiento No-Snack",
+    "tierBusiness": "Zona aprobada por tiburones",
     "membershipSince": "Miembro desde",
     "registryId": "ID de registro",
     "referralCode": "Código de referido",
@@ -1122,7 +1133,13 @@
     "joinThroughReferral": "Únete a la Alianza a través del referido de este diplomático",
     "joinAlliance": "Únete a la Alianza",
     "allianceRank": "Rango en la Alianza",
-    "rankProgress": "{count, plural, one {# referido exitoso} other {# referidos exitosos}}"
+    "rankProgress": "{count, plural, one {# referido exitoso} other {# referidos exitosos}}",
+    "quip1": "Nuestros tiburones revisaron los registros y confirman: este expediente está en orden.",
+    "quip2": "Cruce realizado con inteligencia marina. Estado: legítimo y moderadamente tranquilizador.",
+    "quip3": "El Departamento de Burocracia Acuática ha sellado este registro. Dos veces, por énfasis.",
+    "quip4": "Verificado personalmente por Finnley Mako. Incluso usó sus gafas de lectura.",
+    "quip5": "Esta membresía sobrevivió a nuestro riguroso proceso de verificación de tres segundos.",
+    "quip6": "Confirmado. Ha hablado el sistema de archivo más meticuloso del océano."
   },
   "certificateTemplates": {
     "luxury": {
@@ -1194,6 +1211,8 @@
     }
   },
   "accessibility": {
-    "skipToContent": "Saltar al contenido principal"
+    "skipToContent": "Saltar al contenido principal",
+    "toggleMenu": "Abrir o cerrar el menú",
+    "closeMenuOverlay": "Cerrar la superposición del menú"
   }
 }

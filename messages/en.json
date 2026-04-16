@@ -909,6 +909,7 @@
     "partnersDisclaimer": "Listed as planned recipients. Formal partnerships or confirmed recipient relationships will only be announced once they are actually in place.",
     "partnerStatusPlanned": "Planned Recipient",
     "visitWebsite": "Visit website",
+    "opensInNewTab": "opens in new tab",
     "selectionTitle": "How we choose partners",
     "selectionCriteria1Title": "Direct shark impact",
     "selectionCriteria1Text": "The organization must work directly on shark conservation, research, or habitat protection — not general marine causes.",
@@ -988,6 +989,9 @@
     "newPoster": "Create another poster",
     "viralPrompt": "Share it on Instagram Stories, send it in a group chat, or print it and tape it to their desk.",
     "viralSubtext": "Every poster shared is a step toward universal shark-human diplomatic coverage.",
+    "previewLabel": "Live poster preview",
+    "previewHintBeforeGenerate": "The preview updates as you type. Generate the poster to unlock sharing and gifting.",
+    "previewHintAfterGenerate": "Poster generated. Download it, share it, or resolve the situation with a certificate.",
     "howTitle": "How it works",
     "howStep1Icon": "🚨",
     "howStep1Title": "Generate a Wanted poster",
@@ -998,7 +1002,10 @@
     "howStep3Icon": "03",
     "howStep3Title": "Gift them protection",
     "howStep3Text": "Resolve the situation by gifting them an official Protected Friend certificate. Diplomacy restored.",
-    "bottomCta": "Gift Protected Friend Status — $4"
+    "bottomCta": "Gift Protected Friend Status — $4",
+    "footerCtaTitle": "Start the paperwork before it gets embarrassing.",
+    "footerCtaText": "Generate the poster, send the accusation, then solve the problem with a certificate that looks absurdly official.",
+    "footerCtaButton": "Protect someone you know"
   },
   "career": {
     "hero": {
@@ -1009,6 +1016,7 @@
     "ladder": {
       "label": "Career Ladder",
       "title": "The ranks of shark diplomacy.",
+      "unlocksAt": "Unlocks at",
       "startingRank": "Starting rank — everyone begins here",
       "referralsNeeded": "{count}+ referrals to unlock"
     },
@@ -1109,6 +1117,9 @@
   },
   "verify": {
     "verifiedMember": "Verified Member",
+    "tierProtected": "Protected Friend",
+    "tierNonsnack": "Non-Snack Recognition",
+    "tierBusiness": "Shark-Approved Zone",
     "membershipSince": "Membership Since",
     "registryId": "Registry ID",
     "referralCode": "Referral Code",
@@ -1122,7 +1133,13 @@
     "joinThroughReferral": "Join the Alliance through this diplomat's referral",
     "joinAlliance": "Join the Alliance",
     "allianceRank": "Alliance rank",
-    "rankProgress": "{count, plural, one {# successful referral} other {# successful referrals}}"
+    "rankProgress": "{count, plural, one {# successful referral} other {# successful referrals}}",
+    "quip1": "Our sharks have reviewed the records and confirm: this one checks out.",
+    "quip2": "Cross-referenced with marine intelligence. Status: legitimate and mildly reassuring.",
+    "quip3": "The Department of Aquatic Bureaucracy has stamped this record. Twice, for emphasis.",
+    "quip4": "Verified by Finnley Mako personally. He used his reading glasses and everything.",
+    "quip5": "This membership has survived our rigorous three-second verification process.",
+    "quip6": "Confirmed. The ocean's most meticulous filing system has spoken."
   },
   "certificateTemplates": {
     "luxury": {
@@ -1194,6 +1211,8 @@
     }
   },
   "accessibility": {
-    "skipToContent": "Skip to main content"
+    "skipToContent": "Skip to main content",
+    "toggleMenu": "Toggle menu",
+    "closeMenuOverlay": "Close menu overlay"
   }
 }

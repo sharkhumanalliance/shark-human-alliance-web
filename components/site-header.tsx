@@ -9,6 +9,7 @@ import { buildLocalizedPath } from "@/lib/navigation";
 
 export function SiteHeader() {
   const t = useTranslations("header");
+  const a11y = useTranslations("accessibility");
   const locale = useLocale();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,6 +37,7 @@ export function SiteHeader() {
     { label: t("nav.membership"), href: "/membership" },
     { label: t("nav.impact"), href: "/impact" },
     { label: t("nav.registry"), href: "/registry" },
+    { label: t("nav.wanted"), href: "/wanted", desktopClassName: "hidden min-[1120px]:inline-flex" },
     { label: t("nav.faq"), href: "/faq" },
   ];
 
@@ -80,7 +82,7 @@ export function SiteHeader() {
               key={item.href}
               href={item.href}
               aria-current={isActiveNavItem(item.href) ? "page" : undefined}
-              className={`whitespace-nowrap text-sm transition ${
+              className={`${item.desktopClassName ?? "inline-flex"} whitespace-nowrap text-sm transition ${
                 isActiveNavItem(item.href)
                   ? "font-semibold text-[var(--brand-dark)]"
                   : "text-[var(--muted)] hover:text-[var(--brand-dark)]"
@@ -105,7 +107,7 @@ export function SiteHeader() {
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-transparent text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-100 lg:hidden"
-            aria-label="Toggle menu"
+            aria-label={a11y("toggleMenu")}
             aria-expanded={menuOpen}
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -122,7 +124,7 @@ export function SiteHeader() {
       {menuOpen ? (
         <button
           type="button"
-          aria-label="Close menu overlay"
+          aria-label={a11y("closeMenuOverlay")}
           onClick={() => setMenuOpen(false)}
           className="fixed inset-0 top-[73px] z-40 bg-slate-900/20 backdrop-blur-[1px] lg:hidden"
         />

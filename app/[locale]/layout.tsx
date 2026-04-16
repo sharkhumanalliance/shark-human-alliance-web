@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import {
   Geist,
   Geist_Mono,
@@ -219,3 +219,4 @@ export default async function LocaleLayout({ children, params }: Props) {
     </html>
   );
 }
+

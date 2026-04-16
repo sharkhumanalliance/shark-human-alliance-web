@@ -496,7 +496,7 @@ export function RegistryContent() {
         <section data-reveal className="pb-14">
           <div className="mx-auto max-w-6xl space-y-6 px-4 sm:px-6">
             <section className="rounded-[28px] border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">
-              <div className="grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+              <div className="grid gap-6 lg:grid-cols-2">
                 <div>
                   <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
                     {t("viralNewest")}

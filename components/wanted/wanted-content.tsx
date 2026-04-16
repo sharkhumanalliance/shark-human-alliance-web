@@ -1,24 +1,20 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { getQrCodeUrl } from "@/lib/qr-svg";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
 
-/* ── helpers ────────────────────────────────────────────── */
-
 function nameHash(name: string): number {
-  let h = 0;
-  const s = name || "default";
-  for (let i = 0; i < s.length; i++) {
-    h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  let hash = 0;
+  const source = name || "default";
+  for (let i = 0; i < source.length; i++) {
+    hash = ((hash << 5) - hash + source.charCodeAt(i)) | 0;
   }
-  return Math.abs(h);
+  return Math.abs(hash);
 }
-
-/* ── poster palette ─────────────────────────────────────── */
 
 const POSTER_BG = "#1a0a00";
 const POSTER_PAPER = "#f5e6c8";
@@ -26,8 +22,6 @@ const POSTER_INK = "#2a1a0a";
 const POSTER_RED = "#c0392b";
 const POSTER_GOLD = "#d4a017";
 const POSTER_MUTED = "#8b7355";
-
-/* ── main component ─────────────────────────────────────── */
 
 export function WantedContent() {
   const t = useTranslations("wanted");
@@ -39,41 +33,41 @@ export function WantedContent() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sealImgRef = useRef<HTMLImageElement | null>(null);
 
-  // Read charges from translations (pool of funny reasons)
   const charges = useMemo(() => {
-    const arr: string[] = [];
+    const values: string[] = [];
     for (let i = 0; i < 12; i++) {
       try {
-        const v = t(`charges.${i}`);
-        if (v) arr.push(v);
+        const value = t(`charges.${i}`);
+        if (value) values.push(value);
       } catch {
         break;
       }
     }
-    return arr;
+    return values;
   }, [t]);
 
-  // Pick 3 deterministic charges based on name
   const selectedCharges = useMemo(() => {
     if (charges.length === 0) return [];
-    const h = nameHash(name);
+    const hash = nameHash(name);
     const picked: string[] = [];
     const pool = [...charges];
+
     for (let i = 0; i < Math.min(3, pool.length); i++) {
-      const idx = (h + i * 7) % pool.length;
-      picked.push(pool[idx]);
-      pool.splice(idx, 1);
+      const index = (hash + i * 7) % pool.length;
+      picked.push(pool[index]);
+      pool.splice(index, 1);
     }
+
     return picked;
   }, [name, charges]);
 
-  // Preload seal image
   const ensureSealLoaded = useCallback((): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
       if (sealImgRef.current) {
         resolve(sealImgRef.current);
         return;
       }
+
       const img = new window.Image();
       img.crossOrigin = "anonymous";
       img.onload = () => {
@@ -85,7 +79,6 @@ export function WantedContent() {
     });
   }, []);
 
-  // Load QR code image from external API
   const loadQrImage = useCallback((url: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
       const img = new window.Image();
@@ -96,197 +89,239 @@ export function WantedContent() {
     });
   }, []);
 
-  /* ── Canvas drawing (A4 portrait = 2100×2970) ────── */
-
   const drawPoster = useCallback(
-    async (ctx: CanvasRenderingContext2D, w: number, h: number) => {
+    async (ctx: CanvasRenderingContext2D, width: number, height: number) => {
       const displayName = name.trim() || t("defaultName");
 
-      // Background
       ctx.fillStyle = POSTER_BG;
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillRect(0, 0, width, height);
 
-      // Paper area
-      const mx = 120, my = 140;
-      const pw = w - mx * 2, ph = h - my * 2;
+      const marginX = 120;
+      const marginY = 140;
+      const paperWidth = width - marginX * 2;
+      const paperHeight = height - marginY * 2;
+
       ctx.fillStyle = POSTER_PAPER;
       ctx.beginPath();
-      ctx.roundRect(mx, my, pw, ph, 16);
+      ctx.roundRect(marginX, marginY, paperWidth, paperHeight, 16);
       ctx.fill();
 
-      // Inner border (double line effect)
       ctx.strokeStyle = POSTER_MUTED;
       ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.roundRect(mx + 36, my + 36, pw - 72, ph - 72, 10);
+      ctx.roundRect(marginX + 36, marginY + 36, paperWidth - 72, paperHeight - 72, 10);
       ctx.stroke();
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.roundRect(mx + 46, my + 46, pw - 92, ph - 92, 8);
+      ctx.roundRect(marginX + 46, marginY + 46, paperWidth - 92, paperHeight - 92, 8);
       ctx.stroke();
 
-      let y = my + 110;
-      const cx = w / 2;
+      let y = marginY + 110;
+      const centerX = width / 2;
+      const caseNumber = `SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
 
-      // ── TOP SECTION: header → WANTED → subtitle (no seal here) ──
-
-      // "SHARK HUMAN ALLIANCE" header — small, tracking-heavy
       ctx.fillStyle = POSTER_MUTED;
       ctx.font = "600 32px 'Geist', sans-serif";
       ctx.textAlign = "center";
       ctx.letterSpacing = "12px";
-      ctx.fillText(t("posterHeader").toUpperCase(), cx, y);
+      ctx.fillText(t("posterHeader").toUpperCase(), centerX, y);
       ctx.letterSpacing = "0px";
-      y += 60;
+      y += 54;
 
-      // Thin decorative line above WANTED
       ctx.strokeStyle = POSTER_MUTED;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(cx - 260, y);
-      ctx.lineTo(cx + 260, y);
+      ctx.moveTo(centerX - 260, y);
+      ctx.lineTo(centerX + 260, y);
       ctx.stroke();
-      y += 130;
+      ctx.textAlign = "right";
+      ctx.fillStyle = POSTER_MUTED;
+      ctx.font = "600 22px 'Geist', sans-serif";
+      ctx.fillText(caseNumber, marginX + paperWidth - 92, y - 18);
+      ctx.textAlign = "center";
+      y += 124;
 
-      // "WANTED" — big bold
       ctx.fillStyle = POSTER_RED;
       ctx.font = "900 200px 'Geist', sans-serif";
-      ctx.fillText(t("wantedTitle"), cx, y);
+      ctx.fillText(t("wantedTitle"), centerX, y);
       y += 30;
 
-      // Red decorative line below WANTED
       ctx.strokeStyle = POSTER_RED;
       ctx.lineWidth = 5;
       ctx.beginPath();
-      ctx.moveTo(cx - 340, y);
-      ctx.lineTo(cx + 340, y);
+      ctx.moveTo(centerX - 340, y);
+      ctx.lineTo(centerX + 340, y);
       ctx.stroke();
-      y += 70;
+      y += 72;
 
-      // Subtitle — "DANGEROUSLY UNPROTECTED"
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 44px 'Geist', sans-serif";
+      ctx.font = "600 34px 'Geist', sans-serif";
       ctx.letterSpacing = "6px";
-      ctx.fillText(t("wantedSubtitle").toUpperCase(), cx, y);
+      ctx.fillText(t("wantedSubtitle").toUpperCase(), centerX, y);
       ctx.letterSpacing = "0px";
-      y += 100;
+      y += 88;
 
-      // ── NAME — large display ──
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "900 108px 'Geist', sans-serif";
-      let fontSize = 108;
-      while (ctx.measureText(displayName).width > pw - 200 && fontSize > 48) {
+      ctx.font = "900 96px 'Geist', sans-serif";
+      let fontSize = 96;
+      while (ctx.measureText(displayName).width > paperWidth - 200 && fontSize > 48) {
         fontSize -= 4;
         ctx.font = `900 ${fontSize}px 'Geist', sans-serif`;
       }
-      ctx.fillText(displayName, cx, y);
+      ctx.fillText(displayName, centerX, y);
       y += 28;
 
-      // Underline
-      const nameW = Math.min(ctx.measureText(displayName).width + 60, pw - 200);
+      const nameWidth = Math.min(ctx.measureText(displayName).width + 60, paperWidth - 200);
       ctx.strokeStyle = POSTER_GOLD;
       ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(cx - nameW / 2, y);
-      ctx.lineTo(cx + nameW / 2, y);
+      ctx.moveTo(centerX - nameWidth / 2, y);
+      ctx.lineTo(centerX + nameWidth / 2, y);
       ctx.stroke();
-      y += 70;
+      y += 84;
 
-      // ── CHARGES ──
-      ctx.fillStyle = POSTER_RED;
-      ctx.font = "700 38px 'Geist', sans-serif";
-      ctx.letterSpacing = "5px";
-      ctx.fillText(t("chargesLabel").toUpperCase(), cx, y);
-      ctx.letterSpacing = "0px";
-      y += 58;
-
-      ctx.fillStyle = POSTER_INK;
-      ctx.font = "500 34px 'Geist', sans-serif";
-      ctx.textAlign = "center";
-      for (const charge of selectedCharges) {
+      const chargesBoxX = marginX + 150;
+      const chargesBoxWidth = paperWidth - 300;
+      const chargesBoxInnerX = chargesBoxX + 48;
+      const chargesBoxY = y;
+      const maxChargeWidth = chargesBoxWidth - 150;
+      ctx.font = "500 30px 'Geist', sans-serif";
+      const wrappedCharges = selectedCharges.map((charge, index) => {
         const words = charge.split(" ");
-        let line = "";
         const lines: string[] = [];
+        let line = "";
+
         for (const word of words) {
           const test = line ? `${line} ${word}` : word;
-          if (ctx.measureText(test).width > pw - 260) {
+          if (ctx.measureText(test).width > maxChargeWidth) {
             lines.push(line);
             line = word;
           } else {
             line = test;
           }
         }
-        if (line) lines.push(line);
-        for (const l of lines) {
-          ctx.fillText(l, cx, y);
-          y += 48;
-        }
-        y += 12;
-      }
-      y += 30;
 
-      // ── REWARD ──
-      ctx.fillStyle = POSTER_GOLD;
+        if (line) lines.push(line);
+
+        return {
+          prefix: `${index + 1}.`,
+          lines,
+        };
+      });
+
+      const rewardBoxWidth = 760;
+      const rewardBoxHeight = 112;
+      const rewardBoxX = centerX - rewardBoxWidth / 2;
+      const rewardBoxY = height - marginY - 640;
+      const buttonWidth = 900;
+      const buttonHeight = 84;
+      const buttonX = centerX - buttonWidth / 2;
+      const buttonY = rewardBoxY + rewardBoxHeight + 26;
+      const sealSize = 228;
+      const qrSize = 176;
+      const bottomY = height - marginY - 260;
+
+      const chargesContentHeight =
+        98 +
+        wrappedCharges.reduce(
+          (total, charge) => total + charge.lines.length * 46 + 34,
+          0,
+        ) -
+        34;
+      const chargesBoxHeight = Math.max(
+        280,
+        Math.min(chargesContentHeight + 26, rewardBoxY - chargesBoxY - 36),
+      );
+      ctx.strokeStyle = POSTER_MUTED;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(chargesBoxX, chargesBoxY, chargesBoxWidth, chargesBoxHeight, 18);
+      ctx.stroke();
+      ctx.fillStyle = POSTER_RED;
       ctx.font = "700 34px 'Geist', sans-serif";
+      ctx.textAlign = "center";
       ctx.letterSpacing = "4px";
-      ctx.fillText(t("rewardLabel").toUpperCase(), cx, y);
+      ctx.fillText(t("chargesLabel").toUpperCase(), centerX, chargesBoxY + 42);
       ctx.letterSpacing = "0px";
-      y += 54;
+      ctx.textAlign = "left";
+      ctx.fillStyle = POSTER_INK;
+      ctx.font = "500 30px 'Geist', sans-serif";
+
+      let chargesCursorY = chargesBoxY + 108;
+      wrappedCharges.forEach((charge) => {
+        ctx.font = "700 30px 'Geist', sans-serif";
+        ctx.fillText(charge.prefix, chargesBoxInnerX, chargesCursorY);
+        ctx.font = "500 30px 'Geist', sans-serif";
+
+        charge.lines.forEach((currentLine, lineIndex) => {
+          ctx.fillText(
+            currentLine,
+            chargesBoxInnerX + 54,
+            chargesCursorY + lineIndex * 46,
+          );
+        });
+
+        chargesCursorY += charge.lines.length * 46 + 42;
+      });
+
+      ctx.strokeStyle = POSTER_GOLD;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(rewardBoxX, rewardBoxY, rewardBoxWidth, rewardBoxHeight, 18);
+      ctx.stroke();
+
+      ctx.textAlign = "center";
+      ctx.fillStyle = POSTER_GOLD;
+      ctx.font = "700 28px 'Geist', sans-serif";
+      ctx.letterSpacing = "3px";
+      ctx.fillText(t("rewardLabel").toUpperCase(), centerX, rewardBoxY + 34);
+      ctx.letterSpacing = "0px";
 
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 38px 'Geist', sans-serif";
-      ctx.fillText(t("rewardText"), cx, y);
-      y += 90;
+      ctx.font = "600 34px 'Geist', sans-serif";
+      ctx.fillText(t("rewardText"), centerX, rewardBoxY + 74);
 
-      // ── CTA BUTTON ──
-      const btnW = 1000, btnH = 100;
-      const btnX = cx - btnW / 2, btnY = y - 10;
       ctx.fillStyle = POSTER_RED;
       ctx.beginPath();
-      ctx.roundRect(btnX, btnY, btnW, btnH, 50);
+      ctx.roundRect(buttonX, buttonY, buttonWidth, buttonHeight, 44);
       ctx.fill();
       ctx.fillStyle = "#ffffff";
-      ctx.font = "700 40px 'Geist', sans-serif";
-      ctx.fillText(t("ctaButton"), cx, btnY + btnH / 2 + 13);
+      ctx.font = "700 36px 'Geist', sans-serif";
+      ctx.fillText(t("ctaButton"), centerX, buttonY + buttonHeight / 2 + 11);
 
-      // ── BOTTOM SECTION: seal (right) + QR (left) + footer ──
-      const bottomY = h - my - 240;
-      const sealSize = 260;
-      const qrSize = 200;
-
-      // Seal — bottom right
       try {
         const sealImg = await ensureSealLoaded();
-        const sealX = mx + pw - 60 - sealSize;
-        const sealCY = bottomY + sealSize / 2;
+        const sealX = marginX + paperWidth - 60 - sealSize;
+        const sealCenterY = bottomY + sealSize / 2;
         ctx.save();
         ctx.beginPath();
-        ctx.arc(sealX + sealSize / 2, sealCY, sealSize / 2 + 10, 0, Math.PI * 2);
+        ctx.arc(sealX + sealSize / 2, sealCenterY, sealSize / 2 + 10, 0, Math.PI * 2);
         ctx.fillStyle = "#e8d5b0";
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(sealX + sealSize / 2, sealCY, sealSize / 2, 0, Math.PI * 2);
+        ctx.arc(sealX + sealSize / 2, sealCenterY, sealSize / 2, 0, Math.PI * 2);
         ctx.clip();
         ctx.drawImage(sealImg, sealX, bottomY, sealSize, sealSize);
         ctx.restore();
         ctx.strokeStyle = POSTER_GOLD;
         ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.arc(sealX + sealSize / 2, sealCY, sealSize / 2 + 10, 0, Math.PI * 2);
+        ctx.arc(sealX + sealSize / 2, sealCenterY, sealSize / 2 + 10, 0, Math.PI * 2);
         ctx.stroke();
       } catch {
-        // seal failed to load — skip
+        // Skip seal if it fails to load.
       }
 
-      // QR code — bottom left
-      const purchaseUrl = typeof window !== "undefined"
-        ? buildAbsoluteLocalizedUrl(window.location.origin, locale, "/verify?id=sample")
-        : buildAbsoluteLocalizedUrl("https://sharkhumanalliance.com", locale, "/verify?id=sample");
+      const purchaseUrl =
+        typeof window !== "undefined"
+          ? buildAbsoluteLocalizedUrl(window.location.origin, locale, "/verify?id=sample")
+          : buildAbsoluteLocalizedUrl("https://sharkhumanalliance.com", locale, "/verify?id=sample");
+
       try {
         const qrImg = await loadQrImage(purchaseUrl);
-        const qrX = mx + 60;
+        const qrX = marginX + 60;
         const qrY = bottomY + (sealSize - qrSize) / 2;
-        // White background behind QR
+
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
         ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 10);
@@ -297,56 +332,61 @@ export function WantedContent() {
         ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 10);
         ctx.stroke();
         ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
-        // Label under QR
+
         ctx.fillStyle = POSTER_MUTED;
         ctx.font = "500 22px 'Geist', sans-serif";
-        ctx.textAlign = "center";
         ctx.fillText(t("qrLabel"), qrX + qrSize / 2, qrY + qrSize + 36);
       } catch {
-        // QR failed to load — skip
+        // Skip QR if it fails to load.
       }
 
-      // Alliance branding at bottom
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "400 28px 'Geist', sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(t("posterFooter"), cx, h - my - 60);
+      ctx.font = "400 24px 'Geist', sans-serif";
+      ctx.fillText(t("posterFooter"), centerX, bottomY + sealSize + 74);
     },
-    [locale, name, selectedCharges, t, ensureSealLoaded, loadQrImage]
+    [ensureSealLoaded, loadQrImage, locale, name, selectedCharges, t],
   );
 
-  const handleGenerate = useCallback(async () => {
-    trackEvent("wanted_poster_generate", { name_length: name.trim().length });
-    setGenerated(true);
-    // Small delay to ensure canvas is mounted
-    await new Promise((r) => setTimeout(r, 100));
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
     canvas.width = 2100;
     canvas.height = 2970;
-    await drawPoster(ctx, 2100, 2970);
-  }, [drawPoster, name]);
+
+    drawPoster(ctx, 2100, 2970).catch(() => {
+      // Leave the previous frame in place if drawing fails.
+    });
+  }, [drawPoster]);
+
+  const handleGenerate = useCallback(() => {
+    trackEvent("wanted_poster_generate", { name_length: name.trim().length });
+    setGenerated(true);
+  }, [name]);
 
   const handleDownload = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     trackEvent("wanted_poster_download");
     setDownloading(true);
     try {
       const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/png")
+        canvas.toBlob(resolve, "image/png"),
       );
       if (!blob) return;
+
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
+      const link = document.createElement("a");
       const safeName = (name.trim() || "someone").replace(/\s+/g, "-").toLowerCase();
-      a.download = `wanted-${safeName}.png`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      link.href = url;
+      link.download = `wanted-${safeName}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
       URL.revokeObjectURL(url);
     } finally {
       setDownloading(false);
@@ -356,14 +396,17 @@ export function WantedContent() {
   const handleShare = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     trackEvent("wanted_poster_share");
     try {
       const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/png")
+        canvas.toBlob(resolve, "image/png"),
       );
       if (!blob) return;
+
       const safeName = (name.trim() || "someone").replace(/\s+/g, "-").toLowerCase();
       const file = new File([blob], `wanted-${safeName}.png`, { type: "image/png" });
+
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
@@ -371,20 +414,17 @@ export function WantedContent() {
           text: t("shareText", { name: name.trim() || t("defaultName") }),
         });
       } else {
-        // Fallback: copy page link to clipboard
-        const shareUrl = window.location.href;
-        await navigator.clipboard.writeText(shareUrl);
+        await navigator.clipboard.writeText(window.location.href);
         setLinkCopied(true);
         setTimeout(() => setLinkCopied(false), 2500);
       }
     } catch {
-      // User cancelled share or error — try clipboard as last resort
       try {
         await navigator.clipboard.writeText(window.location.href);
         setLinkCopied(true);
         setTimeout(() => setLinkCopied(false), 2500);
       } catch {
-        // clipboard also failed — silently ignore
+        // Ignore clipboard failure.
       }
     }
   }, [name, t]);
@@ -394,180 +434,227 @@ export function WantedContent() {
     setName("");
   }, []);
 
-  const giftUrl = `/purchase?tier=protected&gift=true${name.trim() ? `&name=${encodeURIComponent(name.trim())}` : ""}`;
+  const updateName = useCallback((value: string) => {
+    setGenerated(false);
+    setLinkCopied(false);
+    setName(value);
+  }, []);
+
+  const displayName = name.trim() || t("defaultName");
+  const giftUrl = `/purchase?tier=protected&gift=true${
+    name.trim() ? `&name=${encodeURIComponent(name.trim())}` : ""
+  }`;
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      {/* Hero */}
-      <section data-reveal className="py-14 lg:py-16 bg-gradient-to-b from-red-950/5 to-transparent">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
-            {t("label")}
-          </p>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
-            {t("title")}
-          </h1>
-          <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
-            {t("subtitle")}
-          </p>
-        </div>
-      </section>
+      <section
+        data-reveal
+        className="bg-gradient-to-b from-red-950/5 via-transparent to-transparent py-14 lg:py-16"
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-10">
+            <div className="lg:max-w-xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
+                {t("label")}
+              </p>
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+                {t("title")}
+              </h1>
+              <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
+                {t("subtitle")}
+              </p>
 
-      {/* Generator */}
-      <section data-reveal className="py-12 sm:py-14">
-        <div className="mx-auto max-w-xl px-4 sm:px-6">
-          {!generated ? (
-            /* ── Form state ──────────────────────────── */
-            <div className="rounded-xl border border-red-100 bg-white p-8 shadow-sm">
-              <div className="text-center mb-6">
-                <span className="text-5xl">🚨</span>
-                <h2 className="mt-4 text-2xl font-bold text-[var(--brand-dark)]">
-                  {t("formTitle")}
-                </h2>
-                <p className="mt-2 text-sm text-[var(--muted)]">
-                  {t("formSubtitle")}
-                </p>
-              </div>
+              <div className="mt-7 rounded-[28px] border border-red-100 bg-gradient-to-br from-red-50/70 via-white to-white p-6 shadow-sm sm:p-8">
+                <div className="border-b border-red-100 pb-5">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-red-700">
+                    {t("formTitle")}
+                  </p>
+                  <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+                    {t("formSubtitle")}
+                  </p>
+                </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="wanted-name"
-                    className="block text-sm font-semibold text-[var(--brand-dark)] mb-2"
-                  >
-                    {t("nameLabel")}
-                  </label>
-                  <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-white px-5 py-4 shadow-sm transition focus-within:border-red-400 focus-within:shadow-md">
-                    <span className="text-lg" aria-hidden="true">🔍</span>
+                <form
+                  className="mt-5 space-y-4"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    if (name.trim()) handleGenerate();
+                  }}
+                >
+                  <div>
+                    <label
+                      htmlFor="wanted-name"
+                      className="mb-2 block text-sm font-semibold text-[var(--brand-dark)]"
+                    >
+                      {t("nameLabel")}
+                    </label>
                     <input
                       id="wanted-name"
+                      name="wanted_name"
                       type="text"
+                      autoComplete="name"
+                      autoCorrect="off"
+                      autoCapitalize="words"
+                      spellCheck={false}
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(event) => updateName(event.target.value)}
                       placeholder={t("namePlaceholder")}
-                      className="w-full bg-transparent text-base text-[var(--brand-dark)] placeholder:text-[var(--muted)]/50 focus:outline-none"
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && name.trim()) handleGenerate();
-                      }}
+                      className="w-full rounded-xl border border-red-200 bg-white px-5 py-4 text-base text-[var(--brand-dark)] shadow-sm placeholder:text-[var(--muted)]/50 transition focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/15"
                     />
                   </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {[t("suggestion1"), t("suggestion2"), t("suggestion3")].map((suggestion) => (
+                      <button
+                        key={suggestion}
+                        type="button"
+                        onClick={() => updateName(suggestion)}
+                        className="rounded-lg border border-red-100 bg-red-50/50 px-4 py-1.5 text-xs font-medium text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={!name.trim()}
+                    className="min-h-[52px] w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {t("generateButton")}
+                  </button>
+                </form>
+
+                <p className="mt-5 text-xs leading-6 text-[var(--muted)]">
+                  {t("formDisclaimer")}
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:sticky lg:top-28">
+              <div className="rounded-[28px] border border-amber-900/15 bg-white p-4 shadow-sm sm:p-5">
+                <div className="border-b border-[var(--border)] pb-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+                      {t("previewLabel")}
+                    </span>
+                    <span className="truncate text-xs font-medium text-[var(--muted)]">
+                      {displayName}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+                    {generated ? t("previewHintAfterGenerate") : t("previewHintBeforeGenerate")}
+                  </p>
                 </div>
 
-                {/* Suggestion chips */}
-                <div className="flex flex-wrap gap-2">
-                  {[t("suggestion1"), t("suggestion2"), t("suggestion3")].map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => setName(s)}
-                      className="rounded-lg border border-red-100 bg-red-50/50 px-4 py-1.5 text-xs font-medium text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
+                <div className="mt-4 overflow-hidden rounded-xl border border-amber-900/20 bg-[#140900] shadow-sm">
+                  <canvas
+                    ref={canvasRef}
+                    className="h-auto w-full"
+                    style={{ aspectRatio: "210 / 297" }}
+                  />
+                </div>
+
+                <div className="mt-4 space-y-3">
+                  {generated ? (
+                    <LocalizedLink
+                      href={giftUrl}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
                     >
-                      {s}
+                      {t("giftCta", { name: displayName })}
+                    </LocalizedLink>
+                  ) : null}
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={handleDownload}
+                      disabled={!generated || downloading}
+                      className="rounded-lg border border-[var(--border)] bg-white px-4 py-3.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {downloading ? t("downloadingButton") : t("downloadButton")}
                     </button>
-                  ))}
+
+                    <button
+                      onClick={handleShare}
+                      disabled={!generated}
+                      className={`rounded-lg border px-4 py-3.5 text-sm font-semibold transition-colors duration-300 ease-out disabled:cursor-not-allowed disabled:opacity-60 ${
+                        linkCopied
+                          ? "border-teal-300 bg-teal-50 text-teal-700"
+                          : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"
+                      }`}
+                    >
+                      {linkCopied ? t("linkCopied") : t("shareButton")}
+                    </button>
+                  </div>
+
+                  <p className="text-xs leading-6 text-[var(--muted)]">
+                    {t("viralPrompt")} {t("viralSubtext")}
+                  </p>
+
+                  {generated ? (
+                    <button
+                      onClick={handleRegenerate}
+                      className="w-full text-center text-sm font-medium text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+                    >
+                      {t("newPoster")}
+                    </button>
+                  ) : null}
                 </div>
-
-                <button
-                  onClick={handleGenerate}
-                  disabled={!name.trim()}
-                  className="mt-4 w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  {t("generateButton")}
-                </button>
-              </div>
-
-              <p className="mt-6 text-center text-xs text-[var(--muted)]">
-                {t("formDisclaimer")}
-              </p>
-            </div>
-          ) : (
-            /* ── Result state ─────────────────────────── */
-            <div className="space-y-6">
-              {/* Canvas poster preview */}
-              <div className="rounded-xl overflow-hidden shadow-md border border-amber-900/20">
-                <canvas
-                  ref={canvasRef}
-                  className="w-full h-auto"
-                  style={{ aspectRatio: "210/297" }}
-                />
-              </div>
-
-              {/* Action buttons */}
-              <div className="space-y-3">
-                <LocalizedLink
-                  href={giftUrl}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
-                >
-                  {t("giftCta", { name: name.trim() || t("defaultName") })}
-                </LocalizedLink>
-
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <button
-                    onClick={handleDownload}
-                    disabled={downloading}
-                    className="rounded-lg border border-[var(--border)] bg-white px-4 py-3.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-50 disabled:opacity-60"
-                  >
-                    {downloading ? t("downloadingButton") : t("downloadButton")}
-                  </button>
-
-                  <button
-                    onClick={handleShare}
-                    className={`rounded-lg border px-4 py-3.5 text-sm font-semibold transition-colors duration-300 ease-out ${linkCopied ? "border-teal-300 bg-teal-50 text-teal-700" : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"}`}
-                  >
-                    {linkCopied ? t("linkCopied") : t("shareButton")}
-                  </button>
-                </div>
-
-                <button
-                  onClick={handleRegenerate}
-                  className="w-full text-center text-sm font-medium text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
-                >
-                  {t("newPoster")}
-                </button>
-              </div>
-
-              {/* Viral sharing prompt */}
-              <div className="rounded-xl border border-orange-100 bg-orange-50/50 p-6 text-center">
-                <p className="text-sm font-semibold text-orange-800">
-                  {t("viralPrompt")}
-                </p>
-                <p className="mt-2 text-xs text-orange-600">
-                  {t("viralSubtext")}
-                </p>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </section>
 
-      {/* How it works strip */}
-      <section data-reveal className="border-t border-[var(--border)] bg-white pb-16 pt-4">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
-          <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
-            {t("howTitle")}
-          </h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex flex-col items-center gap-3">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-2xl">
-                  {t(`howStep${i}Icon`)}
-                </span>
-                <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
-                  {t(`howStep${i}Title`)}
-                </h3>
-                <p className="text-sm text-[var(--muted)]">
-                  {t(`howStep${i}Text`)}
-                </p>
-              </div>
-            ))}
+      <section data-reveal className="py-10 sm:py-14">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
+            <div className="border-b border-[var(--border)] px-6 py-5 sm:px-8">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+                {t("howTitle")}
+              </p>
+            </div>
+            <div className="grid gap-0 md:grid-cols-3">
+              {[1, 2, 3].map((i, index) => (
+                <article
+                  key={i}
+                  className={`px-6 py-6 sm:px-8 ${
+                    index > 0 ? "border-t border-[var(--border)] md:border-l md:border-t-0" : ""
+                  }`}
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+                    0{i}
+                  </p>
+                  <h2 className="mt-3 text-xl font-semibold text-[var(--brand-dark)]">
+                    {t(`howStep${i}Title`)}
+                  </h2>
+                  <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+                    {t(`howStep${i}Text`)}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
-          <div className="mt-10">
-            <LocalizedLink
-              href="/purchase?tier=protected&gift=true"
-              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8"
-            >
-              {t("bottomCta")}
-            </LocalizedLink>
+        </div>
+      </section>
+
+      <section data-reveal className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <div className="text-center">
+            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              {t("footerCtaTitle")}
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/95">
+              {t("footerCtaText")}
+            </p>
+            <div className="mt-8 flex justify-center">
+              <LocalizedLink
+                href="/purchase?tier=protected&gift=true"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
+              >
+                {t("footerCtaButton")}
+              </LocalizedLink>
+            </div>
           </div>
         </div>
       </section>

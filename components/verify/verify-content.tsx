@@ -14,13 +14,16 @@ type VerifyContentProps = {
   referralSourceCode?: string;
 };
 
-function getTierLabel(tier: string) {
+function getTierLabel(
+  tier: string,
+  t: (key: "tierNonsnack" | "tierBusiness" | "tierProtected") => string,
+) {
   const normalized = tier?.toLowerCase() ?? "";
   if (normalized === "nonsnack" || normalized.includes("non-snack"))
-    return "Non-Snack Recognition";
+    return t("tierNonsnack");
   if (normalized === "business" || normalized.includes("zone"))
-    return "Shark-Approved Zone";
-  return "Protected Friend";
+    return t("tierBusiness");
+  return t("tierProtected");
 }
 
 function getTierColor(tier: string) {
@@ -32,21 +35,15 @@ function getTierColor(tier: string) {
   return "#1a7a6d";
 }
 
-const VERIFICATION_QUIPS = [
-  "Our sharks have reviewed the records and confirm: this one checks out.",
-  "Cross-referenced with marine intelligence. Status: legitimate and mildly reassuring.",
-  "The Department of Aquatic Bureaucracy has stamped this record. Twice, for emphasis.",
-  "Verified by Finnley Mako personally. He used his reading glasses and everything.",
-  "This membership has survived our rigorous three-second verification process.",
-  "Confirmed. The ocean's most meticulous filing system has spoken.",
-];
-
-function getQuip(registryId: string) {
+function getQuip(
+  registryId: string,
+  quips: string[],
+) {
   let hash = 0;
   for (let i = 0; i < registryId.length; i++) {
     hash = ((hash << 5) - hash + registryId.charCodeAt(i)) | 0;
   }
-  return VERIFICATION_QUIPS[Math.abs(hash) % VERIFICATION_QUIPS.length];
+  return quips[Math.abs(hash) % quips.length];
 }
 
 export function VerifyContent({
@@ -59,9 +56,17 @@ export function VerifyContent({
   referralSourceCode,
 }: VerifyContentProps) {
   const t = useTranslations("verify");
-  const tierLabel = getTierLabel(tier);
+  const quips = [
+    t("quip1"),
+    t("quip2"),
+    t("quip3"),
+    t("quip4"),
+    t("quip5"),
+    t("quip6"),
+  ];
+  const tierLabel = getTierLabel(tier, t);
   const tierColor = getTierColor(tier);
-  const quip = getQuip(registryId);
+  const quip = getQuip(registryId, quips);
   const rank = getRankInfo(referralCount || 0);
   const rankUi = getRankUi(rank.id);
   const purchaseHref = referralSourceCode
