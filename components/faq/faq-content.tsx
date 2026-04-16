@@ -21,13 +21,13 @@ export function FaqContent() {
 
   return (
     <>
-      <section data-reveal className="py-14 lg:py-16">
+      <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("label")}
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
             <p className="mt-3 text-lg leading-7 text-[var(--muted)]">
@@ -37,7 +37,7 @@ export function FaqContent() {
         </div>
       </section>
 
-      <section data-reveal className="py-12 sm:py-14">
+      <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="space-y-3">
             {items.map((item, idx) => {

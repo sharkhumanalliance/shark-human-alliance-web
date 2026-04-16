@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function FaqJsonLd({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "faqPage" });
-  const items = Array.from({ length: 8 }, (_, i) => ({
+  const items = Array.from({ length: 11 }, (_, i) => ({
     "@type": "Question" as const,
     name: t(`items.${i}.question`),
     acceptedAnswer: {

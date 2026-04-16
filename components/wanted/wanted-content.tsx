@@ -449,7 +449,7 @@ export function WantedContent() {
     <div className="min-h-screen bg-[var(--background)]">
       <section
         data-reveal
-        className="bg-gradient-to-b from-red-950/5 via-transparent to-transparent py-14 lg:py-16"
+        className="bg-gradient-to-b from-red-950/5 via-transparent to-transparent py-12 sm:py-14 lg:py-16"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-10">
@@ -606,7 +606,7 @@ export function WantedContent() {
         </div>
       </section>
 
-      <section data-reveal className="py-10 sm:py-14">
+      <section data-reveal className="py-8 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
             <div className="border-b border-[var(--border)] px-6 py-5 sm:px-8">

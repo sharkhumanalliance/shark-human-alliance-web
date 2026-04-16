@@ -65,21 +65,12 @@ export const metadata: Metadata = {
     title: "Shark Human Alliance — Official Shark Protection Certificates",
     description:
       "Get official Protected Friend status and fund real shark conservation. The perfect gag gift for anyone who's ever side-eyed the ocean.",
-    images: [
-      {
-        url: "/mascots/homepage-hero-plush.png",
-        width: 1152,
-        height: 768,
-        alt: "Finnley Mako and Luna Reef — Shark Human Alliance ambassadors",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Shark Human Alliance",
     description:
       "Official shark protection certificates + real conservation funding. From $4.",
-    images: ["/mascots/homepage-hero-plush.png"],
   },
   robots: {
     index: true,

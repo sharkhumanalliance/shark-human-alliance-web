@@ -104,10 +104,10 @@ export function MembershipPageContent() {
   return (
     <>
       {/* ── 1. HERO — clean, one CTA ── */}
-      <section data-reveal className="relative overflow-hidden py-14 lg:py-16">
+      <section data-reveal className="relative overflow-hidden py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
-            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+            <h1 className="max-w-4xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
 
@@ -134,7 +134,7 @@ export function MembershipPageContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("tiersLabel")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("tiersTitle")}
             </h2>
             <p className="mt-3 text-base leading-7 text-[var(--muted)]">
@@ -151,13 +151,13 @@ export function MembershipPageContent() {
       </section>
 
       {/* ── 3. STYLES — compact certificate previews ── */}
-      <section data-reveal id="styles" className="border-t border-[var(--border)] bg-[var(--surface-soft)] py-12 sm:py-14">
+      <section data-reveal id="styles" className="border-t border-[var(--border)] bg-[var(--surface-soft)] py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("stylesLabel")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("stylesTitle")}
             </h2>
           </div>
@@ -194,13 +194,13 @@ export function MembershipPageContent() {
       </section>
 
       {/* ── 4. FAQ + LEGAL — merged, compact ── */}
-      <section data-reveal className="py-12 sm:py-14">
+      <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("faqLabel")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("faqTitle")}
             </h2>
           </div>

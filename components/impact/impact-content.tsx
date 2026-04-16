@@ -69,7 +69,7 @@ export function ImpactContent() {
 
   return (
     <>
-      <section data-reveal className="py-14 lg:py-16">
+      <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
@@ -85,10 +85,10 @@ export function ImpactContent() {
         </div>
       </section>
 
-      <section data-reveal className="py-12 sm:py-14">
+      <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
+            <h2 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("splitTitle")}
             </h2>
             <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
@@ -156,16 +156,16 @@ export function ImpactContent() {
         </div>
       </section>
 
-      <section data-reveal className="bg-[var(--surface-soft)] py-12 sm:py-14">
+      <section data-reveal className="bg-[var(--surface-soft)] py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
                 {t("partnersTitle")}
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
-                {t("partnersSubtitle")}
               </h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
+                {t("partnersSubtitle")}
+              </p>
 
               <div className="mt-8 space-y-4">
                 {PARTNERS.map(({ key, url }, index) => {
@@ -217,12 +217,12 @@ export function ImpactContent() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
                 {t("reportingTitle")}
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)]">
-                {t("reportingSubtitle")}
               </h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
+                {t("reportingSubtitle")}
+              </p>
 
               <div className="mt-8 overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
                 {[1, 2, 3].map((i, index) => (
@@ -263,10 +263,10 @@ export function ImpactContent() {
         </div>
       </section>
 
-      <section data-reveal className="py-12 sm:py-14">
+      <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("selectionTitle")}
             </h2>
           </div>

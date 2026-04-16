@@ -56,12 +56,12 @@ export default async function TermsPage({ params }: Props) {
     <>
       <SiteHeader />
       <main id="main" className="bg-[var(--surface-soft)] pb-20 md:pb-0">
-        <section data-reveal className="py-14 lg:py-20">
+        <section data-reveal className="py-12 sm:py-14 lg:py-16">
           <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("eyebrow")}
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
             <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
@@ -73,7 +73,7 @@ export default async function TermsPage({ params }: Props) {
           </div>
         </section>
 
-        <section data-reveal className="py-12 lg:py-16">
+        <section data-reveal className="py-10 sm:py-12 lg:py-14">
           <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <div className="space-y-5">
               {sections.map((section) => (

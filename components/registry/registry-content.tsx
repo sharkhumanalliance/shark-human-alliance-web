@@ -163,7 +163,7 @@ export function RegistryContent() {
 
   return (
     <>
-      <section data-reveal className="py-14 lg:py-16">
+      <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">
             <div className="max-w-3xl">
@@ -285,7 +285,7 @@ export function RegistryContent() {
         </div>
       </section>
 
-      <section data-reveal className="py-12 sm:py-14">
+      <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           {loading ? (
             <div role="status" aria-live="polite" aria-label={t("loadingText")}>
@@ -493,7 +493,7 @@ export function RegistryContent() {
       </section>
 
       {!loading && members.length > 0 ? (
-        <section data-reveal className="pb-14">
+        <section data-reveal className="pb-12">
           <div className="mx-auto max-w-6xl space-y-6 px-4 sm:px-6">
             <section className="rounded-[28px] border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">
               <div className="grid gap-6 lg:grid-cols-2">

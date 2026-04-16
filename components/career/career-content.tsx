@@ -159,7 +159,7 @@ export function CareerContent() {
 
   return (
     <>
-      <section data-reveal className="py-14 lg:py-16">
+      <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
@@ -187,7 +187,7 @@ export function CareerContent() {
             </div>
           </div>
 
-          <div className="mt-12 border-t border-[var(--border)] pt-8">
+          <div className="mt-10 border-t border-[var(--border)] pt-6">
             <div className="max-w-4xl">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
                 {t("ladder.label")}
@@ -229,7 +229,7 @@ export function CareerContent() {
         </div>
       </section>
 
-      <section id="career-rank-check" data-reveal className="py-12 sm:py-14">
+      <section id="career-rank-check" data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="overflow-hidden rounded-[28px] border border-sky-200 bg-gradient-to-br from-sky-50/70 via-white to-white shadow-sm">
             <div className="border-b border-sky-100 bg-sky-50/80 px-5 py-3 sm:px-8">
@@ -376,7 +376,7 @@ export function CareerContent() {
         </div>
       </section>
 
-      <section data-reveal className="py-12 sm:py-14">
+      <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">

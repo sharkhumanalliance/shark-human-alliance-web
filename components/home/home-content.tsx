@@ -86,7 +86,7 @@ export function HomeContent() {
 
   return (
     <>
-      <section data-reveal className="bg-white py-14 lg:py-16">
+      <section data-reveal className="bg-white py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
@@ -121,7 +121,7 @@ export function HomeContent() {
         <section
           data-reveal
           id="certificate-preview"
-          className="scroll-mt-28 bg-[var(--surface-soft)] py-12 sm:py-14 lg:py-16"
+          className="scroll-mt-28 bg-[var(--surface-soft)] py-10 sm:py-12 lg:py-14"
         >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
@@ -192,7 +192,7 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section data-reveal id="membership" className="bg-white py-12 sm:py-14">
+      <section data-reveal id="membership" className="bg-white py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
@@ -260,7 +260,7 @@ export function HomeContent() {
       <section
         data-reveal
         id="real-impact"
-        className="bg-[var(--surface-soft)] py-12 sm:py-14"
+        className="bg-[var(--surface-soft)] py-10 sm:py-12"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
