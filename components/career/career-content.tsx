@@ -161,34 +161,34 @@ export function CareerContent() {
     <>
       <section data-reveal className="py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.78fr)] lg:items-end">
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
-                {t("hero.label")}
-              </p>
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
-                {t("hero.title")}
-              </h1>
-              <p className="mt-3 max-w-2xl text-lg leading-7 text-[var(--muted)]">
-                {t("hero.subtitle")}
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <LocalizedLink
-                  href="/purchase?tier=protected"
-                  className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:px-8"
-                >
-                  {t("cta.button")}
-                </LocalizedLink>
-                <a
-                  href="#career-rank-check"
-                  className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
-                >
-                  {t("checkRank.button")}
-                </a>
-              </div>
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+              {t("hero.label")}
+            </p>
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+              {t("hero.title")}
+            </h1>
+            <p className="mt-3 max-w-2xl text-lg leading-7 text-[var(--muted)]">
+              {t("hero.subtitle")}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <LocalizedLink
+                href="/purchase?tier=protected"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:px-8"
+              >
+                {t("cta.button")}
+              </LocalizedLink>
+              <a
+                href="#career-rank-check"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
+              >
+                {t("checkRank.button")}
+              </a>
             </div>
+          </div>
 
-            <div className="border-t border-[var(--border)] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+          <div className="mt-12 border-t border-[var(--border)] pt-8">
+            <div className="max-w-4xl">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
                 {t("ladder.label")}
               </p>
@@ -198,7 +198,7 @@ export function CareerContent() {
                     key={rank.name}
                     className="flex items-start justify-between gap-4 border-b border-[var(--border)] pb-4"
                   >
-                      <div className="flex min-w-0 gap-3">
+                    <div className="flex min-w-0 gap-3">
                       <span
                         className={`w-10 shrink-0 pt-0.5 text-right text-2xl font-light tabular-nums ${rank.color}`}
                       >
@@ -208,12 +208,12 @@ export function CareerContent() {
                         <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">
                           {rank.name}
                         </p>
-                        <p className="mt-1 max-w-md text-sm leading-6 text-[var(--muted)]">
+                        <p className="mt-1 max-w-2xl text-sm leading-6 text-[var(--muted)]">
                           {rank.description}
                         </p>
                       </div>
                     </div>
-                    <div className="shrink-0 text-right">
+                    <div className="shrink-0 pl-4 text-right">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                         {t("ladder.unlocksAt")}
                       </p>

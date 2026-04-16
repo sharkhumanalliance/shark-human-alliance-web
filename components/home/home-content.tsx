@@ -198,7 +198,7 @@ export function HomeContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("membershipSection.label")}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("membershipSection.title")}
             </h2>
             <p className="mt-3 text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
@@ -267,7 +267,7 @@ export function HomeContent() {
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("realImpact.label")}
             </p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--brand-dark)]">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("realImpact.title")}
             </h2>
           </div>
