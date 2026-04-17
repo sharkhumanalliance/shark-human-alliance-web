@@ -160,12 +160,14 @@ export function ImpactContent() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
-                {t("partnersTitle")}
-              </h2>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
-                {t("partnersSubtitle")}
-              </p>
+              <div className="lg:min-h-[10rem]">
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+                  {t("partnersTitle")}
+                </h2>
+                <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
+                  {t("partnersSubtitle")}
+                </p>
+              </div>
 
               <div className="mt-8 space-y-4">
                 {PARTNERS.map(({ key, url }, index) => {
@@ -217,12 +219,14 @@ export function ImpactContent() {
             </div>
 
             <div>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
-                {t("reportingTitle")}
-              </h2>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
-                {t("reportingSubtitle")}
-              </p>
+              <div className="lg:min-h-[10rem]">
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+                  {t("reportingTitle")}
+                </h2>
+                <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
+                  {t("reportingSubtitle")}
+                </p>
+              </div>
 
               <div className="mt-8 overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
                 {[1, 2, 3].map((i, index) => (
