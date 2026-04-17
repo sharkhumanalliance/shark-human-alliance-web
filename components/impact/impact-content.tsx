@@ -158,7 +158,7 @@ export function ImpactContent() {
 
       <section data-reveal className="bg-[var(--surface-soft)] py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
             <div>
               <div className="lg:min-h-[10rem]">
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -169,7 +169,7 @@ export function ImpactContent() {
                 </p>
               </div>
 
-              <div className="mt-8 space-y-4">
+              <div className="mt-6 space-y-4">
                 {PARTNERS.map(({ key, url }, index) => {
                   const variant =
                     index === 0 ? "protected" : index === 1 ? "nonsnack" : index === 2 ? "business" : "protected";
@@ -213,7 +213,7 @@ export function ImpactContent() {
                 })}
               </div>
 
-              <p className="mt-6 text-sm italic text-[var(--muted)]">
+              <p className="mt-5 text-sm italic text-[var(--muted)]">
                 {t("partnersDisclaimer")}
               </p>
             </div>
@@ -228,7 +228,7 @@ export function ImpactContent() {
                 </p>
               </div>
 
-              <div className="mt-8 overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
+              <div className="mt-6 overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
                 {[1, 2, 3].map((i, index) => (
                   <article
                     key={i}
@@ -251,7 +251,7 @@ export function ImpactContent() {
                 ))}
               </div>
 
-              <aside className="mt-5 rounded-2xl border border-[var(--border)] bg-white px-5 py-5 sm:px-6">
+              <aside className="mt-4 rounded-2xl border border-[var(--border)] bg-white px-5 py-5 sm:px-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
                   {t("preReportLabel")}
                 </p>
@@ -275,7 +275,7 @@ export function ImpactContent() {
             </h2>
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
+          <div className="mt-6 overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
             <div className="grid sm:grid-cols-2">
                 {[1, 2, 3, 4].map((i, index) => (
                   <article

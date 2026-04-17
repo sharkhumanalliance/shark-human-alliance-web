@@ -243,9 +243,9 @@ function SuccessContentInner() {
   const displayDate = formatCertificateDate(member.date, locale);
 
   return (
-    <section data-reveal className="py-14">
+    <section data-reveal className="py-12 sm:py-14">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <div className="mb-10">
+        <div className="mb-8">
           <StepIndicator currentStep={3} />
         </div>
 
@@ -265,14 +265,14 @@ function SuccessContentInner() {
           member={{ id: member.id, name: member.name, tier: member.tier }}
         />
 
-        <div className="mt-8 sm:mt-10">
+        <div className="mt-6 sm:mt-8">
           <CertificateTemplateSelector
             value={template}
             onChange={setTemplate}
           />
         </div>
 
-        <div className="mt-6 mx-auto grid max-w-xl grid-cols-1 gap-3 min-[420px]:grid-cols-2">
+        <div className="mt-5 mx-auto grid max-w-xl grid-cols-1 gap-3 min-[420px]:grid-cols-2">
           {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
             const isSelected = paperFormat === formatOption;
             return (
@@ -297,7 +297,7 @@ function SuccessContentInner() {
           </p>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-5">
           <CertificatePreview
             name={member.name}
             tier={member.tier}
@@ -310,7 +310,7 @@ function SuccessContentInner() {
           />
         </div>
 
-        <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
+        <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
           <button
             onClick={handleDownloadCertificate}
             className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:w-auto"
@@ -341,7 +341,7 @@ function SuccessContentInner() {
         ) : null}
 
         {member.referralCode && (
-          <div className="mt-10 mx-auto max-w-xl">
+          <div className="mt-8 mx-auto max-w-xl">
             <div className="rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-4 text-center sm:p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
                 {t("referralTitle")}
@@ -386,7 +386,7 @@ function SuccessContentInner() {
           </div>
         )}
 
-        <div className="mt-8 mx-auto max-w-md text-center">
+        <div className="mt-6 mx-auto max-w-md text-center">
           {member.hasEmail ? (
             <p className="text-sm text-[var(--muted)]">
               {t("emailSentAutomatic")}

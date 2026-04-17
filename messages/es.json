@@ -191,7 +191,7 @@
       "previewSectionLabel": "Pruébalo en vivo"
     },
     "impactTeaser": {
-      "donationsIntro": "Cada certificado contribuye a un fondo de conservación rastreado públicamente. A medida que ese fondo crece, publicamos adónde va el dinero y quién lo recibe.",
+      "donationsIntro": "Cada certificado contribuye a una asignación para conservación que rastreamos y reportamos públicamente. A medida que se realizan donaciones, publicamos las organizaciones destinatarias y los importes asignados.",
       "and": "y",
       "opsJoke": "El resto mantiene funcionando el departamento de operaciones terrestres de una sola persona de la Alianza (apenas).",
       "linkText": "Ver informe completo de impacto y detalles de socios"
@@ -315,52 +315,60 @@
     "label": "FAQ",
     "title": "Preguntas razonables. Respuestas excelentes.",
     "subtitle": "Para personas sensatas que quieren saber qué están comprando, adónde va el dinero y si los tiburones pueden leer certificados.",
-    "items": [
-      {
-        "question": "¿Es real la alianza?",
-        "answer": "La alianza es ficticia e intencionalmente humorística. La financiación para conservación es real."
-      },
-      {
-        "question": "¿La membresía me protege de los tiburones?",
-        "answer": "No. No ofrece protección marina de ningún tipo. Eso sí, ayuda a proteger a tiburones reales de los humanos, que es el problema estadísticamente más relevante."
-      },
-      {
-        "question": "¿Adónde va realmente el dinero?",
-        "answer": "Cada certificado contribuye a un fondo de conservación rastreado públicamente. A medida que ese fondo crece, publicamos adónde va el dinero y quién lo recibe."
-      },
-      {
-        "question": "¿Cuánto cuesta cada certificado?",
-        "answer": "Protected Friend cuesta $4. Non-Snack Recognition cuesta $19. Shark-Approved Zone cuesta $99."
-      },
-      {
-        "question": "¿Recibiré un certificado de inmediato?",
-        "answer": "Sí. Recibes un certificado digital personalizado. Si proporcionas email, también enviamos el enlace por correo."
-      },
-      {
-        "question": "¿Qué recibo inmediatamente después de comprar?",
-        "answer": "Una página de confirmación con vista previa del certificado y enlace de descarga. Si escribes un email, también enviamos el enlace a esa bandeja."
-      },
-      {
-        "question": "¿Puedo acceder a mi certificado más tarde?",
-        "answer": "Sí, si proporcionas un email durante el checkout. Si no, el certificado solo estará disponible para descarga inmediata y el enlace no se guardará."
-      },
-      {
-        "question": "¿Cómo funciona la entrega de regalos?",
-        "answer": "Puedes comprar el certificado como regalo e introducir los datos del destinatario durante el checkout. Si quieres acceso posterior fiable, incluye un email en la compra."
-      },
-      {
-        "question": "¿Por qué tiburones?",
-        "answer": "Porque los tiburones tienen un problema de PR que no crearon. Los humanos matan aproximadamente 100 millones de tiburones al año. Los tiburones matan a muy pocos humanos. El desequilibrio da vergüenza."
-      },
-      {
-        "question": "¿Es deducible de impuestos?",
-        "answer": "No. Esto es la compra de un producto digital humorístico, no una donación directa."
-      },
-      {
-        "question": "¿Qué tamaño tiene el certificado?",
-        "answer": "Los certificados están optimizados para descarga e impresión en A4 o US Letter."
-      }
-    ],
+      "items": [
+        {
+          "question": "¿Es real la alianza?",
+          "answer": "La alianza es ficticia e intencionalmente humorística. La financiación para conservación es real."
+        },
+        {
+          "question": "¿La membresía me protege de los tiburones?",
+          "answer": "No. No ofrece protección marina de ningún tipo. Eso sí, ayuda a proteger a tiburones reales de los humanos, que es el problema estadísticamente más relevante."
+        },
+        {
+          "question": "¿Adónde va realmente el dinero?",
+          "answer": "Cada certificado contribuye a una asignación para conservación que rastreamos y reportamos públicamente. A medida que se realizan donaciones, publicamos las organizaciones destinatarias y los importes asignados."
+        },
+        {
+          "question": "¿Cuándo empiezan las donaciones y cómo se informarán?",
+          "answer": "Publicamos las asignaciones una vez que las donaciones se realizan de verdad. Esta página y nuestras redes sociales mostrarán las organizaciones destinatarias y los importes reportados a medida que ocurra."
+        },
+        {
+          "question": "¿Son estas organizaciones socios formales?",
+          "answer": "No, salvo que lo digamos explícitamente. Primero listamos destinatarios previstos y solo describimos a una organización como socio formal o destinatario confirmado cuando eso sea realmente cierto."
+        },
+        {
+          "question": "¿Cuánto cuesta cada certificado?",
+          "answer": "Protected Friend cuesta $4. Non-Snack Recognition cuesta $19. Shark-Approved Zone cuesta $99."
+        },
+        {
+          "question": "¿Recibiré un certificado de inmediato?",
+          "answer": "Sí. Recibes un certificado digital personalizado. Si proporcionas email, también enviamos el enlace por correo."
+        },
+        {
+          "question": "¿Qué recibo inmediatamente después de comprar?",
+          "answer": "Una página de confirmación con vista previa del certificado y enlace de descarga. Si escribes un email, también enviamos el enlace a esa bandeja."
+        },
+        {
+          "question": "¿Puedo acceder a mi certificado más tarde?",
+          "answer": "Sí, si proporcionas un email durante el checkout. Si no, el certificado solo estará disponible para descarga inmediata y el enlace no se guardará."
+        },
+        {
+          "question": "¿Puedo comprarlo como regalo?",
+          "answer": "Sí. Puedes comprar el certificado como regalo e introducir los datos del destinatario durante el checkout. Si quieres acceso posterior fiable, incluye un email en la compra."
+        },
+        {
+          "question": "¿Por qué tiburones?",
+          "answer": "Porque los tiburones tienen un problema de PR que no crearon. Los humanos matan aproximadamente 100 millones de tiburones al año. Los tiburones matan a muy pocos humanos. El desequilibrio da vergüenza."
+        },
+        {
+          "question": "¿Es una donación o la compra de un producto?",
+          "answer": "Es la compra de un producto digital humorístico. Desde ese ingreso destinamos una parte a conservación; no estás haciendo una donación benéfica directa y no es deducible de impuestos."
+        },
+        {
+          "question": "¿Qué tamaño tiene el certificado?",
+          "answer": "Los certificados están optimizados para descarga e impresión en A4 o US Letter."
+        }
+      ],
     "ctaTitle": "¿Aún tienes preguntas?",
     "ctaText": "La mejor manera de entender el certificado es verlo. Prueba la vista previa en vivo en nuestra página principal — o simplemente hazlo.",
     "ctaButton": "Obtén tu certificado"
@@ -875,7 +883,7 @@
     "title": "Adónde va realmente el dinero.",
     "subtitle": "La Alianza es ficticia. La financiación no. Esta página explica qué aporta cada certificado, a quién pretendemos apoyar y cómo funcionarán los reportes.",
     "splitTitle": "Cómo se dividen los fondos",
-    "splitDescription": "Los precios de los certificados son $4, $19 y $99. Las asignaciones para conservación se rastrean públicamente y se reportan aquí a medida que se distribuyen.",
+      "splitDescription": "Los precios de los certificados son $4, $19 y $99. La parte de cada venta destinada a conservación se rastrea y se reporta aquí a medida que se realizan las donaciones.",
     "splitOf": "de",
     "splitGoesToOcean": "va a conservación",
     "splitProtectedAmount": "$1",
@@ -893,7 +901,7 @@
     "splitOpsLabel": "Operaciones terrestres (la parte aburrida)",
     "splitOpsText": "El resto cubre la parte poco glamurosa en tierra firme: hosting, renderizado, administración y una persona haciendo todo esto en bata.",
     "partnersTitle": "Adónde va el dinero",
-    "partnersSubtitle": "Estas son organizaciones que pretendemos apoyar a medida que crezca el fondo. No afirmaremos una alianza formal hasta que exista realmente.",
+      "partnersSubtitle": "Estas son organizaciones que pretendemos apoyar a medida que se realicen las donaciones. No afirmaremos una alianza formal hasta que exista realmente.",
     "partner1Name": "Shark Trust",
     "partner1Desc": "Organización benéfica del Reino Unido dedicada a salvaguardar el futuro de los tiburones mediante ciencia, educación e influencia política.",
     "partner1Focus": "Enfoque: Política de tiburones en el Reino Unido y Europa, conservación basada en ciencia, campañas de educación pública.",

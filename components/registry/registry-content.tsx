@@ -165,7 +165,7 @@ export function RegistryContent() {
     <>
       <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">
             <div className="max-w-3xl">
               <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
                 {t("title")}
@@ -204,7 +204,7 @@ export function RegistryContent() {
             ) : null}
           </div>
 
-          <div className="mt-8 rounded-[24px] border border-[var(--border)] bg-white px-5 py-4 shadow-sm sm:px-6">
+          <div className="mt-6 rounded-[24px] border border-[var(--border)] bg-white px-5 py-4 shadow-sm sm:px-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
               <div className="min-w-0 flex-1">
                 <label
@@ -494,7 +494,7 @@ export function RegistryContent() {
 
       {!loading && members.length > 0 ? (
         <section data-reveal className="pb-12">
-          <div className="mx-auto max-w-6xl space-y-6 px-4 sm:px-6">
+          <div className="mx-auto max-w-6xl space-y-5 px-4 sm:px-6">
             <section className="rounded-[28px] border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">
               <div className="grid gap-6 lg:grid-cols-2">
                 <div>

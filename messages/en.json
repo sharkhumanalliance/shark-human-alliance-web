@@ -180,7 +180,7 @@
       "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
-      "donationsIntro": "Each certificate contributes to a publicly tracked conservation fund. As that fund grows, we publish where the money goes and who receives it.",
+      "donationsIntro": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated.",
       "and": "and",
       "opsJoke": "The rest keeps the Alliance's one-person land-based operations department running (barely).",
       "linkText": "See full impact report and partner details"
@@ -276,7 +276,7 @@
         },
         {
           "question": "Where does the money actually go?",
-          "answer": "Each certificate contributes to a publicly tracked conservation fund. As that fund grows, we publish where the money goes and who receives it."
+          "answer": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated."
         },
         {
           "question": "Why sharks?",
@@ -315,52 +315,60 @@
     "label": "FAQ",
     "title": "Reasonable questions. Excellent answers.",
     "subtitle": "For sensible humans who want to know what they’re buying, where the money goes, and whether sharks can read certificates.",
-    "items": [
-      {
-        "question": "Is the alliance real?",
-        "answer": "The alliance is fictional and intentionally humorous. The conservation funding is real. Think of it as a comedy product with a real conservation budget behind it."
-      },
-      {
-        "question": "Does membership protect me from sharks?",
-        "answer": "No. It offers no marine protection whatsoever. It does, however, help protect actual sharks from humans, which is the statistically more relevant problem."
-      },
-      {
-        "question": "Where does the money actually go?",
-        "answer": "Each certificate contributes to a publicly tracked conservation fund. As that fund grows, we publish where the money goes and who receives it."
-      },
-      {
-        "question": "How much does each certificate cost?",
-        "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
-      },
-      {
-        "question": "Will I receive a certificate immediately?",
-        "answer": "Yes. You receive a personalized digital certificate. If you provide an email address, we also send the delivery link by email."
-      },
-      {
-        "question": "What do I receive immediately after purchase?",
-        "answer": "A success page with your certificate preview and a download link. If you entered an email address, we also send the certificate link to that inbox."
-      },
-      {
-        "question": "Can I access my certificate later?",
-        "answer": "Yes, if you provide an email address during checkout. If you skip email, the certificate is only available for immediate download after purchase and the link is not stored for later retrieval."
-      },
-      {
-        "question": "How does gift delivery work?",
-        "answer": "You can buy a certificate as a gift and enter the recipient details during checkout. If you want reliable later access, include an email address in the purchase flow."
-      },
-      {
-        "question": "Why sharks?",
-        "answer": "Because sharks have a PR problem they did not create. Humans kill roughly 100 million sharks a year. Sharks kill very few humans. The imbalance is embarrassing."
-      },
-      {
-        "question": "Is this tax-deductible?",
-        "answer": "No. This is a purchase of a humorous digital product, not a direct charitable donation. The conservation funding happens on our side."
-      },
-      {
-        "question": "What size is the certificate?",
-        "answer": "Certificates are optimized for A4 or US Letter download and printing."
-      }
-    ],
+      "items": [
+        {
+          "question": "Is the alliance real?",
+          "answer": "The alliance is fictional and intentionally humorous. The conservation funding is real. Think of it as a comedy product with a real conservation budget behind it."
+        },
+        {
+          "question": "Does membership protect me from sharks?",
+          "answer": "No. It offers no marine protection whatsoever. It does, however, help protect actual sharks from humans, which is the statistically more relevant problem."
+        },
+        {
+          "question": "Where does the money actually go?",
+          "answer": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated."
+        },
+        {
+          "question": "When do donations start, and how will they be reported?",
+          "answer": "We publish allocations once donations are actually made. This page and our social channels will show recipient organizations and reported amounts as they happen."
+        },
+        {
+          "question": "Are these formal partner organizations?",
+          "answer": "Not unless we explicitly say so. We list planned recipients first and only describe an organization as a formal partner or confirmed recipient when that is actually true."
+        },
+        {
+          "question": "How much does each certificate cost?",
+          "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
+        },
+        {
+          "question": "Will I receive a certificate immediately?",
+          "answer": "Yes. You receive a personalized digital certificate. If you provide an email address, we also send the delivery link by email."
+        },
+        {
+          "question": "What do I receive immediately after purchase?",
+          "answer": "A success page with your certificate preview and a download link. If you entered an email address, we also send the certificate link to that inbox."
+        },
+        {
+          "question": "Can I access my certificate later?",
+          "answer": "Yes, if you provide an email address during checkout. If you skip email, the certificate is only available for immediate download after purchase and the link is not stored for later retrieval."
+        },
+        {
+          "question": "Can I buy this as a gift?",
+          "answer": "Yes. You can buy a certificate as a gift and enter the recipient details during checkout. If you want reliable later access, include an email address in the purchase flow."
+        },
+        {
+          "question": "Why sharks?",
+          "answer": "Because sharks have a PR problem they did not create. Humans kill roughly 100 million sharks a year. Sharks kill very few humans. The imbalance is embarrassing."
+        },
+        {
+          "question": "Is this a donation or a product purchase?",
+          "answer": "It is a purchase of a humorous digital product. A conservation allocation is funded from that revenue on our side; you are not making a direct charitable donation, and it is not tax-deductible."
+        },
+        {
+          "question": "What size is the certificate?",
+          "answer": "Certificates are optimized for A4 or US Letter download and printing."
+        }
+      ],
     "ctaTitle": "Still have questions?",
     "ctaText": "The best way to understand the certificate is to see it. Try the live preview on our homepage — or just go for it.",
     "ctaButton": "Get your certificate"
@@ -875,7 +883,7 @@
     "title": "Where the money actually goes.",
     "subtitle": "The Alliance is fictional. The funding is not. This page explains what each certificate contributes, who we aim to support, and how reporting will work.",
     "splitTitle": "How funds are split",
-    "splitDescription": "Certificate prices are fixed at $4, $19, and $99. Conservation allocations are tracked publicly and reported here as donations scale.",
+      "splitDescription": "Certificate prices are fixed at $4, $19, and $99. The conservation portion of each sale is tracked and reported here as donations are made.",
     "splitOf": "of",
     "splitGoesToOcean": "goes to conservation",
     "splitProtectedAmount": "$1",
@@ -893,7 +901,7 @@
     "splitOpsLabel": "Land-based operations (the boring part)",
     "splitOpsText": "The rest covers the unglamorous dry-land part: hosting, rendering, admin, and one human doing all of this in a bathrobe.",
     "partnersTitle": "Where the money goes",
-    "partnersSubtitle": "These are organizations we aim to support as the conservation fund scales. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
+      "partnersSubtitle": "These are organizations we aim to support as donations are made. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
     "partner1Name": "Shark Trust",
     "partner1Desc": "UK-based charity dedicated to safeguarding the future of sharks through science, education and policy influence.",
     "partner1Focus": "Focus: UK & European shark policy, science-led conservation, public education campaigns.",

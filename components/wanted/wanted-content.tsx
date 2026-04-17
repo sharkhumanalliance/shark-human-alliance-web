@@ -452,7 +452,7 @@ export function WantedContent() {
         className="bg-gradient-to-b from-red-950/5 via-transparent to-transparent py-12 sm:py-14 lg:py-16"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-10">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-8">
             <div className="lg:max-w-xl">
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
                 {t("label")}
@@ -464,7 +464,7 @@ export function WantedContent() {
                 {t("subtitle")}
               </p>
 
-              <div className="mt-7 rounded-[28px] border border-red-100 bg-gradient-to-br from-red-50/70 via-white to-white p-6 shadow-sm sm:p-8">
+              <div className="mt-6 rounded-[28px] border border-red-100 bg-gradient-to-br from-red-50/70 via-white to-white p-6 shadow-sm sm:p-7">
                 <div className="border-b border-red-100 pb-5">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-red-700">
                     {t("formTitle")}
@@ -475,7 +475,7 @@ export function WantedContent() {
                 </div>
 
                 <form
-                  className="mt-5 space-y-4"
+                  className="mt-4 space-y-4"
                   onSubmit={(event) => {
                     event.preventDefault();
                     if (name.trim()) handleGenerate();
@@ -525,7 +525,7 @@ export function WantedContent() {
                   </button>
                 </form>
 
-                <p className="mt-5 text-xs leading-6 text-[var(--muted)]">
+                <p className="mt-4 text-xs leading-6 text-[var(--muted)]">
                   {t("formDisclaimer")}
                 </p>
               </div>
@@ -555,7 +555,7 @@ export function WantedContent() {
                   />
                 </div>
 
-                <div className="mt-4 space-y-3">
+                <div className="mt-3 space-y-3">
                   {generated ? (
                     <LocalizedLink
                       href={giftUrl}
@@ -606,7 +606,7 @@ export function WantedContent() {
         </div>
       </section>
 
-      <section data-reveal className="py-8 sm:py-12">
+      <section data-reveal className="py-6 sm:py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
             <div className="border-b border-[var(--border)] px-6 py-5 sm:px-8">
