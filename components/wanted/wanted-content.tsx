@@ -315,7 +315,7 @@ export function WantedContent() {
       const purchaseUrl =
         typeof window !== "undefined"
           ? buildAbsoluteLocalizedUrl(window.location.origin, locale, "/verify?id=sample")
-          : buildAbsoluteLocalizedUrl("https://sharkhumanalliance.com", locale, "/verify?id=sample");
+          : buildAbsoluteLocalizedUrl(process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com", locale, "/verify?id=sample");
 
       try {
         const qrImg = await loadQrImage(purchaseUrl);

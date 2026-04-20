@@ -21,8 +21,7 @@ import {
   createSignedCheckoutSessionValue,
   getCheckoutSessionCookieName,
 } from "@/lib/checkout-session";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
+import { BASE_URL } from "@/lib/config";
 const ENABLE_TEST_PROMO_CODES =
   process.env.ENABLE_TEST_PROMO_CODES === "true" ||
   process.env.NODE_ENV !== "production";
@@ -56,8 +55,10 @@ export async function POST(request: NextRequest) {
       requestHost.endsWith(".local");
     const allowLocalPromoFallback = shouldUseDemoMembers() || isLocalRequest;
     const normalizedPromoCode = promoCode?.toUpperCase().trim() || "";
+    // Free promo codes are gated solely by ENABLE_TEST_PROMO_CODES (or non-production NODE_ENV).
+    // Hostname checks are intentionally NOT used here to prevent DNS-rebinding bypass.
     const isFreePromoFlow = normalizedPromoCode
-      ? (ENABLE_TEST_PROMO_CODES || isLocalRequest) &&
+      ? ENABLE_TEST_PROMO_CODES &&
         FREE_PROMO_CODES.includes(normalizedPromoCode)
       : false;
 

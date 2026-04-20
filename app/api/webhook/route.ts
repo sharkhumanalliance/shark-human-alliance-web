@@ -16,9 +16,9 @@ import {
   incrementReferralCount,
   getMemberByStripeSession,
 } from "@/lib/members";
+import { BASE_URL } from "@/lib/config";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
 
 export async function POST(request: NextRequest) {
   let event;
@@ -168,7 +168,13 @@ export async function POST(request: NextRequest) {
         );
         console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);
       } catch (emailError) {
-        console.error("[SHA Webhook] Email send failed:", emailError);
+        console.error("[SHA Webhook] Certificate email failed after retries", {
+          memberId: newMember.id,
+          sessionId: session.id,
+          recipient: targetEmail,
+          tier,
+          error: emailError instanceof Error ? emailError.message : String(emailError),
+        });
       }
     } else {
       console.warn("[SHA Webhook] Certificate email skipped", {
@@ -229,7 +235,12 @@ export async function POST(request: NextRequest) {
           }
         );
       } catch (buyerEmailError) {
-        console.error("[SHA Webhook] Buyer notification failed:", buyerEmailError);
+        console.error("[SHA Webhook] Buyer notification failed after retries", {
+          memberId: newMember.id,
+          sessionId: session.id,
+          recipient: email,
+          error: buyerEmailError instanceof Error ? buyerEmailError.message : String(buyerEmailError),
+        });
       }
     }
   }

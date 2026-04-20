@@ -115,43 +115,6 @@
     "proofTransparency": "Transparencia e impacto"
   },
   "home": {
-    "reviews": {
-      "label": "Informes de campo de la Alianza",
-      "title": "Informes desde el terreno.",
-      "items": [
-        {
-          "text": "Compré un certificado ayer. Hoy fui a bucear. Un tiburón que pasaba me miró y simplemente... asintió. ¿Coincidencia? Creo que no.",
-          "author": "Mike T.",
-          "role": "Amigo Protegido Certificado",
-          "stars": 5
-        },
-        {
-          "text": "Le regalé esto a mi esposo como broma. Lo enmarcó, lo colgó en su oficina y ahora se presenta como 'diplomático de tiburones' en las fiestas.",
-          "author": "Sarah K.",
-          "role": "Compradora de regalo",
-          "stars": 5
-        },
-        {
-          "text": "El mejor regalo broma que he dado. Mi amiga ahora está genuinamente convencida de que los tiburones pueden sentir su estatus de Protegida.",
-          "author": "Jake R.",
-          "role": "Comprador recurrente",
-          "stars": 5
-        },
-        {
-          "text": "Llevo 20 años nadando con tiburones. Ni una vez me han comido. Atribuyo esto enteramente a mi certificado.",
-          "author": "Diana L.",
-          "role": "No-Snack Certificada",
-          "stars": 5
-        },
-        {
-          "text": "Le di esto a mi papá para su cumpleaños. Lleva una foto en su cartera. Al lado de su licencia de conducir real.",
-          "author": "Tom H.",
-          "role": "Comprador de regalo",
-          "stars": 5
-        }
-      ],
-      "kicker": "Nota de campo in-universe"
-    },
     "earlyAdopter": {
       "label": "Únete a la Alianza",
       "title": "Sé parte de la primera ola de diplomáticos.",

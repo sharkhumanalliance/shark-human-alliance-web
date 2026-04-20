@@ -2,6 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { MembershipPageContent } from "@/components/membership/membership-page-content";
+import { BASE_URL } from "@/lib/config";
 import type { Metadata } from "next";
 
 type Props = {
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: `https://sharkhumanalliance.com/${locale}/membership`,
+      canonical: `${BASE_URL}/${locale}/membership`,
       languages: {
         [locale]: `/${locale}/membership`,
         [otherLocale]: `/${otherLocale}/membership`,

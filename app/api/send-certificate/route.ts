@@ -7,8 +7,7 @@ import {
   sendEmailStrict,
 } from "@/lib/email";
 import { getMemberById } from "@/lib/members";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com";
+import { BASE_URL } from "@/lib/config";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();

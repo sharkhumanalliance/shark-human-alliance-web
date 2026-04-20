@@ -115,43 +115,6 @@
     "proofTransparency": "Transparency & impact"
   },
   "home": {
-    "reviews": {
-      "label": "Alliance field reports",
-      "title": "Reports from the field.",
-      "items": [
-        {
-          "text": "Bought a certificate yesterday. Went diving today. A passing shark looked at me and just... nodded. Coincidence? I think not.",
-          "author": "Mike T.",
-          "role": "Certified Protected Friend",
-          "stars": 5
-        },
-        {
-          "text": "Got this for my husband as a joke. He framed it, hung it in his office, and now introduces himself as a 'shark diplomat' at parties.",
-          "author": "Sarah K.",
-          "role": "Gift buyer",
-          "stars": 5
-        },
-        {
-          "text": "Got this for my friend as a joke. She now genuinely believes sharks can sense her Protected status.",
-          "author": "Jake R.",
-          "role": "Repeat buyer",
-          "stars": 5
-        },
-        {
-          "text": "I've been swimming with sharks for 20 years. Not once have I been eaten. I'm attributing this entirely to my certificate.",
-          "author": "Diana L.",
-          "role": "Certified Non-Snack",
-          "stars": 5
-        },
-        {
-          "text": "Gave this to my dad for his birthday. He carries a photo of it in his wallet. Next to his actual driver's license.",
-          "author": "Tom H.",
-          "role": "Gift buyer",
-          "stars": 5
-        }
-      ],
-      "kicker": "In-universe field note"
-    },
     "earlyAdopter": {
       "label": "Join the Alliance",
       "title": "Be among the first wave of diplomats.",

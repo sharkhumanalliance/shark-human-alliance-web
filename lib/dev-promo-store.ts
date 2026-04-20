@@ -3,9 +3,7 @@ import type { Member } from "@/lib/members";
 type PromoMember = Member;
 
 declare global {
-  // eslint-disable-next-line no-var
   var __shaDevPromoMembersBySession: Map<string, PromoMember> | undefined;
-  // eslint-disable-next-line no-var
   var __shaDevPromoMembersByToken: Map<string, PromoMember> | undefined;
 }
 

@@ -15,6 +15,7 @@ import { Analytics } from "@/components/analytics";
 import { CookieConsent } from "@/components/cookies/cookie-consent";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { BASE_URL } from "@/lib/config";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
   },
   description:
     "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $4.",
-  metadataBase: new URL("https://sharkhumanalliance.com"),
+  metadataBase: new URL(BASE_URL),
   openGraph: {
     type: "website",
     siteName: "Shark Human Alliance",
@@ -109,8 +110,8 @@ function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Shark Human Alliance",
-    url: "https://sharkhumanalliance.com",
-    logo: "https://sharkhumanalliance.com/mascots/homepage-hero-plush.png",
+    url: BASE_URL,
+    logo: `${BASE_URL}/mascots/homepage-hero-plush.png`,
     description:
       "A fictional alliance helping humans and sharks build better relations. Every certificate sale funds real ocean conservation.",
     email: "sharkhumanalliance@gmail.com",
@@ -122,7 +123,7 @@ function JsonLd() {
     name: "Protected Friend Status Certificate",
     description:
       "A personalized, surprisingly official-looking shark protection certificate. The perfect gag gift that funds real ocean conservation.",
-    image: "https://sharkhumanalliance.com/mascots/homepage-hero-plush.png",
+    image: `${BASE_URL}/mascots/homepage-hero-plush.png`,
     brand: { "@type": "Brand", name: "Shark Human Alliance" },
     offers: [
       {
@@ -131,7 +132,22 @@ function JsonLd() {
         price: "4.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
-        url: "https://sharkhumanalliance.com/purchase?tier=protected",
+        url: `${BASE_URL}/en/purchase?tier=protected`,
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+            transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+          },
+          shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
+        },
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: "US",
+          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+        },
       },
       {
         "@type": "Offer",
@@ -139,7 +155,22 @@ function JsonLd() {
         price: "19.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
-        url: "https://sharkhumanalliance.com/purchase?tier=nonsnack",
+        url: `${BASE_URL}/en/purchase?tier=nonsnack`,
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+            transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+          },
+          shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
+        },
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: "US",
+          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+        },
       },
       {
         "@type": "Offer",
@@ -147,7 +178,22 @@ function JsonLd() {
         price: "99.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
-        url: "https://sharkhumanalliance.com/purchase?tier=business",
+        url: `${BASE_URL}/en/purchase?tier=business`,
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+            transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+          },
+          shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
+        },
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: "US",
+          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+        },
       },
     ],
   };
@@ -182,12 +228,12 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale}>
       <head>
         <JsonLd />
-        <link rel="alternate" hrefLang="en" href="https://sharkhumanalliance.com/en" />
-        <link rel="alternate" hrefLang="es" href="https://sharkhumanalliance.com/es" />
+        <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en`} />
+        <link rel="alternate" hrefLang="es" href={`${BASE_URL}/es`} />
         <link
           rel="alternate"
           hrefLang="x-default"
-          href="https://sharkhumanalliance.com/en"
+          href={`${BASE_URL}/en`}
         />
       </head>
       <body

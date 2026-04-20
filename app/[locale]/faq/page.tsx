@@ -2,6 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { FaqContent } from "@/components/faq/faq-content";
+import { BASE_URL } from "@/lib/config";
 import type { Metadata } from "next";
 
 type Props = {
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: `https://sharkhumanalliance.com/${locale}/faq`,
+      canonical: `${BASE_URL}/${locale}/faq`,
       languages: {
         [locale]: `/${locale}/faq`,
         [otherLocale]: `/${otherLocale}/faq`,

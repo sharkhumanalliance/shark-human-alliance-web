@@ -65,6 +65,13 @@ export function logEmailRouteEntered(context: EmailLogContext) {
   });
 }
 
+const MAX_EMAIL_RETRIES = 3;
+const RETRY_DELAY_MS = 1000;
+
+async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function sendEmailStrict(
   payload: Parameters<Resend["emails"]["send"]>[0],
   context?: EmailLogContext
@@ -84,28 +91,49 @@ export async function sendEmailStrict(
     subject: payload.subject ?? null,
   });
 
-  const { data, error } = await getResend().emails.send(payload);
+  let lastError: Error | null = null;
 
-  console.log("[SHA Email] resend result", {
-    flow: resolvedContext.flow,
-    route: resolvedContext.route ?? null,
-    hasData: !!data,
-    hasError: !!error,
-    data: data ?? null,
-    error: error ?? null,
-  });
+  for (let attempt = 1; attempt <= MAX_EMAIL_RETRIES; attempt++) {
+    try {
+      const { data, error } = await getResend().emails.send(payload);
 
-  if (error) {
-    const details =
-      typeof error === "object" ? JSON.stringify(error) : String(error);
-    throw new Error(`[SHA Email] Resend rejected email: ${details}`);
+      console.log("[SHA Email] resend result", {
+        flow: resolvedContext.flow,
+        route: resolvedContext.route ?? null,
+        attempt,
+        hasData: !!data,
+        hasError: !!error,
+        data: data ?? null,
+        error: error ?? null,
+      });
+
+      if (error) {
+        const details =
+          typeof error === "object" ? JSON.stringify(error) : String(error);
+        throw new Error(`[SHA Email] Resend rejected email: ${details}`);
+      }
+
+      if (!data?.id) {
+        throw new Error("[SHA Email] Resend did not return a message id.");
+      }
+
+      return data;
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      console.warn(`[SHA Email] Attempt ${attempt}/${MAX_EMAIL_RETRIES} failed`, {
+        flow: resolvedContext.flow,
+        recipient: normalizeRecipient(resolvedContext.recipient) ?? normalizeRecipient(payload.to),
+        memberId: resolvedContext.memberId ?? null,
+        error: lastError.message,
+      });
+
+      if (attempt < MAX_EMAIL_RETRIES) {
+        await sleep(RETRY_DELAY_MS * attempt);
+      }
+    }
   }
 
-  if (!data?.id) {
-    throw new Error("[SHA Email] Resend did not return a message id.");
-  }
-
-  return data;
+  throw lastError!;
 }
 
 /**
@@ -142,7 +170,7 @@ export function certificateEmailHtml(params: {
   const safeReferralUrl = escapeHtml(
     referralUrl ||
       buildAbsoluteLocalizedUrl(
-        "https://sharkhumanalliance.com",
+        process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
         "en",
         buildReferralHref(referralCode)
       )

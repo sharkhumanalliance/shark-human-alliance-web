@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/lib/config";
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: `https://sharkhumanalliance.com/${locale}/cookie-policy`,
+      canonical: `${BASE_URL}/${locale}/cookie-policy`,
       languages: {
         [locale]: `/${locale}/cookie-policy`,
         [otherLocale]: `/${otherLocale}/cookie-policy`,
