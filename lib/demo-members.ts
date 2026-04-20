@@ -9,6 +9,8 @@ const DEMO_MEMBERS: Member[] = [
     dedication: "Filed preemptively before summer holidays.",
     referralCode: "SHA-MRVA",
     referralCount: 0,
+    registryVisibility: "public",
+    dedicationReviewStatus: "approved",
   },
   {
     id: "m-demo-liaison-002",
@@ -18,6 +20,8 @@ const DEMO_MEMBERS: Member[] = [
     dedication: "For morale, optics, and mild ocean anxiety.",
     referralCode: "SHA-JNMR",
     referralCount: 1,
+    registryVisibility: "public",
+    dedicationReviewStatus: "approved",
   },
   {
     id: "m-demo-field-003",
@@ -27,6 +31,8 @@ const DEMO_MEMBERS: Member[] = [
     dedication: "Officially too organized to be edible.",
     referralCode: "SHA-PTBL",
     referralCount: 3,
+    registryVisibility: "public",
+    dedicationReviewStatus: "approved",
   },
   {
     id: "m-demo-senior-004",
@@ -36,6 +42,8 @@ const DEMO_MEMBERS: Member[] = [
     dedication: "Certified on behalf of an unnecessarily serious office.",
     referralCode: "SHA-OLGR",
     referralCount: 6,
+    registryVisibility: "public",
+    dedicationReviewStatus: "approved",
   },
   {
     id: "m-demo-envoy-005",
@@ -45,6 +53,8 @@ const DEMO_MEMBERS: Member[] = [
     dedication: "Now operating under formal shark-friendly standing.",
     referralCode: "SHA-LUOR",
     referralCount: 12,
+    registryVisibility: "public",
+    dedicationReviewStatus: "approved",
   },
   {
     id: "m-demo-chief-006",
@@ -54,6 +64,8 @@ const DEMO_MEMBERS: Member[] = [
     dedication: "Entire premises placed under symbolic marine protection.",
     referralCode: "SHA-NSS6",
     referralCount: 29,
+    registryVisibility: "public",
+    dedicationReviewStatus: "approved",
   },
 ];
 

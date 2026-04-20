@@ -1,6 +1,9 @@
 import crypto from "crypto";
 import { query, queryOne } from "./db";
 
+export type RegistryVisibility = "public" | "private";
+export type DedicationReviewStatus = "approved" | "rejected";
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -19,6 +22,13 @@ export interface Member {
   accessToken?: string;
   template?: string;
   locale?: string;
+  termsAcceptedAt?: string;
+  termsVersion?: string;
+  digitalContentConsentAt?: string;
+  digitalContentVersion?: string;
+  registryVisibility: RegistryVisibility;
+  dedicationReviewStatus: DedicationReviewStatus;
+  erasedAt?: string;
 }
 
 /** Shape of a row coming from the `members` table. */
@@ -36,6 +46,13 @@ interface MemberRow {
   access_token: string | null;
   template: string | null;
   locale: string | null;
+  terms_accepted_at: string | null;
+  terms_version: string | null;
+  digital_content_consent_at: string | null;
+  digital_content_version: string | null;
+  registry_visibility: RegistryVisibility;
+  dedication_review_status: DedicationReviewStatus;
+  erased_at: string | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -64,6 +81,13 @@ function rowToMember(row: MemberRow): Member {
     accessToken: row.access_token ?? undefined,
     template: row.template ?? undefined,
     locale: row.locale ?? undefined,
+    termsAcceptedAt: row.terms_accepted_at ?? undefined,
+    termsVersion: row.terms_version ?? undefined,
+    digitalContentConsentAt: row.digital_content_consent_at ?? undefined,
+    digitalContentVersion: row.digital_content_version ?? undefined,
+    registryVisibility: row.registry_visibility ?? "private",
+    dedicationReviewStatus: row.dedication_review_status ?? "approved",
+    erasedAt: row.erased_at ?? undefined,
   };
 }
 
@@ -89,6 +113,10 @@ export function generateAccessToken(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
+export function generateArchivedReferralCode(): string {
+  return `DEL-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
+}
+
 // ---------------------------------------------------------------------------
 // Data-access functions
 // ---------------------------------------------------------------------------
@@ -96,7 +124,9 @@ export function generateAccessToken(): string {
 /** Return all members (ordered by creation date, newest first). */
 export async function listMembers(): Promise<Member[]> {
   const rows = await query<MemberRow>(
-    `SELECT * FROM members ORDER BY created_at DESC`
+    `SELECT * FROM members
+      WHERE erased_at IS NULL
+      ORDER BY created_at DESC`
   );
   return rows.map(rowToMember);
 }
@@ -104,7 +134,7 @@ export async function listMembers(): Promise<Member[]> {
 /** Find a single member by primary key. */
 export async function getMemberById(id: string): Promise<Member | null> {
   const row = await queryOne<MemberRow>(
-    `SELECT * FROM members WHERE id = $1`,
+    `SELECT * FROM members WHERE id = $1 AND erased_at IS NULL`,
     [id]
   );
   return row ? rowToMember(row) : null;
@@ -115,7 +145,7 @@ export async function getMemberByAccessToken(
   token: string
 ): Promise<Member | null> {
   const row = await queryOne<MemberRow>(
-    `SELECT * FROM members WHERE access_token = $1`,
+    `SELECT * FROM members WHERE access_token = $1 AND erased_at IS NULL`,
     [token]
   );
   return row ? rowToMember(row) : null;
@@ -137,7 +167,7 @@ export async function getMemberByReferralCode(
   code: string
 ): Promise<Member | null> {
   const row = await queryOne<MemberRow>(
-    `SELECT * FROM members WHERE referral_code = $1`,
+    `SELECT * FROM members WHERE referral_code = $1 AND erased_at IS NULL`,
     [code]
   );
   return row ? rowToMember(row) : null;
@@ -185,9 +215,11 @@ export async function createMember(
         `INSERT INTO members
            (id, name, tier, issue_date, dedication,
             referral_code, referred_by, referral_count,
-            email, stripe_session_id, access_token,
-            template, locale)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+           email, stripe_session_id, access_token,
+            template, locale, terms_accepted_at, terms_version,
+            digital_content_consent_at, digital_content_version,
+            registry_visibility, dedication_review_status, erased_at)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
          RETURNING *`,
         [
           member.id,
@@ -203,6 +235,13 @@ export async function createMember(
           member.accessToken ?? null,
           member.template ?? null,
           member.locale ?? null,
+          member.termsAcceptedAt ?? null,
+          member.termsVersion ?? null,
+          member.digitalContentConsentAt ?? null,
+          member.digitalContentVersion ?? null,
+          member.registryVisibility,
+          member.dedicationReviewStatus,
+          member.erasedAt ?? null,
         ]
       );
       return rowToMember(row!);
@@ -239,4 +278,40 @@ export async function incrementReferralCount(
       WHERE referral_code = $1`,
     [referralCode]
   );
+}
+
+export async function setMemberRegistryVisibility(
+  id: string,
+  registryVisibility: RegistryVisibility
+): Promise<Member | null> {
+  const row = await queryOne<MemberRow>(
+    `UPDATE members
+        SET registry_visibility = $2,
+            updated_at = now()
+      WHERE id = $1
+      RETURNING *`,
+    [id, registryVisibility]
+  );
+
+  return row ? rowToMember(row) : null;
+}
+
+export async function eraseMemberById(id: string): Promise<Member | null> {
+  const row = await queryOne<MemberRow>(
+    `UPDATE members
+        SET name = 'Deleted Member',
+            dedication = '',
+            email = NULL,
+            access_token = NULL,
+            registry_visibility = 'private',
+            dedication_review_status = 'approved',
+            referral_code = $2,
+            erased_at = now(),
+            updated_at = now()
+      WHERE id = $1
+      RETURNING *`,
+    [id, generateArchivedReferralCode()]
+  );
+
+  return row ? rowToMember(row) : null;
 }

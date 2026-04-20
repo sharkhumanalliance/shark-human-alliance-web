@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { CertificateDocument, type CertificateTemplate } from "@/components/certificate/certificate-document";
 import { CertificateSheet, type PaperFormat } from "@/components/certificate/certificate-sheet";
+import { CertificateAccessPanel } from "@/components/certificate/certificate-access-panel";
 import { getMemberByAccessToken } from "@/lib/members";
 import { getDevPromoMemberByAccessToken } from "@/lib/dev-promo-store";
 
@@ -48,20 +49,26 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
   const pageSizeCss = paperFormat === "letter" ? "Letter portrait" : "A4 portrait";
 
   return (
-    <main className="flex min-h-screen items-start justify-center bg-white px-4 py-6 print:block print:bg-white print:p-0">
+    <main className="min-h-screen bg-white px-4 py-6 print:block print:bg-white print:p-0">
       <style media="print">{`@page { size: ${pageSizeCss}; margin: 0; }`}</style>
-      <CertificateSheet paperFormat={paperFormat}>
-        <CertificateDocument
-          name={member.name}
-          tier={member.tier}
-          dedication={member.dedication}
-          date={displayDate}
-          registryId={member.id.toUpperCase()}
-          referralCode={member.referralCode}
-          priorityImages
-          template={template}
-        />
-      </CertificateSheet>
+      <div className="flex items-start justify-center">
+        <CertificateSheet paperFormat={paperFormat}>
+          <CertificateDocument
+            name={member.name}
+            tier={member.tier}
+            dedication={member.dedication}
+            date={displayDate}
+            registryId={member.id.toUpperCase()}
+            referralCode={member.referralCode}
+            priorityImages
+            template={template}
+          />
+        </CertificateSheet>
+      </div>
+      <CertificateAccessPanel
+        token={token}
+        initialRegistryVisibility={member.registryVisibility}
+      />
     </main>
   );
 }

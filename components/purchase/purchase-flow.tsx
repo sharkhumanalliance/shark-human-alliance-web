@@ -9,6 +9,7 @@ import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { StepIndicator } from "@/components/purchase/step-indicator";
 import { trackEvent } from "@/components/analytics";
+import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
 
 type Tier = "basic" | "protected" | "nonsnack" | "business";
@@ -81,6 +82,9 @@ function PurchaseFlowInner() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [template, setTemplate] = useState<CertificateTemplate>(normalizedInitialTemplate);
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [digitalContentConsentAccepted, setDigitalContentConsentAccepted] = useState(false);
+  const [registryConsentAccepted, setRegistryConsentAccepted] = useState(false);
   const giftToggleLabelId = useId();
 
 
@@ -154,6 +158,14 @@ function PurchaseFlowInner() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
+    if (!termsAccepted) {
+      setError(t("termsRequiredError"));
+      return;
+    }
+    if (!digitalContentConsentAccepted) {
+      setError(t("digitalContentConsentRequiredError"));
+      return;
+    }
 
     // If no email and warning not yet confirmed, show warning instead of submitting
     if (!email.trim() && !showEmailWarning) {
@@ -213,12 +225,16 @@ function PurchaseFlowInner() {
           template,
           paperFormat,
           giftMessage: giftMessage.trim(),
+          termsAccepted,
+          digitalContentConsentAccepted,
+          registryConsentAccepted,
         }),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Checkout failed");
+        const errorCode = data.code || "checkout_failed";
+        throw new Error(errorCode);
       }
 
       const { url } = await res.json();
@@ -229,7 +245,16 @@ function PurchaseFlowInner() {
       }
     } catch (err) {
       console.error("[SHA] Checkout error:", err);
-      setError(t("checkoutError"));
+      const errorCode = err instanceof Error ? err.message : "checkout_failed";
+      const errorMap: Record<string, string> = {
+        terms_required: t("termsRequiredError"),
+        digital_content_consent_required: t("digitalContentConsentRequiredError"),
+        dedication_too_long: t("dedicationTooLongError"),
+        dedication_contains_contact: t("dedicationContactError"),
+        dedication_contains_url: t("dedicationUrlError"),
+        dedication_rejected: t("dedicationRejectedError"),
+      };
+      setError(errorMap[errorCode] || t("checkoutError"));
       setIsRedirecting(false);
     }
   }
@@ -591,6 +616,54 @@ function PurchaseFlowInner() {
                   {t("secureBadgeStripe")}
                 </span>
               </div>
+            </div>
+
+            <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-white p-4 sm:p-5">
+              <label className="flex items-start gap-3 text-sm leading-6 text-[var(--brand-dark)]">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => {
+                    setTermsAccepted(e.target.checked);
+                    setError("");
+                  }}
+                  className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                />
+                <span>
+                  {t("termsConsentPrefix")}{" "}
+                  <LocalizedLink href="/terms" className="font-semibold text-[var(--brand)] underline underline-offset-2">
+                    {t("termsConsentLink")}
+                  </LocalizedLink>
+                  .
+                </span>
+              </label>
+
+              <label className="flex items-start gap-3 text-sm leading-6 text-[var(--brand-dark)]">
+                <input
+                  type="checkbox"
+                  checked={digitalContentConsentAccepted}
+                  onChange={(e) => {
+                    setDigitalContentConsentAccepted(e.target.checked);
+                    setError("");
+                  }}
+                  className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                />
+                <span>{t("digitalContentConsentLabel")}</span>
+              </label>
+
+              <label className="flex items-start gap-3 text-sm leading-6 text-[var(--brand-dark)]">
+                <input
+                  type="checkbox"
+                  checked={registryConsentAccepted}
+                  onChange={(e) => setRegistryConsentAccepted(e.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                />
+                <span>{t("registryConsentLabel")}</span>
+              </label>
+
+              <p className="text-xs leading-5 text-[var(--muted)]">
+                {t("registryConsentHint")}
+              </p>
             </div>
 
             {/* No-email warning */}

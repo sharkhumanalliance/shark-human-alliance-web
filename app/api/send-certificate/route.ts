@@ -61,8 +61,17 @@ export async function POST(request: NextRequest) {
           registryId: (memberId || "SHA-XXXX").toUpperCase(),
           referralCode: referralCode || "",
           downloadUrl: certificateUrl,
-          registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${memberId}`),
+          registryUrl:
+            member.registryVisibility === "public"
+              ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${memberId}`)
+              : undefined,
           careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
+          termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/terms"),
+          manageUrl: buildAbsoluteLocalizedUrl(
+            BASE_URL,
+            locale,
+            `/certificate/view?token=${member.accessToken}#record-controls`
+          ),
           referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode || "")),
         }),
       },

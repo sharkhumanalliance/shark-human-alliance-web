@@ -278,60 +278,60 @@
     "label": "FAQ",
     "title": "Preguntas razonables. Respuestas excelentes.",
     "subtitle": "Para personas sensatas que quieren saber qué están comprando, adónde va el dinero y si los tiburones pueden leer certificados.",
-      "items": [
-        {
-          "question": "¿Es real la alianza?",
-          "answer": "La alianza es ficticia e intencionalmente humorística. La financiación para conservación es real."
-        },
-        {
-          "question": "¿La membresía me protege de los tiburones?",
-          "answer": "No. No ofrece protección marina de ningún tipo. Eso sí, ayuda a proteger a tiburones reales de los humanos, que es el problema estadísticamente más relevante."
-        },
-        {
-          "question": "¿Adónde va realmente el dinero?",
-          "answer": "Cada certificado contribuye a una asignación para conservación que rastreamos y reportamos públicamente. A medida que se realizan donaciones, publicamos las organizaciones destinatarias y los importes asignados."
-        },
-        {
-          "question": "¿Cuándo empiezan las donaciones y cómo se informarán?",
-          "answer": "Publicamos las asignaciones una vez que las donaciones se realizan de verdad. Esta página y nuestras redes sociales mostrarán las organizaciones destinatarias y los importes reportados a medida que ocurra."
-        },
-        {
-          "question": "¿Son estas organizaciones socios formales?",
-          "answer": "No, salvo que lo digamos explícitamente. Primero listamos destinatarios previstos y solo describimos a una organización como socio formal o destinatario confirmado cuando eso sea realmente cierto."
-        },
-        {
-          "question": "¿Cuánto cuesta cada certificado?",
-          "answer": "Protected Friend cuesta $4. Non-Snack Recognition cuesta $19. Shark-Approved Zone cuesta $99."
-        },
-        {
-          "question": "¿Recibiré un certificado de inmediato?",
-          "answer": "Sí. Recibes un certificado digital personalizado. Si proporcionas email, también enviamos el enlace por correo."
-        },
-        {
-          "question": "¿Qué recibo inmediatamente después de comprar?",
-          "answer": "Una página de confirmación con vista previa del certificado y enlace de descarga. Si escribes un email, también enviamos el enlace a esa bandeja."
-        },
-        {
-          "question": "¿Puedo acceder a mi certificado más tarde?",
-          "answer": "Sí, si proporcionas un email durante el checkout. Si no, el certificado solo estará disponible para descarga inmediata y el enlace no se guardará."
-        },
-        {
-          "question": "¿Puedo comprarlo como regalo?",
-          "answer": "Sí. Puedes comprar el certificado como regalo e introducir los datos del destinatario durante el checkout. Si quieres acceso posterior fiable, incluye un email en la compra."
-        },
-        {
-          "question": "¿Por qué tiburones?",
-          "answer": "Porque los tiburones tienen un problema de PR que no crearon. Los humanos matan aproximadamente 100 millones de tiburones al año. Los tiburones matan a muy pocos humanos. El desequilibrio da vergüenza."
-        },
-        {
-          "question": "¿Es una donación o la compra de un producto?",
-          "answer": "Es la compra de un producto digital humorístico. Desde ese ingreso destinamos una parte a conservación; no estás haciendo una donación benéfica directa y no es deducible de impuestos."
-        },
-        {
-          "question": "¿Qué tamaño tiene el certificado?",
-          "answer": "Los certificados están optimizados para descarga e impresión en A4 o US Letter."
-        }
-      ],
+    "items": [
+      {
+        "question": "¿Es real la alianza?",
+        "answer": "La alianza es ficticia e intencionalmente humorística. La financiación para conservación es real."
+      },
+      {
+        "question": "¿La membresía me protege de los tiburones?",
+        "answer": "No. No ofrece protección marina de ningún tipo. Eso sí, ayuda a proteger a tiburones reales de los humanos, que es el problema estadísticamente más relevante."
+      },
+      {
+        "question": "¿Adónde va realmente el dinero?",
+        "answer": "Cada certificado contribuye a una asignación para conservación que rastreamos y reportamos públicamente. A medida que se realizan donaciones, publicamos las organizaciones destinatarias y los importes asignados."
+      },
+      {
+        "question": "¿Cuándo empiezan las donaciones y cómo se informarán?",
+        "answer": "Publicamos las asignaciones una vez que las donaciones se realizan de verdad. Esta página y nuestras redes sociales mostrarán las organizaciones destinatarias y los importes reportados a medida que ocurra."
+      },
+      {
+        "question": "¿Son estas organizaciones socios formales?",
+        "answer": "No, salvo que lo digamos explícitamente. Primero listamos destinatarios previstos y solo describimos a una organización como socio formal o destinatario confirmado cuando eso sea realmente cierto."
+      },
+      {
+        "question": "¿Cuánto cuesta cada certificado?",
+        "answer": "Protected Friend cuesta $4. Non-Snack Recognition cuesta $19. Shark-Approved Zone cuesta $99."
+      },
+      {
+        "question": "¿Recibiré un certificado de inmediato?",
+        "answer": "Sí. Recibes un certificado digital personalizado. Si proporcionas email, también enviamos el enlace por correo."
+      },
+      {
+        "question": "¿Qué recibo inmediatamente después de comprar?",
+        "answer": "Una página de confirmación con vista previa del certificado y enlace de descarga. Si escribes un email, también enviamos el enlace a esa bandeja."
+      },
+      {
+        "question": "¿Puedo acceder a mi certificado más tarde?",
+        "answer": "Sí, si proporcionas un email durante el checkout. Si no, el certificado solo estará disponible para descarga inmediata y el enlace no se guardará."
+      },
+      {
+        "question": "¿Puedo comprarlo como regalo?",
+        "answer": "Sí. Puedes comprar el certificado como regalo e introducir los datos del destinatario durante el checkout. Si quieres acceso posterior fiable, incluye un email en la compra."
+      },
+      {
+        "question": "¿Por qué tiburones?",
+        "answer": "Porque los tiburones tienen un problema de PR que no crearon. Los humanos matan aproximadamente 100 millones de tiburones al año. Los tiburones matan a muy pocos humanos. El desequilibrio da vergüenza."
+      },
+      {
+        "question": "¿Es una donación o la compra de un producto?",
+        "answer": "Es la compra de un producto digital humorístico. Desde ese ingreso destinamos una parte a conservación; no estás haciendo una donación benéfica directa y no es deducible de impuestos."
+      },
+      {
+        "question": "¿Qué tamaño tiene el certificado?",
+        "answer": "Los certificados están optimizados para descarga e impresión en A4 o US Letter."
+      }
+    ],
     "ctaTitle": "¿Aún tienes preguntas?",
     "ctaText": "La mejor manera de entender el certificado es verlo. Prueba la vista previa en vivo en nuestra página principal — o simplemente hazlo.",
     "ctaButton": "Obtén tu certificado"
@@ -613,11 +613,11 @@
     "confirmName": "Nombre en el certificado",
     "confirmGiftFor": "Regalo para",
     "confirmTier": "Nivel de membresía",
-      "confirmTemplate": "Estilo de certificado",
-      "confirmDedication": "Dedicatoria",
-      "confirmButton": "Confirmar y pagar",
-      "confirmButtonPromo": "Aplicar Código Promo y Continuar",
-      "confirmBack": "Volver y editar",
+    "confirmTemplate": "Estilo de certificado",
+    "confirmDedication": "Dedicatoria",
+    "confirmButton": "Confirmar y pagar",
+    "confirmButtonPromo": "Aplicar Código Promo y Continuar",
+    "confirmBack": "Volver y editar",
     "orderSummary": "Informe Diplomático",
     "redirecting": "Redirigiendo al checkout seguro...",
     "checkoutError": "Algo salió mal al crear tu checkout. Por favor, inténtalo de nuevo.",
@@ -694,7 +694,20 @@
         "nonsnack": "Reconocimiento No-Snack",
         "business": "Zona aprobada por tiburones"
       }
-    }
+    },
+    "manageRecord": "Gestionar visibilidad del registro",
+    "registryPrivateNotice": "Tu registro es actualmente privado y no aparecera en el registro publico salvo que hayas dado el consentimiento correspondiente.",
+    "termsConsentPrefix": "He leido y acepto las",
+    "termsConsentLink": "Condiciones de compra",
+    "digitalContentConsentLabel": "Solicito expresamente la entrega digital inmediata antes de que termine el plazo de desistimiento y reconozco que, una vez iniciada la entrega, pierdo el derecho de desistimiento.",
+    "registryConsentLabel": "Acepto que el nombre del titular del certificado y los datos aprobados del registro puedan aparecer en el Registro Diplomatico publico.",
+    "registryConsentHint": "Dejalo sin marcar si el registro debe permanecer privado. Los controles privados del registro estaran disponibles mas tarde a traves del enlace de acceso al certificado.",
+    "termsRequiredError": "Confirma las Condiciones de compra antes de continuar.",
+    "digitalContentConsentRequiredError": "Confirma la entrega digital inmediata antes de continuar.",
+    "dedicationTooLongError": "La dedicatoria es demasiado larga. Mejor breve y con porte de certificado.",
+    "dedicationContactError": "La dedicatoria no puede incluir datos de contacto.",
+    "dedicationUrlError": "La dedicatoria no puede incluir enlaces ni direcciones web.",
+    "dedicationRejectedError": "La dedicatoria fue rechazada por las normas de contenido. Mantenla legal y no ofensiva."
   },
   "registry": {
     "title": "El Registro Diplomático",
@@ -846,7 +859,7 @@
     "title": "Adónde va realmente el dinero.",
     "subtitle": "La Alianza es ficticia. La financiación no. Esta página explica qué aporta cada certificado, a quién pretendemos apoyar y cómo funcionarán los reportes.",
     "splitTitle": "Cómo se dividen los fondos",
-      "splitDescription": "Los precios de los certificados son $4, $19 y $99. La parte de cada venta destinada a conservación se rastrea y se reporta aquí a medida que se realizan las donaciones.",
+    "splitDescription": "Los precios de los certificados son $4, $19 y $99. La parte de cada venta destinada a conservación se rastrea y se reporta aquí a medida que se realizan las donaciones.",
     "splitOf": "de",
     "splitGoesToOcean": "va a conservación",
     "splitProtectedAmount": "$1",
@@ -864,7 +877,7 @@
     "splitOpsLabel": "Operaciones terrestres (la parte aburrida)",
     "splitOpsText": "El resto cubre la parte poco glamurosa en tierra firme: hosting, renderizado, administración y una persona haciendo todo esto en bata.",
     "partnersTitle": "Adónde va el dinero",
-      "partnersSubtitle": "Estas son organizaciones que pretendemos apoyar a medida que se realicen las donaciones. No afirmaremos una alianza formal hasta que exista realmente.",
+    "partnersSubtitle": "Estas son organizaciones que pretendemos apoyar a medida que se realicen las donaciones. No afirmaremos una alianza formal hasta que exista realmente.",
     "partner1Name": "Shark Trust",
     "partner1Desc": "Organización benéfica del Reino Unido dedicada a salvaguardar el futuro de los tiburones mediante ciencia, educación e influencia política.",
     "partner1Focus": "Enfoque: Política de tiburones en el Reino Unido y Europa, conservación basada en ciencia, campañas de educación pública.",
@@ -1054,34 +1067,50 @@
     "title": "Condiciones de compra",
     "intro": "Estas condiciones explican cómo funcionan los pedidos, la entrega, el soporte, las reclamaciones y la gestión de reembolsos de los certificados Shark Human Alliance. Esta página busca hacer el proceso de compra más claro y más confiable.",
     "updatedLabel": "Última actualización",
-    "updatedValue": "27 de marzo de 2026",
+    "updatedValue": "20 de abril de 2026",
     "sections": {
       "operator": {
         "title": "1. Operador",
-        "body": "Este sitio web es operado por JEEL Wekeza s.r.o. Si necesitas ayuda con un pedido, un problema de entrega, un archivo defectuoso, un pago duplicado o una reclamación, contáctanos en sharkhumanalliance@gmail.com."
+        "body": "Este sitio web es operado por JEEL Wekeza s.r.o. Si necesitas ayuda con un pedido, un problema de entrega, un archivo defectuoso, un pago duplicado o una reclamacion, contactanos en sharkhumanalliance@gmail.com."
       },
       "products": {
-        "title": "2. Qué se vende",
-        "body": "El sitio vende certificados digitales personalizados y activos digitales relacionados dentro del proyecto Shark Human Alliance. Salvo que se indique expresamente lo contrario en la página del producto, el producto se entrega en formato digital y no se envía ningún certificado físico enmarcado."
+        "title": "2. Que se vende",
+        "body": "El sitio vende certificados digitales personalizados y activos digitales relacionados dentro del proyecto Shark Human Alliance. El certificado es simbolico, humoristico y no vinculante desde el punto de vista legal. Salvo que se indique expresamente lo contrario en la pagina del producto, el producto se entrega en formato digital y no se envia ningun certificado fisico enmarcado. Las asignaciones actuales a conservacion se describen en la pagina de Impacto, incluido el importe asignado por nivel y las organizaciones que actualmente figuran como destinatarias previstas."
       },
       "ordering": {
-        "title": "3. Cómo funciona el pedido",
-        "body": "Para realizar un pedido, elige un nivel de certificado, introduce los datos solicitados y completa el pago en el checkout. El pedido se considera realizado una vez confirmado el pago correctamente."
+        "title": "3. Como funciona el pedido",
+        "body": "Para realizar un pedido, elige un nivel de certificado, introduce los datos solicitados, confirma las Condiciones de compra, confirma la entrega digital inmediata y completa el pago en el checkout. El pedido se considera realizado una vez confirmado el pago correctamente."
+      },
+      "privacy": {
+        "title": "4. Datos personales y base juridica",
+        "body": "Para emitir y entregar el certificado, tratamos el nombre enviado, el texto de dedicatoria, el email de entrega y los identificadores relacionados con el pedido. Este tratamiento se realiza para ejecutar el contrato y entregar el certificado digital solicitado. El texto de la dedicatoria se modera antes de su aceptacion y puede rechazarse si contiene contenido ilicito, abusivo, difamatorio o con datos de contacto."
+      },
+      "registry": {
+        "title": "5. Registro publico",
+        "body": "El Registro Diplomatico publico muestra unicamente los registros para los que el cliente ha dado un consentimiento activo durante el checkout. Si no se concede dicho consentimiento, el registro permanece privado y no se devuelve desde el endpoint publico del registro. La visibilidad del registro puede ocultarse mas adelante y tambien puede iniciarse una solicitud de supresion mediante los controles privados enlazados desde el acceso al certificado."
+      },
+      "moderation": {
+        "title": "6. Moderacion de dedicatorias",
+        "body": "La dedicatoria es contenido enviado por el usuario. Nos reservamos el derecho a rechazar, acortar, eliminar o negarnos a emitir contenido que sea ilicito, abusivo, difamatorio, amenazante, enganoso o que perjudique a terceros, al orden publico o a la presentacion de marca de Shark Human Alliance. Si la moderacion bloquea el texto enviado, el pedido no podra continuar hasta que se aporte una redaccion aceptable."
       },
       "delivery": {
-        "title": "4. Entrega y acceso",
-        "body": "Los certificados se generan digitalmente tras el pago exitoso. Si se proporciona una dirección de email, los detalles de entrega también pueden enviarse por correo. Si no se proporciona email, el certificado debe descargarse inmediatamente desde la página de éxito porque el enlace puede no quedar almacenado para recuperarlo más tarde."
+        "title": "7. Entrega y acceso",
+        "body": "Los certificados se generan digitalmente tras el pago exitoso. Si se proporciona una direccion de email, los detalles de entrega tambien pueden enviarse por correo. Si no se proporciona email, el certificado debe descargarse inmediatamente desde la pagina de exito porque el enlace puede no quedar almacenado para recuperarlo mas tarde."
+      },
+      "digitalContent": {
+        "title": "8. Contenido digital y desistimiento",
+        "body": "El certificado es contenido digital suministrado sin soporte material. La entrega comienza inmediatamente tras el pago y el procesamiento. Durante el checkout, el cliente debe solicitar expresamente el suministro inmediato antes de que termine el plazo de desistimiento y reconocer que, una vez iniciada la entrega, pierde el derecho de desistimiento. La confirmacion del pedido y el mensaje de entrega del certificado repiten esta informacion en un soporte duradero."
       },
       "complaints": {
-        "title": "5. Reclamaciones e incidencias técnicas",
-        "body": "Si el archivo entregado es defectuoso, no puede descargarse el certificado, se genera un nivel incorrecto o surge otro problema técnico o de pago, contacta con soporte sin demora innecesaria e incluye los detalles del pedido si los tienes. Revisaremos la incidencia y propondremos una solución práctica, como reenvío, corrección, sustitución u otra medida adecuada."
+        "title": "9. Reclamaciones e incidencias tecnicas",
+        "body": "Si el archivo entregado es defectuoso, no puede descargarse el certificado, se genera un nivel incorrecto o surge otro problema tecnico o de pago, contacta con soporte sin demora innecesaria e incluye los detalles del pedido si los tienes. Revisaremos la incidencia y propondremos una solucion practica, como reenvio, correccion, sustitucion u otra medida adecuada."
       },
       "refunds": {
-        "title": "6. Reembolsos y correcciones",
-        "body": "Como el producto es un artículo digital personalizado, las solicitudes de reembolso y corrección se gestionan individualmente según el caso concreto. Si hay un cobro duplicado, un fallo técnico de entrega o un defecto causado por nuestra parte, contáctanos y revisaremos la solicitud con rapidez. Si el certificado contiene un error causado por los datos enviados, también te animamos a escribirnos e intentaremos ayudarte."
+        "title": "10. Reembolsos y correcciones",
+        "body": "Como el producto es un articulo digital personalizado, las solicitudes de reembolso y correccion se gestionan individualmente segun el caso concreto. Si hay un cobro duplicado, un fallo tecnico de entrega o un defecto causado por nuestra parte, contactanos y revisaremos la solicitud con rapidez. Si el certificado contiene un error causado por los datos enviados, tambien te animamos a escribirnos e intentaremos ayudarte."
       },
       "contact": {
-        "title": "7. Contacto",
+        "title": "11. Contacto",
         "body": "Para soporte, reclamaciones o preguntas sobre la compra, contacta con sharkhumanalliance@gmail.com."
       }
     }
@@ -1110,7 +1139,9 @@
     "quip3": "El Departamento de Burocracia Acuática ha sellado este registro. Dos veces, por énfasis.",
     "quip4": "Verificado personalmente por Finnley Mako. Incluso usó sus gafas de lectura.",
     "quip5": "Esta membresía sobrevivió a nuestro riguroso proceso de verificación de tres segundos.",
-    "quip6": "Confirmado. Ha hablado el sistema de archivo más meticuloso del océano."
+    "quip6": "Confirmado. Ha hablado el sistema de archivo más meticuloso del océano.",
+    "rateLimitedTitle": "Verificacion pausada temporalmente",
+    "rateLimitedText": "Han llegado demasiadas solicitudes de verificacion desde esta conexion en poco tiempo. Espera un momento y vuelve a intentarlo."
   },
   "certificateTemplates": {
     "luxury": {
@@ -1185,5 +1216,19 @@
     "skipToContent": "Saltar al contenido principal",
     "toggleMenu": "Abrir o cerrar el menú",
     "closeMenuOverlay": "Cerrar la superposición del menú"
+  },
+  "certificateAccess": {
+    "eyebrow": "Controles privados del registro",
+    "title": "Gestiona este registro del certificado",
+    "description": "Usa estos controles para ocultar el registro del certificado del registro publico o para solicitar la supresion de los datos identificativos vinculados a este certificado.",
+    "visibilityLabel": "Visibilidad actual en el registro",
+    "visibilityPublic": "Publico",
+    "visibilityPrivate": "Privado",
+    "hideButton": "Ocultar del registro publico",
+    "eraseButton": "Suprimir datos identificativos",
+    "hideSuccess": "El registro ya esta oculto del registro publico.",
+    "eraseSuccess": "Los datos identificativos del registro han sido suprimidos. Los enlaces publicos existentes deberian dejar de resolver en breve.",
+    "actionError": "No se pudo completar la solicitud. Intentalo de nuevo en un momento.",
+    "eraseConfirm": "Suprimir los datos identificativos de este certificado? Esta accion esta pensada para ser permanente."
   }
 }

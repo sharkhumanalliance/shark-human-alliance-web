@@ -17,6 +17,7 @@ import {
   getMemberByStripeSession,
 } from "@/lib/members";
 import { BASE_URL } from "@/lib/config";
+import { DIGITAL_CONTENT_VERSION, TERMS_VERSION } from "@/lib/legal";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
@@ -76,8 +77,15 @@ export async function POST(request: NextRequest) {
       recipientEmail = "",
       referredBy = "",
       locale = "en",
+      template = "",
       paperFormat = "a4",
       giftMessage = "",
+      termsAcceptedAt = "",
+      termsVersion = TERMS_VERSION,
+      digitalContentConsentAt = "",
+      digitalContentVersion = DIGITAL_CONTENT_VERSION,
+      registryVisibility = "private",
+      dedicationReviewStatus = "approved",
     } = meta;
 
     console.log("[SHA Webhook] checkout.session.completed received", {
@@ -107,7 +115,15 @@ export async function POST(request: NextRequest) {
       email: (email.trim() || recipientEmail.trim()) || undefined,
       stripeSessionId: session.id,
       accessToken,
+      template: template || undefined,
       locale,
+      termsAcceptedAt: termsAcceptedAt || new Date().toISOString(),
+      termsVersion,
+      digitalContentConsentAt: digitalContentConsentAt || new Date().toISOString(),
+      digitalContentVersion,
+      registryVisibility: registryVisibility === "public" ? "public" : "private",
+      dedicationReviewStatus:
+        dedicationReviewStatus === "rejected" ? "rejected" : "approved",
     });
 
     console.log("[SHA Webhook] Member created", {
@@ -149,9 +165,18 @@ export async function POST(request: NextRequest) {
               registryId: newMember.id.toUpperCase(),
               referralCode,
               downloadUrl: certificateUrl,
-              registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`),
+              registryUrl:
+                newMember.registryVisibility === "public"
+                  ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`)
+                  : undefined,
               careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
               referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
+              termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/terms"),
+              manageUrl: buildAbsoluteLocalizedUrl(
+                BASE_URL,
+                locale,
+                `/certificate/view?token=${accessToken}#record-controls`
+              ),
               giftMessage: giftMessage || undefined,
               isGift: isGift === "true",
             }),

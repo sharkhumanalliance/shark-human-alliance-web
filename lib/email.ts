@@ -145,13 +145,28 @@ export function certificateEmailHtml(params: {
   registryId: string;
   referralCode: string;
   downloadUrl: string;
-  registryUrl: string;
+  registryUrl?: string;
   careerUrl: string;
+  termsUrl: string;
+  manageUrl: string;
   referralUrl?: string;
   giftMessage?: string;
   isGift?: boolean;
 }): string {
-  const { name, tier, registryId, referralCode, downloadUrl, registryUrl, careerUrl, referralUrl, giftMessage, isGift } = params;
+  const {
+    name,
+    tier,
+    registryId,
+    referralCode,
+    downloadUrl,
+    registryUrl,
+    careerUrl,
+    termsUrl,
+    manageUrl,
+    referralUrl,
+    giftMessage,
+    isGift,
+  } = params;
 
   const tierLabel: Record<string, string> = {
     basic: "Protected Friend",
@@ -165,8 +180,9 @@ export function certificateEmailHtml(params: {
   const safeStatus = escapeHtml(status);
   const safeRegistryId = escapeHtml(registryId);
   const safeDownloadUrl = escapeHtml(downloadUrl);
-  const safeRegistryUrl = escapeHtml(registryUrl);
   const safeCareerUrl = escapeHtml(careerUrl);
+  const safeTermsUrl = escapeHtml(termsUrl);
+  const safeManageUrl = escapeHtml(manageUrl);
   const safeReferralUrl = escapeHtml(
     referralUrl ||
       buildAbsoluteLocalizedUrl(
@@ -178,6 +194,7 @@ export function certificateEmailHtml(params: {
   const safeGiftMessage = giftMessage
     ? escapeHtmlWithLineBreaks(giftMessage)
     : "";
+  const safeRegistryUrl = registryUrl ? escapeHtml(registryUrl) : "";
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -207,9 +224,10 @@ export function certificateEmailHtml(params: {
         <a href="${safeDownloadUrl}" style="display:inline-block;padding:14px 32px;background-color:#2f80ed;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">Download Your Certificate (PDF)</a>
       </div>
 
+      ${registryUrl ? `
       <div style="margin-top:24px;text-align:center;">
         <a href="${safeRegistryUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">View yourself in the Diplomatic Registry &rarr;</a>
-      </div>
+      </div>` : ""}
 
       ${giftMessage ? `
       <div style="margin-top:24px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:16px;">
@@ -225,6 +243,22 @@ export function certificateEmailHtml(params: {
           ${safeReferralUrl}
         </div>
         <a href="${safeCareerUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">See the full career ladder &rarr;</a>
+      </div>
+
+      <div style="margin-top:24px;padding:20px;background-color:#f8fafc;border:1px solid #dbe4ee;border-radius:16px;">
+        <p style="margin:0 0 8px;font-size:12px;color:#15324d;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Order details</p>
+        <p style="margin:0;font-size:13px;line-height:1.7;color:#5f7892;">
+          Your certificate was supplied immediately in digital form at your express request. Once supply began, the withdrawal right ended.
+        </p>
+        <p style="margin:12px 0 0;font-size:13px;line-height:1.7;color:#5f7892;">
+          Need to hide your registry record or request erasure? Use the private record controls linked below.
+        </p>
+        <p style="margin:12px 0 0;">
+          <a href="${safeManageUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">Manage record visibility &rarr;</a>
+        </p>
+        <p style="margin:10px 0 0;">
+          <a href="${safeTermsUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">Terms &amp; Purchase Conditions &rarr;</a>
+        </p>
       </div>
     </div>
 

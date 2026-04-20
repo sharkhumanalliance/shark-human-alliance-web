@@ -278,60 +278,60 @@
     "label": "FAQ",
     "title": "Reasonable questions. Excellent answers.",
     "subtitle": "For sensible humans who want to know what they’re buying, where the money goes, and whether sharks can read certificates.",
-      "items": [
-        {
-          "question": "Is the alliance real?",
-          "answer": "The alliance is fictional and intentionally humorous. The conservation funding is real. Think of it as a comedy product with a real conservation budget behind it."
-        },
-        {
-          "question": "Does membership protect me from sharks?",
-          "answer": "No. It offers no marine protection whatsoever. It does, however, help protect actual sharks from humans, which is the statistically more relevant problem."
-        },
-        {
-          "question": "Where does the money actually go?",
-          "answer": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated."
-        },
-        {
-          "question": "When do donations start, and how will they be reported?",
-          "answer": "We publish allocations once donations are actually made. This page and our social channels will show recipient organizations and reported amounts as they happen."
-        },
-        {
-          "question": "Are these formal partner organizations?",
-          "answer": "Not unless we explicitly say so. We list planned recipients first and only describe an organization as a formal partner or confirmed recipient when that is actually true."
-        },
-        {
-          "question": "How much does each certificate cost?",
-          "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
-        },
-        {
-          "question": "Will I receive a certificate immediately?",
-          "answer": "Yes. You receive a personalized digital certificate. If you provide an email address, we also send the delivery link by email."
-        },
-        {
-          "question": "What do I receive immediately after purchase?",
-          "answer": "A success page with your certificate preview and a download link. If you entered an email address, we also send the certificate link to that inbox."
-        },
-        {
-          "question": "Can I access my certificate later?",
-          "answer": "Yes, if you provide an email address during checkout. If you skip email, the certificate is only available for immediate download after purchase and the link is not stored for later retrieval."
-        },
-        {
-          "question": "Can I buy this as a gift?",
-          "answer": "Yes. You can buy a certificate as a gift and enter the recipient details during checkout. If you want reliable later access, include an email address in the purchase flow."
-        },
-        {
-          "question": "Why sharks?",
-          "answer": "Because sharks have a PR problem they did not create. Humans kill roughly 100 million sharks a year. Sharks kill very few humans. The imbalance is embarrassing."
-        },
-        {
-          "question": "Is this a donation or a product purchase?",
-          "answer": "It is a purchase of a humorous digital product. A conservation allocation is funded from that revenue on our side; you are not making a direct charitable donation, and it is not tax-deductible."
-        },
-        {
-          "question": "What size is the certificate?",
-          "answer": "Certificates are optimized for A4 or US Letter download and printing."
-        }
-      ],
+    "items": [
+      {
+        "question": "Is the alliance real?",
+        "answer": "The alliance is fictional and intentionally humorous. The conservation funding is real. Think of it as a comedy product with a real conservation budget behind it."
+      },
+      {
+        "question": "Does membership protect me from sharks?",
+        "answer": "No. It offers no marine protection whatsoever. It does, however, help protect actual sharks from humans, which is the statistically more relevant problem."
+      },
+      {
+        "question": "Where does the money actually go?",
+        "answer": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated."
+      },
+      {
+        "question": "When do donations start, and how will they be reported?",
+        "answer": "We publish allocations once donations are actually made. This page and our social channels will show recipient organizations and reported amounts as they happen."
+      },
+      {
+        "question": "Are these formal partner organizations?",
+        "answer": "Not unless we explicitly say so. We list planned recipients first and only describe an organization as a formal partner or confirmed recipient when that is actually true."
+      },
+      {
+        "question": "How much does each certificate cost?",
+        "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
+      },
+      {
+        "question": "Will I receive a certificate immediately?",
+        "answer": "Yes. You receive a personalized digital certificate. If you provide an email address, we also send the delivery link by email."
+      },
+      {
+        "question": "What do I receive immediately after purchase?",
+        "answer": "A success page with your certificate preview and a download link. If you entered an email address, we also send the certificate link to that inbox."
+      },
+      {
+        "question": "Can I access my certificate later?",
+        "answer": "Yes, if you provide an email address during checkout. If you skip email, the certificate is only available for immediate download after purchase and the link is not stored for later retrieval."
+      },
+      {
+        "question": "Can I buy this as a gift?",
+        "answer": "Yes. You can buy a certificate as a gift and enter the recipient details during checkout. If you want reliable later access, include an email address in the purchase flow."
+      },
+      {
+        "question": "Why sharks?",
+        "answer": "Because sharks have a PR problem they did not create. Humans kill roughly 100 million sharks a year. Sharks kill very few humans. The imbalance is embarrassing."
+      },
+      {
+        "question": "Is this a donation or a product purchase?",
+        "answer": "It is a purchase of a humorous digital product. A conservation allocation is funded from that revenue on our side; you are not making a direct charitable donation, and it is not tax-deductible."
+      },
+      {
+        "question": "What size is the certificate?",
+        "answer": "Certificates are optimized for A4 or US Letter download and printing."
+      }
+    ],
     "ctaTitle": "Still have questions?",
     "ctaText": "The best way to understand the certificate is to see it. Try the live preview on our homepage — or just go for it.",
     "ctaButton": "Get your certificate"
@@ -613,11 +613,11 @@
     "confirmName": "Name on certificate",
     "confirmGiftFor": "Gift for",
     "confirmTier": "Membership tier",
-      "confirmTemplate": "Certificate style",
-      "confirmDedication": "Dedication",
-      "confirmButton": "Confirm & pay",
-      "confirmButtonPromo": "Apply Promo Code & Continue",
-      "confirmBack": "Go back and edit",
+    "confirmTemplate": "Certificate style",
+    "confirmDedication": "Dedication",
+    "confirmButton": "Confirm & pay",
+    "confirmButtonPromo": "Apply Promo Code & Continue",
+    "confirmBack": "Go back and edit",
     "orderSummary": "Diplomatic Briefing",
     "redirecting": "Redirecting to secure checkout...",
     "checkoutError": "Something went wrong creating your checkout. Please try again.",
@@ -694,7 +694,20 @@
         "nonsnack": "Non-Snack Recognition",
         "business": "Shark-Approved Zone"
       }
-    }
+    },
+    "manageRecord": "Manage record visibility",
+    "registryPrivateNotice": "Your record is currently private and will not appear in the public registry unless you opted in.",
+    "termsConsentPrefix": "I have read and agree to the",
+    "termsConsentLink": "Terms & Purchase Conditions",
+    "digitalContentConsentLabel": "I expressly request immediate digital delivery before the withdrawal period ends and acknowledge that, once delivery begins, the right to withdraw is lost.",
+    "registryConsentLabel": "I agree that the certificate holder's name and approved record details may appear in the public Diplomatic Registry.",
+    "registryConsentHint": "Leave this unchecked if the record should stay private. Dedicated record controls are available later through the certificate access link.",
+    "termsRequiredError": "Please confirm the Terms & Purchase Conditions before continuing.",
+    "digitalContentConsentRequiredError": "Please confirm immediate digital delivery before continuing.",
+    "dedicationTooLongError": "Dedication is too long. Keep it short and certificate-sized.",
+    "dedicationContactError": "Dedication cannot include contact details.",
+    "dedicationUrlError": "Dedication cannot include links or web addresses.",
+    "dedicationRejectedError": "Dedication was rejected by content rules. Please keep it lawful and non-abusive."
   },
   "registry": {
     "title": "The Diplomatic Registry",
@@ -846,7 +859,7 @@
     "title": "Where the money actually goes.",
     "subtitle": "The Alliance is fictional. The funding is not. This page explains what each certificate contributes, who we aim to support, and how reporting will work.",
     "splitTitle": "How funds are split",
-      "splitDescription": "Certificate prices are fixed at $4, $19, and $99. The conservation portion of each sale is tracked and reported here as donations are made.",
+    "splitDescription": "Certificate prices are fixed at $4, $19, and $99. The conservation portion of each sale is tracked and reported here as donations are made.",
     "splitOf": "of",
     "splitGoesToOcean": "goes to conservation",
     "splitProtectedAmount": "$1",
@@ -864,7 +877,7 @@
     "splitOpsLabel": "Land-based operations (the boring part)",
     "splitOpsText": "The rest covers the unglamorous dry-land part: hosting, rendering, admin, and one human doing all of this in a bathrobe.",
     "partnersTitle": "Where the money goes",
-      "partnersSubtitle": "These are organizations we aim to support as donations are made. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
+    "partnersSubtitle": "These are organizations we aim to support as donations are made. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
     "partner1Name": "Shark Trust",
     "partner1Desc": "UK-based charity dedicated to safeguarding the future of sharks through science, education and policy influence.",
     "partner1Focus": "Focus: UK & European shark policy, science-led conservation, public education campaigns.",
@@ -1054,7 +1067,7 @@
     "title": "Terms & Purchase Conditions",
     "intro": "These terms explain how ordering, delivery, support, complaints and refund handling work for Shark Human Alliance certificates. This page is meant to make the purchase process clearer and more trustworthy.",
     "updatedLabel": "Last updated",
-    "updatedValue": "March 27, 2026",
+    "updatedValue": "April 20, 2026",
     "sections": {
       "operator": {
         "title": "1. Operator",
@@ -1062,26 +1075,42 @@
       },
       "products": {
         "title": "2. What is being sold",
-        "body": "The website sells digital, personalized certificates and related digital assets within the Shark Human Alliance project. Unless explicitly stated otherwise on the product page, the product is delivered digitally and no physical framed certificate is shipped."
+        "body": "The website sells digital, personalized certificates and related digital assets within the Shark Human Alliance project. The certificate is symbolic, humorous, and not legally binding. Unless explicitly stated otherwise on the product page, the product is delivered digitally and no physical framed certificate is shipped. Current conservation allocations are described on the Impact page, including the amount allocated per tier and the organizations currently listed as intended recipients."
       },
       "ordering": {
         "title": "3. How ordering works",
-        "body": "To place an order, choose a certificate tier, enter the requested details, and complete payment through the checkout flow. The order is treated as placed once payment is successfully confirmed."
+        "body": "To place an order, choose a certificate tier, enter the requested details, confirm the Terms & Purchase Conditions, confirm immediate digital delivery, and complete payment through the checkout flow. The order is treated as placed once payment is successfully confirmed."
+      },
+      "privacy": {
+        "title": "4. Personal data and legal basis",
+        "body": "To issue and deliver the certificate, we process the submitted name, dedication text, delivery email, and related order identifiers. This processing is carried out to perform the contract and deliver the requested digital certificate. Dedication text is moderated before acceptance and may be rejected if it contains unlawful, abusive, defamatory, or contact-style content."
+      },
+      "registry": {
+        "title": "5. Public registry",
+        "body": "The public Diplomatic Registry displays only records for which the customer actively opted in during checkout. If no registry opt-in is given, the record remains private and is not returned by the public registry endpoint. Record visibility can later be hidden, and an erasure request can be initiated, through the private record controls linked from the certificate access flow."
+      },
+      "moderation": {
+        "title": "6. Dedication moderation",
+        "body": "Dedication text is user-submitted content. We reserve the right to reject, shorten, remove, or refuse to issue content that is unlawful, abusive, defamatory, threatening, misleading, or otherwise damaging to third parties, public order, or the Shark Human Alliance brand presentation. If moderation blocks the submitted text, the order cannot proceed until acceptable wording is provided."
       },
       "delivery": {
-        "title": "4. Delivery and access",
+        "title": "7. Delivery and access",
         "body": "Certificates are generated digitally after successful payment. If an email address is provided, delivery details may also be sent by email. If no email address is provided, the certificate should be downloaded immediately from the success page because the link may not be stored for later retrieval."
       },
+      "digitalContent": {
+        "title": "8. Digital content and withdrawal",
+        "body": "The certificate is digital content supplied without a tangible medium. Delivery begins immediately after payment and processing. During checkout, the customer must expressly request immediate supply before the withdrawal period ends and acknowledge that, once supply begins, the right to withdraw is lost. Order confirmation and certificate delivery messaging repeat this information on a durable medium."
+      },
       "complaints": {
-        "title": "5. Complaints and technical issues",
+        "title": "9. Complaints and technical issues",
         "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, or another appropriate remedy."
       },
       "refunds": {
-        "title": "6. Refunds and corrections",
+        "title": "10. Refunds and corrections",
         "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help."
       },
       "contact": {
-        "title": "7. Contact",
+        "title": "11. Contact",
         "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
       }
     }
@@ -1110,7 +1139,9 @@
     "quip3": "The Department of Aquatic Bureaucracy has stamped this record. Twice, for emphasis.",
     "quip4": "Verified by Finnley Mako personally. He used his reading glasses and everything.",
     "quip5": "This membership has survived our rigorous three-second verification process.",
-    "quip6": "Confirmed. The ocean's most meticulous filing system has spoken."
+    "quip6": "Confirmed. The ocean's most meticulous filing system has spoken.",
+    "rateLimitedTitle": "Verification temporarily paused",
+    "rateLimitedText": "Too many verification requests arrived from this connection in a short period. Please wait a moment and try again."
   },
   "certificateTemplates": {
     "luxury": {
@@ -1185,5 +1216,19 @@
     "skipToContent": "Skip to main content",
     "toggleMenu": "Toggle menu",
     "closeMenuOverlay": "Close menu overlay"
+  },
+  "certificateAccess": {
+    "eyebrow": "Private record controls",
+    "title": "Manage this certificate record",
+    "description": "Use these controls to hide the record from the public registry or request erasure of identifying details linked to this certificate.",
+    "visibilityLabel": "Current registry visibility",
+    "visibilityPublic": "Public",
+    "visibilityPrivate": "Private",
+    "hideButton": "Hide from public registry",
+    "eraseButton": "Erase identifying record data",
+    "hideSuccess": "The record is now hidden from the public registry.",
+    "eraseSuccess": "The identifying record data has been erased. Existing public links should stop resolving shortly.",
+    "actionError": "The request could not be completed. Please try again in a moment.",
+    "eraseConfirm": "Erase identifying record data for this certificate? This action is intended to be permanent."
   }
 }

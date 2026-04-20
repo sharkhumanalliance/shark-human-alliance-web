@@ -14,9 +14,15 @@ import {
   generateAccessToken,
   createMember,
   incrementReferralCount,
+  type Member,
 } from "@/lib/members";
 import { shouldUseDemoMembers } from "@/lib/demo-members";
 import { saveDevPromoMember } from "@/lib/dev-promo-store";
+import {
+  DedicationModerationError,
+  moderateDedication,
+} from "@/lib/dedication-moderation";
+import { DIGITAL_CONTENT_VERSION, TERMS_VERSION } from "@/lib/legal";
 import {
   createSignedCheckoutSessionValue,
   getCheckoutSessionCookieName,
@@ -45,6 +51,9 @@ export async function POST(request: NextRequest) {
       template,
       paperFormat = "a4",
       giftMessage = "",
+      termsAccepted,
+      digitalContentConsentAccepted,
+      registryConsentAccepted,
     } = body;
 
     const loc = locale || "en";
@@ -83,6 +92,42 @@ export async function POST(request: NextRequest) {
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
+    if (!termsAccepted) {
+      return NextResponse.json(
+        { error: "Terms consent is required", code: "terms_required" },
+        { status: 400 }
+      );
+    }
+    if (!digitalContentConsentAccepted) {
+      return NextResponse.json(
+        {
+          error: "Digital content consent is required",
+          code: "digital_content_consent_required",
+        },
+        { status: 400 }
+      );
+    }
+
+    let moderatedDedication = "";
+    let dedicationReviewStatus: "approved" | "rejected" = "approved";
+    const registryVisibility: Member["registryVisibility"] =
+      registryConsentAccepted ? "public" : "private";
+    try {
+      const moderation = moderateDedication(dedication);
+      moderatedDedication = moderation.dedication;
+      dedicationReviewStatus = moderation.reviewStatus;
+    } catch (error) {
+      if (error instanceof DedicationModerationError) {
+        return NextResponse.json(
+          {
+            error: "Dedication could not be accepted",
+            code: error.code,
+          },
+          { status: 400 }
+        );
+      }
+      throw error;
+    }
 
     // ─── Free promo code: skip Stripe, register member directly ───
     if (isFreePromoFlow) {
@@ -108,7 +153,7 @@ export async function POST(request: NextRequest) {
         name: name.trim(),
         tier,
         date: new Date().toISOString(),
-        dedication: (dedication || "").trim(),
+        dedication: moderatedDedication,
         referralCode,
         referredBy: referredBy || undefined,
         email: (email?.trim() || recipientEmail?.trim()) || undefined,
@@ -116,6 +161,12 @@ export async function POST(request: NextRequest) {
         accessToken,
         template: template || undefined,
         locale: loc,
+        termsAcceptedAt: new Date().toISOString(),
+        termsVersion: TERMS_VERSION,
+        digitalContentConsentAt: new Date().toISOString(),
+        digitalContentVersion: DIGITAL_CONTENT_VERSION,
+        registryVisibility,
+        dedicationReviewStatus,
       };
 
       let newMember;
@@ -172,9 +223,18 @@ export async function POST(request: NextRequest) {
                 registryId: newMember.id.toUpperCase(),
                 referralCode,
                 downloadUrl: certificateUrl,
-                registryUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, `/registry?highlight=${newMember.id}`),
+                registryUrl:
+                  newMember.registryVisibility === "public"
+                    ? buildAbsoluteLocalizedUrl(BASE_URL, loc, `/registry?highlight=${newMember.id}`)
+                    : undefined,
                 careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career"),
                 referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, buildReferralHref(referralCode)),
+                termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/terms"),
+                manageUrl: buildAbsoluteLocalizedUrl(
+                  BASE_URL,
+                  loc,
+                  `/certificate/view?token=${accessToken}#record-controls`
+                ),
                 giftMessage: giftMessage || undefined,
                 isGift,
               }),
@@ -299,7 +359,7 @@ export async function POST(request: NextRequest) {
       metadata: {
         tier,
         name,
-        dedication: dedication || "",
+        dedication: moderatedDedication,
         email,
         isGift: isGift ? "true" : "false",
         recipientEmail: recipientEmail || "",
@@ -308,6 +368,12 @@ export async function POST(request: NextRequest) {
         template: template || "",
         paperFormat: paperFormat === "letter" ? "letter" : "a4",
         giftMessage: giftMessage || "",
+        termsAcceptedAt: new Date().toISOString(),
+        termsVersion: TERMS_VERSION,
+        digitalContentConsentAt: new Date().toISOString(),
+        digitalContentVersion: DIGITAL_CONTENT_VERSION,
+        registryVisibility: registryConsentAccepted ? "public" : "private",
+        dedicationReviewStatus,
       },
     });
 

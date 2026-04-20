@@ -24,6 +24,7 @@ interface MemberData {
   referralCount: number;
   accessToken?: string;
   hasEmail?: boolean;
+  registryVisibility: "public" | "private";
 }
 
 function SuccessContentInner() {
@@ -322,12 +323,22 @@ function SuccessContentInner() {
             )
           </button>
 
-          <LocalizedLink
-            href={`/registry?highlight=${member.id}`}
-            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
-          >
-            {t("viewRegistry")}
-          </LocalizedLink>
+          {member.registryVisibility === "public" ? (
+            <LocalizedLink
+              href={`/registry?highlight=${member.id}`}
+              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
+            >
+              {t("viewRegistry")}
+            </LocalizedLink>
+          ) : null}
+          {member.accessToken ? (
+            <LocalizedLink
+              href={`/certificate/view?token=${member.accessToken}#record-controls`}
+              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
+            >
+              {t("manageRecord")}
+            </LocalizedLink>
+          ) : null}
         </div>
 
         {downloadStatus ? (
@@ -396,6 +407,11 @@ function SuccessContentInner() {
               {t("downloadOnlyNotice")}
             </div>
           )}
+          {member.registryVisibility !== "public" ? (
+            <p className="mt-3 text-sm text-[var(--muted)]">
+              {t("registryPrivateNotice")}
+            </p>
+          ) : null}
         </div>
 
         <div className="mt-6 text-center">
