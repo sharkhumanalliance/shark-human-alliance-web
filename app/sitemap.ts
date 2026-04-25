@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/impact", changeFrequency: "monthly" as const, priority: 0.7 },
     { path: "/faq", changeFrequency: "monthly" as const, priority: 0.6 },
     { path: "/terms", changeFrequency: "monthly" as const, priority: 0.5 },
+    { path: "/privacy", changeFrequency: "monthly" as const, priority: 0.5 },
     { path: "/cookie-policy", changeFrequency: "monthly" as const, priority: 0.4 },
     { path: "/membership", changeFrequency: "monthly" as const, priority: 0.7 },
     { path: "/membership/Protected-friend-status", changeFrequency: "monthly" as const, priority: 0.6 },

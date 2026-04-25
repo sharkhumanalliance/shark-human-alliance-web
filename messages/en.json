@@ -1,19 +1,19 @@
 {
   "seo": {
     "home": {
-      "title": "Funny Shark Certificates — Official Shark Protection | Shark Human Alliance",
+      "title": "Funny Shark Certificates — Official Shark Protection",
       "description": "Personalized funny shark certificates for people who love sharks, fear sharks, or just appreciate excellent paperwork. Every sale funds real ocean conservation. From $4."
     },
     "purchase": {
-      "title": "Buy a Funny Shark Certificate — Personalized & Instant | Shark Human Alliance",
+      "title": "Buy a Funny Shark Certificate — Personalized & Instant",
       "description": "Get a personalized funny shark certificate delivered instantly. Choose your tier, add a name and dedication, fund real shark conservation. From $4."
     },
     "registry": {
-      "title": "Diplomatic Registry — Shark Human Alliance",
+      "title": "Diplomatic Registry",
       "description": "Browse the official registry of humans whose shark-related paperwork is in order. Join the list and fund real conservation."
     },
     "impact": {
-      "title": "Our Impact — Where the Money Goes | Shark Human Alliance",
+      "title": "Our Impact — Where the Money Goes",
       "description": "Full transparency on every dollar. See how certificate sales fund real shark and ocean conservation through vetted partner organizations."
     },
     "membership": {
@@ -21,19 +21,19 @@
       "description": "Choose a personalized shark certificate for yourself, a friend, or your office. Instant digital delivery, public registry entry, and real shark conservation support."
     },
     "protectedFriend": {
-      "title": "Protected Friend Status — Shark Human Alliance",
+      "title": "Protected Friend Status",
       "description": "The flagship shark protection certificate. Personalized, surprisingly frameable, and delivered instantly. Every sale funds real ocean conservation."
     },
     "faq": {
-      "title": "FAQ — Funny Shark Certificates & Conservation | Shark Human Alliance",
+      "title": "FAQ — Funny Shark Certificates & Conservation",
       "description": "Answers to common questions about funny shark certificates, conservation donations, digital delivery, and gifting. Everything you need to know before buying."
     },
     "wanted": {
-      "title": "Funny Shark Wanted Poster Generator — Shark Human Alliance",
+      "title": "Funny Shark Wanted Poster Generator",
       "description": "Generate a funny shark wanted poster for someone you know. Share it on Stories, then gift them an official shark protection certificate. Free to generate."
     },
     "career": {
-      "title": "Alliance Career Ladder — Shark Human Alliance",
+      "title": "Alliance Career Ladder",
       "description": "Climb the ranks from Civilian to Chief Shark Whisperer. Refer friends, earn promotions, and rise through the Alliance's diplomatic hierarchy."
     },
     "purchaseSuccess": {
@@ -41,12 +41,16 @@
       "description": "Your shark protection certificate is ready. Download your PDF and share your referral link."
     },
     "terms": {
-      "title": "Terms & Purchase Conditions — Shark Human Alliance",
+      "title": "Terms & Purchase Conditions",
       "description": "Read how ordering, digital delivery, support, complaints and refund handling work for Shark Human Alliance certificates."
     },
     "cookiePolicy": {
-      "title": "Cookie Policy — Shark Human Alliance",
+      "title": "Cookie Policy",
       "description": "How Shark Human Alliance uses necessary and analytics cookies, how consent works and how you can change your preferences."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "How Shark Human Alliance processes personal data for certificates, checkout, the public registry, email delivery and analytics preferences."
     }
   },
   "header": {
@@ -86,7 +90,8 @@
     "termsLink": "Terms & Purchase Conditions",
     "supportLink": "Support & complaints",
     "cookiePolicyLink": "Cookie Policy",
-    "cookieSettingsLink": "Cookies settings"
+    "cookieSettingsLink": "Cookies settings",
+    "privacyLink": "Privacy Policy"
   },
   "hero": {
     "titleLine1": "Official shark protection.",
@@ -120,6 +125,7 @@
       "title": "Be among the first wave of diplomats.",
       "text": "The Diplomatic Registry is open. Every certificate issued is logged, every dollar tracked. The earlier you join, the more impressive your seniority will look in the archives.",
       "cta": "Get your certificate — $4",
+      "purchaseCta": "Get your certificate",
       "registryCta": "View the Registry",
       "ctaNonSnack": "Go Non-Snack — $19",
       "ctaBusiness": "Certify your office — $99"
@@ -643,8 +649,18 @@
     "giftMessageLabel": "Personal message (optional)",
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
     "referredByBadge": "Referral credit is active for this purchase.",
-    "referralTitle": "Your Alliance Career Starts Now",
+    "referralTitle": "Your diplomatic career starts now",
+    "referralMomentTitle": "You are officially on the ladder.",
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks.",
+    "referralCodeLabel": "Referral code",
+    "referralCurrentRank": "Current rank",
+    "referralNextRank": "Next promotion",
+    "referralProgressLabel": "Rank progress",
+    "referralProgressValue": "{count} of {target} referrals",
+    "referralRemaining": "{count, plural, one {# more recruit} other {# more recruits}} to unlock {rank}",
+    "referralMaxRankTitle": "Top rank reached",
+    "referralMaxRankText": "The personnel department is visibly nervous.",
+    "referralLinkLabel": "Referral link",
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
     "downloadOnlyNotice": "Download now — this link won’t be stored.",
@@ -684,6 +700,11 @@
       "nativeSuccess": "Share sheet opened.",
       "nativeFallback": "Link shared. For Instagram Stories, use the downloaded image as well.",
       "storySubline": "Officially recognized as not a snack.",
+      "storyOfficialBadge": "Officially certified",
+      "storyHeadlineTop": "You are",
+      "storyHeadlineBottom": "not a snack.",
+      "storyFooterLine": "Bureaucratic progress in shark-human relations.",
+      "storyInstruction": "Post this to your Stories. Let the public know you're off the menu.",
       "storyBadge": "Story ready",
       "previewAlt": "Instagram Story preview for your Shark Human Alliance certificate",
       "previewHeadline": "You are officially not a snack.",
@@ -876,6 +897,13 @@
     "splitBusinessText": "$70 from every business certification goes to conservation. If you’re putting it on the wall, it should earn its place there.",
     "splitOpsLabel": "Land-based operations (the boring part)",
     "splitOpsText": "The rest covers the unglamorous dry-land part: hosting, rendering, admin, and one human doing all of this in a bathrobe.",
+    "firstTargetLabel": "First donation target",
+    "firstTargetTitle": "First public allocation target: $500",
+    "firstTargetText": "Before we publish the first allocation report, the immediate goal is a clear $500 conservation allocation. The recipient and receipt will be published before we call it completed.",
+    "firstTargetProgressLabel": "Publicly allocated so far",
+    "firstTargetCurrent": "$0",
+    "firstTargetGoal": "$500 goal",
+    "firstTargetStatus": "Planned first target: Shark Trust, pending the first public allocation.",
     "partnersTitle": "Where the money goes",
     "partnersSubtitle": "These are organizations we aim to support as donations are made. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
     "partner1Name": "Shark Trust",
@@ -1230,5 +1258,54 @@
     "eraseSuccess": "The identifying record data has been erased. Existing public links should stop resolving shortly.",
     "actionError": "The request could not be completed. Please try again in a moment.",
     "eraseConfirm": "Erase identifying record data for this certificate? This action is intended to be permanent."
+  },
+  "privacyPage": {
+    "eyebrow": "Privacy & data protection",
+    "title": "Privacy Policy",
+    "intro": "This page explains how Shark Human Alliance processes personal data when you order a certificate, receive emails, appear in the public registry or use analytics cookies. It is written for an international audience, and our contractual and privacy communication is generally provided in English and Spanish. It is intended to cover the core information required by Article 13 GDPR and related privacy laws.",
+    "updatedLabel": "Last updated",
+    "updatedValue": "April 21, 2026",
+    "sections": {
+      "controller": {
+        "title": "1. Controller and contact",
+        "body": "The controller for Shark Human Alliance is JEEL Wekeza s.r.o., with its registered office at Radlicka 663/28, Smichov, 150 00 Prague 5, Czech Republic, company ID 07969694. Legal form: limited liability company.\n\nPrimary privacy contact: sharkhumanalliance@gmail.com.\n\nNo separate data protection officer is currently published for this service."
+      },
+      "dataCategories": {
+        "title": "2. Which data we process",
+        "body": "Depending on how you use the service, we may process: certificate name, dedication text, email address, order and payment metadata, referral code and referral activity, public registry visibility preference, access token and verification identifiers, basic technical metadata such as IP address used for security and rate limiting, and cookie preference data.\n\nPayment card details are not stored by Shark Human Alliance. Payments are handled by Stripe under Stripe's own systems and notices."
+      },
+      "legalBases": {
+        "title": "3. Purposes and legal bases",
+        "body": "We process personal data for these main purposes:\n\n- issuing and delivering a purchased certificate, handling support and operating the service under Article 6(1)(b) GDPR;\n- meeting accounting, tax and fraud-prevention obligations under Article 6(1)(c) GDPR and, where applicable, Article 6(1)(f) GDPR;\n- publishing a record in the public registry only when you opt in, under Article 6(1)(a) GDPR;\n- sending certificate-related operational emails and referral or access links needed for the service under Article 6(1)(b) GDPR;\n- loading analytics cookies only when you opt in, under Article 6(1)(a) GDPR and applicable cookie rules."
+      },
+      "publicRegistry": {
+        "title": "4. Public registry and certificate visibility",
+        "body": "Registry publication is optional. New purchases are shown in the public registry only if the buyer enables that option during checkout.\n\nRecords can later be hidden from the public registry or anonymized through the certificate access controls or by contacting support. Verification pages for non-public or erased records are not shown publicly."
+      },
+      "providers": {
+        "title": "5. Service providers and recipients",
+        "body": "To operate the website, checkout and certificate delivery, we may share relevant data with providers that support the service, including Stripe for payments, Resend for email delivery, Vercel for hosting and application delivery, and the PostgreSQL database provider used for the project environment, such as Neon or Supabase.\n\nThese providers receive only the data needed for their role in operating the service."
+      },
+      "transfers": {
+        "title": "6. International transfers",
+        "body": "Some providers used by the service may process data outside the European Economic Area, including in the United States. Where such transfers occur, we rely on the provider's applicable transfer mechanism, such as the EU Standard Contractual Clauses, adequacy decisions or equivalent safeguards made available by the provider."
+      },
+      "retention": {
+        "title": "7. Retention periods",
+        "body": "We keep certificate and order data for as long as needed to operate the service, demonstrate the transaction and handle support, legal or accounting obligations. Public registry visibility remains active until the record is hidden or erased. Cookie preference data is stored for up to 180 days unless changed earlier.\n\nWhere the law requires longer retention for accounting or tax records, those records may be kept for the required statutory period."
+      },
+      "rights": {
+        "title": "8. Your rights",
+        "body": "Subject to applicable law, you may request access, rectification, erasure, restriction, portability, withdrawal of consent, objection to certain processing and the right to lodge a complaint with a competent supervisory authority. Because the controller is established in the Czech Republic, the relevant authority for the controller is the Office for Personal Data Protection (UOOU), while data subjects in the EU may also have the right to complain to the authority in their place of residence, work or the place of the alleged infringement.\n\nIf a request concerns a public registry entry, please include the registry ID, referral code or certificate access link where possible."
+      },
+      "cookies": {
+        "title": "9. Cookies and analytics",
+        "body": "Necessary cookies are used for core website functions, checkout flow, language handling, security and storing your cookie preference. Google Analytics 4 may be initialized on the site with a restrictive default consent mode so we can operate the analytics setup, but analytics storage remains denied until analytics consent is granted. If you reject analytics cookies, analytics storage stays denied.\n\nFor more detail, see our Cookie Policy and the cookie settings control in the footer."
+      },
+      "contact": {
+        "title": "10. How to exercise your rights",
+        "body": "Email privacy requests and complaints to sharkhumanalliance@gmail.com. If your request concerns a specific certificate, include enough information for us to identify the record safely, such as the certificate email address, registry ID or certificate access link.\n\nIf you believe we have not handled your request properly, you may also contact the competent supervisory authority. For the controller, that authority is the Czech Office for Personal Data Protection (UOOU)."
+      }
+    }
   }
 }

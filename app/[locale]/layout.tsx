@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import {
   Geist,
   Geist_Mono,
@@ -38,6 +38,7 @@ const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
   weight: ["600", "700"],
+  style: ["normal", "italic"],
 });
 
 const cinzel = Cinzel({
@@ -256,4 +257,3 @@ export default async function LocaleLayout({ children, params }: Props) {
     </html>
   );
 }
-

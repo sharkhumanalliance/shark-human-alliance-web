@@ -18,7 +18,7 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Verify Alliance Membership — Shark Human Alliance",
+    title: "Verify Alliance Membership",
     description:
       "Verify the authenticity of a Shark Human Alliance membership certificate.",
     robots: { index: false, follow: false },

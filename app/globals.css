@@ -179,6 +179,11 @@ textarea:focus-visible {
   font-family: Inter, system-ui, sans-serif;
 }
 
+.certificate-page--paper-letter {
+  width: 216mm;
+  height: 279mm;
+}
+
 .certificate-bg {
   position: absolute;
   inset: 0;
@@ -1137,335 +1142,324 @@ textarea:focus-visible {
 
 /* Playful certificate — restored art-first layout */
 .certificate-page--hero {
-  background:
-    radial-gradient(circle at top left, rgba(133, 186, 220, 0.16), transparent 28%),
-    linear-gradient(180deg, #f9fbfd 0%, #f4f8fb 100%);
+  background: #f8f2ea;
+}
+
+.certificate-page--hero .certificate-bg {
+  opacity: 1;
 }
 
 .certificate-page--hero .certificate-inner-frame {
-  inset: 7.5mm;
-  border: 2.2px solid rgba(26, 73, 103, 0.34);
-  border-radius: 13px;
-  box-shadow:
-    inset 0 0 0 1.4mm rgba(255, 255, 255, 0.6),
-    inset 0 0 0 2.15mm rgba(26, 73, 103, 0.14),
-    0 0 0 0.5px rgba(26, 73, 103, 0.08);
+  display: none;
 }
 
-.certificate-page--hero .certificate-hero {
-  margin: 7.5mm 7.5mm 4mm;
-  width: auto;
-  height: auto;
-  aspect-ratio: 1999 / 722;
-  border-radius: 13px 13px 14px 14px;
-  border: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(242, 248, 252, 0.98));
-  box-shadow: none;
-  overflow: hidden;
-}
-
-.certificate-page--hero .certificate-hero-image {
-  object-fit: cover;
-  object-position: center top;
-  filter: saturate(0.99) contrast(1.01);
-}
-
-.certificate-page--hero .certificate-content {
-  padding: 0 17.4mm 8.3mm;
-}
-
-.certificate-page--hero .certificate-charter-panel,
-.certificate-page--hero .certificate-award-panel {
-  position: relative;
-  max-width: 148mm;
-  margin-left: auto;
-  margin-right: auto;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(247, 251, 253, 0.56));
-  border: 0.75pt solid rgba(26, 73, 103, 0.16);
-  border-radius: 3.1mm;
-  box-shadow:
-    inset 0 0 0 0.55mm rgba(255, 255, 255, 0.45),
-    inset 0 0 0 1.05mm rgba(26, 73, 103, 0.04);
-}
-
-.certificate-page--hero .certificate-charter-panel {
-  margin-top: 1.1mm;
-  padding: 3.7mm 7.5mm 3.9mm;
-}
-
-.certificate-page--hero .certificate-charter-panel::before,
-.certificate-page--hero .certificate-award-panel::before {
-  content: "";
+.certificate-content--playful {
   position: absolute;
-  inset: 1.25mm;
-  border: 0.6pt solid rgba(26, 73, 103, 0.08);
-  border-radius: 2.2mm;
-  pointer-events: none;
+  inset: 0;
+  z-index: 2;
+  padding: 0;
 }
 
-.certificate-page--hero .certificate-award-panel {
-  margin-top: 3.2mm;
-  margin-bottom: 4.2mm;
-  padding: 3.2mm 7mm 3.6mm;
+.certificate-content--playful.certificate-content--playful-letter {
+  inset: 0;
 }
 
-.certificate-page--hero .certificate-header {
-  max-width: 126mm;
-  margin: 0 auto;
+.playful-ribbon-text,
+.playful-intro,
+.playful-recipient-name,
+.playful-status-label,
+.playful-status,
+.playful-body,
+.playful-meta-row,
+.playful-signature,
+.playful-box,
+.playful-footer-note {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/*
+  Playful v2 layout reference (background-playful-v2.png, 2480×3508):
+  - Teal ribbon banner (status text):    y=937-1066  (26.7%-30.4%) -> center 28.6%
+  - Two orange stars (intro flank):       y≈1182      (33.7%)        center between stars
+  - Long dashed underline (name baseline): y=1553-1556 (44.3%)
+  - Decorative orange rays (status flank): y=1770-1773 (50.5%)
+  - SHA Officially Verified seal:          y=2385-2580 (68%-73.5%)
+  - Pool image (do not overlay):           y=2580-3120 (73.5%-89%)
+  - Bottom 3 boxes:                        y=3170-3398 (90.4%-96.9%)
+      Box 1: x=235-1020 (9.5%-41.1%)  starfish icon at left
+      Box 2: x=1066-1860 (43%-75%)    coral icon at left
+      Box 3: x=1969-2414 (79.4%-97.4%) QR center
+  - Bottom border line:                    y≈3478      (99.1%)
+*/
+.playful-ribbon-text {
+  top: 28.05%;
+  width: 50%;
+  color: #f4faf9;
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.135em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 1px 1px rgba(14, 45, 70, 0.32);
+}
+
+.playful-ribbon-text.certificate-tier--protected {
+  color: #eef9f8;
+}
+
+.playful-ribbon-text.certificate-tier--nonsnack {
+  color: #fff4ec;
+}
+
+.playful-ribbon-text.certificate-tier--business {
+  color: #f3eeff;
+}
+
+.playful-ribbon-text--long {
+  width: 56%;
+  font-size: 19px;
+  letter-spacing: 0.1em;
+}
+
+.playful-intro {
+  top: 33.45%;
+  width: 21%;
+  color: #284f68;
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1;
   text-align: center;
 }
 
-.certificate-page--hero .certificate-org {
-  color: #17324b;
-  font-size: 20.2px;
+.playful-recipient-name {
+  top: 37.9%;
+  width: 76%;
+  color: #163763;
+  font-family: var(--font-cormorant), "Cormorant Garamond", "Times New Roman", serif;
+  font-size: 54px;
+  font-style: italic;
   font-weight: 700;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.01em;
+  line-height: 1.08;
+  text-align: center;
+}
+
+.playful-recipient-name--long {
+  top: 38.6%;
+  font-size: 46px;
+}
+
+.playful-recipient-name--xlong {
+  top: 39.2%;
+  font-size: 38px;
+}
+
+.playful-status-label {
+  top: 46.6%;
+  width: 50%;
+  color: #233a63;
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.playful-status {
+  top: 50.05%;
+  width: 72%;
+  color: #1d6a68;
+  font-family: var(--font-cinzel), var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-align: center;
+  text-indent: 0.14em;
   text-transform: uppercase;
 }
 
-.certificate-page--hero .certificate-org-subtitle {
-  margin-top: 1.1mm;
-  color: #42596c;
-  font-size: 6.9px;
+.playful-status.certificate-tier--nonsnack {
+  color: #96501d;
+}
+
+.playful-status.certificate-tier--business {
+  color: #46307f;
+}
+
+.playful-status--long {
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
+}
+
+.playful-body {
+  top: 55.4%;
+  width: 56%;
+  color: #233a63;
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.36;
+  text-align: center;
+}
+
+.playful-meta-row {
+  top: 61.4%;
+  display: grid;
+  width: 72%;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 4%;
+}
+
+.playful-meta-item {
+  text-align: center;
+}
+
+.playful-meta-label {
+  color: #df7023;
+  font-size: 7.2px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.playful-meta-value {
+  margin-top: 1.6mm;
+  color: #243963;
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.playful-signature {
+  top: 65.6%;
+  width: 28%;
+  text-align: center;
+}
+
+.playful-signature--left {
+  left: 21%;
+  transform: translateX(-50%);
+}
+
+.playful-signature--right {
+  left: 79%;
+  transform: translateX(-50%);
+}
+
+.playful-signature-name {
+  color: #173763;
+  font-family: var(--font-dancing-script), "Dancing Script", cursive;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  padding-bottom: 1.6mm;
+  border-bottom: 0.3mm solid rgba(23, 55, 99, 0.32);
+}
+
+.playful-signature-role {
+  margin-top: 1.6mm;
+  color: #30486d;
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 7.4px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.playful-box {
+  transform: none;
+  left: auto;
+  background: transparent;
+}
+
+.playful-box p {
+  margin: 0;
+  color: #30486d;
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 8.4px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.playful-box-label {
+  margin-bottom: 1mm;
+  color: #2a6980;
+  font-size: 6.4px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.playful-box--assessment {
+  left: 16.5%;
+  top: 91.4%;
+  width: 23%;
+  text-align: left;
+}
+
+.playful-box--assessment.certificate-tier--nonsnack .playful-box-label {
+  color: #b35d24;
+}
+
+.playful-box--assessment.certificate-tier--business .playful-box-label {
+  color: #5d4b9f;
+}
+
+.playful-box--note {
+  left: 50.5%;
+  top: 91.4%;
+  width: 23%;
+  text-align: left;
+}
+
+.playful-box--qr {
+  left: 84.7%;
+  top: 90.6%;
+  width: 14%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.playful-qr-image {
+  display: block;
+  width: 15mm;
+  height: 15mm;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 0.6mm;
+  border-radius: 0.8mm;
+  box-shadow: 0 0 0 0.2mm rgba(23, 55, 99, 0.18);
+}
+
+.playful-qr-label {
+  margin-top: 1mm;
+  color: #30486d;
+  font-size: 5.6px;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.certificate-page--hero .certificate-rule {
-  margin: 2.55mm 13mm 2.65mm;
-  border-top-color: rgba(26, 73, 103, 0.18);
-  border-bottom-color: rgba(26, 73, 103, 0.14);
-}
-
-.certificate-page--hero .certificate-title {
-  color: #17324b;
-  font-size: 24px;
+.playful-footer-note {
+  top: 97.85%;
+  width: 60%;
+  color: #2a6980;
+  font-size: 6.4px;
   font-weight: 700;
-  letter-spacing: 0.09em;
-  line-height: 1.01;
+  letter-spacing: 0.16em;
+  line-height: 1.1;
+  text-align: center;
   text-transform: uppercase;
-}
-
-.certificate-page--hero .certificate-intro,
-.certificate-page--hero .certificate-status-label {
-  color: #415b70;
-  font-size: 9.95px;
-  line-height: 1.43;
-}
-
-.certificate-page--hero .certificate-intro {
-  margin: 0 0 2mm;
-}
-
-.certificate-page--hero .certificate-name-wrap {
-  margin-bottom: 2.2mm;
-}
-
-.certificate-page--hero .certificate-name {
-  min-width: 106mm;
-  padding: 1.55mm 2.2mm 1.85mm;
-  border-top-color: rgba(26, 73, 103, 0.18);
-  border-bottom-color: rgba(26, 73, 103, 0.18);
-  color: #14344d;
-  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1.01;
-  letter-spacing: 0.005em;
-}
-
-.certificate-page--hero .certificate-status-label {
-  max-width: 96mm;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.certificate-page--hero .certificate-status {
-  margin-top: 1.75mm;
-  margin-bottom: 0;
-  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: 23px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.135em;
-  text-transform: uppercase;
-  font-variant: normal;
-}
-
-.certificate-page--hero .certificate-status.certificate-tier--protected {
-  color: #1d6a68;
-}
-
-.certificate-page--hero .certificate-status.certificate-tier--nonsnack {
-  color: #96501d;
-}
-
-.certificate-page--hero .certificate-status.certificate-tier--business {
-  color: #46307f;
-}
-
-.certificate-page--hero .certificate-status--nonsnack {
-  font-size: 19px;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-}
-
-.certificate-page--hero .certificate-main {
-  grid-template-columns: minmax(0, 1fr) 42mm;
-  gap: 7mm;
-  align-items: start;
-  margin-bottom: 4.6mm;
-}
-
-.certificate-page--hero .certificate-body {
-  margin-bottom: 2.9mm;
-  font-size: 9.7px;
-  line-height: 1.48;
-}
-
-.certificate-page--hero .certificate-box-label {
-  margin-bottom: 0.95mm;
-  color: #50687b;
-  font-size: 7px;
-  letter-spacing: 0.11em;
-}
-
-.certificate-page--hero .certificate-verdict,
-.certificate-page--hero .certificate-note {
-  padding: 2.05mm 2.45mm 2.15mm 3.5mm;
-  border-radius: 1.2mm;
-  border: 0.75pt solid rgba(23, 50, 75, 0.12);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.4));
-  box-shadow: inset 0 0 0 0.35pt rgba(23, 50, 75, 0.04);
-}
-
-.certificate-page--hero .certificate-verdict {
-  margin-bottom: 2.6mm;
-}
-
-.certificate-page--hero .certificate-note {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
-}
-
-.certificate-page--hero .certificate-verdict p,
-.certificate-page--hero .certificate-note p {
-  font-size: 9.1px;
-  line-height: 1.42;
-}
-
-.certificate-page--hero .certificate-seal-column {
-  padding-top: 8.8mm;
-}
-
-.certificate-page--hero .certificate-seal {
-  width: 34.5mm;
-  height: 34.5mm;
-}
-
-.certificate-page--hero .certificate-seal-caption {
-  margin-top: 1.15mm;
-  font-size: 6.6px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #587082;
-}
-
-.certificate-page--hero .certificate-record-zone {
-  max-width: 149mm;
-  margin: 0 auto;
-  padding: 3.05mm 4.6mm 0;
-  border-top: 0.75pt solid rgba(26, 73, 103, 0.18);
-  position: relative;
-}
-
-.certificate-page--hero .certificate-record-zone::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 18mm;
-  height: 0.75pt;
-  transform: translateX(-50%);
-  background: rgba(26, 73, 103, 0.22);
-}
-
-.certificate-page--hero .certificate-meta {
-  max-width: 112mm;
-  margin: 0 auto;
-  gap: 9mm;
-}
-
-.certificate-page--hero .certificate-meta-label {
-  font-size: 7.2px;
-  letter-spacing: 0.1em;
-}
-
-.certificate-page--hero .certificate-meta-value {
-  font-size: 12.2px;
-}
-
-.certificate-page--hero .certificate-signature-name {
-  min-width: 57mm;
-  color: #153a57;
-  font-family: var(--font-dancing-script), "Dancing Script", cursive;
-  font-size: 19px;
-  font-weight: 700;
-  opacity: 0.84;
-}
-
-.certificate-page--hero .certificate-signature-role {
-  font-size: 7.1px;
-  line-height: 1.38;
-  color: #536c80;
-}
-
-.certificate-page--hero .certificate-bottom-row {
-  margin-top: 3.45mm;
-  align-items: flex-start;
-  gap: 5mm;
-}
-
-.certificate-page--hero .certificate-signatures {
-  gap: 7.2mm;
-}
-
-.certificate-page--hero .certificate-qr {
-  min-width: 28mm;
-  padding: 0.6mm 0 0 3.2mm;
-  border-left: 0.75pt solid rgba(26, 73, 103, 0.16);
-}
-
-.certificate-page--hero .certificate-qr-image {
-  width: 22.5mm;
-  height: 22.5mm;
-  border-color: rgba(23, 50, 75, 0.08);
-  background: rgba(255, 255, 255, 0.56);
-}
-
-.certificate-page--hero .certificate-qr-label {
-  margin-top: 1mm;
-  font-size: 6.1px;
-  letter-spacing: 0.06em;
-}
-
-.certificate-page--hero .certificate-footer {
-  margin-top: 3.2mm;
-  padding-top: 2.4mm;
-  max-width: 145mm;
-}
-
-.certificate-page--hero .certificate-footer-main {
-  font-size: 7.1px;
-  line-height: 1.42;
-}
-
-.certificate-page--hero .certificate-footer-aside {
-  margin-top: 1.15mm;
-  font-size: 6.65px;
-  line-height: 1.38;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1892,14 +1886,14 @@ textarea:focus-visible {
   appearance: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   justify-content: flex-start;
-  min-height: 98px;
+  min-height: 66px;
   height: 100%;
   border: 1.5px solid var(--border, rgba(23, 50, 75, 0.14));
   border-radius: 14px;
   background: white;
-  padding: 14px 15px;
+  padding: 10px 12px;
   text-align: left;
   cursor: pointer;
   transition:
@@ -1923,7 +1917,7 @@ textarea:focus-visible {
 
 .certificate-template-card__title {
   color: #17324b;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.15;
   font-weight: 700;
   white-space: normal;
@@ -1932,10 +1926,10 @@ textarea:focus-visible {
 }
 
 .certificate-template-card__desc {
-  margin-top: auto;
+  margin-top: 0;
   color: #5f7892;
-  font-size: 11.5px;
-  line-height: 1.35;
+  font-size: 11px;
+  line-height: 1.3;
   white-space: normal;
   overflow-wrap: anywhere;
   text-wrap: pretty;
@@ -1944,6 +1938,8 @@ textarea:focus-visible {
 @media (min-width: 560px) {
   .certificate-template-card {
     min-height: 106px;
+    gap: 8px;
+    padding: 14px 15px;
   }
 
   .certificate-template-card__title {
@@ -1951,6 +1947,7 @@ textarea:focus-visible {
   }
 
   .certificate-template-card__desc {
+    margin-top: auto;
     font-size: 12px;
   }
 }
@@ -1991,8 +1988,213 @@ textarea:focus-visible {
     box-shadow: none;
   }
 
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+* {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+}
+
+/*
+  US Letter playful overrides (background-playful-us-v1.png, 2550×3300):
+  - Teal ribbon banner:                y=955-1088   (28.94%-32.97%)  center 30.94%
+  - Two orange stars (intro flank):    y≈1182       (~35.8%)
+  - Long dashed underline (name):      y=1554-1557  (47.10%)
+  - Orange ray decorations (status):   y=1776-1779  (53.86%)
+  - Dashed signature lines (L+R):      y≈2173       (65.85%)
+  - SHA Officially Verified seal:      y=2145-2382  (65.0%-72.18%)   center ~68.6%
+  - Pool image (printed, do not overlay): y=2535-2835 (76.8%-85.9%)
+  - "Don't worry..." speech bubble:    PRINTED on background (~y 78-86%)
+  - Bottom 3 content frames:           y=2870-3188 (87.0%-96.6%)
+      Left frame (starfish icon + text area): x=233-1048 (9.1%-41.1%)
+          Icon: x=269-417 (10.6%-16.3%);  Text area center 28.9%, width 22.7%
+      Middle frame (coral icon + text area): x=1098-1923 (43.1%-75.4%)
+          Icon: x=1145-1269 (44.9%-49.8%); Text area center 62.7%, width 23.6%
+      Right QR frame (square): x=2028-2295 (79.5%-90.0%) center 84.8%, width 10.5%
+  - Footer baseline text:              y≈3196-3201 (96.9%-97.0%)
+  - Bottom rule:                       y≈3268-3289 (99.0%-99.7%)
+*/
+
+/* === Top header === */
+.certificate-page--paper-letter .playful-ribbon-text {
+  top: 30.4%;
+  width: 52%;
+  font-size: 25px;
+  letter-spacing: 0.135em;
+}
+
+.certificate-page--paper-letter .playful-ribbon-text--long {
+  width: 58%;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+}
+
+/* Intro sits closer to the recipient name to reduce the empty gap above it. */
+.certificate-page--paper-letter .playful-intro {
+  top: 37.4%;
+  width: 22%;
+  font-size: 16px;
+}
+
+/* Recipient name: bottom lands on the printed dashed underline at 47.1%. */
+.certificate-page--paper-letter .playful-recipient-name {
+  top: 40.6%;
+  width: 78%;
+  font-size: 62px;
+}
+
+.certificate-page--paper-letter .playful-recipient-name--long {
+  top: 41.3%;
+  font-size: 54px;
+}
+
+.certificate-page--paper-letter .playful-recipient-name--xlong {
+  top: 41.9%;
+  font-size: 44px;
+}
+
+/* Middle section compressed so it reads as a single block between name and
+   signatures and leaves room for the signatures to sit on the dashed lines. */
+.certificate-page--paper-letter .playful-status-label {
+  top: 48.4%;
+  width: 56%;
+  font-size: 13px;
+}
+
+.certificate-page--paper-letter .playful-status {
+  top: 51.2%;
+  width: 76%;
+  font-size: 34px;
+}
+
+.certificate-page--paper-letter .playful-status--long {
+  font-size: 27px;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
+}
+
+.certificate-page--paper-letter .playful-body {
+  top: 55.4%;
+  width: 60%;
+  font-size: 11.5px;
+}
+
+/* The middle column would be covered by the SHA Officially Verified seal
+   centered between the signatures, so we collapse the meta row to a
+   2-column layout. We keep Date (1st) and Registry ID (2nd) and hide
+   Filed Under (3rd) — Filed Under is already shown in the footer rule
+   below the bottom frames, so it would otherwise duplicate. */
+.certificate-page--paper-letter .playful-meta-row {
+  top: 59.8%;
+  width: 78%;
+  gap: 4%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.certificate-page--paper-letter .playful-meta-item:nth-child(3) {
+  display: none;
+}
+
+.certificate-page--paper-letter .playful-meta-label {
+  font-size: 7.4px;
+}
+
+.certificate-page--paper-letter .playful-meta-value {
+  font-size: 11.5px;
+}
+
+/* === Signatures: anchored so text bottom sits on the printed dashed lines at
+   y=65.85%. Letter sig font-size 26px ≈ 2.47% of 1054-px page height; with
+   line-height 1, top=63.4% places the line-box bottom at ~65.85%. */
+.certificate-page--paper-letter .playful-signature {
+  top: 63.4%;
+  width: 30%;
+}
+
+.certificate-page--paper-letter .playful-signature--left {
+  left: 21%;
+}
+
+.certificate-page--paper-letter .playful-signature--right {
+  left: 79%;
+}
+
+.certificate-page--paper-letter .playful-signature-name {
+  font-size: 26px;
+  padding-bottom: 0;
+  /* Background already has the printed dashed line — suppress the rendered border. */
+  border-bottom: none;
+}
+
+.certificate-page--paper-letter .playful-signature-role {
+  margin-top: 1.0mm;
+  font-size: 7.6px;
+}
+
+/* === Bottom frames: the two larger frames have a decorative icon on the left
+       and empty text area on the right; the small square frame on the right
+       is for the QR code. === */
+
+.certificate-page--paper-letter .playful-box-label {
+  margin-bottom: 0.8mm;
+  font-size: 6.6px;
+  letter-spacing: 0.12em;
+}
+
+.certificate-page--paper-letter .playful-box p {
+  font-size: 8.4px;
+  line-height: 1.3;
+}
+
+/* Left frame text area (avoids starfish icon on the left of the frame).
+   Frame inner: x=233-1048; icon ends ~x=417; we anchor text starting
+   ~x=480 with a 22% wide block, vertically centered in the ~9.6% frame. */
+.certificate-page--paper-letter .playful-box--assessment {
+  left: 30%;
+  top: 90.2%;
+  width: 20%;
+  transform: translateX(-50%);
+  text-align: left;
+}
+
+/* Middle frame text area (avoids coral icon on the left of the frame). */
+.certificate-page--paper-letter .playful-box--note {
+  left: 63.5%;
+  top: 90.2%;
+  width: 21%;
+  transform: translateX(-50%);
+  text-align: left;
+}
+
+/* Right square frame holds the QR code. Frame physical size on Letter is
+   ~22 mm wide × ~32 mm tall; we vertically center QR + label inside it. */
+.certificate-page--paper-letter .playful-box--qr {
+  left: 84.8%;
+  top: 88.4%;
+  width: 10.5%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* QR sized to match A4's visual fill ratio (~70% of frame width) and
+   horizontally centered via margin: 0 auto inherited from base rule. */
+.certificate-page--paper-letter .playful-qr-image {
+  display: block;
+  width: 16mm;
+  height: 16mm;
+  margin: 0 auto;
+  padding: 0.5mm;
+  border-radius: 0.8mm;
+}
+
+.certificate-page--paper-letter .playful-qr-label {
+  margin-top: 0.8mm;
+  font-size: 5.6px;
+}
+
+/* Footer note: sits between the bottom of the frame row (~96.6%) and the
+   printed bottom rule (~99%). */
+.certificate-page--paper-letter .playful-footer-note {
+  top: 97.4%;
+  width: 60%;
+  font-size: 6.4px;
 }

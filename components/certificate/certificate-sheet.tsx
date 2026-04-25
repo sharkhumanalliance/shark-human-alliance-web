@@ -21,16 +21,18 @@ type CertificateSheetProps = {
   paperFormat?: PaperFormat;
   children: ReactNode;
   className?: string;
+  useNativePaperLayout?: boolean;
 };
 
 export function CertificateSheet({
   paperFormat = "a4",
   children,
   className = "",
+  useNativePaperLayout = false,
 }: CertificateSheetProps) {
   return (
     <div className={`certificate-sheet certificate-sheet--${paperFormat} ${className}`.trim()}>
-      {paperFormat === "letter" ? (
+      {paperFormat === "letter" && !useNativePaperLayout ? (
         <div className="certificate-sheet__scaled">{children}</div>
       ) : (
         children

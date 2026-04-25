@@ -3,17 +3,23 @@ import { setRequestLocale } from "next-intl/server";
 import { CertificateDocument, type CertificateTemplate } from "@/components/certificate/certificate-document";
 import { CertificateSheet, type PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateAccessPanel } from "@/components/certificate/certificate-access-panel";
+import { CertificatePrintTrigger } from "@/components/certificate/certificate-print-trigger";
 import { getMemberByAccessToken } from "@/lib/members";
 import { getDevPromoMemberByAccessToken } from "@/lib/dev-promo-store";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ token?: string; template?: string; paper?: string }>;
+  searchParams: Promise<{
+    token?: string;
+    template?: string;
+    paper?: string;
+    download?: string;
+  }>;
 };
 
 export default async function CertificateViewPage({ params, searchParams }: Props) {
   const { locale } = await params;
-  const { token, template: templateParam, paper } = await searchParams;
+  const { token, template: templateParam, paper, download } = await searchParams;
   setRequestLocale(locale);
 
   if (!token) notFound();
@@ -40,6 +46,8 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
         : "luxury";
 
   const paperFormat: PaperFormat = paper === "letter" ? "letter" : "a4";
+  const autoPrint = download === "1";
+  const useNativePaperLayout = template === "hero" && paperFormat === "letter";
 
   const displayDate = new Date(member.date).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",
@@ -50,9 +58,13 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
 
   return (
     <main className="min-h-screen bg-white px-4 py-6 print:block print:bg-white print:p-0">
+      <CertificatePrintTrigger enabled={autoPrint} />
       <style media="print">{`@page { size: ${pageSizeCss}; margin: 0; }`}</style>
       <div className="flex items-start justify-center">
-        <CertificateSheet paperFormat={paperFormat}>
+        <CertificateSheet
+          paperFormat={paperFormat}
+          useNativePaperLayout={useNativePaperLayout}
+        >
           <CertificateDocument
             name={member.name}
             tier={member.tier}
@@ -62,6 +74,8 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
             referralCode={member.referralCode}
             priorityImages
             template={template}
+            paperFormat={paperFormat}
+            locale={locale}
           />
         </CertificateSheet>
       </div>

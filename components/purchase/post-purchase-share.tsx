@@ -70,11 +70,21 @@ async function generateStoryBlob({
   tierLabel,
   subline,
   siteLabel,
+  officialBadge,
+  headlineTop,
+  headlineBottom,
+  footerLine,
+  instruction,
 }: {
   memberName: string;
   tierLabel: string;
   subline: string;
   siteLabel: string;
+  officialBadge: string;
+  headlineTop: string;
+  headlineBottom: string;
+  footerLine: string;
+  instruction: string;
 }) {
   const canvas = document.createElement("canvas");
   canvas.width = STORY_WIDTH;
@@ -123,13 +133,14 @@ async function generateStoryBlob({
 
   drawRoundedRect(ctx, 108, 204, 286, 58, 29, "rgba(255,255,255,0.88)");
   ctx.fillStyle = "#0f4c81";
-  ctx.font = "700 22px Arial, Helvetica, sans-serif";
-  ctx.fillText("Officially certified", 145, 241);
+  const badgeFontSize = fitText(ctx, officialBadge, 220, 22, 18);
+  ctx.font = `700 ${badgeFontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillText(officialBadge, 145, 241);
 
   ctx.fillStyle = "#0d2340";
   ctx.font = "700 76px Arial, Helvetica, sans-serif";
-  ctx.fillText("You are", 82, 1000);
-  ctx.fillText("not a snack.", 82, 1088);
+  ctx.fillText(headlineTop, 82, 1000);
+  ctx.fillText(headlineBottom, 82, 1088);
 
   drawRoundedRect(ctx, 80, 1138, 920, 188, 40, "rgba(255,255,255,0.92)");
   const tierFontSize = fitText(ctx, tierLabel, 820, 58, 36);
@@ -146,13 +157,15 @@ async function generateStoryBlob({
   ctx.fillStyle = "#ffffff";
   ctx.font = "700 48px Arial, Helvetica, sans-serif";
   ctx.fillText(subline, 132, 1450);
-  ctx.font = "600 30px Arial, Helvetica, sans-serif";
-  ctx.fillText("Bureaucratic progress in shark-human relations.", 132, 1514);
+  const footerFontSize = fitText(ctx, footerLine, 810, 30, 22);
+  ctx.font = `600 ${footerFontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillText(footerLine, 132, 1514);
   ctx.fillText(siteLabel, 132, 1562);
 
   ctx.fillStyle = "rgba(13, 35, 64, 0.78)";
-  ctx.font = "600 28px Arial, Helvetica, sans-serif";
-  ctx.fillText("Post this to your Stories. Let the public know you're off the menu.", 80, 1690);
+  const instructionFontSize = fitText(ctx, instruction, 920, 28, 20);
+  ctx.font = `600 ${instructionFontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillText(instruction, 80, 1690);
 
   ctx.save();
   ctx.globalAlpha = 0.25;
@@ -197,6 +210,11 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
       tierLabel,
       subline: t("storySubline"),
       siteLabel: verificationUrl || "sharkhumanalliance.com",
+      officialBadge: t("storyOfficialBadge"),
+      headlineTop: t("storyHeadlineTop"),
+      headlineBottom: t("storyHeadlineBottom"),
+      footerLine: t("storyFooterLine"),
+      instruction: t("storyInstruction"),
     });
     return new File([blob], fileName, { type: "image/png" });
   }

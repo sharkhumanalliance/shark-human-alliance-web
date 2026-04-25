@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   EMAIL_FROM,
   certificateEmailHtml,
+  certificateEmailSubject,
   logEmailRouteEntered,
   sendEmailStrict,
 } from "@/lib/email";
@@ -48,13 +49,21 @@ export async function POST(request: NextRequest) {
     }
 
     const locale = member.locale || "en";
-    const certificateUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, `/certificate/view?token=${member.accessToken}`);
+    const templateQuery =
+      member.template && ["hero", "formal", "luxury"].includes(member.template)
+        ? `&template=${encodeURIComponent(member.template)}`
+        : "";
+    const certificateUrl = buildAbsoluteLocalizedUrl(
+      BASE_URL,
+      locale,
+      `/certificate/view?token=${member.accessToken}${templateQuery}&download=1`
+    );
 
     await sendEmailStrict(
       {
         from: EMAIL_FROM,
         to,
-        subject: `Your Alliance Certificate — Welcome, ${name}!`,
+        subject: certificateEmailSubject({ name, locale }),
         html: certificateEmailHtml({
           name,
           tier,
@@ -73,6 +82,7 @@ export async function POST(request: NextRequest) {
             `/certificate/view?token=${member.accessToken}#record-controls`
           ),
           referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode || "")),
+          locale,
         }),
       },
       {

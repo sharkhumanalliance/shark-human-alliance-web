@@ -1,7 +1,11 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import {
+  getCertificateDiplomaticNote,
+  getCertificateHumorSeed,
+} from "@/lib/certificate-humor";
 import { getRankInfo, getRankUi } from "@/lib/referral-ranks";
 
 type VerifyContentProps = {
@@ -55,6 +59,7 @@ export function VerifyContent({
   referralCount,
   referralSourceCode,
 }: VerifyContentProps) {
+  const locale = useLocale();
   const t = useTranslations("verify");
   const quips = [
     t("quip1"),
@@ -66,7 +71,11 @@ export function VerifyContent({
   ];
   const tierLabel = getTierLabel(tier, t);
   const tierColor = getTierColor(tier);
-  const quip = getQuip(registryId, quips);
+  const verificationQuip = getQuip(registryId, quips);
+  const certificateNote = getCertificateDiplomaticNote(
+    getCertificateHumorSeed(name, registryId, tier),
+    locale,
+  );
   const rank = getRankInfo(referralCount || 0);
   const rankUi = getRankUi(rank.id);
   const purchaseHref = referralSourceCode
@@ -97,6 +106,12 @@ export function VerifyContent({
           {t("verifiedMember")}
         </span>
       </div>
+      <p
+        className="mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.2em]"
+        style={{ color: tierColor }}
+      >
+        {verificationQuip}
+      </p>
 
       {/* Card */}
       <div className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-lg sm:p-8">
@@ -139,7 +154,7 @@ export function VerifyContent({
             className="text-center text-sm leading-relaxed"
             style={{ color: "var(--muted)" }}
           >
-            {quip}
+            {certificateNote}
           </p>
         </div>
 

@@ -13,6 +13,7 @@ import { PostPurchaseShare } from "@/components/purchase/post-purchase-share";
 import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
 import { StepIndicator } from "@/components/purchase/step-indicator";
 import { formatCertificateDate } from "@/lib/dates";
+import { getNextRank, getRankInfo } from "@/lib/referral-ranks";
 
 interface MemberData {
   id: string;
@@ -20,6 +21,7 @@ interface MemberData {
   tier: "basic" | "protected" | "nonsnack" | "business";
   date: string;
   dedication: string;
+  template?: CertificateTemplate;
   referralCode: string;
   referralCount: number;
   accessToken?: string;
@@ -27,8 +29,18 @@ interface MemberData {
   registryVisibility: "public" | "private";
 }
 
+const RANK_TRANSLATION_KEYS: Record<string, string> = {
+  civilian: "civilian",
+  intern: "probationaryLiaison",
+  fieldAgent: "fieldOperative",
+  seniorDiplomat: "seniorDiplomat",
+  ambassador: "specialEnvoy",
+  chiefWhisperer: "chiefSharkWhisperer",
+};
+
 function SuccessContentInner() {
   const t = useTranslations("purchase");
+  const rankT = useTranslations("career.ranks");
   const locale = useLocale();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id") || "";
@@ -102,6 +114,15 @@ function SuccessContentInner() {
     poll();
   }, [sessionId]);
 
+  useEffect(() => {
+    if (
+      member?.template &&
+      ["hero", "formal", "luxury"].includes(member.template)
+    ) {
+      setTemplate(member.template);
+    }
+  }, [member?.template]);
+
   function handleRetryPolling() {
     setTimedOut(false);
     setLoading(true);
@@ -152,7 +173,7 @@ function SuccessContentInner() {
     }
     setDownloadStatus("");
     window.open(
-      `/${locale}/certificate/view?token=${member.accessToken}&template=${template}&paper=${paperFormat}`,
+      `/${locale}/certificate/view?token=${member.accessToken}&template=${template}&paper=${paperFormat}&download=1`,
       "_blank",
       "noopener,noreferrer"
     );
@@ -242,6 +263,26 @@ function SuccessContentInner() {
   }
 
   const displayDate = formatCertificateDate(member.date, locale);
+  const currentRank = getRankInfo(member.referralCount);
+  const nextRank = getNextRank(member.referralCount);
+  const currentRankName = rankT(`${RANK_TRANSLATION_KEYS[currentRank.id]}.name`);
+  const nextRankName = nextRank
+    ? rankT(`${RANK_TRANSLATION_KEYS[nextRank.rank.id]}.name`)
+    : null;
+  const referralProgressPercent = nextRank
+    ? Math.min(
+        100,
+        Math.max(
+          0,
+          ((member.referralCount - currentRank.minReferrals) /
+            (nextRank.rank.minReferrals - currentRank.minReferrals)) *
+            100
+        )
+      )
+    : 100;
+  const referralHref = member.referralCode
+    ? `${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`
+    : "";
 
   return (
     <section data-reveal className="py-12 sm:py-14">
@@ -265,6 +306,117 @@ function SuccessContentInner() {
         <PostPurchaseShare
           member={{ id: member.id, name: member.name, tier: member.tier }}
         />
+
+        {member.referralCode && (
+          <section className="mx-auto mt-8 max-w-3xl rounded-2xl border border-sky-200 bg-white p-5 shadow-sm sm:p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+                  {t("referralTitle")}
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--brand-dark)]">
+                  {t("referralMomentTitle")}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted)]">
+                  {t("referralText")}
+                </p>
+              </div>
+              <div className="shrink-0 rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 text-left sm:text-right">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-800/75">
+                  {t("referralCodeLabel")}
+                </p>
+                <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
+                  {member.referralCode}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/55 px-4 py-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {t("referralCurrentRank")}
+                </p>
+                <p className="mt-2 text-lg font-semibold text-[var(--brand-dark)]">
+                  {currentRankName}
+                </p>
+                <p className="mt-1 text-sm text-[var(--muted)]">
+                  {t("referralProgressValue", {
+                    count: member.referralCount,
+                    target: nextRank?.rank.minReferrals ?? member.referralCount,
+                  })}
+                </p>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/55 px-4 py-4">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {t("referralNextRank")}
+                </p>
+                <p className="mt-2 text-lg font-semibold text-[var(--brand-dark)]">
+                  {nextRankName ?? t("referralMaxRankTitle")}
+                </p>
+                <p className="mt-1 text-sm text-[var(--muted)]">
+                  {nextRank
+                    ? t("referralRemaining", {
+                        count: nextRank.remaining,
+                        rank: nextRankName ?? "",
+                      })
+                    : t("referralMaxRankText")}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {t("referralProgressLabel")}
+                </p>
+                <p className="text-xs font-semibold tabular-nums text-[var(--brand-dark)]">
+                  {Math.round(referralProgressPercent)}%
+                </p>
+              </div>
+              <div className="mt-2 h-3 overflow-hidden rounded-full bg-sky-100">
+                <div
+                  className="h-full rounded-full bg-[var(--accent)] transition-[width]"
+                  style={{ width: `${referralProgressPercent}%` }}
+                />
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col items-stretch gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/45 p-3 sm:flex-row sm:items-center sm:px-4 sm:py-3">
+              <label htmlFor="referral-link" className="sr-only">
+                {t("referralLinkLabel")}
+              </label>
+              <input
+                id="referral-link"
+                type="text"
+                value={referralHref}
+                readOnly
+                aria-label={t("referralLinkLabel")}
+                className="min-w-0 flex-grow bg-transparent text-sm font-mono leading-6 text-[var(--brand-dark)] focus:outline-none"
+              />
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${window.location.origin}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`
+                  );
+                  setLinkCopied(true);
+                  setDownloadStatus("");
+                  trackEvent("referral_link_copy", { tier: member.tier });
+                  setTimeout(() => setLinkCopied(false), 2000);
+                }}
+                className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:px-4"
+              >
+                {linkCopied ? "\u2713" : t("referralCopy")}
+              </button>
+            </div>
+
+            <LocalizedLink
+              href="/career"
+              className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
+            >
+              {t("referralCareerLink")} {"\u2192"}
+            </LocalizedLink>
+          </section>
+        )}
 
         <div className="mt-6 sm:mt-8">
           <CertificateTemplateSelector
@@ -308,6 +460,7 @@ function SuccessContentInner() {
             referralCode={member.referralCode}
             template={template}
             paperFormat={paperFormat}
+            locale={locale}
           />
         </div>
 
@@ -350,52 +503,6 @@ function SuccessContentInner() {
             {downloadStatus}
           </div>
         ) : null}
-
-        {member.referralCode && (
-          <div className="mt-8 mx-auto max-w-xl">
-            <div className="rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-4 text-center sm:p-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
-                {t("referralTitle")}
-              </p>
-              <p className="mt-2 text-sm text-[var(--muted)]">
-                {t("referralText")}
-              </p>
-              <div className="mx-auto mt-4 flex max-w-sm flex-col items-stretch gap-2 rounded-xl border border-[var(--border)] bg-white p-3 sm:flex-row sm:items-center sm:px-4 sm:py-3">
-                <label htmlFor="referral-link" className="sr-only">
-                  {t("referralTitle")}
-                </label>
-                <input
-                  id="referral-link"
-                  type="text"
-                  value={`${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`}
-                  readOnly
-                  aria-label={t("referralTitle")}
-                  className="min-w-0 flex-grow bg-transparent text-sm font-mono leading-6 text-[var(--brand-dark)] focus:outline-none"
-                />
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `${window.location.origin}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`
-                    );
-                    setLinkCopied(true);
-                    setDownloadStatus("");
-                    trackEvent("referral_link_copy", { tier: member.tier });
-                    setTimeout(() => setLinkCopied(false), 2000);
-                  }}
-                  className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:px-4"
-                >
-                  {linkCopied ? "\u2713" : t("referralCopy")}
-                </button>
-              </div>
-              <LocalizedLink
-                href="/career"
-                className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
-              >
-                {t("referralCareerLink")} {"\u2192"}
-              </LocalizedLink>
-            </div>
-          </div>
-        )}
 
         <div className="mt-6 mx-auto max-w-md text-center">
           {member.hasEmail ? (

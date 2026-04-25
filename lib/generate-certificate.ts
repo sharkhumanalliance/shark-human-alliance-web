@@ -1,4 +1,9 @@
 import jsPDF from "jspdf";
+import {
+  getCertificateDiplomaticNote,
+  getCertificateFooterAside,
+  getCertificateHumorSeed,
+} from "@/lib/certificate-humor";
 
 /* ─── Image loading — supports both browser (fetch) and server (fs) ─── */
 
@@ -90,6 +95,7 @@ export type CertificateData = {
   date: string;
   dedication: string;
   registryId: string;
+  locale?: string;
   format?: PageFormat;
   selectedReason?: string;
   t: CertificateTranslationsForPDF;
@@ -99,16 +105,6 @@ export type CertificateData = {
 const NAVY: [number, number, number] = [26, 58, 92];
 const GRAY: [number, number, number] = [74, 95, 117];
 const LIGHT_GRAY: [number, number, number] = [160, 180, 197];
-
-function pickReason(name: string, reasons: string[]): string | null {
-  if (!reasons || reasons.length === 0) return null;
-  let hash = 0;
-  const seed = name || "default";
-  for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
-  }
-  return reasons[Math.abs(hash) % reasons.length];
-}
 
 export async function generateCertificatePDF(
   data: CertificateData
@@ -228,9 +224,17 @@ export async function generateCertificatePDF(
   }
 
   // ═══════ BODY TEXT ═══════
-  const reason = data.selectedReason || pickReason(data.name, data.t.reasons);
+  const humorSeed = getCertificateHumorSeed(
+    data.name,
+    data.registryId,
+    data.tier,
+  );
+  const reason =
+    data.selectedReason ||
+    getCertificateDiplomaticNote(humorSeed, data.locale);
+  const footerAside = getCertificateFooterAside(humorSeed, data.locale);
   const bodyParts: string[] = [];
-  if (reason) bodyParts.push(`${data.t.reasonsLabel} ${reason}`);
+  if (data.t.body) bodyParts.push(data.t.body);
   if (data.t.privileges) bodyParts.push(data.t.privileges);
   const fullBody = bodyParts.join(" ");
 
@@ -254,6 +258,13 @@ export async function generateCertificatePDF(
     );
     doc.text(dedLines, margin, y);
     y += dedLines.length * 3 + 3;
+  } else if (reason) {
+    doc.setTextColor(...GRAY);
+    doc.setFontSize(6);
+    doc.setFont("times", "italic");
+    const noteLines = doc.splitTextToSize(reason, W - margin * 2);
+    doc.text(noteLines, margin, y);
+    y += noteLines.length * 3 + 3;
   }
 
   // ═══════ BOTTOM SECTION ═══════
@@ -301,7 +312,10 @@ export async function generateCertificatePDF(
   doc.setTextColor(...LIGHT_GRAY);
   doc.setFontSize(5);
   doc.setFont("helvetica", "italic");
-  const disclaimerLines = doc.splitTextToSize(data.t.disclaimer, W - margin * 2);
+  const disclaimerLines = doc.splitTextToSize(
+    `${data.t.disclaimer} "${footerAside}"`,
+    W - margin * 2,
+  );
   doc.text(disclaimerLines, cx, H - 7, { align: "center" });
 
   return doc;

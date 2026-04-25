@@ -26,6 +26,8 @@ export function CertificatePreview(props: CertificatePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
   const paperFormat = props.paperFormat || "a4";
+  const useNativePaperLayout =
+    props.template === "hero" && paperFormat === "letter";
   const paper = getPaperDimensions(paperFormat);
   const paperWidthPx = paper.width * MM_TO_PX;
   const aspectRatio = (paper.height / paper.width) * 100;
@@ -59,8 +61,11 @@ export function CertificatePreview(props: CertificatePreviewProps) {
               transformOrigin: "top left",
             }}
           >
-            <CertificateSheet paperFormat={paperFormat}>
-              <CertificateDocument {...props} />
+            <CertificateSheet
+              paperFormat={paperFormat}
+              useNativePaperLayout={useNativePaperLayout}
+            >
+              <CertificateDocument {...props} paperFormat={paperFormat} />
             </CertificateSheet>
           </div>
         )}

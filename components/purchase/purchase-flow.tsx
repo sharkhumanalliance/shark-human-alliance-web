@@ -341,6 +341,7 @@ function PurchaseFlowInner() {
                     registryId="SHA-XXXX"
                     template={template}
                     paperFormat={paperFormat}
+                    locale={locale}
                   />
                 </div>
               </div>
@@ -792,6 +793,7 @@ function PurchaseFlowInner() {
                 registryId="SHA-XXXX"
                 template={template}
                 paperFormat={paperFormat}
+                locale={locale}
               />
             </div>
           </div>

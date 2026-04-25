@@ -55,6 +55,7 @@ export async function GET(request: NextRequest) {
     tier: member.tier,
     date: member.date,
     dedication: member.dedication,
+    template: member.template,
     referralCode: member.referralCode,
     referralCount: member.referralCount,
     accessToken: member.accessToken,

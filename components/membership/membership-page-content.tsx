@@ -1,10 +1,11 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { MembershipCard } from "@/components/home/membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import { formatCertificateDate } from "@/lib/dates";
 
 type StyleCard = {
   title: string;
@@ -21,6 +22,11 @@ type StyleCard = {
 export function MembershipPageContent() {
   const t = useTranslations("membershipPage");
   const homeTierT = useTranslations("home.membershipSection");
+  const locale = useLocale();
+  const previewDate = formatCertificateDate(
+    new Date("2026-04-05T12:00:00.000Z"),
+    locale
+  );
 
   const styleCards: StyleCard[] = [
     {
@@ -170,9 +176,10 @@ export function MembershipPageContent() {
                     <CertificatePreview
                       name={card.previewName}
                       tier={card.previewTier}
-                      date="5 Apr 2026"
+                      date={previewDate}
                       registryId={card.registryId}
                       template={card.template}
+                      locale={locale}
                     />
                   </div>
                 </div>

@@ -185,6 +185,7 @@ export function HomeContent() {
                   date={previewDate}
                   registryId="SHA-XXXX-DIP"
                   template={previewTemplate}
+                  locale={locale}
                 />
               </div>
             </div>
@@ -335,10 +336,16 @@ export function HomeContent() {
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/95">
             {t("earlyAdopter.text")}
           </p>
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <LocalizedLink
+              href="/purchase?tier=protected"
+              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--accent-dark)] sm:w-auto"
+            >
+              {t("earlyAdopter.purchaseCta")} {"\u2192"}
+            </LocalizedLink>
             <LocalizedLink
               href="/faq"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/55 bg-white/88 px-5 py-3 text-sm font-semibold text-[#1d4467] shadow-sm transition-colors hover:border-white/70 hover:bg-white"
+              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-white/45 bg-white/15 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:border-white/70 hover:bg-white/20 sm:w-auto"
             >
               {t("faq.allQuestions")} {"\u2192"}
             </LocalizedLink>

@@ -4,7 +4,9 @@ import { getStripe, TIER_PRICES, TIER_NAMES } from "@/lib/stripe";
 import {
   EMAIL_FROM,
   certificateEmailHtml,
-  escapeHtml,
+  certificateEmailSubject,
+  giftBuyerNotificationEmailHtml,
+  giftBuyerNotificationSubject,
   logEmailRouteEntered,
   sendEmailStrict,
 } from "@/lib/email";
@@ -194,10 +196,14 @@ export async function POST(request: NextRequest) {
 
       const targetEmail = isGift && recipientEmail ? recipientEmail.trim() : email?.trim();
       const normalizedPaperFormat = paperFormat === "letter" ? "letter" : "a4";
+      const templateQuery =
+        template && ["hero", "formal", "luxury"].includes(template)
+          ? `&template=${encodeURIComponent(template)}`
+          : "";
       const certificateUrl = buildAbsoluteLocalizedUrl(
         BASE_URL,
         loc,
-        `/certificate/view?token=${accessToken}&paper=${normalizedPaperFormat}`
+        `/certificate/view?token=${accessToken}&paper=${normalizedPaperFormat}${templateQuery}&download=1`
       );
 
       logEmailRouteEntered({
@@ -216,7 +222,7 @@ export async function POST(request: NextRequest) {
             {
               from: EMAIL_FROM,
               to: targetEmail,
-              subject: `Your Alliance Certificate — Welcome, ${name}!`,
+              subject: certificateEmailSubject({ name, locale: loc }),
               html: certificateEmailHtml({
                 name,
                 tier,
@@ -237,6 +243,7 @@ export async function POST(request: NextRequest) {
                 ),
                 giftMessage: giftMessage || undefined,
                 isGift,
+                locale: loc,
               }),
             },
             {
@@ -265,40 +272,24 @@ export async function POST(request: NextRequest) {
 
       if (isGift && recipientEmail && email && email.trim() !== recipientEmail.trim() && process.env.RESEND_API_KEY) {
         try {
-          const safeName = escapeHtml(name);
-          const safeRecipientEmail = escapeHtml(recipientEmail);
-          const safeReferralCode = escapeHtml(referralCode);
-          const safeGiftMessage = giftMessage
-            ? escapeHtml(giftMessage).replace(/\r?\n/g, "<br>")
-            : "";
-          const safeCareerUrl = escapeHtml(
-            buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career")
-          );
+          const careerUrl = buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career");
           await sendEmailStrict(
             {
               from: EMAIL_FROM,
               to: email.trim(),
-              subject: `Gift sent! ${name} is now a ${tier === "nonsnack" ? "Certified Non-Snack" : "Protected Friend"}`,
-              html: `<!DOCTYPE html>
-<html><body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
-<div style="max-width:600px;margin:0 auto;padding:40px 20px;">
-  <div style="background:white;border-radius:24px;padding:32px;text-align:center;border:1px solid #d4e8f7;">
-    <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#64748b;">Gift</div>
-    <h1 style="color:#15324d;font-size:24px;margin:16px 0 8px;">Gift Delivered!</h1>
-    <p style="color:#5f7892;font-size:14px;line-height:1.6;">
-      Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.
-      They'll receive their certificate and a warm welcome from the Alliance.
-      ${safeGiftMessage ? `<br><br><em>Included message:</em> ${safeGiftMessage}` : ""}
-    </p>
-    <p style="color:#5f7892;font-size:13px;margin-top:16px;">
-      Your referral code: <strong>${safeReferralCode}</strong><br>
-      Share it with friends to climb the Alliance career ladder!
-    </p>
-    <a href="${safeCareerUrl}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">View Career Ladder</a>
-  </div>
-  <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
-</div>
-</body></html>`,
+              subject: giftBuyerNotificationSubject({
+                name,
+                tier,
+                locale: loc,
+              }),
+              html: giftBuyerNotificationEmailHtml({
+                name,
+                recipientEmail,
+                referralCode,
+                careerUrl,
+                giftMessage: giftMessage || undefined,
+                locale: loc,
+              }),
             },
             {
               flow: "checkout-promo-buyer-notification",

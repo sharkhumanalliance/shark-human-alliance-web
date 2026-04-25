@@ -1,19 +1,19 @@
 {
   "seo": {
     "home": {
-      "title": "Certificados de Tiburón Divertidos — Protección Oficial | Shark Human Alliance",
+      "title": "Certificados de Tiburón Divertidos — Protección Oficial",
       "description": "Certificados de tiburón personalizados y divertidos para quienes aman los tiburones, los temen o simplemente aprecian el papeleo excelente. Cada venta financia la conservación. Desde $4."
     },
     "purchase": {
-      "title": "Compra un Certificado de Tiburón Divertido — Personalizado e Instantáneo | Shark Human Alliance",
+      "title": "Compra un Certificado de Tiburón Divertido — Personalizado e Instantáneo",
       "description": "Obtén un certificado de tiburón personalizado con entrega instantánea. Elige tu nivel, añade nombre y dedicatoria, financia la conservación real. Desde $4."
     },
     "registry": {
-      "title": "Registro Diplomático — Shark Human Alliance",
+      "title": "Registro Diplomático",
       "description": "Explora el registro oficial de humanos que han logrado reconocimiento diplomático simbólico de los tiburones. Únete a la lista y financia la conservación real."
     },
     "impact": {
-      "title": "Nuestro Impacto — Adónde Va el Dinero | Shark Human Alliance",
+      "title": "Nuestro Impacto — Adónde Va el Dinero",
       "description": "Transparencia total en cada dólar. Mira cómo las ventas de certificados financian la conservación real de tiburones y océanos a través de organizaciones verificadas."
     },
     "membership": {
@@ -21,19 +21,19 @@
       "description": "Elige un certificado de tiburón personalizado para ti, otra persona u oficina. Entrega digital inmediata, registro público y apoyo real a la conservación."
     },
     "protectedFriend": {
-      "title": "Estatus de Amigo Protegido — Shark Human Alliance",
+      "title": "Estatus de Amigo Protegido",
       "description": "El certificado estrella de protección de tiburones. Personalizado, elegante y sorprendentemente enmarcable. El regalo broma perfecto que financia la conservación marina."
     },
     "faq": {
-      "title": "FAQ — Certificados de Tiburón Divertidos y Conservación | Shark Human Alliance",
+      "title": "FAQ — Certificados de Tiburón Divertidos y Conservación",
       "description": "Respuestas a preguntas frecuentes sobre certificados de tiburón divertidos, donaciones, entrega digital y regalos. Todo lo que necesitas saber antes de comprar."
     },
     "wanted": {
-      "title": "Generador de Póster de Búsqueda Divertido — Shark Human Alliance",
+      "title": "Generador de Póster de Búsqueda Divertido",
       "description": "Genera un divertido póster de Se Busca para alguien que conoces. Compártelo en Stories y regálale un certificado oficial de protección de tiburones. Gratis."
     },
     "career": {
-      "title": "Escalafón de la Alianza — Shark Human Alliance",
+      "title": "Escalafón de la Alianza",
       "description": "Sube de rango desde Civil hasta Susurrador Jefe de Tiburones. Refiere amigos, gana ascensos y asciende por la jerarquía diplomática de la Alianza."
     },
     "purchaseSuccess": {
@@ -41,12 +41,16 @@
       "description": "Tu certificado de protección de tiburones está listo. Descarga tu PDF y comparte tu enlace de referido."
     },
     "terms": {
-      "title": "Condiciones de compra — Shark Human Alliance",
+      "title": "Condiciones de compra",
       "description": "Lee cómo funcionan los pedidos, la entrega digital, el soporte, las reclamaciones y la gestión de reembolsos de los certificados Shark Human Alliance."
     },
     "cookiePolicy": {
-      "title": "Política de cookies — Shark Human Alliance",
+      "title": "Política de cookies",
       "description": "Cómo usa Shark Human Alliance las cookies necesarias y analíticas, cómo funciona el consentimiento y cómo puedes cambiar tus preferencias."
+    },
+    "privacy": {
+      "title": "Política de privacidad",
+      "description": "Cómo procesa Shark Human Alliance los datos personales para certificados, checkout, el registro público, el envío de correos y las preferencias de analítica."
     }
   },
   "header": {
@@ -86,7 +90,8 @@
     "termsLink": "Condiciones de compra",
     "supportLink": "Soporte y reclamaciones",
     "cookiePolicyLink": "Política de cookies",
-    "cookieSettingsLink": "Configuración de cookies"
+    "cookieSettingsLink": "Configuración de cookies",
+    "privacyLink": "Política de privacidad"
   },
   "hero": {
     "titleLine1": "Protección oficial contra tiburones.",
@@ -120,6 +125,7 @@
       "title": "Sé parte de la primera ola de diplomáticos.",
       "text": "El Registro Diplomático está abierto. Cada certificado emitido queda registrado, cada dólar rastreado. Cuanto antes te unas, más impresionante será tu antigüedad en los archivos.",
       "cta": "Obtén tu certificado — $4",
+      "purchaseCta": "Obtén tu certificado",
       "registryCta": "Ver el Registro",
       "ctaNonSnack": "Hazte Non-Snack — $19",
       "ctaBusiness": "Certifica tu oficina — $99"
@@ -220,7 +226,7 @@
       "stat1Label": "tiburones estimados matados por humanos anualmente",
       "stat2Value": "<10",
       "stat2Label": "muertes humanas por tiburones en la mayoría de los años",
-      "stat3Value": "â…\"",
+      "stat3Value": "?",
       "stat3Label": "de todas las especies de tiburones están amenazadas",
       "stat4Value": "450M",
       "stat4Label": "años que los tiburones han sobrevivido en la Tierra"
@@ -643,8 +649,18 @@
     "giftMessageLabel": "Mensaje personal (opcional)",
     "giftMessagePlaceholder": "ej. ¡Feliz cumpleaños! Ahora los tiburones saben que no estás en el menú.",
     "referredByBadge": "El crédito por referido está activo para esta compra.",
-    "referralTitle": "Tu carrera en la Alianza comienza ahora",
+    "referralTitle": "Tu carrera diplomática empieza ahora",
+    "referralMomentTitle": "Ya estás oficialmente en el escalafón.",
     "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango.",
+    "referralCodeLabel": "Código de referido",
+    "referralCurrentRank": "Rango actual",
+    "referralNextRank": "Próximo ascenso",
+    "referralProgressLabel": "Progreso de rango",
+    "referralProgressValue": "{count} de {target} referidos",
+    "referralRemaining": "{count, plural, one {# recluta más} other {# reclutas más}} para desbloquear {rank}",
+    "referralMaxRankTitle": "Rango máximo alcanzado",
+    "referralMaxRankText": "El departamento de personal está visiblemente nervioso.",
+    "referralLinkLabel": "Enlace de referido",
     "referralCopy": "Copiar",
     "referralCareerLink": "Ver el escalafón completo",
     "downloadOnlyNotice": "Descarga ahora — este enlace no se guardará.",
@@ -684,6 +700,11 @@
       "nativeSuccess": "Menú de compartir abierto.",
       "nativeFallback": "Enlace compartido. Para Instagram Stories, usa también la imagen descargada.",
       "storySubline": "Reconocido oficialmente como no snack.",
+      "storyOfficialBadge": "Certificado oficialmente",
+      "storyHeadlineTop": "No eres",
+      "storyHeadlineBottom": "un snack.",
+      "storyFooterLine": "Progreso burocrático en relaciones tiburón-humanas.",
+      "storyInstruction": "Súbelo a tus Stories. Que el público sepa que no estás en el menú.",
       "storyBadge": "Story lista",
       "previewAlt": "Vista previa de Story de Instagram para tu certificado de Shark Human Alliance",
       "previewHeadline": "Oficialmente no eres un snack.",
@@ -696,12 +717,12 @@
       }
     },
     "manageRecord": "Gestionar visibilidad del registro",
-    "registryPrivateNotice": "Tu registro es actualmente privado y no aparecera en el registro publico salvo que hayas dado el consentimiento correspondiente.",
-    "termsConsentPrefix": "He leido y acepto las",
+    "registryPrivateNotice": "Tu registro es actualmente privado y no aparecerá en el registro público salvo que hayas dado el consentimiento correspondiente.",
+    "termsConsentPrefix": "He leído y acepto las",
     "termsConsentLink": "Condiciones de compra",
     "digitalContentConsentLabel": "Solicito expresamente la entrega digital inmediata antes de que termine el plazo de desistimiento y reconozco que, una vez iniciada la entrega, pierdo el derecho de desistimiento.",
-    "registryConsentLabel": "Acepto que el nombre del titular del certificado y los datos aprobados del registro puedan aparecer en el Registro Diplomatico publico.",
-    "registryConsentHint": "Dejalo sin marcar si el registro debe permanecer privado. Los controles privados del registro estaran disponibles mas tarde a traves del enlace de acceso al certificado.",
+    "registryConsentLabel": "Acepto que el nombre del titular del certificado y los datos aprobados del registro puedan aparecer en el Registro Diplomático público.",
+    "registryConsentHint": "Déjalo sin marcar si el registro debe permanecer privado. Los controles privados del registro estarán disponibles más tarde a través del enlace de acceso al certificado.",
     "termsRequiredError": "Confirma las Condiciones de compra antes de continuar.",
     "digitalContentConsentRequiredError": "Confirma la entrega digital inmediata antes de continuar.",
     "dedicationTooLongError": "La dedicatoria es demasiado larga. Mejor breve y con porte de certificado.",
@@ -728,7 +749,7 @@
     "classificationLabel": "Clasificación",
     "recordLabel": "Registro",
     "tierLabel": "Nivel",
-    "referralCodeLabel": "Codigo de referencia",
+    "referralCodeLabel": "Código de referencia",
     "recruitsLabel": "Reclutas",
     "actionsLabel": "Acciones",
     "copyAction": "Copiar",
@@ -876,6 +897,13 @@
     "splitBusinessText": "$70 de cada certificación para negocios van a conservación. Si vas a colgarlo en la pared, debería ganarse su sitio.",
     "splitOpsLabel": "Operaciones terrestres (la parte aburrida)",
     "splitOpsText": "El resto cubre la parte poco glamurosa en tierra firme: hosting, renderizado, administración y una persona haciendo todo esto en bata.",
+    "firstTargetLabel": "Primer objetivo de donación",
+    "firstTargetTitle": "Primer objetivo de asignación pública: $500",
+    "firstTargetText": "Antes de publicar el primer informe de asignación, el objetivo inmediato es una asignación clara de $500 para conservación. Publicaremos el destinatario y el recibo antes de marcarla como completada.",
+    "firstTargetProgressLabel": "Asignado públicamente hasta ahora",
+    "firstTargetCurrent": "$0",
+    "firstTargetGoal": "objetivo $500",
+    "firstTargetStatus": "Primer objetivo previsto: Shark Trust, pendiente de la primera asignación pública.",
     "partnersTitle": "Adónde va el dinero",
     "partnersSubtitle": "Estas son organizaciones que pretendemos apoyar a medida que se realicen las donaciones. No afirmaremos una alianza formal hasta que exista realmente.",
     "partner1Name": "Shark Trust",
@@ -1071,43 +1099,43 @@
     "sections": {
       "operator": {
         "title": "1. Operador",
-        "body": "Este sitio web es operado por JEEL Wekeza s.r.o. Si necesitas ayuda con un pedido, un problema de entrega, un archivo defectuoso, un pago duplicado o una reclamacion, contactanos en sharkhumanalliance@gmail.com."
+        "body": "Este sitio web es operado por JEEL Wekeza s.r.o. Si necesitas ayuda con un pedido, un problema de entrega, un archivo defectuoso, un pago duplicado o una reclamación, contáctanos en sharkhumanalliance@gmail.com."
       },
       "products": {
-        "title": "2. Que se vende",
-        "body": "El sitio vende certificados digitales personalizados y activos digitales relacionados dentro del proyecto Shark Human Alliance. El certificado es simbolico, humoristico y no vinculante desde el punto de vista legal. Salvo que se indique expresamente lo contrario en la pagina del producto, el producto se entrega en formato digital y no se envia ningun certificado fisico enmarcado. Las asignaciones actuales a conservacion se describen en la pagina de Impacto, incluido el importe asignado por nivel y las organizaciones que actualmente figuran como destinatarias previstas."
+        "title": "2. Qué se vende",
+        "body": "El sitio vende certificados digitales personalizados y activos digitales relacionados dentro del proyecto Shark Human Alliance. El certificado es simbólico, humorístico y no vinculante desde el punto de vista legal. Salvo que se indique expresamente lo contrario en la página del producto, el producto se entrega en formato digital y no se envía ningún certificado físico enmarcado. Las asignaciones actuales a conservación se describen en la página de Impacto, incluido el importe asignado por nivel y las organizaciones que actualmente figuran como destinatarias previstas."
       },
       "ordering": {
-        "title": "3. Como funciona el pedido",
+        "title": "3. Cómo funciona el pedido",
         "body": "Para realizar un pedido, elige un nivel de certificado, introduce los datos solicitados, confirma las Condiciones de compra, confirma la entrega digital inmediata y completa el pago en el checkout. El pedido se considera realizado una vez confirmado el pago correctamente."
       },
       "privacy": {
-        "title": "4. Datos personales y base juridica",
-        "body": "Para emitir y entregar el certificado, tratamos el nombre enviado, el texto de dedicatoria, el email de entrega y los identificadores relacionados con el pedido. Este tratamiento se realiza para ejecutar el contrato y entregar el certificado digital solicitado. El texto de la dedicatoria se modera antes de su aceptacion y puede rechazarse si contiene contenido ilicito, abusivo, difamatorio o con datos de contacto."
+        "title": "4. Datos personales y base jurídica",
+        "body": "Para emitir y entregar el certificado, tratamos el nombre enviado, el texto de dedicatoria, el email de entrega y los identificadores relacionados con el pedido. Este tratamiento se realiza para ejecutar el contrato y entregar el certificado digital solicitado. El texto de la dedicatoria se modera antes de su aceptación y puede rechazarse si contiene contenido ilícito, abusivo, difamatorio o con datos de contacto."
       },
       "registry": {
-        "title": "5. Registro publico",
-        "body": "El Registro Diplomatico publico muestra unicamente los registros para los que el cliente ha dado un consentimiento activo durante el checkout. Si no se concede dicho consentimiento, el registro permanece privado y no se devuelve desde el endpoint publico del registro. La visibilidad del registro puede ocultarse mas adelante y tambien puede iniciarse una solicitud de supresion mediante los controles privados enlazados desde el acceso al certificado."
+        "title": "5. Registro público",
+        "body": "El Registro Diplomático público muestra únicamente los registros para los que el cliente ha dado un consentimiento activo durante el checkout. Si no se concede dicho consentimiento, el registro permanece privado y no se devuelve desde el endpoint público del registro. La visibilidad del registro puede ocultarse más adelante y también puede iniciarse una solicitud de supresión mediante los controles privados enlazados desde el acceso al certificado."
       },
       "moderation": {
-        "title": "6. Moderacion de dedicatorias",
-        "body": "La dedicatoria es contenido enviado por el usuario. Nos reservamos el derecho a rechazar, acortar, eliminar o negarnos a emitir contenido que sea ilicito, abusivo, difamatorio, amenazante, enganoso o que perjudique a terceros, al orden publico o a la presentacion de marca de Shark Human Alliance. Si la moderacion bloquea el texto enviado, el pedido no podra continuar hasta que se aporte una redaccion aceptable."
+        "title": "6. Moderación de dedicatorias",
+        "body": "La dedicatoria es contenido enviado por el usuario. Nos reservamos el derecho a rechazar, acortar, eliminar o negarnos a emitir contenido que sea ilícito, abusivo, difamatorio, amenazante, engañoso o que perjudique a terceros, al orden público o a la presentación de marca de Shark Human Alliance. Si la moderación bloquea el texto enviado, el pedido no podrá continuar hasta que se aporte una redacción aceptable."
       },
       "delivery": {
         "title": "7. Entrega y acceso",
-        "body": "Los certificados se generan digitalmente tras el pago exitoso. Si se proporciona una direccion de email, los detalles de entrega tambien pueden enviarse por correo. Si no se proporciona email, el certificado debe descargarse inmediatamente desde la pagina de exito porque el enlace puede no quedar almacenado para recuperarlo mas tarde."
+        "body": "Los certificados se generan digitalmente tras el pago exitoso. Si se proporciona una dirección de email, los detalles de entrega también pueden enviarse por correo. Si no se proporciona email, el certificado debe descargarse inmediatamente desde la página de éxito porque el enlace puede no quedar almacenado para recuperarlo más tarde."
       },
       "digitalContent": {
         "title": "8. Contenido digital y desistimiento",
-        "body": "El certificado es contenido digital suministrado sin soporte material. La entrega comienza inmediatamente tras el pago y el procesamiento. Durante el checkout, el cliente debe solicitar expresamente el suministro inmediato antes de que termine el plazo de desistimiento y reconocer que, una vez iniciada la entrega, pierde el derecho de desistimiento. La confirmacion del pedido y el mensaje de entrega del certificado repiten esta informacion en un soporte duradero."
+        "body": "El certificado es contenido digital suministrado sin soporte material. La entrega comienza inmediatamente tras el pago y el procesamiento. Durante el checkout, el cliente debe solicitar expresamente el suministro inmediato antes de que termine el plazo de desistimiento y reconocer que, una vez iniciada la entrega, pierde el derecho de desistimiento. La confirmación del pedido y el mensaje de entrega del certificado repiten esta información en un soporte duradero."
       },
       "complaints": {
-        "title": "9. Reclamaciones e incidencias tecnicas",
-        "body": "Si el archivo entregado es defectuoso, no puede descargarse el certificado, se genera un nivel incorrecto o surge otro problema tecnico o de pago, contacta con soporte sin demora innecesaria e incluye los detalles del pedido si los tienes. Revisaremos la incidencia y propondremos una solucion practica, como reenvio, correccion, sustitucion u otra medida adecuada."
+        "title": "9. Reclamaciones e incidencias técnicas",
+        "body": "Si el archivo entregado es defectuoso, no puede descargarse el certificado, se genera un nivel incorrecto o surge otro problema técnico o de pago, contacta con soporte sin demora innecesaria e incluye los detalles del pedido si los tienes. Revisaremos la incidencia y propondremos una solución práctica, como reenvío, corrección, sustitución u otra medida adecuada."
       },
       "refunds": {
         "title": "10. Reembolsos y correcciones",
-        "body": "Como el producto es un articulo digital personalizado, las solicitudes de reembolso y correccion se gestionan individualmente segun el caso concreto. Si hay un cobro duplicado, un fallo tecnico de entrega o un defecto causado por nuestra parte, contactanos y revisaremos la solicitud con rapidez. Si el certificado contiene un error causado por los datos enviados, tambien te animamos a escribirnos e intentaremos ayudarte."
+        "body": "Como el producto es un artículo digital personalizado, las solicitudes de reembolso y corrección se gestionan individualmente según el caso concreto. Si hay un cobro duplicado, un fallo técnico de entrega o un defecto causado por nuestra parte, contáctanos y revisaremos la solicitud con rapidez. Si el certificado contiene un error causado por los datos enviados, también te animamos a escribirnos e intentaremos ayudarte."
       },
       "contact": {
         "title": "11. Contacto",
@@ -1140,8 +1168,8 @@
     "quip4": "Verificado personalmente por Finnley Mako. Incluso usó sus gafas de lectura.",
     "quip5": "Esta membresía sobrevivió a nuestro riguroso proceso de verificación de tres segundos.",
     "quip6": "Confirmado. Ha hablado el sistema de archivo más meticuloso del océano.",
-    "rateLimitedTitle": "Verificacion pausada temporalmente",
-    "rateLimitedText": "Han llegado demasiadas solicitudes de verificacion desde esta conexion en poco tiempo. Espera un momento y vuelve a intentarlo."
+    "rateLimitedTitle": "Verificación pausada temporalmente",
+    "rateLimitedText": "Han llegado demasiadas solicitudes de verificación desde esta conexión en poco tiempo. Espera un momento y vuelve a intentarlo."
   },
   "certificateTemplates": {
     "luxury": {
@@ -1220,15 +1248,64 @@
   "certificateAccess": {
     "eyebrow": "Controles privados del registro",
     "title": "Gestiona este registro del certificado",
-    "description": "Usa estos controles para ocultar el registro del certificado del registro publico o para solicitar la supresion de los datos identificativos vinculados a este certificado.",
+    "description": "Usa estos controles para ocultar el registro del certificado del registro público o para solicitar la supresión de los datos identificativos vinculados a este certificado.",
     "visibilityLabel": "Visibilidad actual en el registro",
-    "visibilityPublic": "Publico",
+    "visibilityPublic": "Público",
     "visibilityPrivate": "Privado",
-    "hideButton": "Ocultar del registro publico",
+    "hideButton": "Ocultar del registro público",
     "eraseButton": "Suprimir datos identificativos",
-    "hideSuccess": "El registro ya esta oculto del registro publico.",
-    "eraseSuccess": "Los datos identificativos del registro han sido suprimidos. Los enlaces publicos existentes deberian dejar de resolver en breve.",
-    "actionError": "No se pudo completar la solicitud. Intentalo de nuevo en un momento.",
-    "eraseConfirm": "Suprimir los datos identificativos de este certificado? Esta accion esta pensada para ser permanente."
+    "hideSuccess": "El registro ya está oculto del registro público.",
+    "eraseSuccess": "Los datos identificativos del registro han sido suprimidos. Los enlaces públicos existentes deberían dejar de resolver en breve.",
+    "actionError": "No se pudo completar la solicitud. Inténtalo de nuevo en un momento.",
+    "eraseConfirm": "¿Suprimir los datos identificativos de este certificado? Esta acción está pensada para ser permanente."
+  },
+  "privacyPage": {
+    "eyebrow": "Privacidad y protección de datos",
+    "title": "Política de privacidad",
+    "intro": "Esta página explica cómo Shark Human Alliance procesa datos personales cuando pides un certificado, recibes correos, apareces en el registro público o usas cookies analíticas. Está redactada para una audiencia internacional, y nuestra comunicación contractual y de privacidad se ofrece por lo general en inglés y español. Pretende cubrir la información básica exigida por el artículo 13 del GDPR y normas de privacidad relacionadas.",
+    "updatedLabel": "Última actualización",
+    "updatedValue": "21 de abril de 2026",
+    "sections": {
+      "controller": {
+        "title": "1. Responsable y contacto",
+        "body": "El responsable de Shark Human Alliance es JEEL Wekeza s.r.o., con domicilio social en Radlicka 663/28, Smichov, 150 00 Praga 5, República Checa, IČO 07969694. Forma jurídica: sociedad de responsabilidad limitada.\n\nCanal principal de privacidad: sharkhumanalliance@gmail.com.\n\nActualmente no se publica un delegado de protección de datos independiente para este servicio."
+      },
+      "dataCategories": {
+        "title": "2. Qué datos tratamos",
+        "body": "Según cómo uses el servicio, podemos tratar: nombre del certificado, texto de dedicatoria, dirección de correo, metadatos del pedido y del pago, código de referido y actividad de referidos, preferencia de visibilidad en el registro público, token de acceso e identificadores de verificación, metadatos técnicos básicos como la dirección IP usada para seguridad y rate limiting, y datos sobre tu preferencia de cookies.\n\nShark Human Alliance no almacena datos completos de tarjeta. Los pagos los gestiona Stripe conforme a sus propios sistemas y avisos."
+      },
+      "legalBases": {
+        "title": "3. Finalidades y bases jurídicas",
+        "body": "Tratamos datos personales para estas finalidades principales:\n\n- emitir y entregar un certificado comprado, prestar soporte y operar el servicio conforme al artículo 6(1)(b) GDPR;\n- cumplir obligaciones contables, fiscales y de prevención del fraude conforme al artículo 6(1)(c) GDPR y, cuando corresponda, al artículo 6(1)(f) GDPR;\n- publicar un registro en el registro público solo cuando existe opt-in, conforme al artículo 6(1)(a) GDPR;\n- enviar correos operativos relacionados con el certificado y enlaces de referido o acceso necesarios para el servicio conforme al artículo 6(1)(b) GDPR;\n- cargar cookies analíticas solo cuando existe opt-in, conforme al artículo 6(1)(a) GDPR y las normas aplicables sobre cookies."
+      },
+      "publicRegistry": {
+        "title": "4. Registro público y visibilidad del certificado",
+        "body": "La publicación en el registro es opcional. Las compras nuevas solo se muestran en el registro público si la persona compradora activa esa opción en el checkout.\n\nMás adelante el registro puede ocultarse del registro público o anonimizarse mediante los controles de acceso del certificado o contactando con soporte. Las páginas de verificación de registros no públicos o borrados no se muestran públicamente."
+      },
+      "providers": {
+        "title": "5. Proveedores y destinatarios",
+        "body": "Para operar la web, el checkout y la entrega del certificado, podemos compartir los datos necesarios con proveedores que sostienen el servicio, incluidos Stripe para pagos, Resend para envío de correos, Vercel para hosting y entrega de la aplicación, y el proveedor PostgreSQL usado en el entorno del proyecto, como Neon o Supabase.\n\nEstos proveedores reciben solo los datos necesarios para su función en la operación del servicio."
+      },
+      "transfers": {
+        "title": "6. Transferencias internacionales",
+        "body": "Algunos proveedores usados por el servicio pueden tratar datos fuera del Espacio Económico Europeo, incluidos Estados Unidos. Cuando esto ocurra, nos apoyamos en el mecanismo de transferencia aplicable del proveedor, como las Cláusulas Contractuales Tipo de la UE, decisiones de adecuación u otras garantías equivalentes puestas a disposición por el proveedor."
+      },
+      "retention": {
+        "title": "7. Plazos de conservación",
+        "body": "Conservamos datos del certificado y del pedido durante el tiempo necesario para operar el servicio, demostrar la transacción y atender soporte, obligaciones legales o contables. La visibilidad en el registro público permanece activa hasta que el registro se oculta o se borra. La preferencia de cookies se conserva hasta 180 días salvo cambio anterior.\n\nCuando la ley exige una conservación más larga para registros contables o fiscales, esos registros pueden mantenerse durante el periodo legal obligatorio."
+      },
+      "rights": {
+        "title": "8. Tus derechos",
+        "body": "Con arreglo a la ley aplicable, puedes solicitar acceso, rectificación, supresión, limitación, portabilidad, retirada del consentimiento, oposición a determinados tratamientos y el derecho a presentar una reclamación ante una autoridad de control competente. Como el responsable está establecido en la República Checa, la autoridad relevante para el responsable es la ÚOOÚ, mientras que las personas interesadas en la UE también pueden tener derecho a reclamar ante la autoridad de su lugar de residencia, trabajo o del lugar de la presunta infracción.\n\nSi la solicitud se refiere a una entrada del registro público, incluye cuando sea posible el registry ID, el código de referido o el enlace de acceso al certificado."
+      },
+      "cookies": {
+        "title": "9. Cookies y analítica",
+        "body": "Las cookies necesarias se usan para funciones básicas de la web, el flujo de checkout, el idioma, la seguridad y el almacenamiento de tu preferencia de cookies. Google Analytics 4 puede inicializarse en la web con un modo de consentimiento restrictivo por defecto para mantener operativa la configuración de analítica, pero el almacenamiento analítico permanece denegado hasta que exista consentimiento para analítica. Si rechazas las cookies analíticas, ese almacenamiento sigue denegado.\n\nPara más detalle, consulta nuestra Política de cookies y el control de configuración de cookies del footer."
+      },
+      "contact": {
+        "title": "10. Cómo ejercer tus derechos",
+        "body": "Envíanos solicitudes o reclamaciones de privacidad a sharkhumanalliance@gmail.com. Si tu solicitud se refiere a un certificado concreto, incluye información suficiente para identificar el registro de forma segura, como el correo del certificado, el registry ID o el enlace de acceso al certificado.\n\nSi consideras que no hemos gestionado correctamente tu solicitud, también puedes dirigirte a la autoridad de control competente. Para el responsable, esa autoridad es la ÚOOÚ checa."
+      }
+    }
   }
 }

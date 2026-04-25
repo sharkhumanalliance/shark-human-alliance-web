@@ -51,6 +51,9 @@ export function SiteFooter() {
               <LocalizedLink href="/terms" className="text-[var(--muted)] transition-colors duration-300 ease-out hover:text-[var(--brand-dark)]">
                 {t("termsLink")}
               </LocalizedLink>
+              <LocalizedLink href="/privacy" className="text-[var(--muted)] transition-colors duration-300 ease-out hover:text-[var(--brand-dark)]">
+                {t("privacyLink")}
+              </LocalizedLink>
               <LocalizedLink href="/cookie-policy" className="text-[var(--muted)] transition-colors duration-300 ease-out hover:text-[var(--brand-dark)]">
                 {t("cookiePolicyLink")}
               </LocalizedLink>

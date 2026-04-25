@@ -6,6 +6,7 @@ export type CookieConsent = {
 
 export const COOKIE_CONSENT_KEY = "sha_cookie_consent";
 export const COOKIE_CONSENT_MAX_AGE = 60 * 60 * 24 * 180; // 180 days
+export const COOKIE_CONSENT_UPDATED_EVENT = "sha:cookie-consent-updated";
 
 function encodeConsent(consent: CookieConsent): string {
   return encodeURIComponent(JSON.stringify(consent));

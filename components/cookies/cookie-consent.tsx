@@ -3,7 +3,12 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { buildConsent, readConsent, writeConsent } from "@/lib/cookie-consent";
+import {
+  buildConsent,
+  COOKIE_CONSENT_UPDATED_EVENT,
+  readConsent,
+  writeConsent,
+} from "@/lib/cookie-consent";
 
 declare global {
   interface Window {
@@ -63,6 +68,11 @@ export function CookieConsent() {
     const nextConsent = buildConsent(analytics);
     writeConsent(nextConsent);
     updateGoogleConsent(analytics);
+    window.dispatchEvent(
+      new CustomEvent(COOKIE_CONSENT_UPDATED_EVENT, {
+        detail: nextConsent,
+      }),
+    );
     setCookieVersion((current) => current + 1);
     setAnalyticsEnabled(analytics);
     setIsModalOpen(false);

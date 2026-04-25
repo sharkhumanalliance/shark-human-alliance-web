@@ -214,12 +214,12 @@ export async function createMember(
       const row = await queryOne<MemberRow>(
         `INSERT INTO members
            (id, name, tier, issue_date, dedication,
-            referral_code, referred_by, referral_count,
+           referral_code, referred_by, referral_count,
            email, stripe_session_id, access_token,
             template, locale, terms_accepted_at, terms_version,
             digital_content_consent_at, digital_content_version,
             registry_visibility, dedication_review_status, erased_at)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
          RETURNING *`,
         [
           member.id,

@@ -1,13 +1,52 @@
+"use client";
+
+import { useEffect, useSyncExternalStore } from "react";
 import Script from "next/script";
+import {
+  COOKIE_CONSENT_UPDATED_EVENT,
+  readConsent,
+} from "@/lib/cookie-consent";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+function updateGoogleConsent(analytics: boolean) {
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+
+  window.gtag("consent", "update", {
+    analytics_storage: analytics ? "granted" : "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+}
 
 /**
  * Google Analytics 4 wrapper.
  * Include <Analytics /> once in the root layout.
- * Renders nothing if NEXT_PUBLIC_GA_MEASUREMENT_ID is not set.
+ * Renders nothing only if NEXT_PUBLIC_GA_MEASUREMENT_ID is not set.
  */
 export function Analytics() {
+  const analyticsEnabled = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener(COOKIE_CONSENT_UPDATED_EVENT, onStoreChange);
+      return () =>
+        window.removeEventListener(COOKIE_CONSENT_UPDATED_EVENT, onStoreChange);
+    },
+    () => readConsent()?.analytics ?? false,
+    () => false,
+  );
+
+  useEffect(() => {
+    updateGoogleConsent(analyticsEnabled);
+  }, [analyticsEnabled]);
+
   if (!GA_ID) return null;
 
   return (
@@ -38,13 +77,6 @@ export function Analytics() {
   );
 }
 
-/**
- * Track a custom event in GA4.
- *
- * Usage:
- *   import { trackEvent } from "@/components/analytics";
- *   trackEvent("purchase_complete", { tier: "nonsnack", value: 29 });
- */
 export function trackEvent(
   action: string,
   params?: Record<string, string | number | boolean>,
