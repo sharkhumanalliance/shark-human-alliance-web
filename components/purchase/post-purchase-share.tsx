@@ -5,14 +5,13 @@ import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { trackEvent } from "@/components/analytics";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
-
-type Tier = "basic" | "protected" | "nonsnack" | "business";
+import type { PublicTierKey } from "@/lib/tiers";
 
 interface PostPurchaseShareProps {
   member: {
     id: string;
     name: string;
-    tier: Tier;
+    tier: PublicTierKey;
   };
 }
 

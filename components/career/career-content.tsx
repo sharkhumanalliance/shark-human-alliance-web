@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
+import { getPublicTierKey } from "@/lib/tiers";
 
 interface RankInfo {
   name: string;
@@ -115,7 +116,7 @@ export function CareerContent() {
       trackEvent("rank_lookup", {
         rank: data.rank,
         referral_count: data.referralCount,
-        tier: data.tier,
+        tier: getPublicTierKey(data.tier),
       });
     } catch {
       setError(t("checkRank.error"));

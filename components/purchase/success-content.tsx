@@ -2,9 +2,13 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense, useCallback } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
-import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import {
+  type CertificateTemplate,
+  isAcceptedCertificateTemplate,
+  normalizeTemplate,
+} from "@/components/certificate/certificate-document";
 import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { trackEvent } from "@/components/analytics";
@@ -14,14 +18,19 @@ import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
 import { StepIndicator } from "@/components/purchase/step-indicator";
 import { formatCertificateDate } from "@/lib/dates";
 import { getNextRank, getRankInfo } from "@/lib/referral-ranks";
+import {
+  getPublicTierKey,
+  getTierPriceDollars,
+  type TierKey,
+} from "@/lib/tiers";
 
 interface MemberData {
   id: string;
   name: string;
-  tier: "basic" | "protected" | "nonsnack" | "business";
+  tier: TierKey;
   date: string;
   dedication: string;
-  template?: CertificateTemplate;
+  template?: string;
   referralCode: string;
   referralCount: number;
   accessToken?: string;
@@ -37,6 +46,12 @@ const RANK_TRANSLATION_KEYS: Record<string, string> = {
   ambassador: "specialEnvoy",
   chiefWhisperer: "chiefSharkWhisperer",
 };
+
+async function fetchMemberBySession(sessionId: string): Promise<MemberData | null> {
+  const res = await fetch(`/api/member-by-session?session_id=${sessionId}`);
+  if (!res.ok) return null;
+  return res.json();
+}
 
 function SuccessContentInner() {
   const t = useTranslations("purchase");
@@ -58,113 +73,80 @@ function SuccessContentInner() {
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
   const purchaseTrackedRef = useRef(false);
 
-  useEffect(() => {
+  const pollForMember = useCallback(() => {
     if (!sessionId) {
       setLoading(false);
       return;
     }
 
+    setTimedOut(false);
+    setLoading(true);
+    setMember(null);
+
+    let cancelled = false;
     let attempts = 0;
     const maxAttempts = 8;
 
-    async function fetchMember() {
+    async function poll() {
       try {
-        const res = await fetch(`/api/member-by-session?session_id=${sessionId}`);
-        if (res.ok) {
-          const data = await res.json();
+        const data = await fetchMemberBySession(sessionId);
+        if (data) {
+          if (cancelled) return;
           setMember(data);
           setLoading(false);
 
           if (!purchaseTrackedRef.current) {
             purchaseTrackedRef.current = true;
-            const tierValues: Record<string, number> = {
-              basic: 5,
-              protected: 5,
-              nonsnack: 19,
-              business: 99,
-            };
+            const publicTier = getPublicTierKey(data.tier);
             trackEvent("purchase", {
               transaction_id: sessionId,
-              value: tierValues[data.tier] ?? 5,
+              value: getTierPriceDollars(data.tier),
               currency: "USD",
-              item_id: data.tier,
-              item_name: data.tier,
+              item_id: publicTier,
+              item_name: publicTier,
             });
           }
-          return true;
+          return;
         }
       } catch {
         // Retry
       }
-      return false;
-    }
 
-    async function poll() {
-      const found = await fetchMember();
-      if (!found && attempts < maxAttempts) {
+      if (cancelled) return;
+
+      if (attempts < maxAttempts) {
         attempts++;
         const delay = attempts <= 3 ? 500 : 2000;
         setTimeout(poll, delay);
-      } else if (!found) {
+      } else {
         setLoading(false);
         setTimedOut(true);
       }
     }
 
     poll();
+    return () => {
+      cancelled = true;
+    };
   }, [sessionId]);
 
+  useEffect(() => pollForMember(), [pollForMember]);
+
   useEffect(() => {
-    if (
-      member?.template &&
-      ["hero", "formal", "luxury"].includes(member.template)
-    ) {
-      setTemplate(member.template);
+    if (isAcceptedCertificateTemplate(member?.template)) {
+      setTemplate(normalizeTemplate(member.template));
     }
   }, [member?.template]);
 
   function handleRetryPolling() {
-    setTimedOut(false);
-    setLoading(true);
-    setMember(null);
-
-    let attempts = 0;
-    const maxAttempts = 8;
-
-    async function fetchMember() {
-      try {
-        const res = await fetch(`/api/member-by-session?session_id=${sessionId}`);
-        if (res.ok) {
-          const data = await res.json();
-          setMember(data);
-          setLoading(false);
-          return true;
-        }
-      } catch {
-        // Retry
-      }
-      return false;
-    }
-
-    async function poll() {
-      const found = await fetchMember();
-      if (!found && attempts < maxAttempts) {
-        attempts++;
-        const delay = attempts <= 3 ? 500 : 2000;
-        setTimeout(poll, delay);
-      } else if (!found) {
-        setLoading(false);
-        setTimedOut(true);
-      }
-    }
-
-    poll();
+    pollForMember();
   }
 
   function handleDownloadCertificate() {
     if (!member) return;
+    const publicTier = getPublicTierKey(member.tier);
     trackEvent("certificate_download", {
-      tier: member.tier,
+      tier: publicTier,
       format: paperFormat,
     });
     if (!member.accessToken) {
@@ -283,6 +265,7 @@ function SuccessContentInner() {
   const referralHref = member.referralCode
     ? `${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`
     : "";
+  const publicTier = getPublicTierKey(member.tier);
 
   return (
     <section data-reveal className="py-12 sm:py-14">
@@ -304,7 +287,7 @@ function SuccessContentInner() {
         </div>
 
         <PostPurchaseShare
-          member={{ id: member.id, name: member.name, tier: member.tier }}
+          member={{ id: member.id, name: member.name, tier: publicTier }}
         />
 
         {member.referralCode && (
@@ -400,7 +383,7 @@ function SuccessContentInner() {
                   );
                   setLinkCopied(true);
                   setDownloadStatus("");
-                  trackEvent("referral_link_copy", { tier: member.tier });
+                  trackEvent("referral_link_copy", { tier: publicTier });
                   setTimeout(() => setLinkCopied(false), 2000);
                 }}
                 className="shrink-0 rounded-lg bg-[var(--brand)] px-4 py-2.5 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:px-4"
@@ -409,12 +392,20 @@ function SuccessContentInner() {
               </button>
             </div>
 
-            <LocalizedLink
-              href="/career"
-              className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
-            >
-              {t("referralCareerLink")} {"\u2192"}
-            </LocalizedLink>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <LocalizedLink
+                href="/career"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-sky-50"
+              >
+                {t("referralCareerLink")}
+              </LocalizedLink>
+              <LocalizedLink
+                href={`/wanted?name=${encodeURIComponent(member.name)}`}
+                className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[var(--brand)] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--brand-dark)]"
+              >
+                {t("referralWantedPoster")}
+              </LocalizedLink>
+            </div>
           </section>
         )}
 
@@ -453,7 +444,7 @@ function SuccessContentInner() {
         <div className="mt-5">
           <CertificatePreview
             name={member.name}
-            tier={member.tier}
+            tier={publicTier}
             dedication={member.dedication}
             date={displayDate}
             registryId={member.id.toUpperCase()}

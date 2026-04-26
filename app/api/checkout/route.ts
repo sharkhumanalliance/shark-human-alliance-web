@@ -30,6 +30,8 @@ import {
   getCheckoutSessionCookieName,
 } from "@/lib/checkout-session";
 import { BASE_URL } from "@/lib/config";
+import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
+import { isTierKey } from "@/lib/tiers";
 const ENABLE_TEST_PROMO_CODES =
   process.env.ENABLE_TEST_PROMO_CODES === "true" ||
   process.env.NODE_ENV !== "production";
@@ -76,19 +78,20 @@ export async function POST(request: NextRequest) {
     console.log("[SHA Checkout] route entered", {
       mode: isFreePromoFlow ? normalizedPromoCode : "stripe",
       hasApiKey: !!process.env.RESEND_API_KEY,
-      emailFrom: EMAIL_FROM,
+      hasEmailFrom: !!EMAIL_FROM,
       tier: tier ?? null,
-      name: name ?? null,
-      email: email ?? null,
-      recipientEmail: recipientEmail ?? null,
+      hasName: typeof name === "string" && name.trim().length > 0,
+      hasEmail: typeof email === "string" && email.trim().length > 0,
+      hasRecipientEmail:
+        typeof recipientEmail === "string" && recipientEmail.trim().length > 0,
       isGift: !!isGift,
       locale: loc,
       template: template || null,
       paperFormat: paperFormat === "letter" ? "letter" : "a4",
-      referredBy: referredBy || null,
+      hasReferral: typeof referredBy === "string" && referredBy.trim().length > 0,
     });
 
-    if (!tier || !TIER_PRICES[tier]) {
+    if (!isTierKey(tier)) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
     }
     if (!name) {
@@ -196,10 +199,7 @@ export async function POST(request: NextRequest) {
 
       const targetEmail = isGift && recipientEmail ? recipientEmail.trim() : email?.trim();
       const normalizedPaperFormat = paperFormat === "letter" ? "letter" : "a4";
-      const templateQuery =
-        template && ["hero", "formal", "luxury"].includes(template)
-          ? `&template=${encodeURIComponent(template)}`
-          : "";
+      const templateQuery = getCertificateTemplateQueryParam(template);
       const certificateUrl = buildAbsoluteLocalizedUrl(
         BASE_URL,
         loc,
@@ -256,7 +256,12 @@ export async function POST(request: NextRequest) {
               locale: loc,
             }
           );
-          console.log(`[SHA Checkout] Promo certificate email sent to ${targetEmail}`);
+          console.log("[SHA Checkout] Promo certificate email sent", {
+            memberId: newMember.id,
+            sessionId: freeSessionId,
+            tier,
+            hasRecipient: true,
+          });
         } catch (emailError) {
           console.error("[SHA Checkout] Promo email send failed:", emailError);
         }
@@ -264,7 +269,7 @@ export async function POST(request: NextRequest) {
         console.warn("[SHA Checkout] Promo certificate email skipped", {
           reason: targetEmail ? "missing-resend-api-key" : "missing-target-email",
           hasApiKey: !!process.env.RESEND_API_KEY,
-          targetEmail: targetEmail ?? null,
+          hasTargetEmail: !!targetEmail,
           memberId: newMember.id,
           sessionId: freeSessionId,
         });
@@ -306,7 +311,12 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      console.log(`[SHA Checkout] Promo code ${normalizedPromoCode} used — free registration for ${newMember.name}`);
+      console.log("[SHA Checkout] Promo code used", {
+        promoCode: normalizedPromoCode,
+        memberId: newMember.id,
+        sessionId: freeSessionId,
+        tier,
+      });
 
       const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}&paper=${normalizedPaperFormat}`;
       const response = NextResponse.json({ url: successUrl });
@@ -373,9 +383,10 @@ export async function POST(request: NextRequest) {
       hasUrl: !!session.url,
       mode: "stripe",
       tier,
-      name,
-      email: email || null,
-      recipientEmail: recipientEmail || null,
+      hasName: true,
+      hasEmail: typeof email === "string" && email.trim().length > 0,
+      hasRecipientEmail:
+        typeof recipientEmail === "string" && recipientEmail.trim().length > 0,
       isGift: !!isGift,
       locale: loc,
     });

@@ -6,6 +6,7 @@ import { MembershipCard } from "@/components/home/membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import { formatCertificateDate } from "@/lib/dates";
+import { getTierPriceLabel } from "@/lib/tiers";
 
 type StyleCard = {
   title: string;
@@ -44,9 +45,9 @@ export function MembershipPageContent() {
       title: t("styleCards.1.title"),
       text: t("styleCards.1.text"),
       cta: t("styleCards.1.cta"),
-      href: "/purchase?tier=protected&template=formal",
+      href: "/purchase?tier=protected&template=classic",
       accent: "border-slate-200 bg-white",
-      template: "formal",
+      template: "classic",
       previewTier: "Protected Friend Status",
       previewName: "Daniel Reef",
       registryId: "SHA-CLA-1032",
@@ -55,9 +56,9 @@ export function MembershipPageContent() {
       title: t("styleCards.2.title"),
       text: t("styleCards.2.text"),
       cta: t("styleCards.2.cta"),
-      href: "/purchase?tier=protected&template=hero",
+      href: "/purchase?tier=protected&template=playful",
       accent: "border-cyan-200 bg-gradient-to-b from-cyan-50/60 via-white to-white",
-      template: "hero",
+      template: "playful",
       previewTier: "Protected Friend Status",
       previewName: "Sofia Current",
       registryId: "SHA-PLY-2251",
@@ -68,9 +69,9 @@ export function MembershipPageContent() {
     {
       id: "protected",
       variant: "protected" as const,
-      title: homeTierT("protectedTitle"),
-      eyebrow: homeTierT("protectedEyebrow"),
-      price: homeTierT("protectedPrice"),
+        title: homeTierT("protectedTitle"),
+        eyebrow: homeTierT("protectedEyebrow"),
+        price: getTierPriceLabel("protected"),
       description: homeTierT("protectedDescription"),
       features: [homeTierT("protectedFeatures.0"), homeTierT("protectedFeatures.1"), homeTierT("protectedFeatures.2")],
       ctaLabel: homeTierT("protectedCta"),
@@ -80,10 +81,10 @@ export function MembershipPageContent() {
     },
     {
       id: "nonsnack",
-      variant: "nonsnack" as const,
-      title: homeTierT("nonsnackTitle"),
-      eyebrow: homeTierT("nonsnackEyebrow"),
-      price: homeTierT("nonsnackPrice"),
+        variant: "nonsnack" as const,
+        title: homeTierT("nonsnackTitle"),
+        eyebrow: homeTierT("nonsnackEyebrow"),
+        price: getTierPriceLabel("nonsnack"),
       description: homeTierT("nonsnackDescription"),
       features: [homeTierT("nonsnackFeatures.0"), homeTierT("nonsnackFeatures.1"), homeTierT("nonsnackFeatures.2")],
       ctaLabel: homeTierT("nonsnackCta"),
@@ -91,10 +92,10 @@ export function MembershipPageContent() {
     },
     {
       id: "business",
-      variant: "business" as const,
-      title: homeTierT("businessTitle"),
-      eyebrow: homeTierT("businessEyebrow"),
-      price: homeTierT("businessPrice"),
+        variant: "business" as const,
+        title: homeTierT("businessTitle"),
+        eyebrow: homeTierT("businessEyebrow"),
+        price: getTierPriceLabel("business"),
       description: homeTierT("businessDescription"),
       features: [homeTierT("businessFeatures.0"), homeTierT("businessFeatures.1"), homeTierT("businessFeatures.2")],
       ctaLabel: homeTierT("businessCta"),
@@ -123,7 +124,7 @@ export function MembershipPageContent() {
 
             <div className="mt-8">
               <LocalizedLink
-                href="#tiers"
+                href="/membership#tiers"
                 className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
               >
                 {t("ctaPrimary")}

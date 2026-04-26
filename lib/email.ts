@@ -37,9 +37,15 @@ export function getResend(): Resend {
   return _resend;
 }
 
-function normalizeRecipient(recipient: string | string[] | null | undefined) {
-  if (!recipient) return null;
-  return Array.isArray(recipient) ? recipient.join(", ") : recipient;
+function getRecipientLogMeta(recipient: string | string[] | null | undefined) {
+  if (!recipient) {
+    return { hasRecipient: false, recipientCount: 0 };
+  }
+
+  return {
+    hasRecipient: true,
+    recipientCount: Array.isArray(recipient) ? recipient.length : 1,
+  };
 }
 
 export function escapeHtml(value: string): string {
@@ -177,8 +183,8 @@ export function logEmailRouteEntered(context: EmailLogContext) {
     flow: context.flow,
     route: context.route ?? null,
     hasApiKey: !!process.env.RESEND_API_KEY,
-    emailFrom: EMAIL_FROM,
-    recipient: normalizeRecipient(context.recipient),
+    hasEmailFrom: !!EMAIL_FROM,
+    ...getRecipientLogMeta(context.recipient),
     memberId: context.memberId ?? null,
     sessionId: context.sessionId ?? null,
     tier: context.tier ?? null,
@@ -203,13 +209,13 @@ export async function sendEmailStrict(
     flow: resolvedContext.flow,
     route: resolvedContext.route ?? null,
     hasApiKey: !!process.env.RESEND_API_KEY,
-    emailFrom: payload.from ?? EMAIL_FROM,
-    recipient: normalizeRecipient(resolvedContext.recipient) ?? normalizeRecipient(payload.to),
+    hasEmailFrom: !!(payload.from ?? EMAIL_FROM),
+    ...getRecipientLogMeta(resolvedContext.recipient ?? payload.to),
     memberId: resolvedContext.memberId ?? null,
     sessionId: resolvedContext.sessionId ?? null,
     tier: resolvedContext.tier ?? null,
     locale: resolvedContext.locale ?? null,
-    subject: payload.subject ?? null,
+    hasSubject: typeof payload.subject === "string" && payload.subject.length > 0,
   });
 
   let lastError: Error | null = null;
@@ -224,14 +230,20 @@ export async function sendEmailStrict(
         attempt,
         hasData: !!data,
         hasError: !!error,
-        data: data ?? null,
-        error: error ?? null,
+        resendId:
+          data && typeof data === "object" && "id" in data
+            ? String(data.id)
+            : null,
+        errorType:
+          error && typeof error === "object" && "name" in error
+            ? String(error.name)
+            : error
+              ? "resend_error"
+              : null,
       });
 
       if (error) {
-        const details =
-          typeof error === "object" ? JSON.stringify(error) : String(error);
-        throw new Error(`[SHA Email] Resend rejected email: ${details}`);
+        throw new Error("[SHA Email] Resend rejected email");
       }
 
       if (!data?.id) {
@@ -243,7 +255,7 @@ export async function sendEmailStrict(
       lastError = err instanceof Error ? err : new Error(String(err));
       console.warn(`[SHA Email] Attempt ${attempt}/${MAX_EMAIL_RETRIES} failed`, {
         flow: resolvedContext.flow,
-        recipient: normalizeRecipient(resolvedContext.recipient) ?? normalizeRecipient(payload.to),
+        ...getRecipientLogMeta(resolvedContext.recipient ?? payload.to),
         memberId: resolvedContext.memberId ?? null,
         error: lastError.message,
       });

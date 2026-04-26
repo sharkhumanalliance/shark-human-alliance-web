@@ -2,6 +2,7 @@
 
 import { useMessages, useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { FirstDonationTarget } from "@/components/impact/first-donation-target";
 import { useState } from "react";
 
 export function FaqContent() {
@@ -75,6 +76,12 @@ export function FaqContent() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section data-reveal className="py-4 sm:py-6">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <FirstDonationTarget compact />
         </div>
       </section>
 

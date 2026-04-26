@@ -64,6 +64,12 @@ Core product characteristics:
 
 \- When build validation is unreliable, prefer linting, code inspection, and targeted reasoning.
 
+\- On this Windows setup, shell-launched headless Chrome may fail when its `--user-data-dir` points into the workspace (for example `.chrome-headless`) because of local permission / Crashpad / IPC issues.
+
+\- For local browser verification, prefer the in-app browser when available.
+
+\- If shell headless Chrome is needed, use a fresh profile under `%TEMP%` or `%LOCALAPPDATA%`, ideally unique per run, and do not rely on a shared profile directory inside the repo.
+
 
 
 \## Architecture

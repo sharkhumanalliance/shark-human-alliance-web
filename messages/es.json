@@ -63,7 +63,7 @@
       "faq": "FAQ",
       "registry": "Registro"
     },
-    "cta": "Obtén tu certificado"
+    "cta": "Inicia el trámite tiburón"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -160,9 +160,9 @@
       "previewSectionLabel": "Pruébalo en vivo"
     },
     "impactTeaser": {
-      "donationsIntro": "Cada certificado contribuye a una asignación para conservación que rastreamos y reportamos públicamente. A medida que se realizan donaciones, publicamos las organizaciones destinatarias y los importes asignados.",
+        "donationsIntro": "El papeleo es falso. La asignación no. Cada certificado reserva dinero real para conservación de tiburones y océanos, empezando por el primer objetivo público de donación.",
       "and": "y",
-      "opsJoke": "El resto mantiene funcionando el departamento de operaciones terrestres de una sola persona de la Alianza (apenas).",
+        "opsJoke": "El resto mantiene operativa la burocracia terrestre de una sola persona de la Alianza, algo menos majestuoso pero lamentablemente necesario.",
       "linkText": "Ver informe completo de impacto y detalles de socios"
     },
     "membershipSection": {
@@ -286,17 +286,17 @@
     "subtitle": "Para personas sensatas que quieren saber qué están comprando, adónde va el dinero y si los tiburones pueden leer certificados.",
     "items": [
       {
-        "question": "¿Es real la alianza?",
-        "answer": "La alianza es ficticia e intencionalmente humorística. La financiación para conservación es real."
-      },
-      {
-        "question": "¿La membresía me protege de los tiburones?",
-        "answer": "No. No ofrece protección marina de ningún tipo. Eso sí, ayuda a proteger a tiburones reales de los humanos, que es el problema estadísticamente más relevante."
-      },
-      {
-        "question": "¿Adónde va realmente el dinero?",
-        "answer": "Cada certificado contribuye a una asignación para conservación que rastreamos y reportamos públicamente. A medida que se realizan donaciones, publicamos las organizaciones destinatarias y los importes asignados."
-      },
+          "question": "¿Esto sirve legalmente para algo?",
+          "answer": "No. No es un documento legal, una garantía de seguridad, una credencial diplomática ni un instrumento antimordidas. Es papeleo humorístico con aspecto oficial y una asignación real para conservación detrás."
+        },
+        {
+          "question": "¿Los tiburones lo respetarán?",
+          "answer": "Casi seguro que no. Los tiburones no han ratificado el papeleo y es improbable que asistan a la reunión. El certificado protege más a los tiburones de los humanos que a los humanos de los tiburones."
+        },
+        {
+          "question": "¿Adónde va el dinero real?",
+          "answer": "Una parte de cada compra se reserva para conservación de tiburones y océanos. Publicamos las organizaciones destinatarias y los detalles de asignación pública a medida que se realizan las donaciones."
+        },
       {
         "question": "¿Cuándo empiezan las donaciones y cómo se informarán?",
         "answer": "Publicamos las asignaciones una vez que las donaciones se realizan de verdad. Esta página y nuestras redes sociales mostrarán las organizaciones destinatarias y los importes reportados a medida que ocurra."
@@ -344,7 +344,7 @@
   },
   "membershipPage": {
     "badge": "Oficina de selección de certificados",
-    "title": "Elige tu nivel de diplomacia con tiburones.",
+    "title": "Selecciona el papeleo que tu situación merece.",
     "description": "Tres niveles de diplomacia con tiburones y después tres estilos de certificado. Primero eliges el nivel; luego decides qué tan oficial debe parecer el papeleo.",
     "trustItems": [
       "Personalizado en minutos",
@@ -650,8 +650,8 @@
     "giftMessagePlaceholder": "ej. ¡Feliz cumpleaños! Ahora los tiburones saben que no estás en el menú.",
     "referredByBadge": "El crédito por referido está activo para esta compra.",
     "referralTitle": "Tu carrera diplomática empieza ahora",
-    "referralMomentTitle": "Ya estás oficialmente en el escalafón.",
-    "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango.",
+    "referralMomentTitle": "Tu carrera diplomática empieza ahora.",
+    "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango y hace que tu papeleo parezca cada vez más importante.",
     "referralCodeLabel": "Código de referido",
     "referralCurrentRank": "Rango actual",
     "referralNextRank": "Próximo ascenso",
@@ -663,6 +663,7 @@
     "referralLinkLabel": "Enlace de referido",
     "referralCopy": "Copiar",
     "referralCareerLink": "Ver el escalafón completo",
+    "referralWantedPoster": "Crear póster de búsqueda",
     "downloadOnlyNotice": "Descarga ahora — este enlace no se guardará.",
     "recipientEmailHint": "Úsalo si quieres que enviemos el certificado directamente.",
     "paperSizeLabel": "Tamaño del papel",

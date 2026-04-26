@@ -7,10 +7,29 @@ import {
   getCertificateDisplayCopy,
   getCertificateTierKey,
 } from "@/lib/certificate-display-copy";
+import {
+  normalizeTemplate,
+  type CertificateTemplate,
+} from "@/lib/certificate-templates";
 import { getQrCodeUrl, getVerificationUrl } from "@/lib/qr-svg";
 import type { PaperFormat } from "./certificate-sheet";
 
-export type CertificateTemplate = "hero" | "formal" | "luxury";
+/** Legacy template IDs — kept here so values stored before the rename
+ *  ("hero" → "playful", "formal" → "classic") still resolve to the right
+ *  modern template. Any code that reads template from DB / webhook / URL
+ *  should funnel through `normalizeTemplate` first. */
+export {
+  CERTIFICATE_TEMPLATES,
+  getCertificateTemplateQueryParam,
+  isAcceptedCertificateTemplate,
+  LEGACY_CERTIFICATE_TEMPLATES,
+  normalizeTemplate,
+} from "@/lib/certificate-templates";
+export type {
+  AcceptedCertificateTemplate,
+  CertificateTemplate,
+  LegacyCertificateTemplate,
+} from "@/lib/certificate-templates";
 
 export type CertificateDocumentProps = {
   name: string;
@@ -89,9 +108,12 @@ export function CertificateDocument({
   const tokenBase = getCertificateHumorSeed(name, registryId, tier);
   const diplomaticNote = getCertificateDiplomaticNote(tokenBase, locale);
   const footerAside = getCertificateFooterAside(tokenBase, locale);
-  const isFormal = template === "formal";
-  const isLuxury = template === "luxury";
+  const resolvedTemplate = normalizeTemplate(template);
+  const isClassic = resolvedTemplate === "classic";
+  const isLuxury = resolvedTemplate === "luxury";
+  const isPlayful = resolvedTemplate === "playful";
   const isLetter = paperFormat === "letter";
+  const isLuxuryA4 = isLuxury && !isLetter;
 
   const verifyUrl = getVerificationUrl(
     registryId.toLowerCase(),
@@ -99,11 +121,25 @@ export function CertificateDocument({
     undefined,
     referralCode,
   );
+  const luxuryA4Background =
+    tierKey === "business"
+      ? assetMode === "preview"
+        ? "/background-luxury-a4-business-preview.webp"
+        : "/background-luxury-a4-business.png"
+      : tierKey === "nonsnack"
+      ? assetMode === "preview"
+        ? "/background-luxury-a4-nonsnack-preview.webp"
+        : "/background-luxury-a4-nonsnack.png"
+      : assetMode === "preview"
+        ? "/background-luxury-a4-preview.webp"
+        : "/background-luxury-a4.png";
   const backgroundSrc = isLuxury
-    ? assetMode === "preview"
-      ? "/background-luxury-preview.webp"
-      : "/background-luxury.png"
-    : isFormal
+    ? isLuxuryA4
+      ? luxuryA4Background
+      : assetMode === "preview"
+        ? "/background-luxury-preview.webp"
+        : "/background-luxury.png"
+    : isClassic
       ? assetMode === "preview"
         ? "/background-formal-preview.webp"
         : "/background-formal.png"
@@ -114,19 +150,117 @@ export function CertificateDocument({
 
   return (
     <div
-      className={`certificate-page certificate-page--${template} certificate-page--paper-${paperFormat}`}
+      className={`certificate-page certificate-page--${resolvedTemplate} certificate-page--paper-${paperFormat}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={backgroundSrc}
         alt=""
-        className={`certificate-bg${isFormal ? " certificate-bg--formal" : ""}${isLuxury ? " certificate-bg--luxury" : ""}`}
+        className={`certificate-bg${isClassic ? " certificate-bg--classic" : ""}${isLuxury ? " certificate-bg--luxury" : ""}`}
       />
 
       <div className="certificate-inner-frame" />
 
-      {/* Luxury layout - absolutely positioned overlay blocks */}
-      {isLuxury && (
+      {/* Luxury A4 layout - text overlay on border-only art */}
+      {isLuxuryA4 && (
+        <>
+          <div className="lux-a4-title-block">
+            <span className="lux-a4-title-certificate">{copy.certificate}</span>
+            <span className="lux-a4-title-of">{copy.of}</span>
+            <span className="lux-a4-title-recognition">{copy.officialRecognition}</span>
+          </div>
+
+          <div className="lux-a4-issuer-block">
+            <span className="lux-a4-issuer-intro">{copy.issuedBy}</span>
+            <span className="lux-a4-issuer-org">{copy.organization}</span>
+            <span className="lux-a4-issuer-dept">{copy.department}</span>
+          </div>
+
+          {/* Subtle decorative fleuron — section breakpoint between issuer and recipient. */}
+          <div className="lux-a4-flourish lux-a4-flourish--top" aria-hidden="true">
+            <span className="lux-a4-flourish-rule" />
+            <span className="lux-a4-flourish-glyph">❦</span>
+            <span className="lux-a4-flourish-rule" />
+          </div>
+
+          <div className="lux-a4-intro">{copy.playfulIntro}</div>
+
+          <div className="lux-a4-recipient-block">
+            <span className={recipientNameClassName}>{name}</span>
+          </div>
+
+          <div className="lux-a4-status-label">{copy.playfulStatusLabel}</div>
+
+          {/* Decorative flourishes flanking the tier status — engraved feel. */}
+          <div className={`lux-a4-status ${tierColorClass}`}>
+            <span className="lux-a4-status-flourish" aria-hidden="true">✦</span>
+            <span className="lux-a4-status-text">{statusText}</span>
+            <span className="lux-a4-status-flourish" aria-hidden="true">✦</span>
+          </div>
+
+          <div className="lux-a4-body">{copy.playfulBody}</div>
+
+          <div className="lux-a4-meta-row" aria-label={copy.verificationDetails}>
+            <div className="lux-a4-meta-item lux-a4-meta-item--qr">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={qrSrc} alt={copy.verifyMembership} className="lux-a4-qr-image" />
+              <div className="lux-a4-qr-label">{copy.verifyMembership}</div>
+            </div>
+            <div className="lux-a4-record">
+              <div className="lux-a4-record-item">
+                <div className="lux-a4-record-label">{copy.dateOfRecognition}</div>
+                <div className="lux-a4-record-value">{date}</div>
+              </div>
+              <div className="lux-a4-record-item" translate="no">
+                <div className="lux-a4-record-label">{copy.registryId}</div>
+                <div className="lux-a4-record-value">{registryId}</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="lux-a4-signature lux-a4-signature--left">
+            <div className="lux-a4-signature-cursive" aria-hidden="true">
+              Finnley Mako
+            </div>
+            <div className="lux-a4-signature-name">Finnley Mako</div>
+            <div className="lux-a4-signature-role">
+              {copy.finnleyPlayfulRole}
+              <br />
+              {copy.finnleyPlayfulAside}
+            </div>
+          </div>
+
+          <div className="lux-a4-signature lux-a4-signature--right">
+            <div className="lux-a4-signature-cursive" aria-hidden="true">
+              Luna Reef
+            </div>
+            <div className="lux-a4-signature-name">Luna Reef</div>
+            <div className="lux-a4-signature-role">
+              {copy.lunaPlayfulRole}
+              <br />
+              {copy.lunaPlayfulAside}
+            </div>
+          </div>
+
+          <div className="lux-a4-remarks">
+            <div className="lux-a4-remarks-heading">{copy.assessmentLabel}</div>
+            <p>{copy.assessmentText}</p>
+            <p className="lux-a4-remarks-note">
+              <span>
+                {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+              </span>
+              {dedicationText || diplomaticNote}
+            </p>
+          </div>
+
+          <footer className="lux-a4-footer-block">
+            {copy.symbolicDisclaimer}
+          </footer>
+        </>
+      )}
+
+      {/* Legacy Luxury layout - retained for US Letter until it receives its own art */}
+      {isLuxury && !isLuxuryA4 && (
         <>
           <div className="lux-title-block">
             <span className="lux-title-certificate">{copy.certificate}</span>
@@ -168,13 +302,18 @@ export function CertificateDocument({
 
           <div className="lux-body-block">{copy.body}</div>
 
-          {dedicationText ? (
-            <div className="lux-dedication-block">
-              <span className="lux-dedication-text">
-                &ldquo;{dedicationText}&rdquo;
-              </span>
-            </div>
-          ) : null}
+          {/* Dedication block: shows the user's recorded dedication if any,
+              otherwise falls back to an auto-generated diplomatic marine note,
+              so the bottom of the certificate always carries a personalized
+              line of copy. */}
+          <div className="lux-dedication-block">
+            <span className="lux-dedication-label">
+              {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+            </span>
+            <span className="lux-dedication-text">
+              &ldquo;{dedicationText || diplomaticNote}&rdquo;
+            </span>
+          </div>
 
           <div className="lux-meta-block" aria-label={copy.verificationDetails}>
             <span className="lux-meta-line">
@@ -206,78 +345,81 @@ export function CertificateDocument({
       )}
 
       {/* Formal layout - parchment overlay blocks */}
-      {isFormal && (
+      {isClassic && (
         <>
-          <div className="frm-title-block">
-            <span className="frm-kicker">{copy.organization}</span>
-            <span className="frm-title-main">
+          <div className="cls-title-block">
+            <span className="cls-kicker">{copy.organization}</span>
+            <span className="cls-title-main">
               {copy.certificate} {copy.of} {copy.officialRecognition}
             </span>
-            <span className="frm-title-sub">{copy.department}</span>
+            <span className="cls-title-sub">{copy.department}</span>
           </div>
 
-          <div className="frm-qr-block">
-            <span className="frm-qr-label">{copy.verify}</span>
+          <div className="cls-qr-block">
+            <span className="cls-qr-label">{copy.verify}</span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={qrSrc} alt={copy.verifyMembership} className="frm-qr-image" />
+            <img src={qrSrc} alt={copy.verifyMembership} className="cls-qr-image" />
           </div>
 
-          <div className="frm-recipient-block">
-            <span className="frm-recipient-name">{name}</span>
+          <div className="cls-recipient-block">
+            <span className="cls-recipient-name">{name}</span>
           </div>
 
-          <div className="frm-status-label-block">
+          <div className="cls-status-label-block">
             {copy.earnedLine1}
             <br />
             {copy.earnedLine2}
           </div>
 
           <div
-            className={`frm-status-block${tier.toLowerCase().includes("nonsnack") || tier.toLowerCase().includes("non-snack") ? " frm-status-block--nonsnack" : ""}${tier.toLowerCase().includes("business") || tier.toLowerCase().includes("zone") ? " frm-status-block--business" : ""}`}
+            className={`cls-status-block${tier.toLowerCase().includes("nonsnack") || tier.toLowerCase().includes("non-snack") ? " cls-status-block--nonsnack" : ""}${tier.toLowerCase().includes("business") || tier.toLowerCase().includes("zone") ? " cls-status-block--business" : ""}`}
           >
             {statusText}
           </div>
 
-          <div className="frm-body-block">{copy.body}</div>
+          <div className="cls-body-block">{copy.body}</div>
 
-          {dedicationText ? (
-            <div className="frm-dedication-block">
-              <span className="frm-dedication-label">{copy.dedicationLabel}</span>
-              <span className="frm-dedication-text">
-                &ldquo;{dedicationText}&rdquo;
-              </span>
-            </div>
-          ) : null}
-
-          <div className="frm-sig-left">
-            <span className="frm-sig-name">Finnley Mako</span>
-            <span className="frm-sig-role">{copy.finnleyRole}</span>
-          </div>
-          <div className="frm-sig-right">
-            <span className="frm-sig-name">Luna Reef</span>
-            <span className="frm-sig-role">{copy.lunaRole}</span>
+          {/* Always renders. Falls back to an auto-generated diplomatic note
+              when the user did not provide a personal dedication, so the
+              certificate always carries a personalized line. */}
+          <div className="cls-dedication-block">
+            <span className="cls-dedication-label">
+              {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+            </span>
+            <span className="cls-dedication-text">
+              &ldquo;{dedicationText || diplomaticNote}&rdquo;
+            </span>
           </div>
 
-          <div className="frm-meta-block">
-            <div className="frm-meta-item">
-              <span className="frm-meta-label">{copy.dateOfRecognition}</span>
-              <span className="frm-meta-value">{date}</span>
+          <div className="cls-sig-left">
+            <span className="cls-sig-name">Finnley Mako</span>
+            <span className="cls-sig-role">{copy.finnleyRole}</span>
+          </div>
+          <div className="cls-sig-right">
+            <span className="cls-sig-name">Luna Reef</span>
+            <span className="cls-sig-role">{copy.lunaRole}</span>
+          </div>
+
+          <div className="cls-meta-block">
+            <div className="cls-meta-item">
+              <span className="cls-meta-label">{copy.dateOfRecognition}</span>
+              <span className="cls-meta-value">{date}</span>
             </div>
-            <div className="frm-meta-item">
-              <span className="frm-meta-label">{copy.registryId}</span>
-              <span className="frm-meta-value">{registryId}</span>
+            <div className="cls-meta-item">
+              <span className="cls-meta-label">{copy.registryId}</span>
+              <span className="cls-meta-value">{registryId}</span>
             </div>
           </div>
 
-          <div className="frm-footer-left">{copy.symbolicDisclaimer}</div>
-          <div className="frm-footer-right">
+          <div className="cls-footer-left">{copy.symbolicDisclaimer}</div>
+          <div className="cls-footer-right">
             &ldquo;{footerAside}&rdquo;
           </div>
         </>
       )}
 
       {/* Hero layout */}
-      {!isLuxury && !isFormal && (
+      {isPlayful && (
         <section
           className={`certificate-content certificate-content--playful${isLetter ? " certificate-content--playful-letter" : ""}`}
         >
@@ -351,7 +493,7 @@ export function CertificateDocument({
           </div>
 
           <div className="playful-footer-note">
-            {copy.filedUnderPrefix}: {filedUnderText}
+            {copy.symbolicDisclaimer} &ldquo;{footerAside}&rdquo;
           </div>
         </section>
       )}

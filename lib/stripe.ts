@@ -1,28 +1,5 @@
 import Stripe from "stripe";
-
-/** Price in cents for each tier */
-export const TIER_PRICES: Record<string, number> = {
-  basic: 400,
-  protected: 400,
-  nonsnack: 1900,
-  business: 9900,
-};
-
-/** How much of each sale goes to shark conservation (in cents). */
-export const TIER_DONATIONS: Record<string, number> = {
-  basic: 100,
-  protected: 100,
-  nonsnack: 1200,
-  business: 7000,
-};
-
-/** Human-readable tier names for Stripe line items */
-export const TIER_NAMES: Record<string, string> = {
-  basic: "Protected Friend Status",
-  protected: "Protected Friend Status",
-  nonsnack: "Non-Snack Recognition",
-  business: "Shark-Approved Zone Certification",
-};
+export { TIER_DONATIONS, TIER_NAMES, TIER_PRICES } from "@/lib/tiers";
 
 /**
  * Returns a Stripe client instance.

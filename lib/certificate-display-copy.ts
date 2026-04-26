@@ -32,8 +32,12 @@ const COPY = {
       "This document is officially symbolic and diplomatically non-binding. Sharks cannot read, do not recognize human bureaucracy, and remain largely unaware of our existence. Your purchase supports real ocean conservation - which is more than most certificates can say.",
     playfulIntro: "This certifies that",
     playfulStatusLabel: "has been officially recognized as a",
+    /* Mirrors `body` so every certificate carries the same message. The
+       phrasing is shifted to read as a continuation of the tier line above
+       (e.g. "...recognized as a PROTECTED FRIEND by the Shark Human Alliance,
+       as a supporter of...") — no redundant "This certifies that". */
     playfulBody:
-      "by the Shark Human Alliance, in acknowledgment of commendable diplomatic standing, symbolic non-snack potential, and a general willingness to support better shark-human relations.",
+      "by the Shark Human Alliance, as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
     assessmentLabel: "Diplomatic assessment",
     assessmentText:
       "Any shark considering the holder a meal would be demonstrating exceptionally poor judgment.",
@@ -85,8 +89,11 @@ const COPY = {
       "Este documento es oficialmente simbólico y diplomáticamente no vinculante. Los tiburones no saben leer, no reconocen la burocracia humana y, en general, desconocen nuestra existencia. Tu compra apoya conservación oceánica real - que ya es más de lo que pueden decir la mayoría de certificados.",
     playfulIntro: "Esto certifica que",
     playfulStatusLabel: "ha sido reconocido/a oficialmente como",
+    /* Refleja `body` — mismo mensaje en todos los certificados, redactado
+       como continuación de la línea del tier para evitar duplicar
+       "Esto certifica que". */
     playfulBody:
-      "por Shark Human Alliance, en reconocimiento de una posición diplomática encomiable, potencial simbólico de no-snack y una disposición general a apoyar mejores relaciones tiburón-humanas.",
+      "por Shark Human Alliance, como promotor/a de relaciones pacíficas tiburón-humanas y contribuyente a la conservación oceánica real.",
     assessmentLabel: "Evaluación diplomática",
     assessmentText:
       "Cualquier tiburón que considerara a la persona titular como comida demostraría un criterio excepcionalmente pobre.",

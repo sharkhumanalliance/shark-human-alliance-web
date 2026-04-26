@@ -4,15 +4,24 @@ import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, useRef, useMemo, Suspense, useId } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
-import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import {
+  type CertificateTemplate,
+  normalizeTemplate,
+} from "@/components/certificate/certificate-document";
 import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import { StepIndicator } from "@/components/purchase/step-indicator";
 import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
-
-type Tier = "basic" | "protected" | "nonsnack" | "business";
+import {
+  getTierPriceDollars,
+  getTierPriceLabel,
+  getTierSelectionClass,
+  normalizeTier,
+  PUBLIC_TIERS,
+  type TierKey,
+} from "@/lib/tiers";
 
 
 
@@ -41,20 +50,22 @@ function PurchaseFlowInner() {
   const searchParams = useSearchParams();
   const locale = useLocale();
 
-  const initialTier = (searchParams.get("tier") as Tier) || "protected";
+  const initialTier = normalizeTier(searchParams.get("tier"));
   const initialName = searchParams.get("name") || "";
   const initialGift = searchParams.get("gift") === "true";
   const initialPaper = (searchParams.get("paper") as PaperFormat) === "letter" ? "letter" : "a4";
+  // Accepts both modern ("playful" / "classic" / "luxury") and legacy
+  // ("hero" / "formal") template IDs from the URL — normalizeTemplate
+  // funnels them to the modern names.
   const initialTemplateParam = searchParams.get("template");
-  const normalizedInitialTemplate: CertificateTemplate =
-    initialTemplateParam === "formal" || initialTemplateParam === "hero" || initialTemplateParam === "luxury"
-      ? initialTemplateParam
-      : "luxury";
+  const normalizedInitialTemplate: CertificateTemplate = normalizeTemplate(
+    initialTemplateParam,
+  );
   const referredByFromUrl = searchParams.get("ref") || "";
   const wasCanceled = searchParams.get("canceled") === "true";
 
   const [referredByCode, setReferredByCode] = useState(referredByFromUrl);
-  const [tier, setTier] = useState<Tier>(initialTier);
+  const [tier, setTier] = useState<TierKey>(initialTier);
   const [name, setName] = useState(initialName);
   const [dedication, setDedication] = useState("");
 
@@ -113,31 +124,17 @@ function PurchaseFlowInner() {
     }
   }, [referredByCode]);
 
-  const tierPrices: Record<Tier, string> = {
-    basic: "$4",
-    protected: "$4",
-    nonsnack: "$19",
-    business: "$99",
-  };
-
-  const tierValues: Record<Tier, number> = {
-    basic: 4,
-    protected: 4,
-    nonsnack: 19,
-    business: 99,
-  };
-
   // Track view_item on initial load
   const viewedRef = useRef(false);
   useEffect(() => {
     if (viewedRef.current) return;
     viewedRef.current = true;
-    trackEvent("view_item", {
-      item_id: initialTier,
-      item_name: initialTier,
-      value: tierValues[initialTier],
-      currency: "USD",
-    });
+      trackEvent("view_item", {
+        item_id: initialTier,
+        item_name: initialTier,
+        value: getTierPriceDollars(initialTier),
+        currency: "USD",
+      });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -145,13 +142,12 @@ function PurchaseFlowInner() {
   const isFirstTierRender = useRef(true);
   useEffect(() => {
     if (isFirstTierRender.current) { isFirstTierRender.current = false; return; }
-    trackEvent("select_item", {
-      item_id: tier,
-      item_name: tier,
-      value: tierValues[tier],
-      currency: "USD",
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      trackEvent("select_item", {
+        item_id: tier,
+        item_name: tier,
+        value: getTierPriceDollars(tier),
+        currency: "USD",
+      });
   }, [tier]);
 
 
@@ -196,7 +192,7 @@ function PurchaseFlowInner() {
     trackEvent("begin_checkout", {
       item_id: tier,
       item_name: tier,
-      value: tierValues[tier],
+      value: getTierPriceDollars(tier),
       currency: "USD",
       is_gift: isGift,
       has_promo: promoCode.trim().length > 0,
@@ -352,23 +348,17 @@ function PurchaseFlowInner() {
                 {t("tierLabel")}
               </label>
               <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {(["protected", "nonsnack", "business"] as Tier[]).map((tierOption) => {
+                {PUBLIC_TIERS.map((tierOption) => {
                   const isSelected = tier === tierOption;
-                  const colors: Record<Tier, string> = {
-                    basic: isSelected ? "border-sky-400 bg-sky-50" : "border-sky-100 bg-white",
-                    protected: isSelected ? "border-[var(--tier-protected)] bg-[var(--tier-protected-light)]" : "border-[var(--tier-protected-border-light)] bg-white",
-                    nonsnack: isSelected ? "border-[var(--tier-nonsnack)] bg-[var(--tier-nonsnack-light)]" : "border-[var(--tier-nonsnack-border-light)] bg-white",
-                    business: isSelected ? "border-[var(--tier-business)] bg-[var(--tier-business-light)]/80" : "border-[var(--tier-business-border-light)] bg-white",
-                  };
                   return (
                     <button
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`min-h-[108px] rounded-2xl border ${colors[tierOption]} px-4 py-4 text-center transition-colors duration-300 ease-out`}
+                      className={`min-h-[108px] rounded-2xl border ${getTierSelectionClass(tierOption, isSelected)} px-4 py-4 text-center transition-colors duration-300 ease-out`}
                     >
                       <p className="text-lg font-semibold text-[var(--brand-dark)]">
-                        {tierPrices[tierOption]}
+                        {getTierPriceLabel(tierOption)}
                       </p>
                       <p className="mt-1 text-xs text-[var(--muted)]">
                         {t(`tiers.${tierOption}`)}
@@ -772,9 +762,9 @@ function PurchaseFlowInner() {
               disabled={isRedirecting}
               className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {promoCode.trim()
-                ? t("submitButtonPromo")
-                : `${t("submitButton")} - ${tierPrices[tier]}`}
+                {promoCode.trim()
+                  ? t("submitButtonPromo")
+                  : `${t("submitButton")} - ${getTierPriceLabel(tier)}`}
             </button>
           </form>
 
@@ -818,4 +808,3 @@ export function PurchaseFlow() {
     </Suspense>
   );
 }
-

@@ -7,37 +7,25 @@ import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
 import { buildLocalizedPath } from "@/lib/navigation";
 import { getRankInfo } from "@/lib/referral-ranks";
+import {
+  getPublicTierKey,
+  getTierRegistryBadgeClass,
+  getTierRegistryBorderClass,
+  type PublicTierKey,
+  type TierKey,
+} from "@/lib/tiers";
 
 type Member = {
   id: string;
   name: string;
-  tier: "basic" | "protected" | "nonsnack" | "business";
+  tier: TierKey;
   date: string;
   dedication: string;
   referralCode?: string;
   referralCount?: number;
 };
 
-type TierFilter = "all" | "protected" | "nonsnack" | "business";
-
-const TIER_STYLES: Record<string, { badge: string; border: string }> = {
-  basic: {
-    badge: "bg-sky-100 text-sky-800",
-    border: "border-sky-100",
-  },
-  protected: {
-    badge: "bg-[var(--tier-nonsnack-surface)] text-[var(--tier-nonsnack-text)]",
-    border: "border-[var(--tier-nonsnack-border-light)]",
-  },
-  nonsnack: {
-    badge: "bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)]",
-    border: "border-[var(--tier-protected-border-light)]",
-  },
-  business: {
-    badge: "bg-[var(--tier-business-surface)] text-[var(--tier-business-text)]",
-    border: "border-[var(--tier-business-border-light)]",
-  },
-};
+type TierFilter = "all" | PublicTierKey;
 
 function getInitials(name: string) {
   return name
@@ -73,7 +61,10 @@ export function RegistryContent() {
   const normalizedQuery = query.trim().toLowerCase();
 
   const filteredMembers = useMemo(() => {
-    let result = filter === "all" ? members : members.filter((member) => member.tier === filter);
+    let result =
+      filter === "all"
+        ? members
+        : members.filter((member) => getPublicTierKey(member.tier) === filter);
 
     if (normalizedQuery) {
       result = result.filter((member) => {
@@ -117,8 +108,12 @@ export function RegistryContent() {
     [members]
   );
 
-  const protectedCount = members.filter((member) => member.tier === "protected").length;
-  const nonsnackCount = members.filter((member) => member.tier === "nonsnack").length;
+  const protectedCount = members.filter(
+    (member) => getPublicTierKey(member.tier) === "protected"
+  ).length;
+  const nonsnackCount = members.filter(
+    (member) => getPublicTierKey(member.tier) === "nonsnack"
+  ).length;
 
   const filters: { key: TierFilter; label: string }[] = [
     { key: "all", label: t("filterAll") },
@@ -259,7 +254,7 @@ export function RegistryContent() {
                     {item.label}
                     {item.key !== "all" ? (
                       <span className="ml-1.5 opacity-60 tabular-nums">
-                        ({members.filter((member) => member.tier === item.key).length})
+                        ({members.filter((member) => getPublicTierKey(member.tier) === item.key).length})
                       </span>
                     ) : null}
                   </button>
@@ -338,7 +333,8 @@ export function RegistryContent() {
             <>
               <div className="hidden gap-4 md:grid md:grid-cols-1 lg:grid-cols-2">
                 {filteredMembers.map((member) => {
-                  const style = TIER_STYLES[member.tier];
+                  const publicTier = getPublicTierKey(member.tier);
+                  const badgeClass = getTierRegistryBadgeClass(publicTier);
                   const rank = getRankInfo(member.referralCount || 0);
                   const memberHref = getMemberHref(member.id);
                   const memberDate = formatCertificateDate(member.date, locale);
@@ -358,9 +354,9 @@ export function RegistryContent() {
                           </LocalizedLink>
                           <div className="mt-3 flex min-w-0 items-center gap-2 overflow-hidden">
                             <span
-                              className={`inline-flex shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${style.badge}`}
+                              className={`inline-flex shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${badgeClass}`}
                             >
-                              {t(`tierLabels.${member.tier}`)}
+                              {t(`tierLabels.${publicTier}`)}
                             </span>
                             <span className="truncate whitespace-nowrap text-sm font-medium text-[var(--brand-dark)]">
                               {rank.label}
@@ -418,7 +414,9 @@ export function RegistryContent() {
 
               <div className="space-y-3 md:hidden">
                 {filteredMembers.map((member) => {
-                  const style = TIER_STYLES[member.tier];
+                  const publicTier = getPublicTierKey(member.tier);
+                  const badgeClass = getTierRegistryBadgeClass(publicTier);
+                  const borderClass = getTierRegistryBorderClass(publicTier);
                   const rank = getRankInfo(member.referralCount || 0);
                   const memberHref = getMemberHref(member.id);
                   const memberDate = formatCertificateDate(member.date, locale);
@@ -426,7 +424,7 @@ export function RegistryContent() {
                   return (
                     <article
                       key={member.id}
-                      className={`rounded-2xl border ${style.border} bg-white px-4 py-4 shadow-sm`}
+                      className={`rounded-2xl border ${borderClass} bg-white px-4 py-4 shadow-sm`}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
@@ -448,9 +446,9 @@ export function RegistryContent() {
 
                       <div className="mt-3 flex flex-wrap gap-2">
                         <span
-                          className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${style.badge}`}
+                          className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${badgeClass}`}
                         >
-                          {t(`tierLabels.${member.tier}`)}
+                          {t(`tierLabels.${publicTier}`)}
                         </span>
                         <span className="inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-xs font-semibold text-[var(--brand-dark)]">
                           {rank.label}
@@ -503,12 +501,14 @@ export function RegistryContent() {
                   </h2>
                   <div className="mt-4 space-y-3">
                     {newestDiplomats.map((member) => {
-                      const style = TIER_STYLES[member.tier];
+                      const borderClass = getTierRegistryBorderClass(
+                        getPublicTierKey(member.tier)
+                      );
                       return (
                         <LocalizedLink
                           key={member.id}
                           href={getMemberHref(member.id)}
-                          className={`flex items-center gap-3 rounded-xl border ${style.border} bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm`}
+                          className={`flex items-center gap-3 rounded-xl border ${borderClass} bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm`}
                         >
                           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-xs font-semibold uppercase tracking-[0.08em] text-[var(--brand-dark)]">
                             {getInitials(member.name)}

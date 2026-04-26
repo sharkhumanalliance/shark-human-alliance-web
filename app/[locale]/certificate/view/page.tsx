@@ -1,6 +1,11 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { CertificateDocument, type CertificateTemplate } from "@/components/certificate/certificate-document";
+import {
+  CertificateDocument,
+  isAcceptedCertificateTemplate,
+  type CertificateTemplate,
+  normalizeTemplate,
+} from "@/components/certificate/certificate-document";
 import { CertificateSheet, type PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateAccessPanel } from "@/components/certificate/certificate-access-panel";
 import { CertificatePrintTrigger } from "@/components/certificate/certificate-print-trigger";
@@ -37,17 +42,16 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
   if (!member) notFound();
 
   // Query param overrides DB value; DB value overrides default "luxury".
-  const validTemplates: CertificateTemplate[] = ["hero", "formal", "luxury"];
-  const template: CertificateTemplate =
-    validTemplates.includes(templateParam as CertificateTemplate)
-      ? (templateParam as CertificateTemplate)
-      : validTemplates.includes(member.template as CertificateTemplate)
-        ? (member.template as CertificateTemplate)
-        : "luxury";
+  const template: CertificateTemplate = isAcceptedCertificateTemplate(templateParam)
+    ? normalizeTemplate(templateParam)
+    : isAcceptedCertificateTemplate(member.template)
+      ? normalizeTemplate(member.template)
+      : "luxury";
 
   const paperFormat: PaperFormat = paper === "letter" ? "letter" : "a4";
   const autoPrint = download === "1";
-  const useNativePaperLayout = template === "hero" && paperFormat === "letter";
+  const useNativePaperLayout =
+    template === "playful" && paperFormat === "letter";
 
   const displayDate = new Date(member.date).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",

@@ -9,6 +9,7 @@ import {
 } from "@/lib/email";
 import { getMemberById } from "@/lib/members";
 import { BASE_URL } from "@/lib/config";
+import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
     if (!member?.accessToken) {
       console.warn("[SHA Email] Member missing or certificate unavailable", {
         memberId: memberId || null,
-        recipient: to,
+        hasRecipient: typeof to === "string" && to.trim().length > 0,
       });
       return NextResponse.json(
         { error: "Member not found or certificate not available" },
@@ -49,10 +50,7 @@ export async function POST(request: NextRequest) {
     }
 
     const locale = member.locale || "en";
-    const templateQuery =
-      member.template && ["hero", "formal", "luxury"].includes(member.template)
-        ? `&template=${encodeURIComponent(member.template)}`
-        : "";
+    const templateQuery = getCertificateTemplateQueryParam(member.template);
     const certificateUrl = buildAbsoluteLocalizedUrl(
       BASE_URL,
       locale,

@@ -22,12 +22,12 @@ export function CertificateTemplateSelector({ value, onChange }: Props) {
       description: t("luxury.description"),
     },
     {
-      value: "formal",
+      value: "classic",
       title: t("classic.title"),
       description: t("classic.description"),
     },
     {
-      value: "hero",
+      value: "playful",
       title: t("playful.title"),
       description: t("playful.description"),
     },

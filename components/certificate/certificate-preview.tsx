@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import {
   CertificateDocument,
+  normalizeTemplate,
   type CertificateDocumentProps,
 } from "./certificate-document";
 import {
@@ -26,8 +27,9 @@ export function CertificatePreview(props: CertificatePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
   const paperFormat = props.paperFormat || "a4";
+  const template = normalizeTemplate(props.template);
   const useNativePaperLayout =
-    props.template === "hero" && paperFormat === "letter";
+    template === "playful" && paperFormat === "letter";
   const paper = getPaperDimensions(paperFormat);
   const paperWidthPx = paper.width * MM_TO_PX;
   const aspectRatio = (paper.height / paper.width) * 100;

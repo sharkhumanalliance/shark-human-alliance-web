@@ -6,9 +6,11 @@ import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import { FirstDonationTarget } from "@/components/impact/first-donation-target";
 import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
+import { getTierPriceLabel } from "@/lib/tiers";
 
 const PARTNERS = [
   { i: 1, url: "https://www.sharktrust.org" },
@@ -208,10 +210,10 @@ export function HomeContent() {
           </div>
 
           <div className="mt-7 grid gap-5 md:mt-8 md:grid-cols-3 md:items-stretch md:gap-6">
-            <MembershipCard
-              variant="protected"
-              title={t("membershipSection.protectedTitle")}
-              price={t("membershipSection.protectedPrice")}
+              <MembershipCard
+                variant="protected"
+                title={t("membershipSection.protectedTitle")}
+                price={getTierPriceLabel("protected")}
               description={t("membershipSection.protectedDescription")}
               features={[
                 t("membershipSection.protectedFeatures.0"),
@@ -225,10 +227,10 @@ export function HomeContent() {
               eyebrow={t("membershipSection.protectedEyebrow")}
             />
 
-            <MembershipCard
-              variant="nonsnack"
-              title={t("membershipSection.nonsnackTitle")}
-              price={t("membershipSection.nonsnackPrice")}
+              <MembershipCard
+                variant="nonsnack"
+                title={t("membershipSection.nonsnackTitle")}
+                price={getTierPriceLabel("nonsnack")}
               description={t("membershipSection.nonsnackDescription")}
               features={[
                 t("membershipSection.nonsnackFeatures.0"),
@@ -240,10 +242,10 @@ export function HomeContent() {
               eyebrow={t("membershipSection.nonsnackEyebrow")}
             />
 
-            <MembershipCard
-              variant="business"
-              title={t("membershipSection.businessTitle")}
-              price={t("membershipSection.businessPrice")}
+              <MembershipCard
+                variant="business"
+                title={t("membershipSection.businessTitle")}
+                price={getTierPriceLabel("business")}
               description={t("membershipSection.businessDescription")}
               features={[
                 t("membershipSection.businessFeatures.0"),
@@ -295,8 +297,8 @@ export function HomeContent() {
             </div>
           </div>
 
-          <p className="mt-8 max-w-2xl text-base leading-7 text-[var(--muted)]">
-            {t("impactTeaser.donationsIntro")}{" "}
+            <p className="mt-8 max-w-2xl text-base leading-7 text-[var(--muted)]">
+              {t("impactTeaser.donationsIntro")}{" "}
             {PARTNERS.map(({ i, url }, idx) => (
               <span key={i}>
                 <a
@@ -314,10 +316,14 @@ export function HomeContent() {
                   : ". "}
               </span>
             ))}
-            {t("impactTeaser.opsJoke")}
-          </p>
+              {t("impactTeaser.opsJoke")}
+            </p>
 
-          <div className="mt-6">
+            <div className="mt-6 max-w-3xl">
+              <FirstDonationTarget compact />
+            </div>
+
+            <div className="mt-6">
             <LocalizedLink
               href="/impact"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
@@ -345,7 +351,7 @@ export function HomeContent() {
             </LocalizedLink>
             <LocalizedLink
               href="/faq"
-              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-white/45 bg-white/15 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:border-white/70 hover:bg-white/20 sm:w-auto"
+              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg border border-white/70 bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] shadow-sm transition-colors hover:border-white hover:bg-white/90 sm:w-auto"
             >
               {t("faq.allQuestions")} {"\u2192"}
             </LocalizedLink>

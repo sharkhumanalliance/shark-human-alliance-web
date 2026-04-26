@@ -20,6 +20,7 @@ import {
 } from "@/lib/members";
 import { BASE_URL } from "@/lib/config";
 import { DIGITAL_CONTENT_VERSION, TERMS_VERSION } from "@/lib/legal";
+import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
     hasSignatureHeader: !!request.headers.get("stripe-signature"),
     hasWebhookSecret: !!WEBHOOK_SECRET,
     hasResendApiKey: !!process.env.RESEND_API_KEY,
-    emailFrom: EMAIL_FROM,
+    hasEmailFrom: !!EMAIL_FROM,
   });
 
   try {
@@ -94,13 +95,13 @@ export async function POST(request: NextRequest) {
       sessionId: session.id,
       paymentStatus: session.payment_status,
       tier,
-      name,
-      email: email || null,
-      recipientEmail: recipientEmail || null,
+      hasName: name.trim().length > 0,
+      hasEmail: email.trim().length > 0,
+      hasRecipientEmail: recipientEmail.trim().length > 0,
       isGift,
       locale,
       paperFormat,
-      referredBy: referredBy || null,
+      hasReferral: referredBy.trim().length > 0,
     });
 
     const referralCode = await generateUniqueReferralCode();
@@ -142,10 +143,9 @@ export async function POST(request: NextRequest) {
     // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
     const normalizedPaperFormat = paperFormat === "letter" ? "letter" : "a4";
-    const templateQuery =
-      template && ["hero", "formal", "luxury"].includes(template)
-        ? `&template=${encodeURIComponent(template)}`
-        : "";
+    // Accept both modern (playful/classic/luxury) and legacy (hero/formal)
+    // template IDs — older Stripe metadata may still carry the old names.
+    const templateQuery = getCertificateTemplateQueryParam(template);
     const certificateUrl = buildAbsoluteLocalizedUrl(
       BASE_URL,
       locale,
@@ -202,12 +202,17 @@ export async function POST(request: NextRequest) {
             locale,
           }
         );
-        console.log(`[SHA Webhook] Certificate email sent to ${targetEmail}`);
+        console.log("[SHA Webhook] Certificate email sent", {
+          memberId: newMember.id,
+          sessionId: session.id,
+          tier,
+          hasRecipient: true,
+        });
       } catch (emailError) {
         console.error("[SHA Webhook] Certificate email failed after retries", {
           memberId: newMember.id,
           sessionId: session.id,
-          recipient: targetEmail,
+          hasRecipient: true,
           tier,
           error: emailError instanceof Error ? emailError.message : String(emailError),
         });
@@ -216,7 +221,7 @@ export async function POST(request: NextRequest) {
       console.warn("[SHA Webhook] Certificate email skipped", {
         reason: targetEmail ? "missing-resend-api-key" : "missing-target-email",
         hasApiKey: !!process.env.RESEND_API_KEY,
-        targetEmail: targetEmail || null,
+        hasTargetEmail: !!targetEmail,
         memberId: newMember.id,
         sessionId: session.id,
       });
@@ -254,7 +259,7 @@ export async function POST(request: NextRequest) {
         console.error("[SHA Webhook] Buyer notification failed after retries", {
           memberId: newMember.id,
           sessionId: session.id,
-          recipient: email,
+          hasRecipient: true,
           error: buyerEmailError instanceof Error ? buyerEmailError.message : String(buyerEmailError),
         });
       }

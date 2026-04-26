@@ -63,7 +63,7 @@
       "faq": "FAQ",
       "registry": "Registry"
     },
-    "cta": "Get your certificate"
+    "cta": "Start shark clearance"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -149,9 +149,9 @@
       "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
-      "donationsIntro": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated.",
+        "donationsIntro": "The paperwork is fake. The allocation is not. Each certificate sets aside real money for shark and ocean conservation, starting with the first public donation target.",
       "and": "and",
-      "opsJoke": "The rest keeps the Alliance's one-person land-based operations department running (barely).",
+        "opsJoke": "The rest keeps the Alliance's one-person land-based bureaucracy operational, which is less majestic but regrettably necessary.",
       "linkText": "See full impact report and partner details"
     },
     "about": {
@@ -286,17 +286,17 @@
     "subtitle": "For sensible humans who want to know what they’re buying, where the money goes, and whether sharks can read certificates.",
     "items": [
       {
-        "question": "Is the alliance real?",
-        "answer": "The alliance is fictional and intentionally humorous. The conservation funding is real. Think of it as a comedy product with a real conservation budget behind it."
-      },
-      {
-        "question": "Does membership protect me from sharks?",
-        "answer": "No. It offers no marine protection whatsoever. It does, however, help protect actual sharks from humans, which is the statistically more relevant problem."
-      },
-      {
-        "question": "Where does the money actually go?",
-        "answer": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated."
-      },
+          "question": "Is this legally useful?",
+          "answer": "No. It is not a legal document, safety guarantee, diplomatic credential, or anti-bite instrument. It is official-looking joke paperwork with a real conservation allocation behind it."
+        },
+        {
+          "question": "Will sharks respect it?",
+          "answer": "Almost certainly not. Sharks have not ratified the paperwork and are unlikely to attend the meeting. The certificate protects sharks from humans more than humans from sharks."
+        },
+        {
+          "question": "Where does the real money go?",
+          "answer": "Part of each purchase is set aside for shark and ocean conservation. We publish recipient organizations and public allocation details as donations are made."
+        },
       {
         "question": "When do donations start, and how will they be reported?",
         "answer": "We publish allocations once donations are actually made. This page and our social channels will show recipient organizations and reported amounts as they happen."
@@ -344,7 +344,7 @@
   },
   "membershipPage": {
     "badge": "Certificate selection bureau",
-    "title": "Choose your level of shark diplomacy.",
+    "title": "Select the paperwork your situation deserves.",
     "description": "Three tiers of shark diplomacy, followed by three certificate styles. Choose the level first, then decide how official the paperwork should look.",
     "trustItems": [
       "Personalized in minutes",
@@ -650,8 +650,8 @@
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
     "referredByBadge": "Referral credit is active for this purchase.",
     "referralTitle": "Your diplomatic career starts now",
-    "referralMomentTitle": "You are officially on the ladder.",
-    "referralText": "Share your referral link with friends. Every recruit moves you up the ranks.",
+    "referralMomentTitle": "Your diplomatic career starts now.",
+    "referralText": "Share your referral link with friends. Every recruit moves you up the ranks and makes your paperwork look increasingly senior.",
     "referralCodeLabel": "Referral code",
     "referralCurrentRank": "Current rank",
     "referralNextRank": "Next promotion",
@@ -663,6 +663,7 @@
     "referralLinkLabel": "Referral link",
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
+    "referralWantedPoster": "Make a Wanted poster",
     "downloadOnlyNotice": "Download now — this link won’t be stored.",
     "recipientEmailHint": "Use this if you’d like us to send the certificate directly.",
     "paperSizeLabel": "Paper size",
