@@ -355,12 +355,9 @@ function PurchaseFlowInner() {
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`min-h-[108px] rounded-2xl border ${getTierSelectionClass(tierOption, isSelected)} px-4 py-4 text-center transition-colors duration-300 ease-out`}
+                      className={`min-h-[82px] rounded-2xl border ${getTierSelectionClass(tierOption, isSelected)} px-4 py-3 text-center transition-colors duration-300 ease-out`}
                     >
-                      <p className="text-lg font-semibold text-[var(--brand-dark)]">
-                        {getTierPriceLabel(tierOption)}
-                      </p>
-                      <p className="mt-1 text-xs text-[var(--muted)]">
+                      <p className="text-sm font-medium leading-snug text-[var(--muted)]">
                         {t(`tiers.${tierOption}`)}
                       </p>
                     </button>

@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Certificados de Tiburón Divertidos — Protección Oficial",
-      "description": "Certificados de tiburón personalizados y divertidos para quienes aman los tiburones, los temen o simplemente aprecian el papeleo excelente. Cada venta financia la conservación. Desde $4."
+      "description": "El programa de protección humana más oficialmente aproximado de internet. Para asuntos relacionados con tiburones. Los tiburones merecen mejor PR. Y protección real. Un certificado personalizado para personas que aman los tiburones, les temen o simplemente aprecian el papeleo excelente. Cada venta financia la conservación real. Desde $4."
     },
     "purchase": {
       "title": "Compra un Certificado de Tiburón Divertido — Personalizado e Instantáneo",
@@ -363,22 +363,22 @@
       {
         "eyebrow": "Para personas dramáticamente oficiales",
         "title": "Luxury",
-        "text": "Ornado, pulido y ligeramente excesivo. El certificado para quienes quieren que su diplomacia con tiburones parezca alarmantemente oficial.",
-        "detail": "Ideal para regalos enmarcables, personas teatrales y cualquiera que respete un buen borde decorativo.",
+        "text": "Borde naval, sello con cinta y tipografía de certificado serio. La versión para que la diplomacia con tiburones parezca ligeramente alarmante al enmarcarla.",
+        "detail": "Ideal cuando el documento debe parecer papeleo oficial durante al menos los tres primeros segundos.",
         "cta": "Combínalo con Luxury"
       },
       {
         "eyebrow": "Para diplomáticos respetables",
         "title": "Classic",
-        "text": "Limpio, formal e imposible de avergonzar. La opción segura para que la broma funcione con compostura.",
-        "detail": "Ideal para oficinas, amistades sensatas y personas que prefieren su absurdo bien maquetado.",
+        "text": "Pergamino formal, jerarquía limpia y peso ceremonial contenido. La broma se mantiene seca, compuesta y apta para oficina.",
+        "detail": "Ideal para destinatarios sensatos, escritorios ordenados y absurdos que prefieren llevar chaqueta.",
         "cta": "Combínalo con Classic"
       },
       {
         "eyebrow": "Para máxima energía tiburón",
         "title": "Playful",
-        "text": "Atrevido, colorido y descaradamente divertido. Es la versión para quien quiere personalidad inmediata.",
-        "detail": "Ideal para cumpleaños, extrovertidos y regalos que merecen menos contención y más tiburón.",
+        "text": "Brillante, ilustrado y el menos discreto sobre ser un certificado de tiburones. Menos ceremonia, sonrisa más inmediata.",
+        "detail": "Ideal para cumpleaños, chats de grupo y regalos que merecen menos contención y más tiburón.",
         "cta": "Combínalo con Playful"
       }
     ],
@@ -1175,15 +1175,15 @@
   "certificateTemplates": {
     "luxury": {
       "title": "Luxury",
-      "description": "Ornamentado, pulido y moderadamente excesivo."
+      "description": "Borde naval, sello con cinta, muy oficial."
     },
     "classic": {
       "title": "Classic",
-      "description": "Limpio, formal e imposible de avergonzar."
+      "description": "Pergamino formal, limpio y compuesto."
     },
     "playful": {
       "title": "Playful",
-      "description": "Atrevido, colorido y descaradamente divertido."
+      "description": "Colorido, atrevido y listo para regalar."
     }
   },
   "cookies": {

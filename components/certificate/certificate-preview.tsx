@@ -11,6 +11,7 @@ import {
   getPaperDimensions,
   type PaperFormat,
 } from "./certificate-sheet";
+import { getPublicTierKey } from "@/lib/tiers";
 
 /**
  * Preview wrapper that scales the 210 mm × 297 mm certificate artboard
@@ -28,8 +29,10 @@ export function CertificatePreview(props: CertificatePreviewProps) {
   const [scale, setScale] = useState(0);
   const paperFormat = props.paperFormat || "a4";
   const template = normalizeTemplate(props.template);
+  const publicTier = getPublicTierKey(props.tier);
   const useNativePaperLayout =
-    template === "playful" && paperFormat === "letter";
+    paperFormat === "letter" &&
+    (template === "playful" || (template === "luxury" && publicTier === "protected"));
   const paper = getPaperDimensions(paperFormat);
   const paperWidthPx = paper.width * MM_TO_PX;
   const aspectRatio = (paper.height / paper.width) * 100;

@@ -70,6 +70,10 @@ Core product characteristics:
 
 \- If shell headless Chrome is needed, use a fresh profile under `%TEMP%` or `%LOCALAPPDATA%`, ideally unique per run, and do not rely on a shared profile directory inside the repo.
 
+\- Screenshot workflow: try the in-app browser first for local UI checks. If it cannot produce a useful view (for example mobile sticky/full-page duplication), make at most one shell Chrome attempt with a `%TEMP%` profile. If that fails with permission, Crashpad, IPC, or spawn errors, stop retrying and ask the user to provide a screenshot instead of spending time on more browser workarounds.
+
+\- Avoid using full-page screenshots on mobile purchase/certificate views when sticky headers or repeated preview sections are present; prefer a visible viewport screenshot or user-provided screenshot.
+
 
 
 \## Architecture

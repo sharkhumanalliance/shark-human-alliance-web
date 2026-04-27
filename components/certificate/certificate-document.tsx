@@ -114,6 +114,8 @@ export function CertificateDocument({
   const isPlayful = resolvedTemplate === "playful";
   const isLetter = paperFormat === "letter";
   const isLuxuryA4 = isLuxury && !isLetter;
+  const isLuxuryLetterProtected = isLuxury && isLetter && tierKey === "protected";
+  const usesLuxuryBorderLayout = isLuxuryA4 || isLuxuryLetterProtected;
 
   const verifyUrl = getVerificationUrl(
     registryId.toLowerCase(),
@@ -133,12 +135,18 @@ export function CertificateDocument({
       : assetMode === "preview"
         ? "/background-luxury-a4-preview.webp"
         : "/background-luxury-a4.png";
+  const luxuryLetterProtectedBackground =
+    assetMode === "preview"
+      ? "/background-luxury-us-letter-protected-preview.webp"
+      : "/background-luxury-us-letter-protected.png";
   const backgroundSrc = isLuxury
     ? isLuxuryA4
       ? luxuryA4Background
-      : assetMode === "preview"
-        ? "/background-luxury-preview.webp"
-        : "/background-luxury.png"
+      : isLuxuryLetterProtected
+        ? luxuryLetterProtectedBackground
+        : assetMode === "preview"
+          ? "/background-luxury-preview.webp"
+          : "/background-luxury.png"
     : isClassic
       ? assetMode === "preview"
         ? "/background-formal-preview.webp"
@@ -161,8 +169,8 @@ export function CertificateDocument({
 
       <div className="certificate-inner-frame" />
 
-      {/* Luxury A4 layout - text overlay on border-only art */}
-      {isLuxuryA4 && (
+      {/* Luxury border layout - text overlay on border-only art */}
+      {usesLuxuryBorderLayout && (
         <>
           <div className="lux-a4-title-block">
             <span className="lux-a4-title-certificate">{copy.certificate}</span>
@@ -259,8 +267,8 @@ export function CertificateDocument({
         </>
       )}
 
-      {/* Legacy Luxury layout - retained for US Letter until it receives its own art */}
-      {isLuxury && !isLuxuryA4 && (
+      {/* Legacy Luxury layout - retained for US Letter tiers without dedicated art */}
+      {isLuxury && !usesLuxuryBorderLayout && (
         <>
           <div className="lux-title-block">
             <span className="lux-title-certificate">{copy.certificate}</span>
@@ -379,18 +387,6 @@ export function CertificateDocument({
 
           <div className="cls-body-block">{copy.body}</div>
 
-          {/* Always renders. Falls back to an auto-generated diplomatic note
-              when the user did not provide a personal dedication, so the
-              certificate always carries a personalized line. */}
-          <div className="cls-dedication-block">
-            <span className="cls-dedication-label">
-              {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
-            </span>
-            <span className="cls-dedication-text">
-              &ldquo;{dedicationText || diplomaticNote}&rdquo;
-            </span>
-          </div>
-
           <div className="cls-sig-left">
             <span className="cls-sig-name">Finnley Mako</span>
             <span className="cls-sig-role">{copy.finnleyRole}</span>
@@ -411,10 +407,29 @@ export function CertificateDocument({
             </div>
           </div>
 
-          <div className="cls-footer-left">{copy.symbolicDisclaimer}</div>
-          <div className="cls-footer-right">
-            &ldquo;{footerAside}&rdquo;
+          {/* DIPLOMATIC ASSESSMENT and SUPPLEMENTARY MARINE NOTE flank the
+              centered wax seal — text contours along the round shape via
+              shape-outside polygons defined on the pseudo-elements below.
+              The right column auto-falls back to an auto-generated note
+              when the user did not provide a personal dedication. */}
+          <div className="cls-remarks-left">
+            <div className="cls-remarks-heading">{copy.assessmentLabel}</div>
+            <p>{copy.assessmentText}</p>
           </div>
+          <div className="cls-remarks-right">
+            <div className="cls-remarks-heading">
+              {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+            </div>
+            <p>&ldquo;{dedicationText || diplomaticNote}&rdquo;</p>
+          </div>
+
+          {/* Legal disclaimer — moved BELOW the seal as a single full-width
+              two-line block in the narrow strip between the seal's bottom
+              and the printed bottom border. */}
+          <footer className="cls-disclaimer">
+            {copy.symbolicDisclaimer}{" "}
+            &ldquo;{footerAside}&rdquo;
+          </footer>
         </>
       )}
 

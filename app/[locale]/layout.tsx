@@ -59,20 +59,20 @@ export const metadata: Metadata = {
     template: "%s | Shark Human Alliance",
   },
   description:
-    "Get your official Protected Friend Status certificate. A hilarious personalized gift that funds real shark conservation. Digital delivery, from $4.",
+    "The internet's most official-ish human protection program. For shark-related concerns. Sharks deserve better PR. And real protection.",
   metadataBase: new URL(BASE_URL),
   openGraph: {
     type: "website",
     siteName: "Shark Human Alliance",
     title: "Shark Human Alliance — Official Shark Protection Certificates",
     description:
-      "Get official Protected Friend status and fund real shark conservation. The perfect gag gift for anyone who's ever side-eyed the ocean.",
+      "The internet's most official-ish human protection program. For shark-related concerns. Sharks deserve better PR. And real protection.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Shark Human Alliance",
     description:
-      "Official shark protection certificates + real conservation funding. From $4.",
+      "The internet's most official-ish human protection program. For shark-related concerns.",
   },
   robots: {
     index: true,
@@ -229,8 +229,6 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale}>
       <head>
         <JsonLd />
-        <link rel="alternate" hrefLang="en" href={`${BASE_URL}/en`} />
-        <link rel="alternate" hrefLang="es" href={`${BASE_URL}/es`} />
         <link
           rel="alternate"
           hrefLang="x-default"

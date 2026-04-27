@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Funny Shark Certificates — Official Shark Protection",
-      "description": "Personalized funny shark certificates for people who love sharks, fear sharks, or just appreciate excellent paperwork. Every sale funds real ocean conservation. From $4."
+      "description": "The internet's most official-ish human protection program. For shark-related concerns. Sharks deserve better PR. And real protection. A personalized certificate for people who love sharks, fear sharks, or just appreciate excellent paperwork. Every sale funds real ocean conservation. From $4."
     },
     "purchase": {
       "title": "Buy a Funny Shark Certificate — Personalized & Instant",
@@ -363,22 +363,22 @@
       {
         "eyebrow": "For dramatic officials",
         "title": "Luxury",
-        "text": "Ornate, polished, mildly excessive. The certificate for people who want their shark diplomacy to look alarmingly official.",
-        "detail": "Best for framed gifts, theatrical recipients, and anyone who respects a decorative border.",
+        "text": "Naval border, ribboned seal, and serious certificate typography. The version for people who want shark diplomacy to look mildly alarming when framed.",
+        "detail": "Best when the document should pass as official paperwork for at least the first three seconds.",
         "cta": "Pair it with Luxury"
       },
       {
         "eyebrow": "For respectable diplomats",
         "title": "Classic",
-        "text": "Clean, formal, impossible to embarrass. The safe choice for buyers who want the joke to land with composure.",
-        "detail": "Best for offices, sensible friends, and people who prefer their nonsense well formatted.",
+        "text": "Formal parchment, clean hierarchy, and restrained ceremonial weight. The joke stays dry, composed, and office-safe.",
+        "detail": "Best for sensible recipients, tidy desks, and nonsense that prefers a jacket.",
         "cta": "Pair it with Classic"
       },
       {
         "eyebrow": "For maximum shark energy",
         "title": "Playful",
-        "text": "Bold, colorful, unapologetically fun. This is the version for buyers who want the certificate to arrive with immediate personality.",
-        "detail": "Best for birthdays, extroverts, and gift recipients who deserve less restraint and more shark.",
+        "text": "Bright, illustrated, and the least subtle about being a shark certificate. Less ceremony, more immediate grin.",
+        "detail": "Best for birthdays, group chats, and recipients who deserve less restraint and more shark.",
         "cta": "Pair it with Playful"
       }
     ],
@@ -1175,15 +1175,15 @@
   "certificateTemplates": {
     "luxury": {
       "title": "Luxury",
-      "description": "Ornate, polished, mildly excessive."
+      "description": "Naval border, ribbon seal, very official."
     },
     "classic": {
       "title": "Classic",
-      "description": "Clean, formal, impossible to embarrass."
+      "description": "Formal parchment, clean and composed."
     },
     "playful": {
       "title": "Playful",
-      "description": "Bold, colorful, unapologetically fun."
+      "description": "Colorful, bold, gift-ready shark energy."
     }
   },
   "cookies": {
