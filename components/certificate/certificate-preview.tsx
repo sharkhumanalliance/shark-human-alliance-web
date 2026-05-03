@@ -32,7 +32,11 @@ export function CertificatePreview(props: CertificatePreviewProps) {
   const publicTier = getPublicTierKey(props.tier);
   const useNativePaperLayout =
     paperFormat === "letter" &&
-    (template === "playful" || (template === "luxury" && publicTier === "protected"));
+    (template === "playful" ||
+      (template === "luxury" &&
+        (publicTier === "protected" ||
+          publicTier === "nonsnack" ||
+          publicTier === "business")));
   const paper = getPaperDimensions(paperFormat);
   const paperWidthPx = paper.width * MM_TO_PX;
   const aspectRatio = (paper.height / paper.width) * 100;

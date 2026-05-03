@@ -15,6 +15,10 @@ import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
 import {
+  isPaperFormatAvailableForTemplate,
+  normalizePaperFormatForTemplate,
+} from "@/lib/certificate-paper";
+import {
   getTierPriceDollars,
   getTierPriceLabel,
   getTierSelectionClass,
@@ -53,13 +57,16 @@ function PurchaseFlowInner() {
   const initialTier = normalizeTier(searchParams.get("tier"));
   const initialName = searchParams.get("name") || "";
   const initialGift = searchParams.get("gift") === "true";
-  const initialPaper = (searchParams.get("paper") as PaperFormat) === "letter" ? "letter" : "a4";
   // Accepts both modern ("playful" / "classic" / "luxury") and legacy
   // ("hero" / "formal") template IDs from the URL — normalizeTemplate
   // funnels them to the modern names.
   const initialTemplateParam = searchParams.get("template");
   const normalizedInitialTemplate: CertificateTemplate = normalizeTemplate(
     initialTemplateParam,
+  );
+  const initialPaper = normalizePaperFormatForTemplate(
+    normalizedInitialTemplate,
+    searchParams.get("paper"),
   );
   const referredByFromUrl = searchParams.get("ref") || "";
   const wasCanceled = searchParams.get("canceled") === "true";
@@ -98,6 +105,12 @@ function PurchaseFlowInner() {
   const [registryConsentAccepted, setRegistryConsentAccepted] = useState(false);
   const giftToggleLabelId = useId();
 
+  function handleTemplateChange(nextTemplate: CertificateTemplate) {
+    setTemplate(nextTemplate);
+    setPaperFormat((current) =>
+      normalizePaperFormatForTemplate(nextTemplate, current),
+    );
+  }
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -327,7 +340,7 @@ function PurchaseFlowInner() {
                 </span>
               </summary>
               <div className="border-t border-[var(--border)] bg-[var(--surface-soft)]/50 px-3 py-4 sm:px-4">
-                <CertificateTemplateSelector value={template} onChange={setTemplate} />
+                <CertificateTemplateSelector value={template} onChange={handleTemplateChange} />
                 <div className="mt-4">
                   <CertificatePreview
                     name={name.trim() || t("previewName")}
@@ -371,28 +384,52 @@ function PurchaseFlowInner() {
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("paperSizeLabel")}
               </label>
-              <div className="mt-2 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
-                {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
-                  const isSelected = paperFormat === formatOption;
-                  return (
-                    <button
-                      key={formatOption}
-                      type="button"
-                      onClick={() => setPaperFormat(formatOption)}
-                      className={`rounded-xl border px-4 py-3 text-left transition ${
-                        isSelected
-                          ? "border-sky-400 bg-sky-50 shadow-sm"
-                          : "border-[var(--border)] bg-white hover:bg-sky-50/50"
-                      }`}
-                    >
-                      <div className="text-sm font-semibold text-[var(--brand-dark)]">
-                        {t(`paperSizes.${formatOption}.label`)}
-                      </div>
-                      <div className="mt-1 text-xs text-[var(--muted)]">
-                        {t(`paperSizes.${formatOption}.description`)}
-                      </div>
-                    </button>
-                  );
+                <div className="mt-2 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
+                  {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
+                    const isSelected = paperFormat === formatOption;
+                    const isUnavailable = !isPaperFormatAvailableForTemplate(
+                      template,
+                      formatOption,
+                    );
+                    return (
+                      <button
+                        key={formatOption}
+                        type="button"
+                        disabled={isUnavailable}
+                        aria-disabled={isUnavailable}
+                        onClick={() => {
+                          if (!isUnavailable) setPaperFormat(formatOption);
+                        }}
+                        className={`rounded-xl border px-4 py-3 text-left transition ${
+                          isUnavailable
+                            ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-500 opacity-80 grayscale"
+                            : isSelected
+                            ? "border-sky-400 bg-sky-50 shadow-sm"
+                            : "border-[var(--border)] bg-white hover:bg-sky-50/50"
+                        }`}
+                      >
+                        <div
+                          className={`text-sm font-semibold ${
+                            isUnavailable
+                              ? "text-slate-500"
+                              : "text-[var(--brand-dark)]"
+                          }`}
+                        >
+                          {t(`paperSizes.${formatOption}.label`)}
+                        </div>
+                        <div
+                          className={`mt-1 text-xs ${
+                            isUnavailable
+                              ? "text-slate-500"
+                              : "text-[var(--muted)]"
+                          }`}
+                        >
+                          {isUnavailable
+                            ? t("paperSizes.letter.classicUnavailable")
+                            : t(`paperSizes.${formatOption}.description`)}
+                        </div>
+                      </button>
+                    );
                 })}
               </div>
             </div>
@@ -770,7 +807,7 @@ function PurchaseFlowInner() {
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
               {t("livePreview")}
             </p>
-            <CertificateTemplateSelector value={template} onChange={setTemplate} />
+            <CertificateTemplateSelector value={template} onChange={handleTemplateChange} />
             <div className="sticky top-28 mt-4">
               <CertificatePreview
                 name={name.trim() || t("previewName")}

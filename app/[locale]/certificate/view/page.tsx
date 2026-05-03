@@ -12,6 +12,7 @@ import { CertificatePrintTrigger } from "@/components/certificate/certificate-pr
 import { getMemberByAccessToken } from "@/lib/members";
 import { getDevPromoMemberByAccessToken } from "@/lib/dev-promo-store";
 import { getPublicTierKey } from "@/lib/tiers";
+import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -49,12 +50,19 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
       ? normalizeTemplate(member.template)
       : "luxury";
 
-  const paperFormat: PaperFormat = paper === "letter" ? "letter" : "a4";
+  const paperFormat: PaperFormat = normalizePaperFormatForTemplate(
+    template,
+    paper,
+  );
   const autoPrint = download === "1";
   const publicTier = getPublicTierKey(member.tier);
   const useNativePaperLayout =
     paperFormat === "letter" &&
-    (template === "playful" || (template === "luxury" && publicTier === "protected"));
+    (template === "playful" ||
+      (template === "luxury" &&
+        (publicTier === "protected" ||
+          publicTier === "nonsnack" ||
+          publicTier === "business")));
 
   const displayDate = new Date(member.date).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",

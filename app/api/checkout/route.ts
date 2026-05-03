@@ -31,6 +31,7 @@ import {
 } from "@/lib/checkout-session";
 import { BASE_URL } from "@/lib/config";
 import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
+import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
 import { isTierKey } from "@/lib/tiers";
 const ENABLE_TEST_PROMO_CODES =
   process.env.ENABLE_TEST_PROMO_CODES === "true" ||
@@ -61,6 +62,10 @@ export async function POST(request: NextRequest) {
     } = body;
 
     const loc = locale || "en";
+    const normalizedPaperFormat = normalizePaperFormatForTemplate(
+      template,
+      paperFormat,
+    );
     const requestHost = request.nextUrl.hostname.toLowerCase();
     const isLocalRequest =
       requestHost === "127.0.0.1" ||
@@ -87,7 +92,7 @@ export async function POST(request: NextRequest) {
       isGift: !!isGift,
       locale: loc,
       template: template || null,
-      paperFormat: paperFormat === "letter" ? "letter" : "a4",
+      paperFormat: normalizedPaperFormat,
       hasReferral: typeof referredBy === "string" && referredBy.trim().length > 0,
     });
 
@@ -198,7 +203,6 @@ export async function POST(request: NextRequest) {
       }
 
       const targetEmail = isGift && recipientEmail ? recipientEmail.trim() : email?.trim();
-      const normalizedPaperFormat = paperFormat === "letter" ? "letter" : "a4";
       const templateQuery = getCertificateTemplateQueryParam(template);
       const certificateUrl = buildAbsoluteLocalizedUrl(
         BASE_URL,
@@ -355,8 +359,8 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: "payment",
-      success_url: `${BASE_URL}/${loc}/purchase/success?session_id={CHECKOUT_SESSION_ID}&paper=${paperFormat === "letter" ? "letter" : "a4"}`,
-      cancel_url: `${BASE_URL}/${loc}/purchase?tier=${tier}&name=${encodeURIComponent(name)}&canceled=true&paper=${paperFormat === "letter" ? "letter" : "a4"}`,
+      success_url: `${BASE_URL}/${loc}/purchase/success?session_id={CHECKOUT_SESSION_ID}&paper=${normalizedPaperFormat}`,
+      cancel_url: `${BASE_URL}/${loc}/purchase?tier=${tier}&name=${encodeURIComponent(name)}&canceled=true&paper=${normalizedPaperFormat}`,
       metadata: {
         tier,
         name,
@@ -367,7 +371,7 @@ export async function POST(request: NextRequest) {
         referredBy: referredBy || "",
         locale: loc,
         template: template || "",
-        paperFormat: paperFormat === "letter" ? "letter" : "a4",
+        paperFormat: normalizedPaperFormat,
         giftMessage: giftMessage || "",
         termsAcceptedAt: new Date().toISOString(),
         termsVersion: TERMS_VERSION,

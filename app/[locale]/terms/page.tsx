@@ -47,7 +47,12 @@ export default async function TermsPage({ params }: Props) {
     "operator",
     "products",
     "ordering",
+    "privacy",
+    "registry",
+    "moderation",
     "delivery",
+    "digitalContent",
+    "conservation",
     "complaints",
     "refunds",
     "contact",
@@ -78,7 +83,12 @@ export default async function TermsPage({ params }: Props) {
           <div className="mx-auto max-w-4xl px-4 sm:px-6">
             <div className="space-y-5">
               {sections.map((section) => (
-                <article data-reveal key={section} className="rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">
+                <article
+                  id={section}
+                  data-reveal
+                  key={section}
+                  className="scroll-mt-24 rounded-2xl border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7"
+                >
                   <h2 className="text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
                     {t(`sections.${section}.title`)}
                   </h2>

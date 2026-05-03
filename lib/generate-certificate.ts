@@ -231,7 +231,7 @@ export async function generateCertificatePDF(
   );
   const reason =
     data.selectedReason ||
-    getCertificateDiplomaticNote(humorSeed, data.locale);
+    getCertificateDiplomaticNote(humorSeed, data.locale, data.tier);
   const footerAside = getCertificateFooterAside(humorSeed, data.locale);
   const bodyParts: string[] = [];
   if (data.t.body) bodyParts.push(data.t.body);

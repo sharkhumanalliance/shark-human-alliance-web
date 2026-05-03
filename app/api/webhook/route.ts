@@ -21,6 +21,7 @@ import {
 import { BASE_URL } from "@/lib/config";
 import { DIGITAL_CONTENT_VERSION, TERMS_VERSION } from "@/lib/legal";
 import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
+import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
@@ -100,7 +101,7 @@ export async function POST(request: NextRequest) {
       hasRecipientEmail: recipientEmail.trim().length > 0,
       isGift,
       locale,
-      paperFormat,
+      paperFormat: normalizePaperFormatForTemplate(template, paperFormat),
       hasReferral: referredBy.trim().length > 0,
     });
 
@@ -142,7 +143,10 @@ export async function POST(request: NextRequest) {
 
     // Send certificate email (link only)
     const targetEmail = isGift === "true" && recipientEmail ? recipientEmail : email;
-    const normalizedPaperFormat = paperFormat === "letter" ? "letter" : "a4";
+    const normalizedPaperFormat = normalizePaperFormatForTemplate(
+      template,
+      paperFormat,
+    );
     // Accept both modern (playful/classic/luxury) and legacy (hero/formal)
     // template IDs — older Stripe metadata may still carry the old names.
     const templateQuery = getCertificateTemplateQueryParam(template);

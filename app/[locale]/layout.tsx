@@ -175,7 +175,7 @@ function JsonLd() {
       },
       {
         "@type": "Offer",
-        name: "Shark-Approved Zone",
+          name: "Shark-Free Zone",
         price: "99.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",

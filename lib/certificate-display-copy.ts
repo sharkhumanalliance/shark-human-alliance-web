@@ -38,6 +38,19 @@ const COPY = {
        as a supporter of...") — no redundant "This certifies that". */
     playfulBody:
       "by the Shark Human Alliance, as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
+    statusLabels: {
+      protected: "has been officially recognized as a",
+      nonsnack: "has been officially classified as",
+      business: "has been officially designated as a",
+    },
+    bodies: {
+      protected:
+        "by the Shark Human Alliance, as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
+      nonsnack:
+        "by the Shark Human Alliance, on the basis that current records do not support treating the holder as food and in recognition of support for real ocean conservation.",
+      business:
+        "by the Shark Human Alliance, after confirming that no shark has presented documentation sufficient to challenge the zone designation, and in recognition of substantial support for real ocean conservation.",
+    },
     assessmentLabel: "Diplomatic assessment",
     assessmentText:
       "Any shark considering the holder a meal would be demonstrating exceptionally poor judgment.",
@@ -45,18 +58,18 @@ const COPY = {
     marineNoteLabel: "Supplementary marine note",
     tierLabels: {
       protected: "Protected Friend",
-      nonsnack: "Non-Snack Recognition",
-      business: "Shark-Approved Zone",
+      nonsnack: "Certified Non-Snack",
+      business: "Shark-Free Zone",
     },
     ribbonLabels: {
       protected: "Protected Friend Status",
       nonsnack: "Non-Snack Status",
-      business: "Shark-Approved Status",
+      business: "Shark-Free Status",
     },
     filedUnderLabels: {
       protected: "Optimistic Marine Paperwork",
       nonsnack: "Non-Snack Diplomacy",
-      business: "Approved Waters Commerce",
+      business: "Shark-Free Paperwork",
     },
   },
   es: {
@@ -94,6 +107,19 @@ const COPY = {
        "Esto certifica que". */
     playfulBody:
       "por Shark Human Alliance, como promotor/a de relaciones pacíficas tiburón-humanas y contribuyente a la conservación oceánica real.",
+    statusLabels: {
+      protected: "ha sido reconocido/a oficialmente como",
+      nonsnack: "ha sido clasificado/a oficialmente como",
+      business: "ha sido designado/a oficialmente como",
+    },
+    bodies: {
+      protected:
+        "por Shark Human Alliance, como promotor/a de relaciones pacíficas tiburón-humanas y contribuyente a la conservación oceánica real.",
+      nonsnack:
+        "por Shark Human Alliance, dado que los registros actuales no respaldan tratar a la persona titular como alimento y en reconocimiento del apoyo a la conservación oceánica real.",
+      business:
+        "por Shark Human Alliance, tras confirmar que ningún tiburón ha presentado documentación suficiente para impugnar la designación de la zona y en reconocimiento del apoyo significativo a la conservación oceánica real.",
+    },
     assessmentLabel: "Evaluación diplomática",
     assessmentText:
       "Cualquier tiburón que considerara a la persona titular como comida demostraría un criterio excepcionalmente pobre.",
@@ -101,18 +127,18 @@ const COPY = {
     marineNoteLabel: "Nota marina suplementaria",
     tierLabels: {
       protected: "Amigo Protegido",
-      nonsnack: "Reconocimiento No-Snack",
-      business: "Zona Aprobada por Tiburones",
+      nonsnack: "No-Snack Certificado",
+      business: "Zona Libre de Tiburones",
     },
     ribbonLabels: {
       protected: "Estatus de Amigo Protegido",
       nonsnack: "Estatus No-Snack",
-      business: "Estatus Aprobado por Tiburones",
+      business: "Estatus Zona Libre",
     },
     filedUnderLabels: {
       protected: "Papeleo marino optimista",
       nonsnack: "Diplomacia No-Snack",
-      business: "Comercio en Aguas Aprobadas",
+      business: "Papeleo Zona Libre",
     },
   },
 } as const;

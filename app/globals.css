@@ -791,7 +791,6 @@ textarea:focus-visible {
 }
 
 .cls-title-block,
-.cls-qr-block,
 .cls-recipient-block,
 .cls-status-label-block,
 .cls-status-block,
@@ -847,33 +846,34 @@ textarea:focus-visible {
   color: #503694;
 }
 
-/* ── QR code — top right, inside border ── */
-.cls-qr-block {
-  top: 4.6%;
-  right: 6.1%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: calc(0.18 * var(--u));
-}
+/* QR is now embedded inside the meta block as the third verification
+   item (Date + Registry + QR). The standalone top-right qr-block is
+   no longer rendered, but its label / image styles are reused below
+   for the in-meta version. */
 
 .cls-qr-label {
+  margin-top: calc(0.36 * var(--u));
   font-family: var(--font-cinzel), "Cinzel", serif;
-  font-size: calc(0.9 * var(--u));
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: calc(0.84 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.1;
   text-transform: uppercase;
-  color: #503694;
-  opacity: 0.55;
+  color: #6d58a0;
+  text-align: center;
+  white-space: nowrap;
 }
 
+/* Sized to match the visual height of the date/registry value text + label
+   stack (so the three meta columns align baseline-ish in the row). */
 .cls-qr-image {
-  width: calc(8.8 * var(--u));
-  height: calc(8.8 * var(--u));
-  opacity: 0.88;
-  border: calc(0.05 * var(--u)) solid rgba(80, 54, 148, 0.14);
-  border-radius: calc(0.18 * var(--u));
-  background: rgba(255, 255, 255, 0.5);
+  display: block;
+  width: calc(5.4 * var(--u));
+  height: calc(5.4 * var(--u));
+  opacity: 0.92;
+  border: calc(0.06 * var(--u)) solid rgba(80, 54, 148, 0.18);
+  border-radius: calc(0.2 * var(--u));
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* ── Recipient name ── */
@@ -1014,14 +1014,17 @@ textarea:focus-visible {
   text-align: center;
 }
 
+/* Cursive handwritten signature replacing the previous typeset italic.
+   Dancing Script reads as a personal hand-signed mark — feels less
+   "rubber-stamped" than block italic on a luxury document. */
 .cls-sig-name {
   display: block;
-  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: calc(2.55 * var(--u));
+  font-family: var(--font-dancing-script), "Dancing Script", cursive;
+  font-size: calc(3.4 * var(--u));
   font-weight: 700;
-  font-style: italic;
-  color: #2d1560;
-  line-height: 1.1;
+  font-style: normal;
+  color: #1f0e4f;
+  line-height: 1;
   margin-top: calc(0.6 * var(--u));
 }
 
@@ -1042,10 +1045,11 @@ textarea:focus-visible {
   top: 70.2%;
   left: 50%;
   transform: translateX(-50%);
-  width: 72%;
+  width: 78%;
   display: flex;
   justify-content: center;
-  gap: calc(5 * var(--u));
+  align-items: flex-start;
+  gap: calc(4 * var(--u));
   text-align: center;
 }
 
@@ -1054,6 +1058,13 @@ textarea:focus-visible {
   flex-direction: column;
   align-items: center;
   gap: calc(0.3 * var(--u));
+}
+
+/* QR is the third meta column — has a slightly different vertical rhythm
+   (image, then label) compared to the date / registry items (label, then
+   value), so we let it govern its own internal spacing. */
+.cls-meta-item--qr {
+  gap: 0;
 }
 
 .cls-meta-label {
@@ -1076,13 +1087,17 @@ textarea:focus-visible {
 /* ── REMARKS — DIPLOMATIC ASSESSMENT and SUPPLEMENTARY MARINE NOTE flank
        the centered wax seal in the bottom third. Both halves use
        shape-outside polygons on pseudo-elements so the text contours
-       along the round seal on each side. ── */
+       along the round seal on each side.
+       Width 26 % (reduced from 31.6 %) keeps the OUTER page margins
+       untouched (left/right at 10.1 %) but moves each column's
+       inside-facing edge ~5.6 pp away from the central seal so longer
+       body texts no longer encroach on the wax. ── */
 .cls-remarks-left,
 .cls-remarks-right {
   position: absolute;
   z-index: 2;
-  top: 75.9%;
-  width: 31.6%;
+  top: 80.0%;
+  width: 26%;
   min-height: 18%;
   color: #2a1855;
   overflow: visible;
@@ -1127,7 +1142,10 @@ textarea:focus-visible {
 
 /* Shape hooks: invisible floated pseudo-elements that contour around the
    centered wax seal so each half of the remarks text flows around the
-   round shape on its respective side. */
+   round shape on its respective side. The actual protective gap is
+   primarily controlled by the parent column's reduced width above; the
+   float remains at its original 60 % proportion and 0.34 u shape-margin
+   so the text contour around the seal stays visually consistent. */
 .cls-remarks-left::after,
 .cls-remarks-right::before {
   content: "";
@@ -1171,24 +1189,28 @@ textarea:focus-visible {
   );
 }
 
-/* ── Disclaimer — moved BELOW the seal as a single centered full-width
-       block in the narrow strip between the seal's lower edge and the
-       printed bottom border. ── */
+/* ── Disclaimer — sits in the narrow strip BETWEEN the bottom edge of the
+       wax seal (visible at y ≈ 93-94 %) and the top of the printed inner
+       frame border ornaments (which begin around y ≈ 95 % and cluster down
+       to y ≈ 98 %). Width reduced to 64 % because the side decorative
+       ornaments narrow the usable horizontal space at the bottom. The
+       disclaimer text is dark on light to ensure visibility against the
+       parchment background. ── */
 .cls-disclaimer {
   position: absolute;
-  z-index: 2;
-  top: 96.6%;
+  z-index: 5;
+  top: 92.4%;
   left: 50%;
   transform: translateX(-50%);
-  width: 86%;
+  width: 64%;
   text-align: center;
   font-family: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
   font-size: calc(0.7 * var(--u));
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.01em;
   line-height: 1.22;
-  color: #4a2d72;
-  opacity: 0.82;
+  color: #2d1855;
+  opacity: 0.92;
   white-space: normal;
   text-wrap: pretty;
 }
@@ -1296,7 +1318,7 @@ textarea:focus-visible {
   color: #163763;
   font-family: var(--font-cormorant), "Cormorant Garamond", "Times New Roman", serif;
   font-size: 54px;
-  font-style: italic;
+  font-style: normal;
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.08;
@@ -1554,15 +1576,8 @@ textarea:focus-visible {
    the printed border art). Subtle, gold-leaf coloured, no JSX needed. */
 .certificate-page--luxury.certificate-page--paper-a4::before,
 .certificate-page--luxury.certificate-page--paper-a4::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  width: calc(4.4 * var(--u));
-  height: calc(4.4 * var(--u));
-  pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='none' stroke='%23b29765' stroke-width='1.4' opacity='0.85'><path d='M2 14 Q14 14 14 2'/><path d='M2 22 Q22 22 22 2'/><circle cx='14' cy='14' r='2.4' fill='%23b29765'/><path d='M16 16 Q26 26 36 22 Q40 24 38 30'/><path d='M22 22 Q30 28 28 38'/></g></svg>");
+  content: none;
+  display: none;
 }
 
 .certificate-page--luxury.certificate-page--paper-a4::before {
@@ -1777,24 +1792,23 @@ textarea:focus-visible {
    diplomas) rather than a calligraphic script. Less ornate than a true
    script font but unmistakably premium and personal. */
 .certificate-page--luxury.certificate-page--paper-a4 .lux-recipient-name {
-  font-family: var(--font-cormorant), "Cormorant Garamond", "EB Garamond",
-    "Times New Roman", serif;
-  font-size: calc(6.2 * var(--u));
-  font-weight: 600;
-  font-style: italic;
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: calc(5.3 * var(--u));
+  font-weight: 700;
+  font-style: normal;
   line-height: 1.0;
-  letter-spacing: 0.012em;
+  letter-spacing: 0.035em;
   color: #08182f;
   /* Subtle engraved tone — barely visible but adds depth in print. */
   text-shadow: 0 calc(0.04 * var(--u)) 0 rgba(178, 151, 101, 0.18);
 }
 
 .certificate-page--luxury.certificate-page--paper-a4 .lux-recipient-name--long {
-  font-size: calc(5.4 * var(--u));
+  font-size: calc(4.55 * var(--u));
 }
 
 .certificate-page--luxury.certificate-page--paper-a4 .lux-recipient-name--xlong {
-  font-size: calc(4.6 * var(--u));
+  font-size: calc(3.85 * var(--u));
 }
 
 /* Decorative gold rule + diamond ornament between recipient and status,
@@ -2274,23 +2288,22 @@ textarea:focus-visible {
 }
 
 .certificate-page--luxury.certificate-page--paper-letter .lux-recipient-name {
-  font-family: var(--font-cormorant), "Cormorant Garamond", "EB Garamond",
-    "Times New Roman", serif;
-  font-size: calc(5.9 * var(--u));
-  font-weight: 600;
-  font-style: italic;
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: calc(5.0 * var(--u));
+  font-weight: 700;
+  font-style: normal;
   line-height: 1;
-  letter-spacing: 0.012em;
+  letter-spacing: 0.035em;
   color: #08182f;
   text-shadow: 0 calc(0.04 * var(--u)) 0 rgba(178, 151, 101, 0.18);
 }
 
 .certificate-page--luxury.certificate-page--paper-letter .lux-recipient-name--long {
-  font-size: calc(5.15 * var(--u));
+  font-size: calc(4.35 * var(--u));
 }
 
 .certificate-page--luxury.certificate-page--paper-letter .lux-recipient-name--xlong {
-  font-size: calc(4.45 * var(--u));
+  font-size: calc(3.72 * var(--u));
 }
 
 .certificate-page--luxury.certificate-page--paper-letter .lux-a4-status-label {
@@ -2327,6 +2340,7 @@ textarea:focus-visible {
   transform: translateX(-50%);
   width: 84%;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   gap: calc(2.4 * var(--u));
@@ -2338,6 +2352,40 @@ textarea:focus-visible {
   text-transform: uppercase;
   color: #102941;
   text-wrap: balance;
+}
+
+.certificate-page--luxury.certificate-page--paper-letter .lux-a4-status.certificate-tier--nonsnack {
+  width: 96%;
+  gap: calc(1.2 * var(--u));
+  font-size: calc(3.45 * var(--u));
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.certificate-page--luxury.certificate-page--paper-letter .lux-a4-status.certificate-tier--nonsnack .lux-a4-status-text {
+  white-space: nowrap;
+}
+
+.certificate-page--luxury.certificate-page--paper-letter .lux-a4-status.certificate-tier--business {
+  width: 98%;
+  gap: calc(1.2 * var(--u));
+  font-size: calc(3.6 * var(--u));
+  letter-spacing: 0.08em;
+  white-space: nowrap !important;
+  text-wrap: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.certificate-page--luxury.certificate-page--paper-letter .lux-a4-status.certificate-tier--business .lux-a4-status-text {
+  white-space: nowrap !important;
+  text-wrap: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.certificate-page--luxury.certificate-page--paper-letter .lux-a4-status.certificate-tier--business .lux-a4-status-flourish {
+  font-size: calc(2.1 * var(--u));
 }
 
 .certificate-page--luxury.certificate-page--paper-letter .lux-a4-body {
@@ -2558,22 +2606,22 @@ textarea:focus-visible {
 
 .lux-recipient-name {
   display: block;
-  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
-  font-size: calc(6.25 * var(--u));
+  font-family: var(--font-cinzel), "Cinzel", serif;
+  font-size: calc(5.45 * var(--u));
   font-weight: 700;
   line-height: 0.92;
-  letter-spacing: 0.008em;
+  letter-spacing: 0.035em;
   color: #102941;
   text-wrap: balance;
 }
 
 .lux-recipient-name--long {
-  font-size: calc(5.55 * var(--u));
+  font-size: calc(4.75 * var(--u));
   line-height: 0.96;
 }
 
 .lux-recipient-name--xlong {
-  font-size: calc(4.96 * var(--u));
+  font-size: calc(4.15 * var(--u));
   line-height: 0.98;
 }
 
@@ -2976,9 +3024,11 @@ textarea:focus-visible {
   letter-spacing: 0.1em;
 }
 
-/* Intro sits closer to the recipient name to reduce the empty gap above it. */
+/* Intro vertically aligned with the printed orange stars (background reference
+   y≈1182 = 35.8 %). Text top sits 0.4 pp above the stars centre so the italic
+   baseline lands on the stars line. */
 .certificate-page--paper-letter .playful-intro {
-  top: 37.4%;
+  top: 35.4%;
   width: 22%;
   font-size: 16px;
 }
@@ -3114,29 +3164,33 @@ textarea:focus-visible {
 }
 
 /* Right square frame holds the QR code. Frame physical size on Letter is
-   ~22 mm wide × ~32 mm tall; we vertically center QR + label inside it. */
+   ~22 mm wide × ~32 mm tall and sits visually slightly lower on the page than
+   on A4 (because Letter is shorter overall). We translateY(-50%) and pin the
+   reference top to the slot's vertical centre so the QR + label group ends up
+   centred inside the frame regardless of small QR size adjustments. */
 .certificate-page--paper-letter .playful-box--qr {
   left: 84.8%;
-  top: 88.4%;
+  top: 93.6%;
   width: 10.5%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   text-align: center;
 }
 
-/* QR sized to match A4's visual fill ratio (~70% of frame width) and
-   horizontally centered via margin: 0 auto inherited from base rule. */
+/* QR sized to match the slot's interior padding so QR + label both fit inside
+   the printed frame on Letter. Slightly smaller than A4 to account for the
+   shorter slot relative to the footer disclaimer below. */
 .certificate-page--paper-letter .playful-qr-image {
   display: block;
-  width: 16mm;
-  height: 16mm;
+  width: 14mm;
+  height: 14mm;
   margin: 0 auto;
   padding: 0.5mm;
   border-radius: 0.8mm;
 }
 
 .certificate-page--paper-letter .playful-qr-label {
-  margin-top: 0.8mm;
-  font-size: 5.6px;
+  margin-top: 0.6mm;
+  font-size: 5.4px;
 }
 
 /* Footer disclaimer: sits between the bottom of the frame row (~96.6%) and

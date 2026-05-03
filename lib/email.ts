@@ -103,7 +103,7 @@ const EMAIL_COPY = {
     tierLabels: {
       protected: "Protected Friend",
       nonsnack: "Certified Non-Snack",
-      business: "Shark-Approved Zone",
+      business: "Shark-Free Zone",
     },
   },
   es: {
@@ -148,7 +148,7 @@ const EMAIL_COPY = {
     tierLabels: {
       protected: "Amigo Protegido",
       nonsnack: "No-Snack Certificado",
-      business: "Zona Aprobada por Tiburones",
+      business: "Zona Libre de Tiburones",
     },
   },
 } as const;

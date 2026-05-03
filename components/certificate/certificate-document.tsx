@@ -1,4 +1,5 @@
 import {
+  getCertificateDiplomaticAssessment,
   getCertificateDiplomaticNote,
   getCertificateFooterAside,
   getCertificateHumorSeed,
@@ -12,6 +13,7 @@ import {
   type CertificateTemplate,
 } from "@/lib/certificate-templates";
 import { getQrCodeUrl, getVerificationUrl } from "@/lib/qr-svg";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 import type { PaperFormat } from "./certificate-sheet";
 
 /** Legacy template IDs — kept here so values stored before the rename
@@ -73,6 +75,8 @@ export function CertificateDocument({
   const copy = getCertificateDisplayCopy(locale);
   const tierKey = getCertificateTierKey(tier);
   const statusText = copy.tierLabels[tierKey];
+  const statusLabel = copy.statusLabels[tierKey];
+  const bodyText = copy.bodies[tierKey];
   const ribbonStatusText = copy.ribbonLabels[tierKey];
   const filedUnderText = copy.filedUnderLabels[tierKey];
   const tierColorClass = getTierColorClass(tier);
@@ -106,16 +110,26 @@ export function CertificateDocument({
     .filter(Boolean)
     .join(" ");
   const tokenBase = getCertificateHumorSeed(name, registryId, tier);
-  const diplomaticNote = getCertificateDiplomaticNote(tokenBase, locale);
+  const diplomaticAssessment = getCertificateDiplomaticAssessment(
+    tokenBase,
+    copy.assessmentText,
+    locale,
+    tier,
+  );
+  const diplomaticNote = getCertificateDiplomaticNote(tokenBase, locale, tier);
   const footerAside = getCertificateFooterAside(tokenBase, locale);
+  const displayRegistryId = formatRegistryIdForDisplay(registryId);
   const resolvedTemplate = normalizeTemplate(template);
   const isClassic = resolvedTemplate === "classic";
   const isLuxury = resolvedTemplate === "luxury";
   const isPlayful = resolvedTemplate === "playful";
   const isLetter = paperFormat === "letter";
   const isLuxuryA4 = isLuxury && !isLetter;
-  const isLuxuryLetterProtected = isLuxury && isLetter && tierKey === "protected";
-  const usesLuxuryBorderLayout = isLuxuryA4 || isLuxuryLetterProtected;
+  const isLuxuryLetterBorderTier =
+    isLuxury &&
+    isLetter &&
+    (tierKey === "protected" || tierKey === "nonsnack" || tierKey === "business");
+  const usesLuxuryBorderLayout = isLuxuryA4 || isLuxuryLetterBorderTier;
 
   const verifyUrl = getVerificationUrl(
     registryId.toLowerCase(),
@@ -139,11 +153,23 @@ export function CertificateDocument({
     assetMode === "preview"
       ? "/background-luxury-us-letter-protected-preview.webp"
       : "/background-luxury-us-letter-protected.png";
+  const luxuryLetterNonsnackBackground =
+    assetMode === "preview"
+      ? "/background-luxury-us-letter-nonsnack-preview.webp"
+      : "/background-luxury-us-letter-nonsnack.png";
+  const luxuryLetterBusinessBackground =
+    assetMode === "preview"
+      ? "/background-luxury-us-letter-business-preview.webp"
+      : "/background-luxury-us-letter-business.png";
   const backgroundSrc = isLuxury
     ? isLuxuryA4
       ? luxuryA4Background
-      : isLuxuryLetterProtected
-        ? luxuryLetterProtectedBackground
+      : isLuxuryLetterBorderTier
+        ? tierKey === "business"
+          ? luxuryLetterBusinessBackground
+          : tierKey === "nonsnack"
+          ? luxuryLetterNonsnackBackground
+          : luxuryLetterProtectedBackground
         : assetMode === "preview"
           ? "/background-luxury-preview.webp"
           : "/background-luxury.png"
@@ -197,7 +223,7 @@ export function CertificateDocument({
             <span className={recipientNameClassName}>{name}</span>
           </div>
 
-          <div className="lux-a4-status-label">{copy.playfulStatusLabel}</div>
+          <div className="lux-a4-status-label">{statusLabel}</div>
 
           {/* Decorative flourishes flanking the tier status — engraved feel. */}
           <div className={`lux-a4-status ${tierColorClass}`}>
@@ -206,7 +232,7 @@ export function CertificateDocument({
             <span className="lux-a4-status-flourish" aria-hidden="true">✦</span>
           </div>
 
-          <div className="lux-a4-body">{copy.playfulBody}</div>
+          <div className="lux-a4-body">{bodyText}</div>
 
           <div className="lux-a4-meta-row" aria-label={copy.verificationDetails}>
             <div className="lux-a4-meta-item lux-a4-meta-item--qr">
@@ -221,7 +247,7 @@ export function CertificateDocument({
               </div>
               <div className="lux-a4-record-item" translate="no">
                 <div className="lux-a4-record-label">{copy.registryId}</div>
-                <div className="lux-a4-record-value">{registryId}</div>
+                <div className="lux-a4-record-value">{displayRegistryId}</div>
               </div>
             </div>
           </div>
@@ -252,7 +278,7 @@ export function CertificateDocument({
 
           <div className="lux-a4-remarks">
             <div className="lux-a4-remarks-heading">{copy.assessmentLabel}</div>
-            <p>{copy.assessmentText}</p>
+            <p>{diplomaticAssessment}</p>
             <p className="lux-a4-remarks-note">
               <span>
                 {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
@@ -308,7 +334,7 @@ export function CertificateDocument({
             {statusText}
           </div>
 
-          <div className="lux-body-block">{copy.body}</div>
+          <div className="lux-body-block">{bodyText}</div>
 
           {/* Dedication block: shows the user's recorded dedication if any,
               otherwise falls back to an auto-generated diplomatic marine note,
@@ -331,7 +357,7 @@ export function CertificateDocument({
             <span className="lux-meta-line">
               <span className="lux-meta-kicker">{copy.registry}</span>
               <span className="lux-meta-id" translate="no">
-                {registryId}
+                {displayRegistryId}
               </span>
             </span>
           </div>
@@ -363,12 +389,6 @@ export function CertificateDocument({
             <span className="cls-title-sub">{copy.department}</span>
           </div>
 
-          <div className="cls-qr-block">
-            <span className="cls-qr-label">{copy.verify}</span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={qrSrc} alt={copy.verifyMembership} className="cls-qr-image" />
-          </div>
-
           <div className="cls-recipient-block">
             <span className="cls-recipient-name">{name}</span>
           </div>
@@ -385,7 +405,7 @@ export function CertificateDocument({
             {statusText}
           </div>
 
-          <div className="cls-body-block">{copy.body}</div>
+          <div className="cls-body-block">{bodyText}</div>
 
           <div className="cls-sig-left">
             <span className="cls-sig-name">Finnley Mako</span>
@@ -396,14 +416,22 @@ export function CertificateDocument({
             <span className="cls-sig-role">{copy.lunaRole}</span>
           </div>
 
-          <div className="cls-meta-block">
+          {/* Verification block — date, registry id, and QR all together as
+              a single semantic group so the QR sits with its related data
+              instead of in an isolated top-corner. */}
+          <div className="cls-meta-block" aria-label={copy.verificationDetails}>
             <div className="cls-meta-item">
               <span className="cls-meta-label">{copy.dateOfRecognition}</span>
               <span className="cls-meta-value">{date}</span>
             </div>
             <div className="cls-meta-item">
               <span className="cls-meta-label">{copy.registryId}</span>
-              <span className="cls-meta-value">{registryId}</span>
+              <span className="cls-meta-value">{displayRegistryId}</span>
+            </div>
+            <div className="cls-meta-item cls-meta-item--qr">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={qrSrc} alt={copy.verifyMembership} className="cls-qr-image" />
+              <span className="cls-qr-label">{copy.verifyMembership}</span>
             </div>
           </div>
 
@@ -414,7 +442,7 @@ export function CertificateDocument({
               when the user did not provide a personal dedication. */}
           <div className="cls-remarks-left">
             <div className="cls-remarks-heading">{copy.assessmentLabel}</div>
-            <p>{copy.assessmentText}</p>
+            <p>{diplomaticAssessment}</p>
           </div>
           <div className="cls-remarks-right">
             <div className="cls-remarks-heading">
@@ -444,11 +472,11 @@ export function CertificateDocument({
 
           <div className={playfulRecipientClassName}>{name}</div>
 
-          <div className="playful-status-label">{copy.playfulStatusLabel}</div>
+          <div className="playful-status-label">{statusLabel}</div>
 
           <div className={playfulStatusClassName}>{statusText}</div>
 
-          <div className="playful-body">{copy.playfulBody}</div>
+          <div className="playful-body">{bodyText}</div>
 
           <div className="playful-meta-row" aria-label={copy.verificationDetails}>
             <div className="playful-meta-item">
@@ -458,7 +486,7 @@ export function CertificateDocument({
             <div className="playful-meta-item">
               <div className="playful-meta-label">{copy.registryId}</div>
               <div className="playful-meta-value" translate="no">
-                {registryId}
+                {displayRegistryId}
               </div>
             </div>
             <div className="playful-meta-item">
@@ -487,7 +515,7 @@ export function CertificateDocument({
 
           <div className={`playful-box playful-box--assessment ${tierColorClass}`}>
             <div className="playful-box-label">{copy.assessmentLabel}</div>
-            <p>{copy.assessmentText}</p>
+            <p>{diplomaticAssessment}</p>
           </div>
 
           <div className="playful-box playful-box--note">

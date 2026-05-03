@@ -17,6 +17,10 @@ import { PostPurchaseShare } from "@/components/purchase/post-purchase-share";
 import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
 import { StepIndicator } from "@/components/purchase/step-indicator";
 import { formatCertificateDate } from "@/lib/dates";
+import {
+  isPaperFormatAvailableForTemplate,
+  normalizePaperFormatForTemplate,
+} from "@/lib/certificate-paper";
 import { getNextRank, getRankInfo } from "@/lib/referral-ranks";
 import {
   getPublicTierKey,
@@ -65,13 +69,21 @@ function SuccessContentInner() {
   const [linkCopied, setLinkCopied] = useState(false);
   const [timedOut, setTimedOut] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState("");
-  const initialPaper =
-    (searchParams.get("paper") as PaperFormat) === "letter"
-      ? "letter"
-      : "a4";
+  const [customizeOpen, setCustomizeOpen] = useState(false);
+  const initialPaper = normalizePaperFormatForTemplate(
+    "luxury",
+    searchParams.get("paper"),
+  );
   const [template, setTemplate] = useState<CertificateTemplate>("luxury");
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
   const purchaseTrackedRef = useRef(false);
+
+  const handleTemplateChange = useCallback((nextTemplate: CertificateTemplate) => {
+    setTemplate(nextTemplate);
+    setPaperFormat((current) =>
+      normalizePaperFormatForTemplate(nextTemplate, current),
+    );
+  }, []);
 
   const pollForMember = useCallback(() => {
     if (!sessionId) {
@@ -134,9 +146,9 @@ function SuccessContentInner() {
 
   useEffect(() => {
     if (isAcceptedCertificateTemplate(member?.template)) {
-      setTemplate(normalizeTemplate(member.template));
+      handleTemplateChange(normalizeTemplate(member.template));
     }
-  }, [member?.template]);
+  }, [handleTemplateChange, member?.template]);
 
   function handleRetryPolling() {
     pollForMember();
@@ -274,38 +286,199 @@ function SuccessContentInner() {
           <StepIndicator currentStep={3} />
         </div>
 
-        <div className="text-center">
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
-            {t("statusIssued")}
-          </div>
-          <h1 className="mt-6 text-2xl font-semibold text-[var(--brand-dark)] sm:text-3xl">
+        {/* Hero \u2014 pure text confirmation, no badge competing with the step indicator. */}
+        <header className="text-center">
+          <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
             {t("successTitle")}
           </h1>
-          <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg">
             {t("successText")}
           </p>
-        </div>
+        </header>
 
+        {/* Action card #1 \u2014 share. */}
         <PostPurchaseShare
           member={{ id: member.id, name: member.name, tier: publicTier }}
         />
 
+        {/* Action card #2 \u2014 certificate (preview + download + collapsible customize). */}
+        <section className="mt-8 rounded-[32px] border border-[var(--border)] bg-white p-5 shadow-sm sm:p-7">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-800">
+                {t("statusIssued")}
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
+                {t("yourCertificateTitle")}
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted)]">
+                {t("yourCertificateLead")}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setCustomizeOpen((value) => !value)}
+              aria-expanded={customizeOpen}
+              aria-controls="certificate-customize"
+              className="self-start inline-flex min-h-[40px] items-center justify-center rounded-full border border-[var(--border)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--brand-dark)] transition-colors hover:bg-sky-50 sm:self-end"
+            >
+              {customizeOpen ? t("customizeHide") : t("customizeShow")}
+            </button>
+          </div>
+
+          {customizeOpen ? (
+            <div
+              id="certificate-customize"
+              className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/55 p-4 sm:p-5"
+            >
+              <p className="text-xs leading-5 text-[var(--muted)]">
+                {t("customizeHelp")}
+              </p>
+              <div className="mt-4">
+                <CertificateTemplateSelector
+                  value={template}
+                  onChange={handleTemplateChange}
+                />
+              </div>
+              <div className="mt-4 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
+                {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
+                  const isSelected = paperFormat === formatOption;
+                  const isUnavailable = !isPaperFormatAvailableForTemplate(
+                    template,
+                    formatOption,
+                  );
+                  return (
+                    <button
+                      key={formatOption}
+                      type="button"
+                      disabled={isUnavailable}
+                      aria-disabled={isUnavailable}
+                      title={
+                        isUnavailable
+                          ? t("paperSizes.letter.classicUnavailable")
+                          : undefined
+                      }
+                      onClick={() => {
+                        if (!isUnavailable) setPaperFormat(formatOption);
+                      }}
+                      className={`min-h-[46px] rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                        isUnavailable
+                          ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-500 opacity-80 grayscale"
+                          : isSelected
+                          ? "border-sky-400 bg-sky-50 text-[var(--brand-dark)] shadow-sm"
+                          : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-[var(--surface-soft)]"
+                      }`}
+                    >
+                      <span className="block">
+                        {formatOption === "letter"
+                          ? t("paperSizes.letter.label")
+                          : t("paperSizes.a4.label")}
+                      </span>
+                      {isUnavailable ? (
+                        <span className="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.14em]">
+                          {t("paperSizes.letter.classicUnavailable")}
+                        </span>
+                      ) : null}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="mt-3 text-center text-xs text-[var(--muted)]">
+                {t("paperSizeHint")}
+              </p>
+            </div>
+          ) : null}
+
+          <div className="mt-6">
+            <CertificatePreview
+              name={member.name}
+              tier={publicTier}
+              dedication={member.dedication}
+              date={displayDate}
+              registryId={member.id.toUpperCase()}
+              referralCode={member.referralCode}
+              template={template}
+              paperFormat={paperFormat}
+              locale={locale}
+            />
+          </div>
+
+          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
+            <button
+              onClick={handleDownloadCertificate}
+              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:w-auto"
+            >
+              {t("downloadCert")} (
+              {paperFormat === "letter"
+                ? t("paperSizes.letter.label")
+                : t("paperSizes.a4.label")}
+              )
+            </button>
+
+            {member.registryVisibility === "public" ? (
+              <LocalizedLink
+                href={`/registry?highlight=${member.id}`}
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
+              >
+                {t("viewRegistry")}
+              </LocalizedLink>
+            ) : null}
+            {member.accessToken ? (
+              <LocalizedLink
+                href={`/certificate/view?token=${member.accessToken}#record-controls`}
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
+              >
+                {t("manageRecord")}
+              </LocalizedLink>
+            ) : null}
+          </div>
+
+          {downloadStatus ? (
+            <div
+              className="mx-auto mt-4 max-w-md rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-center text-sm font-medium text-amber-800"
+              role="status"
+              aria-live="polite"
+            >
+              {downloadStatus}
+            </div>
+          ) : null}
+
+          <div className="mt-5 mx-auto max-w-md text-center">
+            {member.hasEmail ? (
+              <p className="text-sm text-[var(--muted)]">
+                {t("emailSentAutomatic")}
+              </p>
+            ) : (
+              <div className="rounded-lg border border-amber-200 bg-amber-50/70 px-4 py-2.5 text-xs font-medium text-amber-800">
+                {t("downloadOnlyNotice")}
+              </div>
+            )}
+            {member.registryVisibility !== "public" ? (
+              <p className="mt-3 text-sm text-[var(--muted)]">
+                {t("registryPrivateNotice")}
+              </p>
+            ) : null}
+          </div>
+        </section>
+
+        {/* Long-term value pass \u2014 referral. Visually muted so it doesn't compete
+            with primary actions above. */}
         {member.referralCode && (
-          <section className="mx-auto mt-8 max-w-3xl rounded-2xl border border-sky-200 bg-white p-5 shadow-sm sm:p-6">
+          <section className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/40 p-5 sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
                   {t("referralTitle")}
                 </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--brand-dark)]">
+                <h2 className="mt-2 text-xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-2xl">
                   {t("referralMomentTitle")}
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted)]">
                   {t("referralText")}
                 </p>
               </div>
-              <div className="shrink-0 rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 text-left sm:text-right">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-800/75">
+              <div className="shrink-0 rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-left sm:text-right">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("referralCodeLabel")}
                 </p>
                 <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
@@ -315,7 +488,7 @@ function SuccessContentInner() {
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/55 px-4 py-4">
+              <div className="rounded-xl border border-[var(--border)] bg-white px-4 py-4">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("referralCurrentRank")}
                 </p>
@@ -329,7 +502,7 @@ function SuccessContentInner() {
                   })}
                 </p>
               </div>
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/55 px-4 py-4">
+              <div className="rounded-xl border border-[var(--border)] bg-white px-4 py-4">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("referralNextRank")}
                 </p>
@@ -356,7 +529,7 @@ function SuccessContentInner() {
                   {Math.round(referralProgressPercent)}%
                 </p>
               </div>
-              <div className="mt-2 h-3 overflow-hidden rounded-full bg-sky-100">
+              <div className="mt-2 h-3 overflow-hidden rounded-full bg-[var(--border)]/60">
                 <div
                   className="h-full rounded-full bg-[var(--accent)] transition-[width]"
                   style={{ width: `${referralProgressPercent}%` }}
@@ -364,7 +537,7 @@ function SuccessContentInner() {
               </div>
             </div>
 
-            <div className="mt-5 flex flex-col items-stretch gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/45 p-3 sm:flex-row sm:items-center sm:px-4 sm:py-3">
+            <div className="mt-5 flex flex-col items-stretch gap-3 rounded-xl border border-[var(--border)] bg-white p-3 sm:flex-row sm:items-center sm:px-4 sm:py-3">
               <label htmlFor="referral-link" className="sr-only">
                 {t("referralLinkLabel")}
               </label>
@@ -401,7 +574,7 @@ function SuccessContentInner() {
               </LocalizedLink>
               <LocalizedLink
                 href={`/wanted?name=${encodeURIComponent(member.name)}`}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[var(--brand)] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--brand-dark)]"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-sky-50"
               >
                 {t("referralWantedPoster")}
               </LocalizedLink>
@@ -409,113 +582,16 @@ function SuccessContentInner() {
           </section>
         )}
 
-        <div className="mt-6 sm:mt-8">
-          <CertificateTemplateSelector
-            value={template}
-            onChange={setTemplate}
-          />
-        </div>
-
-        <div className="mt-5 mx-auto grid max-w-xl grid-cols-1 gap-3 min-[420px]:grid-cols-2">
-          {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
-            const isSelected = paperFormat === formatOption;
-            return (
-              <button
-                key={formatOption}
-                type="button"
-                onClick={() => setPaperFormat(formatOption)}
-                className={`min-h-[46px] rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                  isSelected
-                    ? "border-sky-400 bg-sky-50 text-[var(--brand-dark)] shadow-sm"
-                    : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-[var(--surface-soft)]"
-                }`}
-              >
-                {formatOption === "letter"
-                  ? t("paperSizes.letter.label")
-                  : t("paperSizes.a4.label")}
-              </button>
-            );
-          })}
-          <p className="min-[420px]:col-span-2 text-center text-xs text-[var(--muted)]">
-            {t("paperSizeHint")}
-          </p>
-        </div>
-
-        <div className="mt-5">
-          <CertificatePreview
-            name={member.name}
-            tier={publicTier}
-            dedication={member.dedication}
-            date={displayDate}
-            registryId={member.id.toUpperCase()}
-            referralCode={member.referralCode}
-            template={template}
-            paperFormat={paperFormat}
-            locale={locale}
-          />
-        </div>
-
-        <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
-          <button
-            onClick={handleDownloadCertificate}
-            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] sm:w-auto"
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 text-center sm:flex-row">
+          <LocalizedLink
+            href="/registry"
+            className="inline-flex min-h-[40px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-sky-50"
           >
-            {t("downloadCert")} (
-            {paperFormat === "letter"
-              ? t("paperSizes.letter.label")
-              : t("paperSizes.a4.label")}
-            )
-          </button>
-
-          {member.registryVisibility === "public" ? (
-            <LocalizedLink
-              href={`/registry?highlight=${member.id}`}
-              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
-            >
-              {t("viewRegistry")}
-            </LocalizedLink>
-          ) : null}
-          {member.accessToken ? (
-            <LocalizedLink
-              href={`/certificate/view?token=${member.accessToken}#record-controls`}
-              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
-            >
-              {t("manageRecord")}
-            </LocalizedLink>
-          ) : null}
-        </div>
-
-        {downloadStatus ? (
-          <div
-            className="mx-auto mt-4 max-w-md rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-center text-sm font-medium text-amber-800"
-            role="status"
-            aria-live="polite"
-          >
-            {downloadStatus}
-          </div>
-        ) : null}
-
-        <div className="mt-6 mx-auto max-w-md text-center">
-          {member.hasEmail ? (
-            <p className="text-sm text-[var(--muted)]">
-              {t("emailSentAutomatic")}
-            </p>
-          ) : (
-            <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm font-semibold text-amber-800">
-              {t("downloadOnlyNotice")}
-            </div>
-          )}
-          {member.registryVisibility !== "public" ? (
-            <p className="mt-3 text-sm text-[var(--muted)]">
-              {t("registryPrivateNotice")}
-            </p>
-          ) : null}
-        </div>
-
-        <div className="mt-6 text-center">
+            {t("exploreRegistry")}
+          </LocalizedLink>
           <LocalizedLink
             href="/"
-            className="text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+            className="inline-flex min-h-[40px] items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
           >
             {t("backHome")}
           </LocalizedLink>

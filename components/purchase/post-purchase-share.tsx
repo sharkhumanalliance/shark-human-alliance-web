@@ -17,7 +17,7 @@ interface PostPurchaseShareProps {
 
 const STORY_WIDTH = 1080;
 const STORY_HEIGHT = 1920;
-const STORY_IMAGE_SRC = "/mascots/homepage-hero-plush.png";
+const STORY_IMAGE_SRC = "/mascots/case-closed-share.png";
 
 function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -67,23 +67,17 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, 
 async function generateStoryBlob({
   memberName,
   tierLabel,
-  subline,
   siteLabel,
-  officialBadge,
   headlineTop,
   headlineBottom,
   footerLine,
-  instruction,
 }: {
   memberName: string;
   tierLabel: string;
-  subline: string;
   siteLabel: string;
-  officialBadge: string;
   headlineTop: string;
   headlineBottom: string;
   footerLine: string;
-  instruction: string;
 }) {
   const canvas = document.createElement("canvas");
   canvas.width = STORY_WIDTH;
@@ -91,6 +85,8 @@ async function generateStoryBlob({
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas is not available.");
 
+  // Background gradient. The hero illustration carries its own SHA branding so we
+  // intentionally skip the top "SHA / Shark Human Alliance" pill bar.
   const gradient = ctx.createLinearGradient(0, 0, STORY_WIDTH, STORY_HEIGHT);
   gradient.addColorStop(0, "#e8fbff");
   gradient.addColorStop(0.45, "#d8f2ff");
@@ -98,84 +94,97 @@ async function generateStoryBlob({
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, STORY_WIDTH, STORY_HEIGHT);
 
-  ctx.save();
-  ctx.globalAlpha = 0.14;
-  ctx.fillStyle = "#0f4c81";
-  for (let i = 0; i < 12; i += 1) {
-    ctx.beginPath();
-    ctx.arc(120 + i * 90, 150 + (i % 3) * 24, 6 + (i % 4), 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.restore();
-
-  drawRoundedRect(ctx, 70, 72, 260, 64, 32, "rgba(15, 76, 129, 0.1)");
-  ctx.fillStyle = "#0f4c81";
-  ctx.font = "700 28px Arial, Helvetica, sans-serif";
-  ctx.fillText("SHA", 155, 114);
-  ctx.font = "600 22px Arial, Helvetica, sans-serif";
-  ctx.fillText("Shark Human Alliance", 356, 114);
-
+  // Hero illustration — object-contain (Math.min) so the whole "Case closed"
+  // composition is visible, not cropped.
   const heroImage = await loadImage(STORY_IMAGE_SRC);
-  const imageBox = { x: 80, y: 170, width: 920, height: 720 };
-  drawRoundedRect(ctx, imageBox.x, imageBox.y, imageBox.width, imageBox.height, 42, "rgba(255,255,255,0.92)");
-  ctx.save();
-  ctx.beginPath();
-  drawRoundedRect(ctx, imageBox.x, imageBox.y, imageBox.width, imageBox.height, 42, "#ffffff");
-  ctx.clip();
-  const scale = Math.max(imageBox.width / heroImage.width, imageBox.height / heroImage.height);
+  const imageBox = { x: 60, y: 60, width: 960, height: 1140 };
+  const scale = Math.min(
+    imageBox.width / heroImage.width,
+    imageBox.height / heroImage.height
+  );
   const drawWidth = heroImage.width * scale;
   const drawHeight = heroImage.height * scale;
   const drawX = imageBox.x + (imageBox.width - drawWidth) / 2;
   const drawY = imageBox.y + (imageBox.height - drawHeight) / 2;
   ctx.drawImage(heroImage, drawX, drawY, drawWidth, drawHeight);
-  ctx.restore();
 
-  drawRoundedRect(ctx, 108, 204, 286, 58, 29, "rgba(255,255,255,0.88)");
-  ctx.fillStyle = "#0f4c81";
-  const badgeFontSize = fitText(ctx, officialBadge, 220, 22, 18);
-  ctx.font = `700 ${badgeFontSize}px Arial, Helvetica, sans-serif`;
-  ctx.fillText(officialBadge, 145, 241);
+  // Single merged identity + verification card. Replaces the previously separate
+  // white name card + dark verification card (now redundant because the hero
+  // illustration already declares the brand and the moment).
+  const cardBox = { x: 60, y: 1240, width: 960, height: 620 };
+  const cardPadX = 60;
+  drawRoundedRect(
+    ctx,
+    cardBox.x,
+    cardBox.y,
+    cardBox.width,
+    cardBox.height,
+    40,
+    "#0d2340"
+  );
 
-  ctx.fillStyle = "#0d2340";
-  ctx.font = "700 76px Arial, Helvetica, sans-serif";
-  ctx.fillText(headlineTop, 82, 1000);
-  ctx.fillText(headlineBottom, 82, 1088);
+  // Tier label (small caps, sky-blue accent).
+  ctx.fillStyle = "#9dc4e6";
+  ctx.font = "700 28px Arial, Helvetica, sans-serif";
+  ctx.fillText(tierLabel.toUpperCase(), cardBox.x + cardPadX, cardBox.y + 80);
 
-  drawRoundedRect(ctx, 80, 1138, 920, 188, 40, "rgba(255,255,255,0.92)");
-  const tierFontSize = fitText(ctx, tierLabel, 820, 58, 36);
-  ctx.fillStyle = "#0f4c81";
-  ctx.font = `700 ${tierFontSize}px Arial, Helvetica, sans-serif`;
-  ctx.fillText(tierLabel, 130, 1218);
-
-  const nameFontSize = fitText(ctx, memberName, 820, 54, 32);
-  ctx.fillStyle = "#0d2340";
-  ctx.font = `700 ${nameFontSize}px Arial, Helvetica, sans-serif`;
-  ctx.fillText(memberName, 130, 1288);
-
-  drawRoundedRect(ctx, 80, 1368, 920, 220, 40, "#0f4c81");
+  // Member name (medium semibold white).
+  const nameFontSize = fitText(
+    ctx,
+    memberName,
+    cardBox.width - cardPadX * 2,
+    56,
+    32
+  );
   ctx.fillStyle = "#ffffff";
-  ctx.font = "700 48px Arial, Helvetica, sans-serif";
-  ctx.fillText(subline, 132, 1450);
-  const footerFontSize = fitText(ctx, footerLine, 810, 30, 22);
+  ctx.font = `700 ${nameFontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillText(memberName, cardBox.x + cardPadX, cardBox.y + 150);
+
+  // Tier-specific headline, two lines.
+  const topFontSize = fitText(
+    ctx,
+    headlineTop,
+    cardBox.width - cardPadX * 2,
+    80,
+    44
+  );
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `700 ${topFontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillText(headlineTop, cardBox.x + cardPadX, cardBox.y + 290);
+
+  const bottomFontSize = fitText(
+    ctx,
+    headlineBottom,
+    cardBox.width - cardPadX * 2,
+    80,
+    44
+  );
+  ctx.font = `700 ${bottomFontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillText(headlineBottom, cardBox.x + cardPadX, cardBox.y + 380);
+
+  // Brand-voice slogan (small, low-emphasis white).
+  const footerFontSize = fitText(
+    ctx,
+    footerLine,
+    cardBox.width - cardPadX * 2,
+    28,
+    20
+  );
+  ctx.fillStyle = "rgba(255,255,255,0.78)";
   ctx.font = `600 ${footerFontSize}px Arial, Helvetica, sans-serif`;
-  ctx.fillText(footerLine, 132, 1514);
-  ctx.fillText(siteLabel, 132, 1562);
+  ctx.fillText(footerLine, cardBox.x + cardPadX, cardBox.y + 480);
 
-  ctx.fillStyle = "rgba(13, 35, 64, 0.78)";
-  const instructionFontSize = fitText(ctx, instruction, 920, 28, 20);
-  ctx.font = `600 ${instructionFontSize}px Arial, Helvetica, sans-serif`;
-  ctx.fillText(instruction, 80, 1690);
-
-  ctx.save();
-  ctx.globalAlpha = 0.25;
-  ctx.fillStyle = "#0f4c81";
-  ctx.beginPath();
-  ctx.arc(930, 1730, 150, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(1010, 1825, 110, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
+  // Verification host (uppercase, even lower emphasis).
+  const urlFontSize = fitText(
+    ctx,
+    siteLabel,
+    cardBox.width - cardPadX * 2,
+    24,
+    16
+  );
+  ctx.fillStyle = "rgba(255,255,255,0.6)";
+  ctx.font = `600 ${urlFontSize}px Arial, Helvetica, sans-serif`;
+  ctx.fillText(siteLabel, cardBox.x + cardPadX, cardBox.y + 540);
 
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob((blob) => {
@@ -201,19 +210,29 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
   }, [locale, member.id]);
 
   const tierLabel = useMemo(() => t(`tierLabels.${member.tier}`), [member.tier, t]);
+  const shareTitle = useMemo(() => t(`tierCtas.${member.tier}.title`), [member.tier, t]);
+  const shareButtonLabel = useMemo(() => t(`tierCtas.${member.tier}.shareButton`), [member.tier, t]);
   const fileName = useMemo(() => `shark-human-alliance-story-${member.id.toLowerCase()}.png`, [member.id]);
+
+  // Pretty-printed host for the Story preview mock-up — the full UUID URL stays in the
+  // actually generated Story (Canvas), but the on-screen preview must look clean.
+  const previewHost = useMemo(() => {
+    if (!verificationUrl) return "sharkhumanalliance.com";
+    try {
+      return new URL(verificationUrl).host.replace(/^www\./, "");
+    } catch {
+      return "sharkhumanalliance.com";
+    }
+  }, [verificationUrl]);
 
   async function getStoryFile() {
     const blob = await generateStoryBlob({
       memberName: member.name,
       tierLabel,
-      subline: t("storySubline"),
-      siteLabel: verificationUrl || "sharkhumanalliance.com",
-      officialBadge: t("storyOfficialBadge"),
-      headlineTop: t("storyHeadlineTop"),
-      headlineBottom: t("storyHeadlineBottom"),
+      siteLabel: previewHost,
+      headlineTop: t(`tierHeadlines.${member.tier}.headlineTop`),
+      headlineBottom: t(`tierHeadlines.${member.tier}.headlineBottom`),
       footerLine: t("storyFooterLine"),
-      instruction: t("storyInstruction"),
     });
     return new File([blob], fileName, { type: "image/png" });
   }
@@ -252,8 +271,8 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
       if (shareNavigator.share && shareNavigator.canShare?.({ files: [file] })) {
         await shareNavigator.share({
           files: [file],
-          title: t("nativeTitle"),
-          text: `${t("nativeText")} ${verificationUrl}`,
+          title: t(`tierHeadlines.${member.tier}.nativeTitle`),
+          text: `${t(`tierHeadlines.${member.tier}.nativeText`)} ${verificationUrl}`,
         });
         trackEvent("share_story_native_success", { tier: member.tier, mode: "file" });
         setShareHint(t("nativeSuccess"));
@@ -262,8 +281,8 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
 
       if (shareNavigator.share) {
         await shareNavigator.share({
-          title: t("nativeTitle"),
-          text: t("nativeText"),
+          title: t(`tierHeadlines.${member.tier}.nativeTitle`),
+          text: t(`tierHeadlines.${member.tier}.nativeText`),
           url: verificationUrl,
         });
         trackEvent("share_story_native_success", { tier: member.tier, mode: "url" });
@@ -297,14 +316,14 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
   }
 
   return (
-    <section data-reveal className="mt-10 rounded-[32px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-amber-50 px-4 py-5 shadow-[0_24px_80px_rgba(15,76,129,0.08)] sm:px-6 sm:py-7 lg:px-8">
+    <section data-reveal className="mt-10 rounded-[32px] border border-[var(--border)] bg-white px-4 py-5 shadow-sm sm:px-6 sm:py-7 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,360px)] lg:items-center">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-800">
             {t("eyebrow")}
           </p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
-            {t("title")}
+            {shareTitle}
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--muted)] sm:text-base">
             {t("description")}
@@ -319,7 +338,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
               disabled={isBusy}
               className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[var(--brand)] px-6 py-4 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {isBusy ? t("working") : t("shareButton")}
+              {isBusy ? t("working") : shareButtonLabel}
             </button>
             <button
               type="button"
@@ -350,48 +369,42 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
         </div>
 
         <div className="mx-auto w-full max-w-[360px]">
-          <div className="rounded-[34px] border border-sky-100 bg-[#f7fbff] p-3 shadow-[0_20px_60px_rgba(15,76,129,0.12)]">
-            <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-sky-100 via-white to-amber-50 aspect-[9/16]">
-              <div className="absolute inset-x-0 top-0 flex items-center justify-between px-5 pt-5">
-                <div className="rounded-full bg-white/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-900 backdrop-blur">
-                  SHA
-                </div>
+          <div className="rounded-[34px] border border-[var(--border)] bg-[var(--surface-soft)]/60 p-3 shadow-sm">
+            <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-sky-50 via-white to-white aspect-[9/16]">
+              {/* STORY READY pill — kept as a single mock-up label; the SHA bar
+                  has been removed because the illustration carries SHA branding. */}
+              <div className="absolute right-4 top-4">
                 <div className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-900 backdrop-blur">
                   {t("storyBadge")}
                 </div>
               </div>
 
-              <div className="absolute inset-x-4 top-16 overflow-hidden rounded-[26px] border border-white/70 bg-white/70 shadow-sm">
-                <div className="relative aspect-[4/3] w-full">
-                  <Image
-                    src={STORY_IMAGE_SRC}
-                    alt={t("previewAlt")}
-                    fill
-                    sizes="(max-width: 1024px) 320px, 360px"
-                    className="object-cover"
-                    priority={false}
-                  />
-                </div>
+              {/* Hero illustration — object-contain so the whole composition is
+                  visible. Container takes the upper ~58% of the Story frame. */}
+              <div className="absolute inset-x-3 top-3 bottom-[42%]">
+                <Image
+                  src={STORY_IMAGE_SRC}
+                  alt={t("previewAlt")}
+                  fill
+                  sizes="(max-width: 1024px) 320px, 360px"
+                  className="object-contain"
+                  priority={false}
+                />
               </div>
 
-              <div className="absolute inset-x-5 top-[52%] rounded-[24px] bg-white/92 px-4 py-4 shadow-sm">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-800">
+              {/* Single merged identity + verification card. */}
+              <div className="absolute inset-x-3 bottom-3 rounded-[22px] bg-[var(--brand-dark)] px-5 py-5 text-white shadow-lg">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-sky-200">
                   {tierLabel}
                 </p>
-                <p className="mt-2 text-xl font-semibold leading-tight text-[var(--brand-dark)]">
+                <p className="mt-1 text-base font-semibold leading-tight text-white">
                   {member.name}
                 </p>
-              </div>
-
-              <div className="absolute inset-x-5 bottom-5 rounded-[24px] bg-[var(--brand-dark)] px-5 py-5 text-white shadow-lg">
-                <p className="text-[26px] font-semibold leading-tight">
-                  {t("previewHeadline")}
+                <p className="mt-3 text-[22px] font-semibold leading-tight">
+                  {t(`tierHeadlines.${member.tier}.previewHeadline`)}
                 </p>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  {t("previewSubline")}
-                </p>
-                <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/70 break-all">
-                  {verificationUrl.replace(/^https?:\/\//, "")}
+                <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70">
+                  {previewHost}
                 </p>
               </div>
             </div>

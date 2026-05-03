@@ -10,7 +10,7 @@
     },
     "registry": {
       "title": "Diplomatic Registry",
-      "description": "Browse the official registry of humans whose shark-related paperwork is in order. Join the list and fund real conservation."
+      "description": "Browse the public registry of opted-in humans whose shark-related paperwork is in order. Every certificate also gets a private registry record."
     },
     "impact": {
       "title": "Our Impact — Where the Money Goes",
@@ -18,7 +18,7 @@
     },
     "membership": {
       "title": "Funny Shark Certificates | Personalized Shark Gifts",
-      "description": "Choose a personalized shark certificate for yourself, a friend, or your office. Instant digital delivery, public registry entry, and real shark conservation support."
+      "description": "Choose a personalized shark certificate for yourself, a friend, or your office. Instant digital delivery, private registry record, optional public listing, and real shark conservation support."
     },
     "protectedFriend": {
       "title": "Protected Friend Status",
@@ -116,14 +116,14 @@
     "proofPrice": "From $4",
     "proofDelivery": "Delivered in minutes",
     "proofDiplomats": "diplomats enrolled",
-    "proofRegistry": "Public registry",
+    "proofRegistry": "Optional public registry",
     "proofTransparency": "Transparency & impact"
   },
   "home": {
     "earlyAdopter": {
       "label": "Join the Alliance",
       "title": "Be among the first wave of diplomats.",
-      "text": "The Diplomatic Registry is open. Every certificate issued is logged, every dollar tracked. The earlier you join, the more impressive your seniority will look in the archives.",
+      "text": "Every certificate is assigned a private registry record. Public listing is optional and appears only if you choose to make it visible. Every dollar is tracked; the paperwork remains appropriately dramatic.",
       "cta": "Get your certificate — $4",
       "purchaseCta": "Get your certificate",
       "registryCta": "View the Registry",
@@ -188,12 +188,12 @@
         "Downloadable badge"
       ],
       "nonsnackCta": "Go Non-Snack — $19",
-      "businessTitle": "Shark-Approved Zone",
+      "businessTitle": "Shark-Free Zone",
       "businessPrice": "$99",
-      "businessDescription": "For businesses ready to display official shark approval with a straight face. Good for studios, cafés, offices, and anyone who understands the value of strange but excellent wall art.",
+      "businessDescription": "For businesses ready to display official shark-free paperwork with a straight face. Good for studios, cafés, offices, and anyone who understands the value of strange but excellent wall art.",
       "businessFeatures": [
         "Website badge",
-        "Premium registry placement",
+        "Optional premium registry placement",
         "Business-facing certificate"
       ],
       "businessCta": "Get business certification — $99",
@@ -272,8 +272,8 @@
       "point2Title": "Real money. Real conservation.",
       "point2Text": "Every certificate helps fund shark conservation. No vague promises. No “raising awareness” as a business model.",
       "point3Icon": "03",
-      "point3Title": "Your name in the archives",
-      "point3Text": "Added to the Diplomatic Registry, the exclusive list of humans who paid money to be told they are not food.",
+      "point3Title": "A record in the archives",
+      "point3Text": "Every certificate is assigned a private registry record. Public listing is optional and appears only if you choose to make it visible.",
       "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Saving the Blue, and Fundación Malpelo."
     },
     "howStep1": "Pick a certificate",
@@ -293,9 +293,9 @@
           "question": "Will sharks respect it?",
           "answer": "Almost certainly not. Sharks have not ratified the paperwork and are unlikely to attend the meeting. The certificate protects sharks from humans more than humans from sharks."
         },
-        {
-          "question": "Where does the real money go?",
-          "answer": "Part of each purchase is set aside for shark and ocean conservation. We publish recipient organizations and public allocation details as donations are made."
+          {
+            "question": "Where does the real money go?",
+            "answer": "Conservation allocations are funded from Shark Human Alliance revenue. We track them internally and publish recipient organizations and allocation details once donations are made. Planned recipients are not formal partners unless we expressly say so."
         },
       {
         "question": "When do donations start, and how will they be reported?",
@@ -307,7 +307,7 @@
       },
       {
         "question": "How much does each certificate cost?",
-        "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Approved Zone is $99."
+        "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Free Zone is $99."
       },
       {
         "question": "Will I receive a certificate immediately?",
@@ -329,10 +329,10 @@
         "question": "Why sharks?",
         "answer": "Because sharks have a PR problem they did not create. Humans kill roughly 100 million sharks a year. Sharks kill very few humans. The imbalance is embarrassing."
       },
-      {
-        "question": "Is this a donation or a product purchase?",
-        "answer": "It is a purchase of a humorous digital product. A conservation allocation is funded from that revenue on our side; you are not making a direct charitable donation, and it is not tax-deductible."
-      },
+        {
+          "question": "Is this a donation or a product purchase?",
+          "answer": "It is a purchase of a humorous digital product, not a direct charitable donation. A conservation allocation is funded from Shark Human Alliance revenue on our side, and it is not tax-deductible."
+        },
       {
         "question": "What size is the certificate?",
         "answer": "Certificates are optimized for A4 or US Letter download and printing."
@@ -349,7 +349,7 @@
     "trustItems": [
       "Personalized in minutes",
       "Instant digital delivery",
-      "Public registry entry",
+      "Optional public registry listing",
       "Funds real conservation"
     ],
     "ctaPrimary": "Choose the level first",
@@ -389,7 +389,7 @@
     "protectedDescription": "A polished entry point for shark lovers, beach-fearers, and suspiciously good gift buyers. Funny, personal, and surprisingly frameable.",
     "protectedFeatures": [
       "Personalized digital certificate",
-      "Public registry entry",
+      "Optional public registry listing",
       "Instant delivery for gifts and last-minute diplomacy"
     ],
     "protectedCta": "Start with Protected Friend — $4",
@@ -402,8 +402,8 @@
       "Excellent choice for dramatic friends"
     ],
     "nonsnackCta": "Get the Non-Snack version — $19",
-    "businessTitle": "Shark-Approved Zone",
-    "businessDescription": "For cafés, studios, offices, and institutions ready to display certified non-hostility toward sharks with complete administrative confidence.",
+    "businessTitle": "Shark-Free Zone",
+    "businessDescription": "For cafés, studios, offices, and institutions ready to display certified shark-free confidence with complete administrative seriousness.",
     "businessFeatures": [
       "Business-facing certificate",
       "Wall-art level absurd credibility",
@@ -415,7 +415,7 @@
     "includedItems": [
       "Personalized certificate",
       "Digital delivery in minutes",
-      "Public Diplomatic Registry entry",
+      "Optional public Diplomatic Registry listing",
       "Gift-friendly format",
       "Real shark conservation support"
     ],
@@ -426,7 +426,7 @@
       "feature": "Feature",
       "protected": "Protected Friend",
       "nonsnack": "Non-Snack",
-      "business": "Shark-Approved Zone"
+      "business": "Shark-Free Zone"
     },
     "comparisonRows": [
       {
@@ -445,7 +445,7 @@
         "label": "Official status",
         "protected": "Protected Friend Status",
         "nonsnack": "Official Non-Snack Recognition",
-        "business": "Shark-Approved Zone designation"
+        "business": "Shark-Free Zone designation"
       },
       {
         "label": "Price",
@@ -465,7 +465,7 @@
     "step2Title": "Personalize it like you mean it",
     "step2Text": "Add the name, optional dedication, and gift details so it feels like an actual present rather than an administrative hallucination.",
     "step3Title": "Deliver elite shark bureaucracy",
-    "step3Text": "The recipient gets an official-looking certificate, a registry entry, and immediate documentation of improved shark-human relations.",
+    "step3Text": "The recipient gets an official-looking certificate, a private registry record, and immediate documentation of improved shark-human relations.",
     "clarificationLabel": "Important clarification",
     "clarificationTitle": "Important legal clarification, regrettably",
     "clarificationText": "The certificate is a humorous gift product. It does not provide legal immunity, physical safety, anti-bite force fields, or diplomatic leverage with actual sharks. The conservation support, however, is real.",
@@ -501,7 +501,7 @@
     "faqAllLink": "All questions and answers",
     "joinLabel": "Ready to file the paperwork?",
     "joinTitle": "Choose the tier. Then let the sharks review the paperwork.",
-    "joinText": "Start with Protected Friend, step up to Non-Snack, or certify an office with Shark-Approved Zone. Then choose the style that makes the joke land best.",
+    "joinText": "Start with Protected Friend, step up to Non-Snack, or certify an office with Shark-Free Zone. Then choose the style that makes the joke land best.",
     "joinCtaPrimary": "Get your certificate — $4",
     "joinCtaSecondary": "Get the Non-Snack version — $19",
     "joinCtaBusiness": "Certify your office — $99",
@@ -563,13 +563,29 @@
     "stepPayment": "Payment",
     "stepCertificate": "Certificate",
     "tierLabel": "Selected tier",
-    "tiers": {
-      "basic": "Basic Membership — $4",
-      "protected": "Protected Friend Status — $4",
-      "nonsnack": "Non-Snack Recognition — $19",
-      "business": "Shark-Approved Zone — $99"
-    },
-    "nameLabel": "Name on the certificate",
+      "tiers": {
+        "basic": "Basic Membership — $4",
+        "protected": "Protected Friend Status — $4",
+        "nonsnack": "Non-Snack Recognition — $19",
+        "business": "Shark-Free Zone — $99"
+      },
+      "seoSummary": {
+        "eyebrow": "Purchase summary",
+        "title": "{tier}",
+        "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
+        "includesLabel": "What you get",
+        "includes": {
+          "0": "Personalized digital certificate with name and optional dedication.",
+          "1": "Immediate PDF access after successful payment.",
+          "2": "Private registry record; public listing is optional at checkout.",
+          "3": "Conservation allocation funded from Shark Human Alliance revenue."
+        },
+        "legalPrefix": "Before payment, review immediate digital delivery, withdrawal, privacy, and correction rules in",
+        "termsLink": "Terms & Purchase Conditions",
+        "privacyLink": "Privacy Policy",
+        "refundLink": "refund and correction policy"
+      },
+      "nameLabel": "Name on the certificate",
     "namePlaceholder": "e.g. Captain James Coral",
     "giftToggle": "This is a gift",
     "recipientEmailLabel": "Recipient email",
@@ -598,7 +614,7 @@
     "businessNameLabel": "Business or venue name",
     "businessNamePlaceholder": "e.g. Sunset Beach Surf School",
     "businessDedicationLabel": "Tagline or location (optional)",
-    "businessDedicationPlaceholder": "e.g. Proudly shark-approved since 2026",
+    "businessDedicationPlaceholder": "e.g. Proudly shark-free since 2026",
     "emailLabel": "Email for certificate delivery",
     "emailOptionalTag": "optional",
     "emailOptionalHint": "Skip email if you want. Just note that the certificate will only be available right after purchase.",
@@ -643,13 +659,14 @@
     "downloadNotReady": "Your certificate is still being prepared. Please try again in a moment.",
     "viewRegistry": "See yourself in the Diplomatic Registry",
     "emailSentAutomatic": "A certificate email has been sent to your inbox automatically. Check spam if you don't see it!",
-    "backHome": "Back to homepage",
+    "backHome": "Return to homepage",
+    "exploreRegistry": "Explore the registry",
     "changeTier": "Change tier",
     "giftDetailsTitle": "Gift details",
     "giftMessageLabel": "Personal message (optional)",
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
     "referredByBadge": "Referral credit is active for this purchase.",
-    "referralTitle": "Your diplomatic career starts now",
+    "referralTitle": "Referral program",
     "referralMomentTitle": "Your diplomatic career starts now.",
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks and makes your paperwork look increasingly senior.",
     "referralCodeLabel": "Referral code",
@@ -664,7 +681,7 @@
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
     "referralWantedPoster": "Make a Wanted poster",
-    "downloadOnlyNotice": "Download now — this link won’t be stored.",
+    "downloadOnlyNotice": "Save your PDF now. This download link is temporary.",
     "recipientEmailHint": "Use this if you’d like us to send the certificate directly.",
     "paperSizeLabel": "Paper size",
     "paperSizeHint": "Print at Actual Size / 100% for the best result.",
@@ -672,12 +689,19 @@
       "a4": {
         "label": "A4",
         "description": "Best for Europe and most home printers outside North America."
+        },
+        "letter": {
+          "label": "US Letter",
+          "description": "Best for the US and Canada. No cropping, slightly wider margins.",
+          "classicUnavailable": "Not available for Classic yet."
+        }
       },
-      "letter": {
-        "label": "US Letter",
-        "description": "Best for the US and Canada. No cropping, slightly wider margins."
-      }
-    },
+    "customizeTitle": "Customize the certificate",
+    "customizeHelp": "Pick a template and paper size. Defaults usually work — open this only if you want to tweak.",
+    "customizeShow": "Customize",
+    "customizeHide": "Hide options",
+    "yourCertificateTitle": "Your certificate",
+    "yourCertificateLead": "Here is the document on file. Download it as PDF or share it directly.",
     "referredByLabel": "Referral code (optional)",
     "referredByOptionalTag": "Optional",
     "referredByPlaceholder": "e.g. SHA-ABCD",
@@ -687,6 +711,20 @@
       "title": "Boast that you are not a snack.",
       "description": "Do not leave with a dry thank-you page. Take a ready-made Story graphic, post it, and let the public witness your official shark diplomacy status.",
       "shareButton": "Boast that you’re not a snack",
+      "tierCtas": {
+        "protected": {
+          "title": "Announce your protected status.",
+          "shareButton": "Announce your protected status"
+        },
+        "nonsnack": {
+          "title": "Boast that you are not a snack.",
+          "shareButton": "Boast that you’re not a snack"
+        },
+        "business": {
+          "title": "Declare the zone cleared.",
+          "shareButton": "Declare the zone cleared"
+        }
+      },
       "downloadButton": "Download Story",
       "copyButton": "Copy verification link",
       "copySuccess": "Link copied",
@@ -696,25 +734,52 @@
       "working": "Preparing your Story…",
       "downloadReady": "Story downloaded. Open Instagram and add it to Stories.",
       "downloadError": "The Story could not be prepared. Please try again.",
-      "nativeTitle": "Officially not a snack",
-      "nativeText": "I am officially recognized by Shark Human Alliance.",
       "nativeSuccess": "Share sheet opened.",
       "nativeFallback": "Link shared. For Instagram Stories, use the downloaded image as well.",
-      "storySubline": "Officially recognized as not a snack.",
-      "storyOfficialBadge": "Officially certified",
-      "storyHeadlineTop": "You are",
-      "storyHeadlineBottom": "not a snack.",
       "storyFooterLine": "Bureaucratic progress in shark-human relations.",
-      "storyInstruction": "Post this to your Stories. Let the public know you're off the menu.",
+      "storyInstruction": "Post this to your Stories. Make the certification public.",
       "storyBadge": "Story ready",
       "previewAlt": "Instagram Story preview for your Shark Human Alliance certificate",
-      "previewHeadline": "You are officially not a snack.",
       "previewSubline": "Post it. The public deserves to know.",
       "tierLabels": {
         "basic": "Basic Membership",
         "protected": "Protected Friend Status",
         "nonsnack": "Non-Snack Recognition",
-        "business": "Shark-Approved Zone"
+        "business": "Shark-Free Zone"
+      },
+      "tierHeadlines": {
+        "basic": {
+          "headlineTop": "Officially",
+          "headlineBottom": "in the Alliance.",
+          "subline": "Officially recognized by the Shark Human Alliance.",
+          "previewHeadline": "Officially in the Alliance.",
+          "nativeTitle": "Officially recognized",
+          "nativeText": "I am officially recognized by Shark Human Alliance."
+        },
+        "protected": {
+          "headlineTop": "Protected",
+          "headlineBottom": "by the Alliance.",
+          "subline": "Officially recognized as a protected friend.",
+          "previewHeadline": "Officially a protected friend.",
+          "nativeTitle": "Officially a protected friend",
+          "nativeText": "I am officially a protected friend of the Shark Human Alliance."
+        },
+        "nonsnack": {
+          "headlineTop": "You are",
+          "headlineBottom": "not a snack.",
+          "subline": "Officially recognized as not a snack.",
+          "previewHeadline": "Officially not a snack.",
+          "nativeTitle": "Officially not a snack",
+          "nativeText": "I am officially recognized by Shark Human Alliance — not a snack."
+        },
+        "business": {
+          "headlineTop": "Shark-free",
+          "headlineBottom": "zone.",
+          "subline": "Officially certified as a shark-free zone.",
+          "previewHeadline": "Officially a shark-free zone.",
+          "nativeTitle": "Shark-free zone",
+          "nativeText": "Our zone has been officially certified shark-free by Shark Human Alliance."
+        }
       }
     },
     "manageRecord": "Manage record visibility",
@@ -760,9 +825,9 @@
       "basic": "Friend of Sharks",
       "protected": "Protected Friend",
       "nonsnack": "Certified Non-Snack",
-      "business": "Shark-Approved Zone"
+      "business": "Shark-Free Zone"
     },
-    "filterBusiness": "Shark-Approved Zones",
+    "filterBusiness": "Shark-Free Zones",
     "copyLink": "Copy profile link",
     "viralNewest": "Newest Diplomats",
     "viralWanted": "Wanted: Still Unprotected",
@@ -788,10 +853,10 @@
     "careerPromoDesc": "Every diplomat starts as a Civilian. Refer friends, rise through the ranks, and maybe — just maybe — Finnley Mako will learn your name. From Probationary Liaison to Chief Shark Whisperer, your career in shark diplomacy awaits.",
     "careerPromoLink": "View the career ladder",
     "disclaimerTitle": "Registry disclaimer",
-    "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. It does, however, place your name in a permanent diplomatic archive, which is more bureaucracy than most governments have ever devoted to your shark safety.",
+    "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. Every certificate is assigned a private registry record; this public list shows only records made visible by their humans.",
     "clickHint": "Click any diplomat to open their verification card.",
     "rankLabel": "Diplomatic rank",
-    "joinCtaSubtext": "Every certificate issued gets you on the list, funds real conservation, and makes your seniority in the archives increasingly impressive.",
+    "joinCtaSubtext": "Every certificate is assigned a private registry record. Public listing is optional and appears only if you choose to make it visible. Real conservation still gets funded either way.",
     "disclaimerStamp": "Filed & Archived"
   },
   "verifySample": {
@@ -840,7 +905,7 @@
       "basic": "Protected Friend",
       "protected": "Protected Friend",
       "nonsnack": "Certified Non-Snack",
-      "business": "Shark-Approved Free Zone"
+      "business": "Shark-Free Zone"
     },
     "nonsnackSubtitle": "Office of Interspecies Diplomatic Affairs & Culinary Diplomacy",
     "nonsnackCertTitle": "CERTIFICATE OF OFFICIAL INEDIBILITY",
@@ -860,7 +925,7 @@
     "nonsnackDisclaimer": "Disclaimer: This recognition is purely symbolic. Most sharks unfortunately cannot read and some may actually like caffeine. The Alliance does not vouch for encounters with gourmet sharks who ignore bureaucracy. Entering the water remains at your own risk.",
     "businessHeader": "UNITED OCEANS DIPLOMATIC CORPS",
     "businessSubtitle": "Office of Interspecies Commercial Certification",
-    "businessCertTitle": "OFFICIAL CERTIFICATE: SHARK-APPROVED FREE ZONE",
+    "businessCertTitle": "OFFICIAL CERTIFICATE: SHARK-FREE ZONE",
     "businessCertTitleSub": "(License Tier)",
     "businessBody": "has been officially recognized as a supporter of constructive shark dialogue and harmonious coexistence in oceanic space. This zone is declared safe for all forms of business not in conflict with the interests (or culinary preferences) of the Alliance.",
     "businessReasonsLabel": "This establishment has committed to",
@@ -894,7 +959,7 @@
     "splitNonsnackText": "$12 from every Non-Snack sale goes to conservation. The certificate is theatrical. The allocation is not.",
     "splitBusinessAmount": "$70",
     "splitBusinessPrice": "$99",
-    "splitBusinessLabel": "Shark-Approved Zone",
+    "splitBusinessLabel": "Shark-Free Zone",
     "splitBusinessText": "$70 from every business certification goes to conservation. If you’re putting it on the wall, it should earn its place there.",
     "splitOpsLabel": "Land-based operations (the boring part)",
     "splitOpsText": "The rest covers the unglamorous dry-land part: hosting, rendering, admin, and one human doing all of this in a bathrobe.",
@@ -919,7 +984,7 @@
     "partner4Name": "Malpelo Foundation",
     "partner4Desc": "Protecting marine fauna and one of the world's most important shark sanctuaries off Colombia's Pacific coast.",
     "partner4Focus": "Focus: Malpelo Island sanctuary protection, hammerhead shark research, marine patrols.",
-    "partnersDisclaimer": "Listed as planned recipients. Formal partnerships or confirmed recipient relationships will only be announced once they are actually in place.",
+      "partnersDisclaimer": "Diplomatic note: Listed conservation organizations have not necessarily endorsed our paperwork. They are intended recipients, and we publish confirmations once donations are made.",
     "partnerStatusPlanned": "Planned Recipient",
     "visitWebsite": "Visit website",
     "opensInNewTab": "opens in new tab",
@@ -966,6 +1031,39 @@
     "suggestion1": "My Boss",
     "suggestion2": "Dad",
     "suggestion3": "That One Friend",
+    "toneLabel": "Case severity",
+    "tones": {
+      "mild": {
+        "label": "Mildly concerning",
+        "description": "For someone who needs paperwork, not panic.",
+        "posterSubtitle": "Politely Unprotected",
+        "caseStatus": "Open file",
+        "riskLevel": "Manageable",
+        "recommendedAction": "Issue paperwork",
+        "rewardText": "A modest paperwork intervention"
+      },
+      "clear": {
+        "label": "Clearly unprotected",
+        "description": "The standard public notice for certificate-free humans.",
+        "posterSubtitle": "Dangerously Unprotected",
+        "caseStatus": "Unresolved",
+        "riskLevel": "Officially awkward",
+        "recommendedAction": "Resolve case",
+        "rewardText": "One certificate and slightly relieved sharks"
+      },
+      "emergency": {
+        "label": "Administrative emergency",
+        "description": "For advanced cases of visible certificate absence.",
+        "posterSubtitle": "Administratively Catastrophic",
+        "caseStatus": "Escalated",
+        "riskLevel": "Bureaucratic",
+        "recommendedAction": "Close file",
+        "rewardText": "One certificate and measurable social pressure"
+      }
+    },
+    "caseStatusLabel": "Case status",
+    "riskLevelLabel": "Risk level",
+    "recommendedActionLabel": "Recommended action",
     "generateButton": "Generate Wanted Poster",
     "formDisclaimer": "No humans were harmed in the making of this poster. No sharks were impressed either.",
     "defaultName": "Unidentified Human",
@@ -973,33 +1071,48 @@
     "wantedTitle": "WANTED",
     "wantedSubtitle": "Dangerously Unprotected",
     "chargesLabel": "Charges",
-    "charges": [
-      "Entering sovereign shark waters without a passport, visa, or basic manners",
-      "Suspiciously resembling a seal on at least three confirmed occasions",
-      "Zero attempts at inter-species diplomacy despite ample opportunity",
-      "Chronic refusal to acknowledge the Shark High Council",
-      "Swimming with reckless confidence and absolutely no credentials",
-      "Willful failure to register with the Shark Diplomatic Registry",
-      "Possession of an unprotected beach towel in a restricted zone",
-      "Repeated fish consumption without prior Alliance authorization",
-      "Maintaining a suspicious and total absence of shark-related paperwork",
-      "Observed flailing in shallow water — a documented act of provocation",
-      "Smelling vaguely of tuna, which constitutes an unauthorized attractant",
-      "Publicly claiming Jaws is a 'great movie' (classified as anti-shark propaganda)"
-    ],
+    "toneCharges": {
+      "mild": [
+        "Living without clearly displayed shark-adjacent documentation",
+        "Proceeding through daily life with only informal marine confidence",
+        "Maintaining a social circle that has not verified their protection status",
+        "Possessing no visible evidence of Alliance recognition",
+        "Allowing preventable paperwork uncertainty to continue"
+      ],
+      "clear": [
+        "Remaining publicly unprotected despite available certification channels",
+        "Entering ordinary social situations without shark diplomacy paperwork",
+        "Creating avoidable concern among friends, relatives, and imaginary sharks",
+        "Failing to resolve a documented absence of protective status",
+        "Being suspiciously confident without Registry support"
+      ],
+      "emergency": [
+        "Operating in society with no immediate certificate coverage on file",
+        "Triggering an avoidable administrative response from the Alliance Security Bureau",
+        "Leaving the shark community insufficiently briefed on their intentions",
+        "Allowing the case to remain open despite obvious paperwork remedies",
+        "Generating measurable social pressure through continued uncertified existence"
+      ]
+    },
     "rewardLabel": "Reward",
     "rewardText": "One certificate and the vague administrative gratitude of the Alliance",
-    "ctaButton": "PROTECT THIS PERSON NOW",
     "qrLabel": "Scan to protect",
+    "qrCtaLabel": "SCAN TO PROTECT {name}",
     "posterFooter": "sharkhumanalliance.com — Diplomacy is not optional",
-    "downloadButton": "Download Poster (Stories format)",
+    "formatLabel": "Format",
+    "formatA4": "A4 (print)",
+    "formatStory": "Story (9:16)",
+    "downloadButton": "Download poster",
     "downloadingButton": "Preparing poster...",
     "shareButton": "Share poster",
     "linkCopied": "Link copied!",
-    "shareTitle": "WANTED: Unprotected Human",
+    "shareTitle": "WANTED: {name}",
     "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
     "giftCta": "Gift {name} a Protected Friend Certificate — $4",
     "newPoster": "Create another poster",
+    "rerollChargesButton": "Reroll charges",
+    "priceAnchor": "$4 — less than your morning Starbucks. Less waiting in line, too.",
+    "socialProofText": "18 wanted posters issued this week.",
     "viralPrompt": "Share it on Instagram Stories, send it in a group chat, or print it and tape it to their desk.",
     "viralSubtext": "Every poster shared is a step toward universal shark-human diplomatic coverage.",
     "previewLabel": "Live poster preview",
@@ -1126,29 +1239,33 @@
         "title": "7. Delivery and access",
         "body": "Certificates are generated digitally after successful payment. If an email address is provided, delivery details may also be sent by email. If no email address is provided, the certificate should be downloaded immediately from the success page because the link may not be stored for later retrieval."
       },
-      "digitalContent": {
-        "title": "8. Digital content and withdrawal",
-        "body": "The certificate is digital content supplied without a tangible medium. Delivery begins immediately after payment and processing. During checkout, the customer must expressly request immediate supply before the withdrawal period ends and acknowledge that, once supply begins, the right to withdraw is lost. Order confirmation and certificate delivery messaging repeat this information on a durable medium."
-      },
-      "complaints": {
-        "title": "9. Complaints and technical issues",
-        "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, or another appropriate remedy."
-      },
-      "refunds": {
-        "title": "10. Refunds and corrections",
-        "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help."
-      },
-      "contact": {
-        "title": "11. Contact",
-        "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
-      }
+        "digitalContent": {
+          "title": "8. Immediate digital delivery and withdrawal right",
+          "body": "Because the certificate is personalized digital content, you may choose immediate delivery during checkout. If you expressly consent to immediate delivery before the end of the withdrawal period and acknowledge that this means losing the right to withdraw once the certificate is made available, the certificate will be generated immediately after successful payment. This does not affect your statutory rights in case of defective digital content, failed delivery, duplicate charge, or other issue caused by us."
+        },
+        "conservation": {
+          "title": "9. Conservation disclaimer",
+          "body": "Conservation allocations are funded from Shark Human Alliance revenue. You are purchasing a digital product, not making a direct charitable donation. Allocations are tracked internally and reported publicly once donations are made. Planned recipients are not described as formal partners unless expressly confirmed."
+        },
+        "complaints": {
+          "title": "10. Complaints and technical issues",
+          "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, or another appropriate remedy."
+        },
+        "refunds": {
+          "title": "11. Refunds and corrections",
+          "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help."
+        },
+        "contact": {
+          "title": "12. Contact",
+          "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
+        }
     }
   },
   "verify": {
     "verifiedMember": "Verified Member",
     "tierProtected": "Protected Friend",
     "tierNonsnack": "Non-Snack Recognition",
-    "tierBusiness": "Shark-Approved Zone",
+    "tierBusiness": "Shark-Free Zone",
     "membershipSince": "Membership Since",
     "registryId": "Registry ID",
     "referralCode": "Referral Code",

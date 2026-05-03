@@ -16,68 +16,115 @@ function nameHash(name: string): number {
   return Math.abs(hash);
 }
 
-const POSTER_BG = "#1a0a00";
-const POSTER_PAPER = "#f5e6c8";
-const POSTER_INK = "#2a1a0a";
-const POSTER_RED = "#c0392b";
-const POSTER_GOLD = "#d4a017";
-const POSTER_MUTED = "#8b7355";
+function fitCanvasText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  maxWidth: number,
+  initialSize: number,
+  minSize: number,
+  weight = 600,
+) {
+  let fontSize = initialSize;
+  while (fontSize > minSize) {
+    ctx.font = `${weight} ${fontSize}px 'Geist', sans-serif`;
+    if (ctx.measureText(text).width <= maxWidth) break;
+    fontSize -= 2;
+  }
+  return fontSize;
+}
+
+const POSTER_BG = "#3a2515";
+const POSTER_PAPER = "#f6ecd8";
+const POSTER_INK = "#102941";
+const POSTER_RED = "#b94135";
+const POSTER_GOLD = "#b98935";
+const POSTER_MUTED = "#6f7c83";
+const POSTER_INK_DARK = "#7a2a22"; // darker red for ink-bleed dots
+const POSTER_PAPER_GRAIN = "#c9b88a"; // mid-tone for procedural paper grain
+
+type WantedTone = "mild" | "clear" | "emergency";
+
+const WANTED_TONES: WantedTone[] = ["mild", "clear", "emergency"];
+
+type PosterFormat = "a4" | "story";
+
+const POSTER_FORMATS: PosterFormat[] = ["a4", "story"];
+
+interface PosterLayout {
+  width: number;
+  height: number;
+  marginX: number;
+  marginY: number;
+  qrSize: number;
+  aspectRatio: string;
+}
+
+const POSTER_LAYOUTS: Record<PosterFormat, PosterLayout> = {
+  a4: {
+    width: 2100,
+    height: 2970,
+    marginX: 120,
+    marginY: 140,
+    qrSize: 360,
+    aspectRatio: "210 / 297",
+  },
+  story: {
+    width: 1080,
+    height: 1920,
+    marginX: 60,
+    marginY: 70,
+    qrSize: 280,
+    aspectRatio: "108 / 192",
+  },
+};
+
+// Seeded random — deterministic per name + reroll seed so the procedural
+// distress and texture stay consistent for the same inputs.
+function mulberry32(seed: number) {
+  return function () {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 export function WantedContent() {
   const t = useTranslations("wanted");
   const locale = useLocale();
   const [name, setName] = useState("");
+  const [selectedTone, setSelectedTone] = useState<WantedTone>("clear");
+  const [posterFormat, setPosterFormat] = useState<PosterFormat>("a4");
+  const [rerollSeed, setRerollSeed] = useState(0);
   const [generated, setGenerated] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const sealImgRef = useRef<HTMLImageElement | null>(null);
 
   const charges = useMemo(() => {
-    const values: string[] = [];
-    for (let i = 0; i < 12; i++) {
-      try {
-        const value = t(`charges.${i}`);
-        if (value) values.push(value);
-      } catch {
-        break;
-      }
-    }
-    return values;
-  }, [t]);
+    return t.raw(`toneCharges.${selectedTone}`) as string[];
+  }, [selectedTone, t]);
+
+  // Salt hash with the reroll counter so users can cycle through different
+  // 3-charge combinations for the same name + tone.
+  const seededHash = useMemo(
+    () => nameHash(`${name}::${rerollSeed}`),
+    [name, rerollSeed],
+  );
 
   const selectedCharges = useMemo(() => {
     if (charges.length === 0) return [];
-    const hash = nameHash(name);
     const picked: string[] = [];
     const pool = [...charges];
 
     for (let i = 0; i < Math.min(3, pool.length); i++) {
-      const index = (hash + i * 7) % pool.length;
+      const index = (seededHash + i * 7) % pool.length;
       picked.push(pool[index]);
       pool.splice(index, 1);
     }
 
     return picked;
-  }, [name, charges]);
-
-  const ensureSealLoaded = useCallback((): Promise<HTMLImageElement> => {
-    return new Promise((resolve, reject) => {
-      if (sealImgRef.current) {
-        resolve(sealImgRef.current);
-        return;
-      }
-
-      const img = new window.Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        sealImgRef.current = img;
-        resolve(img);
-      };
-      img.onerror = reject;
-      img.src = "/cert-seal.png";
-    });
-  }, []);
+  }, [seededHash, charges]);
 
   const loadQrImage = useCallback((url: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
@@ -90,102 +137,262 @@ export function WantedContent() {
   }, []);
 
   const drawPoster = useCallback(
-    async (ctx: CanvasRenderingContext2D, width: number, height: number) => {
+    async (ctx: CanvasRenderingContext2D, layout: PosterLayout) => {
+      const { width, height, marginX, marginY, qrSize } = layout;
+      // Reference the original A4 design at 2100 wide; everything scales from
+      // there so the same drawing code produces both the A4 (2100 × 2970)
+      // print version and the 9:16 Story (1080 × 1920) export.
+      const scale = width / 2100;
+      const s = (n: number) => n * scale;
+
       const displayName = name.trim() || t("defaultName");
+      const distressRng = mulberry32(seededHash);
 
       ctx.fillStyle = POSTER_BG;
       ctx.fillRect(0, 0, width, height);
 
-      const marginX = 120;
-      const marginY = 140;
       const paperWidth = width - marginX * 2;
       const paperHeight = height - marginY * 2;
 
       ctx.fillStyle = POSTER_PAPER;
       ctx.beginPath();
-      ctx.roundRect(marginX, marginY, paperWidth, paperHeight, 16);
+      ctx.roundRect(marginX, marginY, paperWidth, paperHeight, s(16));
       ctx.fill();
 
+      // Procedural paper grain — subtle noise dots over the parchment so it
+      // doesn't read as a flat fill. Deterministic per seed.
+      ctx.save();
+      ctx.beginPath();
+      ctx.roundRect(marginX, marginY, paperWidth, paperHeight, s(16));
+      ctx.clip();
+      const grainCount = Math.round(paperWidth * paperHeight * 0.0006);
+      const grainRng = mulberry32(0x9e3779b9);
+      ctx.fillStyle = POSTER_PAPER_GRAIN;
+      for (let i = 0; i < grainCount; i++) {
+        const gx = marginX + grainRng() * paperWidth;
+        const gy = marginY + grainRng() * paperHeight;
+        const gr = s(0.6 + grainRng() * 1.6);
+        const ga = 0.06 + grainRng() * 0.08;
+        ctx.globalAlpha = ga;
+        ctx.beginPath();
+        ctx.arc(gx, gy, gr, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      // A few longer "fiber" strokes for paper texture authenticity.
+      ctx.strokeStyle = POSTER_PAPER_GRAIN;
+      const fiberCount = Math.round(paperWidth * 0.012);
+      for (let i = 0; i < fiberCount; i++) {
+        const fx = marginX + grainRng() * paperWidth;
+        const fy = marginY + grainRng() * paperHeight;
+        const fl = s(8 + grainRng() * 22);
+        const angle = grainRng() * Math.PI * 2;
+        ctx.globalAlpha = 0.06 + grainRng() * 0.08;
+        ctx.lineWidth = s(0.6);
+        ctx.beginPath();
+        ctx.moveTo(fx, fy);
+        ctx.lineTo(fx + Math.cos(angle) * fl, fy + Math.sin(angle) * fl);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+
+      // Single decorative inner frame (the second nested frame has been removed
+      // — parchment has its own visual texture, two stacked frames added noise).
       ctx.strokeStyle = POSTER_MUTED;
-      ctx.lineWidth = 3;
+      ctx.lineWidth = s(3);
       ctx.beginPath();
-      ctx.roundRect(marginX + 36, marginY + 36, paperWidth - 72, paperHeight - 72, 10);
-      ctx.stroke();
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.roundRect(marginX + 46, marginY + 46, paperWidth - 92, paperHeight - 92, 8);
+      ctx.roundRect(
+        marginX + s(36),
+        marginY + s(36),
+        paperWidth - s(72),
+        paperHeight - s(72),
+        s(10),
+      );
       ctx.stroke();
 
-      let y = marginY + 110;
+      let y = marginY + s(110);
       const centerX = width / 2;
       const caseNumber = `SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
 
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "600 32px 'Geist', sans-serif";
+      ctx.font = `600 ${s(32)}px 'Geist', sans-serif`;
       ctx.textAlign = "center";
-      ctx.letterSpacing = "12px";
+      ctx.letterSpacing = `${s(12)}px`;
       ctx.fillText(t("posterHeader").toUpperCase(), centerX, y);
       ctx.letterSpacing = "0px";
-      y += 54;
+      y += s(54);
 
       ctx.strokeStyle = POSTER_MUTED;
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = s(1.5);
       ctx.beginPath();
-      ctx.moveTo(centerX - 260, y);
-      ctx.lineTo(centerX + 260, y);
+      ctx.moveTo(centerX - s(260), y);
+      ctx.lineTo(centerX + s(260), y);
       ctx.stroke();
       ctx.textAlign = "right";
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "600 22px 'Geist', sans-serif";
-      ctx.fillText(caseNumber, marginX + paperWidth - 92, y - 18);
+      ctx.font = `600 ${s(22)}px 'Geist', sans-serif`;
+      ctx.fillText(caseNumber, marginX + paperWidth - s(92), y - s(18));
       ctx.textAlign = "center";
-      y += 124;
+      y += s(124);
 
       ctx.fillStyle = POSTER_RED;
-      ctx.font = "900 200px 'Geist', sans-serif";
-      ctx.fillText(t("wantedTitle"), centerX, y);
-      y += 30;
+      ctx.font = `900 ${s(200)}px 'Geist', sans-serif`;
+      const wantedTitle = t("wantedTitle");
+      ctx.fillText(wantedTitle, centerX, y);
+
+      // Procedural distress on WANTED — three layers of overlays seeded by
+      // the name hash so the same name always gets the same wear pattern.
+      const wantedMetrics = ctx.measureText(wantedTitle);
+      const wantedW = wantedMetrics.width;
+      const wantedH = s(170); // approx visual height for 200px Geist 900
+      const wantedLeft = centerX - wantedW / 2;
+      const wantedTop = y - wantedH * 0.85;
+
+      // Layer 1: horizontal "press wear" scratches in parchment color
+      ctx.fillStyle = POSTER_PAPER;
+      const scratchCount = 4;
+      for (let i = 0; i < scratchCount; i++) {
+        const sx = wantedLeft + distressRng() * wantedW;
+        const sy = wantedTop + distressRng() * wantedH;
+        const slen = wantedW * (0.18 + distressRng() * 0.18);
+        const sthick = s(2 + distressRng() * 4);
+        ctx.globalAlpha = 0.45 + distressRng() * 0.25;
+        ctx.fillRect(sx, sy, slen, sthick);
+      }
+
+      // Layer 2: ink-bleed dots in darker red around the contour
+      ctx.fillStyle = POSTER_INK_DARK;
+      const blotCount = 8;
+      for (let i = 0; i < blotCount; i++) {
+        const bx = wantedLeft + distressRng() * wantedW;
+        const by = wantedTop + distressRng() * wantedH;
+        const br = s(2 + distressRng() * 5);
+        ctx.globalAlpha = 0.2 + distressRng() * 0.2;
+        ctx.beginPath();
+        ctx.arc(bx, by, br, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Layer 3: irregular paper "dropout" — one larger parchment-colored
+      // polygon punching through one letter, simulating where ink failed.
+      ctx.fillStyle = POSTER_PAPER;
+      ctx.globalAlpha = 0.5;
+      const dropX = wantedLeft + wantedW * (0.25 + distressRng() * 0.5);
+      const dropY = wantedTop + wantedH * (0.3 + distressRng() * 0.4);
+      const dropR = s(12 + distressRng() * 8);
+      ctx.beginPath();
+      const dropPoints = 7 + Math.floor(distressRng() * 3);
+      for (let i = 0; i < dropPoints; i++) {
+        const angle = (i / dropPoints) * Math.PI * 2;
+        const r = dropR * (0.5 + distressRng() * 0.7);
+        const px = dropX + Math.cos(angle) * r;
+        const py = dropY + Math.sin(angle) * r;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      y += s(30);
 
       ctx.strokeStyle = POSTER_RED;
-      ctx.lineWidth = 5;
+      ctx.lineWidth = s(5);
       ctx.beginPath();
-      ctx.moveTo(centerX - 340, y);
-      ctx.lineTo(centerX + 340, y);
+      ctx.moveTo(centerX - s(340), y);
+      ctx.lineTo(centerX + s(340), y);
       ctx.stroke();
-      y += 72;
+      y += s(72);
 
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 34px 'Geist', sans-serif";
-      ctx.letterSpacing = "6px";
-      ctx.fillText(t("wantedSubtitle").toUpperCase(), centerX, y);
+      ctx.font = `600 ${s(34)}px 'Geist', sans-serif`;
+      ctx.letterSpacing = `${s(6)}px`;
+      ctx.fillText(t(`tones.${selectedTone}.posterSubtitle`).toUpperCase(), centerX, y);
       ctx.letterSpacing = "0px";
-      y += 88;
+      y += s(88);
 
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "900 96px 'Geist', sans-serif";
-      let fontSize = 96;
-      while (ctx.measureText(displayName).width > paperWidth - 200 && fontSize > 48) {
-        fontSize -= 4;
-        ctx.font = `900 ${fontSize}px 'Geist', sans-serif`;
+      let nameFontSize = s(96);
+      ctx.font = `900 ${nameFontSize}px 'Geist', sans-serif`;
+      while (
+        ctx.measureText(displayName).width > paperWidth - s(200) &&
+        nameFontSize > s(48)
+      ) {
+        nameFontSize -= s(4);
+        ctx.font = `900 ${nameFontSize}px 'Geist', sans-serif`;
       }
       ctx.fillText(displayName, centerX, y);
-      y += 28;
+      y += s(28);
 
-      const nameWidth = Math.min(ctx.measureText(displayName).width + 60, paperWidth - 200);
+      const nameWidth = Math.min(
+        ctx.measureText(displayName).width + s(60),
+        paperWidth - s(200),
+      );
       ctx.strokeStyle = POSTER_GOLD;
-      ctx.lineWidth = 3;
+      ctx.lineWidth = s(3);
       ctx.beginPath();
       ctx.moveTo(centerX - nameWidth / 2, y);
       ctx.lineTo(centerX + nameWidth / 2, y);
       ctx.stroke();
-      y += 84;
+      y += s(56);
 
-      const chargesBoxX = marginX + 150;
-      const chargesBoxWidth = paperWidth - 300;
-      const chargesBoxInnerX = chargesBoxX + 48;
+      // Typewriter-style fields row — replaces the old 3-column rounded boxes.
+      // Reads as a filled-in paper form (label + value + dotted underline)
+      // rather than a SaaS dashboard tile.
+      const fieldsRowY = y;
+      const fieldsTotalWidth = paperWidth - s(280);
+      const fieldsX = marginX + s(140);
+      const fieldGap = s(28);
+      const fieldWidth = (fieldsTotalWidth - fieldGap * 2) / 3;
+      const fields = [
+        { label: t("caseStatusLabel"), value: t(`tones.${selectedTone}.caseStatus`) },
+        { label: t("riskLevelLabel"), value: t(`tones.${selectedTone}.riskLevel`) },
+        { label: t("recommendedActionLabel"), value: t(`tones.${selectedTone}.recommendedAction`) },
+      ];
+      fields.forEach((field, index) => {
+        const x = fieldsX + index * (fieldWidth + fieldGap);
+        ctx.fillStyle = POSTER_MUTED;
+        ctx.font = `700 ${s(16)}px 'Geist', sans-serif`;
+        ctx.textAlign = "center";
+        ctx.letterSpacing = `${s(2.5)}px`;
+        ctx.fillText(field.label.toUpperCase(), x + fieldWidth / 2, fieldsRowY);
+        ctx.letterSpacing = "0px";
+        ctx.fillStyle = POSTER_INK;
+        ctx.font = `700 ${s(26)}px 'Courier New', 'Courier', monospace`;
+        ctx.fillText(field.value, x + fieldWidth / 2, fieldsRowY + s(40));
+        ctx.strokeStyle = POSTER_MUTED;
+        ctx.lineWidth = s(1.5);
+        ctx.setLineDash([s(4), s(4)]);
+        ctx.beginPath();
+        ctx.moveTo(x + s(12), fieldsRowY + s(54));
+        ctx.lineTo(x + fieldWidth - s(12), fieldsRowY + s(54));
+        ctx.stroke();
+        ctx.setLineDash([]);
+      });
+      ctx.textAlign = "center";
+      y = fieldsRowY + s(96);
+
+      // Bottom-anchored layout — footer at the very bottom, then the prominent
+      // QR CTA label, then the QR + seal row, then reward box, then charges
+      // box (which auto-expands to fill whatever space remains).
+      const footerY = height - marginY - s(36);
+      const qrCtaY = footerY - s(50);
+      const qrAreaBottomY = qrCtaY - s(56);
+
+      const qrY = qrAreaBottomY - qrSize;
+      const rewardBoxWidth = Math.min(s(760), paperWidth - s(160));
+      const rewardBoxHeight = s(112);
+      const rewardBoxX = centerX - rewardBoxWidth / 2;
+      const rewardBoxY = qrY - s(36) - rewardBoxHeight;
+
+      const chargesBoxX = marginX + s(150);
+      const chargesBoxWidth = paperWidth - s(300);
+      const chargesBoxInnerX = chargesBoxX + s(48);
       const chargesBoxY = y;
-      const maxChargeWidth = chargesBoxWidth - 150;
-      ctx.font = "500 30px 'Geist', sans-serif";
+      const maxChargeWidth = chargesBoxWidth - s(150);
+
+      ctx.font = `500 ${s(30)}px 'Geist', sans-serif`;
       const wrappedCharges = selectedCharges.map((charge, index) => {
         const words = charge.split(" ");
         const lines: string[] = [];
@@ -203,148 +410,140 @@ export function WantedContent() {
 
         if (line) lines.push(line);
 
-        return {
-          prefix: `${index + 1}.`,
-          lines,
-        };
+        return { prefix: `${index + 1}.`, lines };
       });
 
-      const rewardBoxWidth = 760;
-      const rewardBoxHeight = 112;
-      const rewardBoxX = centerX - rewardBoxWidth / 2;
-      const rewardBoxY = height - marginY - 640;
-      const buttonWidth = 900;
-      const buttonHeight = 84;
-      const buttonX = centerX - buttonWidth / 2;
-      const buttonY = rewardBoxY + rewardBoxHeight + 26;
-      const sealSize = 228;
-      const qrSize = 176;
-      const bottomY = height - marginY - 260;
-
       const chargesContentHeight =
-        98 +
+        s(98) +
         wrappedCharges.reduce(
-          (total, charge) => total + charge.lines.length * 46 + 34,
+          (total, charge) => total + charge.lines.length * s(46) + s(34),
           0,
         ) -
-        34;
+        s(34);
       const chargesBoxHeight = Math.max(
-        280,
-        Math.min(chargesContentHeight + 26, rewardBoxY - chargesBoxY - 36),
+        s(280),
+        Math.min(chargesContentHeight + s(26), rewardBoxY - chargesBoxY - s(36)),
       );
+
       ctx.strokeStyle = POSTER_MUTED;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = s(2);
       ctx.beginPath();
-      ctx.roundRect(chargesBoxX, chargesBoxY, chargesBoxWidth, chargesBoxHeight, 18);
+      ctx.roundRect(chargesBoxX, chargesBoxY, chargesBoxWidth, chargesBoxHeight, s(18));
       ctx.stroke();
       ctx.fillStyle = POSTER_RED;
-      ctx.font = "700 34px 'Geist', sans-serif";
+      ctx.font = `700 ${s(34)}px 'Geist', sans-serif`;
       ctx.textAlign = "center";
-      ctx.letterSpacing = "4px";
-      ctx.fillText(t("chargesLabel").toUpperCase(), centerX, chargesBoxY + 42);
+      ctx.letterSpacing = `${s(4)}px`;
+      ctx.fillText(t("chargesLabel").toUpperCase(), centerX, chargesBoxY + s(42));
       ctx.letterSpacing = "0px";
       ctx.textAlign = "left";
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "500 30px 'Geist', sans-serif";
+      ctx.font = `500 ${s(30)}px 'Geist', sans-serif`;
 
-      let chargesCursorY = chargesBoxY + 108;
+      let chargesCursorY = chargesBoxY + s(108);
       wrappedCharges.forEach((charge) => {
-        ctx.font = "700 30px 'Geist', sans-serif";
+        ctx.font = `700 ${s(30)}px 'Geist', sans-serif`;
         ctx.fillText(charge.prefix, chargesBoxInnerX, chargesCursorY);
-        ctx.font = "500 30px 'Geist', sans-serif";
+        ctx.font = `500 ${s(30)}px 'Geist', sans-serif`;
 
         charge.lines.forEach((currentLine, lineIndex) => {
           ctx.fillText(
             currentLine,
-            chargesBoxInnerX + 54,
-            chargesCursorY + lineIndex * 46,
+            chargesBoxInnerX + s(54),
+            chargesCursorY + lineIndex * s(46),
           );
         });
 
-        chargesCursorY += charge.lines.length * 46 + 42;
+        chargesCursorY += charge.lines.length * s(46) + s(42);
       });
 
       ctx.strokeStyle = POSTER_GOLD;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = s(2);
       ctx.beginPath();
-      ctx.roundRect(rewardBoxX, rewardBoxY, rewardBoxWidth, rewardBoxHeight, 18);
+      ctx.roundRect(rewardBoxX, rewardBoxY, rewardBoxWidth, rewardBoxHeight, s(18));
       ctx.stroke();
-
       ctx.textAlign = "center";
       ctx.fillStyle = POSTER_GOLD;
-      ctx.font = "700 28px 'Geist', sans-serif";
-      ctx.letterSpacing = "3px";
-      ctx.fillText(t("rewardLabel").toUpperCase(), centerX, rewardBoxY + 34);
+      ctx.font = `700 ${s(28)}px 'Geist', sans-serif`;
+      ctx.letterSpacing = `${s(3)}px`;
+      ctx.fillText(t("rewardLabel").toUpperCase(), centerX, rewardBoxY + s(34));
       ctx.letterSpacing = "0px";
 
+      const rewardText = t(`tones.${selectedTone}.rewardText`);
+      const rewardFontSize = fitCanvasText(
+        ctx,
+        rewardText,
+        rewardBoxWidth - s(72),
+        s(34),
+        s(23),
+      );
       ctx.fillStyle = POSTER_INK;
-      ctx.font = "600 34px 'Geist', sans-serif";
-      ctx.fillText(t("rewardText"), centerX, rewardBoxY + 74);
+      ctx.font = `600 ${rewardFontSize}px 'Geist', sans-serif`;
+      ctx.fillText(rewardText, centerX, rewardBoxY + s(74));
 
-      ctx.fillStyle = POSTER_RED;
-      ctx.beginPath();
-      ctx.roundRect(buttonX, buttonY, buttonWidth, buttonHeight, 44);
-      ctx.fill();
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "700 36px 'Geist', sans-serif";
-      ctx.fillText(t("ctaButton"), centerX, buttonY + buttonHeight / 2 + 11);
+      // Note: the previous fake red "RESOLVE THIS CASE" button has been removed
+      // — it was a non-functional pixel button on a static PNG that misled
+      // viewers. The certificate seal has also been removed so the QR can
+      // dominate the bottom area as the single, real, scannable call-to-action.
 
-      try {
-        const sealImg = await ensureSealLoaded();
-        const sealX = marginX + paperWidth - 60 - sealSize;
-        const sealCenterY = bottomY + sealSize / 2;
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(sealX + sealSize / 2, sealCenterY, sealSize / 2 + 10, 0, Math.PI * 2);
-        ctx.fillStyle = "#e8d5b0";
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(sealX + sealSize / 2, sealCenterY, sealSize / 2, 0, Math.PI * 2);
-        ctx.clip();
-        ctx.drawImage(sealImg, sealX, bottomY, sealSize, sealSize);
-        ctx.restore();
-        ctx.strokeStyle = POSTER_GOLD;
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.arc(sealX + sealSize / 2, sealCenterY, sealSize / 2 + 10, 0, Math.PI * 2);
-        ctx.stroke();
-      } catch {
-        // Skip seal if it fails to load.
-      }
+      // QR centered horizontally on the paper. Red border for high contrast,
+      // and the URL routes to the gift purchase flow with the target's name
+      // pre-filled (was previously a dead-end /verify?id=sample link).
+      const qrX = centerX - qrSize / 2;
 
-      const purchaseUrl =
+      const trimmedName = name.trim();
+      const purchasePath = `/purchase?tier=protected&gift=true&ref=wanted${
+        trimmedName ? `&name=${encodeURIComponent(trimmedName)}` : ""
+      }`;
+      const purchaseUrlForQr =
         typeof window !== "undefined"
-          ? buildAbsoluteLocalizedUrl(window.location.origin, locale, "/verify?id=sample")
-          : buildAbsoluteLocalizedUrl(process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com", locale, "/verify?id=sample");
+          ? buildAbsoluteLocalizedUrl(window.location.origin, locale, purchasePath)
+          : buildAbsoluteLocalizedUrl(
+              process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+              locale,
+              purchasePath,
+            );
 
       try {
-        const qrImg = await loadQrImage(purchaseUrl);
-        const qrX = marginX + 60;
-        const qrY = bottomY + (sealSize - qrSize) / 2;
-
+        const qrImg = await loadQrImage(purchaseUrlForQr);
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
-        ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 10);
+        ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
         ctx.fill();
-        ctx.strokeStyle = POSTER_MUTED;
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = POSTER_RED;
+        ctx.lineWidth = s(4);
         ctx.beginPath();
-        ctx.roundRect(qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 10);
+        ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
         ctx.stroke();
         ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
-
-        ctx.fillStyle = POSTER_MUTED;
-        ctx.font = "500 22px 'Geist', sans-serif";
-        ctx.fillText(t("qrLabel"), qrX + qrSize / 2, qrY + qrSize + 36);
       } catch {
         // Skip QR if it fails to load.
       }
 
+      // Prominent QR call-to-action label — centered below QR. Bold red,
+      // name-targeted, fitted to width.
+      const qrCtaText = t("qrCtaLabel", { name: displayName.toUpperCase() });
+      const qrCtaMaxWidth = paperWidth - s(160);
+      const qrCtaFontSize = fitCanvasText(
+        ctx,
+        qrCtaText,
+        qrCtaMaxWidth,
+        s(36),
+        s(22),
+        800,
+      );
+      ctx.fillStyle = POSTER_RED;
+      ctx.font = `800 ${qrCtaFontSize}px 'Geist', sans-serif`;
+      ctx.textAlign = "center";
+      ctx.letterSpacing = `${s(2)}px`;
+      ctx.fillText(qrCtaText, centerX, qrCtaY);
+      ctx.letterSpacing = "0px";
+
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = "400 24px 'Geist', sans-serif";
-      ctx.fillText(t("posterFooter"), centerX, bottomY + sealSize + 74);
+      ctx.font = `400 ${s(24)}px 'Geist', sans-serif`;
+      ctx.fillText(t("posterFooter"), centerX, footerY);
     },
-    [ensureSealLoaded, loadQrImage, locale, name, selectedCharges, t],
+    [loadQrImage, locale, name, selectedCharges, selectedTone, seededHash, t],
   );
 
   useEffect(() => {
@@ -354,13 +553,14 @@ export function WantedContent() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = 2100;
-    canvas.height = 2970;
+    const layout = POSTER_LAYOUTS[posterFormat];
+    canvas.width = layout.width;
+    canvas.height = layout.height;
 
-    drawPoster(ctx, 2100, 2970).catch(() => {
+    drawPoster(ctx, layout).catch(() => {
       // Leave the previous frame in place if drawing fails.
     });
-  }, [drawPoster]);
+  }, [drawPoster, posterFormat]);
 
   const handleGenerate = useCallback(() => {
     trackEvent("wanted_poster_generate", { name_length: name.trim().length });
@@ -371,11 +571,41 @@ export function WantedContent() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    trackEvent("wanted_poster_download");
+    trackEvent("wanted_poster_download", { format: posterFormat });
     setDownloading(true);
     try {
+      // Apply a deterministic ±2° tilt to the downloaded poster so it reads
+      // like a printed-and-pinned-to-corkboard image rather than a flat scan.
+      // The preview canvas stays straight (better for editing).
+      const tiltOptions = [-2, -1, 1, 2];
+      const tiltDeg = tiltOptions[nameHash(name) % tiltOptions.length];
+      const tiltRad = (tiltDeg * Math.PI) / 180;
+
+      const srcW = canvas.width;
+      const srcH = canvas.height;
+      // Expand the destination canvas just enough so the rotated rectangle
+      // fits without clipping its corners.
+      const cos = Math.abs(Math.cos(tiltRad));
+      const sin = Math.abs(Math.sin(tiltRad));
+      const dstW = Math.ceil(srcW * cos + srcH * sin);
+      const dstH = Math.ceil(srcW * sin + srcH * cos);
+
+      const off = document.createElement("canvas");
+      off.width = dstW;
+      off.height = dstH;
+      const offCtx = off.getContext("2d");
+      const exportSource = offCtx ? off : canvas;
+
+      if (offCtx) {
+        offCtx.fillStyle = "#0e0a06"; // very dark corkboard tone behind the tilted poster
+        offCtx.fillRect(0, 0, dstW, dstH);
+        offCtx.translate(dstW / 2, dstH / 2);
+        offCtx.rotate(tiltRad);
+        offCtx.drawImage(canvas, -srcW / 2, -srcH / 2);
+      }
+
       const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/png"),
+        exportSource.toBlob(resolve, "image/png"),
       );
       if (!blob) return;
 
@@ -391,7 +621,7 @@ export function WantedContent() {
     } finally {
       setDownloading(false);
     }
-  }, [name]);
+  }, [name, posterFormat]);
 
   const handleShare = useCallback(async () => {
     const canvas = canvasRef.current;
@@ -410,7 +640,7 @@ export function WantedContent() {
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: t("shareTitle"),
+          title: t("shareTitle", { name: name.trim() || t("defaultName") }),
           text: t("shareText", { name: name.trim() || t("defaultName") }),
         });
       } else {
@@ -431,19 +661,39 @@ export function WantedContent() {
 
   const handleRegenerate = useCallback(() => {
     setGenerated(false);
+    setRerollSeed(0);
     setName("");
+  }, []);
+
+  const handleReroll = useCallback(() => {
+    trackEvent("wanted_poster_reroll");
+    setRerollSeed((prev) => prev + 1);
+    setLinkCopied(false);
   }, []);
 
   const updateName = useCallback((value: string) => {
     setGenerated(false);
     setLinkCopied(false);
+    setRerollSeed(0);
     setName(value);
   }, []);
 
+  const updateTone = useCallback((tone: WantedTone) => {
+    setGenerated(false);
+    setLinkCopied(false);
+    setSelectedTone(tone);
+  }, []);
+
+  const updateFormat = useCallback((format: PosterFormat) => {
+    setLinkCopied(false);
+    setPosterFormat(format);
+  }, []);
+
   const displayName = name.trim() || t("defaultName");
-  const giftUrl = `/purchase?tier=protected&gift=true${
+  const giftUrl = `/purchase?tier=protected&gift=true&ref=wanted${
     name.trim() ? `&name=${encodeURIComponent(name.trim())}` : ""
   }`;
+  const layout = POSTER_LAYOUTS[posterFormat];
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
@@ -516,6 +766,37 @@ export function WantedContent() {
                     ))}
                   </div>
 
+                  <fieldset className="space-y-2">
+                    <legend className="text-sm font-semibold text-[var(--brand-dark)]">
+                      {t("toneLabel")}
+                    </legend>
+                    <div className="grid gap-2 sm:grid-cols-3">
+                      {WANTED_TONES.map((tone) => {
+                        const isSelected = selectedTone === tone;
+                        return (
+                          <button
+                            key={tone}
+                            type="button"
+                            onClick={() => updateTone(tone)}
+                            aria-pressed={isSelected}
+                            className={`rounded-xl border px-3 py-3 text-left transition-colors duration-300 ease-out ${
+                              isSelected
+                                ? "border-red-300 bg-red-50 text-red-800 shadow-sm"
+                                : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-red-50/50"
+                            }`}
+                          >
+                            <span className="block text-sm font-semibold text-[var(--brand-dark)]">
+                              {t(`tones.${tone}.label`)}
+                            </span>
+                            <span className="mt-1 block text-xs leading-5">
+                              {t(`tones.${tone}.description`)}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+
                   <button
                     type="submit"
                     disabled={!name.trim()}
@@ -556,15 +837,6 @@ export function WantedContent() {
                 </div>
 
                 <div className="mt-3 space-y-3">
-                  {generated ? (
-                    <LocalizedLink
-                      href={giftUrl}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
-                    >
-                      {t("giftCta", { name: displayName })}
-                    </LocalizedLink>
-                  ) : null}
-
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={handleDownload}
@@ -580,12 +852,23 @@ export function WantedContent() {
                       className={`rounded-lg border px-4 py-3.5 text-sm font-semibold transition-colors duration-300 ease-out disabled:cursor-not-allowed disabled:opacity-60 ${
                         linkCopied
                           ? "border-teal-300 bg-teal-50 text-teal-700"
-                          : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"
+                          : generated
+                            ? "border-red-600 bg-red-600 text-white hover:bg-red-700"
+                            : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"
                       }`}
                     >
                       {linkCopied ? t("linkCopied") : t("shareButton")}
                     </button>
                   </div>
+
+                  {generated ? (
+                    <LocalizedLink
+                      href={giftUrl}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+                    >
+                      {t("giftCta", { name: displayName })}
+                    </LocalizedLink>
+                  ) : null}
 
                   <p className="text-xs leading-6 text-[var(--muted)]">
                     {t("viralPrompt")} {t("viralSubtext")}

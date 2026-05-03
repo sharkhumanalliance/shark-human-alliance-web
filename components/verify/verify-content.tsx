@@ -75,6 +75,7 @@ export function VerifyContent({
   const certificateNote = getCertificateDiplomaticNote(
     getCertificateHumorSeed(name, registryId, tier),
     locale,
+    tier,
   );
   const rank = getRankInfo(referralCount || 0);
   const rankUi = getRankUi(rank.id);
