@@ -141,7 +141,7 @@ export function WantedContent() {
     if (charges.length === 0) return [];
     const picked: string[] = [];
     const pool = [...charges];
-    const chargeCount = posterFormat === "story" ? 2 : 3;
+    const chargeCount = 3;
 
     for (let i = 0; i < Math.min(chargeCount, pool.length); i++) {
       const index = (seededHash + i * 7) % pool.length;
@@ -150,7 +150,7 @@ export function WantedContent() {
     }
 
     return picked;
-  }, [seededHash, charges, posterFormat]);
+  }, [seededHash, charges]);
 
   const selectedCaseDetail = useMemo(() => {
     if (caseDetails.length === 0) {
@@ -345,9 +345,9 @@ export function WantedContent() {
       const subtitleFontSize = fitCanvasText(
         ctx,
         subtitleText,
-        paperWidth - s(180),
-        s(isStory ? 88 : 42),
-        s(isStory ? 48 : 24),
+        paperWidth - s(isStory ? 340 : 180),
+        s(isStory ? 78 : 42),
+        s(isStory ? 40 : 24),
         800,
       );
       ctx.fillStyle = POSTER_INK;
@@ -355,7 +355,7 @@ export function WantedContent() {
       ctx.letterSpacing = `${s(4)}px`;
       ctx.fillText(subtitleText, centerX, y);
       ctx.letterSpacing = "0px";
-      y += s(isStory ? 112 : 88);
+      y += s(isStory ? 136 : 106);
 
       ctx.fillStyle = POSTER_INK;
       let nameFontSize = s(isStory ? 122 : 104);
@@ -368,7 +368,7 @@ export function WantedContent() {
         ctx.font = `900 ${nameFontSize}px 'Geist', sans-serif`;
       }
       ctx.fillText(displayName, centerX, y);
-      y += s(isStory ? 36 : 28);
+      y += s(isStory ? 48 : 32);
 
       const nameWidth = Math.min(
         ctx.measureText(displayName).width + s(60),
@@ -380,7 +380,7 @@ export function WantedContent() {
       ctx.moveTo(centerX - nameWidth / 2, y);
       ctx.lineTo(centerX + nameWidth / 2, y);
       ctx.stroke();
-      y += s(isStory ? 70 : 56);
+      y += s(isStory ? 82 : 64);
 
       // Typewriter-style fields row — replaces the old 3-column rounded boxes.
       // Reads as a filled-in paper form (label + value + dotted underline)
@@ -398,13 +398,13 @@ export function WantedContent() {
       fields.forEach((field, index) => {
         const x = fieldsX + index * (fieldWidth + fieldGap);
         ctx.fillStyle = POSTER_MUTED;
-        ctx.font = `700 ${s(isStory ? 32 : 16)}px 'Geist', sans-serif`;
+        ctx.font = `700 ${s(isStory ? 32 : 18)}px 'Geist', sans-serif`;
         ctx.textAlign = "center";
         ctx.letterSpacing = `${s(2.5)}px`;
         ctx.fillText(field.label.toUpperCase(), x + fieldWidth / 2, fieldsRowY);
         ctx.letterSpacing = "0px";
         ctx.fillStyle = POSTER_INK;
-        ctx.font = `700 ${s(isStory ? 52 : 26)}px 'Courier New', 'Courier', monospace`;
+        ctx.font = `700 ${s(isStory ? 52 : 28)}px 'Courier New', 'Courier', monospace`;
         ctx.fillText(field.value, x + fieldWidth / 2, fieldsRowY + s(isStory ? 64 : 40));
         ctx.strokeStyle = POSTER_MUTED;
         ctx.lineWidth = s(1.5);
@@ -419,7 +419,7 @@ export function WantedContent() {
       const detailY = fieldsRowY + s(isStory ? 132 : 104);
       const detailMaxWidth = fieldsTotalWidth - s(40);
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = `700 ${s(isStory ? 36 : 16)}px 'Geist', sans-serif`;
+      ctx.font = `700 ${s(isStory ? 36 : 18)}px 'Geist', sans-serif`;
       ctx.letterSpacing = `${s(2.5)}px`;
       ctx.fillText(selectedCaseDetail.label.toUpperCase(), centerX, detailY);
       ctx.letterSpacing = "0px";
@@ -428,8 +428,8 @@ export function WantedContent() {
         ctx,
         detailText,
         detailMaxWidth,
-        s(isStory ? 60 : 26),
-        s(isStory ? 38 : 18),
+        s(isStory ? 60 : 28),
+        s(isStory ? 38 : 20),
         700,
       );
       ctx.fillStyle = POSTER_INK;
@@ -443,7 +443,7 @@ export function WantedContent() {
       ctx.lineTo(fieldsX + fieldsTotalWidth - s(12), detailY + s(isStory ? 84 : 54));
       ctx.stroke();
       ctx.setLineDash([]);
-      y = detailY + s(isStory ? 124 : 92);
+      y = detailY + s(isStory ? 150 : 92);
 
       // Bottom-anchored layout — footer pulled clearly inside the inner
       // frame border (was sitting on top of it before). The QR CTA + footer
@@ -451,7 +451,7 @@ export function WantedContent() {
       // significantly larger to remain phone-readable.
       const footerY = height - marginY - s(isStory ? 100 : 70);
       const qrCtaY = footerY - s(isStory ? 84 : 56);
-      const qrAreaBottomY = qrCtaY - s(isStory ? 80 : 60);
+      const qrAreaBottomY = qrCtaY - s(isStory ? 154 : 106);
 
       const qrY = qrAreaBottomY - qrSize;
       const rewardBoxWidth = Math.min(s(760), paperWidth - s(160));
@@ -467,9 +467,9 @@ export function WantedContent() {
 
       // Story canvas (1080 wide) gets downscaled to ~390 px on phone. To
       // keep charges readable post-downscale (target ~12 px on phone), we
-      // need ~33 px on canvas → s(64). A4 print stays at s(30).
-      const chargeTextSize = s(isStory ? 64 : 30);
-      const chargeLineHeight = s(isStory ? 92 : 46);
+      // need ~33 px on canvas → s(64). A4 print stays readable at s(34).
+      const chargeTextSize = s(isStory ? 64 : 34);
+      const chargeLineHeight = s(isStory ? 92 : 52);
       ctx.font = `500 ${chargeTextSize}px 'Geist', sans-serif`;
       const wrappedCharges = selectedCharges.map((charge, index) => {
         const words = charge.split(" ");
@@ -494,15 +494,15 @@ export function WantedContent() {
       // Charges box is sized to content (header + entries + breathing pad),
       // not stretched to fill the bottom region. Smaller box reads cleaner
       // and entries land at the top instead of floating in dead centre.
-      const chargesEntryGap = s(isStory ? 56 : 42);
+      const chargesEntryGap = s(isStory ? 56 : 46);
       const chargesContentHeight =
         wrappedCharges.reduce(
           (total, charge) => total + charge.lines.length * chargeLineHeight + chargesEntryGap,
           0,
         ) - chargesEntryGap;
       const chargesAvailable = rewardBoxY - chargesBoxY - s(36);
-      const chargesHeaderHeight = s(isStory ? 92 : 72);
-      const chargesBoxBottomPad = s(isStory ? 56 : 40);
+      const chargesHeaderHeight = s(isStory ? 92 : 80);
+      const chargesBoxBottomPad = s(isStory ? 56 : 44);
       const chargesBoxHeight = Math.max(
         s(280),
         Math.min(
@@ -517,10 +517,10 @@ export function WantedContent() {
       ctx.roundRect(chargesBoxX, chargesBoxY, chargesBoxWidth, chargesBoxHeight, s(18));
       ctx.stroke();
       ctx.fillStyle = POSTER_RED;
-      ctx.font = `700 ${s(isStory ? 60 : 34)}px 'Geist', sans-serif`;
+      ctx.font = `700 ${s(isStory ? 60 : 40)}px 'Geist', sans-serif`;
       ctx.textAlign = "center";
       ctx.letterSpacing = `${s(4)}px`;
-      ctx.fillText(t("chargesLabel").toUpperCase(), centerX, chargesBoxY + s(isStory ? 62 : 42));
+      ctx.fillText(t("chargesLabel").toUpperCase(), centerX, chargesBoxY + s(isStory ? 62 : 48));
       ctx.letterSpacing = "0px";
       ctx.textAlign = "left";
       ctx.fillStyle = POSTER_INK;
@@ -529,7 +529,7 @@ export function WantedContent() {
       // Top-align entries — start just below the CHARGES header, with a
       // small constant offset. No vertical centering: per user feedback the
       // box should sit close to its content, not float in the middle.
-      let chargesCursorY = chargesBoxY + chargesHeaderHeight + s(isStory ? 28 : 24);
+      let chargesCursorY = chargesBoxY + chargesHeaderHeight + s(isStory ? 48 : 34);
       wrappedCharges.forEach((charge) => {
         ctx.font = `700 ${chargeTextSize}px 'Geist', sans-serif`;
         ctx.fillText(charge.prefix, chargesBoxInnerX, chargesCursorY);
@@ -576,25 +576,28 @@ export function WantedContent() {
       // dominate the bottom area as the single, real, scannable call-to-action.
 
       // QR centered horizontally on the paper. Red border for high contrast,
-      // and the URL routes to the gift purchase flow with the target's name
-      // pre-filled (was previously a dead-end /verify?id=sample link).
+      // and the URL routes to a personalized case page before the purchase
+      // flow so scans continue the wanted-poster joke instead of acting as a
+      // bare checkout CTA.
       const qrX = centerX - qrSize / 2;
 
       const trimmedName = name.trim();
-      const purchasePath = `/purchase?tier=protected&gift=true&ref=wanted${
-        trimmedName ? `&name=${encodeURIComponent(trimmedName)}` : ""
-      }`;
-      const purchaseUrlForQr =
+      const shortCaseParams = new URLSearchParams({ t: selectedTone });
+      if (trimmedName) shortCaseParams.set("n", trimmedName);
+      const shortCasePath = `/w?${shortCaseParams.toString()}`;
+      const caseUrlForQr =
         typeof window !== "undefined"
-          ? buildAbsoluteLocalizedUrl(window.location.origin, locale, purchasePath)
+          ? buildAbsoluteLocalizedUrl(window.location.origin, locale, shortCasePath)
           : buildAbsoluteLocalizedUrl(
               process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
               locale,
-              purchasePath,
+              shortCasePath,
             );
+      const shortCaseUrl = new URL(caseUrlForQr);
+      const shortCaseUrlLabel = `${shortCaseUrl.host}${shortCaseUrl.pathname}${shortCaseUrl.search}`;
 
       try {
-        const qrImg = await loadQrImage(purchaseUrlForQr);
+        const qrImg = await loadQrImage(caseUrlForQr);
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
         ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
@@ -608,6 +611,21 @@ export function WantedContent() {
       } catch {
         // Skip QR if it fails to load.
       }
+
+      const qrLinkText = shortCaseUrlLabel.replace(/\+/g, "%20");
+      const qrLinkFontSize = fitCanvasText(
+        ctx,
+        qrLinkText,
+        paperWidth - s(160),
+        s(isStory ? 48 : 24),
+        s(isStory ? 34 : 17),
+        700,
+      );
+      ctx.fillStyle = POSTER_INK;
+      ctx.font = `700 ${qrLinkFontSize}px 'Geist', sans-serif`;
+      ctx.textAlign = "center";
+      ctx.letterSpacing = "0px";
+      ctx.fillText(qrLinkText, centerX, qrY + qrSize + s(isStory ? 72 : 46));
 
       // Prominent QR call-to-action label — centered below QR. Bold red,
       // name-targeted, fitted to width.
@@ -789,6 +807,10 @@ export function WantedContent() {
   }, []);
 
   const displayName = name.trim() || t("defaultName");
+  const shortCaseUrl = `/w?${new URLSearchParams({
+    t: selectedTone,
+    ...(name.trim() ? { n: name.trim() } : {}),
+  }).toString()}`;
   const giftUrl = `/purchase?tier=protected&gift=true&ref=wanted${
     name.trim() ? `&name=${encodeURIComponent(name.trim())}` : ""
   }`;
@@ -995,6 +1017,14 @@ export function WantedContent() {
                       <p className="text-center text-xs leading-5 text-[var(--muted)]">
                         {t("priceAnchor")}
                       </p>
+
+                      <LocalizedLink
+                        href={shortCaseUrl}
+                        className="block rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-center text-xs font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-red-50"
+                      >
+                        <span className="text-[var(--muted)]">{t("caseLinkLabel")}: </span>
+                        <span className="break-all">{`/${locale}${shortCaseUrl.replace(/\+/g, "%20")}`}</span>
+                      </LocalizedLink>
 
                       <button
                         onClick={handleShare}

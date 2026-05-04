@@ -28,11 +28,15 @@
       "title": "FAQ — Certificados de Tiburón Divertidos y Conservación",
       "description": "Respuestas a preguntas frecuentes sobre certificados de tiburón divertidos, donaciones, entrega digital y regalos. Todo lo que necesitas saber antes de comprar."
     },
-    "wanted": {
-      "title": "Generador de Póster de Búsqueda Divertido",
-      "description": "Genera un divertido póster de Se Busca para alguien que conoces. Compártelo en Stories y regálale un certificado oficial de protección de tiburones. Gratis."
-    },
-    "career": {
+      "wanted": {
+        "title": "Generador de Póster de Búsqueda Divertido",
+        "description": "Genera un divertido póster de Se Busca para alguien que conoces. Compártelo en Stories y regálale un certificado oficial de protección de tiburones. Gratis."
+      },
+      "wantedCase": {
+        "title": "Caso activo de cumplimiento tiburón-humano",
+        "description": "Un expediente personalizado de Shark Human Alliance para regularizar a un humano desprotegido con el papeleo adecuado."
+      },
+      "career": {
       "title": "Escalafón de la Alianza",
       "description": "Sube de rango desde Civil hasta Susurrador Jefe de Tiburones. Refiere amigos, gana ascensos y asciende por la jerarquía diplomática de la Alianza."
     },
@@ -86,6 +90,7 @@
     "madeWith": "Hecho para los tiburones con amor",
     "email": "sharkhumanalliance@gmail.com",
     "copyright": "© 2026 Shark Human Alliance.",
+    "motto": "La diplomacia no es opcional.",
     "operator": "Operado por JEEL Wekeza s.r.o.",
     "termsLink": "Condiciones de compra",
     "supportLink": "Soporte y reclamaciones",
@@ -569,11 +574,12 @@
       "nonsnack": "Reconocimiento No-Snack — $19",
       "business": "Zona Libre de Tiburones — $99"
     },
-    "seoSummary": {
-      "eyebrow": "Resumen de compra",
-      "title": "{tier}",
-      "description": "Certificado digital personalizado, entrega inmediata tras el pago correcto y una asignación real a conservación. Precio: {price}. Asignación a conservación: {donation}.",
-      "includesLabel": "Qué recibes",
+      "seoSummary": {
+        "eyebrow": "Resumen de compra",
+        "title": "Regularización tiburón-humano personalizada",
+        "description": "Certificado digital personalizado, entrega inmediata tras el pago correcto y una asignación real a conservación. Precio: {price}. Asignación a conservación: {donation}.",
+        "coffeeNote": "La regularización de entrada empieza en $4 — más o menos lo que cuesta un café de Starbucks. La persona designada recibe papeleo que los tiburones han sido instruidos a tomar en serio, y además se financia conservación real.",
+        "includesLabel": "Qué recibes",
       "includes": {
         "0": "Certificado digital personalizado con nombre y dedicatoria opcional.",
         "1": "Acceso inmediato al PDF tras el pago correcto.",
@@ -1103,10 +1109,11 @@
     "downloadingButton": "Preparando póster...",
     "shareButton": "Compartir póster",
     "linkCopied": "¡Enlace copiado!",
-    "shareTitle": "SE BUSCA: {name}",
-    "shareText": "{name} ha sido identificado como un humano desprotegido. Haz lo correcto.",
-    "giftCta": "Regalar a {name} un Certificado de Amigo Protegido — $4",
-    "newPoster": "Crear otro póster",
+      "shareTitle": "SE BUSCA: {name}",
+      "shareText": "{name} ha sido identificado como un humano desprotegido. Haz lo correcto.",
+      "giftCta": "Regalar a {name} un Certificado de Amigo Protegido — $4",
+      "caseLinkLabel": "Enlace del caso",
+      "newPoster": "Crear otro póster",
     "rerollChargesButton": "Volver a tirar los cargos",
     "priceAnchor": "$4 — menos que tu café Starbucks de la mañana. Sin colas, además.",
     "socialProofText": "18 pósters de búsqueda emitidos esta semana.",
@@ -1139,7 +1146,7 @@
       "Pasar junto a avisos de tiburones sin acusar recibo",
       "Reservar alojamiento costero sin autorización previa"
     ],
-    "caseDetails": [
+      "caseDetails": [
       {
         "label": "Nivel de expediente",
         "value": "Nivel B / sin resolver"
@@ -1172,9 +1179,30 @@
         "label": "Enlace contactado",
         "value": "Ninguno registrado"
       }
-    ]
-  },
-  "career": {
+      ]
+    },
+    "wantedCase": {
+      "eyebrow": "Aviso de cumplimiento de la Alianza",
+      "caseFileLabel": "Expediente activo",
+      "headline": "Has sido nombrado en un asunto activo de cumplimiento tiburón-humano.",
+      "findingLabel": "Conclusión de la oficina",
+      "finding": "Nuestros registros indican que {name} podría estar operando sin suficiente papeleo adyacente a tiburones. Es corregible. Convenientemente.",
+      "explanation": "La resolución recomendada no es pánico, negación ni discutir con la administración marina. Es un certificado de Amigo Protegido: personalizado, imprimible y bastante más oficial de lo que la situación merece.",
+      "previewLabel": "Documento de regularización propuesto",
+      "certificateDedication": "Emitido tras un incidente público de póster de búsqueda y una revisión administrativa inusualmente eficiente.",
+      "resolutionLabel": "Resolución recomendada",
+      "resolutionTitle": "Emite el papeleo. Cierra el expediente.",
+      "resolutionText": "{name} puede recibir regularización diplomática en minutos con un certificado personalizado de Amigo Protegido. Los tiburones no tendrán obligación legal de cooperar, pero el papeleo se verá excelente.",
+      "cta": "Regularizar a este humano por {price}",
+      "priceNote": "Más o menos un café. La conservación real sigue financiándose.",
+      "trustItems": {
+        "0": "PDF instantáneo",
+        "1": "Listo para regalar",
+        "2": "Financia conservación real",
+        "3": "Sin fuerza legal marina, lamentablemente"
+      }
+    },
+    "career": {
     "hero": {
       "label": "Departamento de Personal de la Alianza",
       "title": "Tu carrera en la Alianza.",

@@ -84,7 +84,9 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-5 text-xs text-[var(--muted)]">
-          <p>&copy; {new Date().getFullYear()} {t("brand")}.</p>
+          <p>
+            {t("copyright")} {t("motto")}
+          </p>
           <p>{t("operator")}</p>
         </div>
       </div>

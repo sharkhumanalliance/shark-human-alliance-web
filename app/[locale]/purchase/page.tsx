@@ -3,16 +3,10 @@ import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PurchaseFlow } from "@/components/purchase/purchase-flow";
 import { BASE_URL } from "@/lib/config";
-import {
-  getTierMetadata,
-  getTierPriceLabel,
-  normalizeTier,
-} from "@/lib/tiers";
 import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams?: Promise<{ tier?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -34,15 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PurchasePage({ params, searchParams }: Props) {
+export default async function PurchasePage({ params }: Props) {
   const { locale } = await params;
-  const resolvedSearchParams = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "purchase" });
-  const selectedTier = normalizeTier(resolvedSearchParams?.tier);
-  const tierMetadata = getTierMetadata(selectedTier);
-  const tierLabel = t(`tiers.${tierMetadata.labelKey}`);
-  const donationLabel = `$${tierMetadata.donationCents / 100}`;
 
   return (
     <>
@@ -56,14 +45,26 @@ export default async function PurchasePage({ params, searchParams }: Props) {
                   {t("seoSummary.eyebrow")}
                 </p>
                 <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
-                  {t("seoSummary.title", { tier: tierLabel })}
+                  {t("seoSummary.title")}
                 </h1>
-                <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
-                  {t("seoSummary.description", {
-                    price: getTierPriceLabel(selectedTier),
-                    donation: donationLabel,
-                  })}
+                <p className="mt-3 max-w-3xl text-sm font-medium leading-6 text-[var(--brand-dark)] sm:text-base sm:leading-7">
+                  {t("seoSummary.coffeeNote")}
                 </p>
+                <div className="mt-5 rounded-2xl border border-[var(--border)] bg-white/80 px-4 py-3 text-sm leading-6 text-[var(--muted)]">
+                  {t("seoSummary.legalPrefix")}{" "}
+                  <a href={`/${locale}/terms`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
+                    {t("seoSummary.termsLink")}
+                  </a>
+                  {", "}
+                  <a href={`/${locale}/privacy`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
+                    {t("seoSummary.privacyLink")}
+                  </a>
+                  {", "}
+                  <a href={`/${locale}/terms#refunds`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
+                    {t("seoSummary.refundLink")}
+                  </a>
+                  .
+                </div>
               </div>
 
               <div className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm">
@@ -79,22 +80,6 @@ export default async function PurchasePage({ params, searchParams }: Props) {
                   ))}
                 </ul>
               </div>
-            </div>
-
-            <div className="mt-5 rounded-2xl border border-[var(--border)] bg-white/80 px-4 py-3 text-sm leading-6 text-[var(--muted)]">
-              {t("seoSummary.legalPrefix")}{" "}
-              <a href={`/${locale}/terms`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
-                {t("seoSummary.termsLink")}
-              </a>
-              {", "}
-              <a href={`/${locale}/privacy`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
-                {t("seoSummary.privacyLink")}
-              </a>
-              {", "}
-              <a href={`/${locale}/terms#refunds`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
-                {t("seoSummary.refundLink")}
-              </a>
-              .
             </div>
           </div>
         </section>

@@ -28,11 +28,15 @@
       "title": "FAQ — Funny Shark Certificates & Conservation",
       "description": "Answers to common questions about funny shark certificates, conservation donations, digital delivery, and gifting. Everything you need to know before buying."
     },
-    "wanted": {
-      "title": "Funny Shark Wanted Poster Generator",
-      "description": "Generate a funny shark wanted poster for someone you know. Share it on Stories, then gift them an official shark protection certificate. Free to generate."
-    },
-    "career": {
+      "wanted": {
+        "title": "Funny Shark Wanted Poster Generator",
+        "description": "Generate a funny shark wanted poster for someone you know. Share it on Stories, then gift them an official shark protection certificate. Free to generate."
+      },
+      "wantedCase": {
+        "title": "Active Shark-Human Compliance Case",
+        "description": "A personalized Shark Human Alliance case file for resolving an unprotected human with appropriate paperwork."
+      },
+      "career": {
       "title": "Alliance Career Ladder",
       "description": "Climb the ranks from Civilian to Chief Shark Whisperer. Refer friends, earn promotions, and rise through the Alliance's diplomatic hierarchy."
     },
@@ -86,6 +90,7 @@
     "madeWith": "Made for sharks with love",
     "email": "sharkhumanalliance@gmail.com",
     "copyright": "© 2026 Shark Human Alliance.",
+    "motto": "Diplomacy is not optional.",
     "operator": "Operated by JEEL Wekeza s.r.o.",
     "termsLink": "Terms & Purchase Conditions",
     "supportLink": "Support & complaints",
@@ -569,11 +574,12 @@
       "nonsnack": "Non-Snack Recognition — $19",
       "business": "Shark-Free Zone — $99"
     },
-    "seoSummary": {
-      "eyebrow": "Purchase summary",
-      "title": "{tier}",
-      "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
-      "includesLabel": "What you get",
+      "seoSummary": {
+        "eyebrow": "Purchase summary",
+        "title": "Personalized shark clearance",
+        "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
+        "coffeeNote": "Entry-tier clearance starts at $4 — about the price of one Starbucks coffee. The appointed human gets paperwork the sharks have been advised to take seriously, and real conservation still gets funded.",
+        "includesLabel": "What you get",
       "includes": {
         "0": "Personalized digital certificate with name and optional dedication.",
         "1": "Immediate PDF access after successful payment.",
@@ -1103,10 +1109,11 @@
     "downloadingButton": "Preparing poster...",
     "shareButton": "Share poster",
     "linkCopied": "Link copied!",
-    "shareTitle": "WANTED: {name}",
-    "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
-    "giftCta": "Gift {name} a Protected Friend Certificate — $4",
-    "newPoster": "Create another poster",
+      "shareTitle": "WANTED: {name}",
+      "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
+      "giftCta": "Gift {name} a Protected Friend Certificate — $4",
+      "caseLinkLabel": "Case link",
+      "newPoster": "Create another poster",
     "rerollChargesButton": "Reroll charges",
     "priceAnchor": "$4 — less than your morning Starbucks. Less waiting in line, too.",
     "socialProofText": "18 wanted posters issued this week.",
@@ -1139,7 +1146,7 @@
       "Walking past published shark advisories without acknowledgement",
       "Booking ocean-adjacent accommodation without prior clearance"
     ],
-    "caseDetails": [
+      "caseDetails": [
       {
         "label": "Filing tier",
         "value": "Tier B / unresolved"
@@ -1172,9 +1179,30 @@
         "label": "Liaison contacted",
         "value": "None on record"
       }
-    ]
-  },
-  "career": {
+      ]
+    },
+    "wantedCase": {
+      "eyebrow": "Alliance compliance notice",
+      "caseFileLabel": "Active case file",
+      "headline": "You have been named in an active shark-human compliance matter.",
+      "findingLabel": "Bureau finding",
+      "finding": "Our records indicate that {name} may be operating without adequate shark-adjacent paperwork. This is correctable. Conveniently.",
+      "explanation": "The recommended resolution is not panic, denial, or arguing with marine administration. It is a Protected Friend certificate: personalized, printable, and significantly more official-looking than the situation deserves.",
+      "previewLabel": "Proposed clearance document",
+      "certificateDedication": "Issued following a public wanted-poster incident and one unusually efficient administrative review.",
+      "resolutionLabel": "Recommended resolution",
+      "resolutionTitle": "Issue the paperwork. Close the file.",
+      "resolutionText": "{name} can be diplomatically cleared in minutes with a personalized Protected Friend certificate. The sharks will receive no legal obligation to cooperate, but the paperwork will look excellent.",
+      "cta": "Clear this human for {price}",
+      "priceNote": "About one coffee. Real conservation still gets funded.",
+      "trustItems": {
+        "0": "Instant PDF",
+        "1": "Gift-ready",
+        "2": "Funds real conservation",
+        "3": "No actual marine legal force, regrettably"
+      }
+    },
+    "career": {
     "hero": {
       "label": "Alliance Personnel Department",
       "title": "Your Alliance Career.",
