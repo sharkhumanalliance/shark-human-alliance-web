@@ -15,7 +15,7 @@ import { getTierPriceLabel } from "@/lib/tiers";
 const PARTNERS = [
   { i: 1, url: "https://www.sharktrust.org" },
   { i: 2, url: "https://oceana.org" },
-  { i: 3, url: "https://sharks.org" },
+  { i: 3, url: "https://www.sharkconservationfund.org/" },
   { i: 4, url: "https://www.fundacionmalpelo.org" },
 ];
 

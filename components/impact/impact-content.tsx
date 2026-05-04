@@ -7,7 +7,7 @@ import { FirstDonationTarget } from "@/components/impact/first-donation-target";
 const PARTNERS = [
   { key: 1, url: "https://www.sharktrust.org" },
   { key: 2, url: "https://oceana.org" },
-  { key: 3, url: "https://sharks.org" },
+  { key: 3, url: "https://www.sharkconservationfund.org/" },
   { key: 4, url: "https://www.fundacionmalpelo.org" },
 ];
 

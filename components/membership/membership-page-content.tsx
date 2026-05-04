@@ -169,9 +169,9 @@ export function MembershipPageContent() {
             </h2>
           </div>
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-3">
             {styleCards.map((card) => (
-              <article data-reveal key={card.title} className={`overflow-hidden rounded-2xl border ${card.accent}`}>
+              <article data-reveal key={card.title} className={`flex h-full flex-col overflow-hidden rounded-2xl border ${card.accent}`}>
                 <div className="border-b border-[var(--border)]/50 bg-white/80 p-4">
                   <div className="mx-auto max-w-[220px]">
                     <CertificatePreview
@@ -185,12 +185,12 @@ export function MembershipPageContent() {
                   </div>
                 </div>
 
-                <div className="p-5">
+                <div className="flex flex-1 flex-col p-5">
                   <h3 className="text-xl font-semibold text-[var(--brand-dark)]">{card.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{card.text}</p>
+                  <p className="mb-4 mt-2 text-sm leading-6 text-[var(--muted)]">{card.text}</p>
                   <LocalizedLink
                     href={card.href}
-                    className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-orange-50"
+                    className="mt-auto inline-flex min-h-[44px] w-full items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-orange-50"
                   >
                     {card.cta}
                   </LocalizedLink>

@@ -116,14 +116,14 @@
     "proofPrice": "Desde $4",
     "proofDelivery": "Entregado en minutos",
     "proofDiplomats": "diplomáticos registrados",
-      "proofRegistry": "Registro público opcional",
+    "proofRegistry": "Registro público opcional",
     "proofTransparency": "Transparencia e impacto"
   },
   "home": {
     "earlyAdopter": {
       "label": "Únete a la Alianza",
       "title": "Sé parte de la primera ola de diplomáticos.",
-        "text": "Cada certificado recibe un registro privado. El listado público es opcional y solo aparece si eliges hacerlo visible. Cada dólar se rastrea; el papeleo conserva el dramatismo adecuado.",
+      "text": "Cada certificado recibe un registro privado. El listado público es opcional y solo aparece si eliges hacerlo visible. Cada dólar se rastrea; el papeleo conserva el dramatismo adecuado.",
       "cta": "Obtén tu certificado — $4",
       "purchaseCta": "Obtén tu certificado",
       "registryCta": "Ver el Registro",
@@ -160,9 +160,9 @@
       "previewSectionLabel": "Pruébalo en vivo"
     },
     "impactTeaser": {
-        "donationsIntro": "El papeleo es falso. La asignación no. Cada certificado reserva dinero real para conservación de tiburones y océanos, empezando por el primer objetivo público de donación.",
+      "donationsIntro": "El papeleo es falso. La asignación no. Cada certificado reserva dinero real para conservación de tiburones y océanos, empezando por el primer objetivo público de donación.",
       "and": "y",
-        "opsJoke": "El resto mantiene operativa la burocracia terrestre de una sola persona de la Alianza, algo menos majestuoso pero lamentablemente necesario.",
+      "opsJoke": "El resto mantiene operativa la burocracia terrestre de una sola persona de la Alianza, algo menos majestuoso pero lamentablemente necesario.",
       "linkText": "Ver informe completo de impacto y detalles de socios"
     },
     "membershipSection": {
@@ -193,7 +193,7 @@
       "businessDescription": "Para negocios dispuestos a exhibir papeleo oficialmente libre de tiburones con la cara seria. Ideal para estudios, cafés, oficinas y cualquiera que entienda el valor del arte de pared extraño pero excelente.",
       "businessFeatures": [
         "Insignia para el sitio web",
-          "Ubicación premium opcional en el registro",
+        "Ubicación premium opcional en el registro",
         "Certificado orientado a negocios"
       ],
       "businessCta": "Obtén certificación empresarial — $99",
@@ -274,7 +274,7 @@
       "point3Icon": "03",
       "point3Title": "Un registro en los archivos",
       "point3Text": "Cada certificado recibe un registro privado. El listado público es opcional y solo aparece si eliges hacerlo visible.",
-      "impactLine": "Cada venta financia la conservación a través de Shark Trust, Oceana, Saving the Blue y Fundación Malpelo."
+      "impactLine": "Cada venta financia la conservación a través de Shark Trust, Oceana, Shark Conservation Fund y Fundación Malpelo."
     },
     "howStep1": "Elige un certificado",
     "howStep2": "Financia conservación real",
@@ -286,17 +286,17 @@
     "subtitle": "Para personas sensatas que quieren saber qué están comprando, adónde va el dinero y si los tiburones pueden leer certificados.",
     "items": [
       {
-          "question": "¿Esto sirve legalmente para algo?",
-          "answer": "No. No es un documento legal, una garantía de seguridad, una credencial diplomática ni un instrumento antimordidas. Es papeleo humorístico con aspecto oficial y una asignación real para conservación detrás."
-        },
-        {
-          "question": "¿Los tiburones lo respetarán?",
-          "answer": "Casi seguro que no. Los tiburones no han ratificado el papeleo y es improbable que asistan a la reunión. El certificado protege más a los tiburones de los humanos que a los humanos de los tiburones."
-        },
-        {
-          "question": "¿Adónde va el dinero real?",
-            "answer": "Las asignaciones a conservación se financian con ingresos de Shark Human Alliance. Las rastreamos internamente y publicamos las organizaciones destinatarias y los detalles de asignación una vez realizadas las donaciones. Los destinatarios previstos no son socios formales salvo que lo digamos expresamente."
-        },
+        "question": "¿Esto sirve legalmente para algo?",
+        "answer": "No. No es un documento legal, una garantía de seguridad, una credencial diplomática ni un instrumento antimordidas. Es papeleo humorístico con aspecto oficial y una asignación real para conservación detrás."
+      },
+      {
+        "question": "¿Los tiburones lo respetarán?",
+        "answer": "Casi seguro que no. Los tiburones no han ratificado el papeleo y es improbable que asistan a la reunión. El certificado protege más a los tiburones de los humanos que a los humanos de los tiburones."
+      },
+      {
+        "question": "¿Adónde va el dinero real?",
+        "answer": "Las asignaciones a conservación se financian con ingresos de Shark Human Alliance. Las rastreamos internamente y publicamos las organizaciones destinatarias y los detalles de asignación una vez realizadas las donaciones. Los destinatarios previstos no son socios formales salvo que lo digamos expresamente."
+      },
       {
         "question": "¿Cuándo empiezan las donaciones y cómo se informarán?",
         "answer": "Publicamos las asignaciones una vez que las donaciones se realizan de verdad. Esta página y nuestras redes sociales mostrarán las organizaciones destinatarias y los importes reportados a medida que ocurra."
@@ -331,7 +331,7 @@
       },
       {
         "question": "¿Es una donación o la compra de un producto?",
-          "answer": "Es la compra de un producto digital humorístico, no una donación benéfica directa. La asignación a conservación se financia con ingresos de Shark Human Alliance por nuestra parte y no es deducible de impuestos."
+        "answer": "Es la compra de un producto digital humorístico, no una donación benéfica directa. La asignación a conservación se financia con ingresos de Shark Human Alliance por nuestra parte y no es deducible de impuestos."
       },
       {
         "question": "¿Qué tamaño tiene el certificado?",
@@ -563,29 +563,29 @@
     "stepPayment": "Pago",
     "stepCertificate": "Certificado",
     "tierLabel": "Nivel seleccionado",
-      "tiers": {
-        "basic": "Membresía Básica — $4",
-        "protected": "Estatus de Amigo Protegido — $4",
-        "nonsnack": "Reconocimiento No-Snack — $19",
-        "business": "Zona Libre de Tiburones — $99"
+    "tiers": {
+      "basic": "Membresía Básica — $4",
+      "protected": "Estatus de Amigo Protegido — $4",
+      "nonsnack": "Reconocimiento No-Snack — $19",
+      "business": "Zona Libre de Tiburones — $99"
+    },
+    "seoSummary": {
+      "eyebrow": "Resumen de compra",
+      "title": "{tier}",
+      "description": "Certificado digital personalizado, entrega inmediata tras el pago correcto y una asignación real a conservación. Precio: {price}. Asignación a conservación: {donation}.",
+      "includesLabel": "Qué recibes",
+      "includes": {
+        "0": "Certificado digital personalizado con nombre y dedicatoria opcional.",
+        "1": "Acceso inmediato al PDF tras el pago correcto.",
+        "2": "Registro privado; el listado público es opcional en el checkout.",
+        "3": "Asignación a conservación financiada con ingresos de Shark Human Alliance."
       },
-      "seoSummary": {
-        "eyebrow": "Resumen de compra",
-        "title": "{tier}",
-        "description": "Certificado digital personalizado, entrega inmediata tras el pago correcto y una asignación real a conservación. Precio: {price}. Asignación a conservación: {donation}.",
-        "includesLabel": "Qué recibes",
-        "includes": {
-          "0": "Certificado digital personalizado con nombre y dedicatoria opcional.",
-          "1": "Acceso inmediato al PDF tras el pago correcto.",
-          "2": "Registro privado; el listado público es opcional en el checkout.",
-          "3": "Asignación a conservación financiada con ingresos de Shark Human Alliance."
-        },
-        "legalPrefix": "Antes de pagar, revisa las reglas sobre entrega digital inmediata, desistimiento, privacidad y correcciones en",
-        "termsLink": "Condiciones de compra",
-        "privacyLink": "Política de privacidad",
-        "refundLink": "política de reembolsos y correcciones"
-      },
-      "nameLabel": "Nombre en el certificado",
+      "legalPrefix": "Antes de pagar, revisa las reglas sobre entrega digital inmediata, desistimiento, privacidad y correcciones en",
+      "termsLink": "Condiciones de compra",
+      "privacyLink": "Política de privacidad",
+      "refundLink": "política de reembolsos y correcciones"
+    },
+    "nameLabel": "Nombre en el certificado",
     "namePlaceholder": "ej. Capitán James Coral",
     "giftToggle": "Esto es un regalo",
     "recipientEmailLabel": "Email del destinatario",
@@ -984,7 +984,7 @@
     "partner4Name": "Malpelo Foundation",
     "partner4Desc": "Protección de la fauna marina y uno de los santuarios de tiburones más importantes del mundo frente a la costa pacífica de Colombia.",
     "partner4Focus": "Enfoque: Protección del santuario de la Isla Malpelo, investigación de tiburones martillo, patrullas marinas.",
-      "partnersDisclaimer": "Nota diplomática: Las organizaciones de conservación listadas no necesariamente han respaldado nuestro papeleo. Son destinatarios previstos, y publicamos confirmaciones una vez realizadas las donaciones.",
+    "partnersDisclaimer": "Nota diplomática: Las organizaciones de conservación listadas no necesariamente han respaldado nuestro papeleo. Son destinatarios previstos, y publicamos confirmaciones una vez realizadas las donaciones.",
     "partnerStatusPlanned": "Destinatario previsto",
     "visitWebsite": "Visitar sitio web",
     "opensInNewTab": "se abre en una pestaña nueva",
@@ -1036,29 +1036,29 @@
       "mild": {
         "label": "Levemente preocupante",
         "description": "Para alguien que necesita papeleo, no pánico.",
-        "posterSubtitle": "Cortésmente Desprotegido",
+        "posterSubtitle": "Suavemente Fuera de Norma",
         "caseStatus": "Expediente abierto",
         "riskLevel": "Gestionable",
         "recommendedAction": "Emitir papeleo",
-        "rewardText": "Una modesta intervención burocrática"
+        "rewardText": "Alivio burocrático modesto"
       },
       "clear": {
         "label": "Claramente sin protección",
         "description": "El aviso público estándar para humanos sin certificado.",
-        "posterSubtitle": "Peligrosamente Desprotegido",
+        "posterSubtitle": "Aproximarse Con Certificado",
         "caseStatus": "Sin resolver",
         "riskLevel": "Oficialmente incómodo",
         "recommendedAction": "Resolver caso",
-        "rewardText": "Un certificado y tiburones ligeramente aliviados"
+        "rewardText": "Tiburones algo aliviados"
       },
       "emergency": {
         "label": "Emergencia administrativa",
         "description": "Para casos avanzados de ausencia visible de certificado.",
-        "posterSubtitle": "Administrativamente Catastrófico",
+        "posterSubtitle": "Escalado — Resolución Requerida",
         "caseStatus": "Escalado",
         "riskLevel": "Burocrático",
         "recommendedAction": "Cerrar expediente",
-        "rewardText": "Un certificado y presión social medible"
+        "rewardText": "Presión social medible"
       }
     },
     "caseStatusLabel": "Estado del caso",
@@ -1069,35 +1069,32 @@
     "defaultName": "Humano No Identificado",
     "posterHeader": "Shark Human Alliance",
     "wantedTitle": "SE BUSCA",
-    "wantedSubtitle": "Peligrosamente Desprotegido",
     "chargesLabel": "Cargos",
     "toneCharges": {
       "mild": [
-        "Vivir sin documentación visible relacionada con tiburones",
-        "Avanzar por la vida diaria con confianza marina meramente informal",
-        "Mantener un círculo social que no ha verificado su estatus de protección",
-        "No poseer evidencia visible de reconocimiento por la Alianza",
-        "Permitir que continúe una incertidumbre documental evitable"
+        "Mantener un bronceado sospechoso sin credenciales en el registro",
+        "Visitar masas de agua sin presentar intención estacional",
+        "Dejar que la documentación caiga por debajo de niveles veraniegos recomendados",
+        "Tratar zonas cercanas al océano como territorio recreativo casual",
+        "No mencionar las relaciones tiburón-humanas en tres (3) reuniones sociales"
       ],
       "clear": [
-        "Permanecer públicamente sin protección pese a los canales de certificación disponibles",
-        "Entrar en situaciones sociales ordinarias sin papeleo de diplomacia tiburonesca",
-        "Crear preocupación evitable entre amistades, familiares y tiburones imaginarios",
-        "No resolver una ausencia documentada de estatus protector",
-        "Mostrar una confianza sospechosa sin respaldo del Registro"
+        "Fotografiar pelícanos, gaviotas y otra fauna marina sin permisos",
+        "Adentrarse en situaciones sociales ordinarias sin autorización diplomática",
+        "Mantener contacto visual no autorizado con peces durante las comidas",
+        "Sostener una dieta favorable a los peces sin intención registrada",
+        "Secarse tras el baño sin certificado protector visible"
       ],
       "emergency": [
-        "Operar en sociedad sin cobertura certificada inmediata en el expediente",
-        "Provocar una respuesta administrativa evitable de la Oficina de Seguridad de la Alianza",
-        "Dejar a la comunidad tiburonesca insuficientemente informada sobre sus intenciones",
-        "Permitir que el caso siga abierto pese a remedios documentales evidentes",
-        "Generar presión social medible mediante una existencia continuada sin certificar"
+        "Provocar alarma involuntaria en tres (3) empleados de la Alianza",
+        "Obligar al Departamento de Prevención de Malentendidos a programar horas extra",
+        "Generar presión documental medible mediante incumplimiento continuado",
+        "Permitir que un caso marcado llegue a revisión trimestral sin acción",
+        "Operar en jurisdicciones cercanas al océano con cero cobertura en archivo"
       ]
     },
     "rewardLabel": "Recompensa",
-    "rewardText": "Un certificado y la vaga gratitud administrativa de la Alianza",
-    "qrLabel": "Escanea para proteger",
-    "qrCtaLabel": "ESCANEA PARA PROTEGER A {name}",
+    "qrCtaLabel": "REGULARIZA A ESTE HUMANO ANTES DE LA TEMPORADA DE PLAYA",
     "posterFooter": "sharkhumanalliance.com — La diplomacia no es opcional",
     "formatLabel": "Formato",
     "formatA4": "A4 (impresión)",
@@ -1131,7 +1128,51 @@
     "bottomCta": "Regalar Estatus de Amigo Protegido — $4",
     "footerCtaTitle": "Empieza el papeleo antes de que sea incómodo.",
     "footerCtaText": "Genera el póster, lanza la acusación y luego resuelve el problema con un certificado absurdamente oficial.",
-    "footerCtaButton": "Protege a alguien que conoces"
+    "footerCtaButton": "Protege a alguien que conoces",
+    "commonCharges": [
+      "Acercarse a aguas abiertas con confianza no documentada",
+      "Mantener ambigüedad de posible aperitivo en un lugar público",
+      "No presentar evidencia de no comestibilidad al momento de la inspección",
+      "Mostrar confianza playera sin respaldo de registros de la Alianza",
+      "No aclarar si los tiburones deben tratar esto como persona, problema o solicitud de papeleo",
+      "Llevar toalla de playa por jurisdicciones marcadas",
+      "Pasar junto a avisos de tiburones sin acusar recibo",
+      "Reservar alojamiento costero sin autorización previa"
+    ],
+    "caseDetails": [
+      {
+        "label": "Nivel de expediente",
+        "value": "Nivel B / sin resolver"
+      },
+      {
+        "label": "Visto por última vez",
+        "value": "Costa, sin permiso"
+      },
+      {
+        "label": "Testigos",
+        "value": "Tres (3) especies marinas"
+      },
+      {
+        "label": "Pendiente",
+        "value": "Un (1) certificado protector"
+      },
+      {
+        "label": "Oficina responsable",
+        "value": "Prevención de Malentendidos"
+      },
+      {
+        "label": "Aviso emitido",
+        "value": "Advertencia estacional estándar"
+      },
+      {
+        "label": "Días sin papeleo",
+        "value": "Varios"
+      },
+      {
+        "label": "Enlace contactado",
+        "value": "Ninguno registrado"
+      }
+    ]
   },
   "career": {
     "hero": {
@@ -1239,26 +1280,26 @@
         "title": "7. Entrega y acceso",
         "body": "Los certificados se generan digitalmente tras el pago exitoso. Si se proporciona una dirección de email, los detalles de entrega también pueden enviarse por correo. Si no se proporciona email, el certificado debe descargarse inmediatamente desde la página de éxito porque el enlace puede no quedar almacenado para recuperarlo más tarde."
       },
-        "digitalContent": {
-          "title": "8. Entrega digital inmediata y derecho de desistimiento",
-          "body": "Como el certificado es contenido digital personalizado, puedes elegir la entrega inmediata durante el checkout. Si consientes expresamente la entrega inmediata antes de que termine el plazo de desistimiento y reconoces que esto implica perder el derecho de desistimiento una vez que el certificado esté disponible, el certificado se generará inmediatamente después del pago correcto. Esto no afecta a tus derechos legales en caso de contenido digital defectuoso, fallo de entrega, cobro duplicado u otro problema causado por nosotros."
-        },
-        "conservation": {
-          "title": "9. Aviso sobre conservación",
-          "body": "Las asignaciones a conservación se financian con ingresos de Shark Human Alliance. Estás comprando un producto digital, no realizando una donación benéfica directa. Las asignaciones se rastrean internamente y se informan públicamente una vez realizadas las donaciones. Los destinatarios previstos no se describen como socios formales salvo confirmación expresa."
-        },
-        "complaints": {
-          "title": "10. Reclamaciones e incidencias técnicas",
-          "body": "Si el archivo entregado es defectuoso, no puede descargarse el certificado, se genera un nivel incorrecto o surge otro problema técnico o de pago, contacta con soporte sin demora innecesaria e incluye los detalles del pedido si los tienes. Revisaremos la incidencia y propondremos una solución práctica, como reenvío, corrección, sustitución u otra medida adecuada."
-        },
-        "refunds": {
-          "title": "11. Reembolsos y correcciones",
-          "body": "Como el producto es un artículo digital personalizado, las solicitudes de reembolso y corrección se gestionan individualmente según el caso concreto. Si hay un cobro duplicado, un fallo técnico de entrega o un defecto causado por nuestra parte, contáctanos y revisaremos la solicitud con rapidez. Si el certificado contiene un error causado por los datos enviados, también te animamos a escribirnos e intentaremos ayudarte."
-        },
-        "contact": {
-          "title": "12. Contacto",
-          "body": "Para soporte, reclamaciones o preguntas sobre la compra, contacta con sharkhumanalliance@gmail.com."
-        }
+      "digitalContent": {
+        "title": "8. Entrega digital inmediata y derecho de desistimiento",
+        "body": "Como el certificado es contenido digital personalizado, puedes elegir la entrega inmediata durante el checkout. Si consientes expresamente la entrega inmediata antes de que termine el plazo de desistimiento y reconoces que esto implica perder el derecho de desistimiento una vez que el certificado esté disponible, el certificado se generará inmediatamente después del pago correcto. Esto no afecta a tus derechos legales en caso de contenido digital defectuoso, fallo de entrega, cobro duplicado u otro problema causado por nosotros."
+      },
+      "conservation": {
+        "title": "9. Aviso sobre conservación",
+        "body": "Las asignaciones a conservación se financian con ingresos de Shark Human Alliance. Estás comprando un producto digital, no realizando una donación benéfica directa. Las asignaciones se rastrean internamente y se informan públicamente una vez realizadas las donaciones. Los destinatarios previstos no se describen como socios formales salvo confirmación expresa."
+      },
+      "complaints": {
+        "title": "10. Reclamaciones e incidencias técnicas",
+        "body": "Si el archivo entregado es defectuoso, no puede descargarse el certificado, se genera un nivel incorrecto o surge otro problema técnico o de pago, contacta con soporte sin demora innecesaria e incluye los detalles del pedido si los tienes. Revisaremos la incidencia y propondremos una solución práctica, como reenvío, corrección, sustitución u otra medida adecuada."
+      },
+      "refunds": {
+        "title": "11. Reembolsos y correcciones",
+        "body": "Como el producto es un artículo digital personalizado, las solicitudes de reembolso y corrección se gestionan individualmente según el caso concreto. Si hay un cobro duplicado, un fallo técnico de entrega o un defecto causado por nuestra parte, contáctanos y revisaremos la solicitud con rapidez. Si el certificado contiene un error causado por los datos enviados, también te animamos a escribirnos e intentaremos ayudarte."
+      },
+      "contact": {
+        "title": "12. Contacto",
+        "body": "Para soporte, reclamaciones o preguntas sobre la compra, contacta con sharkhumanalliance@gmail.com."
+      }
     }
   },
   "verify": {

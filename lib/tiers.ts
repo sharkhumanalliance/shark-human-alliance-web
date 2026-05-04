@@ -45,7 +45,7 @@ export const TIER_METADATA: Record<TierKey, TierMetadata> = {
     priceCents: 9900,
     donationCents: 7000,
     labelKey: "business",
-    stripeName: "Shark-Free Zone Certification",
+    stripeName: "Shark-Free Zone",
     colorVariant: "business",
     isPubliclySelectable: true,
   },

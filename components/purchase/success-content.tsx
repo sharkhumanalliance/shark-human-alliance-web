@@ -570,28 +570,16 @@ function SuccessContentInner() {
                 href="/career"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-sky-50"
               >
-                {t("referralCareerLink")}
-              </LocalizedLink>
-              <LocalizedLink
-                href={`/wanted?name=${encodeURIComponent(member.name)}`}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-sky-50"
-              >
                 {t("referralWantedPoster")}
               </LocalizedLink>
             </div>
           </section>
         )}
 
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 text-center sm:flex-row">
-          <LocalizedLink
-            href="/registry"
-            className="inline-flex min-h-[40px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-sky-50"
-          >
-            {t("exploreRegistry")}
-          </LocalizedLink>
+        <div className="mt-8 text-center">
           <LocalizedLink
             href="/"
-            className="inline-flex min-h-[40px] items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+            className="text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
           >
             {t("backHome")}
           </LocalizedLink>

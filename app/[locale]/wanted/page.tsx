@@ -27,13 +27,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t("title"),
       description: t("description"),
       type: "website",
-      images: [{ url: "/mascots/homepage-hero-plush.png", width: 1152, height: 768 }],
+      // Dedicated wanted-poster sample (Dave from Accounting). When the URL
+      // is shared, the link preview shows the actual product instead of the
+      // generic homepage plushies.
+      images: [
+        { url: "/og/wanted-sample.png", width: 1200, height: 630 },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["/mascots/homepage-hero-plush.png"],
+      images: ["/og/wanted-sample.png"],
     },
   };
 }

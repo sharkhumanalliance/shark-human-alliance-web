@@ -149,9 +149,9 @@
       "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
-        "donationsIntro": "The paperwork is fake. The allocation is not. Each certificate sets aside real money for shark and ocean conservation, starting with the first public donation target.",
+      "donationsIntro": "The paperwork is fake. The allocation is not. Each certificate sets aside real money for shark and ocean conservation, starting with the first public donation target.",
       "and": "and",
-        "opsJoke": "The rest keeps the Alliance's one-person land-based bureaucracy operational, which is less majestic but regrettably necessary.",
+      "opsJoke": "The rest keeps the Alliance's one-person land-based bureaucracy operational, which is less majestic but regrettably necessary.",
       "linkText": "See full impact report and partner details"
     },
     "about": {
@@ -274,7 +274,7 @@
       "point3Icon": "03",
       "point3Title": "A record in the archives",
       "point3Text": "Every certificate is assigned a private registry record. Public listing is optional and appears only if you choose to make it visible.",
-      "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Saving the Blue, and Fundación Malpelo."
+      "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Shark Conservation Fund, and Fundación Malpelo."
     },
     "howStep1": "Pick a certificate",
     "howStep2": "Fund real conservation",
@@ -286,17 +286,17 @@
     "subtitle": "For sensible humans who want to know what they’re buying, where the money goes, and whether sharks can read certificates.",
     "items": [
       {
-          "question": "Is this legally useful?",
-          "answer": "No. It is not a legal document, safety guarantee, diplomatic credential, or anti-bite instrument. It is official-looking joke paperwork with a real conservation allocation behind it."
-        },
-        {
-          "question": "Will sharks respect it?",
-          "answer": "Almost certainly not. Sharks have not ratified the paperwork and are unlikely to attend the meeting. The certificate protects sharks from humans more than humans from sharks."
-        },
-          {
-            "question": "Where does the real money go?",
-            "answer": "Conservation allocations are funded from Shark Human Alliance revenue. We track them internally and publish recipient organizations and allocation details once donations are made. Planned recipients are not formal partners unless we expressly say so."
-        },
+        "question": "Is this legally useful?",
+        "answer": "No. It is not a legal document, safety guarantee, diplomatic credential, or anti-bite instrument. It is official-looking joke paperwork with a real conservation allocation behind it."
+      },
+      {
+        "question": "Will sharks respect it?",
+        "answer": "Almost certainly not. Sharks have not ratified the paperwork and are unlikely to attend the meeting. The certificate protects sharks from humans more than humans from sharks."
+      },
+      {
+        "question": "Where does the real money go?",
+        "answer": "Conservation allocations are funded from Shark Human Alliance revenue. We track them internally and publish recipient organizations and allocation details once donations are made. Planned recipients are not formal partners unless we expressly say so."
+      },
       {
         "question": "When do donations start, and how will they be reported?",
         "answer": "We publish allocations once donations are actually made. This page and our social channels will show recipient organizations and reported amounts as they happen."
@@ -329,10 +329,10 @@
         "question": "Why sharks?",
         "answer": "Because sharks have a PR problem they did not create. Humans kill roughly 100 million sharks a year. Sharks kill very few humans. The imbalance is embarrassing."
       },
-        {
-          "question": "Is this a donation or a product purchase?",
-          "answer": "It is a purchase of a humorous digital product, not a direct charitable donation. A conservation allocation is funded from Shark Human Alliance revenue on our side, and it is not tax-deductible."
-        },
+      {
+        "question": "Is this a donation or a product purchase?",
+        "answer": "It is a purchase of a humorous digital product, not a direct charitable donation. A conservation allocation is funded from Shark Human Alliance revenue on our side, and it is not tax-deductible."
+      },
       {
         "question": "What size is the certificate?",
         "answer": "Certificates are optimized for A4 or US Letter download and printing."
@@ -563,29 +563,29 @@
     "stepPayment": "Payment",
     "stepCertificate": "Certificate",
     "tierLabel": "Selected tier",
-      "tiers": {
-        "basic": "Basic Membership — $4",
-        "protected": "Protected Friend Status — $4",
-        "nonsnack": "Non-Snack Recognition — $19",
-        "business": "Shark-Free Zone — $99"
+    "tiers": {
+      "basic": "Basic Membership — $4",
+      "protected": "Protected Friend Status — $4",
+      "nonsnack": "Non-Snack Recognition — $19",
+      "business": "Shark-Free Zone — $99"
+    },
+    "seoSummary": {
+      "eyebrow": "Purchase summary",
+      "title": "{tier}",
+      "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
+      "includesLabel": "What you get",
+      "includes": {
+        "0": "Personalized digital certificate with name and optional dedication.",
+        "1": "Immediate PDF access after successful payment.",
+        "2": "Private registry record; public listing is optional at checkout.",
+        "3": "Conservation allocation funded from Shark Human Alliance revenue."
       },
-      "seoSummary": {
-        "eyebrow": "Purchase summary",
-        "title": "{tier}",
-        "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
-        "includesLabel": "What you get",
-        "includes": {
-          "0": "Personalized digital certificate with name and optional dedication.",
-          "1": "Immediate PDF access after successful payment.",
-          "2": "Private registry record; public listing is optional at checkout.",
-          "3": "Conservation allocation funded from Shark Human Alliance revenue."
-        },
-        "legalPrefix": "Before payment, review immediate digital delivery, withdrawal, privacy, and correction rules in",
-        "termsLink": "Terms & Purchase Conditions",
-        "privacyLink": "Privacy Policy",
-        "refundLink": "refund and correction policy"
-      },
-      "nameLabel": "Name on the certificate",
+      "legalPrefix": "Before payment, review immediate digital delivery, withdrawal, privacy, and correction rules in",
+      "termsLink": "Terms & Purchase Conditions",
+      "privacyLink": "Privacy Policy",
+      "refundLink": "refund and correction policy"
+    },
+    "nameLabel": "Name on the certificate",
     "namePlaceholder": "e.g. Captain James Coral",
     "giftToggle": "This is a gift",
     "recipientEmailLabel": "Recipient email",
@@ -689,13 +689,13 @@
       "a4": {
         "label": "A4",
         "description": "Best for Europe and most home printers outside North America."
-        },
-        "letter": {
-          "label": "US Letter",
-          "description": "Best for the US and Canada. No cropping, slightly wider margins.",
-          "classicUnavailable": "Not available for Classic yet."
-        }
       },
+      "letter": {
+        "label": "US Letter",
+        "description": "Best for the US and Canada. No cropping, slightly wider margins.",
+        "classicUnavailable": "Not available for Classic yet."
+      }
+    },
     "customizeTitle": "Customize the certificate",
     "customizeHelp": "Pick a template and paper size. Defaults usually work — open this only if you want to tweak.",
     "customizeShow": "Customize",
@@ -984,7 +984,7 @@
     "partner4Name": "Malpelo Foundation",
     "partner4Desc": "Protecting marine fauna and one of the world's most important shark sanctuaries off Colombia's Pacific coast.",
     "partner4Focus": "Focus: Malpelo Island sanctuary protection, hammerhead shark research, marine patrols.",
-      "partnersDisclaimer": "Diplomatic note: Listed conservation organizations have not necessarily endorsed our paperwork. They are intended recipients, and we publish confirmations once donations are made.",
+    "partnersDisclaimer": "Diplomatic note: Listed conservation organizations have not necessarily endorsed our paperwork. They are intended recipients, and we publish confirmations once donations are made.",
     "partnerStatusPlanned": "Planned Recipient",
     "visitWebsite": "Visit website",
     "opensInNewTab": "opens in new tab",
@@ -1036,29 +1036,29 @@
       "mild": {
         "label": "Mildly concerning",
         "description": "For someone who needs paperwork, not panic.",
-        "posterSubtitle": "Politely Unprotected",
+        "posterSubtitle": "Gently Out of Compliance",
         "caseStatus": "Open file",
         "riskLevel": "Manageable",
         "recommendedAction": "Issue paperwork",
-        "rewardText": "A modest paperwork intervention"
+        "rewardText": "Modest paperwork relief"
       },
       "clear": {
         "label": "Clearly unprotected",
         "description": "The standard public notice for certificate-free humans.",
-        "posterSubtitle": "Dangerously Unprotected",
+        "posterSubtitle": "Subject Should Be Approached With a Certificate",
         "caseStatus": "Unresolved",
         "riskLevel": "Officially awkward",
         "recommendedAction": "Resolve case",
-        "rewardText": "One certificate and slightly relieved sharks"
+        "rewardText": "Slightly relieved sharks"
       },
       "emergency": {
         "label": "Administrative emergency",
         "description": "For advanced cases of visible certificate absence.",
-        "posterSubtitle": "Administratively Catastrophic",
+        "posterSubtitle": "Escalated — Resolution Required",
         "caseStatus": "Escalated",
         "riskLevel": "Bureaucratic",
         "recommendedAction": "Close file",
-        "rewardText": "One certificate and measurable social pressure"
+        "rewardText": "Measurable social pressure"
       }
     },
     "caseStatusLabel": "Case status",
@@ -1069,35 +1069,32 @@
     "defaultName": "Unidentified Human",
     "posterHeader": "Shark Human Alliance",
     "wantedTitle": "WANTED",
-    "wantedSubtitle": "Dangerously Unprotected",
     "chargesLabel": "Charges",
     "toneCharges": {
       "mild": [
-        "Living without clearly displayed shark-adjacent documentation",
-        "Proceeding through daily life with only informal marine confidence",
-        "Maintaining a social circle that has not verified their protection status",
-        "Possessing no visible evidence of Alliance recognition",
-        "Allowing preventable paperwork uncertainty to continue"
+        "Maintaining suspicious tan with zero registry credentials on file",
+        "Visiting bodies of water without filing seasonal intent",
+        "Letting documentation drift below recommended summer levels",
+        "Treating ocean-adjacent zones as casual recreation territory",
+        "Failing to mention shark-human relations at three (3) social gatherings"
       ],
       "clear": [
-        "Remaining publicly unprotected despite available certification channels",
-        "Entering ordinary social situations without shark diplomacy paperwork",
-        "Creating avoidable concern among friends, relatives, and imaginary sharks",
-        "Failing to resolve a documented absence of protective status",
-        "Being suspiciously confident without Registry support"
+        "Photographing pelicans, seagulls, and other marine fauna without permits",
+        "Wading into ordinary social situations with no diplomatic clearance",
+        "Sustaining unauthorized fish-eye contact during meal hours",
+        "Maintaining a fish-friendly diet with zero registered intent",
+        "Drying off after swimming with no protective certificate present"
       ],
       "emergency": [
-        "Operating in society with no immediate certificate coverage on file",
-        "Triggering an avoidable administrative response from the Alliance Security Bureau",
-        "Leaving the shark community insufficiently briefed on their intentions",
-        "Allowing the case to remain open despite obvious paperwork remedies",
-        "Generating measurable social pressure through continued uncertified existence"
+        "Triggering involuntary alarm in three (3) Alliance personnel",
+        "Causing the Department of Misunderstanding Prevention to schedule overtime",
+        "Generating measurable filing pressure through continued non-compliance",
+        "Allowing a flagged case to reach quarterly review without action",
+        "Operating in ocean-adjacent jurisdictions with zero coverage on file"
       ]
     },
     "rewardLabel": "Reward",
-    "rewardText": "One certificate and the vague administrative gratitude of the Alliance",
-    "qrLabel": "Scan to protect",
-    "qrCtaLabel": "SCAN TO PROTECT {name}",
+    "qrCtaLabel": "CLEAR THIS HUMAN BEFORE BEACH SEASON",
     "posterFooter": "sharkhumanalliance.com — Diplomacy is not optional",
     "formatLabel": "Format",
     "formatA4": "A4 (print)",
@@ -1131,7 +1128,51 @@
     "bottomCta": "Gift Protected Friend Status — $4",
     "footerCtaTitle": "Start the paperwork before it gets embarrassing.",
     "footerCtaText": "Generate the poster, send the accusation, then solve the problem with a certificate that looks absurdly official.",
-    "footerCtaButton": "Protect someone you know"
+    "footerCtaButton": "Protect someone you know",
+    "commonCharges": [
+      "Approaching open water with undocumented confidence",
+      "Maintaining snack-adjacent ambiguity in a public setting",
+      "Possessing no evidence of non-edibility at the time of inspection",
+      "Displaying beach confidence unsupported by Alliance records",
+      "Failing to clarify whether sharks should treat this as a person, problem, or paperwork request",
+      "Carrying a beach towel through flagged jurisdictions",
+      "Walking past published shark advisories without acknowledgement",
+      "Booking ocean-adjacent accommodation without prior clearance"
+    ],
+    "caseDetails": [
+      {
+        "label": "Filing tier",
+        "value": "Tier B / unresolved"
+      },
+      {
+        "label": "Last seen",
+        "value": "Coastline, no permit"
+      },
+      {
+        "label": "Witnessed by",
+        "value": "Three (3) marine species"
+      },
+      {
+        "label": "Outstanding",
+        "value": "One (1) protective certificate"
+      },
+      {
+        "label": "Office in charge",
+        "value": "Misunderstanding Prevention"
+      },
+      {
+        "label": "Notice issued",
+        "value": "Standard seasonal warning"
+      },
+      {
+        "label": "Days since paperwork",
+        "value": "Multiple"
+      },
+      {
+        "label": "Liaison contacted",
+        "value": "None on record"
+      }
+    ]
   },
   "career": {
     "hero": {
@@ -1239,26 +1280,26 @@
         "title": "7. Delivery and access",
         "body": "Certificates are generated digitally after successful payment. If an email address is provided, delivery details may also be sent by email. If no email address is provided, the certificate should be downloaded immediately from the success page because the link may not be stored for later retrieval."
       },
-        "digitalContent": {
-          "title": "8. Immediate digital delivery and withdrawal right",
-          "body": "Because the certificate is personalized digital content, you may choose immediate delivery during checkout. If you expressly consent to immediate delivery before the end of the withdrawal period and acknowledge that this means losing the right to withdraw once the certificate is made available, the certificate will be generated immediately after successful payment. This does not affect your statutory rights in case of defective digital content, failed delivery, duplicate charge, or other issue caused by us."
-        },
-        "conservation": {
-          "title": "9. Conservation disclaimer",
-          "body": "Conservation allocations are funded from Shark Human Alliance revenue. You are purchasing a digital product, not making a direct charitable donation. Allocations are tracked internally and reported publicly once donations are made. Planned recipients are not described as formal partners unless expressly confirmed."
-        },
-        "complaints": {
-          "title": "10. Complaints and technical issues",
-          "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, or another appropriate remedy."
-        },
-        "refunds": {
-          "title": "11. Refunds and corrections",
-          "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help."
-        },
-        "contact": {
-          "title": "12. Contact",
-          "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
-        }
+      "digitalContent": {
+        "title": "8. Immediate digital delivery and withdrawal right",
+        "body": "Because the certificate is personalized digital content, you may choose immediate delivery during checkout. If you expressly consent to immediate delivery before the end of the withdrawal period and acknowledge that this means losing the right to withdraw once the certificate is made available, the certificate will be generated immediately after successful payment. This does not affect your statutory rights in case of defective digital content, failed delivery, duplicate charge, or other issue caused by us."
+      },
+      "conservation": {
+        "title": "9. Conservation disclaimer",
+        "body": "Conservation allocations are funded from Shark Human Alliance revenue. You are purchasing a digital product, not making a direct charitable donation. Allocations are tracked internally and reported publicly once donations are made. Planned recipients are not described as formal partners unless expressly confirmed."
+      },
+      "complaints": {
+        "title": "10. Complaints and technical issues",
+        "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, or another appropriate remedy."
+      },
+      "refunds": {
+        "title": "11. Refunds and corrections",
+        "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help."
+      },
+      "contact": {
+        "title": "12. Contact",
+        "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
+      }
     }
   },
   "verify": {

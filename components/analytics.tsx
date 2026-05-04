@@ -7,7 +7,15 @@ import {
   readConsent,
 } from "@/lib/cookie-consent";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const RAW_GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
+function normalizeGaMeasurementId(id?: string) {
+  const trimmed = id?.trim();
+  if (!trimmed) return undefined;
+  return trimmed.startsWith("G-") ? trimmed : `G-${trimmed}`;
+}
+
+const GA_ID = normalizeGaMeasurementId(RAW_GA_ID);
 
 declare global {
   interface Window {

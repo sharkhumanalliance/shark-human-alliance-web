@@ -284,7 +284,7 @@ function PurchaseFlowInner() {
   }
 
   return (
-    <section data-reveal className="py-14 lg:py-16">
+    <section data-reveal className="py-10 sm:py-14 lg:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl lg:text-4xl">
@@ -296,7 +296,7 @@ function PurchaseFlowInner() {
         </div>
 
         {/* Step indicator */}
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           <StepIndicator currentStep={1} />
         </div>
 
@@ -329,17 +329,17 @@ function PurchaseFlowInner() {
           </div>
         )}
 
-        <div className="mt-10 grid gap-8 md:gap-10 lg:mt-12 lg:grid-cols-[1fr_1.1fr]">
+        <div className="mt-7 grid gap-7 md:gap-10 lg:mt-12 lg:grid-cols-[1fr_1.1fr]">
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             <details className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm lg:hidden">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 text-sm font-semibold text-[var(--brand-dark)] sm:px-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-[var(--brand-dark)] sm:px-5 sm:py-4">
                 <span>{t("livePreview")}</span>
                 <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   PDF
                 </span>
               </summary>
-              <div className="border-t border-[var(--border)] bg-[var(--surface-soft)]/50 px-3 py-4 sm:px-4">
+              <div className="border-t border-[var(--border)] bg-[var(--surface-soft)]/50 px-3 py-3 sm:px-4 sm:py-4">
                 <CertificateTemplateSelector value={template} onChange={handleTemplateChange} />
                 <div className="mt-4">
                   <CertificatePreview
@@ -360,7 +360,7 @@ function PurchaseFlowInner() {
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("tierLabel")}
               </label>
-              <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-2 grid grid-cols-3 gap-2 sm:gap-3">
                 {PUBLIC_TIERS.map((tierOption) => {
                   const isSelected = tier === tierOption;
                   return (
@@ -368,9 +368,9 @@ function PurchaseFlowInner() {
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`min-h-[82px] rounded-2xl border ${getTierSelectionClass(tierOption, isSelected)} px-4 py-3 text-center transition-colors duration-300 ease-out`}
+                      className={`min-h-[58px] rounded-xl border ${getTierSelectionClass(tierOption, isSelected)} px-2 py-2 text-center transition-colors duration-300 ease-out sm:min-h-[72px] sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[82px]`}
                     >
-                      <p className="text-sm font-medium leading-snug text-[var(--muted)]">
+                      <p className="text-[11px] font-medium leading-tight text-[var(--muted)] sm:text-sm sm:leading-snug">
                         {t(`tiers.${tierOption}`)}
                       </p>
                     </button>
@@ -384,7 +384,7 @@ function PurchaseFlowInner() {
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
                 {t("paperSizeLabel")}
               </label>
-                <div className="mt-2 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
+                <div className="mt-2 grid grid-cols-2 gap-2 sm:gap-3">
                   {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
                     const isSelected = paperFormat === formatOption;
                     const isUnavailable = !isPaperFormatAvailableForTemplate(
@@ -400,7 +400,7 @@ function PurchaseFlowInner() {
                         onClick={() => {
                           if (!isUnavailable) setPaperFormat(formatOption);
                         }}
-                        className={`rounded-xl border px-4 py-3 text-left transition ${
+                        className={`rounded-xl border px-3 py-2.5 text-left transition sm:px-4 sm:py-3 ${
                           isUnavailable
                             ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-500 opacity-80 grayscale"
                             : isSelected
@@ -409,7 +409,7 @@ function PurchaseFlowInner() {
                         }`}
                       >
                         <div
-                          className={`text-sm font-semibold ${
+                          className={`text-sm font-semibold leading-tight ${
                             isUnavailable
                               ? "text-slate-500"
                               : "text-[var(--brand-dark)]"
@@ -418,7 +418,7 @@ function PurchaseFlowInner() {
                           {t(`paperSizes.${formatOption}.label`)}
                         </div>
                         <div
-                          className={`mt-1 text-xs ${
+                          className={`mt-1 text-[11px] leading-snug sm:text-xs ${
                             isUnavailable
                               ? "text-slate-500"
                               : "text-[var(--muted)]"
@@ -435,7 +435,7 @@ function PurchaseFlowInner() {
             </div>
 
             {/* Gift toggle */}
-            <div className="flex min-h-[56px] items-center justify-between gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4">
+            <div className="flex min-h-[48px] items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 sm:min-h-[56px] sm:rounded-2xl sm:py-4">
               <button
                 type="button"
                 onClick={() => { const next = !isGift; setIsGift(next); trackEvent("gift_toggle", { tier, enabled: next }); }}
@@ -472,7 +472,7 @@ function PurchaseFlowInner() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={tier === "business" ? t("businessNamePlaceholder") : t("namePlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
               />
             </div>
 
@@ -490,7 +490,7 @@ function PurchaseFlowInner() {
                 value={dedication}
                 onChange={(e) => setDedication(e.target.value)}
                 placeholder={tier === "business" ? t("businessDedicationPlaceholder") : t("dedicationPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
               />
               {tier !== "business" && (
                 <div className="mt-2 flex flex-wrap gap-2">
@@ -525,7 +525,7 @@ function PurchaseFlowInner() {
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setShowEmailWarning(false); }}
                 placeholder={t("emailPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
               />
               <p className="mt-1.5 text-xs text-[var(--muted)]">{t("emailOptionalHint")}</p>
             </div>
@@ -549,7 +549,7 @@ function PurchaseFlowInner() {
                 value={referredByCode}
                 onChange={(e) => setReferredByCode(e.target.value.toUpperCase().replace(/\s+/g, ""))}
                 placeholder={t("referredByPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm font-mono uppercase text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-mono uppercase text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
               />
               <p className="mt-1.5 text-xs text-[var(--muted)]">{t("referredByHint")}</p>
             </div>
@@ -572,7 +572,7 @@ function PurchaseFlowInner() {
                     value={recipientEmail}
                     onChange={(e) => setRecipientEmail(e.target.value)}
                     placeholder={t("recipientEmailPlaceholder")}
-                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
                   />
                   <p className="mt-1.5 text-xs text-[var(--muted)]">{t("recipientEmailHint")}</p>
                 </div>
@@ -588,7 +588,7 @@ function PurchaseFlowInner() {
                     onChange={(e) => setGiftMessage(e.target.value)}
                     placeholder={t("giftMessagePlaceholder")}
                     rows={3}
-                    className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                    className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
                   />
                 </div>
               </div>
@@ -612,7 +612,7 @@ function PurchaseFlowInner() {
                 spellCheck={false}
                 data-form-type="other"
                 data-lpignore="true"
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-5 py-4 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase"
+                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase sm:px-5 sm:py-4"
               />
             </div>
 

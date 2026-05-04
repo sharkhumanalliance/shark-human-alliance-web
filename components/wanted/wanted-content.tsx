@@ -50,6 +50,19 @@ type PosterFormat = "a4" | "story";
 
 const POSTER_FORMATS: PosterFormat[] = ["a4", "story"];
 
+type WantedCaseDetail = {
+  label: string;
+  value: string;
+};
+
+function readRawMessages<T>(reader: () => T, fallback: T) {
+  try {
+    return reader();
+  } catch {
+    return fallback;
+  }
+}
+
 interface PosterLayout {
   width: number;
   height: number;
@@ -101,9 +114,21 @@ export function WantedContent() {
   const [linkCopied, setLinkCopied] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const charges = useMemo(() => {
+  const toneCharges = useMemo(() => {
     return t.raw(`toneCharges.${selectedTone}`) as string[];
   }, [selectedTone, t]);
+
+  const commonCharges = useMemo(() => {
+    return readRawMessages(() => t.raw("commonCharges") as string[], []);
+  }, [t]);
+
+  const charges = useMemo(() => {
+    return [...toneCharges, ...commonCharges];
+  }, [toneCharges, commonCharges]);
+
+  const caseDetails = useMemo(() => {
+    return readRawMessages(() => t.raw("caseDetails") as WantedCaseDetail[], []);
+  }, [t]);
 
   // Salt hash with the reroll counter so users can cycle through different
   // 3-charge combinations for the same name + tone.
@@ -116,15 +141,23 @@ export function WantedContent() {
     if (charges.length === 0) return [];
     const picked: string[] = [];
     const pool = [...charges];
+    const chargeCount = posterFormat === "story" ? 2 : 3;
 
-    for (let i = 0; i < Math.min(3, pool.length); i++) {
+    for (let i = 0; i < Math.min(chargeCount, pool.length); i++) {
       const index = (seededHash + i * 7) % pool.length;
       picked.push(pool[index]);
       pool.splice(index, 1);
     }
 
     return picked;
-  }, [seededHash, charges]);
+  }, [seededHash, charges, posterFormat]);
+
+  const selectedCaseDetail = useMemo(() => {
+    if (caseDetails.length === 0) {
+      return { label: t("caseStatusLabel"), value: t(`tones.${selectedTone}.caseStatus`) };
+    }
+    return caseDetails[(seededHash + 5) % caseDetails.length];
+  }, [caseDetails, seededHash, selectedTone, t]);
 
   const loadQrImage = useCallback((url: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
@@ -144,6 +177,7 @@ export function WantedContent() {
       // print version and the 9:16 Story (1080 × 1920) export.
       const scale = width / 2100;
       const s = (n: number) => n * scale;
+      const isStory = posterFormat === "story";
 
       const displayName = name.trim() || t("defaultName");
       const distressRng = mulberry32(seededHash);
@@ -303,27 +337,38 @@ export function WantedContent() {
       ctx.moveTo(centerX - s(340), y);
       ctx.lineTo(centerX + s(340), y);
       ctx.stroke();
-      y += s(72);
+      // Story format gets larger gaps in the top stack so WANTED + subtitle +
+      // name don't feel crammed against each other on the taller 9:16 canvas.
+      y += s(isStory ? 92 : 72);
 
+      const subtitleText = t(`tones.${selectedTone}.posterSubtitle`).toUpperCase();
+      const subtitleFontSize = fitCanvasText(
+        ctx,
+        subtitleText,
+        paperWidth - s(180),
+        s(isStory ? 88 : 42),
+        s(isStory ? 48 : 24),
+        800,
+      );
       ctx.fillStyle = POSTER_INK;
-      ctx.font = `600 ${s(34)}px 'Geist', sans-serif`;
-      ctx.letterSpacing = `${s(6)}px`;
-      ctx.fillText(t(`tones.${selectedTone}.posterSubtitle`).toUpperCase(), centerX, y);
+      ctx.font = `800 ${subtitleFontSize}px 'Geist', sans-serif`;
+      ctx.letterSpacing = `${s(4)}px`;
+      ctx.fillText(subtitleText, centerX, y);
       ctx.letterSpacing = "0px";
-      y += s(88);
+      y += s(isStory ? 112 : 88);
 
       ctx.fillStyle = POSTER_INK;
-      let nameFontSize = s(96);
+      let nameFontSize = s(isStory ? 122 : 104);
       ctx.font = `900 ${nameFontSize}px 'Geist', sans-serif`;
       while (
-        ctx.measureText(displayName).width > paperWidth - s(200) &&
-        nameFontSize > s(48)
+        ctx.measureText(displayName).width > paperWidth - s(isStory ? 140 : 200) &&
+        nameFontSize > s(isStory ? 58 : 50)
       ) {
         nameFontSize -= s(4);
         ctx.font = `900 ${nameFontSize}px 'Geist', sans-serif`;
       }
       ctx.fillText(displayName, centerX, y);
-      y += s(28);
+      y += s(isStory ? 36 : 28);
 
       const nameWidth = Math.min(
         ctx.measureText(displayName).width + s(60),
@@ -335,7 +380,7 @@ export function WantedContent() {
       ctx.moveTo(centerX - nameWidth / 2, y);
       ctx.lineTo(centerX + nameWidth / 2, y);
       ctx.stroke();
-      y += s(56);
+      y += s(isStory ? 70 : 56);
 
       // Typewriter-style fields row — replaces the old 3-column rounded boxes.
       // Reads as a filled-in paper form (label + value + dotted underline)
@@ -353,36 +398,64 @@ export function WantedContent() {
       fields.forEach((field, index) => {
         const x = fieldsX + index * (fieldWidth + fieldGap);
         ctx.fillStyle = POSTER_MUTED;
-        ctx.font = `700 ${s(16)}px 'Geist', sans-serif`;
+        ctx.font = `700 ${s(isStory ? 32 : 16)}px 'Geist', sans-serif`;
         ctx.textAlign = "center";
         ctx.letterSpacing = `${s(2.5)}px`;
         ctx.fillText(field.label.toUpperCase(), x + fieldWidth / 2, fieldsRowY);
         ctx.letterSpacing = "0px";
         ctx.fillStyle = POSTER_INK;
-        ctx.font = `700 ${s(26)}px 'Courier New', 'Courier', monospace`;
-        ctx.fillText(field.value, x + fieldWidth / 2, fieldsRowY + s(40));
+        ctx.font = `700 ${s(isStory ? 52 : 26)}px 'Courier New', 'Courier', monospace`;
+        ctx.fillText(field.value, x + fieldWidth / 2, fieldsRowY + s(isStory ? 64 : 40));
         ctx.strokeStyle = POSTER_MUTED;
         ctx.lineWidth = s(1.5);
         ctx.setLineDash([s(4), s(4)]);
         ctx.beginPath();
-        ctx.moveTo(x + s(12), fieldsRowY + s(54));
-        ctx.lineTo(x + fieldWidth - s(12), fieldsRowY + s(54));
+        ctx.moveTo(x + s(12), fieldsRowY + s(isStory ? 86 : 54));
+        ctx.lineTo(x + fieldWidth - s(12), fieldsRowY + s(isStory ? 86 : 54));
         ctx.stroke();
         ctx.setLineDash([]);
       });
       ctx.textAlign = "center";
-      y = fieldsRowY + s(96);
+      const detailY = fieldsRowY + s(isStory ? 132 : 104);
+      const detailMaxWidth = fieldsTotalWidth - s(40);
+      ctx.fillStyle = POSTER_MUTED;
+      ctx.font = `700 ${s(isStory ? 36 : 16)}px 'Geist', sans-serif`;
+      ctx.letterSpacing = `${s(2.5)}px`;
+      ctx.fillText(selectedCaseDetail.label.toUpperCase(), centerX, detailY);
+      ctx.letterSpacing = "0px";
+      const detailText = selectedCaseDetail.value;
+      const detailFontSize = fitCanvasText(
+        ctx,
+        detailText,
+        detailMaxWidth,
+        s(isStory ? 60 : 26),
+        s(isStory ? 38 : 18),
+        700,
+      );
+      ctx.fillStyle = POSTER_INK;
+      ctx.font = `700 ${detailFontSize}px 'Courier New', 'Courier', monospace`;
+      ctx.fillText(detailText, centerX, detailY + s(isStory ? 60 : 38));
+      ctx.strokeStyle = POSTER_MUTED;
+      ctx.lineWidth = s(1.5);
+      ctx.setLineDash([s(4), s(4)]);
+      ctx.beginPath();
+      ctx.moveTo(fieldsX + s(12), detailY + s(isStory ? 84 : 54));
+      ctx.lineTo(fieldsX + fieldsTotalWidth - s(12), detailY + s(isStory ? 84 : 54));
+      ctx.stroke();
+      ctx.setLineDash([]);
+      y = detailY + s(isStory ? 124 : 92);
 
-      // Bottom-anchored layout — footer at the very bottom, then the prominent
-      // QR CTA label, then the QR + seal row, then reward box, then charges
-      // box (which auto-expands to fill whatever space remains).
-      const footerY = height - marginY - s(36);
-      const qrCtaY = footerY - s(50);
-      const qrAreaBottomY = qrCtaY - s(56);
+      // Bottom-anchored layout — footer pulled clearly inside the inner
+      // frame border (was sitting on top of it before). The QR CTA + footer
+      // need extra breathing room on Story because their fonts are
+      // significantly larger to remain phone-readable.
+      const footerY = height - marginY - s(isStory ? 100 : 70);
+      const qrCtaY = footerY - s(isStory ? 84 : 56);
+      const qrAreaBottomY = qrCtaY - s(isStory ? 80 : 60);
 
       const qrY = qrAreaBottomY - qrSize;
       const rewardBoxWidth = Math.min(s(760), paperWidth - s(160));
-      const rewardBoxHeight = s(112);
+      const rewardBoxHeight = s(isStory ? 200 : 112);
       const rewardBoxX = centerX - rewardBoxWidth / 2;
       const rewardBoxY = qrY - s(36) - rewardBoxHeight;
 
@@ -392,7 +465,12 @@ export function WantedContent() {
       const chargesBoxY = y;
       const maxChargeWidth = chargesBoxWidth - s(150);
 
-      ctx.font = `500 ${s(30)}px 'Geist', sans-serif`;
+      // Story canvas (1080 wide) gets downscaled to ~390 px on phone. To
+      // keep charges readable post-downscale (target ~12 px on phone), we
+      // need ~33 px on canvas → s(64). A4 print stays at s(30).
+      const chargeTextSize = s(isStory ? 64 : 30);
+      const chargeLineHeight = s(isStory ? 92 : 46);
+      ctx.font = `500 ${chargeTextSize}px 'Geist', sans-serif`;
       const wrappedCharges = selectedCharges.map((charge, index) => {
         const words = charge.split(" ");
         const lines: string[] = [];
@@ -413,16 +491,24 @@ export function WantedContent() {
         return { prefix: `${index + 1}.`, lines };
       });
 
+      // Charges box is sized to content (header + entries + breathing pad),
+      // not stretched to fill the bottom region. Smaller box reads cleaner
+      // and entries land at the top instead of floating in dead centre.
+      const chargesEntryGap = s(isStory ? 56 : 42);
       const chargesContentHeight =
-        s(98) +
         wrappedCharges.reduce(
-          (total, charge) => total + charge.lines.length * s(46) + s(34),
+          (total, charge) => total + charge.lines.length * chargeLineHeight + chargesEntryGap,
           0,
-        ) -
-        s(34);
+        ) - chargesEntryGap;
+      const chargesAvailable = rewardBoxY - chargesBoxY - s(36);
+      const chargesHeaderHeight = s(isStory ? 92 : 72);
+      const chargesBoxBottomPad = s(isStory ? 56 : 40);
       const chargesBoxHeight = Math.max(
         s(280),
-        Math.min(chargesContentHeight + s(26), rewardBoxY - chargesBoxY - s(36)),
+        Math.min(
+          chargesContentHeight + chargesHeaderHeight + chargesBoxBottomPad,
+          chargesAvailable,
+        ),
       );
 
       ctx.strokeStyle = POSTER_MUTED;
@@ -431,30 +517,33 @@ export function WantedContent() {
       ctx.roundRect(chargesBoxX, chargesBoxY, chargesBoxWidth, chargesBoxHeight, s(18));
       ctx.stroke();
       ctx.fillStyle = POSTER_RED;
-      ctx.font = `700 ${s(34)}px 'Geist', sans-serif`;
+      ctx.font = `700 ${s(isStory ? 60 : 34)}px 'Geist', sans-serif`;
       ctx.textAlign = "center";
       ctx.letterSpacing = `${s(4)}px`;
-      ctx.fillText(t("chargesLabel").toUpperCase(), centerX, chargesBoxY + s(42));
+      ctx.fillText(t("chargesLabel").toUpperCase(), centerX, chargesBoxY + s(isStory ? 62 : 42));
       ctx.letterSpacing = "0px";
       ctx.textAlign = "left";
       ctx.fillStyle = POSTER_INK;
-      ctx.font = `500 ${s(30)}px 'Geist', sans-serif`;
+      ctx.font = `500 ${chargeTextSize}px 'Geist', sans-serif`;
 
-      let chargesCursorY = chargesBoxY + s(108);
+      // Top-align entries — start just below the CHARGES header, with a
+      // small constant offset. No vertical centering: per user feedback the
+      // box should sit close to its content, not float in the middle.
+      let chargesCursorY = chargesBoxY + chargesHeaderHeight + s(isStory ? 28 : 24);
       wrappedCharges.forEach((charge) => {
-        ctx.font = `700 ${s(30)}px 'Geist', sans-serif`;
+        ctx.font = `700 ${chargeTextSize}px 'Geist', sans-serif`;
         ctx.fillText(charge.prefix, chargesBoxInnerX, chargesCursorY);
-        ctx.font = `500 ${s(30)}px 'Geist', sans-serif`;
+        ctx.font = `500 ${chargeTextSize}px 'Geist', sans-serif`;
 
         charge.lines.forEach((currentLine, lineIndex) => {
           ctx.fillText(
             currentLine,
-            chargesBoxInnerX + s(54),
-            chargesCursorY + lineIndex * s(46),
+            chargesBoxInnerX + s(isStory ? 76 : 54),
+            chargesCursorY + lineIndex * chargeLineHeight,
           );
         });
 
-        chargesCursorY += charge.lines.length * s(46) + s(42);
+        chargesCursorY += charge.lines.length * chargeLineHeight + chargesEntryGap;
       });
 
       ctx.strokeStyle = POSTER_GOLD;
@@ -464,9 +553,9 @@ export function WantedContent() {
       ctx.stroke();
       ctx.textAlign = "center";
       ctx.fillStyle = POSTER_GOLD;
-      ctx.font = `700 ${s(28)}px 'Geist', sans-serif`;
+      ctx.font = `700 ${s(isStory ? 52 : 28)}px 'Geist', sans-serif`;
       ctx.letterSpacing = `${s(3)}px`;
-      ctx.fillText(t("rewardLabel").toUpperCase(), centerX, rewardBoxY + s(34));
+      ctx.fillText(t("rewardLabel").toUpperCase(), centerX, rewardBoxY + s(isStory ? 64 : 34));
       ctx.letterSpacing = "0px";
 
       const rewardText = t(`tones.${selectedTone}.rewardText`);
@@ -474,12 +563,12 @@ export function WantedContent() {
         ctx,
         rewardText,
         rewardBoxWidth - s(72),
-        s(34),
-        s(23),
+        s(isStory ? 64 : 34),
+        s(isStory ? 40 : 23),
       );
       ctx.fillStyle = POSTER_INK;
       ctx.font = `600 ${rewardFontSize}px 'Geist', sans-serif`;
-      ctx.fillText(rewardText, centerX, rewardBoxY + s(74));
+      ctx.fillText(rewardText, centerX, rewardBoxY + s(isStory ? 140 : 74));
 
       // Note: the previous fake red "RESOLVE THIS CASE" button has been removed
       // — it was a non-functional pixel button on a static PNG that misled
@@ -528,8 +617,8 @@ export function WantedContent() {
         ctx,
         qrCtaText,
         qrCtaMaxWidth,
-        s(36),
-        s(22),
+        s(isStory ? 80 : 42),
+        s(isStory ? 48 : 24),
         800,
       );
       ctx.fillStyle = POSTER_RED;
@@ -540,10 +629,20 @@ export function WantedContent() {
       ctx.letterSpacing = "0px";
 
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = `400 ${s(24)}px 'Geist', sans-serif`;
+      ctx.font = `400 ${s(isStory ? 44 : 24)}px 'Geist', sans-serif`;
       ctx.fillText(t("posterFooter"), centerX, footerY);
     },
-    [loadQrImage, locale, name, selectedCharges, selectedTone, seededHash, t],
+    [
+      loadQrImage,
+      locale,
+      name,
+      posterFormat,
+      selectedCaseDetail,
+      selectedCharges,
+      selectedTone,
+      seededHash,
+      t,
+    ],
   );
 
   useEffect(() => {
@@ -713,6 +812,13 @@ export function WantedContent() {
               <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
                 {t("subtitle")}
               </p>
+              {/* Synthetic social proof badge — small starter number ("18")
+                  while the site has no real traffic; bump manually until we
+                  switch to real analytics-derived counts. */}
+              <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-red-100 bg-red-50/70 px-3 py-1.5 text-xs font-semibold text-red-700">
+                <span aria-hidden="true">●</span>
+                {t("socialProofText")}
+              </p>
 
               <div className="mt-6 rounded-[28px] border border-red-100 bg-gradient-to-br from-red-50/70 via-white to-white p-6 shadow-sm sm:p-7">
                 <div className="border-b border-red-100 pb-5">
@@ -832,90 +938,97 @@ export function WantedContent() {
                   <canvas
                     ref={canvasRef}
                     className="h-auto w-full"
-                    style={{ aspectRatio: "210 / 297" }}
+                    style={{ aspectRatio: layout.aspectRatio }}
                   />
                 </div>
 
-                <div className="mt-3 space-y-3">
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      onClick={handleDownload}
-                      disabled={!generated || downloading}
-                      className="rounded-lg border border-[var(--border)] bg-white px-4 py-3.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      {downloading ? t("downloadingButton") : t("downloadButton")}
-                    </button>
-
-                    <button
-                      onClick={handleShare}
-                      disabled={!generated}
-                      className={`rounded-lg border px-4 py-3.5 text-sm font-semibold transition-colors duration-300 ease-out disabled:cursor-not-allowed disabled:opacity-60 ${
-                        linkCopied
-                          ? "border-teal-300 bg-teal-50 text-teal-700"
-                          : generated
-                            ? "border-red-600 bg-red-600 text-white hover:bg-red-700"
-                            : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-gray-50"
-                      }`}
-                    >
-                      {linkCopied ? t("linkCopied") : t("shareButton")}
-                    </button>
+                {/* Format toggle (A4 print vs Story 9:16) + reroll dice. Both
+                    apply at any time so the user can preview different
+                    combinations before committing to share/download. */}
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                    {t("formatLabel")}
+                  </span>
+                  <div className="inline-flex rounded-lg border border-[var(--border)] bg-white p-0.5">
+                    {POSTER_FORMATS.map((format) => {
+                      const isSelected = posterFormat === format;
+                      return (
+                        <button
+                          key={format}
+                          type="button"
+                          onClick={() => updateFormat(format)}
+                          aria-pressed={isSelected}
+                          className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors duration-200 ease-out ${
+                            isSelected
+                              ? "bg-red-600 text-white shadow-sm"
+                              : "bg-transparent text-[var(--muted)] hover:bg-red-50"
+                          }`}
+                        >
+                          {format === "a4" ? t("formatA4") : t("formatStory")}
+                        </button>
+                      );
+                    })}
                   </div>
 
-                  {generated ? (
-                    <LocalizedLink
-                      href={giftUrl}
-                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
-                    >
-                      {t("giftCta", { name: displayName })}
-                    </LocalizedLink>
-                  ) : null}
-
-                  <p className="text-xs leading-6 text-[var(--muted)]">
-                    {t("viralPrompt")} {t("viralSubtext")}
-                  </p>
-
-                  {generated ? (
+                  {generated && name.trim() ? (
                     <button
-                      onClick={handleRegenerate}
-                      className="w-full text-center text-sm font-medium text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+                      type="button"
+                      onClick={handleReroll}
+                      className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-[var(--border)] bg-white px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] transition-colors duration-200 ease-out hover:bg-red-50"
+                      aria-label={t("rerollChargesButton")}
                     >
-                      {t("newPoster")}
+                      <span aria-hidden="true">🎲</span>
+                      {t("rerollChargesButton")}
                     </button>
                   ) : null}
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section data-reveal className="py-6 sm:py-10">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
-            <div className="border-b border-[var(--border)] px-6 py-5 sm:px-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
-                {t("howTitle")}
-              </p>
-            </div>
-            <div className="grid gap-0 md:grid-cols-3">
-              {[1, 2, 3].map((i, index) => (
-                <article
-                  key={i}
-                  className={`px-6 py-6 sm:px-8 ${
-                    index > 0 ? "border-t border-[var(--border)] md:border-l md:border-t-0" : ""
-                  }`}
-                >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
-                    0{i}
-                  </p>
-                  <h2 className="mt-3 text-xl font-semibold text-[var(--brand-dark)]">
-                    {t(`howStep${i}Title`)}
-                  </h2>
-                  <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-                    {t(`howStep${i}Text`)}
-                  </p>
-                </article>
-              ))}
+                <div className="mt-4 space-y-3">
+                  {generated ? (
+                    <>
+                      <LocalizedLink
+                        href={giftUrl}
+                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-center text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+                      >
+                        {t("giftCta", { name: displayName })}
+                      </LocalizedLink>
+                      <p className="text-center text-xs leading-5 text-[var(--muted)]">
+                        {t("priceAnchor")}
+                      </p>
+
+                      <button
+                        onClick={handleShare}
+                        className={`w-full rounded-lg border px-4 py-3.5 text-sm font-semibold transition-colors duration-300 ease-out ${
+                          linkCopied
+                            ? "border-teal-300 bg-teal-50 text-teal-700"
+                            : "border-red-300 bg-white text-red-700 hover:bg-red-50"
+                        }`}
+                      >
+                        {linkCopied ? t("linkCopied") : t("shareButton")}
+                      </button>
+
+                      <button
+                        onClick={handleDownload}
+                        disabled={downloading}
+                        className="w-full rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {downloading ? t("downloadingButton") : t("downloadButton")}
+                      </button>
+
+                      <button
+                        onClick={handleRegenerate}
+                        className="w-full text-center text-sm font-medium text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+                      >
+                        {t("newPoster")}
+                      </button>
+                    </>
+                  ) : (
+                    <p className="text-xs leading-6 text-[var(--muted)]">
+                      {t("viralPrompt")} {t("viralSubtext")}
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -932,7 +1045,7 @@ export function WantedContent() {
             </p>
             <div className="mt-8 flex justify-center">
               <LocalizedLink
-                href="/purchase?tier=protected&gift=true"
+                href="/purchase?tier=protected&gift=true&ref=wanted"
                 className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
                 {t("footerCtaButton")}
