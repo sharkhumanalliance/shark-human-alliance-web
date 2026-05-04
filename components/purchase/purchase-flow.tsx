@@ -683,12 +683,13 @@ function PurchaseFlowInner() {
                   onChange={(e) => setRegistryConsentAccepted(e.target.checked)}
                   className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                 />
-                <span>{t("registryConsentLabel")}</span>
+                <span>
+                  {t("registryConsentLabel")}
+                  <span className="mt-2 block text-xs leading-5 text-[var(--muted)]">
+                    {t("registryConsentHint")}
+                  </span>
+                </span>
               </label>
-
-              <p className="text-xs leading-5 text-[var(--muted)]">
-                {t("registryConsentHint")}
-              </p>
             </div>
 
             {/* No-email warning */}

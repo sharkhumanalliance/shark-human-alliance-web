@@ -794,7 +794,7 @@
     "termsConsentLink": "Condiciones de compra",
     "digitalContentConsentLabel": "Solicito expresamente la entrega digital inmediata antes de que termine el plazo de desistimiento y reconozco que, una vez iniciada la entrega, pierdo el derecho de desistimiento.",
     "registryConsentLabel": "Acepto que el nombre del titular del certificado y los datos aprobados del registro puedan aparecer en el Registro Diplomático público.",
-    "registryConsentHint": "Déjalo sin marcar si el registro debe permanecer privado. Los controles privados del registro estarán disponibles más tarde a través del enlace de acceso al certificado.",
+    "registryConsentHint": "Esta casilla del registro es opcional. Déjala sin marcar si el registro debe permanecer privado; los controles privados estarán disponibles más tarde a través del enlace de acceso al certificado.",
     "termsRequiredError": "Confirma las Condiciones de compra antes de continuar.",
     "digitalContentConsentRequiredError": "Confirma la entrega digital inmediata antes de continuar.",
     "dedicationTooLongError": "La dedicatoria es demasiado larga. Mejor breve y con porte de certificado.",
@@ -1189,18 +1189,13 @@
       "finding": "Nuestros registros indican que {name} podría estar operando sin suficiente papeleo adyacente a tiburones. Es corregible. Convenientemente.",
       "explanation": "La resolución recomendada no es pánico, negación ni discutir con la administración marina. Es un certificado de Amigo Protegido: personalizado, imprimible y bastante más oficial de lo que la situación merece.",
       "previewLabel": "Documento de regularización propuesto",
+      "previewText": "Preparado para la persona nombrada, pendiente de la autorización administrativa final.",
       "certificateDedication": "Emitido tras un incidente público de póster de búsqueda y una revisión administrativa inusualmente eficiente.",
       "resolutionLabel": "Resolución recomendada",
       "resolutionTitle": "Emite el papeleo. Cierra el expediente.",
-      "resolutionText": "{name} puede recibir regularización diplomática en minutos con un certificado personalizado de Amigo Protegido. Los tiburones no tendrán obligación legal de cooperar, pero el papeleo se verá excelente.",
+      "resolutionText": "{name} puede recibir regularización diplomática en minutos con un certificado personalizado de Amigo Protegido. Los tiburones no tendrán obligación legal de cooperar, pero el papeleo se verá excelente y la conservación real sigue financiándose.",
       "cta": "Regularizar a este humano por {price}",
-      "priceNote": "Más o menos un café. La conservación real sigue financiándose.",
-      "trustItems": {
-        "0": "PDF instantáneo",
-        "1": "Listo para regalar",
-        "2": "Financia conservación real",
-        "3": "Sin fuerza legal marina, lamentablemente"
-      }
+      "priceNote": "Más o menos un café. Menos espuma, más papeleo."
     },
     "career": {
     "hero": {

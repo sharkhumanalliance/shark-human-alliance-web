@@ -794,7 +794,7 @@
     "termsConsentLink": "Terms & Purchase Conditions",
     "digitalContentConsentLabel": "I expressly request immediate digital delivery before the withdrawal period ends and acknowledge that, once delivery begins, the right to withdraw is lost.",
     "registryConsentLabel": "I agree that the certificate holder's name and approved record details may appear in the public Diplomatic Registry.",
-    "registryConsentHint": "Leave this unchecked if the record should stay private. Dedicated record controls are available later through the certificate access link.",
+    "registryConsentHint": "This registry checkbox is optional. Leave it unchecked if the record should stay private; dedicated record controls are available later through the certificate access link.",
     "termsRequiredError": "Please confirm the Terms & Purchase Conditions before continuing.",
     "digitalContentConsentRequiredError": "Please confirm immediate digital delivery before continuing.",
     "dedicationTooLongError": "Dedication is too long. Keep it short and certificate-sized.",
@@ -1189,18 +1189,13 @@
       "finding": "Our records indicate that {name} may be operating without adequate shark-adjacent paperwork. This is correctable. Conveniently.",
       "explanation": "The recommended resolution is not panic, denial, or arguing with marine administration. It is a Protected Friend certificate: personalized, printable, and significantly more official-looking than the situation deserves.",
       "previewLabel": "Proposed clearance document",
+      "previewText": "Prepared for the named human, pending final administrative clearance.",
       "certificateDedication": "Issued following a public wanted-poster incident and one unusually efficient administrative review.",
       "resolutionLabel": "Recommended resolution",
       "resolutionTitle": "Issue the paperwork. Close the file.",
-      "resolutionText": "{name} can be diplomatically cleared in minutes with a personalized Protected Friend certificate. The sharks will receive no legal obligation to cooperate, but the paperwork will look excellent.",
+      "resolutionText": "{name} can be diplomatically cleared in minutes with a personalized Protected Friend certificate. The sharks will receive no legal obligation to cooperate, but the paperwork will look excellent and real conservation still gets funded.",
       "cta": "Clear this human for {price}",
-      "priceNote": "About one coffee. Real conservation still gets funded.",
-      "trustItems": {
-        "0": "Instant PDF",
-        "1": "Gift-ready",
-        "2": "Funds real conservation",
-        "3": "No actual marine legal force, regrettably"
-      }
+      "priceNote": "About one coffee. Less foam, more paperwork."
     },
     "career": {
     "hero": {

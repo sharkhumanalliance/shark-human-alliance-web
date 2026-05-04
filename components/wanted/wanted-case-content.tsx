@@ -61,8 +61,6 @@ export function WantedCaseContent({
     return `/purchase?${params.toString()}`;
   }, [displayName]);
 
-  const trustItems = [0, 1, 2, 3].map((index) => t(`trustItems.${index}`));
-
   return (
     <section className="border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-10 sm:py-14 lg:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -82,7 +80,7 @@ export function WantedCaseContent({
                 </p>
               </div>
 
-              <h1 className="mt-6 max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl sm:leading-[1.04]">
+              <h1 className="mt-6 max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl sm:leading-[1.08]">
                 {t("headline")}
               </h1>
 
@@ -122,69 +120,60 @@ export function WantedCaseContent({
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
                 {t("findingLabel")}
               </p>
-              <p className="mt-3 text-lg font-semibold leading-7 text-[var(--brand-dark)]">
+              <p className="mt-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
                 {t("finding", { name: displayName })}
               </p>
               <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
                 {t("explanation")}
               </p>
+
+              <div className="mt-5 border-t border-[var(--border)] pt-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+                {t("resolutionLabel")}
+                </p>
+                <h2 className="mt-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
+                  {t("resolutionTitle")}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+                  {t("resolutionText", { name: displayName })}
+                </p>
+
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <LocalizedLink
+                    href={purchaseHref}
+                    className="inline-flex min-h-[52px] shrink-0 items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:whitespace-nowrap"
+                  >
+                    {t("cta", { price: getTierPriceLabel("protected") })}
+                  </LocalizedLink>
+                  <p className="text-sm leading-6 text-[var(--muted)]">
+                    {t("priceNote")}
+                  </p>
+                </div>
+
+              </div>
             </div>
           </div>
 
           <aside className="lg:sticky lg:top-28">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
               {t("previewLabel")}
             </p>
-            <div className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm">
+            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+              {t("previewText")}
+            </p>
+            <div className="mt-4 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm">
               <CertificatePreview
                 name={displayName}
                 tier="protected"
                 dedication={t("certificateDedication")}
                 date={certificateDate}
                 registryId={caseNumber}
-                template="classic"
+                template="luxury"
                 paperFormat="a4"
                 locale={locale}
               />
             </div>
           </aside>
-        </div>
-
-        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.58fr)] lg:items-start">
-          <div className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm sm:p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
-              {t("resolutionLabel")}
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
-              {t("resolutionTitle")}
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
-              {t("resolutionText", { name: displayName })}
-            </p>
-
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <LocalizedLink
-                href={purchaseHref}
-                className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
-              >
-                {t("cta", { price: getTierPriceLabel("protected") })}
-              </LocalizedLink>
-              <p className="text-sm leading-6 text-[var(--muted)]">
-                {t("priceNote")}
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-            {trustItems.map((item) => (
-              <div
-                key={item}
-                className="rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-semibold text-[var(--brand-dark)] shadow-sm"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>
