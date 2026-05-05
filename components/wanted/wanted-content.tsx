@@ -50,11 +50,6 @@ type PosterFormat = "a4" | "story";
 
 const POSTER_FORMATS: PosterFormat[] = ["a4", "story"];
 
-type WantedCaseDetail = {
-  label: string;
-  value: string;
-};
-
 function readRawMessages<T>(reader: () => T, fallback: T) {
   try {
     return reader();
@@ -126,10 +121,6 @@ export function WantedContent() {
     return [...toneCharges, ...commonCharges];
   }, [toneCharges, commonCharges]);
 
-  const caseDetails = useMemo(() => {
-    return readRawMessages(() => t.raw("caseDetails") as WantedCaseDetail[], []);
-  }, [t]);
-
   // Salt hash with the reroll counter so users can cycle through different
   // 3-charge combinations for the same name + tone.
   const seededHash = useMemo(
@@ -152,13 +143,6 @@ export function WantedContent() {
     return picked;
   }, [seededHash, charges]);
 
-  const selectedCaseDetail = useMemo(() => {
-    if (caseDetails.length === 0) {
-      return { label: t("caseStatusLabel"), value: t(`tones.${selectedTone}.caseStatus`) };
-    }
-    return caseDetails[(seededHash + 5) % caseDetails.length];
-  }, [caseDetails, seededHash, selectedTone, t]);
-
   const loadQrImage = useCallback((url: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
       const img = new window.Image();
@@ -166,6 +150,19 @@ export function WantedContent() {
       img.onload = () => resolve(img);
       img.onerror = reject;
       img.src = getQrCodeUrl(url, 300);
+    });
+  }, []);
+
+  // Loads any same-origin image (e.g. /public assets) for the canvas. We set
+  // crossOrigin so the canvas remains exportable via toBlob even when other
+  // images on the same canvas (the QR) require CORS.
+  const loadPosterImage = useCallback((src: string): Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
     });
   }, []);
 
@@ -245,7 +242,7 @@ export function WantedContent() {
       );
       ctx.stroke();
 
-      let y = marginY + s(110);
+      let y = marginY + s(isStory ? 140 : 145);
       const centerX = width / 2;
       const caseNumber = `SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
 
@@ -357,6 +354,44 @@ export function WantedContent() {
       ctx.letterSpacing = "0px";
       y += s(isStory ? 136 : 106);
 
+      // === Subject evidence photo ===
+      // Sits between the subtitle and the name like a traditional wanted-
+      // poster mugshot. The source PNG has a flat white background, so we
+      // composite the figure onto the parchment with `multiply` blend mode:
+      // white becomes the parchment colour, the navy silhouette stays
+      // navy, and the result reads as if printed onto the page rather than
+      // pasted on top. No frame is drawn so the figure flows into the
+      // surrounding texture instead of feeling like a sticker.
+      let photoBlockAdvance = 0;
+      try {
+        const photoImg = await loadPosterImage("/wanted-poster_picture.png");
+        const photoAspect =
+          photoImg.naturalWidth && photoImg.naturalHeight
+            ? photoImg.naturalWidth / photoImg.naturalHeight
+            : 1448 / 1086;
+        const photoH = s(isStory ? 540 : 700);
+        const photoW = photoH * photoAspect;
+        const photoTopGap = s(isStory ? 28 : 32);
+        const trailingGap = s(isStory ? 90 : 110);
+        const photoX = centerX - photoW / 2;
+        const photoY = y + photoTopGap;
+
+        // No caption above the photo — the figure already carries its own
+        // "NO CERTIFICATE ON FILE" stamp, and a separate label would just
+        // weaken the WANTED → photo → name visual hierarchy.
+
+        // The PNG has true transparency on its background, so a plain
+        // drawImage composites the figure cleanly onto the parchment —
+        // including the procedural paper grain showing through the
+        // transparent areas, which is what we want.
+        ctx.drawImage(photoImg, photoX, photoY, photoW, photoH);
+
+        photoBlockAdvance = photoTopGap + photoH + trailingGap;
+      } catch {
+        // If the asset fails to load, the rest of the poster still renders.
+      }
+      y += photoBlockAdvance;
+
       ctx.fillStyle = POSTER_INK;
       let nameFontSize = s(isStory ? 122 : 104);
       ctx.font = `900 ${nameFontSize}px 'Geist', sans-serif`;
@@ -416,42 +451,15 @@ export function WantedContent() {
         ctx.setLineDash([]);
       });
       ctx.textAlign = "center";
-      const detailY = fieldsRowY + s(isStory ? 132 : 104);
-      const detailMaxWidth = fieldsTotalWidth - s(40);
-      ctx.fillStyle = POSTER_MUTED;
-      ctx.font = `700 ${s(isStory ? 36 : 18)}px 'Geist', sans-serif`;
-      ctx.letterSpacing = `${s(2.5)}px`;
-      ctx.fillText(selectedCaseDetail.label.toUpperCase(), centerX, detailY);
-      ctx.letterSpacing = "0px";
-      const detailText = selectedCaseDetail.value;
-      const detailFontSize = fitCanvasText(
-        ctx,
-        detailText,
-        detailMaxWidth,
-        s(isStory ? 60 : 28),
-        s(isStory ? 38 : 20),
-        700,
-      );
-      ctx.fillStyle = POSTER_INK;
-      ctx.font = `700 ${detailFontSize}px 'Courier New', 'Courier', monospace`;
-      ctx.fillText(detailText, centerX, detailY + s(isStory ? 60 : 38));
-      ctx.strokeStyle = POSTER_MUTED;
-      ctx.lineWidth = s(1.5);
-      ctx.setLineDash([s(4), s(4)]);
-      ctx.beginPath();
-      ctx.moveTo(fieldsX + s(12), detailY + s(isStory ? 84 : 54));
-      ctx.lineTo(fieldsX + fieldsTotalWidth - s(12), detailY + s(isStory ? 84 : 54));
-      ctx.stroke();
-      ctx.setLineDash([]);
-      y = detailY + s(isStory ? 150 : 92);
+      y = fieldsRowY + s(isStory ? 126 : 86);
 
       // Bottom-anchored layout — footer pulled clearly inside the inner
       // frame border (was sitting on top of it before). The QR CTA + footer
       // need extra breathing room on Story because their fonts are
       // significantly larger to remain phone-readable.
-      const footerY = height - marginY - s(isStory ? 100 : 70);
-      const qrCtaY = footerY - s(isStory ? 84 : 56);
-      const qrAreaBottomY = qrCtaY - s(isStory ? 154 : 106);
+      const footerY = height - marginY - s(isStory ? 110 : 112);
+      const qrCtaY = footerY - s(isStory ? 70 : 56);
+      const qrAreaBottomY = qrCtaY - s(isStory ? 70 : 62);
 
       const qrY = qrAreaBottomY - qrSize;
       const rewardBoxWidth = Math.min(s(760), paperWidth - s(160));
@@ -593,9 +601,6 @@ export function WantedContent() {
               locale,
               shortCasePath,
             );
-      const shortCaseUrl = new URL(caseUrlForQr);
-      const shortCaseUrlLabel = `${shortCaseUrl.host}${shortCaseUrl.pathname}${shortCaseUrl.search}`;
-
       try {
         const qrImg = await loadQrImage(caseUrlForQr);
         ctx.fillStyle = "#ffffff";
@@ -612,31 +617,20 @@ export function WantedContent() {
         // Skip QR if it fails to load.
       }
 
-      const qrLinkText = shortCaseUrlLabel.replace(/\+/g, "%20");
-      const qrLinkFontSize = fitCanvasText(
-        ctx,
-        qrLinkText,
-        paperWidth - s(160),
-        s(isStory ? 48 : 24),
-        s(isStory ? 34 : 17),
-        700,
-      );
-      ctx.fillStyle = POSTER_INK;
-      ctx.font = `700 ${qrLinkFontSize}px 'Geist', sans-serif`;
-      ctx.textAlign = "center";
-      ctx.letterSpacing = "0px";
-      ctx.fillText(qrLinkText, centerX, qrY + qrSize + s(isStory ? 72 : 46));
-
       // Prominent QR call-to-action label — centered below QR. Bold red,
       // name-targeted, fitted to width.
-      const qrCtaText = t("qrCtaLabel", { name: displayName.toUpperCase() });
+      const qrCtaName = displayName.toUpperCase();
+      const qrCtaText =
+        name.trim() && qrCtaName.length <= 14
+          ? t("qrCtaLabel", { name: qrCtaName })
+          : t("qrCtaFallbackLabel");
       const qrCtaMaxWidth = paperWidth - s(160);
       const qrCtaFontSize = fitCanvasText(
         ctx,
         qrCtaText,
         qrCtaMaxWidth,
-        s(isStory ? 80 : 42),
-        s(isStory ? 48 : 24),
+        s(isStory ? 74 : 42),
+        s(isStory ? 44 : 24),
         800,
       );
       ctx.fillStyle = POSTER_RED;
@@ -651,11 +645,11 @@ export function WantedContent() {
       ctx.fillText(t("posterFooter"), centerX, footerY);
     },
     [
+      loadPosterImage,
       loadQrImage,
       locale,
       name,
       posterFormat,
-      selectedCaseDetail,
       selectedCharges,
       selectedTone,
       seededHash,
@@ -684,6 +678,46 @@ export function WantedContent() {
     setGenerated(true);
   }, [name]);
 
+  const createPosterExportBlob = useCallback(async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+
+    // The preview stays straight for editing. Exports get a deterministic
+    // pinboard tilt; Story keeps 9:16 output and uses a subtler angle.
+    const tiltOptions = posterFormat === "story" ? [-1, -0.65, 0.65, 1] : [-2, -1, 1, 2];
+    const tiltDeg = tiltOptions[nameHash(`${name}::${posterFormat}`) % tiltOptions.length];
+    const tiltRad = (tiltDeg * Math.PI) / 180;
+
+    const srcW = canvas.width;
+    const srcH = canvas.height;
+    const cos = Math.abs(Math.cos(tiltRad));
+    const sin = Math.abs(Math.sin(tiltRad));
+    const rotatedW = srcW * cos + srcH * sin;
+    const rotatedH = srcW * sin + srcH * cos;
+
+    const off = document.createElement("canvas");
+    off.width = posterFormat === "story" ? srcW : Math.ceil(rotatedW);
+    off.height = posterFormat === "story" ? srcH : Math.ceil(rotatedH);
+    const offCtx = off.getContext("2d");
+    if (!offCtx) {
+      return new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
+    }
+
+    offCtx.fillStyle = "#0e0a06";
+    offCtx.fillRect(0, 0, off.width, off.height);
+    offCtx.translate(off.width / 2, off.height / 2);
+    offCtx.rotate(tiltRad);
+
+    const tiltScale =
+      posterFormat === "story"
+        ? Math.min(srcW / rotatedW, srcH / rotatedH) * 0.985
+        : 1;
+    offCtx.scale(tiltScale, tiltScale);
+    offCtx.drawImage(canvas, -srcW / 2, -srcH / 2);
+
+    return new Promise<Blob | null>((resolve) => off.toBlob(resolve, "image/png"));
+  }, [name, posterFormat]);
+
   const handleDownload = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -694,8 +728,8 @@ export function WantedContent() {
       // Apply a deterministic ±2° tilt to the downloaded poster so it reads
       // like a printed-and-pinned-to-corkboard image rather than a flat scan.
       // The preview canvas stays straight (better for editing).
-      const tiltOptions = [-2, -1, 1, 2];
-      const tiltDeg = tiltOptions[nameHash(name) % tiltOptions.length];
+      const tiltOptions = posterFormat === "story" ? [-1, -0.65, 0.65, 1] : [-2, -1, 1, 2];
+      const tiltDeg = tiltOptions[nameHash(`${name}::${posterFormat}`) % tiltOptions.length];
       const tiltRad = (tiltDeg * Math.PI) / 180;
 
       const srcW = canvas.width;
@@ -741,14 +775,22 @@ export function WantedContent() {
   }, [name, posterFormat]);
 
   const handleShare = useCallback(async () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    trackEvent("wanted_poster_share", { format: posterFormat });
+    const trimmedName = name.trim();
+    const shortCaseParams = new URLSearchParams({ t: selectedTone });
+    if (trimmedName) shortCaseParams.set("n", trimmedName);
+    const shortCasePath = `/w?${shortCaseParams.toString()}`;
+    const caseShareUrl =
+      typeof window !== "undefined"
+        ? buildAbsoluteLocalizedUrl(window.location.origin, locale, shortCasePath)
+        : buildAbsoluteLocalizedUrl(
+            process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+            locale,
+            shortCasePath,
+          );
 
-    trackEvent("wanted_poster_share");
     try {
-      const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/png"),
-      );
+      const blob = await createPosterExportBlob();
       if (!blob) return;
 
       const safeName = (name.trim() || "someone").replace(/\s+/g, "-").toLowerCase();
@@ -758,23 +800,24 @@ export function WantedContent() {
         await navigator.share({
           files: [file],
           title: t("shareTitle", { name: name.trim() || t("defaultName") }),
-          text: t("shareText", { name: name.trim() || t("defaultName") }),
+          text: `${t("shareText", { name: name.trim() || t("defaultName") })}\n${caseShareUrl}`,
+          url: caseShareUrl,
         });
       } else {
-        await navigator.clipboard.writeText(window.location.href);
+        await navigator.clipboard.writeText(caseShareUrl);
         setLinkCopied(true);
         setTimeout(() => setLinkCopied(false), 2500);
       }
     } catch {
       try {
-        await navigator.clipboard.writeText(window.location.href);
+        await navigator.clipboard.writeText(caseShareUrl);
         setLinkCopied(true);
         setTimeout(() => setLinkCopied(false), 2500);
       } catch {
         // Ignore clipboard failure.
       }
     }
-  }, [name, t]);
+  }, [createPosterExportBlob, locale, name, posterFormat, selectedTone, t]);
 
   const handleRegenerate = useCallback(() => {
     setGenerated(false);
@@ -964,9 +1007,7 @@ export function WantedContent() {
                   />
                 </div>
 
-                {/* Format toggle (A4 print vs Story 9:16) + reroll dice. Both
-                    apply at any time so the user can preview different
-                    combinations before committing to share/download. */}
+                {/* Format and reroll controls apply to the live preview before generation. */}
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                     {t("formatLabel")}
