@@ -78,9 +78,16 @@ function PurchaseFlowInner() {
 
   // Pick 3 random dedication suggestions from the pool (stable per mount)
   const dedicationSuggestions = useMemo(() => {
-    const pool = Array.from({ length: 15 }, (_, index) =>
-      t(`dedicationSuggestions.${index}`)
-    );
+    const rawSuggestions = t.raw("dedicationSuggestions") as
+      | Record<string, string>
+      | string[];
+    const pool = (
+      Array.isArray(rawSuggestions)
+        ? rawSuggestions
+        : Object.keys(rawSuggestions)
+            .sort((a, b) => Number(a) - Number(b))
+            .map((key) => rawSuggestions[key])
+    ).filter(Boolean);
     const picked: string[] = [];
     for (let i = 0; i < 3 && pool.length > 0; i++) {
       const idx = Math.floor(Math.random() * pool.length);

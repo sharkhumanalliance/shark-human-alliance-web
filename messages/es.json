@@ -188,18 +188,18 @@
       "nonsnackPrice": "$19",
       "nonsnackDescription": "Para humanos que prefieren quedar documentados como persona, no como snack. La misma energía de papeleo official-ish, con una postura antiaperitivo un poco más firme.",
       "nonsnackFeatures": [
-        "Certificado premium",
-        "Estatus oficial No-Snack",
-        "Insignia descargable"
+        "Certificado digital personalizado",
+        "Estatus certificado No-Snack",
+        "Mayor asignación a conservación de tiburones"
       ],
       "nonsnackCta": "Presentar papeleo No-Snack — $19",
       "businessTitle": "Zona Libre de Tiburones",
       "businessPrice": "$99",
       "businessDescription": "Para oficinas, cafés, estudios, salas de reunión y otros espacios agresivamente terrestres que buscan confirmación formal de que no se espera que los tiburones operen allí.",
       "businessFeatures": [
-        "Insignia para el sitio web",
-        "Ubicación premium opcional en el registro",
-        "Certificado orientado a negocios"
+        "Certificado mural para negocios",
+        "Estatus de Zona Libre de Tiburones",
+        "La asignación más alta a conservación"
       ],
       "businessCta": "Certificar una Zona Libre de Tiburones — $99",
       "businessEyebrow": "Para empresas",
@@ -619,7 +619,7 @@
     "dedicationLabel": "Dedicatoria (opcional)",
     "dedicationPlaceholder": "ej. Por seguir técnicamente sin ser comido desde 1987",
     "dedicationSuggestions": {
-      "0": "Por sobrevivir cada vacación de playa con sospechosa confianza",
+      "0": "Por sobrevivir cada temporada de playa con sospechosa confianza",
       "1": "Oficialmente menos cerca de ser snack que ayer",
       "2": "Que los tiburones respeten el papeleo",
       "3": "Aún no es comida. Ahora está archivado correctamente.",
@@ -1054,7 +1054,7 @@
       "mild": {
         "label": "Levemente preocupante",
         "description": "Para alguien que necesita papeleo, no pánico.",
-        "posterSubtitle": "Suavemente Fuera de Norma",
+        "posterSubtitle": "Por llevar protector solar y asumir que eso bastaba.",
         "caseStatus": "Expediente abierto",
         "riskLevel": "Gestionable",
         "recommendedAction": "Emitir papeleo",
@@ -1063,7 +1063,7 @@
       "clear": {
         "label": "Claramente sin protección",
         "description": "El aviso público estándar para humanos sin certificado.",
-        "posterSubtitle": "Aproximarse Con Certificado",
+        "posterSubtitle": "Por entrar en temporada de playa con confianza, protector solar y cero documentación marina.",
         "caseStatus": "Sin resolver",
         "riskLevel": "Oficialmente incómodo",
         "recommendedAction": "Resolver caso",
@@ -1072,23 +1072,46 @@
       "emergency": {
         "label": "Emergencia administrativa",
         "description": "Para casos avanzados de ausencia visible de certificado.",
-        "posterSubtitle": "Escalado — Resolución Requerida",
+        "posterSubtitle": "Por convertirse en la razón por la que este póster tuvo que existir.",
         "caseStatus": "Escalado",
         "riskLevel": "Burocrático",
         "recommendedAction": "Cerrar expediente",
         "rewardText": "Presión social medible"
       }
     },
+    "posterSubtitles": {
+      "mild": [
+        "Por llevar protector solar y asumir que eso bastaba.",
+        "Por estar un poco demasiado tranquilo con el océano.",
+        "Por moverse por el verano con confianza no documentada.",
+        "Por permanecer cerca del agua como si esto ya se hubiera hablado.",
+        "Por mantener confianza sospechosa en entornos adyacentes a tiburones.",
+        "Por comportarse como si los tiburones hubieran recibido aviso previo."
+      ],
+      "clear": [
+        "Por entrar en temporada de playa con confianza, protector solar y cero documentación marina.",
+        "Por caminar hacia las olas como si alguien hubiera autorizado esto.",
+        "Por no aclarar si es amigo, persona o snack.",
+        "Por proceder como si los tiburones respetaran garantías verbales.",
+        "Por poseer niveles peligrosos de confianza y cero documentación tiburón."
+      ],
+      "emergency": [
+        "Por convertirse en la razón por la que este póster tuvo que existir.",
+        "Por hacer que el departamento de certificados use el sello serio.",
+        "Por alcanzar un nivel de confianza no certificada antes considerado teórico.",
+        "Por no dejar a la Alianza otra opción que ponerse visualmente dramática."
+      ]
+    },
     "caseStatusLabel": "Estado del caso",
     "riskLevelLabel": "Nivel de riesgo",
     "recommendedActionLabel": "Acción recomendada",
     "subjectPhotoLabel": "Foto de evidencia",
-    "generateButton": "Generar acusación oficial",
+    "generateButton": "Generar póster Wanted",
     "formDisclaimer": "Ningún humano fue dañado durante la creación de este póster. Ningún tiburón quedó impresionado tampoco.",
     "defaultName": "Humano No Identificado",
     "posterHeader": "Shark Human Alliance",
     "wantedTitle": "SE BUSCA",
-    "chargesLabel": "Incidentes alegados",
+    "chargesLabel": "Problemas de cumplimiento observados",
     "toneCharges": {
       "mild": [
         "Llegar a la temporada de playa con el papeleo todavía en beta",
@@ -1149,26 +1172,41 @@
       ]
     },
     "rewardLabel": "Recompensa",
+    "caseDetailLabel": "Detalle del caso",
+    "caseDetails": [
+      "Los registros muestran confianza, protector solar y ningún trámite marino.",
+      "El sujeto parece listo para la playa y administrativamente sin resolver.",
+      "La evidencia disponible sugiere que la confianza llegó antes que la autorización.",
+      "El expediente contiene buenas vibras, protector solar y varias preguntas sin responder.",
+      "El personal marino no encontró certificado, pero anotó un optimismo considerable.",
+      "El caso sigue abierto por ambigüedad snack-adjacent sin resolver.",
+      "El sujeto no ha demostrado un plan viable para volverse menos comestible en papel.",
+      "La Oficina no encontró formularios, rastro de archivo ni prudencia costera suficiente.",
+      "El océano no ha acusado recibo de documentación protectora alguna.",
+      "Los registros actuales apoyan el despliegue inmediato de papeleo decorativo.",
+      "El departamento de certificados marcó este asunto como innecesariamente prevenible.",
+      "No se localizaron credenciales orientadas a tiburones durante la auditoría preliminar de vibes."
+    ],
     "qrCtaLabel": "ESCANEA PARA REGULARIZAR A {name}",
     "qrCtaFallbackLabel": "ESCANEA PARA CERRAR ESTE CASO",
     "posterFooter": "sharkhumanalliance.com — La diplomacia no es opcional",
     "formatLabel": "Formato",
     "formatA4": "A4 (impresión)",
     "formatStory": "Story (9:16)",
-    "downloadButton": "Descargar acusación",
+    "downloadButton": "Descargar póster",
     "downloadingButton": "Preparando póster...",
-    "shareButton": "Compartir acusación",
+    "shareButton": "Compartir póster",
     "linkCopied": "¡Enlace copiado!",
     "shareTitle": "SE BUSCA: {name}",
     "shareText": "{name} ha sido identificado como un humano desprotegido. Haz lo correcto.",
-    "giftCta": "Cerrar el caso de {name} con un Certificado de Amigo Protegido — $4",
+    "giftCta": "Cerrar el caso de {name} con un Certificado de Amigo Protegido",
     "caseLinkLabel": "Abrir el expediente",
     "caseLinkDescription": "Una landing personalizada donde la acusación puede convertirse en papeleo.",
     "storyLinkLabel": "Enlace para Story",
     "newPoster": "Crear otro póster",
-    "rerollChargesButton": "Inventar nuevos incidentes",
+    "rerollChargesButton": "Rehacer póster",
     "priceAnchor": "$4 — menos que tu café Starbucks de la mañana. Sin colas, además.",
-    "socialProofText": "18 pósters de búsqueda emitidos esta semana.",
+    "socialProofText": "18 pósters de búsqueda emitidos la semana pasada.",
     "viralPrompt": "Compártelo en Instagram Stories, envíalo al grupo de chat, o imprímelo y pégalo en su escritorio.",
     "viralSubtext": "Cada póster compartido es un paso hacia la cobertura diplomática universal entre tiburones y humanos.",
     "previewLabel": "Vista previa del póster",
@@ -1227,40 +1265,6 @@
       "Permanecer dentro de rango de salpicadura sin nota de contingencia",
       "Proceder sin la cantidad recomendada de papeleo absurdo",
       "No tranquilizar por escrito a la comunidad marina amplia"
-    ],
-    "caseDetails": [
-      {
-        "label": "Nivel de expediente",
-        "value": "Nivel B / sin resolver"
-      },
-      {
-        "label": "Visto por última vez",
-        "value": "Costa, sin permiso"
-      },
-      {
-        "label": "Testigos",
-        "value": "Tres (3) especies marinas"
-      },
-      {
-        "label": "Pendiente",
-        "value": "Un (1) certificado protector"
-      },
-      {
-        "label": "Oficina responsable",
-        "value": "Prevención de Malentendidos"
-      },
-      {
-        "label": "Aviso emitido",
-        "value": "Advertencia estacional estándar"
-      },
-      {
-        "label": "Días sin papeleo",
-        "value": "Varios"
-      },
-      {
-        "label": "Enlace contactado",
-        "value": "Ninguno registrado"
-      }
     ],
     "tiltToggleLabel": "Generar con inclinación de póster"
   },

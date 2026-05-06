@@ -188,18 +188,18 @@
       "nonsnackPrice": "$19",
       "nonsnackDescription": "For humans who would prefer to be documented as a person, not a snack. Same official-ish paperwork energy, slightly stronger anti-appetizer positioning.",
       "nonsnackFeatures": [
-        "Premium certificate",
-        "Official Non-Snack status",
-        "Downloadable badge"
+        "Personalized digital certificate",
+        "Certified Non-Snack status",
+        "Higher shark conservation allocation"
       ],
       "nonsnackCta": "File Non-Snack paperwork — $19",
       "businessTitle": "Shark-Free Zone",
       "businessPrice": "$99",
       "businessDescription": "For offices, cafés, studios, meeting rooms, and other aggressively land-based spaces seeking formal confirmation that sharks are not expected to operate there.",
       "businessFeatures": [
-        "Website badge",
-        "Optional premium registry placement",
-        "Business-facing certificate"
+        "Business-facing wall certificate",
+        "Shark-Free Zone status",
+        "Highest conservation allocation"
       ],
       "businessCta": "Certify a Shark-Free Zone — $99",
       "businessEyebrow": "For businesses",
@@ -1054,7 +1054,7 @@
       "mild": {
         "label": "Mildly concerning",
         "description": "For someone who needs paperwork, not panic.",
-        "posterSubtitle": "Gently Out of Compliance",
+        "posterSubtitle": "For carrying sunscreen and assuming that was enough.",
         "caseStatus": "Open file",
         "riskLevel": "Manageable",
         "recommendedAction": "Issue paperwork",
@@ -1063,7 +1063,7 @@
       "clear": {
         "label": "Clearly unprotected",
         "description": "The standard public notice for certificate-free humans.",
-        "posterSubtitle": "Subject Should Be Approached With a Certificate",
+        "posterSubtitle": "For entering beach season with confidence, sunscreen, and no marine documentation.",
         "caseStatus": "Unresolved",
         "riskLevel": "Officially awkward",
         "recommendedAction": "Resolve case",
@@ -1072,23 +1072,46 @@
       "emergency": {
         "label": "Administrative emergency",
         "description": "For advanced cases of visible certificate absence.",
-        "posterSubtitle": "Escalated — Resolution Required",
+        "posterSubtitle": "For becoming the reason this poster had to exist.",
         "caseStatus": "Escalated",
         "riskLevel": "Bureaucratic",
         "recommendedAction": "Close file",
         "rewardText": "Measurable social pressure"
       }
     },
+    "posterSubtitles": {
+      "mild": [
+        "For carrying sunscreen and assuming that was enough.",
+        "For being a little too calm about the ocean.",
+        "For moving through summer with undocumented confidence.",
+        "For standing near water as if this had already been discussed.",
+        "For maintaining suspicious confidence in shark-adjacent environments.",
+        "For behaving as though sharks had received prior notice."
+      ],
+      "clear": [
+        "For entering beach season with confidence, sunscreen, and no marine documentation.",
+        "For walking toward the waves like someone had cleared this.",
+        "For failing to clarify whether they are a friend, a person, or a snack.",
+        "For proceeding as if sharks respect verbal assurances.",
+        "For possessing dangerous levels of confidence and zero shark documentation."
+      ],
+      "emergency": [
+        "For becoming the reason this poster had to exist.",
+        "For causing the certificate department to use the serious stamp.",
+        "For reaching a level of uncertified confidence previously thought theoretical.",
+        "For leaving the Alliance no choice but to become visually dramatic."
+      ]
+    },
     "caseStatusLabel": "Case status",
     "riskLevelLabel": "Risk level",
     "recommendedActionLabel": "Recommended action",
     "subjectPhotoLabel": "Evidence photo",
-    "generateButton": "Generate Official Accusation",
+    "generateButton": "Generate Wanted Poster",
     "formDisclaimer": "No humans were harmed in the making of this poster. No sharks were impressed either.",
     "defaultName": "Unidentified Human",
     "posterHeader": "Shark Human Alliance",
     "wantedTitle": "WANTED",
-    "chargesLabel": "Alleged incidents",
+    "chargesLabel": "Observed compliance issues",
     "toneCharges": {
       "mild": [
         "Arriving at beach season with paperwork still in beta",
@@ -1149,26 +1172,41 @@
       ]
     },
     "rewardLabel": "Reward",
+    "caseDetailLabel": "Case detail",
+    "caseDetails": [
+      "Records show confidence, sunscreen, and no marine filing.",
+      "The subject appears beach-ready and administratively unresolved.",
+      "Available evidence suggests confidence arrived before clearance.",
+      "The file contains vibes, sunscreen, and several unanswered questions.",
+      "Marine staff found no certificate, but noted considerable optimism.",
+      "The case remains open due to unresolved snack-adjacent ambiguity.",
+      "The subject has not demonstrated a workable plan for becoming less edible on paper.",
+      "The Bureau found no forms, no filing trail, and unusually high beach confidence.",
+      "The ocean has not acknowledged receipt of any protective documentation.",
+      "Current records support immediate decorative paperwork deployment.",
+      "The certificate department has marked this matter as unnecessarily preventable.",
+      "No shark-facing credentials were located during the preliminary vibes audit."
+    ],
     "qrCtaLabel": "SCAN TO CLEAR {name}",
     "qrCtaFallbackLabel": "SCAN TO CLOSE THIS CASE",
     "posterFooter": "sharkhumanalliance.com — Diplomacy is not optional",
     "formatLabel": "Format",
     "formatA4": "A4 (print)",
     "formatStory": "Story (9:16)",
-    "downloadButton": "Download accusation",
+    "downloadButton": "Download poster",
     "downloadingButton": "Preparing poster...",
-    "shareButton": "Share accusation",
+    "shareButton": "Share poster",
     "linkCopied": "Link copied!",
     "shareTitle": "WANTED: {name}",
     "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
-    "giftCta": "Close {name}'s case with a Protected Friend Certificate — $4",
+    "giftCta": "Close {name}'s case with a Protected Friend Certificate",
     "caseLinkLabel": "Open the case file",
     "caseLinkDescription": "A personalized landing page where the accusation can become paperwork.",
     "storyLinkLabel": "Story link",
     "newPoster": "Create another poster",
-    "rerollChargesButton": "Invent new incidents",
+    "rerollChargesButton": "Reroll poster",
     "priceAnchor": "$4 — less than your morning Starbucks. Less waiting in line, too.",
-    "socialProofText": "18 wanted posters issued this week.",
+    "socialProofText": "18 wanted posters issued last week.",
     "viralPrompt": "Share it on Instagram Stories, send it in a group chat, or print it and tape it to their desk.",
     "viralSubtext": "Every poster shared is a step toward universal shark-human diplomatic coverage.",
     "previewLabel": "Live poster preview",
@@ -1227,40 +1265,6 @@
       "Standing within splash range without a contingency note",
       "Proceeding without the recommended amount of absurd paperwork",
       "Failing to reassure the wider marine community in writing"
-    ],
-    "caseDetails": [
-      {
-        "label": "Filing tier",
-        "value": "Tier B / unresolved"
-      },
-      {
-        "label": "Last seen",
-        "value": "Coastline, no permit"
-      },
-      {
-        "label": "Witnessed by",
-        "value": "Three (3) marine species"
-      },
-      {
-        "label": "Outstanding",
-        "value": "One (1) protective certificate"
-      },
-      {
-        "label": "Office in charge",
-        "value": "Misunderstanding Prevention"
-      },
-      {
-        "label": "Notice issued",
-        "value": "Standard seasonal warning"
-      },
-      {
-        "label": "Days since paperwork",
-        "value": "Multiple"
-      },
-      {
-        "label": "Liaison contacted",
-        "value": "None on record"
-      }
     ],
     "tiltToggleLabel": "Generate with poster tilt"
   },

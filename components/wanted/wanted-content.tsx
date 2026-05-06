@@ -1,10 +1,10 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import * as QRCode from "qrcode";
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
-import { getQrCodeUrl } from "@/lib/qr-svg";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
 
 function nameHash(name: string): number {
@@ -33,6 +33,56 @@ function fitCanvasText(
   return fontSize;
 }
 
+function wrapCanvasLines(
+  ctx: CanvasRenderingContext2D,
+  text: unknown,
+  maxWidth: number,
+) {
+  const source = typeof text === "string" ? text : String(text ?? "");
+  const words = source.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let line = "";
+
+  for (const word of words) {
+    const test = line ? `${line} ${word}` : word;
+    if (line && ctx.measureText(test).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+
+  if (line) lines.push(line);
+  return lines;
+}
+
+function fitCanvasWrappedText(
+  ctx: CanvasRenderingContext2D,
+  text: unknown,
+  maxWidth: number,
+  initialSize: number,
+  minSize: number,
+  weight = 600,
+  maxLines = 2,
+) {
+  let fontSize = initialSize;
+  const source = typeof text === "string" ? text : String(text ?? "");
+  let lines: string[] = [source];
+
+  while (fontSize > minSize) {
+    ctx.font = `${weight} ${fontSize}px 'Geist', sans-serif`;
+    lines = wrapCanvasLines(ctx, source, maxWidth);
+    if (lines.length <= maxLines) break;
+    fontSize -= 2;
+  }
+
+  ctx.font = `${weight} ${fontSize}px 'Geist', sans-serif`;
+  lines = wrapCanvasLines(ctx, source, maxWidth);
+
+  return { fontSize, lines };
+}
+
 const POSTER_BG = "#3a2515";
 const POSTER_PAPER = "#f6ecd8";
 const POSTER_INK = "#102941";
@@ -56,6 +106,18 @@ function readRawMessages<T>(reader: () => T, fallback: T) {
   } catch {
     return fallback;
   }
+}
+
+function normalizeStringList(value: unknown): string[] {
+  const rawItems = Array.isArray(value)
+    ? value
+    : value && typeof value === "object"
+      ? Object.entries(value)
+          .sort(([a], [b]) => Number(a) - Number(b))
+          .map(([, item]) => item)
+      : [];
+
+  return rawItems.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
 }
 
 interface PosterLayout {
@@ -86,6 +148,86 @@ const POSTER_LAYOUTS: Record<PosterFormat, PosterLayout> = {
   },
 };
 
+function drawQrCode(
+  ctx: CanvasRenderingContext2D,
+  url: string,
+  x: number,
+  y: number,
+  size: number,
+) {
+  const qr = QRCode.create(url, { errorCorrectionLevel: "M" });
+  const moduleCount = qr.modules.size;
+  const cellSize = size / moduleCount;
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(x, y, size, size);
+  ctx.fillStyle = "#000000";
+
+  for (let row = 0; row < moduleCount; row += 1) {
+    for (let col = 0; col < moduleCount; col += 1) {
+      if (qr.modules.get(row, col)) {
+        const cellX = x + col * cellSize;
+        const cellY = y + row * cellSize;
+        ctx.fillRect(cellX, cellY, Math.ceil(cellSize), Math.ceil(cellSize));
+      }
+    }
+  }
+}
+
+function drawQrFallback(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  size: number,
+) {
+  const cell = size / 9;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(x, y, size, size);
+  ctx.strokeStyle = "#000000";
+  ctx.lineWidth = Math.max(2, cell * 0.18);
+
+  const finder = (fx: number, fy: number) => {
+    ctx.strokeRect(fx, fy, cell * 2.4, cell * 2.4);
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(fx + cell * 0.7, fy + cell * 0.7, cell, cell);
+    ctx.fillStyle = "#ffffff";
+  };
+
+  finder(x + cell, y + cell);
+  finder(x + size - cell * 3.4, y + cell);
+  finder(x + cell, y + size - cell * 3.4);
+
+  ctx.fillStyle = "#000000";
+  const dots = [
+    [4, 3],
+    [5, 3],
+    [7, 4],
+    [3, 5],
+    [5, 5],
+    [6, 6],
+    [4, 7],
+    [7, 7],
+  ];
+  dots.forEach(([col, row]) => {
+    ctx.fillRect(x + col * cell, y + row * cell, cell * 0.7, cell * 0.7);
+  });
+}
+
+function drawQrCodeSafe(
+  ctx: CanvasRenderingContext2D,
+  url: string,
+  x: number,
+  y: number,
+  size: number,
+) {
+  try {
+    drawQrCode(ctx, url, x, y, size);
+  } catch (error) {
+    console.error("[Wanted poster] QR render failed", error);
+    drawQrFallback(ctx, x, y, size);
+  }
+}
+
 // Seeded random — deterministic per name + reroll seed so the procedural
 // distress and texture stay consistent for the same inputs.
 function mulberry32(seed: number) {
@@ -111,16 +253,27 @@ export function WantedContent() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const toneCharges = useMemo(() => {
-    return t.raw(`toneCharges.${selectedTone}`) as string[];
+    return normalizeStringList(t.raw(`toneCharges.${selectedTone}`));
   }, [selectedTone, t]);
 
   const commonCharges = useMemo(() => {
-    return readRawMessages(() => t.raw("commonCharges") as string[], []);
+    return normalizeStringList(readRawMessages(() => t.raw("commonCharges"), []));
   }, [t]);
 
   const charges = useMemo(() => {
     return [...toneCharges, ...commonCharges];
   }, [toneCharges, commonCharges]);
+
+  const tonePosterSubtitles = useMemo(() => {
+    const subtitles = normalizeStringList(
+      readRawMessages(() => t.raw(`posterSubtitles.${selectedTone}`), []),
+    );
+    return subtitles.length > 0 ? subtitles : [t(`tones.${selectedTone}.posterSubtitle`)];
+  }, [selectedTone, t]);
+
+  const caseDetails = useMemo(() => {
+    return normalizeStringList(readRawMessages(() => t.raw("caseDetails"), []));
+  }, [t]);
 
   // Salt hash with the reroll counter so users can cycle through different
   // 3-charge combinations for the same name + tone.
@@ -143,15 +296,18 @@ export function WantedContent() {
     return pool.slice(0, Math.min(3, pool.length));
   }, [seededHash, charges]);
 
-  const loadQrImage = useCallback((url: string): Promise<HTMLImageElement> => {
-    return new Promise((resolve, reject) => {
-      const img = new window.Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = getQrCodeUrl(url, 300);
-    });
-  }, []);
+  const selectedPosterSubtitle = useMemo(() => {
+    if (tonePosterSubtitles.length === 0) return t(`tones.${selectedTone}.posterSubtitle`);
+    return tonePosterSubtitles[seededHash % tonePosterSubtitles.length];
+  }, [seededHash, selectedTone, t, tonePosterSubtitles]);
+
+  const selectedCaseDetail = useMemo(() => {
+    if (caseDetails.length > 0) {
+      const baseIndex = nameHash(`${name.trim() || "default"}::case-detail`);
+      return caseDetails[(baseIndex + rerollSeed) % caseDetails.length];
+    }
+    return "Records show confidence, sunscreen, and no marine filing.";
+  }, [caseDetails, name, rerollSeed]);
 
   // Loads any same-origin image (e.g. /public assets) for the canvas. We set
   // crossOrigin so the canvas remains exportable via toBlob even when other
@@ -247,13 +403,13 @@ export function WantedContent() {
         const caseNumber = `SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
 
         ctx.fillStyle = POSTER_MUTED;
-        ctx.font = `700 ${s(34)}px 'Geist', sans-serif`;
+        ctx.font = `700 ${s(46)}px 'Geist', sans-serif`;
         ctx.textAlign = "center";
         ctx.letterSpacing = `${s(12)}px`;
         ctx.fillText(t("posterHeader").toUpperCase(), centerX, marginY + s(114));
         ctx.letterSpacing = "0px";
         ctx.textAlign = "right";
-        ctx.font = `600 ${s(22)}px 'Geist', sans-serif`;
+        ctx.font = `600 ${s(30)}px 'Geist', sans-serif`;
         ctx.fillText(caseNumber, marginX + paperWidth - s(72), marginY + s(144));
         ctx.textAlign = "center";
 
@@ -314,21 +470,25 @@ export function WantedContent() {
         // Subtitle goes ABOVE the name — reads as "WANTED for what" before
         // identifying the suspect, matching the natural flow of a real
         // wanted poster (verb of accusation → name).
-        const subtitleY = marginY + s(560);
-        const subtitleText = t(`tones.${selectedTone}.posterSubtitle`).toUpperCase();
-        const subtitleFontSize = fitCanvasText(
+        const subtitleY = marginY + s(532);
+        const subtitleText = selectedPosterSubtitle.toUpperCase();
+        const subtitleFit = fitCanvasWrappedText(
           ctx,
           subtitleText,
-          paperWidth - s(240),
-          s(54),
+          paperWidth - s(340),
+          s(58),
           s(36),
           800,
+          3,
         );
+        const subtitleLineHeight = subtitleFit.fontSize * 1.2;
         ctx.fillStyle = POSTER_INK;
-        ctx.font = `800 ${subtitleFontSize}px 'Geist', sans-serif`;
+        ctx.font = `800 ${subtitleFit.fontSize}px 'Geist', sans-serif`;
         ctx.textAlign = "center";
         ctx.letterSpacing = `${s(3)}px`;
-        ctx.fillText(subtitleText, centerX, subtitleY);
+        subtitleFit.lines.forEach((line, index) => {
+          ctx.fillText(line, centerX, subtitleY + index * subtitleLineHeight);
+        });
         ctx.letterSpacing = "0px";
 
         ctx.fillStyle = POSTER_INK;
@@ -338,7 +498,7 @@ export function WantedContent() {
           nameFontSize -= s(4);
           ctx.font = `900 ${nameFontSize}px 'Geist', sans-serif`;
         }
-        const nameY = marginY + s(760);
+        const nameY = marginY + s(770);
         ctx.fillText(displayName, centerX, nameY);
         const nameWidth = Math.min(ctx.measureText(displayName).width + s(64), paperWidth - s(220));
         ctx.strokeStyle = POSTER_GOLD;
@@ -366,7 +526,7 @@ export function WantedContent() {
           ctx.fillText(field.label.toUpperCase(), x + fieldWidth / 2, fieldsRowY);
           ctx.letterSpacing = "0px";
           ctx.fillStyle = POSTER_INK;
-          ctx.font = `700 ${s(50)}px 'Courier New', 'Courier', monospace`;
+          ctx.font = `700 ${s(53)}px 'Courier New', 'Courier', monospace`;
           ctx.fillText(field.value, x + fieldWidth / 2, fieldsRowY + s(58));
           ctx.strokeStyle = POSTER_MUTED;
           ctx.lineWidth = s(1.5);
@@ -380,23 +540,11 @@ export function WantedContent() {
 
         const incidentsX = marginX + s(150);
         const incidentsWidth = paperWidth - s(300);
-        const incidentTextSize = s(68);
-        const incidentLineHeight = s(84);
+        const incidentTextSize = s(72);
+        const incidentLineHeight = s(90);
         ctx.font = `500 ${incidentTextSize}px 'Geist', sans-serif`;
         const wrappedCharges = selectedCharges.map((charge) => {
-          const words = charge.split(" ");
-          const lines: string[] = [];
-          let line = "";
-          for (const word of words) {
-            const test = line ? `${line} ${word}` : word;
-            if (ctx.measureText(test).width > incidentsWidth - s(110)) {
-              lines.push(line);
-              line = word;
-            } else {
-              line = test;
-            }
-          }
-          if (line) lines.push(line);
+          const lines = wrapCanvasLines(ctx, charge, incidentsWidth - s(180));
           return { prefix: "—", lines };
         });
 
@@ -421,11 +569,11 @@ export function WantedContent() {
           const watermarkW = paperWidth * 0.76;
           const watermarkH = watermarkW / photoAspect;
           // Position vertically so the figure spans roughly the full
-          // incidents area — sits a bit below the gold ALLEGED INCIDENTS
-          // header and centers within the lower half of the page.
-          const watermarkY = incidentsTitleY + s(160);
+          // incidents area — starts below the generated case note and centers
+          // within the lower half of the page.
+          const watermarkY = incidentsTitleY + s(40);
           ctx.save();
-          ctx.globalAlpha = 0.28;
+          ctx.globalAlpha = 0.18;
           ctx.drawImage(
             watermarkImg,
             centerX - watermarkW / 2,
@@ -446,15 +594,17 @@ export function WantedContent() {
         ctx.fillText(t("chargesLabel").toUpperCase(), centerX, incidentsTitleY);
         ctx.letterSpacing = "0px";
 
-        let incidentsCursorY = incidentsTitleY + s(158);
+        let incidentsCursorY = incidentsTitleY + s(208);
         ctx.textAlign = "left";
         wrappedCharges.forEach((charge) => {
           ctx.fillStyle = POSTER_INK;
-          ctx.font = `800 ${incidentTextSize}px 'Geist', sans-serif`;
+          ctx.globalAlpha = 0.72;
+          ctx.font = `650 ${incidentTextSize}px 'Geist', sans-serif`;
           ctx.fillText(charge.prefix, incidentsX, incidentsCursorY);
+          ctx.globalAlpha = 1;
           ctx.font = `500 ${incidentTextSize}px 'Geist', sans-serif`;
           charge.lines.forEach((currentLine, lineIndex) => {
-            ctx.fillText(currentLine, incidentsX + s(64), incidentsCursorY + lineIndex * incidentLineHeight);
+            ctx.fillText(currentLine, incidentsX + s(92), incidentsCursorY + lineIndex * incidentLineHeight);
           });
           incidentsCursorY += charge.lines.length * incidentLineHeight + s(86);
           ctx.strokeStyle = "rgba(111, 124, 131, 0.42)";
@@ -480,22 +630,17 @@ export function WantedContent() {
               );
 
         const qrX = centerX - qrSize / 2;
-        const qrY = height - marginY - s(820);
-        try {
-          const qrImg = await loadQrImage(caseUrlForQr);
-          ctx.fillStyle = "#ffffff";
-          ctx.beginPath();
-          ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
-          ctx.fill();
-          ctx.strokeStyle = POSTER_RED;
-          ctx.lineWidth = s(4);
-          ctx.beginPath();
-          ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
-          ctx.stroke();
-          ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
-        } catch {
-          // Skip QR if it fails to load.
-        }
+        const qrY = height - marginY - s(860);
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
+        ctx.fill();
+        ctx.strokeStyle = POSTER_RED;
+        ctx.lineWidth = s(4);
+        ctx.beginPath();
+        ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
+        ctx.stroke();
+        drawQrCodeSafe(ctx, caseUrlForQr, qrX, qrY, qrSize);
 
         const qrCtaName = name.trim().split(/\s+/)[0]?.toUpperCase() ?? "";
         const qrCtaText =
@@ -524,7 +669,7 @@ export function WantedContent() {
         const footerText = t("posterFooter");
         const footerFontSize = fitCanvasText(ctx, footerText, paperWidth - s(140), s(50), s(34), 600);
         ctx.font = `600 ${footerFontSize}px 'Geist', sans-serif`;
-        ctx.fillText(footerText, centerX, height - marginY - s(44));
+        ctx.fillText(footerText, centerX, height - marginY - s(52));
         return;
       }
 
@@ -624,21 +769,25 @@ export function WantedContent() {
       // name don't feel crammed against each other on the taller 9:16 canvas.
       y += s(isStory ? 92 : 72);
 
-      const subtitleText = t(`tones.${selectedTone}.posterSubtitle`).toUpperCase();
-      const subtitleFontSize = fitCanvasText(
+      const subtitleText = selectedPosterSubtitle.toUpperCase();
+      const subtitleFit = fitCanvasWrappedText(
         ctx,
         subtitleText,
-        paperWidth - s(isStory ? 340 : 180),
+        paperWidth - s(isStory ? 340 : 520),
         s(isStory ? 78 : 42),
         s(isStory ? 40 : 24),
         800,
+        2,
       );
+      const subtitleLineHeight = subtitleFit.fontSize * 1.2;
       ctx.fillStyle = POSTER_INK;
-      ctx.font = `800 ${subtitleFontSize}px 'Geist', sans-serif`;
+      ctx.font = `800 ${subtitleFit.fontSize}px 'Geist', sans-serif`;
       ctx.letterSpacing = `${s(4)}px`;
-      ctx.fillText(subtitleText, centerX, y);
+      subtitleFit.lines.forEach((line, index) => {
+        ctx.fillText(line, centerX, y + index * subtitleLineHeight);
+      });
       ctx.letterSpacing = "0px";
-      y += s(isStory ? 136 : 106);
+      y += s(isStory ? 150 : 68);
 
       // === Subject evidence photo ===
       // Sits between the subtitle and the name like a traditional wanted-
@@ -657,7 +806,7 @@ export function WantedContent() {
             : 1448 / 1086;
         const photoH = s(isStory ? 540 : 700);
         const photoW = photoH * photoAspect;
-        const photoTopGap = s(isStory ? 28 : 32);
+        const photoTopGap = s(isStory ? 28 : 20);
         const trailingGap = s(isStory ? 90 : 110);
         const photoX = centerX - photoW / 2;
         const photoY = y + photoTopGap;
@@ -743,21 +892,20 @@ export function WantedContent() {
       // frame border (was sitting on top of it before). The QR CTA + footer
       // need extra breathing room on Story because their fonts are
       // significantly larger to remain phone-readable.
-      const footerY = height - marginY - s(isStory ? 110 : 112);
-      const qrCtaY = footerY - s(isStory ? 70 : 56);
-      const qrAreaBottomY = qrCtaY - s(isStory ? 70 : 62);
+      const footerY = height - marginY - s(isStory ? 110 : 72);
+      const qrCtaY = footerY - s(isStory ? 70 : 66);
+      const qrAreaBottomY = qrCtaY - s(isStory ? 70 : 72);
 
       const qrY = qrAreaBottomY - qrSize;
-      const rewardBoxWidth = Math.min(s(760), paperWidth - s(160));
-      const rewardBoxHeight = s(isStory ? 200 : 112);
-      const rewardBoxX = centerX - rewardBoxWidth / 2;
-      const rewardBoxY = qrY - s(36) - rewardBoxHeight;
+      const caseDetailBoxWidth = Math.min(s(760), paperWidth - s(160));
+      const caseDetailBoxHeight = s(isStory ? 0 : 116);
+      const caseDetailBoxY = qrY - s(36) - caseDetailBoxHeight;
 
       const chargesBoxX = marginX + s(150);
       const chargesBoxWidth = paperWidth - s(300);
       const chargesBoxInnerX = chargesBoxX + s(48);
       const chargesBoxY = y;
-      const maxChargeWidth = chargesBoxWidth - s(150);
+      const maxChargeWidth = chargesBoxWidth - s(isStory ? 180 : 260);
 
       // Story canvas (1080 wide) gets downscaled to ~390 px on phone. To
       // keep charges readable post-downscale (target ~12 px on phone), we
@@ -766,23 +914,7 @@ export function WantedContent() {
       const chargeLineHeight = s(isStory ? 92 : 52);
       ctx.font = `500 ${chargeTextSize}px 'Geist', sans-serif`;
       const wrappedCharges = selectedCharges.map((charge, index) => {
-        const words = charge.split(" ");
-        const lines: string[] = [];
-        let line = "";
-
-        for (const word of words) {
-          const test = line ? `${line} ${word}` : word;
-          if (ctx.measureText(test).width > maxChargeWidth) {
-            lines.push(line);
-            line = word;
-          } else {
-            line = test;
-          }
-        }
-
-        if (line) lines.push(line);
-
-        return { prefix: `${index + 1}.`, lines };
+        return { prefix: `${index + 1}.`, lines: wrapCanvasLines(ctx, charge, maxChargeWidth) };
       });
 
       // Charges box is sized to content (header + entries + breathing pad),
@@ -794,16 +926,18 @@ export function WantedContent() {
           (total, charge) => total + charge.lines.length * chargeLineHeight + chargesEntryGap,
           0,
         ) - chargesEntryGap;
-      const chargesAvailable = rewardBoxY - chargesBoxY - s(36);
-      const chargesHeaderHeight = s(isStory ? 92 : 80);
+      const chargesAvailable = caseDetailBoxY - chargesBoxY - s(isStory ? 36 : 72);
+      const caseDetailText = selectedCaseDetail;
+      const chargesHeaderHeight = s(isStory ? 112 : 80);
       const chargesBoxBottomPad = s(isStory ? 56 : 44);
-      const chargesBoxHeight = Math.max(
+      const desiredChargesBoxHeight = Math.max(
         s(280),
-        Math.min(
-          chargesContentHeight + chargesHeaderHeight + chargesBoxBottomPad,
-          chargesAvailable,
-        ),
+        chargesContentHeight + chargesHeaderHeight + chargesBoxBottomPad,
       );
+      const chargesBoxHeight =
+        chargesAvailable > s(360)
+          ? Math.min(desiredChargesBoxHeight, chargesAvailable)
+          : desiredChargesBoxHeight;
 
       ctx.strokeStyle = POSTER_MUTED;
       ctx.lineWidth = s(2);
@@ -823,7 +957,7 @@ export function WantedContent() {
       // Top-align entries — start just below the CHARGES header, with a
       // small constant offset. No vertical centering: per user feedback the
       // box should sit close to its content, not float in the middle.
-      let chargesCursorY = chargesBoxY + chargesHeaderHeight + s(isStory ? 48 : 34);
+      let chargesCursorY = chargesBoxY + chargesHeaderHeight + s(isStory ? 56 : 34);
       wrappedCharges.forEach((charge) => {
         ctx.font = `700 ${chargeTextSize}px 'Geist', sans-serif`;
         ctx.fillText(charge.prefix, chargesBoxInnerX, chargesCursorY);
@@ -840,29 +974,38 @@ export function WantedContent() {
         chargesCursorY += charge.lines.length * chargeLineHeight + chargesEntryGap;
       });
 
-      ctx.strokeStyle = POSTER_GOLD;
-      ctx.lineWidth = s(2);
-      ctx.beginPath();
-      ctx.roundRect(rewardBoxX, rewardBoxY, rewardBoxWidth, rewardBoxHeight, s(18));
-      ctx.stroke();
-      ctx.textAlign = "center";
-      ctx.fillStyle = POSTER_GOLD;
-      ctx.font = `700 ${s(isStory ? 52 : 28)}px 'Geist', sans-serif`;
-      ctx.letterSpacing = `${s(3)}px`;
-      ctx.fillText(t("rewardLabel").toUpperCase(), centerX, rewardBoxY + s(isStory ? 64 : 34));
-      ctx.letterSpacing = "0px";
+      if (!isStory) {
+        ctx.textAlign = "center";
+        ctx.fillStyle = POSTER_GOLD;
+        ctx.font = `700 ${s(28)}px 'Geist', sans-serif`;
+        ctx.letterSpacing = `${s(3)}px`;
+        ctx.fillText(
+          t("caseDetailLabel").toUpperCase(),
+          centerX,
+          caseDetailBoxY + s(28),
+        );
+        ctx.letterSpacing = "0px";
 
-      const rewardText = t(`tones.${selectedTone}.rewardText`);
-      const rewardFontSize = fitCanvasText(
-        ctx,
-        rewardText,
-        rewardBoxWidth - s(72),
-        s(isStory ? 64 : 34),
-        s(isStory ? 40 : 23),
-      );
-      ctx.fillStyle = POSTER_INK;
-      ctx.font = `600 ${rewardFontSize}px 'Geist', sans-serif`;
-      ctx.fillText(rewardText, centerX, rewardBoxY + s(isStory ? 140 : 74));
+        const caseDetailFit = fitCanvasWrappedText(
+          ctx,
+          caseDetailText,
+          caseDetailBoxWidth - s(72),
+          s(34),
+          s(24),
+          600,
+          2,
+        );
+        const caseDetailLineHeight = caseDetailFit.fontSize * 1.2;
+        ctx.fillStyle = POSTER_INK;
+        ctx.font = `600 ${caseDetailFit.fontSize}px 'Geist', sans-serif`;
+        caseDetailFit.lines.forEach((line, index) => {
+          ctx.fillText(
+            line,
+            centerX,
+            caseDetailBoxY + s(72) + index * caseDetailLineHeight,
+          );
+        });
+      }
 
       // Note: the previous fake red "RESOLVE THIS CASE" button has been removed
       // — it was a non-functional pixel button on a static PNG that misled
@@ -887,21 +1030,16 @@ export function WantedContent() {
               locale,
               shortCasePath,
             );
-      try {
-        const qrImg = await loadQrImage(caseUrlForQr);
-        ctx.fillStyle = "#ffffff";
-        ctx.beginPath();
-        ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
-        ctx.fill();
-        ctx.strokeStyle = POSTER_RED;
-        ctx.lineWidth = s(4);
-        ctx.beginPath();
-        ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
-        ctx.stroke();
-        ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
-      } catch {
-        // Skip QR if it fails to load.
-      }
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
+      ctx.fill();
+      ctx.strokeStyle = POSTER_RED;
+      ctx.lineWidth = s(4);
+      ctx.beginPath();
+      ctx.roundRect(qrX - s(14), qrY - s(14), qrSize + s(28), qrSize + s(28), s(12));
+      ctx.stroke();
+      drawQrCodeSafe(ctx, caseUrlForQr, qrX, qrY, qrSize);
 
       // Prominent QR call-to-action label — centered below QR. Bold red,
       // name-targeted, fitted to width.
@@ -932,11 +1070,12 @@ export function WantedContent() {
     },
     [
       loadPosterImage,
-      loadQrImage,
       locale,
       name,
       posterFormat,
+      selectedCaseDetail,
       selectedCharges,
+      selectedPosterSubtitle,
       selectedTone,
       seededHash,
       t,
@@ -954,7 +1093,8 @@ export function WantedContent() {
     canvas.width = layout.width;
     canvas.height = layout.height;
 
-    drawPoster(ctx, layout).catch(() => {
+    drawPoster(ctx, layout).catch((error) => {
+      console.error("[Wanted poster] Canvas render failed", error);
       // Leave the previous frame in place if drawing fails.
     });
   }, [drawPoster, posterFormat]);
@@ -1106,7 +1246,6 @@ export function WantedContent() {
 
   const displayName = name.trim() || t("defaultName");
   const giftCtaText = t("giftCta", { name: displayName });
-  const giftCtaBase = giftCtaText.replace(/\s[—-]\s\$4$/, "");
   const shortCaseUrl = `/w?${new URLSearchParams({
     t: selectedTone,
     ...(name.trim() ? { n: name.trim() } : {}),
@@ -1228,7 +1367,7 @@ export function WantedContent() {
                   <button
                     type="submit"
                     disabled={!name.trim()}
-                    className="min-h-[52px] w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="hidden min-h-[52px] w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40 lg:block"
                   >
                     {t("generateButton")}
                   </button>
@@ -1315,6 +1454,17 @@ export function WantedContent() {
                   </button>
                 </div>
 
+                {!generated ? (
+                  <button
+                    type="button"
+                    onClick={handleGenerate}
+                    disabled={!name.trim()}
+                    className="mt-3 min-h-[52px] w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40 lg:hidden"
+                  >
+                    {t("generateButton")}
+                  </button>
+                ) : null}
+
                 <div className="mt-4 space-y-3">
                   {generated ? (
                     <>
@@ -1322,22 +1472,11 @@ export function WantedContent() {
                         href={giftUrl}
                         className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--accent)] px-5 py-3 text-center text-sm font-semibold leading-6 text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:whitespace-nowrap"
                       >
-                        <span>{giftCtaBase}</span>
-                        <span className="whitespace-nowrap">— $4</span>
+                        <span>{giftCtaText}</span>
                       </LocalizedLink>
                       <p className="text-center text-xs leading-5 text-[var(--muted)]">
                         {t("priceAnchor")}
                       </p>
-
-                      <LocalizedLink
-                        href={shortCaseUrl}
-                        className="block rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-center text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-red-50"
-                      >
-                        <span>{t("caseLinkLabel")}</span>
-                        <span className="mt-0.5 block text-xs font-medium leading-5 text-[var(--muted)]">
-                          {t("caseLinkDescription")}
-                        </span>
-                      </LocalizedLink>
 
                       <button
                         onClick={handleShare}
@@ -1364,6 +1503,16 @@ export function WantedContent() {
                       >
                         {t("newPoster")}
                       </button>
+
+                      <LocalizedLink
+                        href={shortCaseUrl}
+                        className="block rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-center text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-red-50"
+                      >
+                        <span>{t("caseLinkLabel")}</span>
+                        <span className="mt-0.5 block text-xs font-medium leading-5 text-[var(--muted)]">
+                          {t("caseLinkDescription")}
+                        </span>
+                      </LocalizedLink>
                     </>
                   ) : (
                     <p className="text-xs leading-6 text-[var(--muted)]">

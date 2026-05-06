@@ -165,7 +165,7 @@ export function ImpactContent() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
             <div>
-              <div className="lg:min-h-[10rem]">
+              <div>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
                   {t("partnersTitle")}
                 </h2>
@@ -224,7 +224,7 @@ export function ImpactContent() {
             </div>
 
             <div>
-              <div className="lg:min-h-[10rem]">
+              <div>
                 <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
                   {t("reportingTitle")}
                 </h2>

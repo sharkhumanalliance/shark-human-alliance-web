@@ -57,7 +57,7 @@ export function MembershipCard({
           {eyebrow ?? title}
         </div>
 
-        <h3 className="mt-3 text-xl font-semibold leading-tight text-[var(--brand-dark)] sm:min-h-[2.6rem]">
+        <h3 className="mt-3 text-xl font-semibold leading-tight text-[var(--brand-dark)]">
           {title}
         </h3>
 
@@ -65,9 +65,9 @@ export function MembershipCard({
           {price}
         </p>
 
-        <p className="mt-2.5 text-sm leading-6 text-[var(--muted)] sm:min-h-[4rem]">{description}</p>
+        <p className="mt-2.5 text-sm leading-6 text-[var(--muted)]">{description}</p>
 
-        <ul className="mt-4 flex-grow space-y-2 sm:min-h-[6.75rem]">
+        <ul className="mt-4 space-y-2">
           {features.map((feature) => (
             <li
               key={feature}
@@ -81,7 +81,7 @@ export function MembershipCard({
 
         <LocalizedLink
           href={href}
-          className={`mt-3 inline-flex min-h-[48px] w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-colors duration-300 ease-out ${getTierButtonClass(
+          className={`mt-5 inline-flex min-h-[48px] w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-colors duration-300 ease-out ${getTierButtonClass(
             variant
           )}`}
         >
