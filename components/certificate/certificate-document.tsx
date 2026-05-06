@@ -336,7 +336,7 @@ export function CertificateDocument({
 
           <div className="lux-body-block">{bodyText}</div>
 
-          {/* Dedication block: shows the user's recorded dedication if any,
+          {/* Dedication block: shows the user's filed dedication if any,
               otherwise falls back to an auto-generated diplomatic marine note,
               so the bottom of the certificate always carries a personalized
               line of copy. */}

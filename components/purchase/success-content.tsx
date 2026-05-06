@@ -431,6 +431,12 @@ function SuccessContentInner() {
                 {t("manageRecord")}
               </LocalizedLink>
             ) : null}
+            <LocalizedLink
+              href="/wanted"
+              className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-red-200 bg-red-50 px-6 py-4 text-base font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-100 sm:w-auto"
+            >
+              {t("referralWantedPoster")}
+            </LocalizedLink>
           </div>
 
           {downloadStatus ? (
@@ -570,7 +576,7 @@ function SuccessContentInner() {
                 href="/career"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-sky-50"
               >
-                {t("referralWantedPoster")}
+                {t("referralCareerLink")}
               </LocalizedLink>
             </div>
           </section>

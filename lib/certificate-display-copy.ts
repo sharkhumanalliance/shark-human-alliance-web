@@ -51,11 +51,11 @@ const COPY = {
       business:
         "by the Shark Human Alliance, after confirming that no shark has presented documentation sufficient to challenge the zone designation, and in recognition of substantial support for real ocean conservation.",
     },
-    assessmentLabel: "Diplomatic assessment",
+    assessmentLabel: "Case assessment",
     assessmentText:
       "Any shark considering the holder a meal would be demonstrating exceptionally poor judgment.",
-    dedicationLabel: "Recorded dedication",
-    marineNoteLabel: "Supplementary marine note",
+    dedicationLabel: "Filed dedication",
+    marineNoteLabel: "Supplementary case note",
     tierLabels: {
       protected: "Protected Friend",
       nonsnack: "Certified Non-Snack",
@@ -120,11 +120,11 @@ const COPY = {
       business:
         "por Shark Human Alliance, tras confirmar que ningún tiburón ha presentado documentación suficiente para impugnar la designación de la zona y en reconocimiento del apoyo significativo a la conservación oceánica real.",
     },
-    assessmentLabel: "Evaluación diplomática",
+    assessmentLabel: "Evaluación del caso",
     assessmentText:
       "Cualquier tiburón que considerara a la persona titular como comida demostraría un criterio excepcionalmente pobre.",
-    dedicationLabel: "Dedicatoria registrada",
-    marineNoteLabel: "Nota marina suplementaria",
+    dedicationLabel: "Dedicatoria archivada",
+    marineNoteLabel: "Nota suplementaria del caso",
     tierLabels: {
       protected: "Amigo Protegido",
       nonsnack: "No-Snack Certificado",

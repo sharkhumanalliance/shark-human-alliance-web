@@ -68,6 +68,11 @@ export function VerifyContent({
     t("quip4"),
     t("quip5"),
     t("quip6"),
+    t("quip7"),
+    t("quip8"),
+    t("quip9"),
+    t("quip10"),
+    t("quip11"),
   ];
   const tierLabel = getTierLabel(tier, t);
   const tierColor = getTierColor(tier);

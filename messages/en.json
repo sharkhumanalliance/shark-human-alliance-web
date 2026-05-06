@@ -1,12 +1,12 @@
 {
   "seo": {
     "home": {
-      "title": "Funny Shark Certificates — Official Shark Protection",
-      "description": "The internet's most official-ish human protection program. For shark-related concerns. Sharks deserve better PR. And real protection. A personalized certificate for people who love sharks, fear sharks, or just appreciate excellent paperwork. Every sale funds real ocean conservation. From $4."
+      "title": "Funny Shark Certificates & Official-ish Shark Paperwork",
+      "description": "Personalized shark certificates for friends, coworkers, beach-fearers, and people who are probably not food. Funny digital gifts that support real shark conservation."
     },
     "purchase": {
-      "title": "Buy a Funny Shark Certificate — Personalized & Instant",
-      "description": "Get a personalized funny shark certificate delivered instantly. Choose your tier, add a name and dedication, fund real shark conservation. From $4."
+      "title": "Create a Personalized Shark Certificate",
+      "description": "Customize a funny shark certificate, choose a design, and download it instantly after checkout. Gift-ready paperwork with real conservation support."
     },
     "registry": {
       "title": "Diplomatic Registry",
@@ -28,15 +28,15 @@
       "title": "FAQ — Funny Shark Certificates & Conservation",
       "description": "Answers to common questions about funny shark certificates, conservation donations, digital delivery, and gifting. Everything you need to know before buying."
     },
-      "wanted": {
-        "title": "Funny Shark Wanted Poster Generator",
-        "description": "Generate a funny shark wanted poster for someone you know. Share it on Stories, then gift them an official shark protection certificate. Free to generate."
-      },
-      "wantedCase": {
-        "title": "Active Shark-Human Compliance Case",
-        "description": "A personalized Shark Human Alliance case file for resolving an unprotected human with appropriate paperwork."
-      },
-      "career": {
+    "wanted": {
+      "title": "Free Shark Wanted Poster Generator",
+      "description": "Create a funny shark-themed Wanted poster for an unprotected human. Share the accusation, then close the case with official-ish shark paperwork."
+    },
+    "wantedCase": {
+      "title": "Active Shark-Human Compliance Case",
+      "description": "A personalized Shark Human Alliance case file for resolving an unprotected human with appropriate paperwork."
+    },
+    "career": {
       "title": "Alliance Career Ladder",
       "description": "Climb the ranks from Civilian to Chief Shark Whisperer. Refer friends, earn promotions, and rise through the Alliance's diplomatic hierarchy."
     },
@@ -67,7 +67,7 @@
       "faq": "FAQ",
       "registry": "Registry"
     },
-    "cta": "Start shark clearance"
+    "cta": "File shark paperwork"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -102,9 +102,9 @@
     "titleLine1": "Official shark protection.",
     "titleLine2": "For humans.",
     "brandLine": "Sharks deserve better PR. And real protection.",
-    "description": "A personalized certificate for people who love sharks, fear sharks, or simply appreciate excellent paperwork. It also funds real shark conservation.",
-    "ctaPrimary": "Get your certificate",
-    "ctaSecondary": "Preview your certificate",
+    "description": "Personalized shark paperwork for friends, coworkers, beach-fearers, and anyone currently operating without adequate marine documentation.",
+    "ctaPrimary": "File shark paperwork",
+    "ctaSecondary": "Preview the certificate",
     "socialProof": "Join the Alliance",
     "giftBadge": "Official paperwork confirming you are not food.",
     "finnleyName": "Finnley Mako",
@@ -160,7 +160,7 @@
       "linkText": "See full impact report and partner details"
     },
     "about": {
-      "certPreviewLabel": "Tired of being mistaken for a seal? Preview your certificate before the sharks make assumptions.",
+      "certPreviewLabel": "Tired of being mistaken for a seal? Preview the certificate before the sharks make assumptions.",
       "certTitle": "Certificate of Alliance Membership",
       "certCertifies": "This certifies that",
       "certName": "[ Your Name Here ]",
@@ -172,36 +172,36 @@
     },
     "membershipSection": {
       "label": "Certificates",
-      "title": "Choose your level of shark diplomacy.",
-      "description": "Every certificate helps fund real shark conservation. The rest is just unusually good-looking paperwork.",
+      "title": "Choose the paperwork that best matches the situation.",
+      "description": "Whether you are clearing a friend, declaring someone non-snack, or protecting an aggressively land-based room, the Alliance has a form for that.",
       "popularBadge": "Most Popular",
       "protectedTitle": "Protected Friend Status",
       "protectedPrice": "$4",
-      "protectedDescription": "A polished entry point for people who want something personal, funny, and surprisingly frameable. Ideal for birthdays, desk drops, and first-time shark diplomacy.",
+      "protectedDescription": "For everyday humans who need friendly shark-facing paperwork. Personal, giftable, and official-looking enough to raise polite questions at work.",
       "protectedFeatures": [
         "Personalized certificate",
         "Protected Friend status",
         "Instant digital delivery"
       ],
-      "protectedCta": "Get Protected Friend — $4",
+      "protectedCta": "File Protected Friend paperwork — $4",
       "nonsnackTitle": "Non-Snack Recognition",
       "nonsnackPrice": "$19",
-      "nonsnackDescription": "For people who want the joke to land harder and look better framed. More dramatic, more prestigious, and significantly less snack-adjacent.",
+      "nonsnackDescription": "For humans who would prefer to be documented as a person, not a snack. Same official-ish paperwork energy, slightly stronger anti-appetizer positioning.",
       "nonsnackFeatures": [
         "Premium certificate",
         "Official Non-Snack status",
         "Downloadable badge"
       ],
-      "nonsnackCta": "Go Non-Snack — $19",
+      "nonsnackCta": "File Non-Snack paperwork — $19",
       "businessTitle": "Shark-Free Zone",
       "businessPrice": "$99",
-      "businessDescription": "For businesses ready to display official shark-free paperwork with a straight face. Good for studios, cafés, offices, and anyone who understands the value of strange but excellent wall art.",
+      "businessDescription": "For offices, cafés, studios, meeting rooms, and other aggressively land-based spaces seeking formal confirmation that sharks are not expected to operate there.",
       "businessFeatures": [
         "Website badge",
         "Optional premium registry placement",
         "Business-facing certificate"
       ],
-      "businessCta": "Get business certification — $99",
+      "businessCta": "Certify a Shark-Free Zone — $99",
       "businessEyebrow": "For businesses",
       "protectedEyebrow": "Entry tier",
       "nonsnackEyebrow": "Premium tier"
@@ -341,6 +341,26 @@
       {
         "question": "What size is the certificate?",
         "answer": "Certificates are optimized for A4 or US Letter download and printing."
+      },
+      {
+        "question": "Can I print it?",
+        "answer": "Yes. Certificates are designed for A4 and US Letter printing. For best results, print at 100% / Actual Size and use paper dramatic enough to respect the paperwork."
+      },
+      {
+        "question": "Can I make it private?",
+        "answer": "Yes. Public registry listing is optional. If you do not opt in, the certificate record stays private and is used only for delivery, verification, and support."
+      },
+      {
+        "question": "Can I use a fake name?",
+        "answer": "Yes, within reason. You can use a nickname, office title, or joke name, as long as it is not abusive, unlawful, or trying to impersonate someone in a harmful way."
+      },
+      {
+        "question": "Is this suitable for offices?",
+        "answer": "Yes. Shark-Free Zone is built for offices, cafes, studios, meeting rooms, and other places where sharks are not expected but paperwork still improves morale."
+      },
+      {
+        "question": "Is the Wanted poster free?",
+        "answer": "Yes. The Wanted poster is free to generate and share. If the situation becomes administratively serious, you can close the case with a Protected Friend certificate."
       }
     ],
     "ctaTitle": "Still have questions?",
@@ -562,8 +582,8 @@
     ]
   },
   "purchase": {
-    "title": "Proceed to Diplomatic Clearance.",
-    "subtitle": "One form. One payment. One step closer to not being a snack.",
+    "title": "Complete the shark paperwork.",
+    "subtitle": "One form. One payment. One highly official step away from snack-adjacent uncertainty.",
     "stepCustomize": "Customize",
     "stepPayment": "Payment",
     "stepCertificate": "Certificate",
@@ -574,12 +594,12 @@
       "nonsnack": "Non-Snack Recognition — $19",
       "business": "Shark-Free Zone — $99"
     },
-      "seoSummary": {
-        "eyebrow": "Purchase summary",
-        "title": "Personalized shark clearance",
-        "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
-        "coffeeNote": "Entry-tier clearance starts at $4 — about the price of one Starbucks coffee. The appointed human gets paperwork the sharks have been advised to take seriously, and real conservation still gets funded.",
-        "includesLabel": "What you get",
+    "seoSummary": {
+      "eyebrow": "Purchase summary",
+      "title": "Personalized shark clearance",
+      "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
+      "coffeeNote": "Entry-tier clearance starts at $4 — about the price of one Starbucks coffee. The appointed human gets paperwork the sharks have been advised to take seriously, and real conservation still gets funded.",
+      "includesLabel": "What you get",
       "includes": {
         "0": "Personalized digital certificate with name and optional dedication.",
         "1": "Immediate PDF access after successful payment.",
@@ -597,23 +617,13 @@
     "recipientEmailLabel": "Recipient email",
     "recipientEmailPlaceholder": "friend@email.com",
     "dedicationLabel": "Dedication (optional)",
-    "dedicationPlaceholder": "e.g. For surviving every beach vacation since 1987",
+    "dedicationPlaceholder": "e.g. For remaining technically uneaten since 1987",
     "dedicationSuggestions": {
-      "0": "For surviving every beach vacation since 1987",
-      "1": "Because you always said something touched my foot",
-      "2": "Officially no longer snack material",
-      "3": "In honor of watching Jaws 47 times",
-      "4": "May the sharks remember your generosity",
-      "5": "To the bravest ankle-deep swimmer I know",
-      "6": "Diplomatically immune since today",
-      "7": "Still not food. Now it is official.",
-      "8": "For the one who always exits the ocean running",
-      "9": "A small price for not being a snack",
-      "10": "In recognition of outstanding non-edibility",
-      "11": "Because someone had to be first",
-      "12": "For making eye contact with a fish and panicking",
-      "13": "To the human least likely to be mistaken for a seal",
-      "14": "Protected by bureaucracy and good vibes"
+      "0": "For surviving every beach vacation with suspicious confidence",
+      "1": "Officially less snack-adjacent than yesterday",
+      "2": "May the sharks respect the paperwork",
+      "3": "Still not food. Now filed correctly.",
+      "4": "Protected by bureaucracy, vibes, and one PDF"
     },
     "livePreview": "Certificate preview",
     "previewName": "Your Name Here",
@@ -625,10 +635,10 @@
     "emailOptionalTag": "optional",
     "emailOptionalHint": "Skip email if you want. Just note that the certificate will only be available right after purchase.",
     "emailPlaceholder": "your@email.com",
-    "noEmailWarningTitle": "No email — download only",
-    "noEmailWarningText": "Without an email address, your certificate will only be available for download immediately after payment. There is no way to retrieve it later.",
+    "noEmailWarningTitle": "No email - download immediately",
+    "noEmailWarningText": "If you skip email, download the certificate immediately after purchase. We will not have an inbox to send it back to later.",
     "noEmailContinue": "Continue without email",
-    "noEmailAddEmail": "Add email address",
+    "noEmailAddEmail": "Add email for later access",
     "promoCodeLabel": "Promo code (optional)",
     "promoCodePlaceholder": "Enter code",
     "stripeSecure": "Encrypted checkout. Powered by Stripe.",
@@ -648,7 +658,7 @@
     "confirmBack": "Go back and edit",
     "orderSummary": "Diplomatic Briefing",
     "redirecting": "Redirecting to secure checkout...",
-    "checkoutError": "Something went wrong creating your checkout. Please try again.",
+    "checkoutError": "The checkout could not be opened. Please try again, or contact support if the sharks continue interfering.",
     "canceledNotice": "Your payment was canceled. No worries — your form data is still here. Ready when you are!",
     "processing": "Processing your diplomatic paperwork...",
     "successLoading": "Confirming your payment with Stripe — this usually takes just a moment.",
@@ -658,12 +668,12 @@
     "timeoutText": "Your certificate is being prepared. It may take a minute. Check your email — if you provided one, we've already sent it there.",
     "timeoutRetry": "Check again",
     "successTitle": "Welcome to the Alliance, diplomat.",
-    "successText": "Your status has been registered. The paperwork is complete. No objections have been raised by the shark community.",
+    "successText": "Your paperwork is complete, your certificate is ready, and no shark has filed a timely objection. Download the document, then consider making the situation public.",
     "statusDone": "Done",
     "statusIssued": "Issued",
-    "downloadCert": "Download your certificate (PDF)",
+    "downloadCert": "Download certificate",
     "downloadNotReady": "Your certificate is still being prepared. Please try again in a moment.",
-    "viewRegistry": "See yourself in the Diplomatic Registry",
+    "viewRegistry": "View registry record",
     "emailSentAutomatic": "A certificate email has been sent to your inbox automatically. Check spam if you don't see it!",
     "backHome": "Return to homepage",
     "exploreRegistry": "Explore the registry",
@@ -714,27 +724,31 @@
     "referredByHint": "Paste someone else's referral code if you want to credit their diplomatic career.",
     "share": {
       "eyebrow": "After checkout",
-      "title": "Boast that you are not a snack.",
-      "description": "Do not leave with a dry thank-you page. Take a ready-made Story graphic, post it, and let the public witness your official shark diplomacy status.",
-      "shareButton": "Boast that you’re not a snack",
+      "title": "Share the paperwork.",
+      "description": "Download a ready-made Story graphic or share your verification link. The sharks may ignore it, but your friends probably won't.",
+      "shareButton": "Share my paperwork",
       "tierCtas": {
         "protected": {
-          "title": "Announce your protected status.",
-          "shareButton": "Announce your protected status"
+          "title": "Share the paperwork.",
+          "shareButton": "Share my paperwork"
         },
         "nonsnack": {
-          "title": "Boast that you are not a snack.",
-          "shareButton": "Boast that you’re not a snack"
+          "title": "Share the paperwork.",
+          "shareButton": "Share my paperwork"
         },
         "business": {
-          "title": "Declare the zone cleared.",
-          "shareButton": "Declare the zone cleared"
+          "title": "Share the paperwork.",
+          "shareButton": "Share my paperwork"
+        },
+        "basic": {
+          "title": "Share the paperwork.",
+          "shareButton": "Share my paperwork"
         }
       },
-      "downloadButton": "Download Story",
+      "downloadButton": "Download Story graphic",
       "copyButton": "Copy verification link",
       "copySuccess": "Link copied",
-      "copyError": "Copy failed",
+      "copyError": "The link could not be copied. Please copy it manually before the ocean forgets.",
       "tipTitle": "Best results on mobile.",
       "tipText": "Tap the main button on your phone to open sharing. If your browser cannot send the Story directly, use Download Story and upload it to Instagram manually.",
       "working": "Preparing your Story…",
@@ -800,22 +814,22 @@
     "dedicationTooLongError": "Dedication is too long. Keep it short and certificate-sized.",
     "dedicationContactError": "Dedication cannot include contact details.",
     "dedicationUrlError": "Dedication cannot include links or web addresses.",
-    "dedicationRejectedError": "Dedication was rejected by content rules. Please keep it lawful and non-abusive."
+    "dedicationRejectedError": "That dedication could not be used. Please keep it lawful, non-abusive, and certificate-friendly."
   },
   "registry": {
     "title": "The Diplomatic Registry",
     "subtitle": "An official-ish record of humans whose shark-related paperwork is, for once, in order.",
-    "description": "Everyone listed here has been formally assessed and declared symbolically unsuitable for shark consumption. The designation is legally meaningless, scientifically unverified, and aesthetically excellent.",
+    "description": "Everyone listed here has filed enough shark-facing paperwork to appear in the public record. The status is symbolic, legally meaningless, scientifically unverified, and aesthetically difficult to dispute.",
     "loadingText": "Searching the oceanic archives... Careful, some records may have been nibbled.",
     "countLabel": "registered diplomats",
     "searchPlaceholder": "Search by name, referral code, or registry ID...",
-    "searchNoResults": "No diplomats match your search. They might be hiding from sharks.",
+    "searchNoResults": "No matching diplomats found. Either the paperwork is private, missing, or being guarded by a very small shark.",
     "filterAll": "All diplomats",
     "filterBasic": "Basic",
     "filterProtected": "Protected Friends",
     "filterNonsnack": "Non-Snacks",
-    "emptyState": "No one is officially uneaten yet. Someone has to be first.",
-    "emptyStateFounders": "Founding diplomats will appear here. Be the first.",
+    "emptyState": "No public diplomats yet. The sharks are pretending not to notice.",
+    "emptyStateFounders": "No public diplomats yet. The sharks are pretending not to notice.",
     "memberSince": "Diplomat since",
     "nameLabel": "Name",
     "classificationLabel": "Classification",
@@ -919,13 +933,11 @@
     "nonsnackBody": "has, following an in-depth diplomatic inquiry and sensory analysis (strictly symbolic), been declared a being entirely unsuitable for shark consumption anywhere in the world.",
     "nonsnackReasonsLabel": "The SHA Prey Assessment Committee has concluded that the holder is",
     "nonsnackReasons": [
-      "carrying excessive caffeine and stress hormones, known to cause shark anxiety and insomnia.",
-      "of desperately low fat content — nutritionally uninteresting with a bone-choking hazard.",
-      "emitting a cheap sunscreen aroma that is culinarily offensive to sensitive shark noses.",
-      "known to spend 4+ hours daily staring at a glowing rectangle, rendering all muscle tissue entirely decorative.",
-      "leaving a suspicious aftertaste of processed food and screen radiation.",
-      "generating an off-putting amount of body heat from chronic overthinking.",
-      "carrying a suspicious amount of student debt, which even sharks consider toxic."
+      "fundamentally unappetizing, according to three independent shark focus groups and one confused intern.",
+      "dangerously high in caffeine, microplastics, and unresolved calendar stress.",
+      "smelling faintly of sunscreen, fear, and land-based responsibility.",
+      "carrying enough emotional baggage to exceed recommended shark digestion limits.",
+      "already registered as paperwork, and paperwork is not a recognized food group."
     ],
     "nonsnackPrivileges": "The holder may enter the ocean knowing that any shark considering them a snack would be regarded as an individual with very poor taste within the Alliance.",
     "nonsnackDisclaimer": "Disclaimer: This recognition is purely symbolic. Most sharks unfortunately cannot read and some may actually like caffeine. The Alliance does not vouch for encounters with gourmet sharks who ignore bureaucracy. Entering the water remains at your own risk.",
@@ -950,7 +962,7 @@
   "impact": {
     "label": "Our Impact",
     "title": "Where the money actually goes.",
-    "subtitle": "The Alliance is fictional. The funding is not. This page explains what each certificate contributes, who we aim to support, and how reporting will work.",
+    "subtitle": "The paperwork is fictional. The conservation allocation is real. We track every sale, publish allocations, and do not call a recipient confirmed until money has actually moved.",
     "splitTitle": "How funds are split",
     "splitDescription": "Certificate prices are fixed at $4, $19, and $99. The conservation portion of each sale is tracked and reported here as donations are made.",
     "splitOf": "of",
@@ -990,7 +1002,7 @@
     "partner4Name": "Malpelo Foundation",
     "partner4Desc": "Protecting marine fauna and one of the world's most important shark sanctuaries off Colombia's Pacific coast.",
     "partner4Focus": "Focus: Malpelo Island sanctuary protection, hammerhead shark research, marine patrols.",
-    "partnersDisclaimer": "Diplomatic note: Listed conservation organizations have not necessarily endorsed our paperwork. They are intended recipients, and we publish confirmations once donations are made.",
+    "partnersDisclaimer": "Listed organizations are planned recipients, not sponsors, endorsers, or formal partners unless expressly stated. Donation confirmations will be published once allocations are made.",
     "partnerStatusPlanned": "Planned Recipient",
     "visitWebsite": "Visit website",
     "opensInNewTab": "opens in new tab",
@@ -1023,18 +1035,18 @@
     "partnerFocusLabel": "Focus"
   },
   "mobileCta": {
-    "label": "Get your certificate",
+    "label": "File shark paperwork",
     "price": "$4"
   },
   "wanted": {
     "label": "Alliance Security Bureau",
-    "title": "Someone you know is still unprotected.",
-    "subtitle": "Generate a Wanted poster. Share it. Then gift them the protection they clearly need.",
-    "formTitle": "Report an unprotected human",
-    "formSubtitle": "Enter the name of someone currently living without shark paperwork. We’ll take it from there.",
+    "title": "Someone you know is still dangerously paperwork-free.",
+    "subtitle": "Create the official accusation. Share it. Then close the case with a certificate they clearly should have filed months ago.",
+    "formTitle": "File a report on an unprotected human",
+    "formSubtitle": "Enter the name of the person currently operating without shark-facing credentials. The Bureau will invent the rest.",
     "nameLabel": "Name of the unprotected individual",
     "namePlaceholder": "e.g. Dave from Accounting",
-    "suggestion1": "My Boss",
+    "suggestion1": "Craig from Legal",
     "suggestion2": "Dad",
     "suggestion3": "That One Friend",
     "toneLabel": "Case severity",
@@ -1071,33 +1083,69 @@
     "riskLevelLabel": "Risk level",
     "recommendedActionLabel": "Recommended action",
     "subjectPhotoLabel": "Evidence photo",
-    "generateButton": "Generate Wanted Poster",
+    "generateButton": "Generate Official Accusation",
     "formDisclaimer": "No humans were harmed in the making of this poster. No sharks were impressed either.",
     "defaultName": "Unidentified Human",
     "posterHeader": "Shark Human Alliance",
     "wantedTitle": "WANTED",
-    "chargesLabel": "Charges",
+    "chargesLabel": "Alleged incidents",
     "toneCharges": {
       "mild": [
-        "Maintaining suspicious tan with zero registry credentials on file",
-        "Visiting bodies of water without filing seasonal intent",
-        "Letting documentation drift below recommended summer levels",
-        "Treating ocean-adjacent zones as casual recreation territory",
-        "Failing to mention shark-human relations at three (3) social gatherings"
+        "Arriving at beach season with paperwork still in beta",
+        "Loitering near sunscreen with undocumented optimism",
+        "Displaying casual confidence within splash distance",
+        "Treating tide charts as optional lifestyle content",
+        "Standing near open water without a prepared explanation",
+        "Wearing flip-flops in a diplomatically sensitive zone",
+        "Failing to pre-register one (1) beach towel",
+        "Maintaining seaside vibes beyond approved comfort levels",
+        "Ignoring the soft paperwork requirements of summer",
+        "Approaching a pool float with suspicious confidence",
+        "Entering snack territory with only vibes as evidence",
+        "Allowing sunglasses to imply unauthorized beach readiness",
+        "Failing to carry proof of harmless human intentions",
+        "Creating mild confusion among interns at Shark HQ",
+        "Possessing sand-related ambitions without clearance",
+        "Operating under the false belief that sunscreen is paperwork",
+        "Scheduling ocean proximity before completing Form FIN-1"
       ],
       "clear": [
-        "Photographing pelicans, seagulls, and other marine fauna without permits",
-        "Wading into ordinary social situations with no diplomatic clearance",
-        "Sustaining unauthorized fish-eye contact during meal hours",
-        "Maintaining a fish-friendly diet with zero registered intent",
-        "Drying off after swimming with no protective certificate present"
+        "Maintaining snack-adjacent ambiguity in daylight hours",
+        "Displaying beach confidence unsupported by Alliance records",
+        "Entering coastal conditions with no non-edibility proof",
+        "Making direct eye contact with seafood during lunch",
+        "Possessing a towel, sandals, and no diplomatic cover",
+        "Continuing to be technically edible on paper",
+        "Failing to deny snack status in a timely manner",
+        "Walking toward waves like this had been approved",
+        "Carrying picnic items through a flagged jurisdiction",
+        "Using the phrase 'it will be fine' without evidence",
+        "Appearing in vacation photos with unresolved status",
+        "Creating a paperwork gap visible from low tide",
+        "Entering splash radius without a certificate escort",
+        "Allowing marine authorities to infer poor preparation",
+        "Presenting as a person, problem, or possible appetizer",
+        "Failing to make sharks feel adequately briefed",
+        "Being one beach day away from a committee meeting"
       ],
       "emergency": [
-        "Triggering involuntary alarm in three (3) Alliance personnel",
-        "Causing the Department of Misunderstanding Prevention to schedule overtime",
-        "Generating measurable filing pressure through continued non-compliance",
-        "Allowing a flagged case to reach quarterly review without action",
-        "Operating in ocean-adjacent jurisdictions with zero coverage on file"
+        "Triggering a special session of the Snack Ambiguity Board",
+        "Creating measurable concern in the certificate department",
+        "Reaching quarterly review with zero protective paperwork",
+        "Escalating from casual risk to laminated-file territory",
+        "Causing three (3) sharks to request clarification",
+        "Generating an urgent memo with unnecessary underlining",
+        "Allowing paperwork absence to become visually obvious",
+        "Operating at beach-adjacent scale without coverage",
+        "Entering a situation now described as 'very procedural'",
+        "Prompting Luna to locate the emergency stamp pad",
+        "Causing Finnley to sigh into an official clipboard",
+        "Leaving snack status unresolved past acceptable silliness",
+        "Producing administrative waves exceeding safe limits",
+        "Requiring immediate deployment of decorative paperwork",
+        "Moving through coastal zones as if forms do not exist",
+        "Ignoring multiple imaginary notices from marine staff",
+        "Becoming the reason the Alliance has a red stamp"
       ]
     },
     "rewardLabel": "Reward",
@@ -1107,17 +1155,18 @@
     "formatLabel": "Format",
     "formatA4": "A4 (print)",
     "formatStory": "Story (9:16)",
-    "downloadButton": "Download poster",
+    "downloadButton": "Download accusation",
     "downloadingButton": "Preparing poster...",
     "shareButton": "Share accusation",
     "linkCopied": "Link copied!",
-      "shareTitle": "WANTED: {name}",
-      "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
-      "giftCta": "Close the case with a certificate — $4",
-      "caseLinkLabel": "Case link",
-      "storyLinkLabel": "Story link",
-      "newPoster": "Create another poster",
-    "rerollChargesButton": "Reroll charges",
+    "shareTitle": "WANTED: {name}",
+    "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
+    "giftCta": "Close {name}'s case with a Protected Friend Certificate — $4",
+    "caseLinkLabel": "Open the case file",
+    "caseLinkDescription": "A personalized landing page where the accusation can become paperwork.",
+    "storyLinkLabel": "Story link",
+    "newPoster": "Create another poster",
+    "rerollChargesButton": "Invent new incidents",
     "priceAnchor": "$4 — less than your morning Starbucks. Less waiting in line, too.",
     "socialProofText": "18 wanted posters issued this week.",
     "viralPrompt": "Share it on Instagram Stories, send it in a group chat, or print it and tape it to their desk.",
@@ -1141,15 +1190,45 @@
     "footerCtaButton": "Protect someone you know",
     "commonCharges": [
       "Approaching open water with undocumented confidence",
-      "Maintaining snack-adjacent ambiguity in a public setting",
-      "Possessing no evidence of non-edibility at the time of inspection",
-      "Displaying beach confidence unsupported by Alliance records",
-      "Failing to clarify whether sharks should treat this as a person, problem, or paperwork request",
-      "Carrying a beach towel through flagged jurisdictions",
-      "Walking past published shark advisories without acknowledgement",
-      "Booking ocean-adjacent accommodation without prior clearance"
+      "Maintaining no visible certificate at time of inspection",
+      "Failing to clarify whether this is a person or paperwork issue",
+      "Possessing insufficient evidence of not being a snack",
+      "Walking past shark signage without diplomatic eye contact",
+      "Carrying beach equipment through flagged jurisdictions",
+      "Booking ocean-adjacent accommodation without prior clearance",
+      "Creating unnecessary work for imaginary marine officials",
+      "Appearing relaxed while records remain incomplete",
+      "Failing to submit a snack-denial statement before travel",
+      "Maintaining legs, optimism, and no registry entry",
+      "Allowing flip-flops to cross into compliance-sensitive terrain",
+      "Possessing vacation energy unsupported by documentation",
+      "Generating ambiguity for sharks with limited office hours",
+      "Entering a beach scenario with only human confidence",
+      "Leaving the non-snack box unchecked for too long",
+      "Creating a preventable misunderstanding near water",
+      "Using cheerful body language in marine jurisdiction",
+      "Proceeding as if sharks respect verbal assurances",
+      "Failing to provide proof of peaceful terrestrial intent",
+      "Standing near waves with unresolved paperwork posture",
+      "Allowing friends to believe this situation is handled",
+      "Causing the phrase 'technically unprotected' to be used",
+      "Operating under a dangerous surplus of confidence",
+      "Maintaining a casual relationship with compliance",
+      "Crossing into summer with an empty certificate field",
+      "Implying readiness for water without supporting exhibits",
+      "Possessing a human name but no shark-facing credentials",
+      "Creating light administrative turbulence before lunch",
+      "Entering recreational water with no paper trail whatsoever",
+      "Presenting a concerning mix of charm and non-compliance",
+      "Failing to notify the ocean of peaceful intentions",
+      "Continuing to exist near water in an uncertified manner",
+      "Maintaining unclear status in the snack/non-snack continuum",
+      "Causing a clipboard to be opened for no good reason",
+      "Standing within splash range without a contingency note",
+      "Proceeding without the recommended amount of absurd paperwork",
+      "Failing to reassure the wider marine community in writing"
     ],
-      "caseDetails": [
+    "caseDetails": [
       {
         "label": "Filing tier",
         "value": "Tier B / unresolved"
@@ -1182,25 +1261,26 @@
         "label": "Liaison contacted",
         "value": "None on record"
       }
-      ]
-    },
-    "wantedCase": {
-      "eyebrow": "Alliance compliance notice",
-      "caseFileLabel": "Active case file",
-      "headline": "You have been named in an active shark-human compliance matter.",
-      "findingLabel": "Bureau finding",
-      "finding": "Our records indicate that {name} may be operating without adequate shark-adjacent paperwork. This is correctable. Conveniently.",
-      "explanation": "The recommended resolution is not panic, denial, or arguing with marine administration. It is a Protected Friend certificate: personalized, printable, and significantly more official-looking than the situation deserves.",
-      "previewLabel": "Proposed clearance document",
-      "previewText": "Prepared for the named human, pending final administrative clearance.",
-      "certificateDedication": "Issued following a public wanted-poster incident and one unusually efficient administrative review.",
-      "resolutionLabel": "Recommended resolution",
-      "resolutionTitle": "Issue the paperwork. Close the file.",
-      "resolutionText": "{name} can be diplomatically cleared in minutes with a personalized Protected Friend certificate. The sharks will receive no legal obligation to cooperate, but the paperwork will look excellent and real conservation still gets funded.",
-      "cta": "Clear this human for {price}",
-      "priceNote": "About one coffee. Less foam, more paperwork."
-    },
-    "career": {
+    ],
+    "tiltToggleLabel": "Generate with poster tilt"
+  },
+  "wantedCase": {
+    "eyebrow": "Alliance compliance notice",
+    "caseFileLabel": "Active case file",
+    "headline": "You have been named in an active shark-human compliance matter.",
+    "findingLabel": "Bureau finding",
+    "finding": "Our records indicate that {name} may be operating without adequate shark-adjacent paperwork. This is correctable. Conveniently.",
+    "explanation": "The recommended resolution is not panic, denial, or arguing with marine administration. It is a Protected Friend certificate: personalized, printable, and significantly more official-looking than the situation deserves.",
+    "previewLabel": "Proposed clearance document",
+    "previewText": "Prepared for the named human, pending final administrative clearance.",
+    "certificateDedication": "Issued following a public wanted-poster incident and one unusually efficient administrative review.",
+    "resolutionLabel": "Recommended resolution",
+    "resolutionTitle": "Issue the paperwork. Close the file.",
+    "resolutionText": "{name} can be diplomatically cleared in minutes with a personalized Protected Friend certificate. The sharks will receive no legal obligation to cooperate, but the paperwork will look excellent and real conservation still gets funded.",
+    "cta": "Clear this human for {price}",
+    "priceNote": "About one coffee. Less foam, more paperwork."
+  },
+  "career": {
     "hero": {
       "label": "Alliance Personnel Department",
       "title": "Your Alliance Career.",
@@ -1347,14 +1427,19 @@
     "joinAlliance": "Join the Alliance",
     "allianceRank": "Alliance rank",
     "rankProgress": "{count, plural, one {# successful referral} other {# successful referrals}}",
-    "quip1": "Our sharks have reviewed the records and confirm: this one checks out.",
-    "quip2": "Cross-referenced with marine intelligence. Status: legitimate and mildly reassuring.",
-    "quip3": "The Department of Aquatic Bureaucracy has stamped this record. Twice, for emphasis.",
-    "quip4": "Verified by Finnley Mako personally. He used his reading glasses and everything.",
-    "quip5": "This membership has survived our rigorous three-second verification process.",
-    "quip6": "Confirmed. The ocean's most meticulous filing system has spoken.",
+    "quip1": "Verified. The paperwork exists, the registry agrees, and the ocean remains noncommittal.",
+    "quip2": "Confirmed by the Alliance records. Sharks have not countersigned, but that is typical.",
+    "quip3": "This certificate appears valid within the symbolic jurisdiction of excellent paperwork.",
+    "quip4": "Record found. The Department of Misunderstanding Prevention is cautiously satisfied.",
+    "quip5": "Verified after a rigorous review involving one database and no actual sharks.",
+    "quip6": "Our sharks have reviewed the records and confirm: this one checks out.",
     "rateLimitedTitle": "Verification temporarily paused",
-    "rateLimitedText": "Too many verification requests arrived from this connection in a short period. Please wait a moment and try again."
+    "rateLimitedText": "Too many verification requests arrived from this connection in a short period. Please wait a moment and try again.",
+    "quip7": "Cross-referenced with marine intelligence. Status: legitimate and mildly reassuring.",
+    "quip8": "The Department of Aquatic Bureaucracy has stamped this record. Twice, for emphasis.",
+    "quip9": "Verified by Finnley Mako personally. He used his reading glasses and everything.",
+    "quip10": "This membership has survived our rigorous three-second verification process.",
+    "quip11": "Confirmed. The ocean's most meticulous filing system has spoken."
   },
   "certificateTemplates": {
     "luxury": {
