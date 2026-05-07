@@ -46,7 +46,7 @@ export function WantedCaseContent({
   const locale = useLocale();
   const tone = normalizeTone(initialTone);
   const displayName = normalizeName(initialName, wantedT("defaultName"));
-  const caseNumber = `SHA-${nameHash(`${displayName}:${tone}`)
+  const caseNumber = `CASE SHA-${nameHash(`${displayName}:${tone}`)
     .toString()
     .slice(-4)
     .padStart(4, "0")}`;
@@ -66,7 +66,11 @@ export function WantedCaseContent({
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)] lg:items-start">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <div className="rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--muted)] shadow-sm sm:px-5">
+              {t("contextBanner", { name: displayName })}
+            </div>
+
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("eyebrow")}
             </p>
 
@@ -81,7 +85,7 @@ export function WantedCaseContent({
               </div>
 
               <h1 className="mt-6 max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl sm:leading-[1.08]">
-                {t("headline")}
+                {t("headline", { name: displayName })}
               </h1>
 
               <p className="mt-5 text-4xl font-black leading-none tracking-tight text-[var(--brand-dark)] sm:text-6xl">
@@ -132,7 +136,7 @@ export function WantedCaseContent({
                 {t("resolutionLabel")}
                 </p>
                 <h2 className="mt-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
-                  {t("resolutionTitle")}
+                  {t("resolutionTitle", { name: displayName })}
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
                   {t("resolutionText", { name: displayName })}
@@ -143,12 +147,19 @@ export function WantedCaseContent({
                     href={purchaseHref}
                     className="inline-flex min-h-[52px] shrink-0 items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:whitespace-nowrap"
                   >
-                    {t("cta", { price: getTierPriceLabel("protected") })}
+                    {t("cta", { name: displayName, price: getTierPriceLabel("protected") })}
                   </LocalizedLink>
                   <p className="text-sm leading-6 text-[var(--muted)]">
                     {t("priceNote")}
                   </p>
                 </div>
+
+                <LocalizedLink
+                  href="/impact"
+                  className="mt-4 inline-flex text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
+                >
+                  {t("impactLink")}
+                </LocalizedLink>
 
               </div>
             </div>
@@ -156,10 +167,10 @@ export function WantedCaseContent({
 
           <aside className="lg:sticky lg:top-28">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
-              {t("previewLabel")}
+              {t("previewLabel", { name: displayName })}
             </p>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              {t("previewText")}
+              {t("previewText", { name: displayName })}
             </p>
             <div className="mt-4 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm">
               <CertificatePreview

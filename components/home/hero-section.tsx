@@ -19,19 +19,36 @@ export function HeroSection() {
 
       <LocalizedLink
         href="#certificate-preview"
-        className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white/88 px-6 py-3.5 text-base font-semibold text-[var(--brand-dark)] backdrop-blur transition-colors duration-300 ease-out hover:bg-white"
+        className="inline-flex min-h-[44px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white/70 px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] backdrop-blur transition-colors duration-300 ease-out hover:bg-white"
       >
         {t("ctaSecondary")}
       </LocalizedLink>
     </div>
   );
 
+  const heroTeaserLinks = (
+    <div className="mt-4 flex flex-wrap gap-2">
+      <LocalizedLink
+        href="/purchase?tier=protected&gift=true"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-orange-200/75 bg-orange-50/75 px-3 py-1.5 text-sm font-semibold text-[var(--section-label)] transition hover:bg-white hover:text-[var(--brand-dark)]"
+      >
+        {t("giftTeaserLink")} →
+      </LocalizedLink>
+      <LocalizedLink
+        href="/wanted"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-sky-200/75 bg-sky-50/75 px-3 py-1.5 text-sm font-semibold text-[var(--section-label)] transition hover:bg-white hover:text-[var(--brand-dark)]"
+      >
+        {t("wantedTeaserLink")} →
+      </LocalizedLink>
+    </div>
+  );
+
   const heroBullets = (
-    <ul className="overflow-hidden rounded-[22px] border border-white/70 bg-white/66 text-sm font-medium leading-6 text-[var(--brand-dark)] shadow-[0_10px_30px_rgba(15,23,42,0.05)] backdrop-blur sm:grid sm:grid-cols-3 sm:divide-x sm:divide-[var(--border)]">
+    <ul className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold leading-6 text-[var(--muted)]">
       {bullets.map((bullet) => (
         <li
           key={bullet}
-          className="border-b border-[var(--border)] px-4 py-3.5 last:border-b-0 sm:border-b-0 sm:px-5"
+          className="after:ml-2 after:text-[var(--muted)]/55 after:content-['·'] last:after:hidden"
         >
           {bullet}
         </li>
@@ -61,10 +78,14 @@ export function HeroSection() {
           <p className="mt-3 max-w-lg text-sm leading-6 text-[var(--muted)] sm:text-[1.03rem] sm:leading-7">
             {t("description")}
           </p>
+          <p className="mt-2 max-w-lg text-sm font-medium leading-6 text-[var(--muted)]">
+            {t("trustDescription")}
+          </p>
 
           <div className="mt-8 hidden w-full max-w-[36rem] lg:block">
             {heroActions}
-            <div className="mt-8 w-full">{heroBullets}</div>
+            {heroTeaserLinks}
+            <div className="mt-5 w-full">{heroBullets}</div>
           </div>
         </div>
 
@@ -98,7 +119,10 @@ export function HeroSection() {
 
         <div className="relative z-10 w-full lg:hidden">
           {heroBullets}
-          <div className="mt-8">{heroActions}</div>
+          <div className="mt-8">
+            {heroActions}
+            {heroTeaserLinks}
+          </div>
         </div>
       </div>
     </section>

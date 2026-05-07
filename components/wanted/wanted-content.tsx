@@ -33,6 +33,24 @@ function fitCanvasText(
   return fontSize;
 }
 
+function fitCanvasTextWithFont(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  maxWidth: number,
+  initialSize: number,
+  minSize: number,
+  weight = 600,
+  fontFamily = "'Geist', sans-serif",
+) {
+  let fontSize = initialSize;
+  while (fontSize > minSize) {
+    ctx.font = `${weight} ${fontSize}px ${fontFamily}`;
+    if (ctx.measureText(text).width <= maxWidth) break;
+    fontSize -= 2;
+  }
+  return fontSize;
+}
+
 function wrapCanvasLines(
   ctx: CanvasRenderingContext2D,
   text: unknown,
@@ -400,7 +418,7 @@ export function WantedContent() {
 
       if (isStory) {
         const centerX = width / 2;
-        const caseNumber = `SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
+        const caseNumber = `CASE SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
 
         ctx.fillStyle = POSTER_MUTED;
         ctx.font = `700 ${s(46)}px 'Geist', sans-serif`;
@@ -520,13 +538,31 @@ export function WantedContent() {
         ];
         fields.forEach((field, index) => {
           const x = fieldsX + index * (fieldWidth + fieldGap);
+          const fieldLabel = field.label.toUpperCase();
+          const labelFontSize = fitCanvasTextWithFont(
+            ctx,
+            fieldLabel,
+            fieldWidth - s(16),
+            s(32),
+            s(18),
+            700,
+          );
           ctx.fillStyle = POSTER_MUTED;
-          ctx.font = `700 ${s(32)}px 'Geist', sans-serif`;
-          ctx.letterSpacing = `${s(2)}px`;
-          ctx.fillText(field.label.toUpperCase(), x + fieldWidth / 2, fieldsRowY);
+          ctx.font = `700 ${labelFontSize}px 'Geist', sans-serif`;
+          ctx.letterSpacing = `${s(1.5)}px`;
+          ctx.fillText(fieldLabel, x + fieldWidth / 2, fieldsRowY);
           ctx.letterSpacing = "0px";
+          const valueFontSize = fitCanvasTextWithFont(
+            ctx,
+            field.value,
+            fieldWidth - s(12),
+            s(53),
+            s(24),
+            700,
+            "'Courier New', 'Courier', monospace",
+          );
           ctx.fillStyle = POSTER_INK;
-          ctx.font = `700 ${s(53)}px 'Courier New', 'Courier', monospace`;
+          ctx.font = `700 ${valueFontSize}px 'Courier New', 'Courier', monospace`;
           ctx.fillText(field.value, x + fieldWidth / 2, fieldsRowY + s(58));
           ctx.strokeStyle = POSTER_MUTED;
           ctx.lineWidth = s(1.5);
@@ -675,7 +711,7 @@ export function WantedContent() {
 
       let y = marginY + s(isStory ? 140 : 145);
       const centerX = width / 2;
-      const caseNumber = `SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
+      const caseNumber = `CASE SHA-${nameHash(displayName).toString().slice(-4).padStart(4, "0")}`;
 
       ctx.fillStyle = POSTER_MUTED;
       ctx.font = `600 ${s(32)}px 'Geist', sans-serif`;
@@ -867,14 +903,32 @@ export function WantedContent() {
       ];
       fields.forEach((field, index) => {
         const x = fieldsX + index * (fieldWidth + fieldGap);
+        const fieldLabel = field.label.toUpperCase();
+        const labelFontSize = fitCanvasTextWithFont(
+          ctx,
+          fieldLabel,
+          fieldWidth - s(16),
+          s(isStory ? 32 : 18),
+          s(isStory ? 18 : 12),
+          700,
+        );
         ctx.fillStyle = POSTER_MUTED;
-        ctx.font = `700 ${s(isStory ? 32 : 18)}px 'Geist', sans-serif`;
+        ctx.font = `700 ${labelFontSize}px 'Geist', sans-serif`;
         ctx.textAlign = "center";
-        ctx.letterSpacing = `${s(2.5)}px`;
-        ctx.fillText(field.label.toUpperCase(), x + fieldWidth / 2, fieldsRowY);
+        ctx.letterSpacing = `${s(isStory ? 1.5 : 2)}px`;
+        ctx.fillText(fieldLabel, x + fieldWidth / 2, fieldsRowY);
         ctx.letterSpacing = "0px";
+        const valueFontSize = fitCanvasTextWithFont(
+          ctx,
+          field.value,
+          fieldWidth - s(12),
+          s(isStory ? 52 : 28),
+          s(isStory ? 24 : 16),
+          700,
+          "'Courier New', 'Courier', monospace",
+        );
         ctx.fillStyle = POSTER_INK;
-        ctx.font = `700 ${s(isStory ? 52 : 28)}px 'Courier New', 'Courier', monospace`;
+        ctx.font = `700 ${valueFontSize}px 'Courier New', 'Courier', monospace`;
         ctx.fillText(field.value, x + fieldWidth / 2, fieldsRowY + s(isStory ? 64 : 40));
         ctx.strokeStyle = POSTER_MUTED;
         ctx.lineWidth = s(1.5);
@@ -1065,8 +1119,10 @@ export function WantedContent() {
       ctx.letterSpacing = "0px";
 
       ctx.fillStyle = POSTER_MUTED;
-      ctx.font = `400 ${s(isStory ? 44 : 24)}px 'Geist', sans-serif`;
-      ctx.fillText(t("posterFooter"), centerX, footerY);
+      const footerText = t("posterFooter");
+      const footerFontSize = fitCanvasText(ctx, footerText, paperWidth - s(140), s(24), s(16), 400);
+      ctx.font = `400 ${footerFontSize}px 'Geist', sans-serif`;
+      ctx.fillText(footerText, centerX, footerY);
     },
     [
       loadPosterImage,
