@@ -1526,7 +1526,7 @@ export function WantedContent() {
                     <>
                       <LocalizedLink
                         href={giftUrl}
-                        className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--accent)] px-5 py-3 text-center text-sm font-semibold leading-6 text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:whitespace-nowrap"
+                        className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-center text-sm font-semibold leading-6 text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:px-5 sm:py-3 sm:whitespace-nowrap"
                       >
                         <span>{giftCtaText}</span>
                       </LocalizedLink>
@@ -1536,7 +1536,7 @@ export function WantedContent() {
 
                       <button
                         onClick={handleShare}
-                        className={`w-full rounded-lg border px-4 py-3.5 text-sm font-semibold transition-colors duration-300 ease-out ${
+                        className={`min-h-[44px] w-full rounded-lg border px-4 py-2.5 text-sm font-semibold leading-6 transition-colors duration-300 ease-out ${
                           linkCopied
                             ? "border-teal-300 bg-teal-50 text-teal-700"
                             : "border-red-300 bg-white text-red-700 hover:bg-red-50"
@@ -1548,21 +1548,21 @@ export function WantedContent() {
                       <button
                         onClick={handleDownload}
                         disabled={downloading}
-                        className="w-full rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold leading-6 text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {downloading ? t("downloadingButton") : t("downloadButton")}
                       </button>
 
                       <button
                         onClick={handleRegenerate}
-                        className="w-full text-center text-sm font-medium text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+                        className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-center text-sm font-semibold leading-6 text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-50"
                       >
                         {t("newPoster")}
                       </button>
 
                       <LocalizedLink
                         href={shortCaseUrl}
-                        className="block rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-center text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-red-50"
+                        className="block min-h-[44px] rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-center text-sm font-semibold leading-6 text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-red-50"
                       >
                         <span>{t("caseLinkLabel")}</span>
                         <span className="mt-0.5 block text-xs font-medium leading-5 text-[var(--muted)]">
