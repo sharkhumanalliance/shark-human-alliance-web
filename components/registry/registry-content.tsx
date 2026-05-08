@@ -27,15 +27,6 @@ type Member = {
 
 type TierFilter = "all" | PublicTierKey;
 
-function getInitials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
-}
-
 export function RegistryContent() {
   const t = useTranslations("registry");
   const locale = useLocale();
@@ -98,7 +89,6 @@ export function RegistryContent() {
     return exactNameMatches.length === 1 ? exactNameMatches[0] : null;
   }, [members, normalizedQuery]);
 
-  const newestDiplomats = useMemo(() => members.slice(0, 3), [members]);
   const topRecruiters = useMemo(
     () =>
       [...members]
@@ -114,6 +104,9 @@ export function RegistryContent() {
   const nonsnackCount = members.filter(
     (member) => getPublicTierKey(member.tier) === "nonsnack"
   ).length;
+  const businessCount = members.filter(
+    (member) => getPublicTierKey(member.tier) === "business"
+  ).length;
 
   const filters: { key: TierFilter; label: string }[] = [
     { key: "all", label: t("filterAll") },
@@ -122,10 +115,10 @@ export function RegistryContent() {
     { key: "business", label: t("filterBusiness") },
   ];
 
-  const summaryStats = [
-    { label: t("countLabel"), value: String(members.length), accent: "text-[var(--brand-dark)]" },
+  const tierSummaryStats = [
     { label: t("filterProtected"), value: String(protectedCount), accent: "text-teal-700" },
     { label: t("filterNonsnack"), value: String(nonsnackCount), accent: "text-orange-700" },
+    { label: t("filterBusiness"), value: String(businessCount), accent: "text-amber-700" },
   ];
 
   const getMemberHref = useCallback(
@@ -175,20 +168,25 @@ export function RegistryContent() {
 
             {!loading ? (
               <aside className="rounded-[28px] border border-[var(--border)] bg-white px-5 py-5 shadow-sm sm:px-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
-                  {t("countLabel")}
-                </p>
-                <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {summaryStats.map((stat) => (
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+                    {t("countLabel")}
+                  </p>
+                  <p className="mt-2 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] tabular-nums sm:text-4xl">
+                    {members.length}
+                  </p>
+                </div>
+                <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
+                  {tierSummaryStats.map((stat) => (
                     <div
                       key={stat.label}
-                      className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4"
+                      className="rounded-xl border border-[var(--border)] bg-white px-3 py-3"
                     >
-                      <p className="flex min-h-[2.5rem] items-start text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                      <p className="flex min-h-[2.25rem] items-start text-[9px] font-semibold uppercase leading-4 tracking-[0.14em] text-[var(--muted)] sm:text-[10px]">
                         {stat.label}
                       </p>
                       <p
-                        className={`mt-3 text-xl font-semibold tracking-tight tabular-nums sm:text-2xl ${stat.accent}`}
+                        className={`mt-2 text-xl font-semibold tracking-tight tabular-nums sm:text-2xl ${stat.accent}`}
                       >
                         {stat.value}
                       </p>
@@ -494,74 +492,38 @@ export function RegistryContent() {
         <section data-reveal className="pb-12">
           <div className="mx-auto max-w-6xl space-y-5 px-4 sm:px-6">
             <section className="rounded-[28px] border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">
-              <div className="grid gap-6 lg:grid-cols-2">
-                <div>
-                  <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
-                    {t("viralNewest")}
-                  </h2>
-                  <div className="mt-4 space-y-3">
-                    {newestDiplomats.map((member) => {
-                      const borderClass = getTierRegistryBorderClass(
-                        getPublicTierKey(member.tier)
-                      );
-                      return (
-                        <LocalizedLink
-                          key={member.id}
-                          href={getMemberHref(member.id)}
-                          className={`flex items-center gap-3 rounded-xl border ${borderClass} bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm`}
-                        >
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-xs font-semibold uppercase tracking-[0.08em] text-[var(--brand-dark)]">
-                            {getInitials(member.name)}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">
-                              {member.name}
-                            </p>
-                            <p className="text-xs text-[var(--muted)]">
-                              {formatCertificateDate(member.date, locale)}
-                            </p>
-                          </div>
-                        </LocalizedLink>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="border-t border-[var(--border)] pt-6 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
-                  <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
-                    {t("viralRecruiters")}
-                  </h2>
-                  <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
-                    {t("viralRecruitersDesc")}
-                  </p>
-                  <div className="mt-4 space-y-3">
-                    {topRecruiters.map((member, index) => {
-                      const rank = getRankInfo(member.referralCount || 0);
-                      return (
-                        <LocalizedLink
-                          key={member.id}
-                          href={getMemberHref(member.id)}
-                          className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm"
-                        >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--brand-dark)] text-sm font-bold text-white tabular-nums">
-                            #{index + 1}
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">
-                              {member.name}
-                            </p>
-                            <p className="text-xs text-[var(--muted)]">
-                              {member.referralCount} {t("viralRecruitersCount")} - {rank.label}
-                            </p>
-                          </div>
-                          <span className="shrink-0 text-xs font-semibold text-[var(--brand)]">
-                            {t("viralRecruitersRank")}
-                          </span>
-                        </LocalizedLink>
-                      );
-                    })}
-                  </div>
-                </div>
+              <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
+                {t("viralRecruiters")}
+              </h2>
+              <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
+                {t("viralRecruitersDesc")}
+              </p>
+              <div className="mt-4 grid gap-3 lg:grid-cols-2">
+                {topRecruiters.map((member, index) => {
+                  const rank = getRankInfo(member.referralCount || 0);
+                  return (
+                    <LocalizedLink
+                      key={member.id}
+                      href={getMemberHref(member.id)}
+                      className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm"
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--brand-dark)] text-sm font-bold text-white tabular-nums">
+                        #{index + 1}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">
+                          {member.name}
+                        </p>
+                        <p className="text-xs text-[var(--muted)]">
+                          {member.referralCount} {t("viralRecruitersCount")} - {rank.label}
+                        </p>
+                      </div>
+                      <span className="shrink-0 text-xs font-semibold text-[var(--brand)]">
+                        {t("viralRecruitersRank")}
+                      </span>
+                    </LocalizedLink>
+                  );
+                })}
               </div>
             </section>
 
@@ -594,6 +556,11 @@ export function RegistryContent() {
                 <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
                   {t("careerPromoDesc")}
                 </p>
+                <div className="mt-4 overflow-x-auto rounded-xl border border-sky-100 bg-white/70 px-3 py-3">
+                  <p className="whitespace-nowrap text-xs font-semibold text-[var(--brand-dark)]">
+                    {t("careerPromoLadder")}
+                  </p>
+                </div>
                 <LocalizedLink
                   href="/career"
                   className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--brand)] transition hover:text-[var(--brand-dark)]"
@@ -638,6 +605,9 @@ export function RegistryContent() {
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/95">
               {t("joinCtaSubtext")}
+            </p>
+            <p className="mx-auto mt-3 max-w-2xl text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">
+              {t("joinCtaProof")}
             </p>
             <div className="mt-8 flex justify-center">
               <LocalizedLink

@@ -50,25 +50,10 @@ export default async function PurchasePage({ params }: Props) {
                 <p className="mt-3 max-w-3xl text-sm font-medium leading-6 text-[var(--brand-dark)] sm:text-base sm:leading-7">
                   {t("seoSummary.coffeeNote")}
                 </p>
-                <div className="mt-5 rounded-2xl border border-[var(--border)] bg-white/80 px-4 py-3 text-sm leading-6 text-[var(--muted)]">
-                  {t("seoSummary.legalPrefix")}{" "}
-                  <a href={`/${locale}/terms`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
-                    {t("seoSummary.termsLink")}
-                  </a>
-                  {", "}
-                  <a href={`/${locale}/privacy`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
-                    {t("seoSummary.privacyLink")}
-                  </a>
-                  {", "}
-                  <a href={`/${locale}/terms#refunds`} className="font-semibold text-[var(--brand-dark)] underline underline-offset-2">
-                    {t("seoSummary.refundLink")}
-                  </a>
-                  .
-                </div>
               </div>
 
               <div className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
                   {t("seoSummary.includesLabel")}
                 </p>
                 <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--brand-dark)]">

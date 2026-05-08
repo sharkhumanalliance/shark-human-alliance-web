@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useRef, useMemo, Suspense, useId } from "react";
+import { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import {
   type CertificateTemplate,
@@ -10,7 +10,6 @@ import {
 } from "@/components/certificate/certificate-document";
 import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
-import { StepIndicator } from "@/components/purchase/step-indicator";
 import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
@@ -19,13 +18,24 @@ import {
   normalizePaperFormatForTemplate,
 } from "@/lib/certificate-paper";
 import {
+  getPublicTierKey,
   getTierPriceDollars,
   getTierPriceLabel,
   getTierSelectionClass,
-  normalizeTier,
   PUBLIC_TIERS,
-  type TierKey,
+  type PublicTierKey,
 } from "@/lib/tiers";
+
+const REFERRAL_CODE_PATTERN = /^SHA-[A-Z0-9]{4}$/;
+
+function normalizeReferralCode(value?: string | null) {
+  return value?.trim().toUpperCase().replace(/\s+/g, "") || "";
+}
+
+function getValidReferralCode(value?: string | null) {
+  const normalized = normalizeReferralCode(value);
+  return REFERRAL_CODE_PATTERN.test(normalized) ? normalized : "";
+}
 
 
 
@@ -54,7 +64,7 @@ function PurchaseFlowInner() {
   const searchParams = useSearchParams();
   const locale = useLocale();
 
-  const initialTier = normalizeTier(searchParams.get("tier"));
+  const initialTier = getPublicTierKey(searchParams.get("tier"));
   const initialName = searchParams.get("name") || "";
   const initialGift = searchParams.get("gift") === "true";
   // Accepts both modern ("playful" / "classic" / "luxury") and legacy
@@ -68,11 +78,11 @@ function PurchaseFlowInner() {
     normalizedInitialTemplate,
     searchParams.get("paper"),
   );
-  const referredByFromUrl = searchParams.get("ref") || "";
+  const referredByFromUrl = getValidReferralCode(searchParams.get("ref"));
   const wasCanceled = searchParams.get("canceled") === "true";
 
   const [referredByCode, setReferredByCode] = useState(referredByFromUrl);
-  const [tier, setTier] = useState<TierKey>(initialTier);
+  const [tier, setTier] = useState<PublicTierKey>(initialTier);
   const [name, setName] = useState(initialName);
   const [dedication, setDedication] = useState("");
 
@@ -110,7 +120,7 @@ function PurchaseFlowInner() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [digitalContentConsentAccepted, setDigitalContentConsentAccepted] = useState(false);
   const [registryConsentAccepted, setRegistryConsentAccepted] = useState(false);
-  const giftToggleLabelId = useId();
+  const [codeOptionsOpen, setCodeOptionsOpen] = useState(Boolean(referredByFromUrl));
 
   function handleTemplateChange(nextTemplate: CertificateTemplate) {
     setTemplate(nextTemplate);
@@ -125,21 +135,26 @@ function PurchaseFlowInner() {
     if (referredByFromUrl) {
       window.localStorage.setItem("sha_referral_code", referredByFromUrl);
       setReferredByCode(referredByFromUrl);
+      setCodeOptionsOpen(true);
       return;
     }
 
-    const storedReferralCode = window.localStorage.getItem("sha_referral_code") || "";
+    const storedReferralCode = getValidReferralCode(
+      window.localStorage.getItem("sha_referral_code"),
+    );
     if (storedReferralCode) {
       setReferredByCode(storedReferralCode);
+    } else {
+      window.localStorage.removeItem("sha_referral_code");
     }
   }, [referredByFromUrl]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const normalized = referredByCode.trim().toUpperCase();
+    const normalized = getValidReferralCode(referredByCode);
     if (normalized) {
       window.localStorage.setItem("sha_referral_code", normalized);
-    } else {
+    } else if (!referredByCode.trim()) {
       window.localStorage.removeItem("sha_referral_code");
     }
   }, [referredByCode]);
@@ -235,7 +250,7 @@ function PurchaseFlowInner() {
           email: email.trim(),
           isGift,
           recipientEmail: recipientEmail.trim(),
-          referredBy: referredByCode.trim().toUpperCase() || undefined,
+          referredBy: getValidReferralCode(referredByCode) || undefined,
           locale,
           promoCode: promoCode.trim() || undefined,
           template,
@@ -295,16 +310,16 @@ function PurchaseFlowInner() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl lg:text-4xl">
-            {t("title")}
+            {isGift && name.trim()
+              ? t("giftTitle", {
+                  name: name.trim(),
+                  tier: t(`tierShortLabels.${tier}`),
+                })
+              : t("title")}
           </h1>
           <p className="mt-3 text-base leading-7 text-[var(--muted)] sm:text-lg">
             {t("subtitle")}
           </p>
-        </div>
-
-        {/* Step indicator */}
-        <div className="mt-6 sm:mt-8">
-          <StepIndicator currentStep={1} />
         </div>
 
         {/* Canceled notice */}
@@ -319,7 +334,7 @@ function PurchaseFlowInner() {
         )}
 
         {/* Referral badge */}
-        {referredByCode && (
+        {getValidReferralCode(referredByCode) && (
           <div className="mt-6 mx-auto max-w-md rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-3 text-center text-sm text-[var(--brand-dark)]">
             {t("referredByBadge")}
           </div>
@@ -338,9 +353,9 @@ function PurchaseFlowInner() {
 
         <div className="mt-7 grid gap-7 md:gap-10 lg:mt-12 lg:grid-cols-[1fr_1.1fr]">
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <details className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm lg:hidden">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-[var(--brand-dark)] sm:px-5 sm:py-4">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] sm:px-4 sm:py-3">
                 <span>{t("livePreview")}</span>
                 <span className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   PDF
@@ -362,6 +377,7 @@ function PurchaseFlowInner() {
                 </div>
               </div>
             </details>
+
             {/* Tier selector */}
             <div>
               <label className="text-sm font-semibold text-[var(--brand-dark)]">
@@ -375,7 +391,11 @@ function PurchaseFlowInner() {
                       key={tierOption}
                       type="button"
                       onClick={() => setTier(tierOption)}
-                      className={`min-h-[58px] rounded-xl border ${getTierSelectionClass(tierOption, isSelected)} px-2 py-2 text-center transition-colors duration-300 ease-out sm:min-h-[72px] sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[82px]`}
+                      className={`min-h-[58px] rounded-xl border ${getTierSelectionClass(tierOption, isSelected)} px-2 py-2 text-center transition-all duration-300 ease-out sm:min-h-[72px] sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[82px] ${
+                        isSelected
+                          ? "border-2 shadow-sm"
+                          : "opacity-50 hover:opacity-85"
+                      }`}
                     >
                       <p className="text-[11px] font-medium leading-tight text-[var(--muted)] sm:text-sm sm:leading-snug">
                         {t(`tiers.${tierOption}`)}
@@ -439,29 +459,6 @@ function PurchaseFlowInner() {
                     );
                 })}
               </div>
-            </div>
-
-            {/* Gift toggle */}
-            <div className="flex min-h-[48px] items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 sm:min-h-[56px] sm:rounded-2xl sm:py-4">
-              <button
-                type="button"
-                onClick={() => { const next = !isGift; setIsGift(next); trackEvent("gift_toggle", { tier, enabled: next }); }}
-                role="switch"
-                aria-checked={isGift}
-                aria-labelledby={giftToggleLabelId}
-                className={`relative h-6 w-11 rounded-full transition ${
-                  isGift ? "bg-[var(--brand)]" : "bg-gray-300"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition ${
-                    isGift ? "translate-x-5" : ""
-                  }`}
-                />
-              </button>
-              <span id={giftToggleLabelId} className="flex-1 text-sm font-medium text-[var(--brand-dark)]">
-                {t("giftToggle")}
-              </span>
             </div>
 
             {/* Name */}
@@ -537,90 +534,121 @@ function PurchaseFlowInner() {
               <p className="mt-1.5 text-xs text-[var(--muted)]">{t("emailOptionalHint")}</p>
             </div>
 
-            {/* Referral code */}
-            <div>
-              <div className="flex flex-col gap-1 min-[420px]:flex-row min-[420px]:items-baseline min-[420px]:justify-between">
-                <label htmlFor="referredByCode" className="text-sm font-semibold text-[var(--brand-dark)]">
-                  {t("referredByLabel")}
-                </label>
-                <span className="text-xs text-[var(--muted)]">{t("referredByOptionalTag")}</span>
-              </div>
-              <input
-                id="referredByCode"
-                name="referred_by_code"
-                type="text"
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck={false}
-                value={referredByCode}
-                onChange={(e) => setReferredByCode(e.target.value.toUpperCase().replace(/\s+/g, ""))}
-                placeholder={t("referredByPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-mono uppercase text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-              />
-              <p className="mt-1.5 text-xs text-[var(--muted)]">{t("referredByHint")}</p>
+            {/* Gift option */}
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm">
+              <label className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:px-4 sm:py-3">
+                <input
+                  type="checkbox"
+                  checked={isGift}
+                  onChange={(e) => {
+                    setIsGift(e.target.checked);
+                    trackEvent("gift_toggle", { tier, enabled: e.target.checked });
+                  }}
+                  className="h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                />
+                <span>{t("giftToggle")}</span>
+              </label>
+
+              {isGift && (
+                <div className="space-y-3 border-t border-[var(--border)] bg-[var(--surface-soft)]/35 p-4 sm:p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">{t("giftDetailsTitle")}</p>
+                  <div>
+                    <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
+                      {t("recipientEmailLabel")}
+                    </label>
+                    <input
+                      id="recipientEmail"
+                      name="recipient_email"
+                      type="email"
+                      autoComplete="email"
+                      inputMode="email"
+                      spellCheck={false}
+                      required={isGift}
+                      value={recipientEmail}
+                      onChange={(e) => setRecipientEmail(e.target.value)}
+                      placeholder={t("recipientEmailPlaceholder")}
+                      className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                    />
+                    <p className="mt-1.5 text-xs text-[var(--muted)]">{t("recipientEmailHint")}</p>
+                  </div>
+                  <div>
+                    <label htmlFor="giftMessage" className="text-sm font-semibold text-[var(--brand-dark)]">
+                      {t("giftMessageLabel")}
+                    </label>
+                    <textarea
+                      id="giftMessage"
+                      name="gift_message"
+                      autoComplete="off"
+                      value={giftMessage}
+                      onChange={(e) => setGiftMessage(e.target.value)}
+                      placeholder={t("giftMessagePlaceholder")}
+                      rows={3}
+                      className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Gift fields */}
-            {isGift && (
-              <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 sm:p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-dark)]">{t("giftDetailsTitle")}</p>
-                <div>
-                  <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
-                    {t("recipientEmailLabel")}
-                  </label>
-                  <input
-                    id="recipientEmail"
-                    name="recipient_email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    spellCheck={false}
-                    value={recipientEmail}
-                    onChange={(e) => setRecipientEmail(e.target.value)}
-                    placeholder={t("recipientEmailPlaceholder")}
-                    className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-                  />
-                  <p className="mt-1.5 text-xs text-[var(--muted)]">{t("recipientEmailHint")}</p>
-                </div>
-                <div>
-                  <label htmlFor="giftMessage" className="text-sm font-semibold text-[var(--brand-dark)]">
-                    {t("giftMessageLabel")}
-                  </label>
-                  <textarea
-                    id="giftMessage"
-                    name="gift_message"
-                    autoComplete="off"
-                    value={giftMessage}
-                    onChange={(e) => setGiftMessage(e.target.value)}
-                    placeholder={t("giftMessagePlaceholder")}
-                    rows={3}
-                    className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Promo code */}
-            <div>
-              <label htmlFor="promoCode" className="text-sm font-semibold text-[var(--brand-dark)]">
-                {t("promoCodeLabel")}
+            {/* Referral and promo codes */}
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm">
+              <label className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:px-4 sm:py-3">
+                <input
+                  type="checkbox"
+                  checked={codeOptionsOpen}
+                  onChange={(e) => setCodeOptionsOpen(e.target.checked)}
+                  className="h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                />
+                <span>{t("codeOptionsTitle")}</span>
               </label>
-              <input
-                id="promoCode"
-                name="promo_code_nofill"
-                type="text"
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                placeholder={t("promoCodePlaceholder")}
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck={false}
-                data-form-type="other"
-                data-lpignore="true"
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-mono text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 uppercase sm:px-5 sm:py-4"
-              />
+
+              {codeOptionsOpen && (
+                <div className="space-y-3 border-t border-[var(--border)] bg-[var(--surface-soft)]/35 p-4 sm:p-4">
+                  <div>
+                    <div className="flex flex-col gap-1 min-[420px]:flex-row min-[420px]:items-baseline min-[420px]:justify-between">
+                      <label htmlFor="referredByCode" className="text-sm font-semibold text-[var(--brand-dark)]">
+                        {t("referredByLabel")}
+                      </label>
+                      <span className="text-xs text-[var(--muted)]">{t("referredByOptionalTag")}</span>
+                    </div>
+                    <input
+                      id="referredByCode"
+                      name="referred_by_code"
+                      type="text"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
+                      value={referredByCode}
+                      onChange={(e) => setReferredByCode(normalizeReferralCode(e.target.value))}
+                      placeholder={t("referredByPlaceholder")}
+                      className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-mono uppercase text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                    />
+                    <p className="mt-1.5 text-xs text-[var(--muted)]">{t("referredByHint")}</p>
+                  </div>
+
+                  <div>
+                    <label htmlFor="promoCode" className="text-sm font-semibold text-[var(--brand-dark)]">
+                      {t("promoCodeLabel")}
+                    </label>
+                    <input
+                      id="promoCode"
+                      name="promo_code_nofill"
+                      type="text"
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                      placeholder={t("promoCodePlaceholder")}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
+                      data-form-type="other"
+                      data-lpignore="true"
+                      className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-mono uppercase text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Stripe secure payment note */}
@@ -680,23 +708,40 @@ function PurchaseFlowInner() {
                   }}
                   className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                 />
-                <span>{t("digitalContentConsentLabel")}</span>
-              </label>
-
-              <label className="flex items-start gap-3 text-sm leading-6 text-[var(--brand-dark)]">
-                <input
-                  type="checkbox"
-                  checked={registryConsentAccepted}
-                  onChange={(e) => setRegistryConsentAccepted(e.target.checked)}
-                  className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
-                />
                 <span>
-                  {t("registryConsentLabel")}
-                  <span className="mt-2 block text-xs leading-5 text-[var(--muted)]">
-                    {t("registryConsentHint")}
+                  <span className="font-semibold">{t("digitalContentConsentShortLabel")}</span>
+                  <span className="mt-1 block text-xs leading-5 text-[var(--muted)]">
+                    {t("digitalContentConsentSummary")}
                   </span>
                 </span>
               </label>
+
+              <details className="ml-7 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/60 px-3 py-2 text-xs leading-5 text-[var(--muted)]">
+                <summary className="cursor-pointer font-semibold text-[var(--brand-dark)]">
+                  {t("digitalContentConsentFullToggle")}
+                </summary>
+                <p className="mt-2">{t("digitalContentConsentLabel")}</p>
+              </details>
+
+              <div className="border-t border-dashed border-[var(--border)] pt-3">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+                  {t("optionalEyebrow")}
+                </p>
+                <label className="flex items-start gap-3 rounded-xl bg-sky-50/45 p-3 text-sm leading-6 text-[var(--brand-dark)]">
+                  <input
+                    type="checkbox"
+                    checked={registryConsentAccepted}
+                    onChange={(e) => setRegistryConsentAccepted(e.target.checked)}
+                    className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  />
+                  <span>
+                    {t("registryConsentLabel")}
+                    <span className="mt-2 block text-xs leading-5 text-[var(--muted)]">
+                      {t("registryConsentHint")}
+                    </span>
+                  </span>
+                </label>
+              </div>
             </div>
 
             {/* No-email warning */}
@@ -812,7 +857,7 @@ function PurchaseFlowInner() {
 
           {/* Live certificate preview */}
           <div className="hidden lg:block lg:self-start">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
               {t("livePreview")}
             </p>
             <CertificateTemplateSelector value={template} onChange={handleTemplateChange} />

@@ -21,7 +21,7 @@ export const TIER_METADATA: Record<TierKey, TierMetadata> = {
     priceCents: 400,
     donationCents: 100,
     labelKey: "protected",
-    stripeName: "Protected Friend Status",
+    stripeName: "Protected Friend",
     colorVariant: "basic",
     isPubliclySelectable: false,
   },
@@ -29,7 +29,7 @@ export const TIER_METADATA: Record<TierKey, TierMetadata> = {
     priceCents: 400,
     donationCents: 100,
     labelKey: "protected",
-    stripeName: "Protected Friend Status",
+    stripeName: "Protected Friend",
     colorVariant: "protected",
     isPubliclySelectable: true,
   },
@@ -146,6 +146,10 @@ const TIER_STYLES: Record<
 
 export function isTierKey(value?: string | null): value is TierKey {
   return value === "basic" || value === "protected" || value === "nonsnack" || value === "business";
+}
+
+export function isPublicTierKey(value?: string | null): value is PublicTierKey {
+  return value === "protected" || value === "nonsnack" || value === "business";
 }
 
 export function normalizeTier(value?: string | null): TierKey {

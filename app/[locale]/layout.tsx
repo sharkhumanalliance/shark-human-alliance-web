@@ -121,7 +121,7 @@ function JsonLd() {
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: "Protected Friend Status Certificate",
+    name: "Protected Friend Certificate",
     description:
       "A personalized, surprisingly official-looking shark protection certificate. The perfect gag gift that funds real ocean conservation.",
     image: `${BASE_URL}/mascots/homepage-hero-plush.png`,
@@ -129,7 +129,7 @@ function JsonLd() {
     offers: [
       {
         "@type": "Offer",
-        name: "Protected Friend Status",
+        name: "Protected Friend",
         price: "4.00",
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",

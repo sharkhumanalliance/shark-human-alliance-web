@@ -32,13 +32,20 @@ import {
 import { BASE_URL } from "@/lib/config";
 import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
-import { isTierKey } from "@/lib/tiers";
+import { isPublicTierKey } from "@/lib/tiers";
 const ENABLE_TEST_PROMO_CODES =
   process.env.ENABLE_TEST_PROMO_CODES === "true" ||
   process.env.NODE_ENV !== "production";
 
 /** Promo codes that bypass Stripe entirely (100% off). */
 const FREE_PROMO_CODES = ["SHATEST"];
+const REFERRAL_CODE_PATTERN = /^SHA-[A-Z0-9]{4}$/;
+
+function getValidReferralCode(value: unknown) {
+  if (typeof value !== "string") return "";
+  const normalized = value.trim().toUpperCase().replace(/\s+/g, "");
+  return REFERRAL_CODE_PATTERN.test(normalized) ? normalized : "";
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -73,6 +80,7 @@ export async function POST(request: NextRequest) {
       requestHost.endsWith(".local");
     const allowLocalPromoFallback = shouldUseDemoMembers() || isLocalRequest;
     const normalizedPromoCode = promoCode?.toUpperCase().trim() || "";
+    const validReferredBy = getValidReferralCode(referredBy);
     // Free promo codes are gated solely by ENABLE_TEST_PROMO_CODES (or non-production NODE_ENV).
     // Hostname checks are intentionally NOT used here to prevent DNS-rebinding bypass.
     const isFreePromoFlow = normalizedPromoCode
@@ -93,10 +101,10 @@ export async function POST(request: NextRequest) {
       locale: loc,
       template: template || null,
       paperFormat: normalizedPaperFormat,
-      hasReferral: typeof referredBy === "string" && referredBy.trim().length > 0,
+      hasReferral: validReferredBy.length > 0,
     });
 
-    if (!isTierKey(tier)) {
+    if (!isPublicTierKey(tier)) {
       return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
     }
     if (!name) {
@@ -165,7 +173,7 @@ export async function POST(request: NextRequest) {
         date: new Date().toISOString(),
         dedication: moderatedDedication,
         referralCode,
-        referredBy: referredBy || undefined,
+        referredBy: validReferredBy || undefined,
         email: (email?.trim() || recipientEmail?.trim()) || undefined,
         stripeSessionId: freeSessionId,
         accessToken,
@@ -183,8 +191,8 @@ export async function POST(request: NextRequest) {
       try {
         newMember = await createMember(memberDraft);
 
-        if (referredBy) {
-          await incrementReferralCount(referredBy);
+        if (validReferredBy) {
+          await incrementReferralCount(validReferredBy);
         }
       } catch (error) {
         if (!allowLocalPromoFallback) {
@@ -368,7 +376,7 @@ export async function POST(request: NextRequest) {
         email,
         isGift: isGift ? "true" : "false",
         recipientEmail: recipientEmail || "",
-        referredBy: referredBy || "",
+          referredBy: validReferredBy,
         locale: loc,
         template: template || "",
         paperFormat: normalizedPaperFormat,

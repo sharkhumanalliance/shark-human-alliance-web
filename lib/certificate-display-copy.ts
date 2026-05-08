@@ -58,12 +58,12 @@ const COPY = {
     marineNoteLabel: "Supplementary case note",
     tierLabels: {
       protected: "Protected Friend",
-      nonsnack: "Certified Non-Snack",
+      nonsnack: "Non-Snack Recognition",
       business: "Shark-Free Zone",
     },
     ribbonLabels: {
-      protected: "Protected Friend Status",
-      nonsnack: "Non-Snack Status",
+      protected: "Protected Friend",
+      nonsnack: "Non-Snack Recognition",
       business: "Shark-Free Status",
     },
     filedUnderLabels: {
@@ -127,7 +127,7 @@ const COPY = {
     marineNoteLabel: "Nota suplementaria del caso",
     tierLabels: {
       protected: "Amigo Protegido",
-      nonsnack: "No-Snack Certificado",
+      nonsnack: "Reconocimiento No-Snack",
       business: "Zona Libre de Tiburones",
     },
     ribbonLabels: {

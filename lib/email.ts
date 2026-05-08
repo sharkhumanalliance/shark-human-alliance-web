@@ -102,7 +102,7 @@ const EMAIL_COPY = {
     viewCareer: "View Career Ladder",
     tierLabels: {
       protected: "Protected Friend",
-      nonsnack: "Certified Non-Snack",
+      nonsnack: "Non-Snack Recognition",
       business: "Shark-Free Zone",
     },
   },
@@ -147,7 +147,7 @@ const EMAIL_COPY = {
     viewCareer: "Ver escalafón",
     tierLabels: {
       protected: "Amigo Protegido",
-      nonsnack: "No-Snack Certificado",
+      nonsnack: "Reconocimiento No-Snack",
       business: "Zona Libre de Tiburones",
     },
   },

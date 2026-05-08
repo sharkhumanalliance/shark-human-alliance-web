@@ -15,7 +15,6 @@ import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { PostPurchaseShare } from "@/components/purchase/post-purchase-share";
 import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
-import { StepIndicator } from "@/components/purchase/step-indicator";
 import { formatCertificateDate } from "@/lib/dates";
 import {
   isPaperFormatAvailableForTemplate,
@@ -177,9 +176,6 @@ function SuccessContentInner() {
     return (
       <section data-reveal className="py-24 sm:py-32">
         <div className="mx-auto max-w-lg px-4 sm:px-6">
-          <div className="mb-10">
-            <StepIndicator currentStep={3} />
-          </div>
           <div className="text-center">
             <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
             <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
@@ -282,11 +278,7 @@ function SuccessContentInner() {
   return (
     <section data-reveal className="py-12 sm:py-14">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <div className="mb-8">
-          <StepIndicator currentStep={3} />
-        </div>
-
-        {/* Hero \u2014 pure text confirmation, no badge competing with the step indicator. */}
+        {/* Hero - pure text confirmation. */}
         <header className="text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
             {t("successTitle")}
