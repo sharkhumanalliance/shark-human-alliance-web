@@ -23,7 +23,7 @@ export function FirstDonationTarget({ compact = false }: FirstDonationTargetProp
               {t("firstTargetTitle")}
             </h3>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              {t("firstTargetStatus")}
+              {t("firstTargetStatusShort")}
             </p>
           </div>
           <div className="w-full shrink-0 sm:w-56">
@@ -44,9 +44,9 @@ export function FirstDonationTarget({ compact = false }: FirstDonationTargetProp
   }
 
   return (
-    <aside className="overflow-hidden rounded-[28px] border border-teal-200 bg-white">
-      <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.72fr)]">
-        <div className="px-5 py-5 sm:px-6">
+    <aside className="overflow-hidden rounded-[28px] border border-teal-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.72fr)]">
+        <div className="px-5 py-6 sm:px-6">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-teal-700">
             {t("firstTargetLabel")}
           </p>
@@ -58,29 +58,30 @@ export function FirstDonationTarget({ compact = false }: FirstDonationTargetProp
           </p>
         </div>
 
-        <div className="border-t border-teal-100 bg-teal-50/40 px-5 py-5 sm:px-6 lg:border-l lg:border-t-0">
-          <div className="flex items-baseline justify-between gap-4">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-800/80">
-                {t("firstTargetProgressLabel")}
-              </p>
-              <p className="mt-2 text-3xl font-bold tabular-nums text-teal-800">
-                {t("firstTargetCurrent")}
-              </p>
-            </div>
-            <p className="text-sm font-semibold tabular-nums text-teal-900">
-              {t("firstTargetGoal")}
+        <div className="border-t border-teal-100 bg-teal-50/55 px-5 py-6 sm:px-6 lg:border-l lg:border-t-0">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-800/80">
+            {t("firstTargetProgressLabel")}
+          </p>
+          <div className="mt-3 flex items-end justify-between gap-4">
+            <p className="text-4xl font-bold leading-none tracking-tight text-teal-800 tabular-nums">
+              {t("firstTargetCurrent")} <span className="text-2xl text-teal-900/45">/</span>{" "}
+              {t("firstTargetGoalAmount")}
             </p>
           </div>
-          <div className="mt-4 h-3 overflow-hidden rounded-full bg-white">
+          <div className="mt-5 h-3 overflow-hidden rounded-full bg-white shadow-inner">
             <div
               className="h-full rounded-full bg-teal-500"
               style={{ width: `${FIRST_DONATION_PROGRESS}%` }}
             />
           </div>
-          <p className="mt-3 text-xs font-medium leading-5 text-teal-900/75">
-            {t("firstTargetStatus")}
-          </p>
+          <div className="mt-4 rounded-2xl border border-teal-100 bg-white/80 px-4 py-4">
+            <p className="text-sm font-semibold leading-6 text-teal-950/80">
+              {t("firstTargetStatusShort")}
+            </p>
+            <p className="mt-2 text-xs font-medium leading-5 text-teal-950/65">
+              {t("firstTargetStatusNote")}
+            </p>
+          </div>
         </div>
       </div>
     </aside>

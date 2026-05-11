@@ -13,28 +13,22 @@ const PARTNERS = [
 
 const TIER_STYLES = {
   protected: {
-    border: "border-orange-200",
     badge: "bg-orange-50 text-orange-800",
     amount: "text-orange-700",
     barBg: "bg-orange-100",
     barFill: "bg-orange-500",
-    link: "text-orange-700 hover:text-orange-800",
   },
   nonsnack: {
-    border: "border-teal-200",
     badge: "bg-teal-50 text-teal-800",
     amount: "text-teal-700",
     barBg: "bg-teal-100",
     barFill: "bg-teal-500",
-    link: "text-teal-700 hover:text-teal-800",
   },
   business: {
-    border: "border-indigo-200",
     badge: "bg-indigo-50 text-indigo-800",
     amount: "text-indigo-700",
     barBg: "bg-indigo-100",
     barFill: "bg-indigo-500",
-    link: "text-indigo-700 hover:text-indigo-800",
   },
 };
 
@@ -70,29 +64,29 @@ export function ImpactContent() {
 
   return (
     <>
-      <section data-reveal className="py-12 sm:py-14 lg:py-16">
+      <section data-reveal className="pb-8 pt-12 sm:pb-9 sm:pt-14 lg:pb-10 lg:pt-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
               {t("label")}
             </p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
               {t("title")}
             </h1>
-            <p className="mt-3 max-w-2xl text-lg leading-7 text-[var(--muted)]">
+            <p className="mt-3 max-w-3xl text-lg leading-7 text-[var(--muted)]">
               {t("subtitle")}
             </p>
           </div>
         </div>
       </section>
 
-      <section data-reveal className="py-10 sm:py-12">
+      <section data-reveal className="pb-10 pt-6 sm:pb-12 sm:pt-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("splitTitle")}
             </h2>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
+            <p className="mt-3 max-w-3xl text-base leading-7 text-[var(--muted)]">
               {t("splitDescription")}
             </p>
 
@@ -127,7 +121,7 @@ export function ImpactContent() {
                             {t(tier.amountKey)}
                           </p>
                           <p className="text-sm font-semibold tabular-nums text-[var(--muted)]">
-                            {tier.barPercent}% {t("splitGoesToOcean")}
+                            {tier.barPercent}% {t("splitGoesToConservation")}
                           </p>
                         </div>
                         <div
@@ -145,11 +139,11 @@ export function ImpactContent() {
               })}
             </div>
 
-            <aside className="mt-5 max-w-2xl rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/65 px-5 py-4 sm:px-6">
+            <aside className="mt-4 rounded-[22px] border border-sky-200 bg-sky-50/75 px-5 py-5 shadow-sm sm:px-6">
               <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
                 {t("splitOpsLabel")}
               </p>
-              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+              <p className="mt-2 max-w-4xl text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
                 {t("splitOpsText")}
               </p>
             </aside>
@@ -163,6 +157,11 @@ export function ImpactContent() {
 
       <section data-reveal className="bg-[var(--surface-soft)] py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-8 max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+              {t("trustSectionLabel")}
+            </p>
+          </div>
           <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
             <div>
               <div>
@@ -172,29 +171,30 @@ export function ImpactContent() {
                 <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
                   {t("partnersSubtitle")}
                 </p>
+                <div className="mt-4 rounded-2xl border border-sky-100 bg-sky-50/70 px-4 py-3 shadow-sm">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--section-label)]">
+                    {t("partnersNoticeLabel")}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                    {t("partnersDisclaimer")}
+                  </p>
+                </div>
               </div>
 
               <div className="mt-6 space-y-4">
-                {PARTNERS.map(({ key, url }, index) => {
-                  const variant =
-                    index === 0 ? "protected" : index === 1 ? "nonsnack" : index === 2 ? "business" : "protected";
-                  const style = TIER_STYLES[variant];
-                  return (
-                     <a
-                        key={key}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${t(`partner${key}Name`)} - ${t("visitWebsite")} (${t("opensInNewTab")})`}
-                        className={`block rounded-2xl border bg-white px-5 py-5 transition-colors duration-300 ease-out hover:bg-sky-50/40 ${style.border}`}
-                      >
+                {PARTNERS.map(({ key, url }) => (
+                  <a
+                    key={key}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${t(`partner${key}Name`)} - ${t("visitWebsite")} (${t("opensInNewTab")})`}
+                    className="block rounded-2xl border border-[var(--border)] bg-white px-5 py-5 transition-colors duration-300 ease-out hover:bg-sky-50/40"
+                  >
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <p className="text-lg font-semibold text-[var(--brand-dark)]">
                           {t(`partner${key}Name`)}
                         </p>
-                        <span className="inline-flex min-h-[30px] items-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
-                          {t("partnerStatusPlanned")}
-                        </span>
                       </div>
                       <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
                         {t(`partner${key}Desc`)}
@@ -207,20 +207,16 @@ export function ImpactContent() {
                           {t(`partner${key}Focus`)}
                         </p>
                       </div>
-                      <span className={`mt-4 inline-flex items-center gap-1.5 text-sm font-semibold ${style.link}`}>
+                      <span className="mt-5 inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm font-bold text-[var(--brand)] transition-colors hover:bg-sky-50 hover:text-[var(--brand-dark)]">
                         {t("visitWebsite")} {"\u2192"}
                         <span className="text-xs font-medium text-[var(--muted)]">
                           ({t("opensInNewTab")})
                         </span>
                       </span>
                     </a>
-                  );
-                })}
+                ))}
               </div>
 
-              <p className="mt-5 text-sm italic text-[var(--muted)]">
-                {t("partnersDisclaimer")}
-              </p>
             </div>
 
             <div>
@@ -278,6 +274,9 @@ export function ImpactContent() {
             <h2 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("selectionTitle")}
             </h2>
+            <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+              {t("selectionSubtitle")}
+            </p>
           </div>
 
           <div className="mt-6 overflow-hidden rounded-[28px] border border-[var(--border)] bg-white">
