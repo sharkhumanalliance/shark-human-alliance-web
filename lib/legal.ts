@@ -1,3 +1,2 @@
-export const TERMS_VERSION = "2026-04-20";
-export const DIGITAL_CONTENT_VERSION = "2026-04-20";
-
+export const TERMS_VERSION = "2026-05-11";
+export const DIGITAL_CONTENT_VERSION = "2026-05-11";

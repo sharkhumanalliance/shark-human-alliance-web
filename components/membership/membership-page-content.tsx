@@ -243,7 +243,7 @@ export function MembershipPageContent() {
       <section data-reveal id="join" className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="text-center">
-            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">{t("joinTitle")}</h2>
+            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white">{t("joinTitle")}</h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/95">{t("joinText")}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">

@@ -2,7 +2,7 @@
   "seo": {
     "home": {
       "title": "Funny Shark Certificates & Official-ish Shark Paperwork",
-      "description": "Personalized shark certificates for friends, coworkers, beach-fearers, and people who are probably not food. Funny digital gifts that support real shark conservation."
+      "description": "A funny personalized certificate that protects sharks more than it protects you. Official-ish shark paperwork for friends, coworkers, beach-fearers, and people who are probably not food."
     },
     "purchase": {
       "title": "Create a Personalized Shark Certificate",
@@ -26,7 +26,7 @@
     },
     "faq": {
       "title": "FAQ — Funny Shark Certificates & Conservation",
-      "description": "Answers to common questions about funny shark certificates, conservation donations, digital delivery, and gifting. Everything you need to know before buying."
+      "description": "Answers to common questions about funny shark certificates, conservation allocations, digital delivery, and gifting. Everything you need to know before buying."
     },
     "wanted": {
       "title": "Free Shark Wanted Poster Generator",
@@ -77,7 +77,7 @@
     "legalTitle": "Legal",
     "legalText": "Read our Terms & Purchase Conditions for ordering, digital delivery, complaints and refund handling.",
     "transparencyTitle": "Transparency",
-    "transparencyText": "Full transparency on every dollar. Reports published quarterly once donations begin.",
+    "transparencyText": "Full transparency on every dollar. Public allocation reports published quarterly once allocations begin.",
     "nav": {
       "membership": "Certificates",
       "impact": "Impact",
@@ -101,9 +101,9 @@
   "hero": {
     "titleLine1": "Official shark protection.",
     "titleLine2": "For humans.",
-    "brandLine": "Sharks deserve better PR. And real protection.",
+    "brandLine": "A funny personalized certificate that protects sharks more than it protects you.",
     "description": "Personalized shark paperwork for friends, coworkers, beach-fearers, and anyone currently operating without adequate marine documentation.",
-    "trustDescription": "The Alliance is fictional. The shark conservation donations are real and verifiable.",
+    "trustDescription": "The Alliance is fictional. The shark conservation funding is real and verifiable.",
     "ctaPrimary": "File shark paperwork",
     "ctaSecondary": "Preview the certificate",
     "giftTeaserLink": "send one as a gift",
@@ -157,7 +157,7 @@
       "wantedCta": "Generate a Wanted Poster"
     },
     "impactTeaser": {
-      "donationsIntro": "The paperwork is fake. The allocation is not. Each certificate sets aside real money for shark and ocean conservation, starting with the first public donation target.",
+      "donationsIntro": "The paperwork is fake. The allocation is not. Each certificate sets aside real money for shark and ocean conservation, starting with the first public allocation target.",
       "and": "and",
       "opsJoke": "The rest keeps the Alliance's one-person land-based bureaucracy operational, which is less majestic but regrettably necessary.",
       "linkText": "See full impact report and partner details"
@@ -214,11 +214,11 @@
       "title": "The joke is fictional. The impact is not.",
       "description": "Every certificate sold funds verified ocean and shark conservation. We publish where the money goes.",
       "forSharksTitle": "Conservation first",
-      "forSharksText": "Every sale funds verified ocean and shark conservation organizations. No vague promises, no mystery fees. Business certificates donate 70%.",
+      "forSharksText": "Every sale funds verified ocean and shark conservation organizations. No vague promises, no mystery fees. Business certificates allocate $70.",
       "forHumanTitle": "Alliance operations",
       "forHumanText": "The rest keeps the servers running and the founder fed. Think of it as funding the Alliance's land-based operations department (staff: one very tired person).",
-      "transparencyNote": "Full transparency on every dollar. Reports published quarterly once donations begin. If a shark could read a spreadsheet, they would approve.",
-      "legalNote": "The Shark Human Alliance is a fictional entertainment brand. Conservation donations are real and verifiable.",
+      "transparencyNote": "Full transparency on every dollar. Public allocation reports are published quarterly once allocations begin. If a shark could read a spreadsheet, they would approve.",
+      "legalNote": "The Shark Human Alliance is a fictional entertainment brand. Conservation allocations are real and verifiable.",
       "partnersTitle": "Where the money goes",
       "partnersSubtitle": "Organizations we aim to support",
       "partner1Name": "Shark Trust",
@@ -229,7 +229,7 @@
       "partner3Desc": "Direct funding for shark research, protection initiatives and policy change worldwide.",
       "partner4Name": "Malpelo Foundation",
       "partner4Desc": "Protecting marine fauna and one of the world's most important shark sanctuaries in Colombia.",
-      "partnersDisclaimer": "Listed as planned partners. Formal partnerships will be announced as donations begin.",
+      "partnersDisclaimer": "Listed as planned partners. Formal partnerships will be announced as allocations begin.",
       "stat1Value": "~100M",
       "stat1Label": "sharks estimated killed by humans annually",
       "stat2Value": "<10",
@@ -245,7 +245,7 @@
       "items": [
         {
           "question": "Is the alliance real?",
-          "answer": "The alliance is fictional and intentionally humorous. The conservation donations are real and verifiable."
+          "answer": "The alliance is fictional and intentionally humorous. The conservation funding is real and verifiable."
         },
         {
           "question": "Does membership protect me from sharks?",
@@ -253,7 +253,7 @@
         },
         {
           "question": "Where does the money actually go?",
-          "answer": "Each certificate contributes to a conservation allocation we track and report publicly. As donations are made, we publish the recipient organizations and the amounts allocated."
+          "answer": "Each certificate contributes to a conservation allocation we track and report publicly. As allocations are completed, we publish the recipient organizations and the amounts allocated."
         },
         {
           "question": "Why sharks?",
@@ -303,11 +303,11 @@
       },
       {
         "question": "Where does the real money go?",
-        "answer": "Conservation allocations are funded from Shark Human Alliance revenue. We track them internally and publish recipient organizations and allocation details once donations are made. Planned recipients are not formal partners unless we expressly say so."
+        "answer": "Conservation allocations are funded from Shark Human Alliance revenue. We track them internally and publish recipient organizations and allocation details once public allocation reports are issued. Planned recipients are not formal partners unless we expressly say so."
       },
       {
-        "question": "When do donations start, and how will they be reported?",
-        "answer": "We publish allocations once donations are actually made. This page and our social channels will show recipient organizations and reported amounts as they happen."
+        "question": "When do conservation allocations start, and how will they be reported?",
+        "answer": "We publish public allocation reports once allocations are actually completed. This page and our social channels will show recipient organizations and reported amounts as they happen."
       },
       {
         "question": "Are these formal partner organizations?",
@@ -340,6 +340,10 @@
       {
         "question": "Is this a donation or a product purchase?",
         "answer": "It is a purchase of a humorous digital product, not a direct charitable donation. A conservation allocation is funded from Shark Human Alliance revenue on our side, and it is not tax-deductible."
+      },
+      {
+        "question": "Is this a charity?",
+        "answer": "No. Shark Human Alliance is a playful digital product project operated by JEEL Wekeza s.r.o. Part of each purchase is allocated to shark conservation and reported publicly. You are buying a digital product, not making a direct charitable donation."
       },
       {
         "question": "What size is the certificate?",
@@ -733,24 +737,24 @@
     "share": {
       "eyebrow": "After checkout",
       "title": "Share the paperwork.",
-      "description": "Download a ready-made Story graphic or share your verification link. The sharks may ignore it, but your friends probably won't.",
-      "shareButton": "Share my paperwork",
+      "description": "Share your certificate, post the ready-made Story graphic, or open a new Wanted case for the next unprotected human.",
+      "shareButton": "Share certificate",
       "tierCtas": {
         "protected": {
           "title": "Share the paperwork.",
-          "shareButton": "Share my paperwork"
+          "shareButton": "Share certificate"
         },
         "nonsnack": {
           "title": "Share the paperwork.",
-          "shareButton": "Share my paperwork"
+          "shareButton": "Share certificate"
         },
         "business": {
           "title": "Share the paperwork.",
-          "shareButton": "Share my paperwork"
+          "shareButton": "Share certificate"
         },
         "basic": {
           "title": "Share the paperwork.",
-          "shareButton": "Share my paperwork"
+          "shareButton": "Share certificate"
         }
       },
       "downloadButton": "Download Story graphic",
@@ -764,6 +768,8 @@
       "downloadError": "The Story could not be prepared. Please try again.",
       "nativeSuccess": "Share sheet opened.",
       "nativeFallback": "Link shared. For Instagram Stories, use the downloaded image as well.",
+      "wantedPosterButton": "Generate Wanted Poster for a friend",
+      "challengeButton": "Challenge another human",
       "storyFooterLine": "Bureaucratic progress in shark-human relations.",
       "storyInstruction": "Post this to your Stories. Make the certification public.",
       "storyBadge": "Story ready",
@@ -840,8 +846,8 @@
     "filterBasic": "Basic",
     "filterProtected": "Protected Friends",
     "filterNonsnack": "Non-Snacks",
-    "emptyState": "No public diplomats yet. The sharks are pretending not to notice.",
-    "emptyStateFounders": "No public diplomats yet. The sharks are pretending not to notice.",
+    "emptyState": "Founding wave in progress.",
+    "emptyStateFounders": "Be among the first humans formally declared symbolically unsuitable for shark consumption.",
     "memberSince": "Diplomat since",
     "nameLabel": "Name",
     "classificationLabel": "Classification",
@@ -976,9 +982,10 @@
   "impact": {
     "label": "Our Impact",
     "title": "Where the money actually goes.",
+    "brandLine": "Sharks deserve better PR. And real protection.",
     "subtitle": "The paperwork is fictional. The shark conservation allocation is real. We track every sale, publish allocations, and do not call a recipient a confirmed partner until money has actually moved.",
     "splitTitle": "How funds are split",
-    "splitDescription": "Certificate prices are fixed at $4, $19, and $99. Lower tiers carry proportionally higher payment processing and operating costs. The conservation portion of each sale is tracked and reported here as donations are made.",
+    "splitDescription": "Certificate prices are fixed at $4, $19, and $99. Lower tiers carry proportionally higher payment processing and operating costs. The conservation portion of each sale is tracked and reported here through public allocation reports.",
     "splitOf": "of",
     "splitGoesToConservation": "goes to conservation",
     "splitProtectedAmount": "$1",
@@ -994,8 +1001,8 @@
     "splitBusinessLabel": "Shark-Free Zone",
     "splitBusinessText": "$70 from every business certification goes to conservation. If you’re putting it on the wall, it should earn its place there.",
     "splitOpsLabel": "Land-based operations (the boring part)",
-    "splitOpsText": "The remainder covers the less aquatic work: payment processing, hosting, certificate rendering, admin, and the creative maintenance of a joke that has somehow become paperwork.",
-    "firstTargetLabel": "First donation target",
+    "splitOpsText": "The remainder covers the less aquatic work: payment processing, hosting, certificate rendering, admin, and the creative maintenance of a joke that has somehow become paperwork. The main product is the certificate and the suspiciously official joke. The conservation allocation is the real, tracked part that gives the paperwork a reason to exist.",
+    "firstTargetLabel": "First allocation target",
     "firstTargetTitle": "First public allocation target: $500",
     "firstTargetText": "Before we publish the first allocation report, the immediate goal is a clear $500 conservation allocation. The recipient and receipt will be published before we call it completed.",
     "firstTargetProgressLabel": "Publicly allocated so far",
@@ -1006,7 +1013,7 @@
     "firstTargetStatusNote": "Conservation allocations are tracked internally until the $500 threshold; no allocation is reported as completed before the receipt is published here.",
     "partnersTitle": "Where the money goes",
     "trustSectionLabel": "Recipients & reporting",
-    "partnersSubtitle": "These are organizations we aim to support as donations are made. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
+    "partnersSubtitle": "These are organizations we aim to support as allocations are completed. We will report recipients publicly and will not claim a formal partnership before it is confirmed.",
     "partner1Name": "Shark Trust",
     "partner1Desc": "UK-based charity dedicated to safeguarding the future of sharks through science, education and policy influence.",
     "partner1Focus": "Focus: UK & European shark policy, science-led conservation, public education campaigns.",
@@ -1019,7 +1026,7 @@
     "partner4Name": "Malpelo Foundation",
     "partner4Desc": "Protecting marine fauna and one of the world's most important shark sanctuaries off Colombia's Pacific coast.",
     "partner4Focus": "Focus: Malpelo Island sanctuary protection, hammerhead shark research, marine patrols.",
-    "partnersDisclaimer": "Listed organizations are planned recipients, not sponsors, endorsers, or formal partners unless expressly stated. Donation confirmations will be published once allocations are made.",
+    "partnersDisclaimer": "Listed organizations are planned recipients, not sponsors, endorsers, or formal partners unless expressly stated. Public allocation reports will be published once allocations are completed.",
     "partnersNoticeLabel": "Planned recipients",
     "visitWebsite": "Visit website",
     "opensInNewTab": "opens in new tab",
@@ -1034,19 +1041,19 @@
     "selectionCriteria4Title": "Global & local balance",
     "selectionCriteria4Text": "We aim for a mix of global organizations and local sanctuaries to ensure funding reaches where it's needed most.",
     "reportingTitle": "Reporting & transparency",
-    "reportingSubtitle": "Every conservation allocation will be tracked and reported publicly. Here's how reporting will work as donations begin to flow.",
+    "reportingSubtitle": "Every conservation allocation will be tracked and reported publicly. Here's how reporting will work as allocations begin to flow.",
     "reporting1Icon": "📊",
     "reporting1Title": "Quarterly reports",
     "reporting1Text": "Published publicly on this page. How much was raised, where it went, and what impact it had.",
     "reporting2Icon": "🔍",
-    "reporting2Title": "Verifiable donations",
-    "reporting2Text": "Every donation comes with receipts and confirmation from the receiving organization.",
+    "reporting2Title": "Verifiable allocations",
+    "reporting2Text": "Every completed allocation is backed by receipts and confirmation from the receiving organization.",
     "reporting3Icon": "📢",
     "reporting3Title": "Social updates",
     "reporting3Text": "Public updates on our social channels showing how contributions were allocated and what happened next.",
     "preReportLabel": "Current status",
     "preReportTitle": "We haven't published our first report yet",
-    "preReportText": "The Shark Human Alliance is still in its early stages. This page will publish public reporting as donations scale and distributions are made. Until then, we will describe recipient organizations as planned recipients rather than confirmed partners.",
+    "preReportText": "The Shark Human Alliance is still in its early stages. This page will publish public allocation reports as allocations scale and payments are made. Until then, we will describe recipient organizations as planned recipients rather than confirmed partners.",
     "ctaTitle": "Every certificate helps.",
     "ctaText": "The joke is fictional. The funding is real. Get a certificate and help protect the sharks who definitely aren't plotting anything.",
     "ctaButton": "Get your certificate — from $4",
@@ -1218,14 +1225,14 @@
     "linkCopied": "Link copied!",
     "shareTitle": "WANTED: {name}",
     "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
-    "giftCta": "Close {name}'s case with a Protected Friend Certificate",
+    "giftCta": "Gift protection to this human — {price}",
     "caseLinkLabel": "Open the case file",
     "caseLinkDescription": "A personalized landing page where the accusation can become paperwork.",
     "storyLinkLabel": "Story link",
     "newPoster": "Create another poster",
     "rerollChargesButton": "Reroll poster",
     "priceAnchor": "$4 — less than your morning Starbucks. Less waiting in line, too.",
-    "socialProofText": "18 wanted posters issued last week.",
+    "socialProofText": "Wanted cases now open.",
     "viralPrompt": "Share it on Instagram Stories, send it in a group chat, or print it and tape it to their desk.",
     "viralSubtext": "Every poster shared is a step toward universal shark-human diplomatic coverage.",
     "previewLabel": "Live poster preview",
@@ -1301,7 +1308,7 @@
     "resolutionLabel": "Recommended resolution",
     "resolutionTitle": "Send {name} a Protected Friend certificate",
     "resolutionText": "Choose a tier, personalize the certificate, send it. {name} gets a printable PDF in minutes — and a small share of every certificate funds real shark conservation.",
-    "cta": "Issue {name}'s certificate — {price}",
+    "cta": "Gift protection to {name} — {price}",
     "priceNote": "About one coffee. Less foam, more paperwork. Delivered as a PDF within minutes; printable A4 or US Letter.",
     "impactLink": "See where the funding goes →"
   },
@@ -1379,29 +1386,29 @@
   "termsPage": {
     "eyebrow": "Legal & support",
     "title": "Terms & Purchase Conditions",
-    "intro": "These terms explain how ordering, delivery, support, complaints and refund handling work for Shark Human Alliance certificates. This page is meant to make the purchase process clearer and more trustworthy.",
+    "intro": "These terms explain how ordering, immediate digital delivery, support, complaints, corrections and refund handling work for Shark Human Alliance certificates. This page is meant to make the purchase process clearer and less mysterious than most shark paperwork.",
     "updatedLabel": "Last updated",
-    "updatedValue": "April 20, 2026",
+    "updatedValue": "May 11, 2026",
     "sections": {
       "operator": {
         "title": "1. Operator",
-        "body": "This website is operated by JEEL Wekeza s.r.o. If you need help with an order, delivery issue, file defect, duplicate payment, or complaint, contact us at sharkhumanalliance@gmail.com."
+        "body": "This website is operated by JEEL Wekeza s.r.o., Company ID (IČO): 07969694, registered office Radlická 663/28, 150 00 Prague, Czech Republic. The company is registered in the Commercial Register maintained by the Municipal Court in Prague, file no. C 310737. If you need help with an order, delivery issue, file defect, duplicate payment, or complaint, contact us at sharkhumanalliance@gmail.com."
       },
       "products": {
         "title": "2. What is being sold",
-        "body": "The website sells digital, personalized certificates and related digital assets within the Shark Human Alliance project. The certificate is symbolic, humorous, and not legally binding. Unless explicitly stated otherwise on the product page, the product is delivered digitally and no physical framed certificate is shipped. Current conservation allocations are described on the Impact page, including the amount allocated per tier and the organizations currently listed as intended recipients."
+        "body": "The website sells digital, personalized certificates and related digital assets within the Shark Human Alliance project. The certificate is symbolic, humorous, and not legally binding. It is not a safety guarantee, diplomatic credential, official certification, insurance product, or marine authority document. Unless explicitly stated otherwise on the product page, the product is delivered digitally and no physical framed certificate is shipped. Current conservation allocations are described on the Impact page, including the amount allocated per tier and the organizations currently listed as planned recipients."
       },
       "ordering": {
-        "title": "3. How ordering works",
-        "body": "To place an order, choose a certificate tier, enter the requested details, confirm the Terms & Purchase Conditions, confirm immediate digital delivery, and complete payment through the checkout flow. The order is treated as placed once payment is successfully confirmed."
+        "title": "3. Order, payment, and contract formation",
+        "body": "To place an order, choose a certificate tier, enter the requested details, review the price and purchase summary, confirm the Terms & Purchase Conditions, confirm immediate digital delivery, and complete payment through the checkout flow. Card payments are processed by Stripe. The order is treated as placed once payment is successfully confirmed or, for a valid free promo checkout, once the checkout flow confirms completion."
       },
       "privacy": {
         "title": "4. Personal data and legal basis",
-        "body": "To issue and deliver the certificate, we process the submitted name, dedication text, delivery email, and related order identifiers. This processing is carried out to perform the contract and deliver the requested digital certificate. Dedication text is moderated before acceptance and may be rejected if it contains unlawful, abusive, defamatory, or contact-style content."
+        "body": "To issue and deliver the certificate, we process the submitted name, dedication text, delivery email where provided, gift recipient email where provided, and related order identifiers. This processing is carried out to perform the contract and deliver the requested digital certificate. Dedication text is moderated before acceptance and may be rejected if it contains unlawful, abusive, defamatory, misleading, impersonation-style, or contact-style content. More detail is provided in the Privacy Policy."
       },
       "registry": {
         "title": "5. Public registry",
-        "body": "The public Diplomatic Registry displays only records for which the customer actively opted in during checkout. If no registry opt-in is given, the record remains private and is not returned by the public registry endpoint. Record visibility can later be hidden, and an erasure request can be initiated, through the private record controls linked from the certificate access flow."
+        "body": "The public Diplomatic Registry displays only records for which the customer actively opted in during checkout or later made the record public through record controls. If no registry opt-in is given, the record remains private and is not returned by the public registry endpoint. Record visibility can later be hidden, and an erasure request can be initiated, through the private record controls linked from the certificate access flow."
       },
       "moderation": {
         "title": "6. Dedication moderation",
@@ -1409,27 +1416,27 @@
       },
       "delivery": {
         "title": "7. Delivery and access",
-        "body": "Certificates are generated digitally after successful payment. If an email address is provided, delivery details may also be sent by email. If no email address is provided, the certificate should be downloaded immediately from the success page because the link may not be stored for later retrieval."
+        "body": "Certificates are generated digitally after successful payment or successful free promo checkout. Delivery is provided through the success page and, if an email address is provided, delivery details may also be sent by email. If no email address is provided, the certificate should be downloaded immediately from the success page because the link may not be stored for later retrieval. If delivery fails, contact support and include the order details available to you."
       },
       "digitalContent": {
         "title": "8. Immediate digital delivery and withdrawal right",
-        "body": "Because the certificate is personalized digital content, you may choose immediate delivery during checkout. If you expressly consent to immediate delivery before the end of the withdrawal period and acknowledge that this means losing the right to withdraw once the certificate is made available, the certificate will be generated immediately after successful payment. This does not affect your statutory rights in case of defective digital content, failed delivery, duplicate charge, or other issue caused by us."
+        "body": "Because the certificate is personalized digital content made from details you provide, the checkout asks for express consent to immediate digital delivery before the usual withdrawal period expires. If you give that consent and acknowledge the related withdrawal consequences, the certificate can be generated and made available immediately after successful payment. This does not affect your statutory rights in case of defective digital content, failed delivery, duplicate charge, or another issue caused by us."
       },
       "conservation": {
         "title": "9. Conservation disclaimer",
-        "body": "Conservation allocations are funded from Shark Human Alliance revenue. You are purchasing a digital product, not making a direct charitable donation. Allocations are tracked internally and reported publicly once donations are made. Planned recipients are not described as formal partners unless expressly confirmed."
+        "body": "Conservation allocations are funded from Shark Human Alliance revenue. You are purchasing a digital product, not making a direct charitable donation, and the purchase is not tax-deductible as a charitable gift. Allocations are tracked internally and reported publicly once public allocation reports are issued. Planned recipients are not sponsors, endorsers, confirmed recipients, or formal partners unless expressly confirmed."
       },
       "complaints": {
         "title": "10. Complaints and technical issues",
-        "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, or another appropriate remedy."
+        "body": "If the delivered file is defective, the certificate cannot be downloaded, the wrong tier is generated, a payment appears duplicated, or another technical or payment-related issue occurs, contact support without unnecessary delay and include the order details if available. We will review the issue and propose a practical resolution, such as re-delivery, correction, replacement, refund where appropriate, or another suitable remedy."
       },
       "refunds": {
         "title": "11. Refunds and corrections",
-        "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help."
+        "body": "Because the product is a personalized digital item, refund and correction requests are handled individually based on the specific issue and applicable consumer law. If there is a duplicate charge, technical delivery failure, or a defect caused on our side, contact us and we will review the request promptly. If the certificate contains a mistake caused by submitted input data, we still encourage you to contact us and we will try to help with a practical correction."
       },
       "contact": {
         "title": "12. Contact",
-        "body": "For support, complaint handling, or purchase questions, contact sharkhumanalliance@gmail.com."
+        "body": "For support, complaint handling, withdrawal or correction questions, or purchase questions, contact sharkhumanalliance@gmail.com. Please include the order email, Stripe checkout reference if available, certificate holder name, and a short description of the issue so the Bureau can find the file without pretending sharks have searchable handwriting."
       }
     }
   },

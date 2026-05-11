@@ -6,6 +6,7 @@ import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
+import { getTierPriceLabel } from "@/lib/tiers";
 
 function nameHash(name: string): number {
   let hash = 0;
@@ -1301,7 +1302,10 @@ export function WantedContent() {
   }, []);
 
   const displayName = name.trim() || t("defaultName");
-  const giftCtaText = t("giftCta", { name: displayName });
+  const giftCtaText = t("giftCta", {
+    name: displayName,
+    price: getTierPriceLabel("protected"),
+  });
   const shortCaseUrl = `/w?${new URLSearchParams({
     t: selectedTone,
     ...(name.trim() ? { n: name.trim() } : {}),
@@ -1323,32 +1327,30 @@ export function WantedContent() {
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
                 {t("label")}
               </p>
-              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+              <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl lg:text-[2.65rem] lg:leading-[1.05]">
                 {t("title")}
               </h1>
               <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
                 {t("subtitle")}
               </p>
-              {/* Synthetic social proof badge — small starter number ("18")
-                  while the site has no real traffic; bump manually until we
-                  switch to real analytics-derived counts. */}
+              {/* Neutral status badge; avoids implying a specific live poster count. */}
               <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-red-100 bg-red-50/70 px-3 py-1.5 text-xs font-semibold text-red-700">
-                <span aria-hidden="true">●</span>
+                <span aria-hidden="true">•</span>
                 {t("socialProofText")}
               </p>
 
-              <div className="mt-6 rounded-[28px] border border-red-100 bg-gradient-to-br from-red-50/70 via-white to-white p-6 shadow-sm sm:p-7">
-                <div className="border-b border-red-100 pb-5">
+              <div className="mt-6 rounded-xl border border-red-200 bg-white p-5 shadow-sm">
+                <div className="border-b border-red-100 pb-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-red-700">
                     {t("formTitle")}
                   </p>
-                  <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
                     {t("formSubtitle")}
                   </p>
                 </div>
 
                 <form
-                  className="mt-4 space-y-4"
+                  className="mt-4 space-y-3.5"
                   onSubmit={(event) => {
                     event.preventDefault();
                     if (name.trim()) handleGenerate();
@@ -1372,7 +1374,7 @@ export function WantedContent() {
                       value={name}
                       onChange={(event) => updateName(event.target.value)}
                       placeholder={t("namePlaceholder")}
-                      className="w-full rounded-xl border border-red-200 bg-white px-5 py-4 text-base text-[var(--brand-dark)] shadow-sm placeholder:text-[var(--muted)]/50 transition focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/15"
+                      className="w-full rounded-lg border border-red-200 bg-white px-4 py-3 text-base text-[var(--brand-dark)] shadow-sm placeholder:text-[var(--muted)]/50 transition focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/15"
                     />
                   </div>
 
@@ -1382,7 +1384,7 @@ export function WantedContent() {
                         key={suggestion}
                         type="button"
                         onClick={() => updateName(suggestion)}
-                        className="rounded-lg border border-red-100 bg-red-50/50 px-4 py-1.5 text-xs font-medium text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
+                        className="rounded-md border border-red-100 bg-red-50/50 px-3 py-1.5 text-xs font-medium text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
                       >
                         {suggestion}
                       </button>
@@ -1423,7 +1425,7 @@ export function WantedContent() {
                   <button
                     type="submit"
                     disabled={!name.trim()}
-                    className="hidden min-h-[52px] w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40 lg:block"
+                    className="hidden min-h-[48px] w-full rounded-lg bg-red-600 px-6 py-3.5 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40 lg:block"
                   >
                     {t("generateButton")}
                   </button>
@@ -1436,7 +1438,7 @@ export function WantedContent() {
             </div>
 
             <div className="lg:sticky lg:top-28">
-              <div className="rounded-[28px] border border-amber-900/15 bg-white p-4 shadow-sm sm:p-5">
+              <div className="rounded-xl border border-amber-900/15 bg-white p-4 shadow-sm sm:p-5">
                 <div className="border-b border-[var(--border)] pb-3">
                   <div className="flex items-center justify-between gap-3">
                     <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
@@ -1585,7 +1587,7 @@ export function WantedContent() {
       <section data-reveal className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="text-center">
-            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white">
               {t("footerCtaTitle")}
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/95">

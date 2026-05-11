@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
 import type { PublicTierKey } from "@/lib/tiers";
@@ -365,6 +366,21 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
             <p className="font-semibold text-[var(--brand-dark)]">{t("tipTitle")}</p>
             <p className="mt-1">{t("tipText")}</p>
             {shareHint ? <p className="mt-2 font-medium text-sky-800">{shareHint}</p> : null}
+          </div>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <LocalizedLink
+              href="/wanted"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
+            >
+              {t("wantedPosterButton")}
+            </LocalizedLink>
+            <LocalizedLink
+              href="/wanted"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
+            >
+              {t("challengeButton")}
+            </LocalizedLink>
           </div>
         </div>
 
