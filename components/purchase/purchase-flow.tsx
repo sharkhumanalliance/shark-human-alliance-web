@@ -544,7 +544,7 @@ function PurchaseFlowInner() {
                     setIsGift(e.target.checked);
                     trackEvent("gift_toggle", { tier, enabled: e.target.checked });
                   }}
-                  className="h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  className="size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                 />
                 <span>{t("giftToggle")}</span>
               </label>
@@ -597,7 +597,7 @@ function PurchaseFlowInner() {
                   type="checkbox"
                   checked={codeOptionsOpen}
                   onChange={(e) => setCodeOptionsOpen(e.target.checked)}
-                  className="h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  className="size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                 />
                 <span>{t("codeOptionsTitle")}</span>
               </label>
@@ -687,7 +687,7 @@ function PurchaseFlowInner() {
                     setTermsAccepted(e.target.checked);
                     setError("");
                   }}
-                  className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  className="mt-1 size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                 />
                 <span>
                   {t("termsConsentPrefix")}{" "}
@@ -706,22 +706,15 @@ function PurchaseFlowInner() {
                     setDigitalContentConsentAccepted(e.target.checked);
                     setError("");
                   }}
-                  className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  className="mt-1 size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                 />
                 <span>
                   <span className="font-semibold">{t("digitalContentConsentShortLabel")}</span>
                   <span className="mt-1 block text-xs leading-5 text-[var(--muted)]">
-                    {t("digitalContentConsentSummary")}
+                    {t("digitalContentConsentLabel")}
                   </span>
                 </span>
               </label>
-
-              <details className="ml-7 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/60 px-3 py-2 text-xs leading-5 text-[var(--muted)]">
-                <summary className="cursor-pointer font-semibold text-[var(--brand-dark)]">
-                  {t("digitalContentConsentFullToggle")}
-                </summary>
-                <p className="mt-2">{t("digitalContentConsentLabel")}</p>
-              </details>
 
               <div className="border-t border-dashed border-[var(--border)] pt-3">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
@@ -732,7 +725,7 @@ function PurchaseFlowInner() {
                     type="checkbox"
                     checked={registryConsentAccepted}
                     onChange={(e) => setRegistryConsentAccepted(e.target.checked)}
-                    className="mt-1 h-4 w-4 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                    className="mt-1 size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                   />
                   <span>
                     {t("registryConsentLabel")}

@@ -14,7 +14,7 @@
     },
     "impact": {
       "title": "Nuestro Impacto — Adónde Va el Dinero",
-      "description": "Transparencia total en cada dólar. Mira cómo las ventas de certificados financian la conservación real de tiburones y océanos a través de organizaciones verificadas."
+      "description": "Transparencia total en cada dólar. Mira cómo las ventas de certificados financian una asignación de conservación de tiburones rastreada hacia organizaciones receptoras evaluadas."
     },
     "membership": {
       "title": "Certificados divertidos de tiburón | Regalos personalizados",
@@ -22,7 +22,7 @@
     },
     "protectedFriend": {
       "title": "Estatus de Amigo Protegido",
-      "description": "El certificado estrella de protección de tiburones. Personalizado, elegante y sorprendentemente enmarcable. El regalo broma perfecto que financia la conservación marina."
+      "description": "El certificado estrella de protección de tiburones. Personalizado, sorprendentemente enmarcable y entregado al instante. Cada venta financia conservación marina real."
     },
     "faq": {
       "title": "FAQ — Certificados de Tiburón Divertidos y Conservación",
@@ -59,7 +59,7 @@
   },
   "header": {
     "brand": "Shark Human Alliance",
-    "tagline": "Progreso burocrático en las relaciones tiburón-humano.",
+    "tagline": "Papeleo entre tú y ser un snack.",
     "nav": {
       "membership": "Certificados",
       "impact": "Impacto",
@@ -90,7 +90,7 @@
     "madeWith": "Hecho para los tiburones con amor",
     "email": "sharkhumanalliance@gmail.com",
     "copyright": "© 2026 Shark Human Alliance.",
-    "motto": "La diplomacia no es opcional.",
+    "motto": "La diplomacia no es opcional. Los tiburones insistieron.",
     "operator": "Operado por JEEL Wekeza s.r.o.",
     "termsLink": "Condiciones de compra",
     "supportLink": "Soporte y reclamaciones",
@@ -102,8 +102,8 @@
     "titleLine1": "Protección oficial contra tiburones.",
     "titleLine2": "Para humanos.",
     "brandLine": "Un certificado personalizado y divertido que protege más a los tiburones que a ti.",
-    "description": "Papeleo tiburonesco personalizado para amigos, compañeros de trabajo, personas con miedo a la playa y cualquiera que opere actualmente sin documentación marina adecuada.",
-    "trustDescription": "La Alianza es ficticia. La financiación para conservación de tiburones es real y verificable.",
+    "description": "Papeleo tiburonesco personalizado para amigos, compañeros de trabajo, personas con miedo a la playa y cualquiera que opere actualmente sin documentación adecuada de negación de snack.",
+    "trustDescription": "La Alianza es ficticia. La asignación para conservación de tiburones es real, rastreada y reportada públicamente.",
     "ctaPrimary": "Presentar papeleo tiburón",
     "ctaSecondary": "Vista previa del certificado",
     "giftTeaserLink": "envía uno como regalo",
@@ -113,19 +113,11 @@
     "finnleyName": "Finnley Mako",
     "finnleyDesc": "Portavoz de prensa. Ligeramente ofendido por Hollywood.",
     "lunaName": "Luna Reef",
-    "lunaDesc": "Depto. de Prevención de Malentendidos.",
+    "lunaDesc": "Prevención de Malentendidos. Lee, pone iniciales y a veces censura.",
     "imageAlt": "Finnley Mako y Luna Reef — los embajadores de la Alianza",
     "howStep1": "Elige un certificado",
     "howStep2": "Financia conservación real",
-    "howStep3": "Envía el regalo",
-    "bullet1": "Financia conservación real de tiburones",
-    "bullet2": "Entrega digital instantánea",
-    "bullet3": "Personalizado en 60 segundos",
-    "proofPrice": "Desde $4",
-    "proofDelivery": "Entregado en minutos",
-    "proofDiplomats": "diplomáticos registrados",
-    "proofRegistry": "Registro público opcional",
-    "proofTransparency": "Transparencia e impacto"
+    "howStep3": "Envía el regalo"
   },
   "home": {
     "earlyAdopter": {
@@ -135,26 +127,8 @@
       "cta": "Obtén tu certificado — $4",
       "purchaseCta": "Obtén tu certificado",
       "registryCta": "Ver el Registro",
-      "ctaNonSnack": "Hazte Non-Snack — $19",
+      "ctaNonSnack": "Hazte No-Snack — $19",
       "ctaBusiness": "Certifica tu oficina — $99"
-    },
-    "giftingSection": {
-      "label": "Perfecto para regalar",
-      "title": "Todos conocen a alguien que necesita esto.",
-      "case1Icon": "01",
-      "case1Title": "Amantes de los tiburones",
-      "case1Text": "Por fin, el papeleo para demostrar que el sentimiento es mutuo.",
-      "case2Icon": "02",
-      "case2Title": "Los que temen la playa",
-      "case2Text": "El estatus de protección oficial quizás no detenga a una medusa, pero es un comienzo.",
-      "case3Icon": "🎂",
-      "case3Title": "Regalos de cumpleaños y oficina",
-      "case3Text": "Un certificado enmarcado que los declara amigos de los tiburones. Mejor que otra tarjeta regalo.",
-      "case4Icon": "🤷",
-      "case4Title": "Gente que tiene de todo",
-      "case4Text": "No tienen reconocimiento diplomático de tiburones. Nadie lo tiene. Por eso es perfecto.",
-      "cta": "Regalar un certificado — $4",
-      "wantedCta": "Genera un Póster de Búsqueda"
     },
     "about": {
       "certPreviewLabel": "¿Cansado/a de que te confundan con una foca? Previsualiza el certificado antes de que los tiburones saquen conclusiones.",
@@ -186,7 +160,7 @@
         "Estatus de Amigo Protegido",
         "Entrega digital instantánea"
       ],
-      "protectedCta": "Presentar papeleo de Amigo Protegido — $4",
+      "protectedCta": "Presentar el papeleo — $4",
       "nonsnackTitle": "Reconocimiento No-Snack",
       "nonsnackPrice": "$19",
       "nonsnackDescription": "Para humanos que prefieren quedar documentados como persona, no como snack. La misma energía de papeleo official-ish, con una postura antiaperitivo un poco más firme.",
@@ -195,7 +169,7 @@
         "Estatus certificado No-Snack",
         "Mayor asignación a conservación de tiburones"
       ],
-      "nonsnackCta": "Presentar papeleo No-Snack — $19",
+      "nonsnackCta": "Subir a No-Snack — $19",
       "businessTitle": "Zona Libre de Tiburones",
       "businessPrice": "$99",
       "businessDescription": "Para oficinas, cafés, estudios, salas de reunión y otros espacios agresivamente terrestres que buscan confirmación formal de que no se espera que los tiburones operen allí.",
@@ -204,7 +178,7 @@
         "Estatus de Zona Libre de Tiburones",
         "La asignación más alta a conservación"
       ],
-      "businessCta": "Certificar una Zona Libre de Tiburones — $99",
+      "businessCta": "Certificar la zona — $99",
       "businessEyebrow": "Para empresas",
       "protectedEyebrow": "Nivel inicial",
       "nonsnackEyebrow": "Nivel premium"
@@ -212,15 +186,15 @@
     "realImpact": {
       "label": "Impacto Real",
       "title": "El chiste es ficticio. El impacto no.",
-      "description": "Cada certificado vendido financia la conservación verificada de océanos y tiburones. Publicamos adónde va el dinero.",
+      "description": "Cada certificado vendido contribuye a una asignación de conservación de tiburones rastreada. Publicamos adónde va el dinero.",
       "forSharksTitle": "Conservación primero",
-      "forSharksText": "Cada venta financia organizaciones verificadas de conservación de océanos y tiburones. Sin promesas vagas, sin tarifas misteriosas. Los certificados empresariales asignan $70.",
+      "forSharksText": "Cada venta financia una asignación de conservación rastreada: $1 de Amigo Protegido, $12 de No-Snack y $70 de Zona Libre de Tiburones. Sin promesas vagas, sin tarifas misteriosas.",
       "forHumanTitle": "Operaciones de la Alianza",
       "forHumanText": "El resto mantiene los servidores funcionando y al fundador alimentado. Piensa en ello como financiar el departamento de operaciones terrestres de la Alianza (personal: una persona muy cansada).",
       "transparencyNote": "Transparencia total en cada dólar. Los informes públicos de asignación se publicarán trimestralmente una vez que comiencen las asignaciones. Si un tiburón pudiera leer una hoja de cálculo, lo aprobaría.",
-      "legalNote": "La Shark Human Alliance es una marca de entretenimiento ficticia. Las asignaciones a conservación son reales y verificables.",
+      "legalNote": "La Alianza es ficticia. La asignación para conservación de tiburones es real, rastreada y reportada públicamente.",
       "partnersTitle": "Adónde va el dinero",
-      "partnersSubtitle": "Organizaciones que planeamos apoyar",
+      "partnersSubtitle": "Organizaciones que planeamos apoyar a medida que se completen las asignaciones",
       "partner1Name": "Shark Trust",
       "partner1Desc": "Organización benéfica del Reino Unido dedicada a salvaguardar el futuro de los tiburones mediante ciencia, educación e influencia.",
       "partner2Name": "Oceana",
@@ -229,12 +203,12 @@
       "partner3Desc": "Financiación directa para investigación, iniciativas de protección y cambio de políticas sobre tiburones en todo el mundo.",
       "partner4Name": "Malpelo Foundation",
       "partner4Desc": "Protección de la fauna marina y uno de los santuarios de tiburones más importantes del mundo en Colombia.",
-      "partnersDisclaimer": "Listados como socios planificados. Las asociaciones formales se anunciarán cuando comiencen las asignaciones.",
+      "partnersDisclaimer": "Listadas como destinatarias previstas. Las asociaciones formales se anunciarán solo si se confirman.",
       "stat1Value": "~100M",
-      "stat1Label": "tiburones estimados matados por humanos anualmente",
+      "stat1Label": "tiburones sacrificados por humanos al año",
       "stat2Value": "<10",
       "stat2Label": "muertes humanas por tiburones en la mayoría de los años",
-      "stat3Value": "?",
+      "stat3Value": "⅓",
       "stat3Label": "de todas las especies de tiburones están amenazadas",
       "stat4Value": "450M",
       "stat4Label": "años que los tiburones han sobrevivido en la Tierra"
@@ -245,7 +219,7 @@
       "items": [
         {
           "question": "¿Es real la alianza?",
-          "answer": "La alianza es ficticia e intencionalmente humorística. La financiación para conservación es real y verificable."
+          "answer": "La alianza es ficticia e intencionalmente humorística. La asignación para conservación de tiburones es real, rastreada y reportada públicamente."
         },
         {
           "question": "¿La membresía me protege de los tiburones?",
@@ -273,13 +247,10 @@
     "valueHook": {
       "label": "Por qué existe esto",
       "title": "Un chiste para humanos. Un mejor trato para los tiburones.",
-      "point1Icon": "01",
       "point1Title": "Dinero real. Conservación real.",
       "point1Text": "Cada certificado ayuda a financiar conservación real de tiburones mediante una asignación de conservación rastreada.",
-      "point2Icon": "02",
       "point2Title": "Personalizado en 60 segundos.",
       "point2Text": "Introduce un nombre, elige un nivel de autorización y recibe papeleo con aspecto oficial sin esperar a que los tiburones convoquen una reunión.",
-      "point3Icon": "03",
       "point3Title": "Entrega instantánea. Registro opcional.",
       "point3Text": "Descarga tu certificado de inmediato. El listado público en el registro es opcional y solo aparece si eliges hacerlo visible.",
       "impactLine": "Cada venta financia la conservación a través de Shark Trust, Oceana, Shark Conservation Fund y Fundación Malpelo."
@@ -315,7 +286,7 @@
       },
       {
         "question": "¿Cuánto cuesta cada certificado?",
-        "answer": "Protected Friend cuesta $4. Non-Snack Recognition cuesta $19. Zona Libre de Tiburones cuesta $99."
+        "answer": "Amigo Protegido cuesta $4. Reconocimiento No-Snack cuesta $19. Zona Libre de Tiburones cuesta $99. La Alianza no negocia, sobre todo porque nadie lo ha pedido."
       },
       {
         "question": "¿Recibiré un certificado de inmediato?",
@@ -359,7 +330,7 @@
       },
       {
         "question": "¿Puedo usar un nombre falso?",
-        "answer": "Sí, dentro de lo razonable. Puedes usar un apodo, un cargo de oficina o un nombre de broma, siempre que no sea abusivo, ilícito ni intente suplantar a alguien de forma dañina."
+        "answer": "Sí, dentro de lo razonable. Los apodos, cargos de oficina y nombres de broma están bien. El Bureau traza la línea en entradas abusivas, ilícitas o de suplantación — incluso los tiburones tienen estándares, supuestamente."
       },
       {
         "question": "¿Sirve para oficinas?",
@@ -367,7 +338,11 @@
       },
       {
         "question": "¿El póster Wanted es gratis?",
-        "answer": "Sí. El póster Wanted se puede generar y compartir gratis. Si la situación se vuelve administrativamente seria, puedes cerrar el caso con un certificado Protected Friend."
+        "answer": "Sí. El póster Wanted se puede generar y compartir gratis. Si la situación se vuelve administrativamente seria, puedes cerrar el caso con un certificado Amigo Protegido."
+      },
+      {
+        "question": "¿Tengo que rellenar el Formulario FIN-1 manualmente?",
+        "answer": "No. El Formulario FIN-1 se procesa automáticamente durante el checkout. El Bureau lo sella en tu nombre. Otros formularios se gestionan internamente y rara vez escapan."
       }
     ],
     "ctaTitle": "¿Aún tienes preguntas?",
@@ -387,7 +362,7 @@
     "ctaPrimary": "Primero elige el nivel",
     "ctaSecondary": "Luego compara los estilos",
     "recommended": "La mayoría empieza con",
-    "recommendedProduct": "Estado de Amistad Protegida",
+    "recommendedProduct": "Estatus de Amigo Protegido",
     "stylesLabel": "Después, elige el estilo",
     "stylesTitle": "El mismo estatus diplomático. Distintos niveles de drama burocrático.",
     "stylesDescription": "Cuando ya sepas qué nivel de certificado quieres, elige el estilo visual que mejor encaje con la persona. Cambia el aspecto. No cambia el resultado diplomático.",
@@ -417,23 +392,23 @@
     "tiersLabel": "Primero, elige el nivel",
     "tiersTitle": "Elige el nivel de certificado que mejor encaja con la situación.",
     "tiersDescription": "Esta es la verdadera decisión de producto. Las tres opciones son personalizadas, digitales y apoyan la conservación real. La diferencia está en cuánta ceremonia, reconocimiento o utilidad comercial quieres añadir.",
-    "protectedTitle": "Estado de Amistad Protegida",
+    "protectedTitle": "Estatus de Amigo Protegido",
     "protectedDescription": "Una entrada pulida para amantes de los tiburones, temerosos de la playa y personas con muy buen criterio para regalar. Divertido, personal y bastante enmarcable.",
     "protectedFeatures": [
       "Certificado digital personalizado",
       "Listado público opcional en el registro",
       "Entrega inmediata para regalos y diplomacia de última hora"
     ],
-    "protectedCta": "Empezar con Amistad Protegida — $4",
+    "protectedCta": "Empezar con Amigo Protegido — $4",
     "protectedPopular": "Más popular",
-    "nonsnackTitle": "Reconocimiento No Snack",
+    "nonsnackTitle": "Reconocimiento No-Snack",
     "nonsnackDescription": "Para quien quiere más energía ceremonial, una broma mejor enmarcada y reconocimiento oficial de su evidente no comestibilidad.",
     "nonsnackFeatures": [
       "Sensación de certificado premium",
-      "Estado oficial No Snack",
+      "Estado oficial No-Snack",
       "Ideal para amistades dramáticas"
     ],
-    "nonsnackCta": "Obtener versión No Snack — $19",
+    "nonsnackCta": "Obtener versión No-Snack — $19",
     "businessTitle": "Zona Libre de Tiburones",
     "businessDescription": "Para cafés, estudios, oficinas e instituciones listas para mostrar estatus oficialmente libre de tiburones con total confianza administrativa.",
     "businessFeatures": [
@@ -456,8 +431,8 @@
     "comparisonDescription": "Para quien prefiere una comparación adecuada antes de formalizar las relaciones con los tiburones.",
     "comparisonHeaders": {
       "feature": "Característica",
-      "protected": "Amistad Protegida",
-      "nonsnack": "No Snack",
+      "protected": "Amigo Protegido",
+      "nonsnack": "No-Snack",
       "business": "Zona Libre"
     },
     "comparisonRows": [
@@ -475,8 +450,8 @@
       },
       {
         "label": "Estatus oficial",
-        "protected": "Estado de Amistad Protegida",
-        "nonsnack": "Reconocimiento oficial No Snack",
+        "protected": "Estatus de Amigo Protegido",
+        "nonsnack": "Reconocimiento oficial No-Snack",
         "business": "Designación Zona Libre de Tiburones"
       },
       {
@@ -533,9 +508,9 @@
     "faqAllLink": "Todas las preguntas y respuestas",
     "joinLabel": "¿Listo para tramitar el papeleo?",
     "joinTitle": "Elige el nivel. Luego deja que los tiburones revisen la documentación.",
-    "joinText": "Empieza con Estado de Amistad Protegida, sube a Reconocimiento No Snack o certifica una oficina con Zona Libre de Tiburones. Luego elige el estilo que mejor haga funcionar la broma.",
+    "joinText": "Empieza con Amigo Protegido, sube a Reconocimiento No-Snack o certifica una oficina con Zona Libre de Tiburones. Luego elige el estilo que mejor haga funcionar la broma.",
     "joinCtaPrimary": "Obtén tu certificado — $4",
-    "joinCtaSecondary": "Obtener versión No Snack — $19",
+    "joinCtaSecondary": "Obtener versión No-Snack — $19",
     "joinCtaBusiness": "Certifica tu oficina — $99",
     "protectedEyebrow": "Nivel inicial",
     "nonsnackEyebrow": "Nivel premium",
@@ -609,7 +584,7 @@
       "eyebrow": "Resumen de compra",
       "title": "Regularización tiburón-humano personalizada",
       "description": "Certificado digital personalizado, entrega inmediata tras el pago correcto y una asignación real a conservación. Precio: {price}. Asignación a conservación: {donation}.",
-      "coffeeNote": "La regularización de entrada empieza en $4 — más o menos lo que cuesta un café de Starbucks. La persona designada recibe papeleo que los tiburones han sido instruidos a tomar en serio, y además se financia conservación real.",
+      "coffeeNote": "La regularización de entrada empieza en $4 — menos que un café de especialidad. La persona designada recibe papeleo que los tiburones han sido instruidos a tomar en serio, y además se financia conservación real.",
       "includesLabel": "Qué recibes",
       "includes": {
         "0": "Asignación a conservación financiada con ingresos de Shark Human Alliance.",
@@ -668,10 +643,10 @@
     "confirmButtonPromo": "Aplicar Código Promo y Continuar",
     "confirmBack": "Volver y editar",
     "orderSummary": "Informe Diplomático",
-    "redirecting": "Redirigiendo al checkout seguro...",
-    "checkoutError": "No se pudo abrir el checkout. Inténtalo de nuevo o contacta con soporte si los tiburones siguen interfiriendo.",
+    "redirecting": "Redirigiendo al checkout seguro. Los tiburones no gestionan datos de tarjeta.",
+    "checkoutError": "No se pudo abrir el checkout. Inténtalo de nuevo; si los tiburones siguen interfiriendo, contacta con soporte y presentaremos una queja que nadie leerá.",
     "canceledNotice": "Tu pago fue cancelado. Sin problema — tus datos del formulario siguen aquí. ¡Cuando estés listo!",
-    "processing": "Procesando tu papeleo diplomático...",
+    "processing": "Archivando tu papeleo. Participan dos embajadores y un becario.",
     "successLoading": "Confirmando tu pago con Stripe — esto suele tomar solo un momento.",
     "successPending": "¡Pago recibido!",
     "successPendingText": "Tu pago fue exitoso, pero aún estamos procesando tu certificado. Debería llegar a tu email en breve. Si no lo ves, contáctanos.",
@@ -685,7 +660,7 @@
     "downloadCert": "Descargar certificado",
     "downloadNotReady": "Tu certificado todavía se está preparando. Inténtalo de nuevo en un momento.",
     "viewRegistry": "Ver registro",
-    "emailSentAutomatic": "Se ha enviado un email con tu certificado automáticamente. ¡Revisa spam si no lo ves!",
+    "emailSentAutomatic": "Se ha enviado un email con tu certificado a tu bandeja. Si no está ahí, revisa spam — los tiburones archivan en lugares raros.",
     "backHome": "Volver a la página principal",
     "exploreRegistry": "Explorar el registro",
     "changeTier": "Cambiar nivel",
@@ -770,7 +745,7 @@
       "nativeFallback": "Enlace compartido. Para Instagram Stories, usa también la imagen descargada.",
       "wantedPosterButton": "Generar póster Wanted para un amigo",
       "challengeButton": "Retar a otro humano",
-      "storyFooterLine": "Progreso burocrático en relaciones tiburón-humanas.",
+      "storyFooterLine": "Progreso burocrático en relaciones humano-tiburón.",
       "storyInstruction": "Súbelo a tus Stories. Haz pública la certificación.",
       "storyBadge": "Story lista",
       "previewAlt": "Vista previa de Story de Instagram para tu certificado de Shark Human Alliance",
@@ -779,7 +754,7 @@
         "basic": "Amigo Protegido",
         "protected": "Amigo Protegido",
         "nonsnack": "Reconocimiento No-Snack",
-        "business": "Zona libre de tiburones"
+        "business": "Zona Libre de Tiburones"
       },
       "tierHeadlines": {
         "basic": {
@@ -807,11 +782,11 @@
           "nativeText": "Shark Human Alliance me reconoce oficialmente — no soy un snack."
         },
         "business": {
-          "headlineTop": "Zona libre",
+          "headlineTop": "Zona Libre",
           "headlineBottom": "de tiburones.",
-          "subline": "Certificado oficialmente como zona libre de tiburones.",
-          "previewHeadline": "Oficialmente una zona libre de tiburones.",
-          "nativeTitle": "Zona libre de tiburones",
+          "subline": "Certificado oficialmente como Zona Libre de Tiburones.",
+          "previewHeadline": "Oficialmente una Zona Libre de Tiburones.",
+          "nativeTitle": "Zona Libre de Tiburones",
           "nativeText": "Nuestra zona ha sido certificada oficialmente como libre de tiburones por la Shark Human Alliance."
         }
       }
@@ -821,8 +796,6 @@
     "termsConsentPrefix": "He leído y acepto las",
     "termsConsentLink": "Condiciones de compra",
     "digitalContentConsentShortLabel": "Quiero entrega digital inmediata.",
-    "digitalContentConsentSummary": "Esto significa que renuncio a mi derecho de desistimiento de 14 días según la normativa de consumo de la UE.",
-    "digitalContentConsentFullToggle": "Mostrar cláusula completa",
     "digitalContentConsentLabel": "Solicito expresamente la entrega digital inmediata antes de que termine el plazo de desistimiento y reconozco que, una vez iniciada la entrega, pierdo el derecho de desistimiento.",
     "optionalEyebrow": "Opcional",
     "registryConsentLabel": "Acepto que el nombre del titular del certificado y los datos aprobados del registro puedan aparecer en el Registro Diplomático público.",
@@ -837,7 +810,7 @@
   "registry": {
     "title": "El Registro Diplomático",
     "subtitle": "Un registro medio oficial de humanos cuyo papeleo relacionado con tiburones, por una vez, está en orden.",
-    "description": "Todas las personas listadas aquí han presentado suficiente papeleo ante tiburones como para aparecer en el registro público. La Alianza es ficticia. La financiación para conservación de tiburones es real y verificable. El estatus es simbólico, legalmente inútil, científicamente no verificado y estéticamente difícil de discutir.",
+    "description": "Todas las personas listadas aquí han presentado suficiente papeleo ante tiburones como para aparecer en el registro público. La Alianza es ficticia. La asignación para conservación de tiburones es real, rastreada y reportada públicamente. El estatus es simbólico, legalmente inútil, científicamente no verificado y estéticamente difícil de discutir.",
     "loadingText": "Buscando en los archivos oceánicos... Cuidado, algunos registros pueden haber sido mordisqueados.",
     "countLabel": "diplomáticos registrados",
     "searchPlaceholder": "Escribe para filtrar — o pega un ID para verificar.",
@@ -860,7 +833,7 @@
     "copiedAction": "Copiado",
     "openAction": "Abrir",
     "tierLabels": {
-      "basic": "Amigo de los Tiburones",
+      "basic": "Amigo Protegido",
       "protected": "Amigo Protegido",
       "nonsnack": "Reconocimiento No-Snack",
       "business": "Zona Libre de Tiburones"
@@ -926,7 +899,7 @@
       "muy, muy bueno/a rascando barrigas, y por lo tanto demasiado valioso/a para comer.",
       "sospechosamente oloroso/a a protector solar y arrepentimiento existencial.",
       "demasiado crujiente para la comodidad (los tiburones prefieren texturas suaves).",
-      "propenso/a al chapoteo crónico en el agua, lo cual confunde el sonar.",
+      "propenso/a al chapoteo crónico en el agua, lo cual confunde su línea lateral y electrorrecepción.",
       "un/a sospechoso/a de hablar con peces y posible agente doble.",
       "de valor nutricional insignificante pero sorprendentemente alto valor de entretenimiento."
     ],
@@ -950,7 +923,7 @@
     "nonsnackSubtitle": "Oficina de Asuntos Diplomáticos Interespecies y Diplomacia Culinaria",
     "nonsnackCertTitle": "CERTIFICADO DE INCOMESTIBILIDAD OFICIAL",
     "nonsnackCertTitleSub": "(Estatus de Reconocimiento No-Aperitivo)",
-    "nonsnackBody": "ha sido, tras una investigación diplomática exhaustiva y un análisis sensorial (estrictamente simbólico), declarado/a un ser completamente inadecuado para el consumo de tiburones en cualquier parte del mundo.",
+    "nonsnackBody": "ha sido, tras una investigación diplomática exhaustiva y un análisis sensorial (estrictamente simbólico), declarado/a completamente inadecuado/a para el consumo de tiburones en cualquier parte del mundo.",
     "nonsnackReasonsLabel": "El Comité de Evaluación de Presas de SHA ha concluido que el titular es",
     "nonsnackReasons": [
       "fundamentalmente poco apetecible, según tres grupos focales independientes de tiburones y un becario confundido.",
@@ -960,7 +933,7 @@
       "ya registrado/a como papeleo, y el papeleo no es un grupo alimenticio reconocido."
     ],
     "nonsnackPrivileges": "El titular puede entrar al océano sabiendo que cualquier tiburón que lo considere un aperitivo sería considerado un individuo con muy mal gusto dentro de la Alianza.",
-    "nonsnackDisclaimer": "Descargo: Este reconocimiento es puramente simbólico. La mayoría de los tiburones lamentablemente no saben leer y algunos pueden disfrutar la cafeína. La Alianza no se responsabiliza de encuentros con tiburones gourmet que ignoran la burocracia. Entrar al agua sigue siendo bajo su propio riesgo.",
+    "nonsnackDisclaimer": "Aviso del Depto. Legal de Tiburones: Este reconocimiento es puramente simbólico. La mayoría de los tiburones lamentablemente no saben leer y algunos pueden disfrutar la cafeína. La Alianza no se responsabiliza de encuentros con tiburones gourmet que ignoran la burocracia. Entrar al agua sigue siendo bajo su propio riesgo.",
     "businessHeader": "CUERPO DIPLOMÁTICO DE OCÉANOS UNIDOS",
     "businessSubtitle": "Oficina de Certificación Comercial Interespecies",
     "businessCertTitle": "CERTIFICADO OFICIAL: ZONA LIBRE DE TIBURONES",
@@ -969,7 +942,7 @@
     "businessReasonsLabel": "Este establecimiento se ha comprometido a",
     "businessReasons": [
       "cero provocaciones culinarias — ni gominolas con forma de tiburón, ni carteles de 'pesca del día' visibles desde el agua.",
-      "promoción correcta de imagen — absolutamente ninguna proyección de Tiburón en las instalaciones.",
+      "promoción correcta de imagen — absolutamente ninguna proyección de películas con tiburones villanos en las instalaciones.",
       "cuidado diligente de la playa, asegurando que los tiburones no sufran problemas estomacales por basura.",
       "otorgar estatus simbólico de No-Aperitivo a todos los empleados, automática e irrevocablemente.",
       "mantener cero productos de aleta de tiburón en las instalaciones (obviamente).",
@@ -977,7 +950,7 @@
     ],
     "businessPrivileges": "El titular de esta licencia tiene derecho a consultas gratuitas con los embajadores Finnley Mako y Luna Reef (si alguna vez se le acercan).",
     "businessValidityNote": "Validez: Hasta que los tiburones se sindicalicen.",
-    "businessDisclaimer": "Descargo: Este certificado es puramente simbólico. Los tiburones no están vinculados por ningún acuerdo de la Alianza y pueden tener sus propias preferencias culinarias. La licencia no garantiza encuentros con tiburones que respeten la burocracia. Entrar al agua y operar su negocio sigue siendo bajo su propio riesgo."
+    "businessDisclaimer": "Aviso del Depto. Legal de Tiburones: Este certificado es puramente simbólico. Los tiburones no están vinculados por acuerdos de la Alianza, no consultan el registro y pueden tener sus propias preferencias culinarias. La licencia no garantiza encuentros con tiburones que no respeten la burocracia. Entrar al agua y operar tu negocio siguen siendo bajo tu propio riesgo — aunque operar tu negocio dentro del agua tampoco es recomendable."
   },
   "impact": {
     "label": "Nuestro Impacto",
@@ -991,11 +964,11 @@
     "splitProtectedAmount": "$1",
     "splitProtectedPrice": "$4",
     "splitProtectedLabel": "Amigo Protegido",
-    "splitProtectedText": "$1 de cada venta de Protected Friend va a la conservación de tiburones. Certificado pequeño. Contribución real.",
+    "splitProtectedText": "$1 de cada venta de Amigo Protegido va a la conservación de tiburones. Certificado pequeño. Contribución real.",
     "splitNonsnackAmount": "$12",
     "splitNonsnackPrice": "$19",
     "splitNonsnackLabel": "Reconocimiento No-Snack",
-    "splitNonsnackText": "$12 de cada venta de Non-Snack van a conservación. El certificado es teatral. La asignación no.",
+    "splitNonsnackText": "$12 de cada venta de No-Snack van a conservación. El certificado es teatral. La asignación no.",
     "splitBusinessAmount": "$70",
     "splitBusinessPrice": "$99",
     "splitBusinessLabel": "Zona Libre de Tiburones",
@@ -1042,25 +1015,22 @@
     "selectionCriteria4Text": "Buscamos una mezcla de organizaciones globales y santuarios locales para asegurar que la financiación llegue donde más se necesita.",
     "reportingTitle": "Reportes y transparencia",
     "reportingSubtitle": "Cada asignación para conservación se rastreará y se informará públicamente. Así funcionarán los reportes cuando las asignaciones empiecen a moverse.",
-    "reporting1Icon": "📊",
     "reporting1Title": "Informes trimestrales",
     "reporting1Text": "Publicados públicamente en esta página. Cuánto se recaudó, adónde fue y qué impacto tuvo.",
-    "reporting2Icon": "🔍",
     "reporting2Title": "Asignaciones verificables",
     "reporting2Text": "Cada asignación completada cuenta con recibos y confirmación de la organización receptora.",
-    "reporting3Icon": "📢",
     "reporting3Title": "Actualizaciones en redes",
     "reporting3Text": "Actualizaciones públicas en nuestras redes sociales mostrando cómo se asignaron las contribuciones y qué ocurrió después.",
     "preReportLabel": "Estado actual",
     "preReportTitle": "Aún no hemos publicado nuestro primer informe",
     "preReportText": "Shark Human Alliance todavía está en una fase temprana. Esta página publicará informes públicos de asignación a medida que las asignaciones crezcan y los pagos se realicen. Hasta entonces, describiremos a las organizaciones como destinatarios previstos, no como socios confirmados.",
     "ctaTitle": "Cada certificado ayuda.",
-    "ctaText": "El chiste es ficticio. La financiación es real. Obtén un certificado y ayuda a proteger a los tiburones que definitivamente no están tramando nada.",
+    "ctaText": "El chiste es ficticio. La asignación para conservación es real. Obtén un certificado y ayuda a proteger a los tiburones que definitivamente no están tramando nada.",
     "ctaButton": "Obtén tu certificado — desde $4",
     "partnerFocusLabel": "Enfoque"
   },
   "mobileCta": {
-    "label": "Presentar papeleo tiburón",
+    "label": "Entrar en archivo",
     "price": "$4"
   },
   "wanted": {
@@ -1184,7 +1154,7 @@
         "Hacer que tres (3) tiburones pidan aclaración",
         "Generar un memorando tiburón urgente con subrayado innecesario",
         "Permitir que la ausencia de papeleo tiburón sea visualmente obvia",
-        "Operar a escala cercana a playa sin cobertura tiburón",
+        "Operar a escala industrial de playa sin presentar el Formulario FIN-7",
         "Entrar en una situación tiburón ahora descrita como 'muy procedimental'",
         "Hacer que Luna del personal tiburón localice el tampón de emergencia",
         "Hacer que Finnley suspire sobre una carpeta oficial",
@@ -1214,7 +1184,7 @@
     ],
     "qrCtaLabel": "ESCANEA PARA PROTEGER A {name}",
     "qrCtaFallbackLabel": "ESCANEA PARA QUE ESTO DESAPAREZCA",
-    "posterFooter": "sharkhumanalliance.com — Papeleo entre tú y ser snack",
+    "posterFooter": "sharkhumanalliance.com — Presenta el papeleo antes de que lo haga la marea.",
     "formatLabel": "Formato",
     "formatA4": "A4 (impresión)",
     "formatStory": "Story (9:16)",
@@ -1230,33 +1200,23 @@
     "storyLinkLabel": "Enlace para Story",
     "newPoster": "Crear otro póster",
     "rerollChargesButton": "Rehacer póster",
-    "priceAnchor": "$4 — menos que tu café Starbucks de la mañana. Sin colas, además.",
+    "priceAnchor": "$4 — menos que un café de especialidad. Sin colas, además.",
     "socialProofText": "Casos Wanted abiertos.",
     "viralPrompt": "Compártelo en Instagram Stories, envíalo al grupo de chat, o imprímelo y pégalo en su escritorio.",
     "viralSubtext": "Cada póster compartido es un paso hacia la cobertura diplomática universal entre tiburones y humanos.",
     "previewLabel": "Vista previa del póster",
     "previewHintBeforeGenerate": "La vista previa se actualiza mientras escribes. Genera el póster para desbloquear compartir y regalar.",
     "previewHintAfterGenerate": "Póster generado. Descárgalo, compártelo o resuelve la situación con un certificado.",
-    "howTitle": "Cómo funciona",
-    "howStep1Icon": "🚨",
-    "howStep1Title": "Genera un póster de Se Busca",
-    "howStep1Text": "Ingresa su nombre. Crearemos un póster compartible declarando su estatus desprotegido.",
-    "howStep2Icon": "📲",
-    "howStep2Title": "Compártelo en todas partes",
-    "howStep2Text": "Publícalo en Stories, envíalo al grupo de chat o pégalo en su monitor. Se recomienda máxima vergüenza.",
-    "howStep3Icon": "03",
-    "howStep3Title": "Regálale protección",
-    "howStep3Text": "Resuelve la situación regalándole un certificado oficial de Amigo Protegido. Diplomacia restaurada.",
     "bottomCta": "Regalar Amigo Protegido — $4",
     "footerCtaTitle": "Empieza el papeleo antes de que sea incómodo.",
     "footerCtaText": "Genera el póster, lanza la acusación y luego resuelve el problema con un certificado absurdamente oficial.",
     "footerCtaButton": "Protege a alguien que conoces",
     "commonCharges": [
       "Acercarse al agua abierta con confianza no documentada",
-      "No mantener certificado visible al momento de la inspección",
+      "No mantener certificado visible al momento de la inspección (una marea estaba mirando).",
       "No aclarar si esto es una persona o un asunto de papeleo tiburón",
       "Poseer evidencia insuficiente de no ser un snack",
-      "Pasar junto a señalización de tiburones sin contacto visual diplomático",
+      "Pasar junto a señalización de tiburones con contacto visual pleno y cero intención diplomática.",
       "Transportar equipo de playa por jurisdicciones marcadas por tiburones",
       "Reservar alojamiento cercano al océano sin autorización previa",
       "Crear trabajo innecesario para funcionarios marinos imaginarios",
@@ -1271,7 +1231,7 @@
       "Crear un malentendido prevenible cerca del agua",
       "Usar lenguaje corporal alegre en jurisdicción marina",
       "Proceder como si los tiburones respetaran garantías verbales",
-      "No aportar al personal marino prueba de intención terrestre pacífica",
+      "No aportar al personal marino una declaración notariada de intención terrestre pacífica.",
       "Permanecer cerca de olas con postura documental sin resolver",
       "Permitir que amigos crean que esta situación tiburón está gestionada",
       "Forzar a los tiburones a susurrar la frase 'técnicamente comestible'",
@@ -1294,12 +1254,12 @@
     "tiltToggleLabel": "Generar con inclinación de póster"
   },
   "wantedCase": {
-    "contextBanner": "Se ha abierto un caso cómico de protección contra tiburones para {name}. La Alianza es ficticia, el certificado es real y la financiación apoya conservación real de tiburones.",
+    "contextBanner": "Se ha abierto un caso cómico de protección contra tiburones para {name}. La Alianza es ficticia; la asignación para conservación de tiburones es real, rastreada y reportada públicamente.",
     "eyebrow": "Caso abierto de papeleo tiburón",
     "caseFileLabel": "Expediente",
     "headline": "Se ha abierto un caso de protección contra tiburones.",
     "findingLabel": "Conclusión de la oficina",
-    "finding": "Los registros indican que la persona nombrada actualmente no tiene certificación, no ha sido informada y camina por ahí como si los tiburones hubieran sido avisados. No lo han sido. Esto puede corregirse en unos tres minutos.",
+    "finding": "Los registros indican que la persona nombrada sigue sin certificar, sin briefing y caminando por ahí como si los tiburones hubieran sido notificados. No lo han sido. El Formulario FIN-1 sigue sin archivarse. Esto se corrige en unos tres minutos.",
     "explanation": "La Alianza es ficticia. Los tiburones son reales. Cada certificado incluye una asignación de conservación rastreada. El certificado en sí es personalizado, imprimible y más oficial de lo que la situación merece.",
     "previewLabel": "Vista previa del certificado de {name}",
     "previewText": "Esto es lo que recibirá {name}: personalizado, imprimible, apto para enmarcar o para una venganza discretamente burocrática.",
@@ -1371,11 +1331,11 @@
       },
       "seniorDiplomat": {
         "name": "Diplomático Senior",
-        "description": "Los tiburones te han suscrito a su boletín (el enlace para darse de baja no funciona)."
+        "description": "Los tiburones te han suscrito a su boletín, supuestamente. El enlace para darse de baja no funciona."
       },
       "specialEnvoy": {
         "name": "Enviado Especial",
-        "description": "Hay rumores de que Finnley Mako mencionó tu nombre en una reunión. Sin confirmar."
+        "description": "Finnley Mako mencionó tu nombre en una reunión. Las actas fueron censuradas, supuestamente por Luna."
       },
       "chiefSharkWhisperer": {
         "name": "Susurrador Jefe de Tiburones",
@@ -1444,7 +1404,7 @@
     "verifiedMember": "Miembro verificado",
     "tierProtected": "Amigo protegido",
     "tierNonsnack": "Reconocimiento No-Snack",
-    "tierBusiness": "Zona libre de tiburones",
+    "tierBusiness": "Zona Libre de Tiburones",
     "membershipSince": "Miembro desde",
     "registryId": "ID de registro",
     "referralCode": "Código de referido",
@@ -1460,18 +1420,20 @@
     "allianceRank": "Rango en la Alianza",
     "rankProgress": "{count, plural, one {# referido exitoso} other {# referidos exitosos}}",
     "quip1": "Verificado. El papeleo existe, el registro coincide y el océano sigue sin comprometerse.",
-    "quip2": "Confirmado por los registros de la Alianza. Los tiburones no han refrendado nada, pero eso es típico.",
+    "quip2": "Confirmado por los registros de la Alianza. Los tiburones no han refrendado nada, pero tampoco lo han disputado activamente, y eso cuenta.",
     "quip3": "Este certificado parece válido dentro de la jurisdicción simbólica del papeleo excelente.",
     "quip4": "Registro encontrado. El Departamento de Prevención de Malentendidos está prudentemente satisfecho.",
     "quip5": "Verificado tras una revisión rigurosa que implicó una base de datos y ningún tiburón real.",
     "quip6": "Nuestros tiburones han revisado los registros y confirman: este caso cuadra.",
     "rateLimitedTitle": "Verificación pausada temporalmente",
     "rateLimitedText": "Han llegado demasiadas solicitudes de verificación desde esta conexión en poco tiempo. Espera un momento y vuelve a intentarlo.",
-    "quip7": "Cruzado con inteligencia marina. Estado: legítimo y moderadamente tranquilizador.",
+    "quip7": "Cruzado con inteligencia marina. La inteligencia es sobre todo vibraciones, pero la verificación se sostiene.",
     "quip8": "El Departamento de Burocracia Acuática ha sellado este registro. Dos veces, por énfasis.",
-    "quip9": "Verificado personalmente por Finnley Mako. Us? sus gafas de lectura y todo.",
+    "quip9": "Verificado personalmente por Finnley Mako. Usó sus gafas de lectura, supuestamente.",
     "quip10": "Esta membresía sobrevivió a nuestro riguroso proceso de verificación de tres segundos.",
-    "quip11": "Confirmado. El sistema de archivo más meticuloso del océano ha hablado."
+    "quip11": "Confirmado. El sistema de archivo más meticuloso del océano ha hablado.",
+    "quip12": "Este certificado se ha archivado por triplicado. Las otras dos copias fueron comidas.",
+    "quip13": "El Departamento de Prevención de Malentendidos revisó esto. Luna lo rubricó sin comentarios, que es como Luna aprueba."
   },
   "certificateTemplates": {
     "luxury": {
@@ -1489,8 +1451,8 @@
   },
   "cookies": {
     "eyebrow": "Configuración de cookies",
-    "title": "Usamos cookies",
-    "description": "Usamos cookies necesarias para el sitio, el checkout y la seguridad. Con tu consentimiento, también activamos cookies analíticas para medir el tráfico y mejorar la web.",
+    "title": "Cookies. No las marinas.",
+    "description": "Las cookies necesarias mantienen en marcha el sitio, el checkout y la seguridad. Las cookies analíticas solo se cargan con tu consentimiento. Ninguna es comestible y ninguna atrae tiburones; del resto de esta web no podemos decir lo mismo.",
     "acceptAnalytics": "Aceptar analíticas",
     "necessaryOnly": "Solo necesarias",
     "settings": "Configuración",

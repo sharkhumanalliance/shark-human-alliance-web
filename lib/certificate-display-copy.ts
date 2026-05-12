@@ -24,7 +24,7 @@ const COPY = {
     filedUnderPrefix: "Filed under",
     finnleyRole: "Shark Spokesperson",
     lunaRole: "Dept. of Misunderstanding Prevention",
-    finnleyPlayfulRole: "Chief Diplomatic SHA & Press Spokesperson",
+    finnleyPlayfulRole: "Chief Diplomat SHA & Press Spokesperson",
     finnleyPlayfulAside: "(and Optimist)",
     lunaPlayfulRole: "Head of Culinary Inspection &",
     lunaPlayfulAside: "Dept. of Misunderstanding Prevention",
