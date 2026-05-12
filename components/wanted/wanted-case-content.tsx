@@ -4,7 +4,6 @@ import { CertificatePreview } from "@/components/certificate/certificate-preview
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { getTierPriceLabel } from "@/lib/tiers";
 import { useLocale, useTranslations } from "next-intl";
-import { useMemo } from "react";
 
 type WantedCaseTone = "mild" | "clear" | "emergency";
 
@@ -46,35 +45,30 @@ export function WantedCaseContent({
   const locale = useLocale();
   const tone = normalizeTone(initialTone);
   const displayName = normalizeName(initialName, wantedT("defaultName"));
+  const shortName = displayName.split(/\s+/)[0] || displayName;
   const caseNumber = `CASE SHA-${nameHash(`${displayName}:${tone}`)
     .toString()
     .slice(-4)
     .padStart(4, "0")}`;
 
-  const purchaseHref = useMemo(() => {
-    const params = new URLSearchParams({
-      tier: "protected",
-      gift: "true",
-      ref: "wanted",
-      name: displayName,
-    });
-    return `/purchase?${params.toString()}`;
-  }, [displayName]);
+  const purchaseParams = new URLSearchParams({
+    tier: "protected",
+    gift: "true",
+    ref: "wanted",
+    name: displayName,
+  });
+  const purchaseHref = `/purchase?${purchaseParams.toString()}`;
 
   return (
     <section className="border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-10 sm:py-14 lg:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)] lg:items-start">
+        <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
           <div>
-            <div className="rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm leading-6 text-[var(--muted)] shadow-sm sm:px-5">
-              {t("contextBanner", { name: displayName })}
-            </div>
-
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("eyebrow")}
             </p>
 
-            <div className="mt-5 rounded-[1.5rem] border border-[var(--border)] bg-[#f6ecd8] p-5 shadow-sm sm:p-7">
+            <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[#f6ecd8] p-5 shadow-sm sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] pb-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("caseFileLabel")}
@@ -84,11 +78,11 @@ export function WantedCaseContent({
                 </p>
               </div>
 
-              <h1 className="mt-6 max-w-3xl text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl sm:leading-[1.08]">
-                {t("headline", { name: displayName })}
+              <h1 className="mt-5 max-w-2xl text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl sm:leading-[1.09]">
+                {t("headline")}
               </h1>
 
-              <p className="mt-5 text-4xl font-black leading-none tracking-tight text-[var(--brand-dark)] sm:text-6xl">
+              <p className="mt-4 text-4xl font-black leading-none tracking-tight text-[var(--brand-dark)] sm:text-5xl">
                 {displayName}
               </p>
 
@@ -136,30 +130,39 @@ export function WantedCaseContent({
                 {t("resolutionLabel")}
                 </p>
                 <h2 className="mt-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
-                  {t("resolutionTitle", { name: displayName })}
+                  {t("resolutionTitle", { name: shortName })}
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-                  {t("resolutionText", { name: displayName })}
+                  {t("resolutionText", { name: shortName })}
                 </p>
 
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-6 flex flex-col gap-3 sm:items-start">
                   <LocalizedLink
                     href={purchaseHref}
-                    className="inline-flex min-h-[52px] shrink-0 items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:whitespace-nowrap"
+                    className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:whitespace-nowrap"
                   >
-                    {t("cta", { name: displayName, price: getTierPriceLabel("protected") })}
+                    {t("cta", { name: shortName, price: getTierPriceLabel("protected") })}
                   </LocalizedLink>
-                  <p className="text-sm leading-6 text-[var(--muted)]">
+                  <p className="max-w-md text-sm leading-6 text-[var(--muted)]">
                     {t("priceNote")}
                   </p>
                 </div>
 
-                <LocalizedLink
-                  href="/impact"
-                  className="mt-4 inline-flex text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
-                >
-                  {t("impactLink")}
-                </LocalizedLink>
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-5">
+                  <LocalizedLink
+                    href="/impact"
+                    className="inline-flex text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
+                  >
+                    {t("impactLink")}
+                  </LocalizedLink>
+
+                  <LocalizedLink
+                    href="/wanted"
+                    className="inline-flex text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
+                  >
+                    {t("newPosterLink")}
+                  </LocalizedLink>
+                </div>
 
               </div>
             </div>
@@ -167,12 +170,12 @@ export function WantedCaseContent({
 
           <aside className="lg:sticky lg:top-28">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
-              {t("previewLabel", { name: displayName })}
+              {t("previewLabel", { name: shortName })}
             </p>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              {t("previewText", { name: displayName })}
+              {t("previewText", { name: shortName })}
             </p>
-            <div className="mt-4 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm">
+            <div className="mt-4 rounded-2xl border border-[var(--border)] bg-white p-3 shadow-sm">
               <CertificatePreview
                 name={displayName}
                 tier="protected"

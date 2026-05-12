@@ -1091,7 +1091,7 @@
         "posterSubtitle": "Por caminar cerca de agua salada sin certificado frente a tiburones.",
         "caseStatus": "No avisados",
         "riskLevel": "Plausible",
-        "recommendedAction": "Archivar certificado",
+        "recommendedAction": "Presentar papeleo",
         "rewardText": "Tiburones algo aliviados"
       },
       "emergency": {
@@ -1129,7 +1129,7 @@
     },
     "caseStatusLabel": "Estado del tiburón",
     "riskLevelLabel": "Riesgo de aperitivo",
-    "recommendedActionLabel": "Acción de la Alianza",
+    "recommendedActionLabel": "Siguiente paso",
     "subjectPhotoLabel": "Foto de evidencia",
     "generateButton": "Generar póster Wanted",
     "formDisclaimer": "Ningún humano fue dañado durante la creación de este póster. Ningún tiburón quedó impresionado tampoco.",
@@ -1297,19 +1297,20 @@
     "contextBanner": "Se ha abierto un caso cómico de protección contra tiburones para {name}. La Alianza es ficticia, el certificado es real y la financiación apoya conservación real de tiburones.",
     "eyebrow": "Caso abierto de papeleo tiburón",
     "caseFileLabel": "Expediente",
-    "headline": "Se ha abierto un caso de protección contra tiburones para {name}.",
+    "headline": "Se ha abierto un caso de protección contra tiburones.",
     "findingLabel": "Conclusión de la oficina",
     "finding": "Los registros indican que la persona nombrada actualmente no tiene certificación, no ha sido informada y camina por ahí como si los tiburones hubieran sido avisados. No lo han sido. Esto puede corregirse en unos tres minutos.",
-    "explanation": "La Alianza es ficticia. Los tiburones son reales. Una parte de cada certificado financia conservación real de tiburones mediante asignaciones de conservación registradas. El certificado en sí es personalizado, imprimible y bastante más oficial de lo que la situación merece.",
+    "explanation": "La Alianza es ficticia. Los tiburones son reales. Cada certificado incluye una asignación de conservación rastreada. El certificado en sí es personalizado, imprimible y más oficial de lo que la situación merece.",
     "previewLabel": "Vista previa del certificado de {name}",
     "previewText": "Esto es lo que recibirá {name}: personalizado, imprimible, apto para enmarcar o para una venganza discretamente burocrática.",
     "certificateDedication": "Emitido tras un incidente público de póster de búsqueda y una revisión administrativa inusualmente eficiente.",
     "resolutionLabel": "Resolución recomendada",
     "resolutionTitle": "Envía a {name} un certificado de Amigo Protegido",
-    "resolutionText": "Elige un nivel, personaliza el certificado y envíalo. {name} recibe un PDF imprimible en minutos, y una pequeña parte de cada certificado financia conservación real de tiburones.",
+    "resolutionText": "{name} recibe un PDF imprimible en minutos. Incluye una asignación de conservación rastreada, y el caso puede considerarse emocionalmente resuelto.",
     "cta": "Regalar protección a {name} — {price}",
-    "priceNote": "Más o menos un café. Menos espuma, más papeleo. Entregado como PDF en minutos; imprimible en A4 o US Letter.",
-    "impactLink": "Ver a dónde va la financiación →"
+    "priceNote": "Más o menos un café. Menos espuma, más papeleo y una historia sorprendentemente útil.",
+    "impactLink": "Ver a dónde va la financiación →",
+    "newPosterLink": "Abrir otro caso Wanted →"
   },
   "career": {
     "hero": {

@@ -1092,7 +1092,7 @@
         "posterSubtitle": "For walking near salt water without a shark-facing certificate.",
         "caseStatus": "Unbriefed",
         "riskLevel": "Plausible",
-        "recommendedAction": "File certificate",
+        "recommendedAction": "File paperwork",
         "rewardText": "Slightly relieved sharks"
       },
       "emergency": {
@@ -1130,7 +1130,7 @@
     },
     "caseStatusLabel": "Shark status",
     "riskLevelLabel": "Snack risk",
-    "recommendedActionLabel": "Alliance action",
+    "recommendedActionLabel": "Next step",
     "subjectPhotoLabel": "Evidence photo",
     "generateButton": "Generate Wanted Poster",
     "formDisclaimer": "No humans were harmed in the making of this poster. No sharks were impressed either.",
@@ -1298,19 +1298,20 @@
     "contextBanner": "A comedic shark-protection case has been opened for {name}. The Alliance is fictional, the certificate is real, and the funding supports actual shark conservation.",
     "eyebrow": "Open shark-paperwork case",
     "caseFileLabel": "File",
-    "headline": "A shark-protection case has been opened for {name}.",
+    "headline": "A shark-protection case has been opened.",
     "findingLabel": "Bureau finding",
     "finding": "Records indicate the named human is currently uncertified, unbriefed, and walking around as if the sharks had been notified. They have not. This is correctable in about three minutes.",
-    "explanation": "The Alliance is fictional. The sharks are real. A portion of every certificate funds actual shark conservation through tracked conservation allocations. The certificate itself is personalized, printable, and significantly more official-looking than the situation deserves.",
+    "explanation": "The Alliance is fictional. The sharks are real. Each certificate includes a tracked conservation allocation. The certificate itself is personalized, printable, and more official-looking than the situation deserves.",
     "previewLabel": "Preview of {name}'s certificate",
     "previewText": "This is what {name} will receive — personalized, printable, suitable for framing or quiet revenge.",
     "certificateDedication": "Issued following a public wanted-poster incident and one unusually efficient administrative review.",
     "resolutionLabel": "Recommended resolution",
     "resolutionTitle": "Send {name} a Protected Friend certificate",
-    "resolutionText": "Choose a tier, personalize the certificate, send it. {name} gets a printable PDF in minutes — and a small share of every certificate funds real shark conservation.",
+    "resolutionText": "{name} gets a printable PDF in minutes. A tracked conservation allocation is included, and the case can be considered emotionally resolved.",
     "cta": "Gift protection to {name} — {price}",
-    "priceNote": "About one coffee. Less foam, more paperwork. Delivered as a PDF within minutes; printable A4 or US Letter.",
-    "impactLink": "See where the funding goes →"
+    "priceNote": "About one coffee. Less foam, more paperwork, and a surprisingly useful story.",
+    "impactLink": "See where the funding goes →",
+    "newPosterLink": "Open another Wanted case →"
   },
   "career": {
     "hero": {
