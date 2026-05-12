@@ -52,10 +52,9 @@ export function SiteHeader() {
   const languageSwitcherFallback = (
     <div
       aria-hidden="true"
-      className="flex shrink-0 items-center gap-0.5 sm:gap-1"
+      className="flex shrink-0 items-center"
     >
-      <span className="h-10 w-10 rounded-full bg-sky-50 sm:h-11 sm:w-11" />
-      <span className="h-10 w-10 rounded-full bg-sky-50 sm:h-11 sm:w-11" />
+      <span className="h-10 w-[3.25rem] rounded-full bg-sky-50 sm:h-11" />
     </div>
   );
 
