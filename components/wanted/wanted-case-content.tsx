@@ -70,13 +70,13 @@ export function WantedCaseContent({
               {t("contextBanner", { name: displayName })}
             </div>
 
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("eyebrow")}
             </p>
 
             <div className="mt-5 rounded-[1.5rem] border border-[var(--border)] bg-[#f6ecd8] p-5 shadow-sm sm:p-7">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] pb-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("caseFileLabel")}
                 </p>
                 <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
@@ -121,7 +121,7 @@ export function WantedCaseContent({
             </div>
 
             <div className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                 {t("findingLabel")}
               </p>
               <p className="mt-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
@@ -132,7 +132,7 @@ export function WantedCaseContent({
               </p>
 
               <div className="mt-5 border-t border-[var(--border)] pt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                 {t("resolutionLabel")}
                 </p>
                 <h2 className="mt-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
@@ -166,7 +166,7 @@ export function WantedCaseContent({
           </div>
 
           <aside className="lg:sticky lg:top-28">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("previewLabel", { name: displayName })}
             </p>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">

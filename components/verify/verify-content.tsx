@@ -137,7 +137,7 @@ export function VerifyContent({
 
         <div className={`mb-6 rounded-2xl p-4 text-center sm:p-5 ${rankUi.panelClass}`}>
           <div className="flex items-center justify-center gap-2">
-            <p className={`text-[11px] font-bold uppercase tracking-[0.24em] ${rankUi.eyebrowClass}`}>
+            <p className={`text-[11px] font-bold uppercase tracking-[0.18em] ${rankUi.eyebrowClass}`}>
               {t("allianceRank")}
             </p>
             {rankUi.chipLabel ? (
@@ -229,7 +229,7 @@ export function VerifyContent({
       {referralSourceCode ? (
         <div className="mt-8 rounded-2xl border border-[color:rgba(16,185,129,0.24)] bg-[color:rgba(16,185,129,0.08)] p-4 text-center shadow-sm sm:p-5">
           <p
-            className="text-[11px] font-bold uppercase tracking-[0.24em]"
+            className="text-[11px] font-bold uppercase tracking-[0.18em]"
             style={{ color: "var(--brand)" }}
           >
             {t("referralCreditActive")}

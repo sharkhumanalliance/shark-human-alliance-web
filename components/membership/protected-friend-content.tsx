@@ -51,7 +51,7 @@ export function ProtectedFriendContent() {
           </div>
 
           <div className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-sm sm:p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-800">
               {t("includedLabel")}
             </p>
 
@@ -86,7 +86,7 @@ export function ProtectedFriendContent() {
       <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-800">
               {t("whyLabel")}
             </p>
             <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -122,7 +122,7 @@ export function ProtectedFriendContent() {
       <section data-reveal id="buy" className="py-10 sm:py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="rounded-xl border border-sky-900/30 bg-[var(--brand-dark)] px-5 py-10 text-white sm:px-8 sm:py-12 sm:px-12">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-200">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-200">
               {t("buyLabel")}
             </p>
             <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -153,7 +153,7 @@ export function ProtectedFriendContent() {
       <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-teal-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-teal-800">
               {t("faqLabel")}
             </p>
             <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">

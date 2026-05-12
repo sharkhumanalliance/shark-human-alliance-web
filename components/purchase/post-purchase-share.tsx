@@ -320,7 +320,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
     <section data-reveal className="mt-10 rounded-[32px] border border-[var(--border)] bg-white px-4 py-5 shadow-sm sm:px-6 sm:py-7 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,360px)] lg:items-center">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-800">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-800">
             {t("eyebrow")}
           </p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
@@ -410,7 +410,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
 
               {/* Single merged identity + verification card. */}
               <div className="absolute inset-x-3 bottom-3 rounded-[22px] bg-[var(--brand-dark)] px-5 py-5 text-white shadow-lg">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-sky-200">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sky-200">
                   {tierLabel}
                 </p>
                 <p className="mt-1 text-base font-semibold leading-tight text-white">

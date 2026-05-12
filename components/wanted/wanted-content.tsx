@@ -1324,7 +1324,7 @@ export function WantedContent() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-8">
             <div className="lg:max-w-xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-red-700">
                 {t("label")}
               </p>
               <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl lg:text-[2.65rem] lg:leading-[1.05]">
@@ -1341,7 +1341,7 @@ export function WantedContent() {
 
               <div className="mt-6 rounded-xl border border-red-200 bg-white p-5 shadow-sm">
                 <div className="border-b border-red-100 pb-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-red-700">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-red-700">
                     {t("formTitle")}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
@@ -1441,7 +1441,7 @@ export function WantedContent() {
               <div className="rounded-xl border border-amber-900/15 bg-white p-4 shadow-sm sm:p-5">
                 <div className="border-b border-[var(--border)] pb-3">
                   <div className="flex items-center justify-between gap-3">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                       {t("previewLabel")}
                     </span>
                     <span className="truncate text-xs font-medium text-[var(--muted)]">

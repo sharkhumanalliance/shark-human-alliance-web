@@ -169,7 +169,7 @@ export function RegistryContent() {
             {!loading ? (
               <aside className="rounded-[28px] border border-[var(--border)] bg-white px-5 py-5 shadow-sm sm:px-6">
                 <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                     {t("countLabel")}
                   </p>
                   <p className="mt-2 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] tabular-nums sm:text-4xl">
@@ -309,7 +309,7 @@ export function RegistryContent() {
             </div>
           ) : filteredMembers.length === 0 ? (
             <div className="py-14 text-center">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                 SHA
               </div>
               <p className="mt-4 text-lg font-semibold text-[var(--brand-dark)]">
@@ -364,13 +364,13 @@ export function RegistryContent() {
                         <div className="flex shrink-0 flex-col items-end gap-3">
                           <div className="flex items-center gap-5 text-sm text-[var(--muted)]">
                             <div>
-                              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--muted)]">
+                              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
                                 {t("memberSince")}
                               </p>
                               <p className="mt-1 whitespace-nowrap">{memberDate}</p>
                             </div>
                             <div>
-                              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--muted)]">
+                              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
                                 {t("recruitsLabel")}
                               </p>
                               <p className="mt-1 text-sm font-semibold tabular-nums text-[var(--brand-dark)]">
@@ -398,7 +398,7 @@ export function RegistryContent() {
                         </div>
                       </div>
                       <div className="mt-3 flex items-center gap-3 border-t border-[var(--border)] pt-3">
-                        <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.24em] text-[var(--muted)]">
+                        <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
                           {t("referralCodeLabel")}
                         </p>
                         <p className="truncate font-mono text-xs text-[var(--muted)]/80">
@@ -454,7 +454,7 @@ export function RegistryContent() {
                       </div>
 
                       <div className="mt-3 border-t border-[var(--border)] pt-3">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[var(--muted)]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
                           {t("referralCodeLabel")}
                         </p>
                         <p className="mt-1 truncate font-mono text-xs text-[var(--muted)]/80">
@@ -583,7 +583,7 @@ export function RegistryContent() {
                 DEPT.
               </span>
             </div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
               {t("disclaimerTitle")}
             </p>
             <p className="mt-4 max-w-3xl text-sm italic leading-6 text-[var(--muted)]">

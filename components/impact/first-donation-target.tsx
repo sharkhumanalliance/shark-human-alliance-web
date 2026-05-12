@@ -16,7 +16,7 @@ export function FirstDonationTarget({ compact = false }: FirstDonationTargetProp
       <aside className="rounded-xl border border-teal-200 bg-white px-5 py-4 shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-teal-700">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700">
               {t("firstTargetLabel")}
             </p>
             <h3 className="mt-2 text-lg font-semibold text-[var(--brand-dark)]">
@@ -47,7 +47,7 @@ export function FirstDonationTarget({ compact = false }: FirstDonationTargetProp
     <aside className="overflow-hidden rounded-xl border border-teal-200 bg-white shadow-sm">
       <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.72fr)]">
         <div className="px-5 py-4 sm:px-6 sm:py-5">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-teal-700">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700">
             {t("firstTargetLabel")}
           </p>
           <h3 className="mt-2 text-lg font-semibold text-[var(--brand-dark)] sm:text-xl">

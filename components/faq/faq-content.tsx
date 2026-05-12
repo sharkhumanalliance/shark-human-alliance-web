@@ -25,7 +25,7 @@ export function FaqContent() {
       <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("label")}
             </p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">

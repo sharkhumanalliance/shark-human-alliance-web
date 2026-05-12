@@ -194,7 +194,7 @@ function SuccessContentInner() {
     return (
       <section data-reveal className="py-10 sm:py-14">
         <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
               {t("statusDone")}
             </div>
           <h1 className="mt-6 text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
@@ -226,7 +226,7 @@ function SuccessContentInner() {
     return (
       <section data-reveal className="py-10 sm:py-14">
         <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
               {t("statusDone")}
             </div>
           <h1 className="mt-6 text-xl font-semibold text-[var(--brand-dark)] sm:text-2xl">
@@ -297,7 +297,7 @@ function SuccessContentInner() {
         <section className="mt-8 rounded-[32px] border border-[var(--border)] bg-white p-5 shadow-sm sm:p-7">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-800">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-800">
                 {t("statusIssued")}
               </p>
               <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
@@ -465,7 +465,7 @@ function SuccessContentInner() {
           <section className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/40 p-5 sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("referralTitle")}
                 </p>
                 <h2 className="mt-2 text-xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-2xl">

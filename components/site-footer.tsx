@@ -33,7 +33,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("navTitle")}</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-dark)]">{t("navTitle")}</h4>
             <nav className="mt-2 flex flex-col gap-1.5 text-sm">
               <LocalizedLink href="/membership" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">{t("nav.membership")}</LocalizedLink>
               <LocalizedLink href="/impact" className="text-[var(--muted)] transition hover:text-[var(--brand-dark)]">{t("nav.impact")}</LocalizedLink>
@@ -45,7 +45,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("legalTitle")}</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-dark)]">{t("legalTitle")}</h4>
             <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{t("legalText")}</p>
             <div className="mt-3 flex flex-col items-start gap-2 text-sm">
               <LocalizedLink href="/terms" className="text-[var(--muted)] transition-colors duration-300 ease-out hover:text-[var(--brand-dark)]">
@@ -74,7 +74,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--brand-dark)]">{t("transparencyTitle")}</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand-dark)]">{t("transparencyTitle")}</h4>
             <p className="mt-1 text-sm leading-6 text-[var(--muted)]">{t("transparencyText")}</p>
             <p className="mt-3 text-sm text-[var(--muted)]">
               {t("madeWith")}{" "}

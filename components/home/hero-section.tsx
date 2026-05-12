@@ -6,7 +6,6 @@ import { LocalizedLink } from "@/components/ui/localized-link";
 
 export function HeroSection() {
   const t = useTranslations("hero");
-  const bullets = [t("bullet1"), t("bullet2"), t("bullet3")];
 
   const heroActions = (
     <div className="flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-3">
@@ -43,19 +42,6 @@ export function HeroSection() {
     </div>
   );
 
-  const heroBullets = (
-    <ul className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold leading-6 text-[var(--muted)]">
-      {bullets.map((bullet) => (
-        <li
-          key={bullet}
-          className="after:ml-2 after:text-[var(--muted)]/55 after:content-['·'] last:after:hidden"
-        >
-          {bullet}
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
     <section className="relative overflow-hidden bg-[var(--surface-soft)]">
       <div className="absolute inset-x-0 top-0 h-[24rem] bg-[radial-gradient(circle_at_top_left,rgba(125,181,230,0.18),transparent_42%),radial-gradient(circle_at_top_right,rgba(238,138,69,0.12),transparent_34%),linear-gradient(180deg,#f7fbff_0%,rgba(248,250,252,0.94)_58%,rgba(248,250,252,1)_100%)]" />
@@ -65,7 +51,7 @@ export function HeroSection() {
             {t("giftBadge")}
           </div>
 
-          <h1 className="max-w-xl text-3xl font-bold leading-[1.02] tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+          <h1 className="max-w-xl text-3xl font-bold leading-[1.09] tracking-tight text-[var(--brand-dark)] sm:text-5xl">
             {t("titleLine1")}
             <br />
             <span className="text-[var(--section-label)]">{t("titleLine2")}</span>
@@ -85,7 +71,6 @@ export function HeroSection() {
           <div className="mt-8 hidden w-full max-w-[36rem] lg:block">
             {heroActions}
             {heroTeaserLinks}
-            <div className="mt-5 w-full">{heroBullets}</div>
           </div>
         </div>
 
@@ -118,8 +103,7 @@ export function HeroSection() {
         </div>
 
         <div className="relative z-10 w-full lg:hidden">
-          {heroBullets}
-          <div className="mt-8">
+          <div>
             {heroActions}
             {heroTeaserLinks}
           </div>

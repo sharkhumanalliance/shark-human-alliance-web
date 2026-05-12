@@ -58,7 +58,7 @@ export function CertificateAccessPanel({
       id="record-controls"
       className="mx-auto mt-8 max-w-3xl rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm print:hidden sm:p-6"
     >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
         {t("eyebrow")}
       </p>
       <h2 className="mt-2 text-xl font-semibold text-[var(--brand-dark)]">

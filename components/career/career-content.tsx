@@ -163,7 +163,7 @@ export function CareerContent() {
       <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
               {t("hero.label")}
             </p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
@@ -190,7 +190,7 @@ export function CareerContent() {
 
           <div className="mt-10 border-t border-[var(--border)] pt-6">
             <div className="max-w-4xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
                 {t("ladder.label")}
               </p>
               <div className="mt-4 space-y-4">
@@ -380,7 +380,7 @@ export function CareerContent() {
       <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
               {t("howWorks.label")}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -397,7 +397,7 @@ export function CareerContent() {
                     index > 0 ? "border-t border-[var(--border)] md:border-l md:border-t-0" : ""
                   }`}
                 >
-                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-800">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
                     {item.step}
                   </p>
                   <h3 className="mt-3 text-xl font-semibold text-[var(--brand-dark)]">

@@ -138,7 +138,7 @@ export function MembershipPageContent() {
       <section data-reveal id="tiers" className="pb-12 pt-8 sm:pb-14 sm:pt-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("tiersLabel")}
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -161,7 +161,7 @@ export function MembershipPageContent() {
       <section data-reveal id="styles" className="border-t border-[var(--border)] bg-[var(--surface-soft)] py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("stylesLabel")}
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -205,7 +205,7 @@ export function MembershipPageContent() {
       <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("faqLabel")}
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">

@@ -67,7 +67,7 @@ export function ImpactContent() {
       <section data-reveal className="pb-8 pt-12 sm:pb-9 sm:pt-14 lg:pb-10 lg:pt-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-4xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("label")}
             </p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
@@ -143,7 +143,7 @@ export function ImpactContent() {
             </div>
 
             <aside className="mt-4 rounded-xl border border-sky-200 bg-sky-50/75 px-5 py-5 shadow-sm sm:px-6">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                 {t("splitOpsLabel")}
               </p>
               <p className="mt-2 max-w-4xl text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
@@ -161,7 +161,7 @@ export function ImpactContent() {
       <section data-reveal className="bg-[var(--surface-soft)] py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-6 max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("trustSectionLabel")}
             </p>
           </div>
@@ -256,7 +256,7 @@ export function ImpactContent() {
                   </article>
                 ))}
                 <article className="border-t border-[var(--border)] bg-[var(--surface-soft)]/55 px-5 py-5 sm:px-6">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                     {t("preReportLabel")}
                   </p>
                   <h3 className="mt-3 text-lg font-semibold text-[var(--brand-dark)]">

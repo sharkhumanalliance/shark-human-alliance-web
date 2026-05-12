@@ -551,7 +551,7 @@ function PurchaseFlowInner() {
 
               {isGift && (
                 <div className="space-y-3 border-t border-[var(--border)] bg-[var(--surface-soft)]/35 p-4 sm:p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">{t("giftDetailsTitle")}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">{t("giftDetailsTitle")}</p>
                   <div>
                     <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
                       {t("recipientEmailLabel")}
@@ -724,7 +724,7 @@ function PurchaseFlowInner() {
               </details>
 
               <div className="border-t border-dashed border-[var(--border)] pt-3">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                   {t("optionalEyebrow")}
                 </p>
                 <label className="flex items-start gap-3 rounded-xl bg-sky-50/45 p-3 text-sm leading-6 text-[var(--brand-dark)]">
@@ -857,7 +857,7 @@ function PurchaseFlowInner() {
 
           {/* Live certificate preview */}
           <div className="hidden lg:block lg:self-start">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("livePreview")}
             </p>
             <CertificateTemplateSelector value={template} onChange={handleTemplateChange} />

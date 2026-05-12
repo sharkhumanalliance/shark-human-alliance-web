@@ -91,7 +91,7 @@ export function HomeContent() {
       <section data-reveal className="bg-white py-12 sm:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("valueHook.label")}
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -129,7 +129,7 @@ export function HomeContent() {
           <div className="grid gap-6 sm:gap-8 lg:grid-cols-[minmax(0,370px)_minmax(0,1fr)] lg:items-start lg:gap-10">
             <div className="lg:sticky lg:top-24 lg:self-start">
               <div className="rounded-2xl border border-[var(--border)] bg-white p-4 sm:p-5 lg:border-0 lg:bg-transparent lg:p-0">
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                   {t("about.previewSectionLabel")}
                 </p>
                 <p className="mt-2 max-w-md text-sm font-medium leading-7 text-[var(--brand-dark)] sm:text-base md:text-lg">
@@ -198,7 +198,7 @@ export function HomeContent() {
       <section data-reveal id="membership" className="bg-white py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("membershipSection.label")}
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -267,7 +267,7 @@ export function HomeContent() {
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--section-label)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("realImpact.label")}
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
