@@ -15,13 +15,13 @@ const PROTECTED_DIPLOMATIC_NOTES = {
 
 const PROTECTED_ASSESSMENTS = {
   en: [
-    "The holder has been reviewed and found suitable for peaceful shark-adjacent relations.",
+    "The holder has been reviewed and found unlikely to escalate shark-human relations before lunch.",
     "Current records indicate the holder should be regarded as a friend, not an incident.",
     "Any shark disputing this friendship is invited to file the appropriate forms, which do not currently exist.",
     "The holder is recognized as a friendly terrestrial party with no current need for marine escalation.",
   ],
   es: [
-    "La persona titular ha sido revisada y considerada apta para relaciones pacíficas adyacentes a tiburones.",
+    "La persona titular ha sido revisada y considerada poco propensa a escalar las relaciones tiburón-humanas antes del almuerzo.",
     "Los registros actuales indican que la persona titular debe ser considerada una amistad, no un incidente.",
     "Todo tiburón que cuestione esta amistad queda invitado a presentar los formularios correspondientes, que actualmente no existen.",
     "La persona titular queda reconocida como parte terrestre amistosa sin necesidad actual de escalada marina.",

@@ -355,9 +355,9 @@
     "description": "Three tiers of shark diplomacy, followed by three certificate styles. Choose the level first, then decide how official the paperwork should look.",
     "trustItems": [
       "Personalized in minutes",
-      "Instant digital delivery",
-      "Optional public registry listing",
-      "Funds real conservation"
+      "Delivered before the sharks object",
+      "Optional public registry record",
+      "Tracked conservation allocation"
     ],
     "ctaPrimary": "Choose the level first",
     "ctaSecondary": "Then compare the styles",
@@ -649,9 +649,9 @@
     "processing": "Filing your paperwork. Two ambassadors and one intern are involved.",
     "successLoading": "Confirming your payment with Stripe — this usually takes just a moment.",
     "successPending": "Payment received!",
-    "successPendingText": "Your payment was successful, but we're still processing your certificate. It should arrive in your email shortly. If not, please contact us.",
+    "successPendingText": "Payment received. The certificate is still moving through the Bureau, which is mostly a database pretending to wear a tie.",
     "timeoutTitle": "Your payment went through.",
-    "timeoutText": "Your certificate is being prepared. It may take a minute. Check your email — if you provided one, we've already sent it there.",
+    "timeoutText": "Your certificate is being prepared. Form FIN-1 is being stamped, which occasionally takes longer than dignity allows. Check your email if you provided one.",
     "timeoutRetry": "Check again",
     "successTitle": "Welcome to the Alliance, diplomat.",
     "successText": "Your paperwork is complete, your certificate is ready, and no shark has filed a timely objection. Download the document, then consider making the situation public.",
@@ -678,7 +678,7 @@
     "referralProgressValue": "{count} of {target} referrals",
     "referralRemaining": "{count, plural, one {# more recruit} other {# more recruits}} to unlock {rank}",
     "referralMaxRankTitle": "Top rank reached",
-    "referralMaxRankText": "The personnel department is visibly nervous.",
+    "referralMaxRankText": "The personnel department is visibly nervous. Luna has opened a second folder.",
     "referralLinkLabel": "Referral link",
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
@@ -711,24 +711,24 @@
     "referredByHint": "Paste someone else's referral code if you want to credit their diplomatic career.",
     "share": {
       "eyebrow": "After checkout",
-      "title": "Share the paperwork.",
-      "description": "Share your certificate, post the ready-made Story graphic, or open a new Wanted case for the next unprotected human.",
+      "title": "Make the paperwork public.",
+      "description": "Share the certificate, open a Wanted case, or let another human remain dangerously undocumented. Your call.",
       "shareButton": "Share certificate",
       "tierCtas": {
         "protected": {
-          "title": "Share the paperwork.",
+          "title": "Make the paperwork public.",
           "shareButton": "Share certificate"
         },
         "nonsnack": {
-          "title": "Share the paperwork.",
+          "title": "Make the paperwork public.",
           "shareButton": "Share certificate"
         },
         "business": {
-          "title": "Share the paperwork.",
+          "title": "Make the paperwork public.",
           "shareButton": "Share certificate"
         },
         "basic": {
-          "title": "Share the paperwork.",
+          "title": "Make the paperwork public.",
           "shareButton": "Share certificate"
         }
       },
@@ -849,8 +849,8 @@
     "viralRecruitersDesc": "These diplomats have recruited the most humans into the Alliance using their referral code at checkout. Finnley Mako personally reads their names out loud (allegedly).",
     "viralRecruitersCount": "recruits",
     "viralRecruitersRank": "View rank",
-    "joinCta": "Want to join the list?",
-    "joinCtaButton": "Get your certificate",
+    "joinCta": "Want your file opened?",
+    "joinCtaButton": "File your certificate",
     "verifyTitle": "Find a certificate",
     "verifyDescription": "Use the certificate's Registry ID or referral code for direct verification.",
     "verifyPlaceholder": "e.g. m-3f8a… or SHA-XXXX",
@@ -946,7 +946,8 @@
       "diligent beach care, ensuring sharks do not suffer stomach issues from litter.",
       "granting symbolic Non-Snack status to all employees, automatically and irrevocably.",
       "maintaining zero shark fin products on premises (obviously).",
-      "providing free Wi-Fi for visiting marine diplomats."
+      "maintaining reasonable Wi-Fi access for visiting marine diplomats, should any arrive with laptops.",
+      "displaying the certificate somewhere visible enough to confuse clients, staff, and legally cautious fish."
     ],
     "businessPrivileges": "The holder of this license is entitled to free consultations with ambassadors Finnley Mako and Luna Reef (if they ever approach you).",
     "businessValidityNote": "Validity: Until the sharks unionize.",

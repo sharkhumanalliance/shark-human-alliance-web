@@ -64,7 +64,7 @@ function escapeHtmlWithLineBreaks(value: string): string {
 const EMAIL_COPY = {
   en: {
     certificateSubject: (name: string) =>
-      `Your Alliance Certificate - Welcome, ${name}!`,
+      `Your shark paperwork is approved, ${name}`,
     giftBuyerSubject: (name: string, status: string) =>
       `Gift sent! ${name} is now a ${status}`,
     title: "Your Alliance Certificate",
@@ -73,7 +73,7 @@ const EMAIL_COPY = {
     welcomeHeading: (safeName: string) => `Welcome to the Alliance, ${safeName}.`,
     giftSubtitle: "A fellow diplomat has arranged your paperwork.",
     welcomeSubtitle:
-      "Your diplomatic status has been registered. The sharks have been notified (symbolically).",
+      "Your diplomatic status has been registered. The sharks remain symbolically informed and practically indifferent.",
     yourStatus: "Your Status",
     registryId: "Registry ID",
     downloadCertificate: "Download Your Certificate (PDF)",
@@ -91,7 +91,7 @@ const EMAIL_COPY = {
     termsLink: "Terms &amp; Purchase Conditions &rarr;",
     footerTagline: "Shark Human Alliance &mdash; Peace between humans and sharks",
     fictionalDisclaimer:
-      "This certificate is 100% fictional and guarantees absolutely no marine protection.<br>The conservation donations, however, are very real.",
+      "This certificate is 100% fictional and guarantees absolutely no marine protection.<br>The conservation allocation, however, is real, tracked, and considerably more useful than the paperwork.",
     giftBadge: "Gift",
     giftDelivered: "Gift Delivered!",
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>
@@ -108,7 +108,7 @@ const EMAIL_COPY = {
   },
   es: {
     certificateSubject: (name: string) =>
-      `Tu certificado de la Alianza - Bienvenido/a, ${name}!`,
+      `Tu papeleo tiburón está aprobado, ${name}`,
     giftBuyerSubject: (name: string, status: string) =>
       `¡Regalo enviado! ${name} ahora tiene ${status}`,
     title: "Tu certificado de la Alianza",
@@ -117,7 +117,7 @@ const EMAIL_COPY = {
     welcomeHeading: (safeName: string) => `Bienvenido/a a la Alianza, ${safeName}.`,
     giftSubtitle: "Un/a diplomático/a ha gestionado tu papeleo.",
     welcomeSubtitle:
-      "Tu estatus diplomático ha sido registrado. Los tiburones han sido notificados (simbólicamente).",
+      "Tu estatus diplomático ha sido registrado. Los tiburones siguen simbólicamente informados y prácticamente indiferentes.",
     yourStatus: "Tu estatus",
     registryId: "ID de registro",
     downloadCertificate: "Descargar certificado (PDF)",
@@ -136,7 +136,7 @@ const EMAIL_COPY = {
     footerTagline:
       "Shark Human Alliance &mdash; Paz entre humanos y tiburones",
     fictionalDisclaimer:
-      "Este certificado es 100 % ficticio y no garantiza ninguna protección marina.<br>La financiación para conservación, sin embargo, es muy real.",
+      "Este certificado es 100 % ficticio y no garantiza ninguna protección marina.<br>La asignación para conservación, sin embargo, es real, rastreada y bastante más útil que el papeleo.",
     giftBadge: "Regalo",
     giftDelivered: "¡Regalo entregado!",
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>

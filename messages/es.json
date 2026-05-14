@@ -355,9 +355,9 @@
     "description": "Tres niveles de diplomacia con tiburones y después tres estilos de certificado. Primero eliges el nivel; luego decides qué tan oficial debe parecer el papeleo.",
     "trustItems": [
       "Personalizado en minutos",
-      "Entrega digital inmediata",
-      "Listado público opcional en el registro",
-      "Apoya conservación real"
+      "Entregado antes de que los tiburones objeten",
+      "Registro público opcional",
+      "Asignación de conservación rastreada"
     ],
     "ctaPrimary": "Primero elige el nivel",
     "ctaSecondary": "Luego compara los estilos",
@@ -649,9 +649,9 @@
     "processing": "Archivando tu papeleo. Participan dos embajadores y un becario.",
     "successLoading": "Confirmando tu pago con Stripe — esto suele tomar solo un momento.",
     "successPending": "¡Pago recibido!",
-    "successPendingText": "Tu pago fue exitoso, pero aún estamos procesando tu certificado. Debería llegar a tu email en breve. Si no lo ves, contáctanos.",
+    "successPendingText": "Pago recibido. El certificado sigue avanzando por el Bureau, que en realidad es una base de datos fingiendo llevar corbata.",
     "timeoutTitle": "Tu pago se procesó.",
-    "timeoutText": "Tu certificado está siendo preparado. Puede tardar un minuto. Revisa tu correo — si proporcionaste uno, ya lo enviamos allí.",
+    "timeoutText": "Tu certificado se está preparando. El Formulario FIN-1 está siendo sellado, y a veces eso tarda más de lo que permite la dignidad. Revisa tu email si proporcionaste uno.",
     "timeoutRetry": "Verificar de nuevo",
     "successTitle": "Bienvenido a la Alianza, diplomático.",
     "successText": "Tu papeleo está completo, tu certificado está listo y ningún tiburón ha presentado una objeción a tiempo. Descarga el documento y luego considera hacer pública la situación.",
@@ -678,7 +678,7 @@
     "referralProgressValue": "{count} de {target} referidos",
     "referralRemaining": "{count, plural, one {# recluta más} other {# reclutas más}} para desbloquear {rank}",
     "referralMaxRankTitle": "Rango máximo alcanzado",
-    "referralMaxRankText": "El departamento de personal está visiblemente nervioso.",
+    "referralMaxRankText": "El departamento de personal está visiblemente nervioso. Luna ha abierto una segunda carpeta.",
     "referralLinkLabel": "Enlace de referido",
     "referralCopy": "Copiar",
     "referralCareerLink": "Ver el escalafón completo",
@@ -711,24 +711,24 @@
     "referredByHint": "Pega el código de referido de otra persona si quieres acreditar su carrera diplomática.",
     "share": {
       "eyebrow": "Después del pago",
-      "title": "Comparte el papeleo.",
-      "description": "Comparte tu certificado, publica el gráfico de Story listo para usar o abre un nuevo caso Wanted para el siguiente humano sin protección.",
+      "title": "Haz público el papeleo.",
+      "description": "Comparte el certificado, abre un caso Wanted, o deja que otro humano siga peligrosamente indocumentado. Tú decides.",
       "shareButton": "Compartir certificado",
       "tierCtas": {
         "protected": {
-          "title": "Comparte el papeleo.",
+          "title": "Haz público el papeleo.",
           "shareButton": "Compartir certificado"
         },
         "nonsnack": {
-          "title": "Comparte el papeleo.",
+          "title": "Haz público el papeleo.",
           "shareButton": "Compartir certificado"
         },
         "business": {
-          "title": "Comparte el papeleo.",
+          "title": "Haz público el papeleo.",
           "shareButton": "Compartir certificado"
         },
         "basic": {
-          "title": "Comparte el papeleo.",
+          "title": "Haz público el papeleo.",
           "shareButton": "Compartir certificado"
         }
       },
@@ -849,8 +849,8 @@
     "viralRecruitersDesc": "Estos diplomáticos han reclutado a más humanos para la Alianza usando su código de referido en el checkout. Finnley Mako lee personalmente sus nombres en voz alta (supuestamente).",
     "viralRecruitersCount": "reclutas",
     "viralRecruitersRank": "Ver rango",
-    "joinCta": "¿Quieres unirte a la lista?",
-    "joinCtaButton": "Obtén tu certificado",
+    "joinCta": "¿Quieres que abramos tu expediente?",
+    "joinCtaButton": "Presentar tu certificado",
     "verifyTitle": "Encontrar un certificado",
     "verifyDescription": "Usa el ID de registro o el código de referido del certificado para verificación directa.",
     "verifyPlaceholder": "ej. m-3f8a… o SHA-XXXX",
@@ -946,7 +946,8 @@
       "cuidado diligente de la playa, asegurando que los tiburones no sufran problemas estomacales por basura.",
       "otorgar estatus simbólico de No-Aperitivo a todos los empleados, automática e irrevocablemente.",
       "mantener cero productos de aleta de tiburón en las instalaciones (obviamente).",
-      "proporcionar Wi-Fi gratuito para diplomáticos marinos visitantes."
+      "mantener acceso Wi-Fi razonable para diplomáticos marinos visitantes, si alguno llega con portátil.",
+      "exhibir el certificado en un lugar lo bastante visible como para confundir a clientes, personal y peces legalmente cautelosos."
     ],
     "businessPrivileges": "El titular de esta licencia tiene derecho a consultas gratuitas con los embajadores Finnley Mako y Luna Reef (si alguna vez se le acercan).",
     "businessValidityNote": "Validez: Hasta que los tiburones se sindicalicen.",
