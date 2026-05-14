@@ -1,0 +1,38 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "sharkhumanalliance.com"
+        }
+      ],
+      "destination": "https://www.sharkhumanalliance.com/en",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "sharkhumanalliance.com"
+        }
+      ],
+      "destination": "https://www.sharkhumanalliance.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en",
+      "permanent": true
+    }
+  ]
+}

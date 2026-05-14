@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 
-Sitemap: https://sharkhumanalliance.com/sitemap.xml
+Sitemap: https://www.sharkhumanalliance.com/sitemap.xml
