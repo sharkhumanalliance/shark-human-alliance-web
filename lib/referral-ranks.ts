@@ -15,7 +15,7 @@ export interface RankUi {
 }
 
 export const RANKS: RankInfo[] = [
-  { id: "civilian", minReferrals: 0, icon: "👤", label: "Civilian" },
+  { id: "civilian", minReferrals: 0, icon: "🛡️", label: "Registered Diplomat" },
   { id: "intern", minReferrals: 1, icon: "🔰", label: "Probationary Liaison" },
   { id: "fieldAgent", minReferrals: 3, icon: "🕵️", label: "Field Operative" },
   { id: "seniorDiplomat", minReferrals: 5, icon: "🎖️", label: "Senior Diplomat" },
@@ -113,10 +113,10 @@ export function getRankUi(rankId: string): RankUi {
     case "civilian":
     default:
       return {
-        panelClass: "border border-slate-200 bg-slate-50/70",
-        eyebrowClass: "text-slate-500",
+        panelClass: "border border-sky-200 bg-sky-50/70",
+        eyebrowClass: "text-sky-700/80",
         labelClass: "text-slate-700",
-        metaClass: "text-slate-500",
+        metaClass: "text-sky-700/80",
       };
   }
 }

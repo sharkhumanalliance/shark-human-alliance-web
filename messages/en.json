@@ -38,7 +38,7 @@
     },
     "career": {
       "title": "Alliance Career Ladder",
-      "description": "Climb the ranks from Civilian to Chief Shark Whisperer. Refer friends, earn promotions, and rise through the Alliance's diplomatic hierarchy."
+      "description": "Climb the ranks from Registered Diplomat to Chief Shark Whisperer. Refer friends, earn promotions, and rise through the Alliance's diplomatic hierarchy."
     },
     "purchaseSuccess": {
       "title": "Welcome to the Alliance!",
@@ -621,9 +621,8 @@
     "emailOptionalTag": "optional",
     "emailOptionalHint": "We'll email you the PDF immediately. You can also download it on the next page.",
     "emailPlaceholder": "your@email.com",
-    "noEmailWarningTitle": "No email - download immediately",
-    "noEmailWarningText": "If you skip email, download the certificate immediately after purchase. We will not have an inbox to send it back to later.",
-    "noEmailContinue": "Continue without email",
+    "noEmailWarningTitle": "No email on file",
+    "noEmailWarningText": "You can continue without email. Just download the certificate on the success page; we will not have an inbox to resend it to later.",
     "noEmailAddEmail": "Add email for later access",
     "promoCodeLabel": "Promo code",
     "promoCodePlaceholder": "Enter code",
@@ -639,31 +638,26 @@
     "confirmTier": "Membership tier",
     "confirmTemplate": "Certificate style",
     "confirmDedication": "Dedication",
+    "confirmDelivery": "Delivery",
+    "confirmDeliveryDownloadOnly": "Download immediately",
+    "confirmDeliveryEmail": "Email + download",
     "confirmButton": "Confirm & pay",
     "confirmButtonPromo": "Apply Promo Code & Continue",
     "confirmBack": "Go back and edit",
-    "orderSummary": "Diplomatic Briefing",
     "redirecting": "Redirecting to secure checkout. The sharks do not handle card details.",
     "checkoutError": "Checkout could not be opened. Try again — if the sharks continue interfering, contact support and we will file a complaint nobody will read.",
     "canceledNotice": "Your payment was canceled. No worries — your form data is still here. Ready when you are!",
     "processing": "Filing your paperwork. Two ambassadors and one intern are involved.",
     "successLoading": "Confirming your payment with Stripe — this usually takes just a moment.",
-    "successPending": "Payment received!",
-    "successPendingText": "Payment received. The certificate is still moving through the Bureau, which is mostly a database pretending to wear a tie.",
     "timeoutTitle": "Your payment went through.",
     "timeoutText": "Your certificate is being prepared. Form FIN-1 is being stamped, which occasionally takes longer than dignity allows. Check your email if you provided one.",
     "timeoutRetry": "Check again",
-    "successTitle": "Welcome to the Alliance, diplomat.",
-    "successText": "Your paperwork is complete, your certificate is ready, and no shark has filed a timely objection. Download the document, then consider making the situation public.",
     "statusDone": "Done",
     "statusIssued": "Issued",
-    "downloadCert": "Download certificate",
     "downloadNotReady": "Your certificate is still being prepared. Please try again in a moment.",
     "viewRegistry": "View registry record",
     "emailSentAutomatic": "A certificate email has been sent to your inbox. If it isn’t there, check spam — sharks file in odd places.",
     "backHome": "Return to homepage",
-    "exploreRegistry": "Explore the registry",
-    "changeTier": "Change tier",
     "giftDetailsTitle": "Gift details",
     "giftMessageLabel": "Personal message (optional)",
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
@@ -672,13 +666,7 @@
     "referralMomentTitle": "Your diplomatic career starts now.",
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks and makes your paperwork look increasingly senior.",
     "referralCodeLabel": "Referral code",
-    "referralCurrentRank": "Current rank",
-    "referralNextRank": "Next promotion",
     "referralProgressLabel": "Rank progress",
-    "referralProgressValue": "{count} of {target} referrals",
-    "referralRemaining": "{count, plural, one {# more recruit} other {# more recruits}} to unlock {rank}",
-    "referralMaxRankTitle": "Top rank reached",
-    "referralMaxRankText": "The personnel department is visibly nervous. Luna has opened a second folder.",
     "referralLinkLabel": "Referral link",
     "referralCopy": "Copy",
     "referralCareerLink": "See the full career ladder",
@@ -698,7 +686,6 @@
         "classicUnavailable": "Not available for Classic yet."
       }
     },
-    "customizeTitle": "Customize the certificate",
     "customizeHelp": "Pick a template and paper size. Defaults usually work — open this only if you want to tweak.",
     "customizeShow": "Customize",
     "customizeHide": "Hide options",
@@ -732,7 +719,7 @@
           "shareButton": "Share certificate"
         }
       },
-      "downloadButton": "Download Story graphic",
+      "downloadButton": "Download Story image",
       "copyButton": "Copy verification link",
       "copySuccess": "Link copied",
       "copyError": "The link could not be copied. Please copy it manually before the ocean forgets.",
@@ -748,6 +735,12 @@
       "storyFooterLine": "Bureaucratic progress in shark-human relations.",
       "storyInstruction": "Post this to your Stories. Make the certification public.",
       "storyBadge": "Story ready",
+      "certificateTitle": "CERTIFICATE",
+      "certificateSubtitle": "Official Recognition",
+      "certificateIssuer": "Issued by the Shark Human Alliance",
+      "certificateIntro": "This certifies that",
+      "certificateStatusIntro": "has been officially recognized as",
+      "certificateConservationLine": "by paperwork that protects sharks more than humans.",
       "previewAlt": "Instagram Story preview for your Shark Human Alliance certificate",
       "previewSubline": "Post it. The public deserves to know.",
       "tierLabels": {
@@ -789,7 +782,8 @@
           "nativeTitle": "Shark-free zone",
           "nativeText": "Our zone has been officially certified shark-free by Shark Human Alliance."
         }
-      }
+      },
+      "compactEyebrow": "Share the news"
     },
     "manageRecord": "Manage record visibility",
     "registryPrivateNotice": "Your record is currently private and will not appear in the public registry unless you opted in.",
@@ -805,7 +799,31 @@
     "dedicationTooLongError": "Dedication is too long. Keep it short and certificate-sized.",
     "dedicationContactError": "Dedication cannot include contact details.",
     "dedicationUrlError": "Dedication cannot include links or web addresses.",
-    "dedicationRejectedError": "That dedication could not be used. Please keep it lawful, non-abusive, and certificate-friendly."
+    "dedicationRejectedError": "That dedication could not be used. Please keep it lawful, non-abusive, and certificate-friendly.",
+    "successStatusBadge": "Case opened · Paperwork filed",
+    "successTitleNamed": "Welcome to the Alliance, {name}.",
+    "successTextBrief": "Your paperwork is complete and your certificate is ready. No shark has filed a timely objection.",
+    "downloadCertHero": "Download certificate ({paper})",
+    "previewCustomizeLink": "Preview & customize before downloading",
+    "impactEyebrow": "Your contribution",
+    "impactText": "<strong>{donation}</strong> goes to shark conservation. Tracked and reported in the next public allocation update.",
+    "impactTrackingLabel": "Tracking ID",
+    "impactLink": "See where the money goes",
+    "manageRecordTitle": "Manage your record",
+    "secondaryRegistryDesc": "Open your record in the public Diplomatic Registry.",
+    "secondaryManageDesc": "Change whether your certificate appears publicly.",
+    "secondaryWantedDesc": "For a friend who is still dangerously undocumented.",
+    "previewExpand": "View full size",
+    "previewCollapse": "Collapse preview",
+    "previewExpandHint": "Click to view full size",
+    "referralCurrentStatus": "Current status",
+    "referralRegisteredDiplomatStatus": "Registered Diplomat",
+    "referralPaperworkComplete": "Certificate issued. The file exists and the sharks have been notified in principle.",
+    "referralNextStep": "Next step",
+    "referralProbationaryLiaison": "Probationary Liaison",
+    "referralFirstRecruitNeeded": "Refer 1 friend to unlock the first Alliance promotion.",
+    "referralFirstRecruitComplete": "First recruit logged. The sharks have opened a larger folder.",
+    "referralStepProgress": "{count} / {target} steps complete"
   },
   "registry": {
     "title": "The Diplomatic Registry",
@@ -861,8 +879,8 @@
     "verifyBuyCta": "Get a certificate",
     "verifyWantedCta": "Generate Wanted Poster",
     "careerPromoTitle": "Climb the Alliance Ranks",
-    "careerPromoDesc": "Refer humans into the Alliance and climb the ranks. Each new recruit moves you up the career ladder, from Civilian (0 recruits) to Chief Shark Whisperer (25+). Top diplomats get a public rank badge in the registry.",
-    "careerPromoLadder": "Civilian (0) → Probationary Liaison (1) → Field Operative (3) → Senior Diplomat (5) → Special Envoy (10) → Chief Shark Whisperer (25+)",
+    "careerPromoDesc": "Refer humans into the Alliance and climb the ranks. Each new recruit moves you up the career ladder, from Registered Diplomat (0 recruits) to Chief Shark Whisperer (25+). Top diplomats get a public rank badge in the registry.",
+    "careerPromoLadder": "Registered Diplomat (0) → Probationary Liaison (1) → Field Operative (3) → Senior Diplomat (5) → Special Envoy (10) → Chief Shark Whisperer (25+)",
     "careerPromoLink": "View the career ladder",
     "disclaimerTitle": "Registry disclaimer",
     "disclaimerText": "This registry provides no legal, marine, or nutritional status. Inclusion does not reduce your statistical likelihood of being a shark's lunch. Every certificate is assigned a private registry record; this public list shows only records made visible by their humans.",
@@ -1278,7 +1296,7 @@
     "hero": {
       "label": "Alliance Personnel Department",
       "title": "Your Alliance Career.",
-      "subtitle": "Every great shark diplomat started as a Civilian. Refer friends, climb the ranks, and one day Finnley Mako might actually remember your name."
+      "subtitle": "Every great shark diplomat started as a Registered Diplomat. Refer friends, climb the ranks, and one day Finnley Mako might actually remember your name."
     },
     "ladder": {
       "label": "Career Ladder",
@@ -1320,8 +1338,8 @@
     },
     "ranks": {
       "civilian": {
-        "name": "Civilian",
-        "description": "Sharks don't know you exist. Honestly, that's probably fine."
+        "name": "Registered Diplomat",
+        "description": "Your paperwork exists. Your influence does not, yet."
       },
       "probationaryLiaison": {
         "name": "Probationary Liaison",

@@ -57,7 +57,11 @@ Big Canvas-based generator in `components/wanted/wanted-content.tsx`. `drawPoste
 
 ## Post-purchase share
 
-`components/purchase/post-purchase-share.tsx`. Uses `/mascots/case-closed-share.png` + tier-specific copy from `purchase.share.tierHeadlines.<tier>` (keys: `headlineTop`, `headlineBottom`, `previewHeadline`, `nativeTitle`, `nativeText`). The shared verify URL should use public `registryCode`, not raw internal member id.
+`components/purchase/post-purchase-share.tsx`. Generates a 1080x1920 Story PNG with a certificate-led composition + tier-specific copy from `purchase.share.tierHeadlines.<tier>` (keys: `headlineTop`, `headlineBottom`, `previewHeadline`, `nativeTitle`, `nativeText`). The shared verify URL should use public `registryCode`, not raw internal member id.
+
+## Certificate / verify OG preview
+
+Public `/[locale]/verify?id=<registryCode>` pages generate certificate-style Open Graph previews through `app/og/certificate/route.tsx` (1200x630). This is only for public registry records; private certificate access still uses `/certificate/view?token=...` and should not expose access tokens in OG metadata.
 
 ## i18n conventions
 
@@ -85,4 +89,4 @@ See `.env.example`. Required: `DATABASE_URL`, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_
 - `data/members.json` historical, unused. All data in Postgres.
 - `wanted.socialProofText` is hand-maintained (currently "18 wanted posters issued this week"). Bump manually until real analytics.
 - `lib/qr-svg.ts` `getQrCodeUrl` hits an external QR API — swap to local `qrcode` npm if it ever needs to go offline.
-- `registry_code` migration stage 1 is `db/migration-004-registry-code.sql` and has been run against production. Keep the column nullable until the registry-code app deploy is live; then a later hardening migration can set `registry_code` NOT NULL.
+- `registry_code` is the public registry identifier. Migration stage 1 (`db/migration-004-registry-code.sql`) and hardening stage 2 (`db/migration-005-registry-code-not-null.sql`) have been run against production.

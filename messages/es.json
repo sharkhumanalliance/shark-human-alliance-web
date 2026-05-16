@@ -38,7 +38,7 @@
     },
     "career": {
       "title": "Escalafón de la Alianza",
-      "description": "Sube de rango desde Civil hasta Susurrador Jefe de Tiburones. Refiere amigos, gana ascensos y asciende por la jerarquía diplomática de la Alianza."
+      "description": "Sube de rango desde Diplomático Registrado hasta Susurrador Jefe de Tiburones. Refiere amigos, gana ascensos y asciende por la jerarquía diplomática de la Alianza."
     },
     "purchaseSuccess": {
       "title": "¡Bienvenido a la Alianza!",
@@ -621,9 +621,8 @@
     "emailOptionalTag": "opcional",
     "emailOptionalHint": "Te enviaremos el PDF por email inmediatamente. También podrás descargarlo en la página siguiente.",
     "emailPlaceholder": "tu@email.com",
-    "noEmailWarningTitle": "Sin email - descarga inmediatamente",
-    "noEmailWarningText": "Si omites el email, descarga el certificado justo después de la compra. No tendremos una bandeja de entrada a la que reenviarlo más tarde.",
-    "noEmailContinue": "Continuar sin email",
+    "noEmailWarningTitle": "Sin email registrado",
+    "noEmailWarningText": "Puedes continuar sin email. Descarga el certificado en la página de confirmación; no tendremos una bandeja a la que reenviarlo más tarde.",
     "noEmailAddEmail": "Añadir email para acceso posterior",
     "promoCodeLabel": "Código promocional",
     "promoCodePlaceholder": "Introduce el código",
@@ -639,31 +638,26 @@
     "confirmTier": "Nivel de membresía",
     "confirmTemplate": "Estilo de certificado",
     "confirmDedication": "Dedicatoria",
+    "confirmDelivery": "Entrega",
+    "confirmDeliveryDownloadOnly": "Descarga inmediata",
+    "confirmDeliveryEmail": "Email + descarga",
     "confirmButton": "Confirmar y pagar",
     "confirmButtonPromo": "Aplicar Código Promo y Continuar",
     "confirmBack": "Volver y editar",
-    "orderSummary": "Informe Diplomático",
     "redirecting": "Redirigiendo al checkout seguro. Los tiburones no gestionan datos de tarjeta.",
     "checkoutError": "No se pudo abrir el checkout. Inténtalo de nuevo; si los tiburones siguen interfiriendo, contacta con soporte y presentaremos una queja que nadie leerá.",
     "canceledNotice": "Tu pago fue cancelado. Sin problema — tus datos del formulario siguen aquí. ¡Cuando estés listo!",
     "processing": "Archivando tu papeleo. Participan dos embajadores y un becario.",
     "successLoading": "Confirmando tu pago con Stripe — esto suele tomar solo un momento.",
-    "successPending": "¡Pago recibido!",
-    "successPendingText": "Pago recibido. El certificado sigue avanzando por el Bureau, que en realidad es una base de datos fingiendo llevar corbata.",
     "timeoutTitle": "Tu pago se procesó.",
     "timeoutText": "Tu certificado se está preparando. El Formulario FIN-1 está siendo sellado, y a veces eso tarda más de lo que permite la dignidad. Revisa tu email si proporcionaste uno.",
     "timeoutRetry": "Verificar de nuevo",
-    "successTitle": "Bienvenido a la Alianza, diplomático.",
-    "successText": "Tu papeleo está completo, tu certificado está listo y ningún tiburón ha presentado una objeción a tiempo. Descarga el documento y luego considera hacer pública la situación.",
     "statusDone": "Hecho",
     "statusIssued": "Emitido",
-    "downloadCert": "Descargar certificado",
     "downloadNotReady": "Tu certificado todavía se está preparando. Inténtalo de nuevo en un momento.",
     "viewRegistry": "Ver registro",
     "emailSentAutomatic": "Se ha enviado un email con tu certificado a tu bandeja. Si no está ahí, revisa spam — los tiburones archivan en lugares raros.",
     "backHome": "Volver a la página principal",
-    "exploreRegistry": "Explorar el registro",
-    "changeTier": "Cambiar nivel",
     "giftDetailsTitle": "Detalles del regalo",
     "giftMessageLabel": "Mensaje personal (opcional)",
     "giftMessagePlaceholder": "ej. ¡Feliz cumpleaños! Ahora los tiburones saben que no estás en el menú.",
@@ -672,13 +666,7 @@
     "referralMomentTitle": "Tu carrera diplomática empieza ahora.",
     "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango y hace que tu papeleo parezca cada vez más importante.",
     "referralCodeLabel": "Código de referido",
-    "referralCurrentRank": "Rango actual",
-    "referralNextRank": "Próximo ascenso",
     "referralProgressLabel": "Progreso de rango",
-    "referralProgressValue": "{count} de {target} referidos",
-    "referralRemaining": "{count, plural, one {# recluta más} other {# reclutas más}} para desbloquear {rank}",
-    "referralMaxRankTitle": "Rango máximo alcanzado",
-    "referralMaxRankText": "El departamento de personal está visiblemente nervioso. Luna ha abierto una segunda carpeta.",
     "referralLinkLabel": "Enlace de referido",
     "referralCopy": "Copiar",
     "referralCareerLink": "Ver el escalafón completo",
@@ -698,7 +686,6 @@
         "classicUnavailable": "Aún no disponible para Classic."
       }
     },
-    "customizeTitle": "Personaliza el certificado",
     "customizeHelp": "Elige una plantilla y un tamaño de papel. Los valores por defecto suelen funcionar — abre esto solo si quieres ajustarlo.",
     "customizeShow": "Personalizar",
     "customizeHide": "Ocultar opciones",
@@ -732,7 +719,7 @@
           "shareButton": "Compartir certificado"
         }
       },
-      "downloadButton": "Descargar gráfico para Story",
+      "downloadButton": "Descargar imagen para Story",
       "copyButton": "Copiar enlace de verificación",
       "copySuccess": "Enlace copiado",
       "copyError": "No se pudo copiar el enlace. Cópialo manualmente antes de que el océano lo olvide.",
@@ -748,6 +735,12 @@
       "storyFooterLine": "Progreso burocrático en relaciones humano-tiburón.",
       "storyInstruction": "Súbelo a tus Stories. Haz pública la certificación.",
       "storyBadge": "Story lista",
+      "certificateTitle": "CERTIFICADO",
+      "certificateSubtitle": "Reconocimiento Oficial",
+      "certificateIssuer": "Emitido por Shark Human Alliance",
+      "certificateIntro": "Esto certifica que",
+      "certificateStatusIntro": "ha sido reconocido/a oficialmente como",
+      "certificateConservationLine": "mediante papeleo que protege más a los tiburones que a los humanos.",
       "previewAlt": "Vista previa de Story de Instagram para tu certificado de Shark Human Alliance",
       "previewSubline": "Publícalo. El público merece saberlo.",
       "tierLabels": {
@@ -789,7 +782,8 @@
           "nativeTitle": "Zona Libre de Tiburones",
           "nativeText": "Nuestra zona ha sido certificada oficialmente como libre de tiburones por la Shark Human Alliance."
         }
-      }
+      },
+      "compactEyebrow": "Comparte la noticia"
     },
     "manageRecord": "Gestionar visibilidad del registro",
     "registryPrivateNotice": "Tu registro es actualmente privado y no aparecerá en el registro público salvo que hayas dado el consentimiento correspondiente.",
@@ -805,7 +799,31 @@
     "dedicationTooLongError": "La dedicatoria es demasiado larga. Mejor breve y con porte de certificado.",
     "dedicationContactError": "La dedicatoria no puede incluir datos de contacto.",
     "dedicationUrlError": "La dedicatoria no puede incluir enlaces ni direcciones web.",
-    "dedicationRejectedError": "No se pudo usar esa dedicatoria. Mantenla legal, no ofensiva y apta para certificado."
+    "dedicationRejectedError": "No se pudo usar esa dedicatoria. Mantenla legal, no ofensiva y apta para certificado.",
+    "successStatusBadge": "Caso abierto · Papeleo registrado",
+    "successTitleNamed": "Bienvenido a la Alianza, {name}.",
+    "successTextBrief": "Tu papeleo está completo y tu certificado está listo. Ningún tiburón ha presentado una objeción a tiempo.",
+    "downloadCertHero": "Descargar certificado ({paper})",
+    "previewCustomizeLink": "Previsualizar y personalizar antes de descargar",
+    "impactEyebrow": "Tu contribución",
+    "impactText": "<strong>{donation}</strong> va directo a la conservación de tiburones. Registrado y reportado en la próxima actualización pública de asignaciones.",
+    "impactTrackingLabel": "ID de seguimiento",
+    "impactLink": "Ver adónde va el dinero",
+    "manageRecordTitle": "Gestiona tu registro",
+    "secondaryRegistryDesc": "Abre tu ficha en el Registro Diplomático público.",
+    "secondaryManageDesc": "Cambia si tu certificado aparece públicamente.",
+    "secondaryWantedDesc": "Para un amigo que sigue peligrosamente indocumentado.",
+    "previewExpand": "Ver a tamaño completo",
+    "previewCollapse": "Reducir vista previa",
+    "previewExpandHint": "Haz clic para verlo a tamaño completo",
+    "referralCurrentStatus": "Estado actual",
+    "referralRegisteredDiplomatStatus": "Diplomático Registrado",
+    "referralPaperworkComplete": "Certificado emitido. El expediente existe y los tiburones han sido notificados en principio.",
+    "referralNextStep": "Siguiente paso",
+    "referralProbationaryLiaison": "Enlace en periodo de prueba",
+    "referralFirstRecruitNeeded": "Refiere a 1 amigo para desbloquear el primer ascenso en la Alianza.",
+    "referralFirstRecruitComplete": "Primer recluta registrado. Los tiburones han abierto una carpeta más grande.",
+    "referralStepProgress": "{count} / {target} pasos completados"
   },
   "registry": {
     "title": "El Registro Diplomático",
@@ -861,8 +879,8 @@
     "verifyBuyCta": "Obtén un certificado",
     "verifyWantedCta": "Genera un Póster de Búsqueda",
     "careerPromoTitle": "Asciende en los Rangos de la Alianza",
-    "careerPromoDesc": "Recluta humanos para la Alianza y asciende de rango. Cada nuevo recluta te sube en la carrera diplomática, desde Civil (0 reclutas) hasta Susurrador Jefe de Tiburones (25+). Los diplomáticos destacados reciben una insignia pública de rango en el registro.",
-    "careerPromoLadder": "Civil (0) → Enlace en Prácticas (1) → Operativo de Campo (3) → Diplomático Sénior (5) → Enviado Especial (10) → Susurrador Jefe de Tiburones (25+)",
+    "careerPromoDesc": "Recluta humanos para la Alianza y asciende de rango. Cada nuevo recluta te sube en la carrera diplomática, desde Diplomático Registrado (0 reclutas) hasta Susurrador Jefe de Tiburones (25+). Los diplomáticos destacados reciben una insignia pública de rango en el registro.",
+    "careerPromoLadder": "Diplomático Registrado (0) → Enlace en Prácticas (1) → Operativo de Campo (3) → Diplomático Sénior (5) → Enviado Especial (10) → Susurrador Jefe de Tiburones (25+)",
     "careerPromoLink": "Ver la escalera de rangos",
     "disclaimerTitle": "Descargo de responsabilidad del registro",
     "disclaimerText": "Este registro no proporciona estatus legal, marino ni nutricional. La inclusión no reduce tu probabilidad estadística de ser el almuerzo de un tiburón. Cada certificado recibe un registro privado; esta lista pública muestra solo los registros que sus humanos hicieron visibles.",
@@ -1277,7 +1295,7 @@
     "hero": {
       "label": "Departamento de Personal de la Alianza",
       "title": "Tu carrera en la Alianza.",
-      "subtitle": "Todo gran diplomático de tiburones empezó como Civil. Refiere amigos, sube de rango, y algún día Finnley Mako podría recordar tu nombre."
+      "subtitle": "Todo gran diplomático de tiburones empezó como Diplomático Registrado. Refiere amigos, sube de rango, y algún día Finnley Mako podría recordar tu nombre."
     },
     "ladder": {
       "label": "Escalafón",
@@ -1319,8 +1337,8 @@
     },
     "ranks": {
       "civilian": {
-        "name": "Civil",
-        "description": "Los tiburones no saben que existes. Sinceramente, probablemente sea mejor así."
+        "name": "Diplomático Registrado",
+        "description": "Tu papeleo existe. Tu influencia todavía no."
       },
       "probationaryLiaison": {
         "name": "Enlace en Prácticas",

@@ -13,6 +13,7 @@ import { VerifyContent } from "@/components/verify/verify-content";
 import { VerifySampleContent } from "@/components/verify/verify-sample-content";
 import { getRateLimitKey, takeRateLimit } from "@/lib/rate-limit";
 import { formatRegistryIdForDisplay } from "@/lib/registry-id";
+import { BASE_URL } from "@/lib/config";
 import type { Metadata } from "next";
 
 type Props = {
@@ -20,7 +21,60 @@ type Props = {
   searchParams: Promise<{ id?: string; code?: string; ref?: string }>;
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const { id, code } = await searchParams;
+  const publicIdentifier = code || id;
+
+  if (publicIdentifier && publicIdentifier !== "sample") {
+    let member: Member | null = null;
+    try {
+      member = await getMemberByPublicIdentifier(publicIdentifier);
+    } catch (error) {
+      if (!shouldUseDemoMembers()) {
+        throw error;
+      }
+    }
+
+    if (!member && shouldUseDemoMembers()) {
+      member = getDemoMemberByPublicIdentifier(publicIdentifier);
+    }
+
+    if (member?.registryVisibility === "public" && !member.erasedAt) {
+      const registryId = member.registryCode || formatRegistryIdForDisplay(member.id);
+      const ogParams = new URLSearchParams({
+        name: member.name,
+        tier: member.tier,
+        code: registryId,
+        locale,
+      });
+      const imageUrl = `${BASE_URL}/og/certificate?${ogParams.toString()}`;
+      const title = `${member.name} - Verified Shark Human Alliance certificate`;
+      const description =
+        "A verified Shark Human Alliance certificate record. Symbolic paperwork, real shark conservation allocation.";
+
+      return {
+        title,
+        description,
+        robots: { index: false, follow: false },
+        openGraph: {
+          title,
+          description,
+          images: [{ url: imageUrl, width: 1200, height: 630 }],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: [imageUrl],
+        },
+      };
+    }
+  }
+
   return {
     title: "Verify Alliance Membership",
     description:

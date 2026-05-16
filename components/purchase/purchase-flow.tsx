@@ -221,21 +221,16 @@ function PurchaseFlowInner() {
       return;
     }
 
-    // If no email and warning not yet confirmed, show warning instead of submitting
+    // If no email is provided, show the warning and the order review together.
+    // The review card owns the only primary submit action in this state.
     if (!email.trim() && !showEmailWarning) {
       setShowEmailWarning(true);
-      trackEvent("no_email_warning_shown", { tier });
-      return;
-    }
-
-    // If email warning shown but confirmation not yet shown, show confirmation
-    if (showEmailWarning && !showConfirmation) {
       setShowConfirmation(true);
+      trackEvent("no_email_warning_shown", { tier });
       trackEvent("confirmation_shown", { tier });
       return;
     }
 
-    // If no email warning needed but confirmation not yet shown, show confirmation
     if (!showConfirmation) {
       setShowConfirmation(true);
       trackEvent("confirmation_shown", { tier });
@@ -550,7 +545,11 @@ function PurchaseFlowInner() {
                 autoComplete="email"
                 spellCheck={false}
                 value={email}
-                onChange={(e) => { setEmail(e.target.value); setShowEmailWarning(false); }}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setShowEmailWarning(false);
+                  setShowConfirmation(false);
+                }}
                 placeholder={t("emailPlaceholder")}
                 className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
               />
@@ -763,26 +762,23 @@ function PurchaseFlowInner() {
             {/* No-email warning */}
             {showEmailWarning && (
               <div
-                className="rounded-xl border border-amber-200 bg-amber-50 p-4"
+                className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3"
                 role="status"
                 aria-live="polite"
               >
-                <p className="text-sm font-semibold text-amber-800">{t("noEmailWarningTitle")}</p>
-                <p className="mt-1 text-sm leading-6 text-amber-700">{t("noEmailWarningText")}</p>
-                <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                  <button
-                    type="submit"
-                    className="min-h-[44px] flex-1 rounded-lg bg-amber-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-amber-800"
-                  >
-                    {t("noEmailContinue")}
-                  </button>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-amber-800">{t("noEmailWarningTitle")}</p>
+                    <p className="mt-1 text-sm leading-6 text-amber-700">{t("noEmailWarningText")}</p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => {
                       setShowEmailWarning(false);
+                      setShowConfirmation(false);
                       document.getElementById("email")?.focus();
                     }}
-                    className="min-h-[44px] flex-1 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition-colors duration-300 ease-out hover:bg-amber-50"
+                    className="shrink-0 rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-sm font-semibold text-amber-800 transition-colors duration-300 ease-out hover:bg-amber-50"
                   >
                     {t("noEmailAddEmail")}
                   </button>
@@ -828,6 +824,17 @@ function PurchaseFlowInner() {
                       {template}
                     </span>
                   </div>
+                  {/* Delivery */}
+                  <div className="flex justify-between items-start gap-3">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                      {t("confirmDelivery")}
+                    </span>
+                    <span className="text-right text-sm font-medium text-[var(--brand-dark)]">
+                      {email.trim()
+                        ? t("confirmDeliveryEmail")
+                        : t("confirmDeliveryDownloadOnly")}
+                    </span>
+                  </div>
                   {/* Dedication (if provided) */}
                   {dedication.trim() && (
                     <div className="flex justify-between items-start gap-3">
@@ -850,7 +857,10 @@ function PurchaseFlowInner() {
                     </button>
                   <button
                     type="button"
-                    onClick={() => setShowConfirmation(false)}
+                    onClick={() => {
+                      setShowConfirmation(false);
+                      setShowEmailWarning(false);
+                    }}
                     className="flex-1 min-h-[44px] rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
                   >
                     {t("confirmBack")}
@@ -860,15 +870,17 @@ function PurchaseFlowInner() {
             )}
 
             {/* Submit */}
-            <button
-              type="submit"
-              disabled={isRedirecting}
-              className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
-            >
-                {promoCode.trim()
-                  ? t("submitButtonPromo")
-                  : `${t("submitButton")} - ${getTierPriceLabel(tier)}`}
-            </button>
+            {!showConfirmation ? (
+              <button
+                type="submit"
+                disabled={isRedirecting}
+                className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                  {promoCode.trim()
+                    ? t("submitButtonPromo")
+                    : `${t("submitButton")} - ${getTierPriceLabel(tier)}`}
+              </button>
+            ) : null}
           </form>
 
           {/* Live certificate preview */}
