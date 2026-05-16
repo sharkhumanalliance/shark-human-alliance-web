@@ -29,7 +29,7 @@ Files seen truncated: `wanted-content.tsx`, `success-content.tsx`, `purchase-flo
 
 ## Data layer (`lib/members.ts` + `lib/db.ts`)
 
-Postgres via lazy `pg.Pool`. Migrations in `db/migration-*.sql`. Member schema: `{id, name, tier, date, dedication, referralCode, referredBy?, referralCount, email?, stripeSessionId?, accessToken?, template?, locale?, registryVisibility}`. Member IDs are UUIDs. Webhook is idempotent via `getMemberByStripeSession()`.
+Postgres via lazy `pg.Pool`. Migrations in `db/migration-*.sql`. Member schema: `{id, registryCode?, name, tier, date, dedication, referralCode, referredBy?, referralCount, email?, stripeSessionId?, accessToken?, template?, locale?, registryVisibility}`. Member IDs are internal UUIDs; public registry/verify surfaces use `registry_code` (`registryCode` in app code). Webhook is idempotent via `getMemberByStripeSession()`.
 
 ## API routes
 
@@ -50,14 +50,14 @@ Big Canvas-based generator in `components/wanted/wanted-content.tsx`. `drawPoste
 - All sizes scale via `s(n) = n * (width / 2100)`. **Story canvas is half-width, so `n` must usually be larger** for Story to stay readable on phone after IG downscale (e.g. `s(isStory ? 64 : 30)` for charges → ~12 px on phone).
 - Determinism: `seededHash = nameHash(name + "::" + rerollSeed)`. Same name + same reroll seed → identical poster. Reroll button bumps the seed.
 - Pools (in `wanted.*` of messages): `toneCharges.<tone>` (5×3), `commonCharges` (10), `administrativeSubtitles` (8), `caseDetails` (8 `{label,value}`), `rewardTexts` (7). Picks rotate via `(seededHash + offset) % length`.
-- QR links to `/purchase?tier=protected&gift=true&ref=wanted&name=<encoded>` — verify `/purchase` actually reads `gift=true` and `name=`. That's the conversion path.
+- QR & internal CTAs link to `/purchase?tier=protected&gift=true&from=wanted_poster&name=<encoded>`. `/purchase` (in `purchase-flow.tsx`) reads `name`, `gift` and `from` on mount; `from` is persisted to `sessionStorage["sha_attribution_source"]` so the `purchase` event on `/purchase/success` can re-emit it after Stripe's redirect. Legacy `ref=wanted` was removed — it was being silently rejected by the SHA-XXXX referral-code validator.
 - Download tilts the canvas ±2° (deterministic) on an off-screen canvas before `toBlob`. Preview stays straight.
 - Procedural distress on WANTED + parchment grain via `mulberry32(seededHash)` — no font assets.
-- OG image at `/og/wanted-sample.png` (1200×630) is currently a placeholder; see `public/og/README.md`.
+- OG image (1200×630) is generated dynamically by `app/og/wanted/route.tsx` (uses `next/og`). Shared `/wanted/case?name=...&tone=...` URLs get a personalized preview; the generic `/wanted` page is seeded with a sample name. Share button in `wanted-content.tsx` emits the long `/wanted/case?...` URL (not `/w?...`) because some scrapers do not follow redirects. See `public/og/README.md`.
 
 ## Post-purchase share
 
-`components/purchase/post-purchase-share.tsx`. Uses `/mascots/case-closed-share.png` + tier-specific copy from `purchase.share.tierHeadlines.<tier>` (keys: `headlineTop`, `headlineBottom`, `previewHeadline`, `nativeTitle`, `nativeText`).
+`components/purchase/post-purchase-share.tsx`. Uses `/mascots/case-closed-share.png` + tier-specific copy from `purchase.share.tierHeadlines.<tier>` (keys: `headlineTop`, `headlineBottom`, `previewHeadline`, `nativeTitle`, `nativeText`). The shared verify URL should use public `registryCode`, not raw internal member id.
 
 ## i18n conventions
 
@@ -75,9 +75,9 @@ Tailwind CSS v4 (`@import "tailwindcss"`). Tokens in `:root` of `globals.css`: `
 
 See `.env.example`. Required: `DATABASE_URL`, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`, `NEXT_PUBLIC_BASE_URL`, `NEXT_PUBLIC_GA_MEASUREMENT_ID`.
 
-## Tracked GA4 events (`components/analytics.ts`)
+## Tracked GA4 events (`components/analytics.tsx`)
 
-`purchase`, `certificate_download`, `referral_link_copy`, `share_story_{clicked,downloaded,native_success,failed}`, `share_link_copied`, `wanted_poster_{generate,download,share,reroll}`.
+`purchase`, `view_item`, `select_item`, `certificate_download`, `referral_link_copy`, `share_story_{clicked,downloaded,native_success,failed}`, `share_link_copied`, `wanted_poster_{generate,download,share,reroll}`, `wanted_case_view`, `wanted_to_purchase_click`. The wanted→purchase funnel events share `source` (e.g. `wanted_gift_cta`, `wanted_case_cta`, `wanted_footer_cta`), `tone`, `locale`, `personalized`. `view_item` and `purchase` re-emit `source` from `sessionStorage["sha_attribution_source"]` so funnel reports survive Stripe's redirect.
 
 ## Other constraints
 
@@ -85,3 +85,4 @@ See `.env.example`. Required: `DATABASE_URL`, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_
 - `data/members.json` historical, unused. All data in Postgres.
 - `wanted.socialProofText` is hand-maintained (currently "18 wanted posters issued this week"). Bump manually until real analytics.
 - `lib/qr-svg.ts` `getQrCodeUrl` hits an external QR API — swap to local `qrcode` npm if it ever needs to go offline.
+- `registry_code` migration stage 1 is `db/migration-004-registry-code.sql` and has been run against production. Keep the column nullable until the registry-code app deploy is live; then a later hardening migration can set `registry_code` NOT NULL.

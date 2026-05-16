@@ -274,6 +274,7 @@ export function PostPurchaseShare({ member }: PostPurchaseShareProps) {
           files: [file],
           title: t(`tierHeadlines.${member.tier}.nativeTitle`),
           text: `${t(`tierHeadlines.${member.tier}.nativeText`)} ${verificationUrl}`,
+          url: verificationUrl,
         });
         trackEvent("share_story_native_success", { tier: member.tier, mode: "file" });
         setShareHint(t("nativeSuccess"));

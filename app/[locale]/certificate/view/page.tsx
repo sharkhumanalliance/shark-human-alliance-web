@@ -13,6 +13,7 @@ import { getMemberByAccessToken } from "@/lib/members";
 import { getDevPromoMemberByAccessToken } from "@/lib/dev-promo-store";
 import { getPublicTierKey } from "@/lib/tiers";
 import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -85,8 +86,9 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
             tier={member.tier}
             dedication={member.dedication}
             date={displayDate}
-            registryId={member.id.toUpperCase()}
+            registryId={member.registryCode || formatRegistryIdForDisplay(member.id)}
             referralCode={member.referralCode}
+            accessToken={token}
             priorityImages
             template={template}
             paperFormat={paperFormat}

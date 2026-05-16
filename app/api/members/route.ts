@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { listMembers, type Member } from "@/lib/members";
 import { getDemoMembers, shouldUseDemoMembers } from "@/lib/demo-members";
 import { getRateLimitKey, takeRateLimit } from "@/lib/rate-limit";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 
 function getClientIp(request: NextRequest) {
   const forwardedFor = request.headers.get("x-forwarded-for");
@@ -46,7 +47,8 @@ export async function GET(request: NextRequest) {
   const publicMembers = members
     .filter((member) => member.registryVisibility === "public" && !member.erasedAt)
     .map((member) => ({
-      id: member.id,
+      id: member.registryCode || formatRegistryIdForDisplay(member.id),
+      registryCode: member.registryCode || formatRegistryIdForDisplay(member.id),
       name: member.name,
       tier: member.tier,
       date: member.date,

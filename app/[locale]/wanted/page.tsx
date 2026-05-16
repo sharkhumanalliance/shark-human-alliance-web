@@ -13,6 +13,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo.wanted" });
   const otherLocale = locale === "en" ? "es" : "en";
+
+  // Dynamic OG poster generated at request time. The /wanted landing page is
+  // the generic entry point, so we seed it with a recognizable sample name.
+  const sampleName = locale === "es" ? "David de Contabilidad" : "Dave from Accounting";
+  const ogUrl = `${BASE_URL}/og/wanted?name=${encodeURIComponent(sampleName)}&tone=clear&locale=${locale}`;
+
   return {
     title: t("title"),
     description: t("description"),
@@ -27,18 +33,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t("title"),
       description: t("description"),
       type: "website",
-      // Dedicated wanted-poster sample (Dave from Accounting). When the URL
-      // is shared, the link preview shows the actual product instead of the
-      // generic homepage plushies.
       images: [
-        { url: "/og/wanted-sample.png", width: 1200, height: 630 },
+        { url: ogUrl, width: 1200, height: 630 },
       ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["/og/wanted-sample.png"],
+      images: [ogUrl],
     },
   };
 }

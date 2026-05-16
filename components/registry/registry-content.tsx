@@ -128,13 +128,13 @@ export function RegistryContent() {
 
   const copyProfileLink = useCallback(
     (memberId: string) => {
-      const url = `${window.location.origin}${buildLocalizedPath(locale, `/registry?highlight=${memberId}`)}`;
+      const url = `${window.location.origin}${buildLocalizedPath(locale, getMemberHref(memberId))}`;
       navigator.clipboard.writeText(url).then(() => {
         setCopiedId(memberId);
         setTimeout(() => setCopiedId(null), 2000);
       });
     },
-    [locale]
+    [getMemberHref, locale]
   );
 
   const handleOpenRecord = useCallback(() => {

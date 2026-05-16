@@ -6,6 +6,7 @@ import {
   getCheckoutSessionCookieName,
   isValidSignedCheckoutSessionValue,
 } from "@/lib/checkout-session";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 
 /**
  * GET /api/member-by-session?session_id=cs_xxx
@@ -51,6 +52,7 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({
     id: member.id,
+    registryCode: member.registryCode || formatRegistryIdForDisplay(member.id),
     name: member.name,
     tier: member.tier,
     date: member.date,

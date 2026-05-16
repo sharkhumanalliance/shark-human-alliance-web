@@ -12,7 +12,11 @@ import {
   normalizeTemplate,
   type CertificateTemplate,
 } from "@/lib/certificate-templates";
-import { getQrCodeUrl, getVerificationUrl } from "@/lib/qr-svg";
+import {
+  getCertificateAccessUrl,
+  getQrCodeUrl,
+  getVerificationUrl,
+} from "@/lib/qr-svg";
 import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 import type { PaperFormat } from "./certificate-sheet";
 
@@ -40,6 +44,7 @@ export type CertificateDocumentProps = {
   date: string;
   registryId: string;
   referralCode?: string;
+  accessToken?: string;
   priorityImages?: boolean;
   className?: string;
   template?: CertificateTemplate;
@@ -66,6 +71,7 @@ export function CertificateDocument({
   date,
   registryId,
   referralCode,
+  accessToken,
   priorityImages = false,
   template = "luxury",
   assetMode = priorityImages ? "full" : "preview",
@@ -131,12 +137,14 @@ export function CertificateDocument({
     (tierKey === "protected" || tierKey === "nonsnack" || tierKey === "business");
   const usesLuxuryBorderLayout = isLuxuryA4 || isLuxuryLetterBorderTier;
 
-  const verifyUrl = getVerificationUrl(
-    registryId.toLowerCase(),
-    undefined,
-    undefined,
-    referralCode,
-  );
+  const verifyUrl = accessToken
+    ? getCertificateAccessUrl(accessToken, undefined, locale)
+    : getVerificationUrl(
+        registryId.toLowerCase(),
+        undefined,
+        locale,
+        referralCode,
+      );
   const luxuryA4Background =
     tierKey === "business"
       ? assetMode === "preview"

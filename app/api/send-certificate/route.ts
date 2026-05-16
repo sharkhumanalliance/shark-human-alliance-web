@@ -10,6 +10,7 @@ import {
 import { getMemberById } from "@/lib/members";
 import { BASE_URL } from "@/lib/config";
 import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -50,6 +51,7 @@ export async function POST(request: NextRequest) {
     }
 
     const locale = member.locale || "en";
+    const publicRegistryId = member.registryCode || formatRegistryIdForDisplay(member.id);
     const templateQuery = getCertificateTemplateQueryParam(member.template);
     const certificateUrl = buildAbsoluteLocalizedUrl(
       BASE_URL,
@@ -65,12 +67,12 @@ export async function POST(request: NextRequest) {
         html: certificateEmailHtml({
           name,
           tier,
-          registryId: (memberId || "SHA-XXXX").toUpperCase(),
+          registryId: publicRegistryId,
           referralCode: referralCode || "",
           downloadUrl: certificateUrl,
           registryUrl:
             member.registryVisibility === "public"
-              ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${memberId}`)
+              ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${encodeURIComponent(publicRegistryId)}`)
               : undefined,
           careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
           termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/terms"),

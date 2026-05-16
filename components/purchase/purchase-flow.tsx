@@ -80,6 +80,11 @@ function PurchaseFlowInner() {
   );
   const referredByFromUrl = getValidReferralCode(searchParams.get("ref"));
   const wasCanceled = searchParams.get("canceled") === "true";
+  // Cross-funnel attribution. `from=wanted_poster` (and friends) is set on
+  // CTAs that link into /purchase from other surfaces. We persist it into
+  // sessionStorage so it survives the Stripe round-trip and can be re-emitted
+  // on the success page's `purchase` event for funnel analysis in GA4.
+  const attributionFromUrl = (searchParams.get("from") || "").trim().slice(0, 64);
 
   const [referredByCode, setReferredByCode] = useState(referredByFromUrl);
   const [tier, setTier] = useState<PublicTierKey>(initialTier);
@@ -119,7 +124,7 @@ function PurchaseFlowInner() {
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [digitalContentConsentAccepted, setDigitalContentConsentAccepted] = useState(false);
-  const [registryConsentAccepted, setRegistryConsentAccepted] = useState(false);
+  const [registryConsentAccepted, setRegistryConsentAccepted] = useState(true);
   const [codeOptionsOpen, setCodeOptionsOpen] = useState(Boolean(referredByFromUrl));
 
   function handleTemplateChange(nextTemplate: CertificateTemplate) {
@@ -159,17 +164,35 @@ function PurchaseFlowInner() {
     }
   }, [referredByCode]);
 
+  // Persist attribution source from the URL (e.g. ?from=wanted_poster) into
+  // sessionStorage. Stripe's redirect to /purchase/success would otherwise
+  // drop this query param, breaking funnel attribution.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (attributionFromUrl) {
+      try {
+        window.sessionStorage.setItem("sha_attribution_source", attributionFromUrl);
+      } catch {
+        // sessionStorage may be unavailable in private mode — silent fallback
+        // means the purchase event simply ships without a source.
+      }
+    }
+  }, [attributionFromUrl]);
+
   // Track view_item on initial load
   const viewedRef = useRef(false);
   useEffect(() => {
     if (viewedRef.current) return;
     viewedRef.current = true;
-      trackEvent("view_item", {
-        item_id: initialTier,
-        item_name: initialTier,
-        value: getTierPriceDollars(initialTier),
-        currency: "USD",
-      });
+    const params: Record<string, string | number | boolean> = {
+      item_id: initialTier,
+      item_name: initialTier,
+      value: getTierPriceDollars(initialTier),
+      currency: "USD",
+    };
+    if (attributionFromUrl) params.source = attributionFromUrl;
+    if (initialGift) params.is_gift = true;
+    trackEvent("view_item", params);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

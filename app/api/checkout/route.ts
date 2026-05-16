@@ -13,6 +13,7 @@ import {
 import {
   generateMemberId,
   generateUniqueReferralCode,
+  generateUniqueRegistryCode,
   generateAccessToken,
   createMember,
   incrementReferralCount,
@@ -33,6 +34,7 @@ import { BASE_URL } from "@/lib/config";
 import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
 import { isPublicTierKey } from "@/lib/tiers";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 const ENABLE_TEST_PROMO_CODES =
   process.env.ENABLE_TEST_PROMO_CODES === "true" ||
   process.env.NODE_ENV !== "production";
@@ -129,7 +131,7 @@ export async function POST(request: NextRequest) {
     let moderatedDedication = "";
     let dedicationReviewStatus: "approved" | "rejected" = "approved";
     const registryVisibility: Member["registryVisibility"] =
-      registryConsentAccepted ? "public" : "private";
+      registryConsentAccepted === false ? "private" : "public";
     try {
       const moderation = moderateDedication(dedication);
       moderatedDedication = moderation.dedication;
@@ -151,11 +153,15 @@ export async function POST(request: NextRequest) {
     if (isFreePromoFlow) {
       const freeSessionId = `promo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
       const accessToken = generateAccessToken();
+      const memberId = generateMemberId();
+      const fallbackRegistryCode = formatRegistryIdForDisplay(memberId);
       const fallbackReferralCode = `SHA-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
       let referralCode = fallbackReferralCode;
+      let registryCode = fallbackRegistryCode;
 
       try {
         referralCode = await generateUniqueReferralCode();
+        registryCode = await generateUniqueRegistryCode();
       } catch (error) {
         if (!allowLocalPromoFallback) {
           throw error;
@@ -167,7 +173,8 @@ export async function POST(request: NextRequest) {
       }
 
       const memberDraft = {
-        id: generateMemberId(),
+        id: memberId,
+        registryCode,
         name: name.trim(),
         tier,
         date: new Date().toISOString(),
@@ -238,12 +245,12 @@ export async function POST(request: NextRequest) {
               html: certificateEmailHtml({
                 name,
                 tier,
-                registryId: newMember.id.toUpperCase(),
+                registryId: newMember.registryCode || formatRegistryIdForDisplay(newMember.id),
                 referralCode,
                 downloadUrl: certificateUrl,
                 registryUrl:
                   newMember.registryVisibility === "public"
-                    ? buildAbsoluteLocalizedUrl(BASE_URL, loc, `/registry?highlight=${newMember.id}`)
+                    ? buildAbsoluteLocalizedUrl(BASE_URL, loc, `/registry?highlight=${encodeURIComponent(newMember.registryCode || formatRegistryIdForDisplay(newMember.id))}`)
                     : undefined,
                 careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/career"),
                 referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, buildReferralHref(referralCode)),
@@ -385,7 +392,7 @@ export async function POST(request: NextRequest) {
         termsVersion: TERMS_VERSION,
         digitalContentConsentAt: new Date().toISOString(),
         digitalContentVersion: DIGITAL_CONTENT_VERSION,
-        registryVisibility: registryConsentAccepted ? "public" : "private",
+        registryVisibility: registryConsentAccepted === false ? "private" : "public",
         dedicationReviewStatus,
       },
     });

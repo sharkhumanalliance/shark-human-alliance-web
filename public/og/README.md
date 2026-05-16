@@ -1,40 +1,46 @@
 # Open Graph images
 
-## `wanted-sample.png` (1200 × 630)
+OG previews for `/[locale]/wanted` and `/[locale]/wanted/case` are now
+generated **dynamically at request time** by
+`app/og/wanted/route.tsx` (uses `next/og` `ImageResponse`).
 
-Used as the social-share preview for `/[locale]/wanted` (Twitter card + OpenGraph).
+## Route
 
-### Current state
+```
+/og/wanted?name=<encoded>&tone=<mild|clear|emergency>&locale=<en|es>
+```
 
-A temporary placeholder (copy of `public/mascots/homepage-hero-plush.png`) is in place
-so the build doesn't 404 on missing image. **Replace it with a real
-sample wanted poster** as soon as possible — the placeholder defeats the
-purpose of the dedicated OG image.
+Returns a 1200 × 630 PNG with the WANTED poster aesthetic (dark wood frame,
+parchment, headline, deterministic charges drawn from the message pools).
 
-### How to generate the real one
+The route is referenced in `generateMetadata` of:
+- `app/[locale]/wanted/page.tsx`        — generic landing, seeded with a
+  sample name ("Dave from Accounting" / "David de Contabilidad").
+- `app/[locale]/wanted/case/page.tsx`   — personalized landing, reads
+  `name` and `tone` from query params.
 
-1. Run `npm run dev` and open `http://localhost:3000/en/wanted`.
-2. Type **"Dave from Accounting"** as the name.
-3. Pick the **"Clearly unprotected"** tone (the standard / default).
-4. Click **Generate Wanted Poster**.
-5. Optionally pick **A4** in the format toggle (more visual content).
-6. Right-click the canvas preview → **Save image as…** → save somewhere temp.
-7. Open the saved PNG (likely 2100 × 2970) in any image editor.
-8. Crop / resize to **1200 × 630** for OG. Two reasonable options:
-   - Crop the top half of the poster (header + WANTED + name + a few charges).
-   - Crop the bottom area featuring the QR + reward box.
-   The first option works best because the WANTED + name combo is the most
-   recognizable part of the design.
-9. Export as PNG, save as `public/og/wanted-sample.png`, replacing this
-   placeholder.
+## Caching
 
-### Targets per platform
+The handler sets `Cache-Control: public, max-age=86400, s-maxage=86400,
+stale-while-revalidate=604800`. Output is purely a deterministic function
+of query params (`nameHash` → modular index into the message arrays), so
+edge-cached previews remain stable.
 
-| Platform | Recommended size | Notes |
+## Determinism / virality note
+
+Identical share URL → identical preview. That matters when the same
+`/wanted/case?name=X` link is reshared: every scraper / messenger sees the
+same image. If you ever change the charge pools in `messages/*.json` the
+hashed indices may shift; bump a query-string version param (e.g. `&v=2`)
+to force scrapers to refresh.
+
+## Target sizes per platform
+
+| Platform | Size | Notes |
 |---|---|---|
 | Open Graph (FB, LinkedIn, Slack) | 1200 × 630 | min 600 × 315, 1.91:1 ratio |
 | Twitter (large card) | 1200 × 630 | same shape |
-| iMessage | 1200 × 630 | same |
+| iMessage | 1200 × 630 | same — does **not** follow 30x redirects |
 
-If you'd rather generate this dynamically per-share, swap to a Next.js
-`opengraph-image.tsx` route (see `next/og` ImageResponse docs).
+The last column is why `handleShare` in `components/wanted/wanted-content.tsx`
+emits the long `/wanted/case?...` URL rather than the `/w?...` short redirect.

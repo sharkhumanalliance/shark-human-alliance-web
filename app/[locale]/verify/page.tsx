@@ -2,18 +2,22 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
-import { getMemberById, type Member } from "@/lib/members";
-import { getDemoMemberById, shouldUseDemoMembers } from "@/lib/demo-members";
+import { getMemberByPublicIdentifier, type Member } from "@/lib/members";
+import {
+  getDemoMemberByPublicIdentifier,
+  shouldUseDemoMembers,
+} from "@/lib/demo-members";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { VerifyContent } from "@/components/verify/verify-content";
 import { VerifySampleContent } from "@/components/verify/verify-sample-content";
 import { getRateLimitKey, takeRateLimit } from "@/lib/rate-limit";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ id?: string; ref?: string }>;
+  searchParams: Promise<{ id?: string; code?: string; ref?: string }>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -27,14 +31,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function VerifyPage({ params, searchParams }: Props) {
   const { locale } = await params;
-  const { id, ref } = await searchParams;
+  const { id, code, ref } = await searchParams;
+  const publicIdentifier = code || id;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "verify" });
 
-  if (!id) notFound();
+  if (!publicIdentifier) notFound();
 
   // Sample certificate preview — not a real member
-  if (id === "sample") {
+  if (publicIdentifier === "sample") {
     return (
       <>
         <SiteHeader />
@@ -75,7 +80,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
   let member: Member | null = null;
 
   try {
-    member = await getMemberById(id);
+    member = await getMemberByPublicIdentifier(publicIdentifier);
   } catch (error) {
     if (!shouldUseDemoMembers()) {
       throw error;
@@ -83,7 +88,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
   }
 
   if (!member && shouldUseDemoMembers()) {
-    member = getDemoMemberById(id);
+    member = getDemoMemberByPublicIdentifier(publicIdentifier);
   }
 
   if (!member) notFound();
@@ -102,7 +107,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
           name={member.name}
           tier={member.tier}
           date={displayDate}
-          registryId={member.id.toUpperCase()}
+          registryId={member.registryCode || formatRegistryIdForDisplay(member.id)}
           referralCode={member.referralCode}
           referralCount={member.referralCount}
           referralSourceCode={ref || member.referralCode}

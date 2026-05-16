@@ -1227,18 +1227,31 @@ export function WantedContent() {
   }, [createPosterExportBlob, name, posterFormat, useTilt]);
 
   const handleShare = useCallback(async () => {
-    trackEvent("wanted_poster_share", { format: posterFormat });
+    trackEvent("wanted_poster_share", {
+      format: posterFormat,
+      tone: selectedTone,
+      locale,
+      // Whether the share carries a real name (not just default placeholder)
+      // — useful for measuring deliberate-share vs. exploration-share.
+      personalized: name.trim().length > 0,
+    });
     const trimmedName = name.trim();
-    const shortCaseParams = new URLSearchParams({ t: selectedTone });
-    if (trimmedName) shortCaseParams.set("n", trimmedName);
-    const shortCasePath = `/w?${shortCaseParams.toString()}`;
+    // For *shared* URLs we use the long /wanted/case path directly rather
+    // than the /w short redirect. Reason: several social scrapers (notably
+    // iMessage, occasionally WhatsApp) do not follow 307 redirects when
+    // fetching OG metadata, so a /w link would render a generic preview.
+    // The /w short form stays in use for the QR code, where compactness
+    // matters for module density.
+    const caseParams = new URLSearchParams({ tone: selectedTone });
+    if (trimmedName) caseParams.set("name", trimmedName);
+    const casePath = `/wanted/case?${caseParams.toString()}`;
     const caseShareUrl =
       typeof window !== "undefined"
-        ? buildAbsoluteLocalizedUrl(window.location.origin, locale, shortCasePath)
+        ? buildAbsoluteLocalizedUrl(window.location.origin, locale, casePath)
         : buildAbsoluteLocalizedUrl(
             process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
             locale,
-            shortCasePath,
+            casePath,
           );
 
     try {
@@ -1310,7 +1323,12 @@ export function WantedContent() {
     t: selectedTone,
     ...(name.trim() ? { n: name.trim() } : {}),
   }).toString()}`;
-  const giftUrl = `/purchase?tier=protected&gift=true&ref=wanted${
+  // Attribution: `from=wanted_poster` is read by /purchase, persisted into
+  // sessionStorage and re-emitted on view_item / purchase events so we can
+  // build the wanted → purchase funnel in GA4. The legacy `ref=wanted` was
+  // silently rejected by getValidReferralCode (which requires SHA-XXXX), so
+  // it produced no analytics value.
+  const giftUrl = `/purchase?tier=protected&gift=true&from=wanted_poster${
     name.trim() ? `&name=${encodeURIComponent(name.trim())}` : ""
   }`;
   const layout = POSTER_LAYOUTS[posterFormat];
@@ -1528,6 +1546,14 @@ export function WantedContent() {
                     <>
                       <LocalizedLink
                         href={giftUrl}
+                        onClick={() =>
+                          trackEvent("wanted_to_purchase_click", {
+                            source: "wanted_gift_cta",
+                            tone: selectedTone,
+                            locale,
+                            personalized: name.trim().length > 0,
+                          })
+                        }
                         className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-center text-sm font-semibold leading-6 text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:px-5 sm:py-3 sm:whitespace-nowrap"
                       >
                         <span>{giftCtaText}</span>
@@ -1595,7 +1621,14 @@ export function WantedContent() {
             </p>
             <div className="mt-8 flex justify-center">
               <LocalizedLink
-                href="/purchase?tier=protected&gift=true&ref=wanted"
+                href="/purchase?tier=protected&gift=true&from=wanted_poster"
+                onClick={() =>
+                  trackEvent("wanted_to_purchase_click", {
+                    source: "wanted_footer_cta",
+                    tone: selectedTone,
+                    locale,
+                  })
+                }
                 className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
                 {t("footerCtaButton")}

@@ -11,3 +11,7 @@ export function formatRegistryIdForDisplay(registryId: string) {
 
   return `SHA-${compact.slice(0, 4)}-${compact.slice(-4)}`;
 }
+
+export function normalizeRegistryCode(value: string) {
+  return value.trim().toUpperCase().replace(/\s+/g, "");
+}

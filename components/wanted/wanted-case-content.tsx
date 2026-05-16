@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { trackEvent } from "@/components/analytics";
 import { getTierPriceLabel } from "@/lib/tiers";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -51,13 +53,30 @@ export function WantedCaseContent({
     .slice(-4)
     .padStart(4, "0")}`;
 
+  // Attribution: `from=wanted_poster` is the cross-funnel source param read
+  // by /purchase. The legacy `ref=wanted` was silently rejected by
+  // getValidReferralCode (SHA-XXXX validator), so it produced no signal.
   const purchaseParams = new URLSearchParams({
     tier: "protected",
     gift: "true",
-    ref: "wanted",
+    from: "wanted_poster",
     name: displayName,
   });
   const purchaseHref = `/purchase?${purchaseParams.toString()}`;
+
+  // One impression event per mount — anchors the wanted_case_view →
+  // wanted_to_purchase_click → view_item → purchase funnel in GA4.
+  const viewedRef = useRef(false);
+  useEffect(() => {
+    if (viewedRef.current) return;
+    viewedRef.current = true;
+    const personalized = (initialName ?? "").trim().length > 0;
+    trackEvent("wanted_case_view", {
+      tone,
+      locale,
+      personalized,
+    });
+  }, [tone, locale, initialName]);
 
   return (
     <section className="border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-10 sm:py-14 lg:py-16">
@@ -139,6 +158,14 @@ export function WantedCaseContent({
                 <div className="mt-6 flex flex-col gap-3 sm:items-start">
                   <LocalizedLink
                     href={purchaseHref}
+                    onClick={() =>
+                      trackEvent("wanted_to_purchase_click", {
+                        source: "wanted_case_cta",
+                        tone,
+                        locale,
+                        personalized: (initialName ?? "").trim().length > 0,
+                      })
+                    }
                     className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:whitespace-nowrap"
                   >
                     {t("cta", { name: shortName, price: getTierPriceLabel("protected") })}

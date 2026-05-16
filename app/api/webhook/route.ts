@@ -13,6 +13,7 @@ import {
 import {
   generateMemberId,
   generateUniqueReferralCode,
+  generateUniqueRegistryCode,
   generateAccessToken,
   createMember,
   incrementReferralCount,
@@ -22,6 +23,7 @@ import { BASE_URL } from "@/lib/config";
 import { DIGITAL_CONTENT_VERSION, TERMS_VERSION } from "@/lib/legal";
 import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
@@ -106,10 +108,13 @@ export async function POST(request: NextRequest) {
     });
 
     const referralCode = await generateUniqueReferralCode();
+    const registryCode = await generateUniqueRegistryCode();
     const accessToken = generateAccessToken();
+    const memberId = generateMemberId();
 
     const newMember = await createMember({
-      id: generateMemberId(),
+      id: memberId,
+      registryCode,
       name: name.trim(),
       tier,
       date: new Date().toISOString(),
@@ -176,12 +181,12 @@ export async function POST(request: NextRequest) {
             html: certificateEmailHtml({
               name,
               tier,
-              registryId: newMember.id.toUpperCase(),
+              registryId: newMember.registryCode || formatRegistryIdForDisplay(newMember.id),
               referralCode,
               downloadUrl: certificateUrl,
               registryUrl:
                 newMember.registryVisibility === "public"
-                  ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${newMember.id}`)
+                  ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${encodeURIComponent(newMember.registryCode || formatRegistryIdForDisplay(newMember.id))}`)
                   : undefined,
               careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
               referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),

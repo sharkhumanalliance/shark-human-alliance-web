@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { query, queryOne } from "./db";
+import { formatRegistryIdForDisplay, normalizeRegistryCode } from "./registry-id";
 
 export type RegistryVisibility = "public" | "private";
 export type DedicationReviewStatus = "approved" | "rejected";
@@ -10,6 +11,7 @@ export type DedicationReviewStatus = "approved" | "rejected";
 
 export interface Member {
   id: string;
+  registryCode?: string;
   name: string;
   tier: string;
   date: string;
@@ -34,6 +36,7 @@ export interface Member {
 /** Shape of a row coming from the `members` table. */
 interface MemberRow {
   id: string;
+  registry_code: string | null;
   name: string;
   tier: string;
   issue_date: string;
@@ -69,6 +72,7 @@ function rowToMember(row: MemberRow): Member {
 
   return {
     id: row.id,
+    registryCode: row.registry_code ?? formatRegistryIdForDisplay(row.id),
     name: row.name,
     tier: row.tier,
     date: dateStr,
@@ -109,6 +113,17 @@ export function generateReferralCode(): string {
   return `SHA-${code}`;
 }
 
+export function generateRegistryCode(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let first = "";
+  let second = "";
+  for (let i = 0; i < 4; i++) {
+    first += chars.charAt(Math.floor(Math.random() * chars.length));
+    second += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return `SHA-${first}-${second}`;
+}
+
 export function generateAccessToken(): string {
   return crypto.randomBytes(32).toString("hex");
 }
@@ -138,6 +153,31 @@ export async function getMemberById(id: string): Promise<Member | null> {
     [id]
   );
   return row ? rowToMember(row) : null;
+}
+
+export async function getMemberByRegistryCode(
+  code: string
+): Promise<Member | null> {
+  const normalized = normalizeRegistryCode(code);
+  if (!normalized) return null;
+
+  const row = await queryOne<MemberRow>(
+    `SELECT * FROM members WHERE registry_code = $1 AND erased_at IS NULL`,
+    [normalized]
+  );
+  return row ? rowToMember(row) : null;
+}
+
+export async function getMemberByPublicIdentifier(
+  identifier: string
+): Promise<Member | null> {
+  const normalized = normalizeRegistryCode(identifier);
+  if (!normalized) return null;
+
+  const byRegistryCode = await getMemberByRegistryCode(normalized);
+  if (byRegistryCode) return byRegistryCode;
+
+  return getMemberById(identifier);
 }
 
 /** Find a member by their access token (certificate URL). */
@@ -182,6 +222,17 @@ export async function referralCodeExists(code: string): Promise<boolean> {
   return row !== null;
 }
 
+export async function registryCodeExists(code: string): Promise<boolean> {
+  const normalized = normalizeRegistryCode(code);
+  if (!normalized) return false;
+
+  const row = await queryOne<{ n: string }>(
+    `SELECT 1 AS n FROM members WHERE registry_code = $1`,
+    [normalized]
+  );
+  return row !== null;
+}
+
 /** Generate a referral code that is unique in the DB. */
 export async function generateUniqueReferralCode(): Promise<string> {
   let code: string;
@@ -191,17 +242,26 @@ export async function generateUniqueReferralCode(): Promise<string> {
   return code;
 }
 
+export async function generateUniqueRegistryCode(): Promise<string> {
+  let code: string;
+  do {
+    code = generateRegistryCode();
+  } while (await registryCodeExists(code));
+  return code;
+}
+
 // ---------------------------------------------------------------------------
 // createMember — with referral_code collision retry
 // ---------------------------------------------------------------------------
 
 const MAX_REFERRAL_RETRIES = 5;
+const MAX_REGISTRY_CODE_RETRIES = 5;
 
 /**
  * Insert a new member.
  *
- * If the insert fails due to a UNIQUE violation on `referral_code`,
- * the function regenerates the code and retries (up to MAX_REFERRAL_RETRIES).
+ * If the insert fails due to a UNIQUE violation on `referral_code` or
+ * `registry_code`, the function regenerates that public code and retries.
  * Other unique violations (e.g. stripe_session_id) propagate immediately.
  */
 export async function createMember(
@@ -209,20 +269,25 @@ export async function createMember(
 ): Promise<Member> {
   let lastError: unknown;
 
-  for (let attempt = 0; attempt < MAX_REFERRAL_RETRIES; attempt++) {
+  for (
+    let attempt = 0;
+    attempt < MAX_REFERRAL_RETRIES + MAX_REGISTRY_CODE_RETRIES;
+    attempt++
+  ) {
     try {
       const row = await queryOne<MemberRow>(
         `INSERT INTO members
-           (id, name, tier, issue_date, dedication,
+           (id, registry_code, name, tier, issue_date, dedication,
            referral_code, referred_by, referral_count,
            email, stripe_session_id, access_token,
             template, locale, terms_accepted_at, terms_version,
             digital_content_consent_at, digital_content_version,
             registry_visibility, dedication_review_status, erased_at)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
          RETURNING *`,
         [
           member.id,
+          normalizeRegistryCode(member.registryCode || generateRegistryCode()),
           member.name,
           member.tier,
           member.date,
@@ -260,6 +325,14 @@ export async function createMember(
       }
 
       // Any other error (including duplicate stripe_session_id) — propagate
+      if (
+        pgErr.code === "23505" &&
+        pgErr.constraint?.includes("registry_code")
+      ) {
+        member = { ...member, registryCode: generateRegistryCode() };
+        continue;
+      }
+
       throw err;
     }
   }

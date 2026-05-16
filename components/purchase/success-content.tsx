@@ -26,9 +26,11 @@ import {
   getTierPriceDollars,
   type TierKey,
 } from "@/lib/tiers";
+import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 
 interface MemberData {
   id: string;
+  registryCode?: string;
   name: string;
   tier: TierKey;
   date: string;
@@ -109,13 +111,36 @@ function SuccessContentInner() {
           if (!purchaseTrackedRef.current) {
             purchaseTrackedRef.current = true;
             const publicTier = getPublicTierKey(data.tier);
-            trackEvent("purchase", {
+            // Recover cross-funnel attribution stored on /purchase before
+            // the Stripe redirect. This is the bridge that lets GA4 group
+            // purchases by their originating surface (e.g. wanted_poster).
+            let attributionSource = "";
+            if (typeof window !== "undefined") {
+              try {
+                attributionSource =
+                  window.sessionStorage.getItem("sha_attribution_source") || "";
+              } catch {
+                // sessionStorage unavailable — proceed without source.
+              }
+            }
+            const params: Record<string, string | number | boolean> = {
               transaction_id: sessionId,
               value: getTierPriceDollars(data.tier),
               currency: "USD",
               item_id: publicTier,
               item_name: publicTier,
-            });
+            };
+            if (attributionSource) params.source = attributionSource;
+            trackEvent("purchase", params);
+            // Clear after firing so refreshing /success does not
+            // re-attribute future unrelated sessions.
+            if (attributionSource && typeof window !== "undefined") {
+              try {
+                window.sessionStorage.removeItem("sha_attribution_source");
+              } catch {
+                // ignore
+              }
+            }
           }
           return;
         }
@@ -274,6 +299,7 @@ function SuccessContentInner() {
     ? `${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`
     : "";
   const publicTier = getPublicTierKey(member.tier);
+  const publicRegistryId = member.registryCode || formatRegistryIdForDisplay(member.id);
 
   return (
     <section data-reveal className="py-12 sm:py-14">
@@ -290,7 +316,7 @@ function SuccessContentInner() {
 
         {/* Action card #1 \u2014 share. */}
         <PostPurchaseShare
-          member={{ id: member.id, name: member.name, tier: publicTier }}
+          member={{ id: publicRegistryId, name: member.name, tier: publicTier }}
         />
 
         {/* Action card #2 \u2014 certificate (preview + download + collapsible customize). */}
@@ -387,7 +413,7 @@ function SuccessContentInner() {
               tier={publicTier}
               dedication={member.dedication}
               date={displayDate}
-              registryId={member.id.toUpperCase()}
+              registryId={publicRegistryId}
               referralCode={member.referralCode}
               template={template}
               paperFormat={paperFormat}
@@ -409,7 +435,7 @@ function SuccessContentInner() {
 
             {member.registryVisibility === "public" ? (
               <LocalizedLink
-                href={`/registry?highlight=${member.id}`}
+                href={`/registry?highlight=${encodeURIComponent(publicRegistryId)}`}
                 className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
               >
                 {t("viewRegistry")}

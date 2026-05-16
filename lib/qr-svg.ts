@@ -57,3 +57,25 @@ export function getVerificationUrl(
 
   return `${base}/${locale}/verify?${params.toString()}`;
 }
+
+/**
+ * Build the private certificate access URL for a member.
+ *
+ * Certificates can be private in the public registry, so the QR code on a real
+ * certificate should resolve through the access token instead of the public
+ * verification lookup.
+ */
+export function getCertificateAccessUrl(
+  accessToken: string,
+  baseUrl?: string,
+  locale = process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en",
+): string {
+  const base =
+    baseUrl ||
+    (typeof window !== "undefined"
+      ? window.location.origin
+      : process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com");
+
+  const params = new URLSearchParams({ token: accessToken });
+  return `${base}/${locale}/certificate/view?${params.toString()}`;
+}

@@ -3,6 +3,7 @@ import type { Member } from "@/lib/members";
 const DEMO_MEMBERS: Member[] = [
   {
     id: "m-demo-finnley-001",
+    registryCode: "SHA-DEMO-0001",
     name: "Marina Vale",
     tier: "protected",
     date: "2026-04-14T09:15:00.000Z",
@@ -14,6 +15,7 @@ const DEMO_MEMBERS: Member[] = [
   },
   {
     id: "m-demo-liaison-002",
+    registryCode: "SHA-DEMO-0002",
     name: "Jonah Mercer",
     tier: "protected",
     date: "2026-04-13T16:40:00.000Z",
@@ -25,6 +27,7 @@ const DEMO_MEMBERS: Member[] = [
   },
   {
     id: "m-demo-field-003",
+    registryCode: "SHA-DEMO-0003",
     name: "Petra Bloom",
     tier: "nonsnack",
     date: "2026-04-12T11:05:00.000Z",
@@ -36,6 +39,7 @@ const DEMO_MEMBERS: Member[] = [
   },
   {
     id: "m-demo-senior-004",
+    registryCode: "SHA-DEMO-0004",
     name: "Oliver Grant",
     tier: "business",
     date: "2026-04-09T08:20:00.000Z",
@@ -47,6 +51,7 @@ const DEMO_MEMBERS: Member[] = [
   },
   {
     id: "m-demo-envoy-005",
+    registryCode: "SHA-DEMO-0005",
     name: "Lucia Ortega",
     tier: "nonsnack",
     date: "2026-04-07T14:30:00.000Z",
@@ -58,6 +63,7 @@ const DEMO_MEMBERS: Member[] = [
   },
   {
     id: "m-demo-chief-006",
+    registryCode: "SHA-DEMO-0006",
     name: "North Sea Studio",
     tier: "business",
     date: "2026-04-03T10:00:00.000Z",
@@ -79,4 +85,15 @@ export function getDemoMembers(): Member[] {
 
 export function getDemoMemberById(id: string): Member | null {
   return DEMO_MEMBERS.find((member) => member.id === id) ?? null;
+}
+
+export function getDemoMemberByPublicIdentifier(identifier: string): Member | null {
+  const normalized = identifier.trim().toUpperCase();
+  return (
+    DEMO_MEMBERS.find(
+      (member) =>
+        member.id === identifier ||
+        member.registryCode?.toUpperCase() === normalized
+    ) ?? null
+  );
 }
