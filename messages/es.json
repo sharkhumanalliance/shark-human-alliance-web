@@ -823,7 +823,8 @@
     "referralProbationaryLiaison": "Enlace en periodo de prueba",
     "referralFirstRecruitNeeded": "Refiere a 1 amigo para desbloquear el primer ascenso en la Alianza.",
     "referralFirstRecruitComplete": "Primer recluta registrado. Los tiburones han abierto una carpeta más grande.",
-    "referralStepProgress": "{count} / {target} pasos completados"
+    "referralStepProgress": "{count} / {target} pasos completados",
+    "referralProtectedFriendStatus": "Amigo protegido ✓"
   },
   "registry": {
     "title": "El Registro Diplomático",

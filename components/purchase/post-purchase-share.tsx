@@ -1,21 +1,37 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { CertificateDocument } from "@/components/certificate/certificate-document";
+import {
+  CertificateSheet,
+  getPaperDimensions,
+  type PaperFormat,
+} from "@/components/certificate/certificate-sheet";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
-import type { PublicTierKey } from "@/lib/tiers";
+import { getPublicTierKey, type PublicTierKey } from "@/lib/tiers";
+import {
+  normalizeTemplate,
+  type CertificateTemplate,
+} from "@/lib/certificate-templates";
 
 interface PostPurchaseShareProps {
   member: {
     id: string;
     name: string;
     tier: PublicTierKey;
+    dedication?: string | null;
+    date?: string;
+    referralCode?: string;
+    accessToken?: string;
+    template?: CertificateTemplate;
+    paperFormat?: PaperFormat;
   };
   /**
-   * "full"    - original layout with Story preview, headings and Wanted Poster CTAs.
-   * "compact" - single horizontal action row used on the redesigned success page
+   * "full"    — original layout with Story preview, headings and Wanted Poster CTAs.
+   * "compact" — single horizontal action row used on the redesigned success page
    *             where the Hero already owns the primary action.
    */
   variant?: "full" | "compact";
@@ -23,6 +39,7 @@ interface PostPurchaseShareProps {
 
 const STORY_WIDTH = 1080;
 const STORY_HEIGHT = 1920;
+const MM_TO_PX = 96 / 25.4;
 
 function drawRoundedRect(
   ctx: CanvasRenderingContext2D,
@@ -60,145 +77,150 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, 
   return fontSize;
 }
 
-function drawCenteredText(
-  ctx: CanvasRenderingContext2D,
-  text: string,
-  x: number,
-  y: number,
-  maxWidth: number,
-  initialSize: number,
-  minSize: number,
-  options: {
-    weight?: number;
-    family?: string;
-    fillStyle?: string;
-  } = {},
-) {
-  const fontSize = fitText(ctx, text, maxWidth, initialSize, minSize);
-  ctx.font = `${options.weight ?? 700} ${fontSize}px ${options.family ?? "Georgia, 'Times New Roman', serif"}`;
-  ctx.fillStyle = options.fillStyle ?? "#102941";
-  ctx.textAlign = "center";
-  ctx.fillText(text, x, y, maxWidth);
-  ctx.textAlign = "left";
+async function blobToDataUrl(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error("Could not read image blob."));
+    reader.readAsDataURL(blob);
+  });
 }
 
-function drawCertificateCard({
-  ctx,
-  memberName,
-  tierLabel,
-  registryId,
-  copy,
-}: {
-  ctx: CanvasRenderingContext2D;
-  memberName: string;
-  tierLabel: string;
-  registryId: string;
-  copy: {
-    title: string;
-    subtitle: string;
-    issuer: string;
-    intro: string;
-    statusIntro: string;
-    conservationLine: string;
-  };
-}) {
-  const card = { x: 110, y: 120, width: 860, height: 1040 };
-  const centerX = card.x + card.width / 2;
+async function getInlineImageSrc(src: string) {
+  if (!src || src.startsWith("data:")) return src;
+  const url = new URL(src, window.location.href);
+
+  if (url.hostname === "api.qrserver.com") {
+    const encodedData = url.searchParams.get("data");
+    if (encodedData) {
+      const qr = await import("qrcode");
+      return qr.toDataURL(encodedData, {
+        errorCorrectionLevel: "M",
+        margin: 0,
+        width: 200,
+      });
+    }
+  }
+
+  const response = await fetch(url.toString(), { mode: "cors" });
+  if (!response.ok) {
+    throw new Error(`Could not load image for share export: ${url.pathname}`);
+  }
+  return blobToDataUrl(await response.blob());
+}
+
+async function inlineImagesForSvg(root: HTMLElement) {
+  const images = Array.from(root.querySelectorAll("img"));
+  await Promise.all(
+    images.map(async (image) => {
+      const src = image.getAttribute("src");
+      if (!src) return;
+      try {
+        image.setAttribute("src", await getInlineImageSrc(src));
+      } catch {
+        image.removeAttribute("src");
+      }
+    }),
+  );
+}
+
+function collectDocumentCss() {
+  const chunks: string[] = [];
+  for (const sheet of Array.from(document.styleSheets)) {
+    try {
+      chunks.push(
+        Array.from(sheet.cssRules)
+          .map((rule) => rule.cssText)
+          .join("\n"),
+      );
+    } catch {
+      // Cross-origin stylesheets cannot be read. The app stylesheet is same-origin.
+    }
+  }
+  return chunks.join("\n");
+}
+
+async function renderCertificateElementToImage(
+  sourceElement: HTMLElement,
+  paperFormat: PaperFormat,
+) {
+  await document.fonts?.ready;
+  const clone = sourceElement.cloneNode(true) as HTMLElement;
+  await inlineImagesForSvg(clone);
+
+  const paper = getPaperDimensions(paperFormat);
+  const width = Math.round(paper.width * MM_TO_PX);
+  const height = Math.round(paper.height * MM_TO_PX);
+  const styles = collectDocumentCss();
+  const xhtml = `
+    <div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;margin:0;background:#fff;overflow:hidden;">
+      <style>
+        ${styles}
+        * { box-sizing: border-box; }
+        body { margin: 0; }
+        img { max-width: none; }
+      </style>
+      ${clone.outerHTML}
+    </div>
+  `;
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <foreignObject width="100%" height="100%">${xhtml}</foreignObject>
+    </svg>
+  `;
+  const url = URL.createObjectURL(
+    new Blob([svg], { type: "image/svg+xml;charset=utf-8" }),
+  );
+  try {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = url;
+    await image.decode();
+    return image;
+  } finally {
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+}
+
+function drawCertificateImage(
+  ctx: CanvasRenderingContext2D,
+  certificateImage: HTMLImageElement,
+) {
+  const target = { x: 100, y: 85, width: 880, height: 1120 };
+  const sourceRatio = certificateImage.naturalWidth / certificateImage.naturalHeight;
+  const targetRatio = target.width / target.height;
+  const width = sourceRatio > targetRatio ? target.width : target.height * sourceRatio;
+  const height = sourceRatio > targetRatio ? target.width / sourceRatio : target.height;
+  const x = target.x + (target.width - width) / 2;
+  const y = target.y + (target.height - height) / 2;
 
   ctx.save();
-  ctx.shadowColor = "rgba(16, 41, 65, 0.20)";
-  ctx.shadowBlur = 36;
-  ctx.shadowOffsetY = 22;
-  drawRoundedRect(ctx, card.x, card.y, card.width, card.height, 20, "#fff8ed");
+  ctx.shadowColor = "rgba(16, 41, 65, 0.22)";
+  ctx.shadowBlur = 40;
+  ctx.shadowOffsetY = 24;
+  drawRoundedRect(ctx, x - 18, y - 18, width + 36, height + 36, 22, "#ffffff");
   ctx.restore();
-
-  ctx.strokeStyle = "#0d2340";
-  ctx.lineWidth = 8;
-  ctx.strokeRect(card.x + 36, card.y + 36, card.width - 72, card.height - 72);
-  ctx.strokeStyle = "#d7b56d";
-  ctx.lineWidth = 3;
-  ctx.strokeRect(card.x + 58, card.y + 58, card.width - 116, card.height - 116);
-
-  drawCenteredText(ctx, copy.title, centerX, card.y + 180, card.width - 180, 76, 52, {
-    weight: 800,
-  });
-  drawCenteredText(ctx, copy.subtitle, centerX, card.y + 245, card.width - 180, 35, 26, {
-    weight: 700,
-  });
-
-  ctx.fillStyle = "#64748b";
-  ctx.font = "600 24px Arial, Helvetica, sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText(copy.issuer, centerX, card.y + 330);
-
-  ctx.fillStyle = "#d7b56d";
-  ctx.beginPath();
-  ctx.arc(centerX, card.y + 385, 7, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#64748b";
-  ctx.font = "italic 26px Georgia, 'Times New Roman', serif";
-  ctx.fillText(copy.intro, centerX, card.y + 455);
-
-  drawCenteredText(ctx, memberName.toUpperCase(), centerX, card.y + 560, card.width - 190, 62, 34, {
-    weight: 800,
-  });
-
-  ctx.fillStyle = "#64748b";
-  ctx.font = "600 22px Arial, Helvetica, sans-serif";
-  ctx.fillText(copy.statusIntro, centerX, card.y + 650);
-
-  drawCenteredText(ctx, tierLabel.toUpperCase(), centerX, card.y + 750, card.width - 160, 66, 38, {
-    weight: 900,
-  });
-
-  ctx.fillStyle = "#475569";
-  ctx.font = "500 24px Arial, Helvetica, sans-serif";
-  ctx.fillText(copy.conservationLine, centerX, card.y + 820);
-
-  ctx.strokeStyle = "#d7b56d";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(card.x + 150, card.y + 895);
-  ctx.lineTo(card.x + 360, card.y + 895);
-  ctx.moveTo(card.x + 500, card.y + 895);
-  ctx.lineTo(card.x + 710, card.y + 895);
-  ctx.stroke();
-
-  ctx.fillStyle = "#102941";
-  ctx.font = "700 26px Georgia, 'Times New Roman', serif";
-  ctx.fillText("Finnley Mako", card.x + 255, card.y + 940);
-  ctx.fillText("Luna Reef", card.x + 605, card.y + 940);
-
-  ctx.fillStyle = "#64748b";
-  ctx.font = "700 20px Arial, Helvetica, sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(registryId, card.x + 82, card.y + 1002);
+  ctx.drawImage(certificateImage, x, y, width, height);
 }
 
 async function generateStoryBlob({
+  certificateElement,
+  paperFormat,
   memberName,
   tierLabel,
   siteLabel,
   headlineTop,
   headlineBottom,
   footerLine,
-  certificateCopy,
 }: {
+  certificateElement: HTMLElement;
+  paperFormat: PaperFormat;
   memberName: string;
   tierLabel: string;
   siteLabel: string;
   headlineTop: string;
   headlineBottom: string;
   footerLine: string;
-  certificateCopy: {
-    title: string;
-    subtitle: string;
-    issuer: string;
-    intro: string;
-    statusIntro: string;
-    conservationLine: string;
-  };
 }) {
   const canvas = document.createElement("canvas");
   canvas.width = STORY_WIDTH;
@@ -215,13 +237,13 @@ async function generateStoryBlob({
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, STORY_WIDTH, STORY_HEIGHT);
 
-  drawCertificateCard({
-    ctx,
-    memberName,
-    tierLabel,
-    registryId: siteLabel,
-    copy: certificateCopy,
-  });
+  // Hero illustration — object-contain (Math.min) so the whole "Case closed"
+  // composition is visible, not cropped.
+  const certificateImage = await renderCertificateElementToImage(
+    certificateElement,
+    paperFormat,
+  );
+  drawCertificateImage(ctx, certificateImage);
 
   // Single merged identity + verification card. Replaces the previously separate
   // white name card + dark verification card (now redundant because the hero
@@ -315,9 +337,20 @@ async function generateStoryBlob({
 export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShareProps) {
   const t = useTranslations("purchase.share");
   const locale = useLocale();
+  const certificateShareRef = useRef<HTMLDivElement>(null);
   const [isBusy, setIsBusy] = useState(false);
   const [copyState, setCopyState] = useState<"idle" | "done" | "error">("idle");
   const [shareHint, setShareHint] = useState<string | null>(null);
+  const certificateTemplate = normalizeTemplate(member.template);
+  const paperFormat = member.paperFormat ?? "a4";
+  const publicTier = getPublicTierKey(member.tier);
+  const useNativePaperLayout =
+    paperFormat === "letter" &&
+    (certificateTemplate === "playful" ||
+      (certificateTemplate === "luxury" &&
+        (publicTier === "protected" ||
+          publicTier === "nonsnack" ||
+          publicTier === "business")));
 
   const verificationUrl = useMemo(() => {
     if (typeof window === "undefined") return "";
@@ -329,7 +362,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
   const shareButtonLabel = useMemo(() => t(`tierCtas.${member.tier}.shareButton`), [member.tier, t]);
   const fileName = useMemo(() => `shark-human-alliance-story-${member.id.toLowerCase()}.png`, [member.id]);
 
-  // Pretty-printed host for the Story preview mock-up. The full URL stays in the
+  // Pretty-printed host for the Story preview mock-up — the full UUID URL stays in the
   // actually generated Story (Canvas), but the on-screen preview must look clean.
   const previewHost = useMemo(() => {
     if (!verificationUrl) return "sharkhumanalliance.com";
@@ -341,21 +374,17 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
   }, [verificationUrl]);
 
   async function getStoryFile() {
+    const certificateElement = certificateShareRef.current;
+    if (!certificateElement) throw new Error("Certificate preview is not ready.");
     const blob = await generateStoryBlob({
+      certificateElement,
+      paperFormat,
       memberName: member.name,
       tierLabel,
       siteLabel: previewHost,
       headlineTop: t(`tierHeadlines.${member.tier}.headlineTop`),
       headlineBottom: t(`tierHeadlines.${member.tier}.headlineBottom`),
       footerLine: t("storyFooterLine"),
-      certificateCopy: {
-        title: t("certificateTitle"),
-        subtitle: t("certificateSubtitle"),
-        issuer: t("certificateIssuer"),
-        intro: t("certificateIntro"),
-        statusIntro: t("certificateStatusIntro"),
-        conservationLine: t("certificateConservationLine"),
-      },
     });
     return new File([blob], fileName, { type: "image/png" });
   }
@@ -439,16 +468,47 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
     }
   }
 
+  const shareCertificateSource = (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed -left-[10000px] top-0 opacity-0"
+    >
+      <div ref={certificateShareRef}>
+        <CertificateSheet
+          paperFormat={paperFormat}
+          useNativePaperLayout={useNativePaperLayout}
+        >
+          <CertificateDocument
+            name={member.name}
+            tier={publicTier}
+            dedication={member.dedication}
+            date={member.date ?? ""}
+            registryId={member.id}
+            referralCode={member.referralCode}
+            accessToken={member.accessToken}
+            priorityImages
+            assetMode="full"
+            template={certificateTemplate}
+            paperFormat={paperFormat}
+            locale={locale}
+          />
+        </CertificateSheet>
+      </div>
+    </div>
+  );
+
   if (variant === "compact") {
     // Compact share row used on the redesigned success page. The Hero already
     // owns the primary action (Download certificate), so this strip is only a
-    // secondary "share what you just got" affordance: no Story mock-up, no
+    // secondary "share what you just got" affordance — no Story mock-up, no
     // Wanted Poster CTAs (those live in the dedicated secondary actions card).
     return (
-      <section
-        data-reveal
-        className="mt-6 border-y border-[var(--border)] py-4"
-      >
+      <>
+        {shareCertificateSource}
+        <section
+          data-reveal
+          className="mt-6 border-y border-[var(--border)] py-4"
+        >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)] shrink-0">
             {t("compactEyebrow")}
@@ -460,7 +520,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
                 void shareStory();
               }}
               disabled={isBusy}
-              className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md bg-[var(--brand)] px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md border border-[var(--brand)] bg-[var(--brand)] px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isBusy ? t("working") : shareButtonLabel}
             </button>
@@ -479,7 +539,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
               onClick={() => {
                 void copyLink();
               }}
-              className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] hover:text-[var(--brand-dark)]"
+              className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
             >
               {copyState === "done"
                 ? t("copySuccess")
@@ -498,12 +558,15 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
             {shareHint}
           </p>
         ) : null}
-      </section>
+        </section>
+      </>
     );
   }
 
   return (
-    <section data-reveal className="mt-10 rounded-[32px] border border-[var(--border)] bg-white px-4 py-5 shadow-sm sm:px-6 sm:py-7 lg:px-8">
+    <>
+      {shareCertificateSource}
+      <section data-reveal className="mt-10 rounded-[32px] border border-[var(--border)] bg-white px-4 py-5 shadow-sm sm:px-6 sm:py-7 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,360px)] lg:items-center">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-800">
@@ -542,7 +605,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
               onClick={() => {
                 void copyLink();
               }}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl px-5 py-4 text-sm font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 hover:text-[var(--brand-dark)]"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
             >
               {copyState === "done" ? t("copySuccess") : copyState === "error" ? t("copyError") : t("copyButton")}
             </button>
@@ -573,7 +636,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
         <div className="mx-auto w-full max-w-[360px]">
           <div className="rounded-[34px] border border-[var(--border)] bg-[var(--surface-soft)]/60 p-3 shadow-sm">
             <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-sky-50 via-white to-white aspect-[9/16]">
-              {/* Story-ready pill kept as a single mock-up label; the SHA bar
+              {/* STORY READY pill — kept as a single mock-up label; the SHA bar
                   has been removed because the illustration carries SHA branding. */}
               <div className="absolute right-4 top-4">
                 <div className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-900 backdrop-blur">
@@ -581,22 +644,24 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
                 </div>
               </div>
 
+              {/* Hero illustration — object-contain so the whole composition is
+                  visible. Container takes the upper ~58% of the Story frame. */}
               <div className="absolute inset-x-5 top-10 bottom-[42%] rounded-xl border-[3px] border-[var(--brand-dark)] bg-[#fff8ed] p-5 shadow-md">
                 <div className="h-full border border-amber-300 px-4 py-5 text-center">
                   <p className="font-serif text-2xl font-black tracking-wide text-[var(--brand-dark)]">
-                    {t("certificateTitle")}
+                    CERTIFICATE
                   </p>
                   <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-dark)]">
-                    {t("certificateSubtitle")}
+                    Official Recognition
                   </p>
                   <p className="mt-8 text-[10px] italic text-[var(--muted)]">
-                    {t("certificateIntro")}
+                    This certifies that
                   </p>
                   <p className="mt-3 break-words font-serif text-xl font-black uppercase leading-tight text-[var(--brand-dark)]">
                     {member.name}
                   </p>
                   <p className="mt-8 text-[10px] font-semibold text-[var(--muted)]">
-                    {t("certificateStatusIntro")}
+                    has been officially recognized as
                   </p>
                   <p className="mt-3 break-words font-serif text-xl font-black uppercase tracking-wide text-[var(--brand-dark)]">
                     {tierLabel}
@@ -626,6 +691,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

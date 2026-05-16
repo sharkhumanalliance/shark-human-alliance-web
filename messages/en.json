@@ -823,7 +823,8 @@
     "referralProbationaryLiaison": "Probationary Liaison",
     "referralFirstRecruitNeeded": "Refer 1 friend to unlock the first Alliance promotion.",
     "referralFirstRecruitComplete": "First recruit logged. The sharks have opened a larger folder.",
-    "referralStepProgress": "{count} / {target} steps complete"
+    "referralStepProgress": "{count} / {target} steps complete",
+    "referralProtectedFriendStatus": "Protected Friend ✓"
   },
   "registry": {
     "title": "The Diplomatic Registry",
