@@ -365,7 +365,7 @@ export async function POST(request: NextRequest) {
             currency: "usd",
             product_data: {
               name: `${tierName} — Shark Human Alliance`,
-              description: `Personalized certificate for ${name}. Every sale funds real shark conservation.`,
+              description: `Personalized certificate for ${name}. Includes a tracked shark conservation allocation.`,
               images: [`${BASE_URL}/mascots/homepage-hero-plush.png`],
             },
             unit_amount: priceInCents,

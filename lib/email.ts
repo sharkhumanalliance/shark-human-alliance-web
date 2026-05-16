@@ -67,7 +67,7 @@ const EMAIL_COPY = {
       `Your shark paperwork is approved, ${name}`,
     giftBuyerSubject: (name: string, status: string) =>
       `Gift sent! ${name} is now a ${status}`,
-    title: "Your Alliance Certificate",
+    title: "Your shark paperwork is approved",
     giftHeading: (safeName: string) =>
       `A certificate has arrived for ${safeName}.`,
     welcomeHeading: (safeName: string) => `Welcome to the Alliance, ${safeName}.`,
@@ -76,12 +76,17 @@ const EMAIL_COPY = {
       "Your diplomatic status has been registered. The sharks remain symbolically informed and practically indifferent.",
     yourStatus: "Your Status",
     registryId: "Registry ID",
-    downloadCertificate: "Download Your Certificate (PDF)",
-    viewRegistry: "View yourself in the Diplomatic Registry &rarr;",
+    downloadCertificate: "Download certificate PDF",
+    viewRegistry: "View registry record &rarr;",
     personalMessage: "Personal message",
     careerHeading: "Your Alliance Career Starts Now",
-    careerText: "Share your referral link. Every recruit moves you up the ranks.",
+    careerText:
+      "Share your referral link. Every recruit moves you up the ranks, which is how bureaucracy proves it is alive.",
     careerLink: "See the full career ladder &rarr;",
+    wantedHeading: "Someone else still looks unfiled",
+    wantedText:
+      "Open a Wanted case for a friend, then let the Bureau recommend the paperwork.",
+    wantedLink: "Open a Wanted case &rarr;",
     orderDetails: "Order details",
     digitalSupply:
       "Your certificate was supplied immediately in digital form at your express request. Once supply began, the withdrawal right ended.",
@@ -111,7 +116,7 @@ const EMAIL_COPY = {
       `Tu papeleo tiburón está aprobado, ${name}`,
     giftBuyerSubject: (name: string, status: string) =>
       `¡Regalo enviado! ${name} ahora tiene ${status}`,
-    title: "Tu certificado de la Alianza",
+    title: "Tu papeleo tiburón está aprobado",
     giftHeading: (safeName: string) =>
       `Ha llegado un certificado para ${safeName}.`,
     welcomeHeading: (safeName: string) => `Bienvenido/a a la Alianza, ${safeName}.`,
@@ -120,12 +125,17 @@ const EMAIL_COPY = {
       "Tu estatus diplomático ha sido registrado. Los tiburones siguen simbólicamente informados y prácticamente indiferentes.",
     yourStatus: "Tu estatus",
     registryId: "ID de registro",
-    downloadCertificate: "Descargar certificado (PDF)",
-    viewRegistry: "Verte en el Registro Diplomático &rarr;",
+    downloadCertificate: "Descargar certificado PDF",
+    viewRegistry: "Ver registro &rarr;",
     personalMessage: "Mensaje personal",
     careerHeading: "Tu carrera en la Alianza comienza ahora",
-    careerText: "Comparte tu enlace de referido. Cada recluta te sube de rango.",
+    careerText:
+      "Comparte tu enlace de referido. Cada recluta te sube de rango, que es como la burocracia demuestra que está viva.",
     careerLink: "Ver el escalafón completo &rarr;",
+    wantedHeading: "Otra persona sigue sin expediente",
+    wantedText:
+      "Abre un caso Wanted para un amigo y deja que la Oficina recomiende el papeleo.",
+    wantedLink: "Abrir un caso Wanted &rarr;",
     orderDetails: "Detalles del pedido",
     digitalSupply:
       "Tu certificado fue suministrado inmediatamente en formato digital a petición expresa. Una vez iniciada la entrega, terminó el derecho de desistimiento.",
@@ -313,6 +323,13 @@ export function certificateEmailHtml(params: {
   const safeCareerUrl = escapeHtml(careerUrl);
   const safeTermsUrl = escapeHtml(termsUrl);
   const safeManageUrl = escapeHtml(manageUrl);
+  const safeWantedUrl = escapeHtml(
+    buildAbsoluteLocalizedUrl(
+      process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+      resolvedLocale,
+      "/wanted"
+    )
+  );
   const safeReferralUrl = escapeHtml(
     referralUrl ||
       buildAbsoluteLocalizedUrl(
@@ -373,6 +390,12 @@ export function certificateEmailHtml(params: {
           ${safeReferralUrl}
         </div>
         <a href="${safeCareerUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">${copy.careerLink}</a>
+      </div>
+
+      <div style="margin-top:16px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:16px;text-align:center;">
+        <p style="margin:0;font-size:12px;color:#9a3412;text-transform:uppercase;letter-spacing:2px;font-weight:700;">${copy.wantedHeading}</p>
+        <p style="margin:8px 0 12px;font-size:14px;line-height:1.6;color:#7c2d12;">${copy.wantedText}</p>
+        <a href="${safeWantedUrl}" style="color:#c2410c;font-weight:700;font-size:14px;text-decoration:none;">${copy.wantedLink}</a>
       </div>
 
       <div style="margin-top:24px;padding:20px;background-color:#f8fafc;border:1px solid #dbe4ee;border-radius:16px;">

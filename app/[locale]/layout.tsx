@@ -59,20 +59,20 @@ export const metadata: Metadata = {
     template: "%s | Shark Human Alliance",
   },
   description:
-    "The internet's most official-ish human protection program. For shark-related concerns. Sharks deserve better PR. And real protection.",
+    "A funny personalized certificate that protects sharks more than it protects you. Official-ish shark paperwork for humans who are probably not food.",
   metadataBase: new URL(BASE_URL),
   openGraph: {
     type: "website",
     siteName: "Shark Human Alliance",
     title: "Shark Human Alliance — Official Shark Protection Certificates",
     description:
-      "The internet's most official-ish human protection program. For shark-related concerns. Sharks deserve better PR. And real protection.",
+      "A funny personalized certificate that protects sharks more than it protects you. Official-ish shark paperwork for humans who are probably not food.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Shark Human Alliance",
     description:
-      "The internet's most official-ish human protection program. For shark-related concerns.",
+      "A funny personalized certificate that protects sharks more than it protects you.",
   },
   robots: {
     index: true,
@@ -114,7 +114,7 @@ function JsonLd() {
     url: BASE_URL,
     logo: `${BASE_URL}/mascots/homepage-hero-plush.png`,
     description:
-      "A fictional alliance helping humans and sharks build better relations. Every certificate sale funds real ocean conservation.",
+      "A fictional alliance selling funny personalized certificates that protect sharks more than they protect humans.",
     email: "sharkhumanalliance@gmail.com",
   };
 
@@ -123,7 +123,7 @@ function JsonLd() {
     "@type": "Product",
     name: "Protected Friend Certificate",
     description:
-      "A personalized, surprisingly official-looking shark protection certificate. The perfect gag gift that funds real ocean conservation.",
+      "A funny personalized certificate that protects sharks more than it protects you. Official-ish, printable, and conservation-positive.",
     image: `${BASE_URL}/mascots/homepage-hero-plush.png`,
     brand: { "@type": "Brand", name: "Shark Human Alliance" },
     offers: [

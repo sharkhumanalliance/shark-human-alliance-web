@@ -621,8 +621,8 @@
     "emailOptionalTag": "optional",
     "emailOptionalHint": "We'll email you the PDF immediately. You can also download it on the next page.",
     "emailPlaceholder": "your@email.com",
-    "noEmailWarningTitle": "No email on file",
-    "noEmailWarningText": "You can continue without email. Just download the certificate on the success page; we will not have an inbox to resend it to later.",
+    "noEmailWarningTitle": "Download-only delivery",
+    "noEmailWarningText": "No email means no inbox rescue later. Continue if you are ready to download the certificate on the next page.",
     "noEmailAddEmail": "Add email for later access",
     "promoCodeLabel": "Promo code",
     "promoCodePlaceholder": "Enter code",
@@ -630,9 +630,9 @@
     "stripeSecureNote": "Even sharks know not to mess with payment infrastructure.",
     "secureBadgeCard": "Card payment",
     "secureBadgeStripe": "Stripe checkout",
-    "submitButton": "Complete purchase",
-    "submitButtonPromo": "Apply Promo Code & Continue",
-    "confirmTitle": "Review your order",
+    "submitButton": "Review order",
+    "submitButtonPromo": "Review order & apply promo",
+    "confirmTitle": "Final review",
     "confirmName": "Name on certificate",
     "confirmGiftFor": "Gift for",
     "confirmTier": "Membership tier",
@@ -641,8 +641,8 @@
     "confirmDelivery": "Delivery",
     "confirmDeliveryDownloadOnly": "Download immediately",
     "confirmDeliveryEmail": "Email + download",
-    "confirmButton": "Confirm & pay",
-    "confirmButtonPromo": "Apply Promo Code & Continue",
+    "confirmButton": "Confirm & pay securely",
+    "confirmButtonPromo": "Apply promo & continue",
     "confirmBack": "Go back and edit",
     "redirecting": "Redirecting to secure checkout. The sharks do not handle card details.",
     "checkoutError": "Checkout could not be opened. Try again — if the sharks continue interfering, contact support and we will file a complaint nobody will read.",
@@ -763,24 +763,24 @@
           "headlineBottom": "by the Alliance.",
           "subline": "Officially recognized as a protected friend.",
           "previewHeadline": "Officially a protected friend.",
-          "nativeTitle": "Officially a protected friend",
-          "nativeText": "I am officially a protected friend of the Shark Human Alliance."
+          "nativeTitle": "Administratively protected",
+          "nativeText": "I have been administratively protected by Shark Human Alliance. The sharks may process this when convenient."
         },
         "nonsnack": {
           "headlineTop": "You are",
           "headlineBottom": "not a snack.",
           "subline": "Officially recognized as not a snack.",
           "previewHeadline": "Officially not a snack.",
-          "nativeTitle": "Officially not a snack",
-          "nativeText": "I am officially recognized by Shark Human Alliance — not a snack."
+          "nativeTitle": "Reviewed and found non-snack",
+          "nativeText": "I have been reviewed and found unsuitable for snacking. Shark Human Alliance has filed the paperwork."
         },
         "business": {
           "headlineTop": "Shark-free",
           "headlineBottom": "zone.",
           "subline": "Officially certified as a shark-free zone.",
           "previewHeadline": "Officially a shark-free zone.",
-          "nativeTitle": "Shark-free zone",
-          "nativeText": "Our zone has been officially certified shark-free by Shark Human Alliance."
+          "nativeTitle": "Shark-free zone, administratively speaking",
+          "nativeText": "This zone is now shark-free, administratively speaking. Shark Human Alliance has placed it on file."
         }
       },
       "compactEyebrow": "Share the news"

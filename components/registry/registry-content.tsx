@@ -17,6 +17,7 @@ import {
 
 type Member = {
   id: string;
+  registryCode?: string;
   name: string;
   tier: TierKey;
   date: string;
@@ -26,6 +27,10 @@ type Member = {
 };
 
 type TierFilter = "all" | PublicTierKey;
+
+function getPublicMemberId(member: Member) {
+  return member.registryCode || member.id;
+}
 
 export function RegistryContent() {
   const t = useTranslations("registry");
@@ -63,7 +68,7 @@ export function RegistryContent() {
         return (
           member.name.toLowerCase().includes(normalizedQuery) ||
           referral.includes(normalizedQuery) ||
-          member.id.toLowerCase().includes(normalizedQuery)
+          getPublicMemberId(member).toLowerCase().includes(normalizedQuery)
         );
       });
     }
@@ -76,7 +81,7 @@ export function RegistryContent() {
 
     const directMatch = members.find(
       (member) =>
-        member.id.toLowerCase() === normalizedQuery ||
+        getPublicMemberId(member).toLowerCase() === normalizedQuery ||
         (member.referralCode && member.referralCode.toLowerCase() === normalizedQuery)
     );
 
@@ -142,7 +147,7 @@ export function RegistryContent() {
 
     if (exactLookupMatch) {
       setLookupError("");
-      router.push(buildLocalizedPath(locale, getMemberHref(exactLookupMatch.id)));
+      router.push(buildLocalizedPath(locale, getMemberHref(getPublicMemberId(exactLookupMatch))));
       return;
     }
 
@@ -334,12 +339,13 @@ export function RegistryContent() {
                   const publicTier = getPublicTierKey(member.tier);
                   const badgeClass = getTierRegistryBadgeClass(publicTier);
                   const rank = getRankInfo(member.referralCount || 0);
-                  const memberHref = getMemberHref(member.id);
+                  const publicMemberId = getPublicMemberId(member);
+                  const memberHref = getMemberHref(publicMemberId);
                   const memberDate = formatCertificateDate(member.date, locale);
 
                   return (
                     <div
-                      key={member.id}
+                      key={publicMemberId}
                       className="rounded-[22px] border border-[var(--border)] bg-white px-5 py-4 shadow-sm transition-colors hover:bg-sky-50/40"
                     >
                       <div className="flex items-start justify-between gap-4">
@@ -381,11 +387,11 @@ export function RegistryContent() {
                           <div className="flex items-center gap-2">
                             <button
                               type="button"
-                              onClick={() => copyProfileLink(member.id)}
+                              onClick={() => copyProfileLink(publicMemberId)}
                               aria-label={`${t("copyLink")}: ${member.name}`}
                               className="rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-white hover:text-[var(--brand-dark)]"
                             >
-                              {copiedId === member.id ? t("copiedAction") : t("copyAction")}
+                              {copiedId === publicMemberId ? t("copiedAction") : t("copyAction")}
                             </button>
                             <LocalizedLink
                               href={memberHref}
@@ -416,12 +422,13 @@ export function RegistryContent() {
                   const badgeClass = getTierRegistryBadgeClass(publicTier);
                   const borderClass = getTierRegistryBorderClass(publicTier);
                   const rank = getRankInfo(member.referralCount || 0);
-                  const memberHref = getMemberHref(member.id);
+                  const publicMemberId = getPublicMemberId(member);
+                  const memberHref = getMemberHref(publicMemberId);
                   const memberDate = formatCertificateDate(member.date, locale);
 
                   return (
                     <article
-                      key={member.id}
+                      key={publicMemberId}
                       className={`rounded-2xl border ${borderClass} bg-white px-4 py-4 shadow-sm`}
                     >
                       <div className="flex items-start justify-between gap-3">
@@ -465,11 +472,11 @@ export function RegistryContent() {
                       <div className="mt-3 flex items-center justify-end gap-2">
                           <button
                             type="button"
-                            onClick={() => copyProfileLink(member.id)}
+                            onClick={() => copyProfileLink(publicMemberId)}
                             aria-label={`${t("copyLink")}: ${member.name}`}
                             className="rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 hover:text-[var(--brand-dark)]"
                           >
-                            {copiedId === member.id ? t("copiedAction") : t("copyAction")}
+                            {copiedId === publicMemberId ? t("copiedAction") : t("copyAction")}
                           </button>
                         <LocalizedLink
                           href={memberHref}
@@ -503,8 +510,8 @@ export function RegistryContent() {
                   const rank = getRankInfo(member.referralCount || 0);
                   return (
                     <LocalizedLink
-                      key={member.id}
-                      href={getMemberHref(member.id)}
+                      key={getPublicMemberId(member)}
+                      href={getMemberHref(getPublicMemberId(member))}
                       className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm"
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--brand-dark)] text-sm font-bold text-white tabular-nums">

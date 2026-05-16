@@ -621,8 +621,8 @@
     "emailOptionalTag": "opcional",
     "emailOptionalHint": "Te enviaremos el PDF por email inmediatamente. También podrás descargarlo en la página siguiente.",
     "emailPlaceholder": "tu@email.com",
-    "noEmailWarningTitle": "Sin email registrado",
-    "noEmailWarningText": "Puedes continuar sin email. Descarga el certificado en la página de confirmación; no tendremos una bandeja a la que reenviarlo más tarde.",
+    "noEmailWarningTitle": "Entrega solo por descarga",
+    "noEmailWarningText": "Sin email no hay rescate por bandeja de entrada más tarde. Continúa si puedes descargar el certificado en la página siguiente.",
     "noEmailAddEmail": "Añadir email para acceso posterior",
     "promoCodeLabel": "Código promocional",
     "promoCodePlaceholder": "Introduce el código",
@@ -630,9 +630,9 @@
     "stripeSecureNote": "Hasta los tiburones saben que no se juega con la infraestructura de pagos.",
     "secureBadgeCard": "Pago con tarjeta",
     "secureBadgeStripe": "Checkout con Stripe",
-    "submitButton": "Completar compra",
-    "submitButtonPromo": "Aplicar Código Promo y Continuar",
-    "confirmTitle": "Revisa tu pedido",
+    "submitButton": "Revisar pedido",
+    "submitButtonPromo": "Revisar pedido y aplicar promo",
+    "confirmTitle": "Revisión final",
     "confirmName": "Nombre en el certificado",
     "confirmGiftFor": "Regalo para",
     "confirmTier": "Nivel de membresía",
@@ -641,8 +641,8 @@
     "confirmDelivery": "Entrega",
     "confirmDeliveryDownloadOnly": "Descarga inmediata",
     "confirmDeliveryEmail": "Email + descarga",
-    "confirmButton": "Confirmar y pagar",
-    "confirmButtonPromo": "Aplicar Código Promo y Continuar",
+    "confirmButton": "Confirmar y pagar con seguridad",
+    "confirmButtonPromo": "Aplicar promo y continuar",
     "confirmBack": "Volver y editar",
     "redirecting": "Redirigiendo al checkout seguro. Los tiburones no gestionan datos de tarjeta.",
     "checkoutError": "No se pudo abrir el checkout. Inténtalo de nuevo; si los tiburones siguen interfiriendo, contacta con soporte y presentaremos una queja que nadie leerá.",
@@ -763,24 +763,24 @@
           "headlineBottom": "protegido.",
           "subline": "Reconocido oficialmente como amigo protegido.",
           "previewHeadline": "Oficialmente amigo protegido.",
-          "nativeTitle": "Oficialmente amigo protegido",
-          "nativeText": "Soy oficialmente amigo protegido por la Shark Human Alliance."
+          "nativeTitle": "Protegido administrativamente",
+          "nativeText": "He sido protegido administrativamente por Shark Human Alliance. Los tiburones pueden procesarlo cuando les venga bien."
         },
         "nonsnack": {
           "headlineTop": "No eres",
           "headlineBottom": "un snack.",
           "subline": "Reconocido oficialmente como no snack.",
           "previewHeadline": "Oficialmente no eres un snack.",
-          "nativeTitle": "Oficialmente no eres un snack",
-          "nativeText": "Shark Human Alliance me reconoce oficialmente — no soy un snack."
+          "nativeTitle": "Revisado y declarado no-snack",
+          "nativeText": "He sido revisado y declarado inadecuado para snack. Shark Human Alliance ha archivado el papeleo."
         },
         "business": {
           "headlineTop": "Zona Libre",
           "headlineBottom": "de tiburones.",
           "subline": "Certificado oficialmente como Zona Libre de Tiburones.",
           "previewHeadline": "Oficialmente una Zona Libre de Tiburones.",
-          "nativeTitle": "Zona Libre de Tiburones",
-          "nativeText": "Nuestra zona ha sido certificada oficialmente como libre de tiburones por la Shark Human Alliance."
+          "nativeTitle": "Zona Libre de Tiburones, administrativamente",
+          "nativeText": "Esta zona ya es libre de tiburones, administrativamente hablando. Shark Human Alliance la ha dejado archivada."
         }
       },
       "compactEyebrow": "Comparte la noticia"

@@ -175,7 +175,7 @@ export function WantedCaseContent({
                   </p>
                 </div>
 
-                <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-5">
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <LocalizedLink
                     href="/impact"
                     className="inline-flex text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
@@ -185,7 +185,7 @@ export function WantedCaseContent({
 
                   <LocalizedLink
                     href="/wanted"
-                    className="inline-flex text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
+                    className="inline-flex min-h-[40px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] transition hover:bg-[var(--surface-soft)] sm:ml-auto"
                   >
                     {t("newPosterLink")}
                   </LocalizedLink>
