@@ -98,6 +98,13 @@
     "cookieSettingsLink": "Cookies settings",
     "privacyLink": "Privacy Policy"
   },
+  "notFound": {
+    "eyebrow": "Navigation incident",
+    "title": "This page escaped the filing cabinet.",
+    "text": "The Alliance searched the usual drawers, one suspicious drawer, and the ocean. No matching page was found.",
+    "homeCta": "Return to headquarters",
+    "registryCta": "Check the Registry"
+  },
   "hero": {
     "titleLine1": "Official shark protection.",
     "titleLine2": "For humans.",
@@ -359,7 +366,7 @@
       "Optional public registry record",
       "Tracked conservation allocation"
     ],
-    "ctaPrimary": "Choose the level first",
+    "ctaPrimary": "Browse certificate tiers",
     "ctaSecondary": "Then compare the styles",
     "recommended": "Most people start with",
     "recommendedProduct": "Protected Friend Status",
@@ -401,6 +408,7 @@
     ],
     "protectedCta": "Start with Protected Friend — $4",
     "protectedPopular": "Most popular",
+    "protectedDetailLink": "Why Protected Friend is the usual starting point",
     "nonsnackTitle": "Non-Snack Recognition",
     "nonsnackDescription": "For buyers who want stronger ceremonial energy, a better framed punchline, and official recognition of their obvious non-edibility.",
     "nonsnackFeatures": [
@@ -800,7 +808,7 @@
     "dedicationContactError": "Dedication cannot include contact details.",
     "dedicationUrlError": "Dedication cannot include links or web addresses.",
     "dedicationRejectedError": "That dedication could not be used. Please keep it lawful, non-abusive, and certificate-friendly.",
-    "successStatusBadge": "Case opened · Paperwork filed",
+    "successStatusBadge": "Case closed · Paperwork on file",
     "successTitleNamed": "Welcome to the Alliance, {name}.",
     "successTextBrief": "Your paperwork is complete and your certificate is ready. No shark has filed a timely objection.",
     "downloadCertHero": "Download certificate ({paper})",
@@ -1272,7 +1280,10 @@
       "Proceeding without the recommended amount of absurd shark paperwork",
       "Failing to reassure the wider marine community in writing"
     ],
-    "tiltToggleLabel": "Generate with poster tilt"
+    "tiltToggleLabel": "Generate with poster tilt",
+    "shareErrorBanner": "Sharing failed. The poster could not be opened in your sharing menu — try Download poster or Copy verification link instead.",
+    "downloadErrorBanner": "Could not generate the poster image. Try Reroll or refresh the page.",
+    "downloadHintIOS": "On iPhone the poster opens in a new tab — long-press it and choose “Save to Photos”."
   },
   "wantedCase": {
     "contextBanner": "A comedic shark-protection case has been opened for {name}. The Alliance is fictional; the shark conservation allocation is real, tracked, and reported publicly.",
@@ -1311,6 +1322,7 @@
       "subtitle": "Enter your referral code (you received it after your purchase) to see your current rank and progress.",
       "codeLabel": "Your referral code",
       "button": "Check my rank",
+      "jumpButton": "Go to rank check",
       "loading": "Consulting the archives...",
       "notFound": "Hmm, that code wasn't found in our oceanic archives. Double-check and try again.",
       "error": "Something went wrong. The sharks may have chewed through a cable.",
@@ -1448,6 +1460,28 @@
     "quip6": "Our sharks have reviewed the records and confirm: this one checks out.",
     "rateLimitedTitle": "Verification temporarily paused",
     "rateLimitedText": "Too many verification requests arrived from this connection in a short period. Please wait a moment and try again.",
+    "lookup": {
+      "missing": {
+        "eyebrow": "Verification desk",
+        "title": "The sharks need a registry code.",
+        "text": "This verification page arrived without paperwork attached. Enter the registry code and we will pretend this was orderly."
+      },
+      "notFound": {
+        "eyebrow": "Record not located",
+        "title": "No file surfaced from the depths.",
+        "text": "That code did not match a public Alliance record. It may be mistyped, private, or currently being reviewed by someone with a stamp."
+      },
+      "private": {
+        "eyebrow": "Record unavailable",
+        "title": "This file is wearing sunglasses.",
+        "text": "The certificate exists only if its holder says it may be public. This one is private, erased, or otherwise refusing public eye contact."
+      },
+      "codeLabel": "Registry code",
+      "placeholder": "SHA-XXXX",
+      "button": "Verify record",
+      "registryLink": "Browse the Registry",
+      "purchaseLink": "File new paperwork"
+    },
     "quip7": "Cross-referenced with marine intelligence. The intelligence is mostly vibes, but the verification holds.",
     "quip8": "The Department of Aquatic Bureaucracy has stamped this record. Twice, for emphasis.",
     "quip9": "Verified by Finnley Mako personally. He used his reading glasses, allegedly.",
@@ -1538,8 +1572,10 @@
     "visibilityPublic": "Public",
     "visibilityPrivate": "Private",
     "hideButton": "Hide from public registry",
+    "showButton": "Make public in the registry",
     "eraseButton": "Erase identifying record data",
     "hideSuccess": "The record is now hidden from the public registry.",
+    "showSuccess": "The record is public again. The Registry has been instructed to look busy.",
     "eraseSuccess": "The identifying record data has been erased. Existing public links should stop resolving shortly.",
     "actionError": "The request could not be completed. Please try again in a moment.",
     "eraseConfirm": "Erase identifying record data for this certificate? This action is intended to be permanent."

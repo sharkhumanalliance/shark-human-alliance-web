@@ -51,6 +51,7 @@ async function fetchMemberBySession(sessionId: string): Promise<MemberData | nul
 
 function SuccessContentInner() {
   const t = useTranslations("purchase");
+  const templatesT = useTranslations("certificateTemplates");
   const locale = useLocale();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id") || "";
@@ -69,6 +70,7 @@ function SuccessContentInner() {
   const [template, setTemplate] = useState<CertificateTemplate>("luxury");
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
   const purchaseTrackedRef = useRef(false);
+  const previewSectionRef = useRef<HTMLElement>(null);
 
   const handleTemplateChange = useCallback((nextTemplate: CertificateTemplate) => {
     setTemplate(nextTemplate);
@@ -160,6 +162,12 @@ function SuccessContentInner() {
   useEffect(() => pollForMember(), [pollForMember]);
 
   useEffect(() => {
+    if (previewExpanded && previewSectionRef.current) {
+      previewSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [previewExpanded]);
+
+  useEffect(() => {
     if (isAcceptedCertificateTemplate(member?.template)) {
       handleTemplateChange(normalizeTemplate(member.template));
     }
@@ -181,11 +189,17 @@ function SuccessContentInner() {
       return;
     }
     setDownloadStatus("");
-    window.open(
-      `/${locale}/certificate/view?token=${member.accessToken}&template=${template}&paper=${paperFormat}&download=1`,
-      "_blank",
-      "noopener,noreferrer"
-    );
+    const downloadUrl = `/${locale}/certificate/view?token=${member.accessToken}&template=${template}&paper=${paperFormat}&download=1`;
+    // Use a real anchor click so mobile browsers treat it as a direct user
+    // navigation instead of a programmatic popup. window.open is silently
+    // blocked on iOS Safari in some configurations.
+    const anchor = document.createElement("a");
+    anchor.href = downloadUrl;
+    anchor.target = "_blank";
+    anchor.rel = "noopener";
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
   }
 
   if (loading) {
@@ -343,7 +357,7 @@ function SuccessContentInner() {
               onClick={() => setCustomizeOpen((value) => !value)}
               aria-expanded={customizeOpen}
               aria-controls="certificate-customize"
-              className="text-sm font-semibold text-[var(--brand-dark)] underline decoration-dashed underline-offset-4 transition hover:text-[var(--brand)]"
+              className="text-sm font-semibold text-[var(--brand-dark)] underline underline-offset-4 transition hover:text-[var(--brand)]"
             >
               {customizeOpen ? t("customizeHide") : t("previewCustomizeLink")}
             </button>
@@ -351,15 +365,15 @@ function SuccessContentInner() {
 
           {downloadStatus ? (
             <div
-              className="mx-auto mt-4 max-w-md rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-center text-sm font-medium text-amber-800"
-              role="status"
-              aria-live="polite"
+              className="mx-auto mt-4 max-w-md rounded-xl border border-red-300 bg-red-50 px-5 py-4 text-center text-sm font-semibold text-red-800"
+              role="alert"
+              aria-live="assertive"
             >
               {downloadStatus}
             </div>
           ) : null}
 
-          <p className="mx-auto mt-3 max-w-md text-[11px] leading-5 text-[var(--muted)]">
+          <p className="mx-auto mt-3 max-w-md text-xs leading-5 text-sky-800">
             {member.hasEmail ? t("emailSentAutomatic") : t("downloadOnlyNotice")}
           </p>
         </header>
@@ -370,15 +384,16 @@ function SuccessContentInner() {
             Tracking ID is inlined into the impact text as a
             quiet footer — no separate badge column.
            ==================================================== */}
-        <div className="mt-8 grid gap-4 lg:grid-cols-[200px_1fr] lg:items-stretch">
+        <div className={previewExpanded ? "mt-8" : "mt-8 grid gap-4 md:grid-cols-[220px_1fr] md:items-stretch"}>
+          {!previewExpanded && (
           <button
             type="button"
-            onClick={() => setPreviewExpanded((value) => !value)}
+            onClick={() => setPreviewExpanded(true)}
             aria-expanded={previewExpanded}
-            aria-label={previewExpanded ? t("previewCollapse") : t("previewExpand")}
-            className="group flex h-full cursor-zoom-in flex-col items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-white p-2 transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30"
+            aria-label={t("previewExpand")}
+            className="group mx-auto flex h-full w-full max-w-sm cursor-zoom-in flex-col items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-white p-2 transition hover:shadow-md focus-visible:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 active:bg-[var(--surface-soft)] md:max-w-none md:mx-0"
           >
-            <div className="pointer-events-none mx-auto w-full max-w-[180px]">
+            <div className="pointer-events-none mx-auto w-full max-w-[200px]">
               <CertificatePreview
                 name={member.name}
                 tier={publicTier}
@@ -391,9 +406,12 @@ function SuccessContentInner() {
                 locale={locale}
               />
             </div>
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)] transition group-hover:text-[var(--brand-dark)]">
+            <p className="text-xs text-[var(--muted)]">
+              {primaryPaperLabel} · {templatesT(`${template}.title`)}
+            </p>
+            <span className="inline-flex items-center gap-1.5 text-xs text-[var(--muted)] transition group-hover:text-[var(--brand-dark)]">
               <svg
-                className="h-3 w-3"
+                className="h-3.5 w-3.5"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -410,6 +428,7 @@ function SuccessContentInner() {
               {t("previewExpandHint")}
             </span>
           </button>
+          )}
 
           <section
             aria-label={t("impactEyebrow")}
@@ -449,8 +468,8 @@ function SuccessContentInner() {
                       ),
                     })}
                   </p>
-                  <p className="mt-2 font-mono text-[11px] leading-5 text-[var(--muted)]">
-                    {t("impactTrackingLabel")} {publicRegistryId}
+                  <p className="mt-2 text-[11px] leading-5 text-[var(--muted)]">
+                    {t("impactTrackingLabel")} <span className="font-mono">{publicRegistryId}</span>
                   </p>
                 </div>
               </div>
@@ -541,7 +560,7 @@ function SuccessContentInner() {
 
         {/* Expanded full-size preview — when thumbnail clicked */}
         {previewExpanded ? (
-          <section className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6">
+          <section ref={previewSectionRef} className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6">
             <div className="flex justify-end">
               <button
                 type="button"
@@ -574,12 +593,6 @@ function SuccessContentInner() {
             id: publicRegistryId,
             name: member.name,
             tier: publicTier,
-            dedication: member.dedication,
-            date: displayDate,
-            referralCode: member.referralCode,
-            accessToken: member.accessToken,
-            template,
-            paperFormat,
           }}
         />
 
@@ -678,7 +691,7 @@ function SuccessContentInner() {
               </p>
               <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[var(--border)]/60">
                 <div
-                  className="h-full rounded-full bg-[var(--accent)] transition-[width]"
+                  className="h-full rounded-full bg-[var(--tier-nonsnack)] transition-[width]"
                   style={{ width: `${referralProgressPercent}%` }}
                 />
               </div>

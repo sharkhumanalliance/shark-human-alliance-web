@@ -83,11 +83,10 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-5 text-xs text-[var(--muted)]">
+        <div className="mt-10 border-t border-[var(--border)] pt-5 text-xs leading-6 text-[var(--muted)]">
           <p>
-            {t("copyright")} {t("motto")}
+            {t("copyright")} {t("motto")} {t("operator")}
           </p>
-          <p>{t("operator")}</p>
         </div>
       </div>
     </footer>

@@ -154,6 +154,15 @@ export function MembershipPageContent() {
               <MembershipCard key={card.id} {...card} />
             ))}
           </div>
+
+          <div className="mt-5">
+            <LocalizedLink
+              href="/membership/protected-friend-status"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
+            >
+              {t("protectedDetailLink")} {"\u2192"}
+            </LocalizedLink>
+          </div>
         </div>
       </section>
 

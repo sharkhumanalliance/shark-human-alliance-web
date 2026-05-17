@@ -270,6 +270,12 @@ export function WantedContent() {
   const [linkCopied, setLinkCopied] = useState(false);
   const [useTilt, setUseTilt] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  // Pre-generated poster blob keeps navigator.share() within the user-gesture
+  // window on iOS Safari (the 300ms canvas + toBlob otherwise drops the gesture).
+  const shareBlobRef = useRef<Blob | null>(null);
+  const shareBlobKeyRef = useRef<string>("");
+  const [shareError, setShareError] = useState<string | null>(null);
 
   const toneCharges = useMemo(() => {
     return normalizeStringList(t.raw(`toneCharges.${selectedTone}`));
@@ -1205,22 +1211,61 @@ export function WantedContent() {
     return new Promise<Blob | null>((resolve) => off.toBlob(resolve, "image/png"));
   }, [name, posterFormat, useTilt]);
 
+  // Pre-generate the export blob whenever inputs change (debounced) so that
+  // share/download calls do not have to wait for a fresh canvas render. This
+  // is the same gesture-preservation trick we use on the success page share.
+  useEffect(() => {
+    const key = `${name}::${selectedTone}::${posterFormat}::${rerollSeed}::${useTilt}`;
+    if (shareBlobKeyRef.current === key) return;
+    let cancelled = false;
+    const timer = window.setTimeout(async () => {
+      try {
+        const blob = await createPosterExportBlob();
+        if (!cancelled && blob) {
+          shareBlobRef.current = blob;
+          shareBlobKeyRef.current = key;
+        }
+      } catch (error) {
+        console.warn("[Wanted] Poster blob prefetch failed:", error);
+      }
+    }, 300);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [createPosterExportBlob, name, selectedTone, posterFormat, rerollSeed, useTilt]);
+
   const handleDownload = useCallback(async () => {
     trackEvent("wanted_poster_download", { format: posterFormat, tilted: useTilt });
     setDownloading(true);
+    setShareError(null);
     try {
-      const blob = await createPosterExportBlob();
-      if (!blob) return;
+      // Use the cached blob if available; otherwise produce a fresh one.
+      const blob = shareBlobRef.current ?? (await createPosterExportBlob());
+      if (!blob) {
+        setShareError("downloadError");
+        return;
+      }
 
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       const safeName = (name.trim() || "someone").replace(/\s+/g, "-").toLowerCase();
       link.href = url;
       link.download = `wanted-${safeName}.png`;
+      // iOS Safari ignores `download` and opens the image inline. We add
+      // target=_blank so the image at least renders in a new tab where the
+      // user can long-press to save it; the inline hint under the button
+      // explains this.
+      link.target = "_blank";
+      link.rel = "noopener";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Give the browser a moment to consume the blob before revoking.
+      window.setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } catch (error) {
+      console.warn("[Wanted] Download failed:", error);
+      setShareError("downloadError");
     } finally {
       setDownloading(false);
     }
@@ -1254,33 +1299,52 @@ export function WantedContent() {
             casePath,
           );
 
+    setShareError(null);
     try {
-      const blob = await createPosterExportBlob();
-      if (!blob) return;
+      const blob = shareBlobRef.current ?? (await createPosterExportBlob());
+      if (!blob) {
+        setShareError("shareError");
+        return;
+      }
 
       const safeName = (name.trim() || "someone").replace(/\s+/g, "-").toLowerCase();
       const file = new File([blob], `wanted-${safeName}.png`, { type: "image/png" });
 
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: t("shareTitle", { name: name.trim() || t("defaultName") }),
-          text: `${t("shareText", { name: name.trim() || t("defaultName") })}\n${caseShareUrl}`,
-          url: caseShareUrl,
-        });
-      } else {
-        await navigator.clipboard.writeText(caseShareUrl);
-        setLinkCopied(true);
-        setTimeout(() => setLinkCopied(false), 2500);
+        try {
+          await navigator.share({
+            files: [file],
+            title: t("shareTitle", { name: name.trim() || t("defaultName") }),
+            // URL stays only in the `url` field — embedding it in `text` too
+            // causes iMessage / WhatsApp to render the link twice in the
+            // outgoing message.
+            text: t("shareText", { name: name.trim() || t("defaultName") }),
+            url: caseShareUrl,
+          });
+          return;
+        } catch (error) {
+          // User dismissed the share sheet — not a failure, do not fall back
+          // to clipboard which would silently confuse them with a "copied"
+          // toast they did not ask for.
+          if (error instanceof Error && error.name === "AbortError") {
+            return;
+          }
+          console.warn("[Wanted] Native share with file failed:", error);
+          // Fall through to clipboard fallback below.
+        }
       }
-    } catch {
+
       try {
         await navigator.clipboard.writeText(caseShareUrl);
         setLinkCopied(true);
         setTimeout(() => setLinkCopied(false), 2500);
-      } catch {
-        // Ignore clipboard failure.
+      } catch (clipboardError) {
+        console.warn("[Wanted] Clipboard write failed:", clipboardError);
+        setShareError("shareError");
       }
+    } catch (error) {
+      console.warn("[Wanted] Share failed:", error);
+      setShareError("shareError");
     }
   }, [createPosterExportBlob, locale, name, posterFormat, selectedTone, t]);
 
@@ -1288,6 +1352,15 @@ export function WantedContent() {
     setGenerated(false);
     setRerollSeed(0);
     setName("");
+    setShareError(null);
+    // Scroll the name input back into view and focus it so the user does not
+    // have to manually scroll up after the action buttons reset.
+    nameInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Mobile Safari occasionally drops focus during a smooth scroll; defer the
+    // focus so it lands after the animation finishes.
+    window.setTimeout(() => {
+      nameInputRef.current?.focus();
+    }, 400);
   }, []);
 
   const handleReroll = useCallback(() => {
@@ -1341,7 +1414,7 @@ export function WantedContent() {
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-8">
-            <div className="lg:max-w-xl">
+            <div className="order-2 lg:order-1 lg:max-w-xl">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-red-700">
                 {t("label")}
               </p>
@@ -1382,6 +1455,7 @@ export function WantedContent() {
                       {t("nameLabel")}
                     </label>
                     <input
+                      ref={nameInputRef}
                       id="wanted-name"
                       name="wanted_name"
                       type="text"
@@ -1455,7 +1529,7 @@ export function WantedContent() {
               </div>
             </div>
 
-            <div className="lg:sticky lg:top-28">
+            <div className="order-1 mx-auto w-full max-w-[300px] lg:order-2 lg:mx-0 lg:max-w-none lg:sticky lg:top-28">
               <div className="rounded-xl border border-amber-900/15 bg-white p-4 shadow-sm sm:p-5">
                 <div className="border-b border-[var(--border)] pb-3">
                   <div className="flex items-center justify-between gap-3">
@@ -1581,6 +1655,18 @@ export function WantedContent() {
                         {downloading ? t("downloadingButton") : t("downloadButton")}
                       </button>
 
+                      {shareError ? (
+                        <div
+                          role="alert"
+                          aria-live="assertive"
+                          className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm font-medium text-red-800"
+                        >
+                          {shareError === "shareError" ? t("shareErrorBanner") : t("downloadErrorBanner")}
+                        </div>
+                      ) : null}
+                      <p className="text-[11px] leading-5 text-[var(--muted)]">
+                        {t("downloadHintIOS")}
+                      </p>
                       <button
                         onClick={handleRegenerate}
                         className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-center text-sm font-semibold leading-6 text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-gray-50"

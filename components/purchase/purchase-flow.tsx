@@ -91,25 +91,20 @@ function PurchaseFlowInner() {
   const [name, setName] = useState(initialName);
   const [dedication, setDedication] = useState("");
 
-  // Pick 3 random dedication suggestions from the pool (stable per mount)
+  // Keep suggestions deterministic so SSR, hydration, and the live preview
+  // always agree. Randomizing here can make the server HTML differ from the
+  // first client render and trigger a hydration mismatch.
   const dedicationSuggestions = useMemo(() => {
     const rawSuggestions = t.raw("dedicationSuggestions") as
       | Record<string, string>
       | string[];
-    const pool = (
+    return (
       Array.isArray(rawSuggestions)
         ? rawSuggestions
         : Object.keys(rawSuggestions)
             .sort((a, b) => Number(a) - Number(b))
             .map((key) => rawSuggestions[key])
-    ).filter(Boolean);
-    const picked: string[] = [];
-    for (let i = 0; i < 3 && pool.length > 0; i++) {
-      const idx = Math.floor(Math.random() * pool.length);
-      picked.push(pool[idx]);
-      pool.splice(idx, 1);
-    }
-    return picked;
+    ).filter(Boolean).slice(0, 3);
   }, [t]);
   const [email, setEmail] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -412,7 +407,7 @@ function PurchaseFlowInner() {
                       className={`min-h-[58px] rounded-xl border ${getTierSelectionClass(tierOption, isSelected)} px-2 py-2 text-center transition-all duration-300 ease-out sm:min-h-[72px] sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[82px] ${
                         isSelected
                           ? "border-2 shadow-sm"
-                          : "opacity-50 hover:opacity-85"
+                          : "bg-white text-[var(--brand-dark)] hover:-translate-y-0.5 hover:shadow-sm"
                       }`}
                     >
                       <p className="text-[11px] font-medium leading-tight text-[var(--muted)] sm:text-sm sm:leading-snug">

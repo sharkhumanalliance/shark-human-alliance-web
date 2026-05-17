@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
   const token = typeof body?.token === "string" ? body.token.trim() : "";
   const action = typeof body?.action === "string" ? body.action.trim() : "";
 
-  if (!token || !["hide", "erase"].includes(action)) {
+  if (!token || !["hide", "show", "erase"].includes(action)) {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 
@@ -67,6 +67,15 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    if (action === "show") {
+      const updated = setDevPromoMemberRegistryVisibility(token, "public");
+      return NextResponse.json({
+        success: true,
+        action,
+        registryVisibility: updated?.registryVisibility ?? "public",
+      });
+    }
+
     eraseDevPromoMember(token);
     return NextResponse.json({
       success: true,
@@ -82,6 +91,15 @@ export async function POST(request: NextRequest) {
       success: true,
       action,
       registryVisibility: updated?.registryVisibility ?? "private",
+    });
+  }
+
+  if (action === "show") {
+    const updated = await setMemberRegistryVisibility(member.id, "public");
+    return NextResponse.json({
+      success: true,
+      action,
+      registryVisibility: updated?.registryVisibility ?? "public",
     });
   }
 

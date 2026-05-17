@@ -98,6 +98,13 @@
     "cookieSettingsLink": "Configuración de cookies",
     "privacyLink": "Política de privacidad"
   },
+  "notFound": {
+    "eyebrow": "Incidente de navegación",
+    "title": "Esta página escapó del archivador.",
+    "text": "La Alianza revisó los cajones habituales, un cajón sospechoso y el océano. No encontró una página coincidente.",
+    "homeCta": "Volver a la sede",
+    "registryCta": "Consultar el Registro"
+  },
   "hero": {
     "titleLine1": "Protección oficial contra tiburones.",
     "titleLine2": "Para humanos.",
@@ -359,7 +366,7 @@
       "Registro público opcional",
       "Asignación de conservación rastreada"
     ],
-    "ctaPrimary": "Primero elige el nivel",
+    "ctaPrimary": "Ver niveles de certificado",
     "ctaSecondary": "Luego compara los estilos",
     "recommended": "La mayoría empieza con",
     "recommendedProduct": "Estatus de Amigo Protegido",
@@ -401,6 +408,7 @@
     ],
     "protectedCta": "Empezar con Amigo Protegido — $4",
     "protectedPopular": "Más popular",
+    "protectedDetailLink": "Por qué Amigo Protegido suele ser el punto de partida",
     "nonsnackTitle": "Reconocimiento No-Snack",
     "nonsnackDescription": "Para quien quiere más energía ceremonial, una broma mejor enmarcada y reconocimiento oficial de su evidente no comestibilidad.",
     "nonsnackFeatures": [
@@ -800,7 +808,7 @@
     "dedicationContactError": "La dedicatoria no puede incluir datos de contacto.",
     "dedicationUrlError": "La dedicatoria no puede incluir enlaces ni direcciones web.",
     "dedicationRejectedError": "No se pudo usar esa dedicatoria. Mantenla legal, no ofensiva y apta para certificado.",
-    "successStatusBadge": "Caso abierto · Papeleo registrado",
+    "successStatusBadge": "Caso cerrado · Papeleo archivado",
     "successTitleNamed": "Bienvenido a la Alianza, {name}.",
     "successTextBrief": "Tu papeleo está completo y tu certificado está listo. Ningún tiburón ha presentado una objeción a tiempo.",
     "downloadCertHero": "Descargar certificado ({paper})",
@@ -1271,7 +1279,10 @@
       "Proceder sin la cantidad recomendada de papeleo tiburón absurdo",
       "No tranquilizar por escrito a la comunidad marina amplia"
     ],
-    "tiltToggleLabel": "Generar con inclinación de póster"
+    "tiltToggleLabel": "Generar con inclinación de póster",
+    "shareErrorBanner": "No se pudo compartir. No fue posible abrir el póster en el menú de compartir — prueba Descargar póster o Copiar enlace de verificación.",
+    "downloadErrorBanner": "No se pudo generar la imagen del póster. Prueba Reroll o recarga la página.",
+    "downloadHintIOS": "En el iPhone el póster se abre en una pestaña nueva — pulsa y mantén pulsado sobre la imagen y elige «Guardar en Fotos»."
   },
   "wantedCase": {
     "contextBanner": "Se ha abierto un caso cómico de protección contra tiburones para {name}. La Alianza es ficticia; la asignación para conservación de tiburones es real, rastreada y reportada públicamente.",
@@ -1310,6 +1321,7 @@
       "subtitle": "Ingresa tu código de referido (lo recibiste después de tu compra) para ver tu rango actual y progreso.",
       "codeLabel": "Tu código de referido",
       "button": "Consultar mi rango",
+      "jumpButton": "Ir a consultar rango",
       "loading": "Consultando los archivos...",
       "notFound": "Hmm, ese código no se encontró en nuestros archivos oceánicos. Revisa e intenta de nuevo.",
       "error": "Algo salió mal. Los tiburones pueden haber mordido un cable.",
@@ -1447,6 +1459,28 @@
     "quip6": "Nuestros tiburones han revisado los registros y confirman: este caso cuadra.",
     "rateLimitedTitle": "Verificación pausada temporalmente",
     "rateLimitedText": "Han llegado demasiadas solicitudes de verificación desde esta conexión en poco tiempo. Espera un momento y vuelve a intentarlo.",
+    "lookup": {
+      "missing": {
+        "eyebrow": "Mesa de verificación",
+        "title": "Los tiburones necesitan un código de registro.",
+        "text": "Esta página de verificación llegó sin papeleo adjunto. Ingresa el código de registro y fingiremos que todo fue ordenado."
+      },
+      "notFound": {
+        "eyebrow": "Registro no localizado",
+        "title": "Ningún expediente salió de las profundidades.",
+        "text": "Ese código no coincide con un registro público de la Alianza. Puede estar mal escrito, ser privado o estar bajo revisión por alguien con un sello."
+      },
+      "private": {
+        "eyebrow": "Registro no disponible",
+        "title": "Este expediente lleva gafas de sol.",
+        "text": "El certificado solo es público si su titular lo permite. Este está privado, borrado o evitando el contacto visual público."
+      },
+      "codeLabel": "Código de registro",
+      "placeholder": "SHA-XXXX",
+      "button": "Verificar registro",
+      "registryLink": "Explorar el Registro",
+      "purchaseLink": "Presentar nuevo papeleo"
+    },
     "quip7": "Cruzado con inteligencia marina. La inteligencia es sobre todo vibraciones, pero la verificación se sostiene.",
     "quip8": "El Departamento de Burocracia Acuática ha sellado este registro. Dos veces, por énfasis.",
     "quip9": "Verificado personalmente por Finnley Mako. Usó sus gafas de lectura, supuestamente.",
@@ -1537,8 +1571,10 @@
     "visibilityPublic": "Público",
     "visibilityPrivate": "Privado",
     "hideButton": "Ocultar del registro público",
+    "showButton": "Hacer público en el registro",
     "eraseButton": "Suprimir datos identificativos",
     "hideSuccess": "El registro ya está oculto del registro público.",
+    "showSuccess": "El registro vuelve a ser público. El Registro ha recibido instrucciones de parecer ocupado.",
     "eraseSuccess": "Los datos identificativos del registro han sido suprimidos. Los enlaces públicos existentes deberían dejar de resolver en breve.",
     "actionError": "No se pudo completar la solicitud. Inténtalo de nuevo en un momento.",
     "eraseConfirm": "¿Suprimir los datos identificativos de este certificado? Esta acción está pensada para ser permanente."

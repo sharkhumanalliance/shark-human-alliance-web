@@ -236,6 +236,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         />
       </head>
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${cormorantGaramond.variable} ${cinzel.variable} ${robotoCondensed.variable} bg-[var(--background)] text-[var(--foreground)] antialiased`}
       >
         <a

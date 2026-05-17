@@ -1,33 +1,17 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useMemo, useRef, useState } from "react";
-import { CertificateDocument } from "@/components/certificate/certificate-document";
-import {
-  CertificateSheet,
-  getPaperDimensions,
-  type PaperFormat,
-} from "@/components/certificate/certificate-sheet";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
-import { getPublicTierKey, type PublicTierKey } from "@/lib/tiers";
-import {
-  normalizeTemplate,
-  type CertificateTemplate,
-} from "@/lib/certificate-templates";
+import type { PublicTierKey } from "@/lib/tiers";
 
 interface PostPurchaseShareProps {
   member: {
     id: string;
     name: string;
     tier: PublicTierKey;
-    dedication?: string | null;
-    date?: string;
-    referralCode?: string;
-    accessToken?: string;
-    template?: CertificateTemplate;
-    paperFormat?: PaperFormat;
   };
   /**
    * "full"    — original layout with Story preview, headings and Wanted Poster CTAs.
@@ -39,7 +23,6 @@ interface PostPurchaseShareProps {
 
 const STORY_WIDTH = 1080;
 const STORY_HEIGHT = 1920;
-const MM_TO_PX = 96 / 25.4;
 
 function drawRoundedRect(
   ctx: CanvasRenderingContext2D,
@@ -77,146 +60,125 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, 
   return fontSize;
 }
 
-async function blobToDataUrl(blob: Blob) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error("Could not read image blob."));
-    reader.readAsDataURL(blob);
-  });
-}
-
-async function getInlineImageSrc(src: string) {
-  if (!src || src.startsWith("data:")) return src;
-  const url = new URL(src, window.location.href);
-
-  if (url.hostname === "api.qrserver.com") {
-    const encodedData = url.searchParams.get("data");
-    if (encodedData) {
-      const qr = await import("qrcode");
-      return qr.toDataURL(encodedData, {
-        errorCorrectionLevel: "M",
-        margin: 0,
-        width: 200,
-      });
-    }
-  }
-
-  const response = await fetch(url.toString(), { mode: "cors" });
-  if (!response.ok) {
-    throw new Error(`Could not load image for share export: ${url.pathname}`);
-  }
-  return blobToDataUrl(await response.blob());
-}
-
-async function inlineImagesForSvg(root: HTMLElement) {
-  const images = Array.from(root.querySelectorAll("img"));
-  await Promise.all(
-    images.map(async (image) => {
-      const src = image.getAttribute("src");
-      if (!src) return;
-      try {
-        image.setAttribute("src", await getInlineImageSrc(src));
-      } catch {
-        image.removeAttribute("src");
-      }
-    }),
-  );
-}
-
-function collectDocumentCss() {
-  const chunks: string[] = [];
-  for (const sheet of Array.from(document.styleSheets)) {
-    try {
-      chunks.push(
-        Array.from(sheet.cssRules)
-          .map((rule) => rule.cssText)
-          .join("\n"),
-      );
-    } catch {
-      // Cross-origin stylesheets cannot be read. The app stylesheet is same-origin.
-    }
-  }
-  return chunks.join("\n");
-}
-
-async function renderCertificateElementToImage(
-  sourceElement: HTMLElement,
-  paperFormat: PaperFormat,
-) {
-  await document.fonts?.ready;
-  const clone = sourceElement.cloneNode(true) as HTMLElement;
-  await inlineImagesForSvg(clone);
-
-  const paper = getPaperDimensions(paperFormat);
-  const width = Math.round(paper.width * MM_TO_PX);
-  const height = Math.round(paper.height * MM_TO_PX);
-  const styles = collectDocumentCss();
-  const xhtml = `
-    <div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;margin:0;background:#fff;overflow:hidden;">
-      <style>
-        ${styles}
-        * { box-sizing: border-box; }
-        body { margin: 0; }
-        img { max-width: none; }
-      </style>
-      ${clone.outerHTML}
-    </div>
-  `;
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-      <foreignObject width="100%" height="100%">${xhtml}</foreignObject>
-    </svg>
-  `;
-  const url = URL.createObjectURL(
-    new Blob([svg], { type: "image/svg+xml;charset=utf-8" }),
-  );
-  try {
-    const image = new Image();
-    image.decoding = "async";
-    image.src = url;
-    await image.decode();
-    return image;
-  } finally {
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-}
-
-function drawCertificateImage(
+function drawCenteredText(
   ctx: CanvasRenderingContext2D,
-  certificateImage: HTMLImageElement,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  initialSize: number,
+  minSize: number,
+  options: {
+    weight?: number;
+    family?: string;
+    fillStyle?: string;
+  } = {},
 ) {
-  const target = { x: 100, y: 85, width: 880, height: 1120 };
-  const sourceRatio = certificateImage.naturalWidth / certificateImage.naturalHeight;
-  const targetRatio = target.width / target.height;
-  const width = sourceRatio > targetRatio ? target.width : target.height * sourceRatio;
-  const height = sourceRatio > targetRatio ? target.width / sourceRatio : target.height;
-  const x = target.x + (target.width - width) / 2;
-  const y = target.y + (target.height - height) / 2;
+  const fontSize = fitText(ctx, text, maxWidth, initialSize, minSize);
+  ctx.font = `${options.weight ?? 700} ${fontSize}px ${options.family ?? "Georgia, 'Times New Roman', serif"}`;
+  ctx.fillStyle = options.fillStyle ?? "#102941";
+  ctx.textAlign = "center";
+  ctx.fillText(text, x, y, maxWidth);
+  ctx.textAlign = "left";
+}
+
+function drawCertificateCard({
+  ctx,
+  memberName,
+  tierLabel,
+  registryId,
+}: {
+  ctx: CanvasRenderingContext2D;
+  memberName: string;
+  tierLabel: string;
+  registryId: string;
+}) {
+  const card = { x: 110, y: 120, width: 860, height: 1040 };
+  const centerX = card.x + card.width / 2;
 
   ctx.save();
-  ctx.shadowColor = "rgba(16, 41, 65, 0.22)";
-  ctx.shadowBlur = 40;
-  ctx.shadowOffsetY = 24;
-  drawRoundedRect(ctx, x - 18, y - 18, width + 36, height + 36, 22, "#ffffff");
+  ctx.shadowColor = "rgba(16, 41, 65, 0.20)";
+  ctx.shadowBlur = 36;
+  ctx.shadowOffsetY = 22;
+  drawRoundedRect(ctx, card.x, card.y, card.width, card.height, 20, "#fff8ed");
   ctx.restore();
-  ctx.drawImage(certificateImage, x, y, width, height);
+
+  ctx.strokeStyle = "#0d2340";
+  ctx.lineWidth = 8;
+  ctx.strokeRect(card.x + 36, card.y + 36, card.width - 72, card.height - 72);
+  ctx.strokeStyle = "#d7b56d";
+  ctx.lineWidth = 3;
+  ctx.strokeRect(card.x + 58, card.y + 58, card.width - 116, card.height - 116);
+
+  drawCenteredText(ctx, "CERTIFICATE", centerX, card.y + 180, card.width - 180, 76, 52, {
+    weight: 800,
+  });
+  drawCenteredText(ctx, "OF OFFICIAL RECOGNITION", centerX, card.y + 245, card.width - 180, 35, 26, {
+    weight: 700,
+  });
+
+  ctx.fillStyle = "#64748b";
+  ctx.font = "600 24px Arial, Helvetica, sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("Issued by the Shark Human Alliance", centerX, card.y + 330);
+
+  ctx.fillStyle = "#d7b56d";
+  ctx.beginPath();
+  ctx.arc(centerX, card.y + 385, 7, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "#64748b";
+  ctx.font = "italic 26px Georgia, 'Times New Roman', serif";
+  ctx.fillText("This certifies that", centerX, card.y + 455);
+
+  drawCenteredText(ctx, memberName.toUpperCase(), centerX, card.y + 560, card.width - 190, 62, 34, {
+    weight: 800,
+  });
+
+  ctx.fillStyle = "#64748b";
+  ctx.font = "600 22px Arial, Helvetica, sans-serif";
+  ctx.fillText("has been officially recognized as", centerX, card.y + 650);
+
+  drawCenteredText(ctx, tierLabel.toUpperCase(), centerX, card.y + 750, card.width - 160, 66, 38, {
+    weight: 900,
+  });
+
+  ctx.fillStyle = "#475569";
+  ctx.font = "500 24px Arial, Helvetica, sans-serif";
+  ctx.fillText("by paperwork that protects sharks more than humans.", centerX, card.y + 820);
+
+  ctx.strokeStyle = "#d7b56d";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(card.x + 150, card.y + 895);
+  ctx.lineTo(card.x + 360, card.y + 895);
+  ctx.moveTo(card.x + 500, card.y + 895);
+  ctx.lineTo(card.x + 710, card.y + 895);
+  ctx.stroke();
+
+  ctx.fillStyle = "#102941";
+  ctx.font = "700 26px Georgia, 'Times New Roman', serif";
+  ctx.fillText("Finnley Mako", card.x + 255, card.y + 940);
+  ctx.fillText("Luna Reef", card.x + 605, card.y + 940);
+
+  ctx.fillStyle = "#64748b";
+  ctx.font = "700 20px Arial, Helvetica, sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText(registryId, card.x + 82, card.y + 1002);
 }
 
 async function generateStoryBlob({
-  certificateElement,
-  paperFormat,
   memberName,
   tierLabel,
+  registryId,
   siteLabel,
   headlineTop,
   headlineBottom,
   footerLine,
 }: {
-  certificateElement: HTMLElement;
-  paperFormat: PaperFormat;
   memberName: string;
   tierLabel: string;
+  registryId: string;
   siteLabel: string;
   headlineTop: string;
   headlineBottom: string;
@@ -239,11 +201,12 @@ async function generateStoryBlob({
 
   // Hero illustration — object-contain (Math.min) so the whole "Case closed"
   // composition is visible, not cropped.
-  const certificateImage = await renderCertificateElementToImage(
-    certificateElement,
-    paperFormat,
-  );
-  drawCertificateImage(ctx, certificateImage);
+  drawCertificateCard({
+    ctx,
+    memberName,
+    tierLabel,
+    registryId,
+  });
 
   // Single merged identity + verification card. Replaces the previously separate
   // white name card + dark verification card (now redundant because the hero
@@ -337,20 +300,9 @@ async function generateStoryBlob({
 export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShareProps) {
   const t = useTranslations("purchase.share");
   const locale = useLocale();
-  const certificateShareRef = useRef<HTMLDivElement>(null);
   const [isBusy, setIsBusy] = useState(false);
   const [copyState, setCopyState] = useState<"idle" | "done" | "error">("idle");
   const [shareHint, setShareHint] = useState<string | null>(null);
-  const certificateTemplate = normalizeTemplate(member.template);
-  const paperFormat = member.paperFormat ?? "a4";
-  const publicTier = getPublicTierKey(member.tier);
-  const useNativePaperLayout =
-    paperFormat === "letter" &&
-    (certificateTemplate === "playful" ||
-      (certificateTemplate === "luxury" &&
-        (publicTier === "protected" ||
-          publicTier === "nonsnack" ||
-          publicTier === "business")));
 
   const verificationUrl = useMemo(() => {
     if (typeof window === "undefined") return "";
@@ -373,20 +325,48 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
     }
   }, [verificationUrl]);
 
-  async function getStoryFile() {
-    const certificateElement = certificateShareRef.current;
-    if (!certificateElement) throw new Error("Certificate preview is not ready.");
+  // Story file is pre-generated as soon as the component mounts so that the
+  // tap on Share can call navigator.share() within the same user-gesture tick.
+  // iOS Safari otherwise drops the gesture during the ~300ms canvas render and
+  // silently refuses the share.
+  const storyFileRef = useRef<File | null>(null);
+  const [storyFileReady, setStoryFileReady] = useState(false);
+
+  async function buildStoryFile() {
     const blob = await generateStoryBlob({
-      certificateElement,
-      paperFormat,
       memberName: member.name,
       tierLabel,
+      registryId: member.id,
       siteLabel: previewHost,
       headlineTop: t(`tierHeadlines.${member.tier}.headlineTop`),
       headlineBottom: t(`tierHeadlines.${member.tier}.headlineBottom`),
       footerLine: t("storyFooterLine"),
     });
     return new File([blob], fileName, { type: "image/png" });
+  }
+
+  useEffect(() => {
+    let cancelled = false;
+    buildStoryFile()
+      .then((file) => {
+        if (!cancelled) {
+          storyFileRef.current = file;
+          setStoryFileReady(true);
+        }
+      })
+      .catch((error) => {
+        // Pre-fetch failures are non-fatal — share/download can still try
+        // again on demand. We just log so we can see in dev tools why.
+        console.warn("[SHA] Story prefetch failed:", error);
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [member.id, member.name, member.tier]);
+
+  async function getStoryFile() {
+    return storyFileRef.current ?? (await buildStoryFile());
   }
 
   async function downloadStory(options?: { preserveBusyState?: boolean }) {
@@ -398,11 +378,19 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
       const anchor = document.createElement("a");
       anchor.href = objectUrl;
       anchor.download = file.name;
+      // iOS Safari ignores the download attribute and opens the image inline.
+      // We give it a hint by setting target="_blank" so the user at least sees
+      // the image and can long-press to save.
+      anchor.target = "_blank";
+      anchor.rel = "noopener";
+      document.body.appendChild(anchor);
       anchor.click();
-      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+      document.body.removeChild(anchor);
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 4000);
       trackEvent("share_story_downloaded", { tier: member.tier });
       setShareHint(t("downloadReady"));
-    } catch {
+    } catch (error) {
+      console.warn("[SHA] Story download failed:", error);
       setShareHint(t("downloadError"));
       trackEvent("share_story_failed", { tier: member.tier, stage: "download" });
     } finally {
@@ -415,40 +403,57 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
     setShareHint(null);
     trackEvent("share_story_clicked", { tier: member.tier });
     try {
-      const file = await getStoryFile();
+      // Use the cached file when available so navigator.share() is called
+      // synchronously from the user gesture — required by iOS Safari.
       const shareNavigator = navigator as Navigator & {
         canShare?: (data?: ShareData) => boolean;
       };
+      const file = storyFileRef.current;
 
-      if (shareNavigator.share && shareNavigator.canShare?.({ files: [file] })) {
-        await shareNavigator.share({
-          files: [file],
-          title: t(`tierHeadlines.${member.tier}.nativeTitle`),
-          text: `${t(`tierHeadlines.${member.tier}.nativeText`)} ${verificationUrl}`,
-          url: verificationUrl,
-        });
-        trackEvent("share_story_native_success", { tier: member.tier, mode: "file" });
-        setShareHint(t("nativeSuccess"));
-        return;
+      if (file && shareNavigator.share && shareNavigator.canShare?.({ files: [file] })) {
+        try {
+          await shareNavigator.share({
+            files: [file],
+            title: t(`tierHeadlines.${member.tier}.nativeTitle`),
+            text: `${t(`tierHeadlines.${member.tier}.nativeText`)} ${verificationUrl}`,
+            url: verificationUrl,
+          });
+          trackEvent("share_story_native_success", { tier: member.tier, mode: "file" });
+          setShareHint(t("nativeSuccess"));
+          return;
+        } catch (error) {
+          if (error instanceof Error && error.name === "AbortError") {
+            setShareHint(null);
+            return;
+          }
+          // Native share with file failed (common on iOS in-app browsers).
+          // Fall through to URL-only share, then to download.
+          console.warn("[SHA] Native file share failed:", error);
+        }
       }
 
       if (shareNavigator.share) {
-        await shareNavigator.share({
-          title: t(`tierHeadlines.${member.tier}.nativeTitle`),
-          text: t(`tierHeadlines.${member.tier}.nativeText`),
-          url: verificationUrl,
-        });
-        trackEvent("share_story_native_success", { tier: member.tier, mode: "url" });
-        setShareHint(t("nativeFallback"));
-        return;
+        try {
+          await shareNavigator.share({
+            title: t(`tierHeadlines.${member.tier}.nativeTitle`),
+            text: t(`tierHeadlines.${member.tier}.nativeText`),
+            url: verificationUrl,
+          });
+          trackEvent("share_story_native_success", { tier: member.tier, mode: "url" });
+          setShareHint(t("nativeFallback"));
+          return;
+        } catch (error) {
+          if (error instanceof Error && error.name === "AbortError") {
+            setShareHint(null);
+            return;
+          }
+          console.warn("[SHA] Native URL share failed:", error);
+        }
       }
 
       await downloadStory({ preserveBusyState: true });
     } catch (error) {
-      if (error instanceof Error && error.name === "AbortError") {
-        setShareHint(null);
-        return;
-      }
+      console.warn("[SHA] Share story failed:", error);
       trackEvent("share_story_failed", { tier: member.tier, stage: "native-share" });
       await downloadStory({ preserveBusyState: true });
     } finally {
@@ -468,47 +473,16 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
     }
   }
 
-  const shareCertificateSource = (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none fixed -left-[10000px] top-0 opacity-0"
-    >
-      <div ref={certificateShareRef}>
-        <CertificateSheet
-          paperFormat={paperFormat}
-          useNativePaperLayout={useNativePaperLayout}
-        >
-          <CertificateDocument
-            name={member.name}
-            tier={publicTier}
-            dedication={member.dedication}
-            date={member.date ?? ""}
-            registryId={member.id}
-            referralCode={member.referralCode}
-            accessToken={member.accessToken}
-            priorityImages
-            assetMode="full"
-            template={certificateTemplate}
-            paperFormat={paperFormat}
-            locale={locale}
-          />
-        </CertificateSheet>
-      </div>
-    </div>
-  );
-
   if (variant === "compact") {
     // Compact share row used on the redesigned success page. The Hero already
     // owns the primary action (Download certificate), so this strip is only a
     // secondary "share what you just got" affordance — no Story mock-up, no
     // Wanted Poster CTAs (those live in the dedicated secondary actions card).
     return (
-      <>
-        {shareCertificateSource}
-        <section
-          data-reveal
-          className="mt-6 border-y border-[var(--border)] py-4"
-        >
+      <section
+        data-reveal
+        className="mt-6 border-y border-[var(--border)] py-4"
+      >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)] shrink-0">
             {t("compactEyebrow")}
@@ -522,7 +496,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
               disabled={isBusy}
               className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md border border-[var(--brand)] bg-[var(--brand)] px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {isBusy ? t("working") : shareButtonLabel}
+              {isBusy && !storyFileReady ? t("working") : shareButtonLabel}
             </button>
             <button
               type="button"
@@ -551,22 +525,19 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
         </div>
         {shareHint ? (
           <p
-            className="mt-2 text-xs font-medium text-sky-800"
+            className="mt-3 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm font-medium text-sky-900"
             role="status"
             aria-live="polite"
           >
             {shareHint}
           </p>
         ) : null}
-        </section>
-      </>
+      </section>
     );
   }
 
   return (
-    <>
-      {shareCertificateSource}
-      <section data-reveal className="mt-10 rounded-[32px] border border-[var(--border)] bg-white px-4 py-5 shadow-sm sm:px-6 sm:py-7 lg:px-8">
+    <section data-reveal className="mt-10 rounded-[32px] border border-[var(--border)] bg-white px-4 py-5 shadow-sm sm:px-6 sm:py-7 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,360px)] lg:items-center">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-800">
@@ -691,7 +662,6 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
           </div>
         </div>
       </div>
-      </section>
-    </>
+    </section>
   );
 }

@@ -173,18 +173,18 @@ export function CareerContent() {
               {t("hero.subtitle")}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#career-rank-check"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:px-8"
+              >
+                {t("checkRank.jumpButton")}
+              </a>
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:px-8"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
               >
                 {t("cta.button")}
               </LocalizedLink>
-              <a
-                href="#career-rank-check"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
-              >
-                {t("checkRank.button")}
-              </a>
             </div>
           </div>
 

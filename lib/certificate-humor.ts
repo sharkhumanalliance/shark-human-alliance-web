@@ -149,7 +149,12 @@ export function getCertificateHumorSeed(
   registryId: string,
   tier: string,
 ) {
-  return `${name.trim()}-${registryId.trim().toLowerCase()}-${tier.trim().toLowerCase()}`;
+  // The registry id is intentionally excluded from the seed. Purchase previews
+  // render with a placeholder id before checkout, while issued certificates use
+  // the final public registry id; basing humor on the id would make the
+  // previewed note differ from the delivered certificate for the same name.
+  void registryId;
+  return `${name.trim().toLowerCase()}-${tier.trim().toLowerCase()}`;
 }
 
 export function getCertificateDiplomaticAssessment(

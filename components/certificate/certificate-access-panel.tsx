@@ -18,7 +18,7 @@ export function CertificateAccessPanel({
   const [submitting, setSubmitting] = useState(false);
   const [erased, setErased] = useState(false);
 
-  async function runAction(action: "hide" | "erase") {
+  async function runAction(action: "hide" | "show" | "erase") {
     if (action === "erase" && !window.confirm(t("eraseConfirm"))) {
       return;
     }
@@ -38,13 +38,17 @@ export function CertificateAccessPanel({
         throw new Error(data?.error || "request_failed");
       }
 
-      if (action === "hide") {
-        setRegistryVisibility("private");
-        setStatus(t("hideSuccess"));
-      } else {
+      if (action === "erase") {
         setRegistryVisibility("private");
         setErased(true);
         setStatus(t("eraseSuccess"));
+      } else {
+        const nextVisibility =
+          data?.registryVisibility === "public" ? "public" : "private";
+        setRegistryVisibility(nextVisibility);
+        setStatus(
+          nextVisibility === "public" ? t("showSuccess") : t("hideSuccess"),
+        );
       }
     } catch {
       setStatus(t("actionError"));
@@ -78,14 +82,25 @@ export function CertificateAccessPanel({
       </div>
 
       <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-        <button
-          type="button"
-          disabled={submitting || erased || registryVisibility === "private"}
-          onClick={() => runAction("hide")}
-          className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {t("hideButton")}
-        </button>
+        {registryVisibility === "public" ? (
+          <button
+            type="button"
+            disabled={submitting || erased}
+            onClick={() => runAction("hide")}
+            className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {t("hideButton")}
+          </button>
+        ) : (
+          <button
+            type="button"
+            disabled={submitting || erased}
+            onClick={() => runAction("show")}
+            className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--brand)] px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {t("showButton")}
+          </button>
+        )}
         <button
           type="button"
           disabled={submitting || erased}

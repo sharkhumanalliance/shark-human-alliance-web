@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
@@ -10,6 +9,7 @@ import {
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { VerifyContent } from "@/components/verify/verify-content";
+import { VerifyLookupContent } from "@/components/verify/verify-lookup-content";
 import { VerifySampleContent } from "@/components/verify/verify-sample-content";
 import { getRateLimitKey, takeRateLimit } from "@/lib/rate-limit";
 import { formatRegistryIdForDisplay } from "@/lib/registry-id";
@@ -90,7 +90,19 @@ export default async function VerifyPage({ params, searchParams }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "verify" });
 
-  if (!publicIdentifier) notFound();
+  function renderLookup(reason: "missing" | "notFound" | "private") {
+    return (
+      <>
+        <SiteHeader />
+        <main id="main" className="pb-20 md:pb-0">
+          <VerifyLookupContent reason={reason} />
+        </main>
+        <SiteFooter />
+      </>
+    );
+  }
+
+  if (!publicIdentifier) return renderLookup("missing");
 
   // Sample certificate preview — not a real member
   if (publicIdentifier === "sample") {
@@ -145,8 +157,10 @@ export default async function VerifyPage({ params, searchParams }: Props) {
     member = getDemoMemberByPublicIdentifier(publicIdentifier);
   }
 
-  if (!member) notFound();
-  if (member.registryVisibility !== "public" || member.erasedAt) notFound();
+  if (!member) return renderLookup("notFound");
+  if (member.registryVisibility !== "public" || member.erasedAt) {
+    return renderLookup("private");
+  }
 
   const displayDate = new Date(member.date).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",
