@@ -296,10 +296,6 @@ export function WantedContent() {
     return subtitles.length > 0 ? subtitles : [t(`tones.${selectedTone}.posterSubtitle`)];
   }, [selectedTone, t]);
 
-  const caseDetails = useMemo(() => {
-    return normalizeStringList(readRawMessages(() => t.raw("caseDetails"), []));
-  }, [t]);
-
   // Salt hash with the reroll counter so users can cycle through different
   // 3-charge combinations for the same name + tone.
   const seededHash = useMemo(
@@ -326,12 +322,16 @@ export function WantedContent() {
     return tonePosterSubtitles[seededHash % tonePosterSubtitles.length];
   }, [seededHash, selectedTone, t, tonePosterSubtitles]);
 
+  const caseDetails = useMemo(() => {
+    return normalizeStringList(readRawMessages(() => t.raw("caseDetails"), []));
+  }, [t]);
+
   const selectedCaseDetail = useMemo(() => {
     if (caseDetails.length > 0) {
       const baseIndex = nameHash(`${name.trim() || "default"}::case-detail`);
       return caseDetails[(baseIndex + rerollSeed) % caseDetails.length];
     }
-    return "Records show confidence, sunscreen, and no marine filing.";
+    return "This notice does not confirm snack status. It merely confirms that the Bureau is uncomfortable.";
   }, [caseDetails, name, rerollSeed]);
 
   // Loads any same-origin image (e.g. /public assets) for the canvas. We set
@@ -705,14 +705,53 @@ export function WantedContent() {
         ctx.fillText(qrCtaText, centerX, qrY + qrSize + s(96));
         ctx.letterSpacing = "0px";
 
+        // Permanent Bureau disclaimer — vytištěno na každém posteru těsně
+        // nad URL footerem. Stejná rodina, váha a barva jako footer (Geist
+        // 600, rgba(16,41,65,0.86)), jen drobně menší font — disclaimer +
+        // URL tvoří jeden dvouřádkový blok. Předtím to byla jen 1 z ~10
+        // rotujících caseDetail variant, takže se objevovala na ~10 %
+        // posterů; pevný slot zajistí, že deadpan punchline vidí každý.
+        const storyDisclaimerText = t("posterDisclaimer");
+        const storyDisclaimerFontSize = fitCanvasText(
+          ctx,
+          storyDisclaimerText,
+          paperWidth - s(160),
+          s(36),
+          s(24),
+          600,
+        );
+        ctx.fillStyle = "rgba(16, 41, 65, 0.86)";
+        ctx.font = `600 ${storyDisclaimerFontSize}px 'Geist', sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillText(
+          storyDisclaimerText,
+          centerX,
+          height - marginY - s(72) - s(58),
+        );
+
         // Footer URL with stronger contrast than the muted gray used
         // elsewhere — this is the only piece of plain-text branding on the
         // poster, so it deserves to be readable on a phone screen.
         ctx.fillStyle = "rgba(16, 41, 65, 0.86)";
         const footerText = t("posterFooter");
-        const footerFontSize = fitCanvasText(ctx, footerText, paperWidth - s(140), s(50), s(34), 600);
-        ctx.font = `600 ${footerFontSize}px 'Geist', sans-serif`;
-        ctx.fillText(footerText, centerX, height - marginY - s(52));
+        const footerFit = fitCanvasWrappedText(
+          ctx,
+          footerText,
+          paperWidth - s(140),
+          s(44),
+          s(28),
+          600,
+          2,
+        );
+        const footerLineHeight = footerFit.fontSize * 1.16;
+        ctx.font = `600 ${footerFit.fontSize}px 'Geist', sans-serif`;
+        footerFit.lines.forEach((line, index) => {
+          ctx.fillText(
+            line,
+            centerX,
+            height - marginY - s(72) + (index - (footerFit.lines.length - 1)) * footerLineHeight,
+          );
+        });
         return;
       }
 
@@ -954,7 +993,11 @@ export function WantedContent() {
       // need extra breathing room on Story because their fonts are
       // significantly larger to remain phone-readable.
       const footerY = height - marginY - s(isStory ? 110 : 72);
-      const qrCtaY = footerY - s(isStory ? 70 : 66);
+      // qrCtaY bumped up on A4 by an extra s(34) to make room for the
+      // permanent Bureau disclaimer line printed between QR CTA and the URL
+      // footer. Story branch never reaches this code (early-return above),
+      // so the isStory ternary is preserved only for structural consistency.
+      const qrCtaY = footerY - s(isStory ? 70 : 100);
       const qrAreaBottomY = qrCtaY - s(isStory ? 70 : 72);
 
       const qrY = qrAreaBottomY - qrSize;
@@ -1125,11 +1168,49 @@ export function WantedContent() {
       ctx.fillText(qrCtaText, centerX, qrCtaY);
       ctx.letterSpacing = "0px";
 
+      // Permanent Bureau disclaimer — vytištěno na každém A4 posteru těsně
+      // nad URL footerem. Stejná rodina, váha (400) a barva (POSTER_MUTED)
+      // jako footer — disclaimer + URL tvoří jeden dvouřádkový blok zápatí.
+      // Předtím to byla 1 z ~10 caseDetails variant (zobrazení ~10 %); pevný
+      // slot zajistí, že deadpan punchline vidí každý.
+      const a4DisclaimerText = t("posterDisclaimer");
+      const a4DisclaimerFontSize = fitCanvasText(
+        ctx,
+        a4DisclaimerText,
+        paperWidth - s(140),
+        s(20),
+        s(14),
+        400,
+      );
+      ctx.fillStyle = POSTER_MUTED;
+      ctx.font = `400 ${a4DisclaimerFontSize}px 'Geist', sans-serif`;
+      ctx.textAlign = "center";
+      ctx.fillText(
+        a4DisclaimerText,
+        centerX,
+        footerY - s(34),
+      );
+
       ctx.fillStyle = POSTER_MUTED;
       const footerText = t("posterFooter");
-      const footerFontSize = fitCanvasText(ctx, footerText, paperWidth - s(140), s(24), s(16), 400);
-      ctx.font = `400 ${footerFontSize}px 'Geist', sans-serif`;
-      ctx.fillText(footerText, centerX, footerY);
+      const footerFit = fitCanvasWrappedText(
+        ctx,
+        footerText,
+        paperWidth - s(140),
+        s(isStory ? 42 : 24),
+        s(isStory ? 26 : 16),
+        400,
+        2,
+      );
+      const footerLineHeight = footerFit.fontSize * 1.16;
+      ctx.font = `400 ${footerFit.fontSize}px 'Geist', sans-serif`;
+      footerFit.lines.forEach((line, index) => {
+        ctx.fillText(
+          line,
+          centerX,
+          footerY + (index - (footerFit.lines.length - 1)) * footerLineHeight,
+        );
+      });
     },
     [
       loadPosterImage,
