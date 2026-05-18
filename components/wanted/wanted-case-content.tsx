@@ -199,6 +199,10 @@ export function WantedCaseContent({
                 {displayName}
               </p>
 
+              <p className="mt-4 w-full border-l-4 border-[var(--accent)] bg-white/45 py-3 pl-4 pr-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
+                {t("caseTagline", { name: shortName })}
+              </p>
+
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">

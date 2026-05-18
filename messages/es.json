@@ -1078,8 +1078,8 @@
       "label": "Brecha documental rutinaria",
       "description": "Ausencia leve de papeleo. Luna lo ha notado, pero no se ha levantado.",
       "posterSubtitle": "Por ambigüedad snack sin resolver en una carpeta de bajo volumen.",
-      "caseStatus": "Ingreso rutinario",
-      "riskLevel": "Papeleo anotado",
+      "caseStatus": "Archivado en silencio",
+      "riskLevel": "Levemente anotado",
       "recommendedAction": "Abrir expediente",
       "rewardText": "Aclarar expediente"
       },
@@ -1087,8 +1087,8 @@
       "label": "Revisión de cumplimiento abierta",
       "description": "El aviso público estándar para humanos sin papeleo frente a tiburones.",
       "posterSubtitle": "Por operar en público sin credenciales frente a tiburones.",
-      "caseStatus": "Revisión abierta",
-      "riskLevel": "Ambigüedad activa",
+      "caseStatus": "Abierto e incómodo",
+      "riskLevel": "Por encima de lo normal",
       "recommendedAction": "Elegir respuesta",
       "rewardText": "Resolver ambigüedad"
       },
@@ -1239,8 +1239,9 @@
     "eyebrow": "Caso abierto de papeleo tiburón",
     "caseFileLabel": "Expediente",
     "headline": "Se ha abierto un caso de cumplimiento tiburón",
+    "caseTagline": "Los registros confirman que {name} existe. La Oficina no sabe cómo sentirse al respecto.",
     "caseStatusBlock": {
-      "title": "Estado del caso",
+      "title": "Expediente de la Oficina",
       "officerLabel": "Oficial asignada",
       "officerName": "Luna Reef",
       "officerRole": "Prevención de Malentendidos",
