@@ -1078,27 +1078,27 @@
       "label": "Routine filing gap",
       "description": "Light paperwork absence. Luna has noticed, but has not stood up.",
       "posterSubtitle": "For unresolved snack-related ambiguity in a low-volume folder.",
-      "caseStatus": "Filed quietly",
-      "riskLevel": "Mildly noted",
-      "recommendedAction": "Open the file",
+      "filedBecause": "Existing casually",
+      "bureauMood": "Taking notes",
+      "remedy": "View file",
       "rewardText": "Clarify the file"
       },
       "clear": {
       "label": "Open compliance review",
       "description": "The standard public notice for humans with no shark-facing paperwork.",
       "posterSubtitle": "For operating in public without shark-facing credentials.",
-      "caseStatus": "Open and uncomfortable",
-      "riskLevel": "Above average",
-      "recommendedAction": "Choose response",
+      "filedBecause": "Unverified confidence",
+      "bureauMood": "No longer relaxed",
+      "remedy": "Submit response",
       "rewardText": "Resolve ambiguity"
       },
       "emergency": {
       "label": "Priority folder escalation",
       "description": "For visible certificate absence requiring the serious stamp.",
       "posterSubtitle": "For causing the Bureau to move this into a slightly larger folder.",
-      "caseStatus": "Priority file",
-      "riskLevel": "Serious stamp pending",
-      "recommendedAction": "Respond below",
+      "filedBecause": "Public confidence",
+      "bureauMood": "Serious stamp pending",
+      "remedy": "Settle by paperwork",
       "rewardText": "Clear the case"
       }
     },
@@ -1131,9 +1131,9 @@
         "For forcing this matter into a folder with tabs."
       ]
     },
-    "caseStatusLabel": "Case status",
-    "riskLevelLabel": "Bureau concern",
-    "recommendedActionLabel": "Next step",
+    "filedBecauseLabel": "Filed because",
+    "bureauMoodLabel": "Bureau mood",
+    "remedyLabel": "Recommended remedy",
     "subjectPhotoLabel": "Evidence photo",
     "generateButton": "Generate Wanted Poster",
     "formDisclaimer": "No humans were harmed in the making of this poster. No sharks were impressed either.",
@@ -1248,8 +1248,6 @@
       "supervisorLabel": "Supervising officer",
       "supervisorName": "Finnley Mako",
       "supervisorRole": "Stamp Department",
-      "moodLabel": "Bureau mood",
-      "moodValue": "Concerned, but still processing.",
       "ambiguityLabel": "Administrative Snack Ambiguity",
       "ambiguityValue": "{level}%",
       "ambiguityReasonLabel": "Reason",

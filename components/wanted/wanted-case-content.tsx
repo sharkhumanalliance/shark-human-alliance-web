@@ -206,26 +206,26 @@ export function WantedCaseContent({
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {wantedT("caseStatusLabel")}
+                    {wantedT("filedBecauseLabel")}
                   </p>
                   <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
-                    {wantedT(`tones.${tone}.caseStatus`)}
+                    {wantedT(`tones.${tone}.filedBecause`)}
                   </p>
                 </div>
                 <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {wantedT("riskLevelLabel")}
+                    {wantedT("bureauMoodLabel")}
                   </p>
                   <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
-                    {wantedT(`tones.${tone}.riskLevel`)}
+                    {wantedT(`tones.${tone}.bureauMood`)}
                   </p>
                 </div>
                 <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {wantedT("recommendedActionLabel")}
+                    {wantedT("remedyLabel")}
                   </p>
                   <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
-                    {wantedT(`tones.${tone}.recommendedAction`)}
+                    {wantedT(`tones.${tone}.remedy`)}
                   </p>
                 </div>
               </div>
@@ -255,14 +255,6 @@ export function WantedCaseContent({
                     </p>
                     <p className="mt-0.5 text-sm text-[var(--muted)]">
                       {t("caseStatusBlock.supervisorRole")}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      {t("caseStatusBlock.moodLabel")}
-                    </p>
-                    <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
-                      {t("caseStatusBlock.moodValue")}
                     </p>
                   </div>
                   <div className="sm:col-span-2">

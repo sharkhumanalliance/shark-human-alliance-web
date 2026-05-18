@@ -539,9 +539,9 @@ export function WantedContent() {
         const fieldGap = s(24);
         const fieldWidth = (fieldsTotalWidth - fieldGap * 2) / 3;
         const fields = [
-          { label: t("caseStatusLabel"), value: t(`tones.${selectedTone}.caseStatus`) },
-          { label: t("riskLevelLabel"), value: t(`tones.${selectedTone}.riskLevel`) },
-          { label: t("recommendedActionLabel"), value: t(`tones.${selectedTone}.recommendedAction`) },
+          { label: t("filedBecauseLabel"), value: t(`tones.${selectedTone}.filedBecause`) },
+          { label: t("bureauMoodLabel"), value: t(`tones.${selectedTone}.bureauMood`) },
+          { label: t("remedyLabel"), value: t(`tones.${selectedTone}.remedy`) },
         ];
         fields.forEach((field, index) => {
           const x = fieldsX + index * (fieldWidth + fieldGap);
@@ -943,9 +943,9 @@ export function WantedContent() {
       const fieldGap = s(28);
       const fieldWidth = (fieldsTotalWidth - fieldGap * 2) / 3;
       const fields = [
-        { label: t("caseStatusLabel"), value: t(`tones.${selectedTone}.caseStatus`) },
-        { label: t("riskLevelLabel"), value: t(`tones.${selectedTone}.riskLevel`) },
-        { label: t("recommendedActionLabel"), value: t(`tones.${selectedTone}.recommendedAction`) },
+        { label: t("filedBecauseLabel"), value: t(`tones.${selectedTone}.filedBecause`) },
+        { label: t("bureauMoodLabel"), value: t(`tones.${selectedTone}.bureauMood`) },
+        { label: t("remedyLabel"), value: t(`tones.${selectedTone}.remedy`) },
       ];
       fields.forEach((field, index) => {
         const x = fieldsX + index * (fieldWidth + fieldGap);

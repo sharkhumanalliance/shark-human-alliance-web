@@ -1078,27 +1078,27 @@
       "label": "Brecha documental rutinaria",
       "description": "Ausencia leve de papeleo. Luna lo ha notado, pero no se ha levantado.",
       "posterSubtitle": "Por ambigüedad snack sin resolver en una carpeta de bajo volumen.",
-      "caseStatus": "Archivado en silencio",
-      "riskLevel": "Levemente anotado",
-      "recommendedAction": "Abrir expediente",
+      "filedBecause": "Existir casualmente",
+      "bureauMood": "Tomando nota",
+      "remedy": "Ver expediente",
       "rewardText": "Aclarar expediente"
       },
       "clear": {
       "label": "Revisión de cumplimiento abierta",
       "description": "El aviso público estándar para humanos sin papeleo frente a tiburones.",
       "posterSubtitle": "Por operar en público sin credenciales frente a tiburones.",
-      "caseStatus": "Abierto e incómodo",
-      "riskLevel": "Por encima de lo normal",
-      "recommendedAction": "Elegir respuesta",
+      "filedBecause": "Confianza no verificada",
+      "bureauMood": "Ya no tranquila",
+      "remedy": "Enviar respuesta",
       "rewardText": "Resolver ambigüedad"
       },
       "emergency": {
       "label": "Escalada de carpeta prioritaria",
       "description": "Para ausencia visible de certificado que requiere el sello serio.",
       "posterSubtitle": "Por hacer que la Oficina mueva esto a una carpeta ligeramente más grande.",
-      "caseStatus": "Expediente prioritario",
-      "riskLevel": "Sello serio pendiente",
-      "recommendedAction": "Responder abajo",
+      "filedBecause": "Confianza pública",
+      "bureauMood": "Sello serio pendiente",
+      "remedy": "Resolver con papeleo",
       "rewardText": "Cerrar el caso"
       }
     },
@@ -1131,9 +1131,9 @@
         "Por obligar a mover este asunto a una carpeta con pestañas."
       ]
     },
-    "caseStatusLabel": "Estado del caso",
-    "riskLevelLabel": "Preocupación de la Oficina",
-    "recommendedActionLabel": "Siguiente paso",
+    "filedBecauseLabel": "Archivado por",
+    "bureauMoodLabel": "Ánimo de la Oficina",
+    "remedyLabel": "Remedio recomendado",
     "subjectPhotoLabel": "Foto de evidencia",
     "generateButton": "Generar póster Wanted",
     "formDisclaimer": "Ningún humano fue dañado durante la creación de este póster. Ningún tiburón quedó impresionado tampoco.",
@@ -1248,8 +1248,6 @@
       "supervisorLabel": "Oficial supervisor",
       "supervisorName": "Finnley Mako",
       "supervisorRole": "Departamento de Sellos",
-      "moodLabel": "Ánimo de la Oficina",
-    "moodValue": "Preocupada, pero aún procesándolo.",
       "ambiguityLabel": "Ambigüedad Administrativa de Snack",
       "ambiguityValue": "{level}%",
       "ambiguityReasonLabel": "Motivo",
