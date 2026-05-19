@@ -15,13 +15,15 @@ No tests. The Linux VM cannot run `next build` (missing SWC binaries). Verify wi
 
 ## ⚠️ Edit-tool truncation gotcha (read this first)
 
-The Edit tool occasionally truncates large source files (TS/TSX, big JSON, CSS) when applying big replacements — file ends mid-line or with trailing NULL bytes. After every Edit on a file >~30 KB, **verify with `tail -c 200 <path>`** that it ends with the expected closing brackets/EOF. Recovery:
+The Edit tool routinely truncates large source files (TS/TSX, big JSON, CSS) when applying replacements — file ends mid-line or with trailing NULL bytes. After every Edit on a file >~30 KB, **verify with `tail -c 200 <path>`** that it ends with the expected closing brackets/EOF. Recovery:
 
 - Trailing NULLs: `python3 -c "p='path'; d=open(p,'rb').read().rstrip(b'\x00')+b'\n'; open(p,'wb').write(d)"`
 - Mid-line cut: rebuild the missing tail via Python script.
 - Broken JSON: `git show HEAD:path` and re-apply patches via `json.dump`.
 
-Files seen truncated: `wanted-content.tsx`, `success-content.tsx`, `purchase-flow.tsx`, `messages/{en,es}.json`, `globals.css`, `lib/tiers.ts`, several `app/[locale]/.../page.tsx`. Silent corruption — `tsc` catches it but only after layered edits make recovery harder.
+**Strong recommendation for repeat editing of large files:** switch to Python edits via bash (`python3 << 'PYEOF' ... PYEOF` with `text.replace(old, new)` + assertion that the marker exists). The Edit tool was observed to truncate `verify-content.tsx` on three consecutive calls — Python edits did not. For JSON files, always go through `json.load` / `json.dump`, never patch as plain text.
+
+Files seen truncated: `wanted-content.tsx`, `success-content.tsx`, `purchase-flow.tsx`, `verify-content.tsx`, `registry-content.tsx`, `messages/{en,es}.json`, `globals.css`, `lib/tiers.ts`, several `app/[locale]/.../page.tsx`. Silent corruption — `tsc` catches it but only after layered edits make recovery harder.
 
 ## Project
 

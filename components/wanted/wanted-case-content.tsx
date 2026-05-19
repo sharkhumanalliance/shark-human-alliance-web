@@ -89,12 +89,6 @@ export function WantedCaseContent({
     "",
     t("defenseStatement.body", { name: displayName }),
     "",
-    t("defenseStatement.reviewLabel"),
-    t("defenseStatement.reviewCredibility"),
-    t("defenseStatement.reviewPaperwork"),
-    t("defenseStatement.reviewAmbiguity"),
-    t("defenseStatement.reviewLuna"),
-    "",
     t("defenseStatement.storyVersion"),
   ].join("\n");
 
@@ -290,10 +284,10 @@ export function WantedCaseContent({
                   <div className="grid gap-3 border-t border-dashed border-[var(--muted)]/40 pt-4 sm:col-span-2 sm:grid-cols-2">
                     <div>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                        {t("caseStatusBlock.fileLocationLabel")}
+                        {t("caseStatusBlock.humanCooperationLabel")}
                       </p>
                       <p className="mt-1 font-mono text-xs font-semibold text-[var(--brand-dark)]">
-                        {t("caseStatusBlock.fileLocation")}
+                        {t("caseStatusBlock.humanCooperation")}
                       </p>
                     </div>
                     <div>
@@ -405,17 +399,6 @@ export function WantedCaseContent({
                         {t("defenseStatement.body", { name: displayName })}
                       </p>
                       <div className="mt-4 border-t border-[var(--border)] pt-4">
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
-                          {t("defenseStatement.reviewLabel")}
-                        </p>
-                        <div className="mt-2 space-y-1 font-mono text-xs font-semibold uppercase tracking-[0.08em] text-[var(--muted)]">
-                          <p>{t("defenseStatement.reviewCredibility")}</p>
-                          <p>{t("defenseStatement.reviewPaperwork")}</p>
-                          <p>{t("defenseStatement.reviewAmbiguity")}</p>
-                          <p>{t("defenseStatement.reviewLuna")}</p>
-                        </div>
-                      </div>
-                      <div className="mt-4 border-t border-[var(--border)] pt-4">
                         <p className="whitespace-pre-line text-sm font-semibold leading-6 text-[var(--brand-dark)]">
                           {t("defenseStatement.storyVersion")}
                         </p>
@@ -486,21 +469,33 @@ export function WantedCaseContent({
                     {submittedBlameName ? (
                       <div className="mt-4 border-l-4 border-[var(--brand-dark)] bg-[var(--surface-soft)]/60 py-4 pl-4 pr-3">
                         <p className="font-semibold text-[var(--brand-dark)]">
-                          {t("blamePanel.confirmationTitle")}
+                          {t("blamePanel.resultTitle")}
                         </p>
                         <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-                          {t("blamePanel.confirmationText")}
+                          {t("blamePanel.resultText")}
                         </p>
                         <p className="mt-3 text-sm leading-6 text-[var(--brand-dark)]">
                           <span className="font-semibold">
-                            {t("blamePanel.lunaNoteLabel")}:
+                            {t("blamePanel.targetLabel")}:
                           </span>{" "}
-                          {t("blamePanel.lunaNote", {
-                            name: submittedBlameName,
-                          })}
+                          {submittedBlameName}
                         </p>
-                        <p className="mt-1 text-sm leading-6 text-[var(--brand-dark)]">
-                          {t("blamePanel.finnleyNote")}
+                        <p className="mt-3 font-mono text-sm font-semibold uppercase tracking-[0.08em] text-[var(--brand-dark)]">
+                          <span className="font-semibold">
+                            {t("blamePanel.updatedStatusLabel")}:
+                          </span>{" "}
+                          {t("blamePanel.updatedStatusValue")}
+                        </p>
+                        <div className="mt-4 rounded-lg border border-[var(--border)] bg-white px-4 py-4">
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+                            {t("blamePanel.noteTitle")}
+                          </p>
+                          <p className="mt-2 whitespace-pre-line text-sm leading-6 text-[var(--brand-dark)]">
+                            {t("blamePanel.noteText")}
+                          </p>
+                        </div>
+                        <p className="mt-4 whitespace-pre-line text-sm font-semibold leading-6 text-[var(--brand-dark)]">
+                          {t("blamePanel.storyVersion")}
                         </p>
                       </div>
                     ) : null}

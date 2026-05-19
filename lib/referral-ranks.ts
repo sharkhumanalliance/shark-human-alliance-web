@@ -62,6 +62,27 @@ export function getNextRank(
   return null;
 }
 
+/**
+ * Get the progress (0..1) toward the next rank, plus a flag indicating whether
+ * the diplomat has already reached the top rank.
+ */
+export function getRankProgress(referralCount: number): {
+  progress: number;
+  isTop: boolean;
+} {
+  const nextRank = getNextRank(referralCount);
+  if (!nextRank) return { progress: 1, isTop: true };
+
+  const currentRank = getRankInfo(referralCount);
+  const span = nextRank.rank.minReferrals - currentRank.minReferrals;
+  const filled = referralCount - currentRank.minReferrals;
+  const progress = span > 0 ? filled / span : 0;
+  return {
+    progress: Math.min(Math.max(progress, 0), 1),
+    isTop: false,
+  };
+}
+
 
 export function getRankUi(rankId: string): RankUi {
   switch (rankId) {

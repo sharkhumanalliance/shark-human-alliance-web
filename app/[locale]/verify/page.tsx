@@ -21,6 +21,12 @@ type Props = {
   searchParams: Promise<{ id?: string; code?: string; ref?: string }>;
 };
 
+function getDaysOnFile(issueDate: string) {
+  const issuedAt = new Date(issueDate).getTime();
+  if (!Number.isFinite(issuedAt)) return 0;
+  return Math.max(0, Math.floor((Date.now() - issuedAt) / 86_400_000));
+}
+
 export async function generateMetadata({
   params,
   searchParams,
@@ -166,6 +172,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
     locale === "es" ? "es-ES" : "en-US",
     { year: "numeric", month: "long", day: "numeric" }
   );
+  const daysOnFile = getDaysOnFile(member.date);
 
   return (
     <>
@@ -175,6 +182,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
           name={member.name}
           tier={member.tier}
           date={displayDate}
+          daysOnFile={daysOnFile}
           registryId={member.registryCode || formatRegistryIdForDisplay(member.id)}
           referralCode={member.referralCode}
           referralCount={member.referralCount}

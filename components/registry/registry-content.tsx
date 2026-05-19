@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
 import { buildLocalizedPath } from "@/lib/navigation";
-import { getRankInfo } from "@/lib/referral-ranks";
+import { getNextRank, getRankInfo, getRankProgress } from "@/lib/referral-ranks";
 import {
   getPublicTierKey,
   getTierRegistryBadgeClass,
@@ -28,8 +29,68 @@ type Member = {
 
 type TierFilter = "all" | PublicTierKey;
 
+const NEW_MEMBER_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+const CAREER_STEP_KEYS = ["0", "1", "2", "3", "4", "5"] as const;
+const RECRUITER_REWARD_KEYS = ["0", "1", "2", "3"] as const;
+const AVATAR_STYLE_BY_TIER: Record<PublicTierKey, string> = {
+  protected:
+    "bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)] ring-[var(--tier-protected-border)]",
+  nonsnack:
+    "bg-[var(--tier-nonsnack-surface)] text-[var(--tier-nonsnack-text)] ring-[var(--tier-nonsnack-border)]",
+  business:
+    "bg-[var(--tier-business-surface)] text-[var(--tier-business-text)] ring-[var(--tier-business-border)]",
+};
+
 function getPublicMemberId(member: Member) {
   return member.registryCode || member.id;
+}
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "SHA";
+  return parts
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
+}
+
+function getTierAvatarClass(tier: PublicTierKey) {
+  return AVATAR_STYLE_BY_TIER[tier];
+}
+
+function isNewMember(date: string) {
+  const timestamp = Date.parse(date);
+  if (!Number.isFinite(timestamp)) return false;
+  const age = Date.now() - timestamp;
+  return age >= 0 && age <= NEW_MEMBER_WINDOW_MS;
+}
+
+function getRecruiterBadge(
+  placement: number | undefined,
+  referralCount: number
+) {
+  if (placement === 0) {
+    return "border-amber-300 bg-gradient-to-r from-amber-100 to-yellow-50 text-amber-900";
+  }
+  if (placement === 1) {
+    return "border-slate-300 bg-gradient-to-r from-slate-100 to-white text-slate-800";
+  }
+  if (placement === 2) {
+    return "border-orange-300 bg-gradient-to-r from-orange-100 to-amber-50 text-orange-900";
+  }
+  if (referralCount >= 5) {
+    return "border-sky-200 bg-sky-50 text-sky-900";
+  }
+  return "";
+}
+
+function getRecruiterBadgeLabel(
+  placement: number | undefined,
+  referralCount: number
+) {
+  if (placement !== undefined && placement < 3) return `#${placement + 1}`;
+  if (referralCount >= 5) return "5+";
+  return "";
 }
 
 export function RegistryContent() {
@@ -42,6 +103,7 @@ export function RegistryContent() {
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [lookupError, setLookupError] = useState("");
+  const [explainedFilter, setExplainedFilter] = useState<TierFilter>("all");
 
   useEffect(() => {
     fetch("/api/members")
@@ -103,6 +165,14 @@ export function RegistryContent() {
     [members]
   );
 
+  const recruiterPlacementById = useMemo(() => {
+    const placements = new Map<string, number>();
+    topRecruiters.forEach((member, index) => {
+      placements.set(getPublicMemberId(member), index);
+    });
+    return placements;
+  }, [topRecruiters]);
+
   const protectedCount = members.filter(
     (member) => getPublicTierKey(member.tier) === "protected"
   ).length;
@@ -113,18 +183,35 @@ export function RegistryContent() {
     (member) => getPublicTierKey(member.tier) === "business"
   ).length;
 
-  const filters: { key: TierFilter; label: string }[] = [
-    { key: "all", label: t("filterAll") },
-    { key: "protected", label: t("filterProtected") },
-    { key: "nonsnack", label: t("filterNonsnack") },
-    { key: "business", label: t("filterBusiness") },
+  const filters: { key: TierFilter; label: string; description: string }[] = [
+    { key: "all", label: t("filterAll"), description: t("filterAllHint") },
+    {
+      key: "protected",
+      label: t("filterProtected"),
+      description: t("filterProtectedHint"),
+    },
+    {
+      key: "nonsnack",
+      label: t("filterNonsnack"),
+      description: t("filterNonsnackHint"),
+    },
+    {
+      key: "business",
+      label: t("filterBusiness"),
+      description: t("filterBusinessHint"),
+    },
   ];
+
+  const explainedFilterDescription =
+    filters.find((item) => item.key === explainedFilter)?.description ??
+    filters[0].description;
 
   const tierSummaryStats = [
     { label: t("filterProtected"), value: String(protectedCount), accent: "text-teal-700" },
     { label: t("filterNonsnack"), value: String(nonsnackCount), accent: "text-orange-700" },
     { label: t("filterBusiness"), value: String(businessCount), accent: "text-amber-700" },
   ];
+  const wantedPreviewSrc = "/registry-wanted-preview.png";
 
   const getMemberHref = useCallback(
     (memberId: string) => `/verify?id=${encodeURIComponent(memberId)}`,
@@ -142,6 +229,15 @@ export function RegistryContent() {
     [getMemberHref, locale]
   );
 
+  const copyReferralCode = useCallback((memberId: string, referralCode?: string) => {
+    if (!referralCode) return;
+
+    navigator.clipboard.writeText(referralCode).then(() => {
+      setCopiedId(`referral:${memberId}`);
+      setTimeout(() => setCopiedId(null), 2000);
+    });
+  }, []);
+
   const handleOpenRecord = useCallback(() => {
     if (!normalizedQuery) return;
 
@@ -154,6 +250,14 @@ export function RegistryContent() {
     setLookupError(t("verifyNotFound"));
   }, [exactLookupMatch, getMemberHref, locale, normalizedQuery, router, t]);
 
+  const handleRandomDiplomat = useCallback(() => {
+    const candidates = filteredMembers.length > 0 ? filteredMembers : members;
+    if (candidates.length === 0) return;
+    const member = candidates[Math.floor(Math.random() * candidates.length)];
+    setLookupError("");
+    router.push(buildLocalizedPath(locale, getMemberHref(getPublicMemberId(member))));
+  }, [filteredMembers, getMemberHref, locale, members, router]);
+
   return (
     <>
       <section data-reveal className="py-12 sm:py-14 lg:py-16">
@@ -163,16 +267,16 @@ export function RegistryContent() {
               <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
                 {t("title")}
               </h1>
-              <p className="mt-3 max-w-2xl text-lg leading-7 text-[var(--muted)]">
+              <p className="mt-3 max-w-3xl text-balance text-lg leading-7 text-[var(--muted)]">
                 {t("subtitle")}
               </p>
-              <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--muted)]">
+              <p className="mt-4 max-w-3xl text-sm leading-6 text-[var(--muted)]">
                 {t("description")}
               </p>
             </div>
 
             {!loading ? (
-              <aside className="rounded-[28px] border border-[var(--border)] bg-white px-5 py-5 shadow-sm sm:px-6">
+              <aside className="hidden rounded-[28px] border border-[var(--border)] bg-white px-5 py-5 shadow-sm sm:px-6 lg:block">
                 <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                     {t("countLabel")}
@@ -202,7 +306,44 @@ export function RegistryContent() {
             ) : null}
           </div>
 
-          <div className="mt-6 rounded-[24px] border border-[var(--border)] bg-white px-5 py-4 shadow-sm sm:px-6">
+          {!loading ? (
+            <div className="mt-5 grid grid-cols-4 gap-2 rounded-2xl border border-[var(--border)] bg-white px-3 py-3 shadow-sm lg:hidden">
+              <div>
+                <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">
+                  {t("mobileStatTotal")}
+                </p>
+                <p className="mt-1 text-lg font-semibold tabular-nums text-[var(--brand-dark)]">
+                  {members.length}
+                </p>
+              </div>
+              <div>
+                <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">
+                  {t("mobileStatFriends")}
+                </p>
+                <p className="mt-1 text-lg font-semibold tabular-nums text-teal-700">
+                  {protectedCount}
+                </p>
+              </div>
+              <div>
+                <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">
+                  {t("mobileStatNonsnacks")}
+                </p>
+                <p className="mt-1 text-lg font-semibold tabular-nums text-orange-700">
+                  {nonsnackCount}
+                </p>
+              </div>
+              <div>
+                <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--muted)]">
+                  {t("mobileStatZones")}
+                </p>
+                <p className="mt-1 text-lg font-semibold tabular-nums text-amber-700">
+                  {businessCount}
+                </p>
+              </div>
+            </div>
+          ) : null}
+
+          <div className="sticky top-0 z-20 mt-5 rounded-[24px] border border-[var(--border)] bg-white/95 px-5 py-4 shadow-sm backdrop-blur sm:px-6 lg:static lg:mt-6 lg:bg-white lg:backdrop-blur-none">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
               <div className="min-w-0 flex-1">
                 <label
@@ -231,37 +372,56 @@ export function RegistryContent() {
                   className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/55 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
                 />
               </div>
-              <button
-                onClick={handleOpenRecord}
-                disabled={!normalizedQuery}
-                className="shrink-0 self-start rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-45 sm:self-auto"
-              >
-                {t("verifyButton")}
-              </button>
+              <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:self-auto">
+                <button
+                  onClick={handleOpenRecord}
+                  disabled={!normalizedQuery}
+                  className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-45"
+                >
+                  {t("verifyButton")}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRandomDiplomat}
+                  disabled={members.length === 0}
+                  className="rounded-lg bg-[var(--brand-dark)] px-4 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand)] disabled:cursor-not-allowed disabled:opacity-45"
+                >
+                  {t("randomDiplomat")}
+                </button>
+              </div>
             </div>
 
             <div className="mt-4 flex flex-col gap-3 border-t border-[var(--border)] pt-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-                {filters.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setFilter(item.key)}
-                    aria-pressed={filter === item.key}
-                    className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
-                      filter === item.key
-                        ? "bg-[var(--brand-dark)] text-white shadow-sm"
-                        : "border border-[var(--border)] bg-white text-[var(--muted)] hover:bg-sky-50 hover:text-[var(--brand-dark)]"
-                    }`}
-                  >
-                    {item.label}
-                    {item.key !== "all" ? (
-                      <span className="ml-1.5 opacity-60 tabular-nums">
-                        ({members.filter((member) => getPublicTierKey(member.tier) === item.key).length})
-                      </span>
-                    ) : null}
-                  </button>
-                ))}
+              <div className="relative min-w-0">
+                <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-white/95 to-transparent sm:hidden" />
+                <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 pr-8 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 sm:pr-0">
+                  {filters.map((item) => (
+                    <button
+                      key={item.key}
+                      type="button"
+                      title={item.description}
+                      onMouseEnter={() => setExplainedFilter(item.key)}
+                      onFocus={() => setExplainedFilter(item.key)}
+                      onClick={() => {
+                        setFilter(item.key);
+                        setExplainedFilter(item.key);
+                      }}
+                      aria-pressed={filter === item.key}
+                      className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
+                        filter === item.key
+                          ? "bg-[var(--brand-dark)] text-white shadow-sm"
+                          : "border border-[var(--border)] bg-white text-[var(--muted)] hover:bg-sky-50 hover:text-[var(--brand-dark)]"
+                      }`}
+                    >
+                      {item.label}
+                      {item.key !== "all" ? (
+                        <span className="ml-1.5 opacity-60 tabular-nums">
+                          ({members.filter((member) => getPublicTierKey(member.tier) === item.key).length})
+                        </span>
+                      ) : null}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <p className="text-sm text-[var(--muted)] lg:pl-4">
@@ -272,6 +432,10 @@ export function RegistryContent() {
               </p>
             </div>
 
+            <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+              {explainedFilterDescription}
+            </p>
+
             <div aria-live="polite" className="mt-3 min-h-6">
               {lookupError ? (
                 <p className="text-sm text-red-600">{lookupError}</p>
@@ -281,10 +445,8 @@ export function RegistryContent() {
             </div>
           </div>
         </div>
-      </section>
 
-      <section data-reveal className="py-10 sm:py-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto mt-10 max-w-6xl px-4 sm:mt-12 sm:px-6">
           {loading ? (
             <div role="status" aria-live="polite" aria-label={t("loadingText")}>
               <div className="space-y-3">
@@ -334,40 +496,84 @@ export function RegistryContent() {
             </div>
           ) : (
             <>
-              <div className="hidden gap-4 md:grid md:grid-cols-1 lg:grid-cols-2">
+              <div className="hidden gap-3 md:grid md:grid-cols-1 lg:grid-cols-2">
                 {filteredMembers.map((member) => {
                   const publicTier = getPublicTierKey(member.tier);
                   const badgeClass = getTierRegistryBadgeClass(publicTier);
+                  const borderClass = getTierRegistryBorderClass(publicTier);
                   const rank = getRankInfo(member.referralCount || 0);
+                  const referralCount = member.referralCount || 0;
+                  const nextRank = getNextRank(referralCount);
+                  const rankProgress = getRankProgress(referralCount);
+                  const rankTooltip = nextRank
+                    ? t("nextRankShort", {
+                        count: nextRank.remaining,
+                        rank: nextRank.rank.label,
+                      })
+                    : t("topRankStatus");
+                  const placement = recruiterPlacementById.get(getPublicMemberId(member));
+                  const recruiterBadgeClass = getRecruiterBadge(placement, referralCount);
+                  const recruiterBadgeLabel = getRecruiterBadgeLabel(placement, referralCount);
                   const publicMemberId = getPublicMemberId(member);
                   const memberHref = getMemberHref(publicMemberId);
                   const memberDate = formatCertificateDate(member.date, locale);
+                  const newMember = isNewMember(member.date);
 
                   return (
-                    <div
+                    <article
                       key={publicMemberId}
-                      className="rounded-[22px] border border-[var(--border)] bg-white px-5 py-4 shadow-sm transition-colors hover:bg-sky-50/40"
+                      role="link"
+                      tabIndex={0}
+                      onClick={() =>
+                        router.push(buildLocalizedPath(locale, memberHref))
+                      }
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          router.push(buildLocalizedPath(locale, memberHref));
+                        }
+                      }}
+                      className={`group relative cursor-pointer overflow-hidden rounded-[22px] border ${borderClass} bg-white px-5 py-4 shadow-sm transition-colors hover:bg-sky-50/40 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/25`}
                     >
                       <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0">
-                          <LocalizedLink
-                            href={memberHref}
-                            className="block truncate text-base font-semibold text-[var(--brand-dark)] transition hover:text-[var(--brand)]"
+                        <div className="relative z-10 flex min-w-0 items-start gap-3">
+                          <div
+                            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold ring-1 ${getTierAvatarClass(publicTier)}`}
+                            aria-hidden="true"
                           >
-                            {member.name}
-                          </LocalizedLink>
-                          <div className="mt-3 flex min-w-0 items-center gap-2 overflow-hidden">
-                            <span
-                              className={`inline-flex shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${badgeClass}`}
-                            >
-                              {t(`tierLabels.${publicTier}`)}
-                            </span>
-                            <span className="truncate whitespace-nowrap text-sm font-medium text-[var(--brand-dark)]">
-                              {rank.label}
-                            </span>
+                            {getInitials(member.name)}
+                          </div>
+                          <div className="min-w-0">
+                            <div className="flex min-w-0 items-center gap-2">
+                              <p className="truncate text-base font-semibold text-[var(--brand-dark)] transition group-hover:text-[var(--brand)]">
+                                {member.name}
+                              </p>
+                              {newMember ? (
+                                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-amber-900">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500 motion-safe:animate-pulse" />
+                                  {t("newTag")}
+                                </span>
+                              ) : null}
+                              {recruiterBadgeLabel ? (
+                                <span
+                                  className={`inline-flex shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] ${recruiterBadgeClass}`}
+                                >
+                                  {recruiterBadgeLabel}
+                                </span>
+                              ) : null}
+                            </div>
+                            <div className="mt-3 flex min-w-0 flex-col items-start gap-1.5">
+                              <span
+                                className={`inline-flex shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${badgeClass}`}
+                              >
+                                {t(`tierLabels.${publicTier}`)}
+                              </span>
+                              <span className="text-sm font-medium leading-5 text-[var(--muted)]">
+                                {rank.label}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex shrink-0 flex-col items-end gap-3">
+                        <div className="relative z-10 flex shrink-0 flex-col items-end gap-3">
                           <div className="flex items-center gap-5 text-sm text-[var(--muted)]">
                             <div>
                               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
@@ -379,19 +585,29 @@ export function RegistryContent() {
                               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
                                 {t("recruitsLabel")}
                               </p>
-                              <p className="mt-1 text-sm font-semibold tabular-nums text-[var(--brand-dark)]">
-                                {member.referralCount || 0}
+                              <p className="mt-1 max-w-[11rem] text-sm font-semibold text-[var(--brand-dark)]">
+                                {referralCount === 0
+                                  ? t("soloOperator")
+                                  : referralCount === 1
+                                    ? t("firstRecruit")
+                                    : t("recruitSummary", {
+                                        count: referralCount,
+                                      })}
                               </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
                             <button
                               type="button"
-                              onClick={() => copyProfileLink(publicMemberId)}
+                              onClick={(event) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                copyProfileLink(publicMemberId);
+                              }}
                               aria-label={`${t("copyLink")}: ${member.name}`}
-                              className="rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-white hover:text-[var(--brand-dark)]"
+                              className="rounded-lg border border-[var(--border)] bg-white px-2.5 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] hover:text-[var(--brand-dark)]"
                             >
-                              {copiedId === publicMemberId ? t("copiedAction") : t("copyAction")}
+                              {copiedId === publicMemberId ? t("copiedShort") : t("copyAction")}
                             </button>
                             <LocalizedLink
                               href={memberHref}
@@ -403,50 +619,119 @@ export function RegistryContent() {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-3 flex items-center gap-3 border-t border-[var(--border)] pt-3">
-                        <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
-                          {t("referralCodeLabel")}
-                        </p>
-                        <p className="truncate font-mono text-xs text-[var(--muted)]/80">
-                          {member.referralCode || "-"}
-                        </p>
+                      <div className="relative z-10 mt-3 border-t border-[var(--border)] pt-3">
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            copyReferralCode(publicMemberId, member.referralCode);
+                          }}
+                          disabled={!member.referralCode}
+                          className="inline-flex min-h-[34px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-2.5 py-1.5 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
+                            {t("referralCodeLabel")}
+                          </span>
+                          <span className="truncate font-mono text-xs font-semibold text-[var(--brand-dark)]">
+                            {member.referralCode || "-"}
+                          </span>
+                          <span className="shrink-0 text-xs font-bold text-[var(--brand)]">
+                            {copiedId === `referral:${publicMemberId}`
+                              ? t("copiedShort")
+                              : t("copyLinkShort")}
+                          </span>
+                        </button>
                       </div>
-                    </div>
+                      <div
+                        className="absolute inset-x-0 bottom-0 z-10 h-1 bg-[var(--surface-soft)]"
+                        role="progressbar"
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={Math.round(rankProgress.progress * 100)}
+                        aria-label={rankTooltip}
+                        title={rankTooltip}
+                      >
+                        <div
+                          className={`h-full transition-all duration-500 ease-out ${
+                            rankProgress.isTop ? "bg-amber-400" : "bg-[var(--brand)]"
+                          }`}
+                          style={{ width: `${Math.round(rankProgress.progress * 100)}%` }}
+                        />
+                      </div>
+                    </article>
                   );
                 })}
               </div>
 
-              <div className="space-y-3 md:hidden">
+              <div className="space-y-2 md:hidden">
                 {filteredMembers.map((member) => {
                   const publicTier = getPublicTierKey(member.tier);
                   const badgeClass = getTierRegistryBadgeClass(publicTier);
                   const borderClass = getTierRegistryBorderClass(publicTier);
                   const rank = getRankInfo(member.referralCount || 0);
+                  const referralCount = member.referralCount || 0;
+                  const nextRank = getNextRank(referralCount);
+                  const rankProgress = getRankProgress(referralCount);
+                  const rankTooltip = nextRank
+                    ? t("nextRankShort", {
+                        count: nextRank.remaining,
+                        rank: nextRank.rank.label,
+                      })
+                    : t("topRankStatus");
+                  const placement = recruiterPlacementById.get(getPublicMemberId(member));
+                  const recruiterBadgeClass = getRecruiterBadge(placement, referralCount);
+                  const recruiterBadgeLabel = getRecruiterBadgeLabel(placement, referralCount);
                   const publicMemberId = getPublicMemberId(member);
                   const memberHref = getMemberHref(publicMemberId);
                   const memberDate = formatCertificateDate(member.date, locale);
+                  const newMember = isNewMember(member.date);
 
                   return (
                     <article
                       key={publicMemberId}
-                      className={`rounded-2xl border ${borderClass} bg-white px-4 py-4 shadow-sm`}
+                      role="link"
+                      tabIndex={0}
+                      onClick={() =>
+                        router.push(buildLocalizedPath(locale, memberHref))
+                      }
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          router.push(buildLocalizedPath(locale, memberHref));
+                        }
+                      }}
+                      className={`relative cursor-pointer overflow-hidden rounded-2xl border ${borderClass} bg-white px-4 py-4 shadow-sm transition hover:bg-sky-50/40 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/25`}
                     >
                       <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
-                          <LocalizedLink
-                            href={memberHref}
-                            className="block truncate text-base font-semibold text-[var(--brand-dark)]"
+                        <div className="flex min-w-0 items-start gap-3">
+                          <div
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-bold ring-1 ${getTierAvatarClass(publicTier)}`}
+                            aria-hidden="true"
                           >
-                            {member.name}
-                          </LocalizedLink>
-                          <p className="mt-1 text-xs text-[var(--muted)]">{memberDate}</p>
+                            {getInitials(member.name)}
+                          </div>
+                          <div className="min-w-0">
+                            <div className="flex min-w-0 items-center gap-2">
+                              <p className="truncate text-base font-semibold text-[var(--brand-dark)]">
+                                {member.name}
+                              </p>
+                              {newMember ? (
+                                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-amber-900">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500 motion-safe:animate-pulse" />
+                                  {t("newTag")}
+                                </span>
+                              ) : null}
+                            </div>
+                            <p className="mt-1 text-xs text-[var(--muted)]">{memberDate}</p>
+                          </div>
                         </div>
-                        <p className="text-right text-xs text-[var(--muted)]">
-                          <span className="block font-semibold tabular-nums text-[var(--brand-dark)]">
-                            {member.referralCount || 0}
+                        {recruiterBadgeLabel ? (
+                          <span
+                            className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] ${recruiterBadgeClass}`}
+                          >
+                            {recruiterBadgeLabel}
                           </span>
-                          {t("viralRecruitersCount")}
-                        </p>
+                        ) : null}
                       </div>
 
                       <div className="mt-3 flex flex-wrap gap-2">
@@ -458,25 +743,52 @@ export function RegistryContent() {
                         <span className="inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-xs font-semibold text-[var(--brand-dark)]">
                           {rank.label}
                         </span>
+                        <span className="inline-flex rounded-full border border-[var(--border)] px-3 py-1 text-xs font-semibold text-[var(--brand-dark)]">
+                          {referralCount === 0
+                            ? t("soloOperator")
+                            : referralCount === 1
+                              ? t("firstRecruit")
+                              : t("recruitSummary", { count: referralCount })}
+                        </span>
                       </div>
 
-                      <div className="mt-3 border-t border-[var(--border)] pt-3">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
-                          {t("referralCodeLabel")}
-                        </p>
-                        <p className="mt-1 truncate font-mono text-xs text-[var(--muted)]/80">
-                          {member.referralCode || "-"}
-                        </p>
+                      <div className="mt-3 flex flex-col gap-1.5 border-t border-[var(--border)] pt-3">
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            copyReferralCode(publicMemberId, member.referralCode);
+                          }}
+                          disabled={!member.referralCode}
+                          className="inline-flex min-h-[34px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-2.5 py-1.5 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
+                            {t("referralCodeLabel")}
+                          </span>
+                          <span className="truncate font-mono text-xs font-semibold text-[var(--brand-dark)]">
+                            {member.referralCode || "-"}
+                          </span>
+                          <span className="shrink-0 text-xs font-bold text-[var(--brand)]">
+                            {copiedId === `referral:${publicMemberId}`
+                              ? t("copiedShort")
+                              : t("copyLinkShort")}
+                          </span>
+                        </button>
                       </div>
 
                       <div className="mt-3 flex items-center justify-end gap-2">
                           <button
                             type="button"
-                            onClick={() => copyProfileLink(publicMemberId)}
+                            onClick={(event) => {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              copyProfileLink(publicMemberId);
+                            }}
                             aria-label={`${t("copyLink")}: ${member.name}`}
                             className="rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 hover:text-[var(--brand-dark)]"
                           >
-                            {copiedId === publicMemberId ? t("copiedAction") : t("copyAction")}
+                            {copiedId === publicMemberId ? t("copiedShort") : t("copyAction")}
                           </button>
                         <LocalizedLink
                           href={memberHref}
@@ -486,6 +798,22 @@ export function RegistryContent() {
                           {t("openAction")}
                         </LocalizedLink>
                         </div>
+                      <div
+                        className="absolute inset-x-0 bottom-0 h-1 bg-[var(--surface-soft)]"
+                        role="progressbar"
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={Math.round(rankProgress.progress * 100)}
+                        aria-label={rankTooltip}
+                        title={rankTooltip}
+                      >
+                        <div
+                          className={`h-full transition-all duration-500 ease-out ${
+                            rankProgress.isTop ? "bg-amber-400" : "bg-[var(--brand)]"
+                          }`}
+                          style={{ width: `${Math.round(rankProgress.progress * 100)}%` }}
+                        />
+                      </div>
                     </article>
                   );
                 })}
@@ -508,26 +836,41 @@ export function RegistryContent() {
               <div className="mt-4 grid gap-3 lg:grid-cols-2">
                 {topRecruiters.map((member, index) => {
                   const rank = getRankInfo(member.referralCount || 0);
+                  const nextRank = getNextRank(member.referralCount || 0);
                   return (
                     <LocalizedLink
                       key={getPublicMemberId(member)}
                       href={getMemberHref(getPublicMemberId(member))}
-                      className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm"
+                      className="grid gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm sm:grid-cols-[minmax(0,1fr)_minmax(170px,0.8fr)] sm:items-center"
                     >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--brand-dark)] text-sm font-bold text-white tabular-nums">
-                        #{index + 1}
+                      <div className="flex min-w-0 items-center gap-3">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--brand-dark)] text-lg font-bold text-white tabular-nums">
+                          {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">
+                            {t("viralRecruiterLine", {
+                              rank: index + 1,
+                              name: member.name,
+                              count: member.referralCount || 0,
+                            })}
+                          </p>
+                          <p className="mt-1 text-xs text-[var(--muted)]">
+                            {index === 0
+                              ? t("viralRecruiterRewardTop")
+                              : t(`viralRecruiterRewards.${RECRUITER_REWARD_KEYS[(index - 1) % RECRUITER_REWARD_KEYS.length]}`)}
+                          </p>
+                        </div>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">
-                          {member.name}
-                        </p>
-                        <p className="text-xs text-[var(--muted)]">
-                          {member.referralCount} {t("viralRecruitersCount")} - {rank.label}
-                        </p>
-                      </div>
-                      <span className="shrink-0 text-xs font-semibold text-[var(--brand)]">
-                        {t("viralRecruitersRank")}
-                      </span>
+                      <p className="text-xs font-semibold leading-5 text-[var(--brand)] sm:text-right">
+                        {nextRank
+                          ? t("nextRankShort", {
+                              count: nextRank.remaining,
+                              rank: nextRank.rank.label,
+                            })
+                          : t("topRankStatus")}
+                        <span className="block text-[var(--muted)]">{rank.label}</span>
+                      </p>
                     </LocalizedLink>
                   );
                 })}
@@ -543,7 +886,7 @@ export function RegistryContent() {
                 <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                   <LocalizedLink
                     href="/purchase?tier=protected&gift=true"
-                    className="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-red-700"
+                    className="inline-flex items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
                   >
                     {t("viralWantedCta")}
                   </LocalizedLink>
@@ -554,6 +897,25 @@ export function RegistryContent() {
                     {t("viralWantedPoster")}
                   </LocalizedLink>
                 </div>
+                <LocalizedLink
+                  href="/wanted"
+                  aria-label={t("wantedPreviewCta")}
+                  className="group/preview relative mt-5 block -rotate-1 overflow-hidden rounded-xl border border-red-100 bg-white shadow-md transition duration-300 ease-out hover:-translate-y-0.5 hover:rotate-0 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                >
+                  <Image
+                    src={wantedPreviewSrc}
+                    alt={t("wantedPreviewAlt")}
+                    width={1200}
+                    height={630}
+                    className="block aspect-[1200/630] w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-black/45 via-black/0 to-transparent opacity-0 transition-opacity duration-300 group-hover/preview:opacity-100 group-focus-visible/preview:opacity-100">
+                    <span className="m-3 inline-flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-red-700 shadow-sm">
+                      {t("wantedPreviewCta")} {"→"}
+                    </span>
+                  </div>
+                </LocalizedLink>
               </div>
 
               <div className="rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-white p-6">
@@ -563,10 +925,35 @@ export function RegistryContent() {
                 <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
                   {t("careerPromoDesc")}
                 </p>
-                <div className="mt-4 overflow-x-auto rounded-xl border border-sky-100 bg-white/70 px-3 py-3">
-                  <p className="whitespace-nowrap text-xs font-semibold text-[var(--brand-dark)]">
-                    {t("careerPromoLadder")}
-                  </p>
+                <div className="mt-4 rounded-xl border border-sky-100 bg-white/75 px-4 py-4">
+                  <div className="space-y-3">
+                    {CAREER_STEP_KEYS.map((stepKey, index) => (
+                      <div key={stepKey} className="flex gap-3">
+                        <div className="flex flex-col items-center">
+                          <div
+                            className={`flex h-7 w-7 items-center justify-center rounded-full border text-[11px] font-bold ${
+                              index === CAREER_STEP_KEYS.length - 1
+                                ? "border-amber-300 bg-amber-100 text-amber-900"
+                                : "border-[var(--brand-dark)] bg-[var(--brand-dark)] text-white"
+                            }`}
+                          >
+                            {index + 1}
+                          </div>
+                          {index < CAREER_STEP_KEYS.length - 1 ? (
+                            <div className="mt-1 h-5 w-px bg-[var(--brand-dark)]/20" />
+                          ) : null}
+                        </div>
+                        <div className="min-w-0 pb-1">
+                          <p className="text-sm font-semibold leading-5 text-[var(--brand-dark)]">
+                            {t(`careerPromoSteps.${stepKey}.label`)}
+                          </p>
+                          <p className="text-xs leading-5 text-[var(--muted)]">
+                            {t(`careerPromoSteps.${stepKey}.threshold`)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <LocalizedLink
                   href="/career"
@@ -604,22 +991,22 @@ export function RegistryContent() {
         </div>
       </section>
 
-      <section data-reveal className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
+      <section data-reveal className="bg-[#25527f] pb-10 pt-10 sm:pb-16 sm:pt-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="text-center">
-            <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white">
+            <h2 className="mx-auto max-w-3xl text-2xl font-semibold tracking-tight text-white sm:text-3xl">
               {t("joinCta")}
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-white/95">
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-white/95 sm:text-base sm:leading-7">
               {t("joinCtaSubtext")}
             </p>
-            <p className="mx-auto mt-3 max-w-2xl text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">
+            <p className="mx-auto mt-3 max-w-2xl text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent)] sm:text-sm">
               {t("joinCtaProof")}
             </p>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-6 flex justify-center sm:mt-8">
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
+                className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-5 py-3 text-sm font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:min-h-[52px] sm:w-auto sm:px-8 sm:py-4 sm:text-lg"
               >
                 {t("joinCtaButton")}
               </LocalizedLink>
