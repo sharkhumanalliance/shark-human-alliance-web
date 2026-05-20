@@ -66,11 +66,13 @@ export function FaqContent() {
                     </span>
                   </button>
                   <div
-                    className={`overflow-hidden transition-all duration-200 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                    className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-200 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
                   >
-                    <p className="px-5 pb-5 text-sm leading-6 text-[var(--muted)] sm:px-6">
-                      {item.answer}
-                    </p>
+                    <div className="min-h-0">
+                      <p className="px-5 pb-5 text-sm leading-6 text-[var(--muted)] sm:px-6">
+                        {item.answer}
+                      </p>
+                    </div>
                   </div>
                 </article>
               );

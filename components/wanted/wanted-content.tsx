@@ -1246,6 +1246,10 @@ export function WantedContent() {
   const handleGenerate = useCallback(() => {
     trackEvent("wanted_poster_generate", { name_length: name.trim().length });
     setGenerated(true);
+    if (!window.matchMedia("(max-width: 1023px)").matches) return;
+    window.setTimeout(() => {
+      canvasRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 0);
   }, [name]);
 
   const createPosterExportBlob = useCallback(async () => {
@@ -1495,7 +1499,7 @@ export function WantedContent() {
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-8">
-            <div className="order-2 lg:order-1 lg:max-w-xl">
+            <div className="lg:max-w-xl">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-red-700">
                 {t("label")}
               </p>
@@ -1598,7 +1602,7 @@ export function WantedContent() {
                   <button
                     type="submit"
                     disabled={!name.trim()}
-                    className="hidden min-h-[48px] w-full rounded-lg bg-red-600 px-6 py-3.5 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40 lg:block"
+                    className="min-h-[48px] w-full rounded-lg bg-red-600 px-6 py-3.5 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     {t("generateButton")}
                   </button>
@@ -1610,7 +1614,7 @@ export function WantedContent() {
               </div>
             </div>
 
-            <div className="order-1 mx-auto w-full max-w-[300px] lg:order-2 lg:mx-0 lg:max-w-none lg:sticky lg:top-28">
+            <div className="mx-auto w-full max-w-[300px] lg:mx-0 lg:max-w-none lg:sticky lg:top-28">
               <div className="rounded-xl border border-amber-900/15 bg-white p-4 shadow-sm sm:p-5">
                 <div className="border-b border-[var(--border)] pb-3">
                   <div className="flex items-center justify-between gap-3">
@@ -1684,17 +1688,6 @@ export function WantedContent() {
                     {t("rerollChargesButton")}
                   </button>
                 </div>
-
-                {!generated ? (
-                  <button
-                    type="button"
-                    onClick={handleGenerate}
-                    disabled={!name.trim()}
-                    className="mt-3 min-h-[52px] w-full rounded-lg bg-red-600 px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40 lg:hidden"
-                  >
-                    {t("generateButton")}
-                  </button>
-                ) : null}
 
                 <div className="mt-4 space-y-3">
                   {generated ? (

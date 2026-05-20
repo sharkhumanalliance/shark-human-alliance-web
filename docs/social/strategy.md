@@ -1,6 +1,6 @@
 # Social Strategy
 
-Last updated: 2026-05-17
+Last updated: 2026-05-20
 
 ## Positioning
 
@@ -49,6 +49,14 @@ Harder product pushes can start after week 6, especially around:
 - first conservation allocation progress
 - seasonal beach/travel moments
 - gift moments
+
+## Language Policy
+
+Start social EN-only for the first 4-6 weeks. The goal is to stabilize the visual system, post formats, and brand voice before doubling production work.
+
+Add ES caption variants after the best-performing formats are clear. When ES starts, translate meaning and tone rather than posting literal copies.
+
+The website remains EN/ES; this policy applies only to social publishing.
 
 ## Content Pillars
 
@@ -145,6 +153,10 @@ Use them for material too small for the feed:
 
 Avoid daily Stories until production becomes easy.
 
+## Sensitivity
+
+Before every publishing week, check [crisis.md](./crisis.md). If a fatal or serious shark incident is currently in the news cycle, pause humor and product-bridge posts.
+
 ## CTA Ladder
 
 Use this order:
@@ -177,6 +189,11 @@ Weeks 5-6:
 - checkout starts
 - certificate purchases
 - repeat comments around Finnley/Luna
+
+Review checkpoints:
+
+- End of week 2: keep/adjust visual templates, posting times, and first-line caption style.
+- End of week 4: decide whether Wanted bridge is earning visits/shares; if not, improve the free-tool CTA before pushing certificates harder.
 
 ## Decision Filter
 

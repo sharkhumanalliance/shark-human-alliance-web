@@ -1,6 +1,6 @@
 # Social Voice Guide
 
-Last updated: 2026-05-17
+Last updated: 2026-05-20
 
 ## Voice Formula
 
@@ -38,6 +38,14 @@ Avoid:
 - No brand voice that sounds like a normal DTC gift company.
 - First line must work on its own.
 - If the post is factual, the caption should not overstate the graphic.
+
+## Comment And Engagement Rules
+
+Reply in-character to playful comments only.
+
+Use plain human tone for genuine criticism, genuine distress, conservation questions, refund/support issues, or anything involving real injuries. Never argue, never punch down, and never use Bureau jokes when someone is upset.
+
+If a comment relates to a real shark incident, follow [crisis.md](./crisis.md).
 
 ## Forbidden Phrases
 
@@ -143,6 +151,11 @@ Examples:
 18. `Public filing will be available shortly.`
 19. `A certificate may resolve this matter aesthetically.`
 20. `The Bureau appreciates your attention to this damp administrative issue.`
+21. `The Bureau can neither confirm nor deny this, allegedly.`
+22. `Finnley reviewed the matter personally, allegedly.`
+23. `Luna approved this by not objecting, allegedly.`
+
+Use `allegedly` sparingly. It should feel like a dry legal tic, not a catchphrase in every post.
 
 ## Hashtags
 

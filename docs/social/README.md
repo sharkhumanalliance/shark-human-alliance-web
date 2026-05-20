@@ -1,6 +1,6 @@
 # Shark Human Alliance Social Kit
 
-Last updated: 2026-05-17
+Last updated: 2026-05-20
 
 This folder is the working source of truth for Shark Human Alliance social media planning.
 
@@ -15,6 +15,7 @@ The brand should feel like fictional paperwork with real conservation behind it.
 - [strategy.md](./strategy.md) - campaign phases, conversion timing, content pillars, cadence.
 - [brand-kit.md](./brand-kit.md) - visual system, colors, typography, stamps, templates, asset checklist.
 - [voice.md](./voice.md) - caption rules, blacklist, approved voice patterns, reusable lines.
+- [crisis.md](./crisis.md) - pause rules and response protocol for real shark incidents or sensitive criticism.
 - [sources.md](./sources.md) - approved shark facts, wording, citations, source-line rules.
 - [mascot-model-sheet.md](./mascot-model-sheet.md) - Finnley and Luna consistency brief for illustrators or AI generation.
 - [editorial-calendar-4-weeks.md](./editorial-calendar-4-weeks.md) - first 4 weeks of posts and stories.
@@ -22,6 +23,8 @@ The brand should feel like fictional paperwork with real conservation behind it.
 ## Working Rule
 
 Do not publish factual shark statistics unless the wording appears in `sources.md` or has been added there with a citation first.
+
+Do not publish humor during an active serious/fatal shark incident news cycle until `crisis.md` has been checked.
 
 Do not publish new mascot-heavy visuals unless they follow `mascot-model-sheet.md`.
 

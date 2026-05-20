@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <defs>
+    <pattern id="paperNoise" width="90" height="90" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="18" r="1.2" fill="#856D4C" opacity="0.08"/>
+      <circle cx="42" cy="58" r="1" fill="#856D4C" opacity="0.06"/>
+      <circle cx="70" cy="24" r="1.6" fill="#856D4C" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="1080" height="1350" fill="#F8FAFC"/>
+  <rect x="81" y="81" width="918" height="1188" rx="22" fill="#EFE7D4" stroke="#D8C8A8" stroke-width="3"/>
+  <rect x="81" y="81" width="918" height="1188" rx="22" fill="url(#paperNoise)"/>
+  <text x="999" y="1312" text-anchor="end" font-family="'Courier New', monospace" font-size="16" fill="#64748B">IG 4:5 - finnley-statement</text>
+  
+      <text x="130" y="203" font-family="'Courier New', monospace" font-size="22" font-weight="800" letter-spacing="7" fill="#2563EB">FINNLEY MAKO - PRESS SPOKESPERSON</text>
+      <text x="130" y="297" font-family="Georgia, serif" font-size="54" font-weight="800" fill="#162D50">OFFICIAL STATEMENT</text>
+      <circle cx="280" cy="513" r="112" fill="#DCEBFA" stroke="#E2E8F0" stroke-width="4"/>
+      <path d="M208 585 C230 489, 360 487, 392 585 Z" fill="#1E3A5F" opacity="0.92"/>
+      <text x="280" y="678" text-anchor="middle" font-family="'Courier New', monospace" font-size="17" font-weight="800" letter-spacing="2" fill="#64748B">PLACE MASCOT HERE</text>
+      <text x="440" y="493" text-anchor="start" font-family="Georgia, serif" font-size="32" font-weight="700" font-style="italic" fill="#162D50">&quot;Most sharks would simply swim</text>
+<text x="440" y="541" text-anchor="start" font-family="Georgia, serif" font-size="32" font-weight="700" font-style="italic" fill="#162D50">past and continue minding their</text>
+<text x="440" y="589" text-anchor="start" font-family="Georgia, serif" font-size="32" font-weight="700" font-style="italic" fill="#162D50">business.&quot;</text>
+      <g transform="translate(713 1053) rotate(6) scale(0.23)" opacity="0.9">
+    <rect x="-540" y="-150" width="1080" height="300" rx="24" fill="none" stroke="#1E3A5F" stroke-width="18"/>
+    <rect x="-500" y="-112" width="1000" height="224" rx="14" fill="none" stroke="#1E3A5F" stroke-width="5" stroke-dasharray="24 16" opacity="0.72"/>
+    <text x="0" y="18" text-anchor="middle" dominant-baseline="middle" font-family="Impact, 'Arial Black', sans-serif" font-size="96" font-weight="900" letter-spacing="5" fill="#1E3A5F">REVIEWED</text>
+  </g>
+    
+</svg>

@@ -1,6 +1,6 @@
 # Brand And Social Kit
 
-Last updated: 2026-05-17
+Last updated: 2026-05-20
 
 ## Core Principle
 
@@ -35,7 +35,7 @@ Avoid generic ocean teal graphics, childish cartoon chaos, meme-template fonts, 
 | --- | --- | --- |
 | Poster paper | `#F6ECD8` | Wanted, memos, public notices |
 | Aged cream | `#EFE7D4` | Fact cards, official forms |
-| Stamp red | `#B94135` | Wanted, urgent stamps, rejection stamps |
+| Wanted / stamp red | `#B94135` | Wanted posters, urgent stamps, rejection stamps |
 | Stamp gold | `#B98935` | Seals, premium details, certificate references |
 | Deep poster brown | `#3A2515` | Wanted poster outer background |
 
@@ -79,6 +79,7 @@ Required MVP stamps:
 8. `PROTECTION GRANTED`
 9. `OBJECTION DENIED`
 10. `FORWARD TO LUNA`
+11. `RETURNED - RECIPIENT UNREACHABLE`
 
 Stamp rules: usually one stamp per post; two only when the joke needs escalation. Keep stamp angle between -12 and +12 degrees.
 

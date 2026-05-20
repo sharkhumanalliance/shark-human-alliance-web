@@ -71,6 +71,7 @@ function SuccessContentInner() {
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
   const purchaseTrackedRef = useRef(false);
   const previewSectionRef = useRef<HTMLElement>(null);
+  const customizeSectionRef = useRef<HTMLElement>(null);
 
   const handleTemplateChange = useCallback((nextTemplate: CertificateTemplate) => {
     setTemplate(nextTemplate);
@@ -166,6 +167,12 @@ function SuccessContentInner() {
       previewSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [previewExpanded]);
+
+  useEffect(() => {
+    if (customizeOpen && customizeSectionRef.current) {
+      customizeSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [customizeOpen]);
 
   useEffect(() => {
     if (isAcceptedCertificateTemplate(member?.template)) {
@@ -489,7 +496,8 @@ function SuccessContentInner() {
         {customizeOpen ? (
           <section
             id="certificate-customize"
-            className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6"
+            ref={customizeSectionRef}
+            className="mt-6 scroll-mt-24 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6"
           >
             <div className="flex items-baseline justify-between gap-3">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">

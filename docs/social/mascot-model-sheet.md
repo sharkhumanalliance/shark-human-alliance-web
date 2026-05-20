@@ -1,6 +1,6 @@
 # Mascot Consistency Brief
 
-Last updated: 2026-05-17
+Last updated: 2026-05-20
 
 Use existing approved mascot visuals as the primary reference. This file is only a guardrail for new social scenes, AI generations, and composites.
 
@@ -50,11 +50,13 @@ Do not make Luna frantic. Keep her teal, slightly smaller, organized, and calmly
 - Regenerate/rework if color, accessories, eye shape, or body proportions drift.
 - Do not publish mascot-heavy posts without checking against the references.
 
+Future asset need: create a small turnaround/reference set from the approved visuals before producing many mascot-heavy scenes. Minimum useful set is front, three-quarter, and side/profile for each mascot, plus calm/reviewing/statement expressions.
+
 ## Base Prompt Add-On
 
 Use this after the specific scene:
 
-`soft plush chibi shark ambassador style, consistent with existing Shark Human Alliance mascots, rounded friendly body, large blue eyes with white highlights, gentle fabric texture, official-ish Bureau paperwork props, navy ink and cream paper palette, warm dry humor, no scary teeth, no aggression, no horror, no photorealistic shark anatomy`
+`soft plush chibi shark ambassador style, consistent with existing Shark Human Alliance mascots, rounded friendly body, large expressive eyes with white highlights, gentle fabric texture, official-ish Bureau paperwork props, navy ink and cream paper palette, warm dry humor, no scary teeth, no aggression, no horror, no photorealistic shark anatomy`
 
 ## Negative Prompt
 

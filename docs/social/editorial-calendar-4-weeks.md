@@ -1,6 +1,6 @@
 # Editorial Calendar: First 4 Weeks
 
-Last updated: 2026-05-17
+Last updated: 2026-05-20
 
 This calendar assumes 3 Instagram feed posts per week, 2 Facebook feed posts per week, and 1-2 Stories per week starting week 2.
 
@@ -183,10 +183,6 @@ Stamp:
 
 `RETURNED - RECIPIENT UNREACHABLE`
 
-Note:
-
-If `RETURNED` stamp is not part of MVP, use `PENDING`.
-
 ## Week 4: Public Service And First Wanted Bridge
 
 Goal: keep world-building, then introduce Wanted as a free action.
@@ -250,6 +246,8 @@ Before each week:
 2. Check mascot visuals against `mascot-model-sheet.md`.
 3. Export 4:5 feed and 9:16 Story variants where useful.
 4. Check first-line caption strength.
-5. Keep hashtags to 5 stable plus 1-2 rotating.
+5. Write alt text for every graphic.
+6. Check `crisis.md` before scheduling humor.
+7. Keep hashtags to 5 stable plus 1-2 rotating.
 
 For hashtag rules, use [voice.md](./voice.md).

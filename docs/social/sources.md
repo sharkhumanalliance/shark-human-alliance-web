@@ -1,6 +1,6 @@
 # Approved Shark Facts And Sources
 
-Last updated: 2026-05-17
+Last updated: 2026-05-20
 
 Use this file for every factual post. If a number is not here, do not publish it until it is added with a citation.
 
@@ -91,6 +91,8 @@ Florida Museum of Natural History, International Shark Attack File, "Yearly Worl
 Always say "unprovoked shark bites" or "unprovoked shark bite fatalities" when using ISAF figures.
 
 Do not compare to "sharks kill fewer than 10 humans" without context. That wording is punchy but less precise.
+
+Verify before using the specific "eight" average in new graphics. ISAF publishes annual summaries, so this value should be refreshed yearly. The evergreen wording "fewer than 10 human fatalities from unprovoked shark bites occur in most years" is safer for reusable templates.
 
 ## Fact 4: Shark Evolution Timeline
 

@@ -100,7 +100,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
     return (
       <>
         <SiteHeader />
-        <main id="main" className="pb-20 md:pb-0">
+        <main id="main">
           <VerifyLookupContent reason={reason} />
         </main>
         <SiteFooter />
@@ -115,7 +115,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
     return (
       <>
         <SiteHeader />
-        <main id="main" className="pb-20 md:pb-0">
+        <main id="main">
           <VerifySampleContent />
         </main>
         <SiteFooter />
@@ -134,7 +134,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
     return (
       <>
         <SiteHeader />
-        <main id="main" className="pb-20 pt-16 md:pb-0">
+        <main id="main" className="pt-16">
           <section className="mx-auto max-w-xl px-4 text-center sm:px-6">
             <h1 className="text-2xl font-semibold text-[var(--brand-dark)]">
               {t("rateLimitedTitle")}
@@ -177,7 +177,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pb-20 md:pb-0">
+      <main id="main">
         <VerifyContent
           name={member.name}
           tier={member.tier}

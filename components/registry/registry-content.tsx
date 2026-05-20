@@ -343,7 +343,7 @@ export function RegistryContent() {
             </div>
           ) : null}
 
-          <div className="sticky top-0 z-20 mt-5 rounded-[24px] border border-[var(--border)] bg-white/95 px-5 py-4 shadow-sm backdrop-blur sm:px-6 lg:static lg:mt-6 lg:bg-white lg:backdrop-blur-none">
+          <div className="sticky top-[73px] z-20 mt-5 rounded-[24px] border border-[var(--border)] bg-white/95 px-5 py-4 shadow-sm backdrop-blur sm:px-6 lg:static lg:mt-6 lg:bg-white lg:backdrop-blur-none">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
               <div className="min-w-0 flex-1">
                 <label

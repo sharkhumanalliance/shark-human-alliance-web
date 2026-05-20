@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+  <g fill="none" stroke="#1E3A5F" stroke-linecap="round" stroke-linejoin="round" opacity="0.94" transform="rotate(-6 700 280)">
+    <rect x="72" y="96" width="1256" height="368" rx="32" stroke-width="20"/>
+    <rect x="110" y="134" width="1180" height="292" rx="18" stroke-width="6" stroke-dasharray="28 18" opacity="0.78"/>
+    <line x1="190" y1="200" x2="1210" y2="200" stroke-width="5" opacity="0.55"/>
+    <line x1="190" y1="360" x2="1210" y2="360" stroke-width="5" opacity="0.55"/>
+    <text x="700" y="308" text-anchor="middle" dominant-baseline="middle"
+      font-family="Impact, 'Arial Black', 'Roboto Condensed', sans-serif"
+      font-size="128" font-weight="900" letter-spacing="8"
+      fill="#1E3A5F" stroke="none">OBJECTION DENIED</text>
+    <text x="700" y="310" text-anchor="middle" dominant-baseline="middle"
+      font-family="Impact, 'Arial Black', 'Roboto Condensed', sans-serif"
+      font-size="128" font-weight="900" letter-spacing="8"
+      fill="#1E3A5F" stroke="none" opacity="0.18">OBJECTION DENIED</text>
+  </g>
+</svg>
