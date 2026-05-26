@@ -33,6 +33,138 @@
       ],
       "destination": "/en",
       "permanent": true
+    },
+    {
+      "source": "/purchase",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/purchase",
+      "permanent": true
+    },
+    {
+      "source": "/registry",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/registry",
+      "permanent": true
+    },
+    {
+      "source": "/impact",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/impact",
+      "permanent": true
+    },
+    {
+      "source": "/faq",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/faq",
+      "permanent": true
+    },
+    {
+      "source": "/terms",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/terms",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/cookie-policy",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/cookie-policy",
+      "permanent": true
+    },
+    {
+      "source": "/membership",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/membership",
+      "permanent": true
+    },
+    {
+      "source": "/membership/Protected-friend-status",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/membership/protected-friend-status",
+      "permanent": true
+    },
+    {
+      "source": "/membership/protected-friend-status",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/membership/protected-friend-status",
+      "permanent": true
+    },
+    {
+      "source": "/wanted",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/wanted",
+      "permanent": true
+    },
+    {
+      "source": "/career",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.sharkhumanalliance.com"
+        }
+      ],
+      "destination": "/en/career",
+      "permanent": true
     }
   ]
 }
