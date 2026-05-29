@@ -65,6 +65,7 @@ export async function POST(request: NextRequest) {
       template,
       paperFormat = "a4",
       giftMessage = "",
+      fromName = "",
       termsAccepted,
       digitalContentConsentAccepted,
       registryConsentAccepted,
@@ -224,6 +225,13 @@ export async function POST(request: NextRequest) {
         loc,
         `/certificate/view?token=${accessToken}&paper=${normalizedPaperFormat}${templateQuery}&download=1`
       );
+      const giftRevealUrl = isGift
+        ? buildAbsoluteLocalizedUrl(
+            BASE_URL,
+            loc,
+            `/gift?to=${encodeURIComponent(name.trim())}${fromName ? `&from=${encodeURIComponent(fromName.trim())}` : ""}${giftMessage ? `&msg=${encodeURIComponent(giftMessage)}` : ""}&token=${accessToken}`,
+          )
+        : undefined;
 
       logEmailRouteEntered({
         flow: "checkout-promo-certificate",
@@ -261,6 +269,8 @@ export async function POST(request: NextRequest) {
                   `/certificate/view?token=${accessToken}#record-controls`
                 ),
                 giftMessage: giftMessage || undefined,
+                fromName: isGift && fromName ? fromName.trim() : undefined,
+                revealUrl: giftRevealUrl,
                 isGift,
                 locale: loc,
               }),
@@ -312,6 +322,7 @@ export async function POST(request: NextRequest) {
                 referralCode,
                 careerUrl,
                 giftMessage: giftMessage || undefined,
+                revealUrl: giftRevealUrl,
                 locale: loc,
               }),
             },
@@ -388,6 +399,7 @@ export async function POST(request: NextRequest) {
         template: template || "",
         paperFormat: normalizedPaperFormat,
         giftMessage: giftMessage || "",
+        fromName: fromName || "",
         termsAcceptedAt: new Date().toISOString(),
         termsVersion: TERMS_VERSION,
         digitalContentConsentAt: new Date().toISOString(),

@@ -1,4 +1,20 @@
 {
+  "giftReveal": {
+    "metaTitle": "A gift is waiting for you",
+    "metaDescription": "Someone has filed official-ish shark protection paperwork in your name. Open your gift.",
+    "eyebrow": "A gift from the Alliance",
+    "defaultTo": "friend",
+    "sealedTitle": "{name}, someone filed paperwork on your behalf.",
+    "sealedSubtitle": "A fellow human has arranged official-ish shark protection for you.",
+    "sealedSubtitleFrom": "{name} has arranged official-ish shark protection for you.",
+    "openButton": "Open your gift",
+    "revealedHeadline": "You're officially protected, {name}.",
+    "revealedSubtitle": "Your Protected Friend paperwork is filed. The sharks have been symbolically notified.",
+    "fromLabel": "From {name}",
+    "messageLabel": "A note for you",
+    "certificateCta": "Open your certificate",
+    "exploreCta": "Explore the Alliance →"
+  },
   "seo": {
     "home": {
       "title": "Funny Shark Certificates & Official-ish Shark Paperwork",
@@ -667,6 +683,9 @@
     "emailSentAutomatic": "A certificate email has been sent to your inbox. If it isn’t there, check spam — sharks file in odd places.",
     "backHome": "Return to homepage",
     "giftDetailsTitle": "Gift details",
+    "fromNameLabel": "Your name (optional)",
+    "fromNamePlaceholder": "e.g. Tom",
+    "fromNameHint": "Shown on the gift reveal so they know who to thank.",
     "giftMessageLabel": "Personal message (optional)",
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
     "referredByBadge": "Referral credit is active for this purchase.",

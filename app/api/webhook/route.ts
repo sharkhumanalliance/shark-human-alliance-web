@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
       template = "",
       paperFormat = "a4",
       giftMessage = "",
+      fromName = "",
       termsAcceptedAt = "",
       termsVersion = TERMS_VERSION,
       digitalContentConsentAt = "",
@@ -160,6 +161,14 @@ export async function POST(request: NextRequest) {
       locale,
       `/certificate/view?token=${accessToken}&paper=${normalizedPaperFormat}${templateQuery}&download=1`
     );
+    const giftRevealUrl =
+      isGift === "true"
+        ? buildAbsoluteLocalizedUrl(
+            BASE_URL,
+            locale,
+            `/gift?to=${encodeURIComponent(name.trim())}${fromName ? `&from=${encodeURIComponent(fromName.trim())}` : ""}${giftMessage ? `&msg=${encodeURIComponent(giftMessage)}` : ""}&token=${accessToken}`,
+          )
+        : undefined;
 
     logEmailRouteEntered({
       flow: "webhook-certificate",
@@ -197,6 +206,9 @@ export async function POST(request: NextRequest) {
                 `/certificate/view?token=${accessToken}#record-controls`
               ),
               giftMessage: giftMessage || undefined,
+              fromName:
+                isGift === "true" && fromName ? fromName.trim() : undefined,
+              revealUrl: giftRevealUrl,
               isGift: isGift === "true",
               locale,
             }),
@@ -251,6 +263,7 @@ export async function POST(request: NextRequest) {
               referralCode,
               careerUrl,
               giftMessage: giftMessage || undefined,
+              revealUrl: giftRevealUrl,
               locale,
             }),
           },

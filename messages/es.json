@@ -1,4 +1,20 @@
 {
+  "giftReveal": {
+    "metaTitle": "Un regalo te está esperando",
+    "metaDescription": "Alguien ha tramitado papeleo de protección tiburón (más o menos oficial) a tu nombre. Abre tu regalo.",
+    "eyebrow": "Un regalo de la Alianza",
+    "defaultTo": "amigo/a",
+    "sealedTitle": "{name}, alguien ha tramitado papeleo en tu nombre.",
+    "sealedSubtitle": "Otra persona ha gestionado para ti protección tiburón (más o menos oficial).",
+    "sealedSubtitleFrom": "{name} ha gestionado para ti protección tiburón (más o menos oficial).",
+    "openButton": "Abre tu regalo",
+    "revealedHeadline": "Estás oficialmente protegido/a, {name}.",
+    "revealedSubtitle": "Tu papeleo de Amigo Protegido está archivado. Los tiburones han sido informados simbólicamente.",
+    "fromLabel": "De {name}",
+    "messageLabel": "Una nota para ti",
+    "certificateCta": "Abre tu certificado",
+    "exploreCta": "Explora la Alianza →"
+  },
   "seo": {
     "home": {
       "title": "Certificados de tiburón divertidos y papeleo tiburonesco casi oficial",
@@ -667,6 +683,9 @@
     "emailSentAutomatic": "Se ha enviado un email con tu certificado a tu bandeja. Si no está ahí, revisa spam — los tiburones archivan en lugares raros.",
     "backHome": "Volver a la página principal",
     "giftDetailsTitle": "Detalles del regalo",
+    "fromNameLabel": "Tu nombre (opcional)",
+    "fromNamePlaceholder": "ej. Tom",
+    "fromNameHint": "Aparece en el regalo para que sepan a quién agradecer.",
     "giftMessageLabel": "Mensaje personal (opcional)",
     "giftMessagePlaceholder": "ej. ¡Feliz cumpleaños! Ahora los tiburones saben que no estás en el menú.",
     "referredByBadge": "El crédito por referido está activo para esta compra.",

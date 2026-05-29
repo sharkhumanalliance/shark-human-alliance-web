@@ -102,6 +102,9 @@ const EMAIL_COPY = {
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>
       `Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.<br>They'll receive their certificate and a warm welcome from the Alliance.`,
     includedMessage: "Included message:",
+    openGift: "Open your gift",
+    giftFrom: (safeFromName: string) => `From ${safeFromName}`,
+    giftShareLink: "Gift link you can also send yourself:",
     referralCode: "Your referral code:",
     referralText: "Share it with friends to climb the Alliance career ladder!",
     viewCareer: "View Career Ladder",
@@ -152,6 +155,9 @@ const EMAIL_COPY = {
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>
       `Tu regalo para <strong>${safeName}</strong> se ha enviado a <strong>${safeRecipientEmail}</strong>.<br>Recibirá su certificado y una bienvenida formal de la Alianza.`,
     includedMessage: "Mensaje incluido:",
+    openGift: "Abre tu regalo",
+    giftFrom: (safeFromName: string) => `De ${safeFromName}`,
+    giftShareLink: "Enlace de regalo que también puedes enviar tú:",
     referralCode: "Tu código de referido:",
     referralText: "Compártelo con amigos para subir en el escalafón de la Alianza.",
     viewCareer: "Ver escalafón",
@@ -294,6 +300,8 @@ export function certificateEmailHtml(params: {
   manageUrl: string;
   referralUrl?: string;
   giftMessage?: string;
+  fromName?: string;
+  revealUrl?: string;
   isGift?: boolean;
   locale?: string | null;
 }): string {
@@ -309,6 +317,8 @@ export function certificateEmailHtml(params: {
     manageUrl,
     referralUrl,
     giftMessage,
+    fromName,
+    revealUrl,
     isGift,
     locale,
   } = params;
@@ -341,6 +351,8 @@ export function certificateEmailHtml(params: {
   const safeGiftMessage = giftMessage
     ? escapeHtmlWithLineBreaks(giftMessage)
     : "";
+  const safeFromName = fromName ? escapeHtml(fromName) : "";
+  const safeRevealUrl = revealUrl ? escapeHtml(revealUrl) : "";
   const safeRegistryUrl = registryUrl ? escapeHtml(registryUrl) : "";
 
   return `<!DOCTYPE html>
@@ -367,6 +379,11 @@ export function certificateEmailHtml(params: {
         <p style="margin:8px 0 0;font-size:13px;color:#5f7892;">${copy.registryId}: ${safeRegistryId}</p>
       </div>
 
+      ${isGift && revealUrl ? `
+      <div style="margin-top:24px;text-align:center;">
+        <a href="${safeRevealUrl}" style="display:inline-block;padding:14px 32px;background-color:#0d9488;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">${copy.openGift}</a>
+      </div>` : ""}
+
       <div style="margin-top:24px;text-align:center;">
         <a href="${safeDownloadUrl}" style="display:inline-block;padding:14px 32px;background-color:#2f80ed;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">${copy.downloadCertificate}</a>
       </div>
@@ -376,10 +393,11 @@ export function certificateEmailHtml(params: {
         <a href="${safeRegistryUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">${copy.viewRegistry}</a>
       </div>` : ""}
 
-      ${giftMessage ? `
+      ${(giftMessage || safeFromName) ? `
       <div style="margin-top:24px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:16px;">
         <p style="margin:0 0 8px;font-size:12px;color:#9a3412;text-transform:uppercase;letter-spacing:2px;font-weight:700;">${copy.personalMessage}</p>
-        <p style="margin:0;font-size:14px;line-height:1.7;color:#7c2d12;">${safeGiftMessage}</p>
+        ${giftMessage ? `<p style="margin:0;font-size:14px;line-height:1.7;color:#7c2d12;">${safeGiftMessage}</p>` : ""}
+        ${safeFromName ? `<p style="margin:${giftMessage ? "12px" : "0"} 0 0;font-size:14px;font-weight:700;color:#7c2d12;">&mdash; ${copy.giftFrom(safeFromName)}</p>` : ""}
       </div>` : ""}
 
       <!-- Referral section -->
@@ -432,6 +450,7 @@ export function giftBuyerNotificationEmailHtml(params: {
   referralCode: string;
   careerUrl: string;
   giftMessage?: string;
+  revealUrl?: string;
   locale?: string | null;
 }): string {
   const {
@@ -440,6 +459,7 @@ export function giftBuyerNotificationEmailHtml(params: {
     referralCode,
     careerUrl,
     giftMessage,
+    revealUrl,
     locale,
   } = params;
   const resolvedLocale = getCertificateLocale(locale ?? undefined);
@@ -451,6 +471,7 @@ export function giftBuyerNotificationEmailHtml(params: {
     ? escapeHtmlWithLineBreaks(giftMessage)
     : "";
   const safeCareerUrl = escapeHtml(careerUrl);
+  const safeRevealUrl = revealUrl ? escapeHtml(revealUrl) : "";
 
   return `<!DOCTYPE html>
 <html lang="${resolvedLocale}"><body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
@@ -466,6 +487,7 @@ export function giftBuyerNotificationEmailHtml(params: {
       ${copy.referralCode} <strong>${safeReferralCode}</strong><br>
       ${copy.referralText}
     </p>
+    ${revealUrl ? `<p style="color:#5f7892;font-size:13px;margin-top:16px;">${copy.giftShareLink}<br><a href="${safeRevealUrl}" style="color:#2f80ed;font-weight:600;word-break:break-all;">${safeRevealUrl}</a></p>` : ""}
     <a href="${safeCareerUrl}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">${copy.viewCareer}</a>
   </div>
   <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
