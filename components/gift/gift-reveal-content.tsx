@@ -1,15 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
+import type { CertificateTemplate } from "@/lib/certificate-templates";
 import { useLocale, useTranslations } from "next-intl";
+
+export type GiftCertificate = {
+  name: string;
+  tier: string;
+  dedication: string;
+  date: string;
+  registryId: string;
+  template: CertificateTemplate;
+};
 
 type GiftRevealContentProps = {
   to?: string;
   from?: string;
   message?: string;
   token?: string;
+  certificate?: GiftCertificate;
 };
 
 function clean(value: string | undefined, max = 80): string {
@@ -21,11 +33,13 @@ export function GiftRevealContent({
   from,
   message,
   token,
+  certificate,
 }: GiftRevealContentProps) {
   const t = useTranslations("giftReveal");
   const locale = useLocale();
 
-  const toName = clean(to) || t("defaultTo");
+  // Prefer the real certificate's name when we have it; fall back to the URL.
+  const toName = certificate?.name || clean(to) || t("defaultTo");
   const fromName = clean(from);
   const giftMessage = clean(message, 600);
   const certToken = clean(token, 128).replace(/[^a-fA-F0-9]/g, "");
@@ -41,8 +55,9 @@ export function GiftRevealContent({
       personalized: clean(to).length > 0,
       has_message: giftMessage.length > 0,
       has_token: certToken.length > 0,
+      has_certificate: Boolean(certificate),
     });
-  }, [locale, to, giftMessage.length, certToken.length]);
+  }, [locale, to, giftMessage.length, certToken.length, certificate]);
 
   function handleOpen() {
     setRevealed(true);
@@ -99,8 +114,23 @@ export function GiftRevealContent({
               {t("revealedSubtitle")}
             </p>
 
+            {certificate ? (
+              <div className="mx-auto mt-8 max-w-md rounded-2xl border border-[var(--border)] bg-white p-3 shadow-sm">
+                <CertificatePreview
+                  name={certificate.name}
+                  tier={certificate.tier}
+                  dedication={certificate.dedication}
+                  date={certificate.date}
+                  registryId={certificate.registryId}
+                  template={certificate.template}
+                  paperFormat="a4"
+                  locale={locale}
+                />
+              </div>
+            ) : null}
+
             {fromName ? (
-              <p className="mt-5 inline-flex items-center rounded-full border border-[var(--accent)]/40 bg-[var(--surface-soft)] px-4 py-1.5 text-sm font-semibold text-[var(--brand-dark)]">
+              <p className="mt-6 inline-flex items-center rounded-full border border-[var(--accent)]/40 bg-[var(--surface-soft)] px-4 py-1.5 text-sm font-semibold text-[var(--brand-dark)]">
                 {t("fromLabel", { name: fromName })}
               </p>
             ) : null}

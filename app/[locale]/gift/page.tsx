@@ -1,7 +1,13 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { GiftRevealContent } from "@/components/gift/gift-reveal-content";
+import {
+  GiftRevealContent,
+  type GiftCertificate,
+} from "@/components/gift/gift-reveal-content";
 import { BASE_URL } from "@/lib/config";
+import { getMemberByAccessToken } from "@/lib/members";
+import { normalizeTemplate } from "@/lib/certificate-templates";
+import { formatCertificateDate } from "@/lib/dates";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -43,6 +49,31 @@ export default async function GiftRevealPage({ params, searchParams }: Props) {
   const resolved = await searchParams;
   setRequestLocale(locale);
 
+  // When a valid access token is present, load the real certificate so the
+  // reveal shows the actual personalized document instead of a placeholder.
+  const token = (resolved?.token ?? "")
+    .replace(/[^a-fA-F0-9]/g, "")
+    .slice(0, 128);
+  let certificate: GiftCertificate | undefined;
+  if (token) {
+    try {
+      const member = await getMemberByAccessToken(token);
+      if (member) {
+        certificate = {
+          name: member.name,
+          tier: member.tier,
+          dedication: member.dedication ?? "",
+          date: formatCertificateDate(new Date(member.date), locale),
+          registryId: member.registryCode || "",
+          template: normalizeTemplate(member.template),
+        };
+      }
+    } catch {
+      // DB unavailable / demo mode — fall back to the placeholder reveal.
+      certificate = undefined;
+    }
+  }
+
   return (
     <>
       <SiteHeader />
@@ -52,6 +83,7 @@ export default async function GiftRevealPage({ params, searchParams }: Props) {
           from={resolved?.from}
           message={resolved?.msg}
           token={resolved?.token}
+          certificate={certificate}
         />
       </main>
       <SiteFooter />

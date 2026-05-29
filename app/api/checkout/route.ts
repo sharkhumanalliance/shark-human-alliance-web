@@ -225,6 +225,9 @@ export async function POST(request: NextRequest) {
         loc,
         `/certificate/view?token=${accessToken}&paper=${normalizedPaperFormat}${templateQuery}&download=1`
       );
+      // The buyer paid and the recipient may never open their email, so the
+      // gift reveal link carries the access token for both — buyer and recipient
+      // alike can reach the certificate.
       const giftRevealUrl = isGift
         ? buildAbsoluteLocalizedUrl(
             BASE_URL,
