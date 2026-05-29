@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams?: Promise<{ name?: string; tone?: string }>;
+  searchParams?: Promise<{ name?: string; tone?: string; by?: string }>;
 };
 
 const ALLOWED_TONES = ["mild", "clear", "emergency"] as const;
@@ -77,6 +77,7 @@ export default async function WantedCasePage({ params, searchParams }: Props) {
         <WantedCaseContent
           initialName={resolvedSearchParams?.name}
           initialTone={resolvedSearchParams?.tone}
+          initialBy={resolvedSearchParams?.by}
           certificateDate={formatCertificateDate(new Date(), locale)}
         />
       </main>

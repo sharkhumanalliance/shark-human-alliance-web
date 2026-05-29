@@ -247,6 +247,24 @@ function drawQrCodeSafe(
   }
 }
 
+// Splits a raw input into a deduped list of clean names. Lets users accuse a
+// whole group at once by separating names with commas or new lines. Capped so
+// a pasted address book cannot spawn an unbounded poster queue.
+function parseNameList(raw: string): string[] {
+  const seen = new Set<string>();
+  const names: string[] = [];
+  for (const part of raw.split(/[,\n]/)) {
+    const cleaned = part.replace(/\s+/g, " ").trim().slice(0, 80);
+    if (!cleaned) continue;
+    const key = cleaned.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    names.push(cleaned);
+    if (names.length >= 5) break;
+  }
+  return names;
+}
+
 // Seeded random — deterministic per name + reroll seed so the procedural
 // distress and texture stay consistent for the same inputs.
 function mulberry32(seed: number) {
@@ -258,14 +276,33 @@ function mulberry32(seed: number) {
   };
 }
 
-export function WantedContent() {
+type WantedContentProps = {
+  initialName?: string;
+  initialBy?: string;
+};
+
+export function WantedContent({ initialName, initialBy }: WantedContentProps = {}) {
   const t = useTranslations("wanted");
   const locale = useLocale();
-  const [name, setName] = useState("");
+  // Accusation chain: when arriving from a case page's "blame" action the
+  // accused person's name is prefilled and `by` carries who filed it, so the
+  // resulting share keeps the reciprocity trail visible.
+  const prefillName = (initialName ?? "").replace(/\s+/g, " ").trim().slice(0, 80);
+  // The filer's own name. Prefilled from the incoming `by` when arriving via
+  // an accuse-back link, but always editable through the optional field so the
+  // very first poster in a chain can also carry attribution.
+  const [filerName, setFilerName] = useState(
+    (initialBy ?? "").replace(/\s+/g, " ").trim().slice(0, 80),
+  );
+  const [name, setName] = useState(prefillName);
   const [selectedTone, setSelectedTone] = useState<WantedTone>("clear");
   const [posterFormat, setPosterFormat] = useState<PosterFormat>("a4");
   const [rerollSeed, setRerollSeed] = useState(0);
-  const [generated, setGenerated] = useState(false);
+  const [generated, setGenerated] = useState(prefillName.length > 0);
+  // Multi-tag queue: holds several accused names so a single round-up renders
+  // one poster at a time via the stepper. Empty for the normal single-name flow.
+  const [queue, setQueue] = useState<string[]>([]);
+  const [queueIndex, setQueueIndex] = useState(0);
   const [downloading, setDownloading] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [useTilt, setUseTilt] = useState(true);
@@ -296,11 +333,20 @@ export function WantedContent() {
     return subtitles.length > 0 ? subtitles : [t(`tones.${selectedTone}.posterSubtitle`)];
   }, [selectedTone, t]);
 
+  // The poster always renders a single person. While the user is still typing
+  // a comma-separated round-up (before generating), the preview shows only the
+  // first name rather than the raw "Tom, Jana, Petr" string. After generating,
+  // `name` already holds a single queue entry, so this is a no-op then.
+  const posterName = useMemo(() => {
+    const list = parseNameList(name);
+    return list.length > 0 ? list[0] : name.trim();
+  }, [name]);
+
   // Salt hash with the reroll counter so users can cycle through different
   // 3-charge combinations for the same name + tone.
   const seededHash = useMemo(
-    () => nameHash(`${name}::${rerollSeed}`),
-    [name, rerollSeed],
+    () => nameHash(`${posterName}::${rerollSeed}`),
+    [posterName, rerollSeed],
   );
 
   const selectedCharges = useMemo(() => {
@@ -328,11 +374,11 @@ export function WantedContent() {
 
   const selectedCaseDetail = useMemo(() => {
     if (caseDetails.length > 0) {
-      const baseIndex = nameHash(`${name.trim() || "default"}::case-detail`);
+      const baseIndex = nameHash(`${posterName || "default"}::case-detail`);
       return caseDetails[(baseIndex + rerollSeed) % caseDetails.length];
     }
     return "This notice does not confirm snack status. It merely confirms that the Bureau is uncomfortable.";
-  }, [caseDetails, name, rerollSeed]);
+  }, [caseDetails, posterName, rerollSeed]);
 
   // Loads any same-origin image (e.g. /public assets) for the canvas. We set
   // crossOrigin so the canvas remains exportable via toBlob even when other
@@ -357,7 +403,7 @@ export function WantedContent() {
       const s = (n: number) => n * scale;
       const isStory = posterFormat === "story";
 
-      const displayName = name.trim() || t("defaultName");
+      const displayName = posterName || t("defaultName");
       const distressRng = mulberry32(seededHash);
 
       ctx.fillStyle = POSTER_BG;
@@ -659,7 +705,7 @@ export function WantedContent() {
           incidentsCursorY += s(72);
         });
 
-        const trimmedName = name.trim();
+        const trimmedName = posterName;
         const shortCaseParams = new URLSearchParams({ t: selectedTone });
         if (trimmedName) shortCaseParams.set("n", trimmedName);
         const shortCasePath = `/w?${shortCaseParams.toString()}`;
@@ -685,7 +731,7 @@ export function WantedContent() {
         ctx.stroke();
         drawQrCodeSafe(ctx, caseUrlForQr, qrX, qrY, qrSize);
 
-        const qrCtaName = name.trim().split(/\s+/)[0]?.toUpperCase() ?? "";
+        const qrCtaName = posterName.split(/\s+/)[0]?.toUpperCase() ?? "";
         const qrCtaText =
           qrCtaName && qrCtaName.length <= 14
             ? t("qrCtaLabel", { name: qrCtaName })
@@ -1122,7 +1168,7 @@ export function WantedContent() {
       // bare checkout CTA.
       const qrX = centerX - qrSize / 2;
 
-      const trimmedName = name.trim();
+      const trimmedName = posterName;
       const shortCaseParams = new URLSearchParams({ t: selectedTone });
       if (trimmedName) shortCaseParams.set("n", trimmedName);
       const shortCasePath = `/w?${shortCaseParams.toString()}`;
@@ -1147,7 +1193,7 @@ export function WantedContent() {
 
       // Prominent QR call-to-action label — centered below QR. Bold red,
       // name-targeted, fitted to width.
-      const qrCtaName = name.trim().split(/\s+/)[0]?.toUpperCase() ?? "";
+      const qrCtaName = posterName.split(/\s+/)[0]?.toUpperCase() ?? "";
       const qrCtaText =
         qrCtaName && qrCtaName.length <= 14
           ? t("qrCtaLabel", { name: qrCtaName })
@@ -1215,7 +1261,7 @@ export function WantedContent() {
     [
       loadPosterImage,
       locale,
-      name,
+      posterName,
       posterFormat,
       selectedCaseDetail,
       selectedCharges,
@@ -1244,6 +1290,17 @@ export function WantedContent() {
   }, [drawPoster, posterFormat]);
 
   const handleGenerate = useCallback(() => {
+    const names = parseNameList(name);
+    if (names.length > 1) {
+      setQueue(names);
+      setQueueIndex(0);
+      setName(names[0]);
+      trackEvent("wanted_poster_multi_tag", { name_count: names.length });
+    } else {
+      setQueue([]);
+      setQueueIndex(0);
+      if (names.length === 1 && names[0] !== name) setName(names[0]);
+    }
     trackEvent("wanted_poster_generate", { name_length: name.trim().length });
     setGenerated(true);
     if (!window.matchMedia("(max-width: 1023px)").matches) return;
@@ -1251,6 +1308,25 @@ export function WantedContent() {
       canvasRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 0);
   }, [name]);
+
+  // Advance the multi-tag stepper to the next accused human. Keeps `generated`
+  // true so the action panel stays visible; only the active name changes, so
+  // the existing single-canvas render is reused unchanged.
+  // Move freely back and forth through the round-up so the user can revisit any
+  // poster, not just walk forward. No forced scroll — the visible "Poster X of
+  // N" indicator and the name change in the preview signal the switch.
+  const goToQueueIndex = useCallback(
+    (target: number) => {
+      if (target < 0 || target >= queue.length || target === queueIndex) return;
+      setQueueIndex(target);
+      setName(queue[target]);
+      setRerollSeed(0);
+      setLinkCopied(false);
+      setShareError(null);
+      trackEvent("wanted_poster_multi_tag", { navigated: true, index: target });
+    },
+    [queue, queueIndex],
+  );
 
   const createPosterExportBlob = useCallback(async () => {
     const canvas = canvasRef.current;
@@ -1374,6 +1450,8 @@ export function WantedContent() {
     // matters for module density.
     const caseParams = new URLSearchParams({ tone: selectedTone });
     if (trimmedName) caseParams.set("name", trimmedName);
+    const trimmedFiler = filerName.trim();
+    if (trimmedFiler) caseParams.set("by", trimmedFiler);
     const casePath = `/wanted/case?${caseParams.toString()}`;
     const caseShareUrl =
       typeof window !== "undefined"
@@ -1431,12 +1509,14 @@ export function WantedContent() {
       console.warn("[Wanted] Share failed:", error);
       setShareError("shareError");
     }
-  }, [createPosterExportBlob, locale, name, posterFormat, selectedTone, t]);
+  }, [createPosterExportBlob, filerName, locale, name, posterFormat, selectedTone, t]);
 
   const handleRegenerate = useCallback(() => {
     setGenerated(false);
     setRerollSeed(0);
     setName("");
+    setQueue([]);
+    setQueueIndex(0);
     setShareError(null);
     // Scroll the name input back into view and focus it so the user does not
     // have to manually scroll up after the action buttons reset.
@@ -1458,6 +1538,8 @@ export function WantedContent() {
     setGenerated(false);
     setLinkCopied(false);
     setRerollSeed(0);
+    setQueue([]);
+    setQueueIndex(0);
     setName(value);
   }, []);
 
@@ -1472,7 +1554,7 @@ export function WantedContent() {
     setPosterFormat(format);
   }, []);
 
-  const displayName = name.trim() || t("defaultName");
+  const displayName = posterName || t("defaultName");
   const giftCtaText = t("giftCta", {
     name: displayName,
     price: getTierPriceLabel("protected"),
@@ -1553,6 +1635,9 @@ export function WantedContent() {
                       placeholder={t("namePlaceholder")}
                       className="w-full rounded-lg border border-red-200 bg-white px-4 py-3 text-base text-[var(--brand-dark)] shadow-sm placeholder:text-[var(--muted)]/50 transition focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/15"
                     />
+                    <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+                      {t("multiNameHint")}
+                    </p>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
@@ -1566,6 +1651,31 @@ export function WantedContent() {
                         {suggestion}
                       </button>
                     ))}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="wanted-filer"
+                      className="mb-2 block text-sm font-semibold text-[var(--brand-dark)]"
+                    >
+                      {t("filerLabel")}
+                    </label>
+                    <input
+                      id="wanted-filer"
+                      name="wanted_filer"
+                      type="text"
+                      autoComplete="name"
+                      autoCorrect="off"
+                      autoCapitalize="words"
+                      spellCheck={false}
+                      value={filerName}
+                      onChange={(event) => setFilerName(event.target.value.slice(0, 80))}
+                      placeholder={t("filerPlaceholder")}
+                      className="w-full rounded-lg border border-red-200 bg-white px-4 py-3 text-base text-[var(--brand-dark)] shadow-sm placeholder:text-[var(--muted)]/50 transition focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/15"
+                    />
+                    <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+                      {t("filerHint")}
+                    </p>
                   </div>
 
                   <fieldset className="space-y-2">
@@ -1692,6 +1802,49 @@ export function WantedContent() {
                 <div className="mt-4 space-y-3">
                   {generated ? (
                     <>
+                      {queue.length > 1 ? (
+                        <div className="rounded-lg border border-red-200 bg-red-50/60 px-3 py-2.5">
+                          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-red-700">
+                            {t("queueProgress", {
+                              current: queueIndex + 1,
+                              total: queue.length,
+                            })}
+                          </p>
+
+                          <div className="mt-2 flex flex-wrap gap-1.5">
+                            {queue.map((queuedName, index) => (
+                              <button
+                                key={`${queuedName}-${index}`}
+                                type="button"
+                                onClick={() => goToQueueIndex(index)}
+                                aria-current={index === queueIndex}
+                                className={`max-w-full truncate rounded-md border px-2 py-1 text-xs font-semibold transition-colors duration-200 ease-out ${
+                                  index === queueIndex
+                                    ? "border-red-600 bg-red-600 text-white"
+                                    : "border-red-200 bg-white text-red-700 hover:bg-red-50"
+                                }`}
+                              >
+                                {queuedName}
+                              </button>
+                            ))}
+                          </div>
+
+                          {queueIndex < queue.length - 1 ? (
+                            <button
+                              type="button"
+                              onClick={() => goToQueueIndex(queueIndex + 1)}
+                              className="mt-2 min-h-[40px] w-full rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-red-700"
+                            >
+                              {t("queueNext", { name: queue[queueIndex + 1] })}
+                            </button>
+                          ) : (
+                            <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+                              {t("queueDone")}
+                            </p>
+                          )}
+                        </div>
+                      ) : null}
+
                       <LocalizedLink
                         href={giftUrl}
                         onClick={() =>

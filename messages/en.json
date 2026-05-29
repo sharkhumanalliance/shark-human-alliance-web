@@ -1259,6 +1259,13 @@
     "caseLinkDescription": "A personalized landing page where the accusation can become paperwork.",
     "storyLinkLabel": "Story link",
     "newPoster": "Create another poster",
+    "multiNameHint": "Tip: separate several names with commas to accuse a whole group at once.",
+    "filerLabel": "Your name (optional)",
+    "filerPlaceholder": "e.g. Tom from Sales",
+    "filerHint": "Stamped on the case as who filed it — so they know exactly who to blame, and can accuse you right back.",
+    "queueProgress": "Poster {current} of {total}",
+    "queueNext": "Next: {name} →",
+    "queueDone": "Last poster in your round-up. Each one opens its own case.",
     "rerollChargesButton": "Reroll poster",
     "priceAnchor": "$4 — less than a fancy latte. Less waiting in line, too.",
     "socialProofText": "Wanted cases now open.",
@@ -1292,6 +1299,9 @@
     "contextBanner": "A shark compliance case has been opened for {name}. The Bureau requests a response, preferably before Luna reads the file again.",
     "eyebrow": "Open shark-paperwork case",
     "caseFileLabel": "File",
+    "filedByLabel": "Filed by {name}",
+    "accuseBackShortcut": "Was this you? Accuse {name} right back →",
+    "accuseBackGeneric": "On the list yourself? Blame someone else →",
     "headline": "A Shark Compliance Case Has Been Opened",
     "caseTagline": "Records confirm {name} exists. The Bureau is unsure how to feel about this.",
     "caseStatusBlock": {
@@ -1323,8 +1333,10 @@
       "denyText": "File a denial of snack status, seafood resemblance, and suspicious confidence.",
       "blameTitle": "Blame Someone Else",
       "blameText": "Transfer the file to a more administratively concerning human.",
+      "blameTag": "Keep it going",
       "settleTitle": "Close the Case",
-      "settleText": "Resolve the matter with Protected Friend Status."
+      "settleText": "Resolve the matter with Protected Friend Status.",
+      "settleTag": "Recommended"
     },
     "defenseStatement": {
       "statusTitle": "Denial Logged",
@@ -1352,7 +1364,9 @@
       "updatedStatusValue": "Suspicion redistributed, not resolved.",
       "noteTitle": "TRANSFER NOTE",
       "noteText": "Responsibility may be transferred only to a human with equal or greater snack ambiguity.\nFinnley has prepared a fresh folder just in case.",
-      "storyVersion": "I tried to transfer my shark compliance case.\nThe Bureau asked for a name.\nThis has become someone else’s problem, pending review."
+      "storyVersion": "I tried to transfer my shark compliance case.\nThe Bureau asked for a name.\nThis has become someone else’s problem, pending review.",
+      "issuePosterCta": "Issue a Wanted poster for {name} →",
+      "issuePosterHint": "This opens the generator with their name prefilled — and your name on file as the one who reported them."
     },
     "previewLabel": "Preview of {name}'s certificate",
     "previewText": "This is what {name} will receive — personalized, printable, and suitable for framing after the Bureau closes the file.",

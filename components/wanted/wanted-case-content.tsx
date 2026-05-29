@@ -49,12 +49,14 @@ function normalizeName(value: string | undefined, fallback: string) {
 type WantedCaseContentProps = {
   initialName?: string;
   initialTone?: string;
+  initialBy?: string;
   certificateDate: string;
 };
 
 export function WantedCaseContent({
   initialName,
   initialTone,
+  initialBy,
   certificateDate,
 }: WantedCaseContentProps) {
   const t = useTranslations("wantedCase");
@@ -63,6 +65,7 @@ export function WantedCaseContent({
   const tone = normalizeTone(initialTone);
   const displayName = normalizeName(initialName, wantedT("defaultName"));
   const shortName = displayName.split(/\s+/)[0] || displayName;
+  const accuserName = normalizeName(initialBy, "");
   const ambiguityLevel = AMBIGUITY_LEVEL_BY_TONE[tone];
   const personalized = (initialName ?? "").trim().length > 0;
   const [activeResponse, setActiveResponse] = useState<CaseResponse | null>(null);
@@ -71,6 +74,7 @@ export function WantedCaseContent({
   const [blameName, setBlameName] = useState("");
   const [submittedBlameName, setSubmittedBlameName] = useState("");
   const settlementRef = useRef<HTMLDivElement | null>(null);
+  const responseRef = useRef<HTMLDivElement | null>(null);
   const caseNumber = `CASE SHA-${nameHash(`${displayName}:${tone}`)
     .toString()
     .slice(-4)
@@ -100,6 +104,26 @@ export function WantedCaseContent({
       tone,
       locale,
       personalized,
+    });
+  }
+
+  // Header reciprocity shortcut when no specific accuser is on file: open the
+  // blame panel and scroll the response block into view so the loop can start
+  // without hunting for the right tab.
+  function startBlameFromHeader() {
+    trackEvent("wanted_accuse_back", {
+      tone,
+      locale,
+      personalized,
+      source: "case_header",
+    });
+    selectResponse("blame");
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    responseRef.current?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
     });
   }
 
@@ -193,9 +217,42 @@ export function WantedCaseContent({
                 {displayName}
               </p>
 
+              {accuserName ? (
+                <p className="mt-2 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+                  {t("filedByLabel", { name: accuserName })}
+                </p>
+              ) : null}
+
               <p className="mt-4 w-full border-l-4 border-[var(--accent)] bg-white/45 py-3 pl-4 pr-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
                 {t("caseTagline", { name: shortName })}
               </p>
+
+              {accuserName ? (
+                <LocalizedLink
+                  href={`/wanted?name=${encodeURIComponent(
+                    accuserName,
+                  )}&by=${encodeURIComponent(displayName)}`}
+                  onClick={() =>
+                    trackEvent("wanted_accuse_back", {
+                      tone,
+                      locale,
+                      personalized,
+                      source: "case_header",
+                    })
+                  }
+                  className="mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-red-300 bg-red-50/60 px-4 py-2.5 text-sm font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-50"
+                >
+                  {t("accuseBackShortcut", { name: accuserName })}
+                </LocalizedLink>
+              ) : (
+                <button
+                  type="button"
+                  onClick={startBlameFromHeader}
+                  className="mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-red-300 bg-red-50/60 px-4 py-2.5 text-sm font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-50"
+                >
+                  {t("accuseBackGeneric")}
+                </button>
+              )}
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
@@ -314,7 +371,7 @@ export function WantedCaseContent({
                 {t("explanation")}
               </p>
 
-              <div className="mt-5 border-t border-[var(--border)] pt-5">
+              <div ref={responseRef} className="mt-5 border-t border-[var(--border)] pt-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                   {t("response.label")}
                 </p>
@@ -322,58 +379,69 @@ export function WantedCaseContent({
                   {t("response.title")}
                 </h2>
 
-                <div className="mt-4 grid gap-2 sm:gap-3 md:grid-cols-3">
+                {/* Hierarchy: settle (purchase) and blame (viral loop) are the
+                    two high-value paths and lead visually; deny is a dead-end so
+                    it sits below as a slim, muted secondary action. */}
+                <div className="mt-4 space-y-2 sm:space-y-3">
+                  <div className="grid gap-2 sm:gap-3 md:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={() => selectResponse("settle")}
+                      aria-pressed={activeResponse === "settle"}
+                      className={`min-h-[96px] rounded-xl border p-4 text-left transition-colors duration-300 ease-out lg:min-h-[120px] lg:p-5 ${
+                        activeResponse === "settle"
+                          ? "border-[var(--accent)] bg-[var(--surface-soft)] text-[var(--brand-dark)] shadow-sm ring-1 ring-[var(--accent)]/30"
+                          : "border-[var(--accent)]/45 bg-[var(--surface-soft)]/60 text-[var(--brand-dark)] hover:bg-[var(--surface-soft)]"
+                      }`}
+                    >
+                      <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+                        {t("response.settleTag")}
+                      </span>
+                      <span className="mt-1.5 block text-sm font-semibold text-[var(--brand-dark)]">
+                        {t("response.settleTitle")}
+                      </span>
+                      <span className="mt-1 block text-sm leading-5 text-[var(--muted)] sm:leading-6">
+                        {t("response.settleText")}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => selectResponse("blame")}
+                      aria-pressed={activeResponse === "blame"}
+                      className={`min-h-[96px] rounded-xl border p-4 text-left transition-colors duration-300 ease-out lg:min-h-[120px] lg:p-5 ${
+                        activeResponse === "blame"
+                          ? "border-red-500 bg-red-50 text-red-900 shadow-sm ring-1 ring-red-300"
+                          : "border-red-300 bg-red-50/50 text-red-800 hover:bg-red-50"
+                      }`}
+                    >
+                      <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-red-700">
+                        {t("response.blameTag")}
+                      </span>
+                      <span className="mt-1.5 block text-sm font-semibold text-red-900">
+                        {t("response.blameTitle")}
+                      </span>
+                      <span className="mt-1 block text-sm leading-5 text-red-800/80 sm:leading-6">
+                        {t("response.blameText")}
+                      </span>
+                    </button>
+                  </div>
+
                   <button
                     type="button"
                     onClick={() => selectResponse("deny")}
                     aria-pressed={activeResponse === "deny"}
-                    className={`min-h-[84px] rounded-xl border p-4 text-left transition-colors duration-300 ease-out sm:min-h-[96px] lg:min-h-[112px] lg:p-5 ${
+                    className={`flex min-h-[52px] w-full flex-col gap-0.5 rounded-lg border px-4 py-2.5 text-left transition-colors duration-300 ease-out sm:flex-row sm:items-center sm:gap-2 ${
                       activeResponse === "deny"
-                        ? "border-[var(--accent)] bg-[var(--surface-soft)] text-[var(--brand-dark)] shadow-sm"
+                        ? "border-[var(--accent)] bg-[var(--surface-soft)] text-[var(--brand-dark)]"
                         : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-[var(--surface-soft)]"
                     }`}
                   >
-                    <span className="block text-sm font-semibold text-[var(--brand-dark)]">
+                    <span className="text-sm font-semibold text-[var(--brand-dark)]">
                       {t("response.denyTitle")}
                     </span>
-                    <span className="mt-1 block text-sm leading-5 sm:mt-2 sm:leading-6">
+                    <span className="text-sm leading-5 text-[var(--muted)]">
                       {t("response.denyText")}
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => selectResponse("blame")}
-                    aria-pressed={activeResponse === "blame"}
-                    className={`min-h-[84px] rounded-xl border p-4 text-left transition-colors duration-300 ease-out sm:min-h-[96px] lg:min-h-[112px] lg:p-5 ${
-                      activeResponse === "blame"
-                        ? "border-[var(--accent)] bg-[var(--surface-soft)] text-[var(--brand-dark)] shadow-sm"
-                        : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-[var(--surface-soft)]"
-                    }`}
-                  >
-                    <span className="block text-sm font-semibold text-[var(--brand-dark)]">
-                      {t("response.blameTitle")}
-                    </span>
-                    <span className="mt-1 block text-sm leading-5 sm:mt-2 sm:leading-6">
-                      {t("response.blameText")}
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => selectResponse("settle")}
-                    aria-pressed={activeResponse === "settle"}
-                    className={`min-h-[84px] rounded-xl border p-4 text-left transition-colors duration-300 ease-out sm:min-h-[96px] lg:min-h-[112px] lg:p-5 ${
-                      activeResponse === "settle"
-                        ? "border-[var(--accent)] bg-[var(--surface-soft)] text-[var(--brand-dark)] shadow-sm"
-                        : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-[var(--surface-soft)]"
-                    }`}
-                  >
-                    <span className="block text-sm font-semibold text-[var(--brand-dark)]">
-                      {t("response.settleTitle")}
-                    </span>
-                    <span className="mt-1 block text-sm leading-5 sm:mt-2 sm:leading-6">
-                      {t("response.settleText")}
                     </span>
                   </button>
                 </div>
@@ -497,6 +565,29 @@ export function WantedCaseContent({
                         <p className="mt-4 whitespace-pre-line text-sm font-semibold leading-6 text-[var(--brand-dark)]">
                           {t("blamePanel.storyVersion")}
                         </p>
+
+                        <div className="mt-5 border-t border-dashed border-[var(--border)] pt-4">
+                          <LocalizedLink
+                            href={`/wanted?name=${encodeURIComponent(
+                              submittedBlameName,
+                            )}&by=${encodeURIComponent(displayName)}`}
+                            onClick={() =>
+                              trackEvent("wanted_accuse_back", {
+                                tone,
+                                locale,
+                                personalized,
+                              })
+                            }
+                            className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-red-700 sm:w-auto"
+                          >
+                            {t("blamePanel.issuePosterCta", {
+                              name: submittedBlameName,
+                            })}
+                          </LocalizedLink>
+                          <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+                            {t("blamePanel.issuePosterHint")}
+                          </p>
+                        </div>
                       </div>
                     ) : null}
                   </div>

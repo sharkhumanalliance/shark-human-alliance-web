@@ -1259,6 +1259,13 @@
     "caseLinkDescription": "Una landing personalizada donde la acusación puede convertirse en papeleo.",
     "storyLinkLabel": "Enlace para Story",
     "newPoster": "Crear otro póster",
+    "multiNameHint": "Consejo: separa varios nombres con comas para acusar a todo un grupo de una vez.",
+    "filerLabel": "Tu nombre (opcional)",
+    "filerPlaceholder": "p. ej. Tom de Ventas",
+    "filerHint": "Aparecerá en el caso como quien lo presentó — para que sepan a quién culpar y puedan acusarte de vuelta.",
+    "queueProgress": "Póster {current} de {total}",
+    "queueNext": "Siguiente: {name} →",
+    "queueDone": "Último póster de tu ronda. Cada uno abre su propio caso.",
     "rerollChargesButton": "Rehacer póster",
     "priceAnchor": "$4 — menos que un café de especialidad. Sin colas, además.",
     "socialProofText": "Casos Wanted abiertos.",
@@ -1292,6 +1299,9 @@
     "contextBanner": "Se ha abierto un caso de cumplimiento tiburón para {name}. La Oficina solicita una respuesta, preferiblemente antes de que Luna vuelva a leer el expediente.",
     "eyebrow": "Caso abierto de papeleo tiburón",
     "caseFileLabel": "Expediente",
+    "filedByLabel": "Presentado por {name}",
+    "accuseBackShortcut": "¿Eras tú? Acusa a {name} de vuelta →",
+    "accuseBackGeneric": "¿Apareces tú en la lista? Culpa a otra persona →",
     "headline": "Se ha abierto un caso de cumplimiento tiburón",
     "caseTagline": "Los registros confirman que {name} existe. La Oficina no sabe cómo sentirse al respecto.",
     "caseStatusBlock": {
@@ -1323,8 +1333,10 @@
       "denyText": "Presenta una negación del estatus de snack, todo parecido con marisco y la confianza sospechosa.",
       "blameTitle": "Culpar a Otra Persona",
       "blameText": "Transfiere el expediente a un humano administrativamente más preocupante.",
+      "blameTag": "Sigue la cadena",
       "settleTitle": "Cerrar el Caso",
-      "settleText": "Resuelve el asunto con Estatus de Amigo Protegido."
+      "settleText": "Resuelve el asunto con Estatus de Amigo Protegido.",
+      "settleTag": "Recomendado"
     },
     "defenseStatement": {
       "statusTitle": "Negación Registrada",
@@ -1352,7 +1364,9 @@
       "updatedStatusValue": "Sospecha redistribuida, no resuelta.",
       "noteTitle": "NOTA DE TRANSFERENCIA",
       "noteText": "La responsabilidad solo puede transferirse a un humano con ambigüedad snack igual o mayor.\nFinnley ha preparado una carpeta nueva por si acaso.",
-      "storyVersion": "Intenté transferir mi caso de cumplimiento tiburón.\nLa Oficina pidió un nombre.\nEsto se ha convertido en problema de otra persona, pendiente de revisión."
+      "storyVersion": "Intenté transferir mi caso de cumplimiento tiburón.\nLa Oficina pidió un nombre.\nEsto se ha convertido en problema de otra persona, pendiente de revisión.",
+      "issuePosterCta": "Emitir un póster de Se Busca para {name} →",
+      "issuePosterHint": "Esto abre el generador con su nombre rellenado — y con tu nombre registrado como quien lo denunció."
     },
     "previewLabel": "Vista previa del certificado de {name}",
     "previewText": "Esto es lo que recibirá {name}: personalizado, imprimible y apto para enmarcar cuando la Oficina cierre el expediente.",

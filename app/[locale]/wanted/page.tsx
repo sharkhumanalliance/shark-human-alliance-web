@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ locale: string }>;
+  searchParams?: Promise<{ name?: string; by?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -46,15 +47,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function WantedPage({ params }: Props) {
+export default async function WantedPage({ params, searchParams }: Props) {
   const { locale } = await params;
+  const resolved = await searchParams;
   setRequestLocale(locale);
 
   return (
     <>
       <SiteHeader />
       <main id="main" className="pb-20 md:pb-0">
-        <WantedContent />
+        <WantedContent initialName={resolved?.name} initialBy={resolved?.by} />
       </main>
       <SiteFooter />
     </>
