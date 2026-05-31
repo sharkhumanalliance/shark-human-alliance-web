@@ -87,16 +87,16 @@ export function CookieConsent() {
     <>
       <div className="hidden" aria-hidden="true">{cookieVersion}</div>
       {shouldShowBanner ? (
-        <div className="fixed inset-x-4 bottom-4 z-[110] mx-auto max-w-3xl rounded-3xl border border-[var(--border)] bg-white/95 p-4 shadow-[0_24px_80px_rgba(10,30,54,0.18)] backdrop-blur sm:bottom-6 sm:px-5 sm:py-4">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="fixed inset-x-3 bottom-3 z-[110] mx-auto max-w-3xl rounded-2xl border border-[var(--border)] bg-white/95 p-3 shadow-[0_18px_60px_rgba(10,30,54,0.16)] backdrop-blur sm:inset-x-4 sm:bottom-6 sm:rounded-3xl sm:px-5 sm:py-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--section-label)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)] sm:text-[11px] sm:tracking-[0.2em]">
                 {t("eyebrow")}
               </p>
-              <h2 className="mt-2 text-lg font-semibold text-[var(--brand-dark)] sm:text-xl">
+              <h2 className="mt-1 text-base font-semibold text-[var(--brand-dark)] sm:mt-2 sm:text-xl">
                 {t("title")}
               </h2>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted)]">
+              <p className="mt-1 max-w-2xl text-xs leading-5 text-[var(--muted)] sm:mt-2 sm:text-sm sm:leading-6">
                 {t("description")}
               </p>
             </div>
@@ -104,7 +104,7 @@ export function CookieConsent() {
               <button
                 type="button"
                 onClick={() => applyConsent(true)}
-                className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)] sm:min-h-[48px] sm:py-3"
               >
                 {t("acceptAnalytics")}
               </button>

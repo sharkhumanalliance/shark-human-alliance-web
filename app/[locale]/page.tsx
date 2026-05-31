@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { HomeContent } from "@/components/home/home-content";
+import { MobileStickyCta } from "@/components/home/mobile-sticky-cta";
 import { BASE_URL } from "@/lib/config";
 import type { Metadata } from "next";
 
@@ -51,6 +52,7 @@ export default async function Home({ params }: Props) {
         <HomeContent />
       </main>
       <SiteFooter />
+      <MobileStickyCta />
     </>
   );
 }

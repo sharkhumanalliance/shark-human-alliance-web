@@ -79,11 +79,43 @@ export function ImpactContent() {
             <p className="mt-3 max-w-3xl text-base leading-7 text-[var(--muted)] sm:text-lg">
               {t("subtitle")}
             </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {[1, 2, 3].map((index) => (
+                <div
+                  key={index}
+                  className="rounded-2xl border border-[var(--border)] bg-white px-4 py-4 shadow-sm"
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--section-label)]">
+                    {t(`heroProof.${index}.label`)}
+                  </p>
+                  <p className="mt-2 text-2xl font-bold tabular-nums text-[var(--brand-dark)]">
+                    {t(`heroProof.${index}.value`)}
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
+                    {t(`heroProof.${index}.text`)}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#allocation-split"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition hover:bg-[var(--surface-soft)]"
+              >
+                {t("heroProofCta")}
+              </a>
+              <LocalizedLink
+                href="/purchase?tier=protected"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
+              >
+                {t("heroPurchaseCta")}
+              </LocalizedLink>
+            </div>
           </div>
         </div>
       </section>
 
-      <section data-reveal className="pb-10 pt-6 sm:pb-12 sm:pt-8">
+      <section id="allocation-split" data-reveal className="scroll-mt-28 pb-10 pt-6 sm:pb-12 sm:pt-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">

@@ -59,6 +59,7 @@ function SuccessContentInner() {
   const [member, setMember] = useState<MemberData | null>(null);
   const [loading, setLoading] = useState(true);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [giftLinkCopied, setGiftLinkCopied] = useState(false);
   const [timedOut, setTimedOut] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState("");
   const [customizeOpen, setCustomizeOpen] = useState(false);
@@ -299,6 +300,13 @@ function SuccessContentInner() {
     : "";
   const publicTier = getPublicTierKey(member.tier);
   const publicRegistryId = member.registryCode || formatRegistryIdForDisplay(member.id);
+  // Gift purchases get a shareable reveal link so the buyer can preview what
+  // the recipient sees and hand it over personally.
+  const isGift = searchParams.get("gift") === "1";
+  const giftLink =
+    isGift && member.accessToken
+      ? `${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, `/gift?to=${encodeURIComponent(member.name)}&token=${member.accessToken}`)}`
+      : "";
 
   // Impact strip value — donationCents comes from the canonical tier
   // metadata so this cannot drift away from the /impact page. We intentionally
@@ -384,6 +392,52 @@ function SuccessContentInner() {
             {member.hasEmail ? t("emailSentAutomatic") : t("downloadOnlyNotice")}
           </p>
         </header>
+
+        {isGift && giftLink ? (
+          <div className="mx-auto mt-6 max-w-md rounded-2xl border border-[var(--accent)]/40 bg-[var(--surface-soft)]/50 p-5 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+              {t("giftSendTitle")}
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+              {t("giftSendText")}
+            </p>
+            <div className="mt-4 flex flex-col items-stretch gap-2 rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 sm:flex-row sm:items-center sm:px-4">
+              <label htmlFor="gift-link" className="sr-only">
+                {t("giftLinkLabel")}
+              </label>
+              <input
+                id="gift-link"
+                type="text"
+                value={giftLink}
+                readOnly
+                aria-label={t("giftLinkLabel")}
+                className="min-w-0 flex-grow bg-transparent text-sm font-mono leading-6 text-[var(--brand-dark)] focus:outline-none"
+              />
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(giftLink);
+                  setGiftLinkCopied(true);
+                  trackEvent("gift_link_copy", { tier: publicTier });
+                  setTimeout(() => setGiftLinkCopied(false), 2000);
+                }}
+                className="shrink-0 rounded-md bg-[var(--accent)] px-4 py-2.5 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+              >
+                {giftLinkCopied ? "✓" : t("giftLinkCopy")}
+              </button>
+            </div>
+            <a
+              href={giftLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent("gift_reveal_preview_click", { tier: publicTier })
+              }
+              className="mt-3 inline-flex min-h-[40px] items-center justify-center text-sm font-semibold text-[var(--accent)] transition hover:text-[var(--accent-dark)]"
+            >
+              {t("giftPreview")}
+            </a>
+          </div>
+        ) : null}
 
         {/* ====================================================
             Side-by-side: small cert thumbnail (left) + impact

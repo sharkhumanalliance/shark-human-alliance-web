@@ -4,6 +4,9 @@
     "metaDescription": "Alguien ha tramitado papeleo de protección tiburón (más o menos oficial) a tu nombre. Abre tu regalo.",
     "eyebrow": "Un regalo de la Alianza",
     "defaultTo": "amigo/a",
+    "bareTitle": "Hay un regalo tiburón esperando",
+    "bareText": "Esta es una página de regalo personalizada. Sin el enlace original del regalo, aquí no hay nada concreto que desenvolver.",
+    "bareGiftCta": "Enviar un regalo tiburón",
     "sealedTitle": "{name}, alguien ha tramitado papeleo en tu nombre.",
     "sealedSubtitle": "Otra persona ha gestionado para ti protección tiburón (más o menos oficial).",
     "sealedSubtitleFrom": "{name} ha gestionado para ti protección tiburón (más o menos oficial).",
@@ -13,6 +16,10 @@
     "fromLabel": "De {name}",
     "messageLabel": "Una nota para ti",
     "certificateCta": "Abre tu certificado",
+    "yourTurnLabel": "Te toca",
+    "yourTurnText": "¿Conoces a alguien más peligrosamente desprotegido? Devuelve el favor.",
+    "protectBackCta": "Protege a alguien tú",
+    "wantedCta": "Crea un póster de Se Busca",
     "exploreCta": "Explora la Alianza →"
   },
   "seo": {
@@ -83,7 +90,14 @@
       "faq": "FAQ",
       "registry": "Registro"
     },
-    "cta": "Presentar papeleo tiburón"
+    "cta": "Presentar papeleo tiburón",
+    "giftCta": "Regalar"
+  },
+  "stickyCta": {
+    "label": "Atajo de papeleo tiburón",
+    "text": "Prueba de que no eres un snack",
+    "cta": "Presentar papeleo tiburón",
+    "dismissLabel": "Ocultar atajo de papeleo tiburón"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -608,7 +622,8 @@
       "eyebrow": "Resumen de compra",
       "title": "Regularización tiburón-humano personalizada",
       "description": "Certificado digital personalizado, entrega inmediata tras el pago correcto y una asignación real a conservación. Precio: {price}. Asignación a conservación: {donation}.",
-      "coffeeNote": "La regularización de entrada empieza en $4 — menos que un café de especialidad. La persona designada recibe papeleo que los tiburones han sido instruidos a tomar en serio, y además se financia conservación real.",
+      "coffeeNote": "La regularización de entrada empieza en $4. Recibes papeleo personalizado, acceso inmediato al PDF y una asignación rastreada a conservación.",
+      "mobileSummaryToggle": "Resumen del pedido",
       "includesLabel": "Qué recibes",
       "includes": {
         "0": "Asignación a conservación financiada con ingresos de Shark Human Alliance.",
@@ -686,6 +701,11 @@
     "fromNameLabel": "Tu nombre (opcional)",
     "fromNamePlaceholder": "ej. Tom",
     "fromNameHint": "Aparece en el regalo para que sepan a quién agradecer.",
+    "giftSendTitle": "Envía el regalo",
+    "giftSendText": "Lo hemos enviado por correo a tu destinatario. También puedes previsualizarlo y entregar el enlace tú.",
+    "giftLinkLabel": "Enlace del regalo",
+    "giftLinkCopy": "Copiar enlace",
+    "giftPreview": "Previsualizar el regalo →",
     "giftMessageLabel": "Mensaje personal (opcional)",
     "giftMessagePlaceholder": "ej. ¡Feliz cumpleaños! Ahora los tiburones saben que no estás en el menú.",
     "referredByBadge": "El crédito por referido está activo para esta compra.",
@@ -1062,6 +1082,25 @@
     "title": "Adónde va realmente el dinero.",
     "brandLine": "Los tiburones merecen mejor imagen. Y protección real.",
     "subtitle": "El papeleo es ficticio. La asignación a conservación de tiburones es real. Registramos cada venta, publicamos las asignaciones y no llamamos socio confirmado a un destinatario hasta que el dinero se haya movido de verdad.",
+    "heroProof": {
+      "1": {
+        "label": "Amigo Protegido",
+        "value": "$1",
+        "text": "de cada certificado de $4 va a conservación."
+      },
+      "2": {
+        "label": "No-Snack",
+        "value": "$12",
+        "text": "de cada certificado de $19 va a conservación."
+      },
+      "3": {
+        "label": "Zona Libre de Tiburones",
+        "value": "$70",
+        "text": "de cada certificación de $99 va a conservación."
+      }
+    },
+    "heroProofCta": "Ver el cálculo de asignación",
+    "heroPurchaseCta": "Presentar papeleo",
     "splitTitle": "Cómo se dividen los fondos",
     "splitDescription": "Los precios de los certificados son $4, $19 y $99. Los niveles más bajos tienen proporcionalmente más costes de procesamiento y operación. La parte de cada venta destinada a conservación se rastrea y se reporta aquí mediante informes públicos de asignación.",
     "splitOf": "de",
@@ -1323,6 +1362,11 @@
     "accuseBackGeneric": "¿Apareces tú en la lista? Culpa a otra persona →",
     "headline": "Se ha abierto un caso de cumplimiento tiburón",
     "caseTagline": "Los registros confirman que {name} existe. La Oficina no sabe cómo sentirse al respecto.",
+    "settleShortcutLabel": "Resolución rápida",
+    "settleShortcutText": "Cierra el expediente con papeleo simbólico de Amigo Protegido antes de que alguien añada más pestañas.",
+    "settleShortcutCta": "Resolver con un certificado — {price}",
+    "settleShortcutSecondary": "o responde abajo",
+    "fullCaseFileSummary": "Expediente completo",
     "caseStatusBlock": {
       "title": "Expediente de la Oficina",
       "officerLabel": "Oficial asignada",
@@ -1648,7 +1692,7 @@
   "cookies": {
     "eyebrow": "Configuración de cookies",
     "title": "Cookies. No las marinas.",
-    "description": "Las cookies necesarias mantienen en marcha el sitio, el checkout y la seguridad. Las cookies analíticas solo se cargan con tu consentimiento. Ninguna es comestible y ninguna atrae tiburones; del resto de esta web no podemos decir lo mismo.",
+    "description": "Las cookies necesarias mantienen el checkout y la seguridad. La analítica solo se carga con consentimiento. Acepta o rechaza con un toque; ningún tiburón será notificado.",
     "acceptAnalytics": "Aceptar analíticas",
     "necessaryOnly": "Solo necesarias",
     "settings": "Configuración",

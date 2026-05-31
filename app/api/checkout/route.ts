@@ -232,7 +232,7 @@ export async function POST(request: NextRequest) {
         ? buildAbsoluteLocalizedUrl(
             BASE_URL,
             loc,
-            `/gift?to=${encodeURIComponent(name.trim())}${fromName ? `&from=${encodeURIComponent(fromName.trim())}` : ""}${giftMessage ? `&msg=${encodeURIComponent(giftMessage)}` : ""}&token=${accessToken}`,
+            `/gift?to=${encodeURIComponent(name.trim())}${fromName ? `&from=${encodeURIComponent(fromName.trim())}` : ""}${giftMessage ? `&msg=${encodeURIComponent(giftMessage.slice(0, 600))}` : ""}&token=${accessToken}`,
           )
         : undefined;
 
@@ -351,7 +351,7 @@ export async function POST(request: NextRequest) {
         tier,
       });
 
-      const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}&paper=${normalizedPaperFormat}`;
+      const successUrl = `/${loc}/purchase/success?session_id=${freeSessionId}&paper=${normalizedPaperFormat}${isGift ? "&gift=1" : ""}`;
       const response = NextResponse.json({ url: successUrl });
       response.cookies.set({
         name: getCheckoutSessionCookieName(),
@@ -388,7 +388,7 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: "payment",
-      success_url: `${BASE_URL}/${loc}/purchase/success?session_id={CHECKOUT_SESSION_ID}&paper=${normalizedPaperFormat}`,
+      success_url: `${BASE_URL}/${loc}/purchase/success?session_id={CHECKOUT_SESSION_ID}&paper=${normalizedPaperFormat}${isGift ? "&gift=1" : ""}`,
       cancel_url: `${BASE_URL}/${loc}/purchase?tier=${tier}&name=${encodeURIComponent(name)}&canceled=true&paper=${normalizedPaperFormat}`,
       metadata: {
         tier,

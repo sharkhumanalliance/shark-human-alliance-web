@@ -392,9 +392,8 @@ export function RegistryContent() {
             </div>
 
             <div className="mt-4 flex flex-col gap-3 border-t border-[var(--border)] pt-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="relative min-w-0">
-                <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-white/95 to-transparent sm:hidden" />
-                <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 pr-8 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 sm:pr-0">
+              <div className="min-w-0">
+                <div className="flex flex-wrap gap-2">
                   {filters.map((item) => (
                     <button
                       key={item.key}
@@ -407,9 +406,9 @@ export function RegistryContent() {
                         setExplainedFilter(item.key);
                       }}
                       aria-pressed={filter === item.key}
-                      className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
+                      className={`min-h-[44px] rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
                         filter === item.key
-                          ? "bg-[var(--brand-dark)] text-white shadow-sm"
+                          ? "bg-[var(--brand-dark)] text-white shadow-sm ring-2 ring-[var(--brand-dark)]/15"
                           : "border border-[var(--border)] bg-white text-[var(--muted)] hover:bg-sky-50 hover:text-[var(--brand-dark)]"
                       }`}
                     >
@@ -605,13 +604,13 @@ export function RegistryContent() {
                                 copyProfileLink(publicMemberId);
                               }}
                               aria-label={`${t("copyLink")}: ${member.name}`}
-                              className="rounded-lg border border-[var(--border)] bg-white px-2.5 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] hover:text-[var(--brand-dark)]"
+                              className="inline-flex min-h-[44px] items-center rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] hover:text-[var(--brand-dark)]"
                             >
                               {copiedId === publicMemberId ? t("copiedShort") : t("copyAction")}
                             </button>
                             <LocalizedLink
                               href={memberHref}
-                              className="rounded-lg bg-[var(--brand)] px-3 py-2 text-xs font-semibold !text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
+                              className="inline-flex min-h-[44px] items-center rounded-lg bg-[var(--brand)] px-3 py-2 text-xs font-semibold !text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
                               style={{ color: "#ffffff" }}
                             >
                               {t("openAction")}
@@ -628,7 +627,7 @@ export function RegistryContent() {
                             copyReferralCode(publicMemberId, member.referralCode);
                           }}
                           disabled={!member.referralCode}
-                          className="inline-flex min-h-[34px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-2.5 py-1.5 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
+                          className="inline-flex min-h-[44px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
                             {t("referralCodeLabel")}
@@ -761,7 +760,7 @@ export function RegistryContent() {
                             copyReferralCode(publicMemberId, member.referralCode);
                           }}
                           disabled={!member.referralCode}
-                          className="inline-flex min-h-[34px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-2.5 py-1.5 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
+                          className="inline-flex min-h-[44px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
                             {t("referralCodeLabel")}
@@ -784,15 +783,15 @@ export function RegistryContent() {
                               event.preventDefault();
                               event.stopPropagation();
                               copyProfileLink(publicMemberId);
-                            }}
-                            aria-label={`${t("copyLink")}: ${member.name}`}
-                            className="rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 hover:text-[var(--brand-dark)]"
+                          }}
+                          aria-label={`${t("copyLink")}: ${member.name}`}
+                            className="inline-flex min-h-[44px] items-center rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 hover:text-[var(--brand-dark)]"
                           >
                             {copiedId === publicMemberId ? t("copiedShort") : t("copyAction")}
                           </button>
                         <LocalizedLink
                           href={memberHref}
-                          className="rounded-lg bg-[var(--brand)] px-3 py-2 text-xs font-semibold !text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
+                          className="inline-flex min-h-[44px] items-center rounded-lg bg-[var(--brand)] px-3 py-2 text-xs font-semibold !text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
                           style={{ color: "#ffffff" }}
                         >
                           {t("openAction")}

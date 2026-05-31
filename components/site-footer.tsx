@@ -8,7 +8,7 @@ export function SiteFooter() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="border-t border-[var(--border)] bg-white">
+    <footer id="site-footer" className="border-t border-[var(--border)] bg-white">
       <div className="mx-auto max-w-6xl px-4 pb-8 pt-16 sm:px-6">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           <div>

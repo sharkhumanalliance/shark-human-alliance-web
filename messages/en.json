@@ -4,6 +4,9 @@
     "metaDescription": "Someone has filed official-ish shark protection paperwork in your name. Open your gift.",
     "eyebrow": "A gift from the Alliance",
     "defaultTo": "friend",
+    "bareTitle": "A shark gift is waiting",
+    "bareText": "This is a personalized gift page. Without the original gift link, there is nothing specific to unwrap here.",
+    "bareGiftCta": "Send a shark gift",
     "sealedTitle": "{name}, someone filed paperwork on your behalf.",
     "sealedSubtitle": "A fellow human has arranged official-ish shark protection for you.",
     "sealedSubtitleFrom": "{name} has arranged official-ish shark protection for you.",
@@ -13,6 +16,10 @@
     "fromLabel": "From {name}",
     "messageLabel": "A note for you",
     "certificateCta": "Open your certificate",
+    "yourTurnLabel": "Your turn",
+    "yourTurnText": "Know someone else who's dangerously unprotected? Return the favor.",
+    "protectBackCta": "Protect someone back",
+    "wantedCta": "Make a Wanted poster",
     "exploreCta": "Explore the Alliance →"
   },
   "seo": {
@@ -83,7 +90,14 @@
       "faq": "FAQ",
       "registry": "Registry"
     },
-    "cta": "File shark paperwork"
+    "cta": "File shark paperwork",
+    "giftCta": "Gift"
+  },
+  "stickyCta": {
+    "label": "Quick shark paperwork shortcut",
+    "text": "Proof you're not a snack",
+    "cta": "File shark paperwork",
+    "dismissLabel": "Hide shark paperwork shortcut"
   },
   "footer": {
     "brand": "Shark Human Alliance",
@@ -608,7 +622,8 @@
       "eyebrow": "Purchase summary",
       "title": "Personalized shark clearance",
       "description": "Personalized digital certificate, immediate delivery after successful payment, and a real conservation allocation. Price: {price}. Conservation allocation: {donation}.",
-      "coffeeNote": "Entry-tier clearance starts at $4 — less than a fancy latte. The appointed human gets paperwork the sharks have been advised to take seriously, and real conservation still gets funded.",
+      "coffeeNote": "Entry-tier clearance starts at $4. You get personalized paperwork, immediate PDF access, and a tracked conservation allocation.",
+      "mobileSummaryToggle": "Order summary",
       "includesLabel": "What you get",
       "includes": {
         "0": "Conservation allocation funded from Shark Human Alliance revenue.",
@@ -686,6 +701,11 @@
     "fromNameLabel": "Your name (optional)",
     "fromNamePlaceholder": "e.g. Tom",
     "fromNameHint": "Shown on the gift reveal so they know who to thank.",
+    "giftSendTitle": "Send the gift",
+    "giftSendText": "We've emailed it to your recipient. You can also preview it and hand over the link yourself.",
+    "giftLinkLabel": "Gift reveal link",
+    "giftLinkCopy": "Copy link",
+    "giftPreview": "Preview the gift reveal →",
     "giftMessageLabel": "Personal message (optional)",
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
     "referredByBadge": "Referral credit is active for this purchase.",
@@ -1062,6 +1082,25 @@
     "title": "Where the money actually goes.",
     "brandLine": "Sharks deserve better PR. And real protection.",
     "subtitle": "The paperwork is fictional. The shark conservation allocation is real. We track every sale, publish allocations, and do not call a recipient a confirmed partner until money has actually moved.",
+    "heroProof": {
+      "1": {
+        "label": "Protected Friend",
+        "value": "$1",
+        "text": "from every $4 certificate goes to conservation."
+      },
+      "2": {
+        "label": "Non-Snack",
+        "value": "$12",
+        "text": "from every $19 certificate goes to conservation."
+      },
+      "3": {
+        "label": "Shark-Free Zone",
+        "value": "$70",
+        "text": "from every $99 certification goes to conservation."
+      }
+    },
+    "heroProofCta": "See the allocation math",
+    "heroPurchaseCta": "File paperwork",
     "splitTitle": "How funds are split",
     "splitDescription": "Certificate prices are fixed at $4, $19, and $99. Lower tiers carry proportionally higher payment processing and operating costs. The conservation portion of each sale is tracked and reported here through public allocation reports.",
     "splitOf": "of",
@@ -1323,6 +1362,11 @@
     "accuseBackGeneric": "On the list yourself? Blame someone else →",
     "headline": "A Shark Compliance Case Has Been Opened",
     "caseTagline": "Records confirm {name} exists. The Bureau is unsure how to feel about this.",
+    "settleShortcutLabel": "Fast resolution",
+    "settleShortcutText": "Close the file with symbolic Protected Friend paperwork before anyone adds more tabs.",
+    "settleShortcutCta": "Settle this with a certificate — {price}",
+    "settleShortcutSecondary": "or respond below",
+    "fullCaseFileSummary": "Full case file",
     "caseStatusBlock": {
       "title": "Bureau Dossier",
       "officerLabel": "Assigned officer",
@@ -1648,7 +1692,7 @@
   "cookies": {
     "eyebrow": "Cookie settings",
     "title": "Cookies. Not the marine kind.",
-    "description": "Necessary cookies keep the website, checkout and security running. Analytics cookies only load with your consent. None of them are edible, and none of them attract sharks — the rest of this site cannot make the same claim.",
+    "description": "Necessary cookies keep checkout and security working. Analytics only load with consent. Accept or reject in one tap; no shark will be notified.",
     "acceptAnalytics": "Accept analytics",
     "necessaryOnly": "Necessary only",
     "settings": "Settings",

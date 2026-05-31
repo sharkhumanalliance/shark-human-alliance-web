@@ -1646,7 +1646,7 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
                         key={suggestion}
                         type="button"
                         onClick={() => updateName(suggestion)}
-                        className="rounded-md border border-red-100 bg-red-50/50 px-3 py-1.5 text-xs font-medium text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
+                        className="min-h-[44px] rounded-md border border-red-100 bg-red-50/50 px-3 py-2 text-xs font-medium text-red-700 transition-colors duration-300 ease-out hover:bg-red-100"
                       >
                         {suggestion}
                       </button>

@@ -36,23 +36,38 @@ export default async function PurchasePage({ params }: Props) {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pb-12 md:pb-0">
-        <section className="border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-8">
+      <main id="main" className="flex flex-col pb-12 md:pb-0">
+        <section className="order-2 border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-6 lg:order-1 lg:py-8">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.55fr)] lg:items-start">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
                   {t("seoSummary.eyebrow")}
                 </p>
-                <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
+                <h2 className="mt-2 text-xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-2xl lg:text-3xl">
                   {t("seoSummary.title")}
-                </h1>
+                </h2>
                 <p className="mt-3 max-w-3xl text-sm font-medium leading-6 text-[var(--brand-dark)] sm:text-base sm:leading-7">
                   {t("seoSummary.coffeeNote")}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm">
+              <details className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm lg:hidden">
+                <summary className="flex min-h-[48px] cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-[var(--brand-dark)]">
+                  <span>{t("seoSummary.mobileSummaryToggle")}</span>
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <ul className="space-y-2 border-t border-[var(--border)] px-4 py-4 text-sm leading-6 text-[var(--brand-dark)]">
+                  {[0, 1, 2, 3].map((index) => (
+                    <li key={index} className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />
+                      <span>{t(`seoSummary.includes.${index}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+
+              <div className="hidden rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm lg:block">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--section-label)]">
                   {t("seoSummary.includesLabel")}
                 </p>
@@ -68,7 +83,9 @@ export default async function PurchasePage({ params }: Props) {
             </div>
           </div>
         </section>
-        <PurchaseFlow />
+        <div className="order-1 lg:order-2">
+          <PurchaseFlow />
+        </div>
       </main>
       <SiteFooter />
     </>

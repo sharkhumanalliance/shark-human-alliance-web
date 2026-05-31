@@ -518,7 +518,7 @@ function PurchaseFlowInner() {
                       key={suggestion}
                       type="button"
                       onClick={() => setDedication(suggestion)}
-                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto sm:py-1"
+                      className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
                     >
                       {suggestion}
                     </button>
@@ -620,6 +620,7 @@ function PurchaseFlowInner() {
                       onChange={(e) => setGiftMessage(e.target.value)}
                       placeholder={t("giftMessagePlaceholder")}
                       rows={3}
+                      maxLength={600}
                       className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
                     />
                   </div>

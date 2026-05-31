@@ -334,7 +334,11 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section data-reveal className="bg-[#25527f] pb-16 pt-14 sm:pt-16">
+      <section
+        data-reveal
+        id="home-final-cta"
+        className="bg-[#25527f] pb-16 pt-14 sm:pt-16"
+      >
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
           <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-white">
             {t("earlyAdopter.title")}

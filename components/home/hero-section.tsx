@@ -43,7 +43,7 @@ export function HeroSection() {
   );
 
   return (
-    <section className="relative overflow-hidden bg-[var(--surface-soft)]">
+    <section id="home-hero" className="relative overflow-hidden bg-[var(--surface-soft)]">
       <div className="absolute inset-x-0 top-0 h-[24rem] bg-[radial-gradient(circle_at_top_left,rgba(125,181,230,0.18),transparent_42%),radial-gradient(circle_at_top_right,rgba(238,138,69,0.12),transparent_34%),linear-gradient(180deg,#f7fbff_0%,rgba(248,250,252,0.94)_58%,rgba(248,250,252,1)_100%)]" />
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-16">
         <div className="relative z-10 flex max-w-xl flex-col justify-center lg:pr-2">

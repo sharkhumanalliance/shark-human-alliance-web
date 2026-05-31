@@ -118,6 +118,10 @@ export function WantedCaseContent({
       source: "case_header",
     });
     selectResponse("blame");
+    scrollToResponseBlock();
+  }
+
+  function scrollToResponseBlock() {
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -190,6 +194,81 @@ export function WantedCaseContent({
     });
   }, [activeResponse]);
 
+  const caseStatusContent = (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+          {t("caseStatusBlock.officerLabel")}
+        </p>
+        <p className="mt-1 font-semibold text-[var(--brand-dark)]">
+          {t("caseStatusBlock.officerName")}
+        </p>
+        <p className="mt-0.5 text-sm text-[var(--muted)]">
+          {t("caseStatusBlock.officerRole")}
+        </p>
+      </div>
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+          {t("caseStatusBlock.supervisorLabel")}
+        </p>
+        <p className="mt-1 font-semibold text-[var(--brand-dark)]">
+          {t("caseStatusBlock.supervisorName")}
+        </p>
+        <p className="mt-0.5 text-sm text-[var(--muted)]">
+          {t("caseStatusBlock.supervisorRole")}
+        </p>
+      </div>
+      <div className="sm:col-span-2">
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+            {t("caseStatusBlock.ambiguityLabel")}
+          </p>
+          <p className="font-mono text-sm font-bold text-[var(--brand-dark)]">
+            {t("caseStatusBlock.ambiguityValue", {
+              level: ambiguityLevel,
+            })}
+          </p>
+        </div>
+        <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/70">
+          <div
+            className="h-full rounded-full bg-[var(--accent)]"
+            style={{ width: `${ambiguityLevel}%` }}
+          />
+        </div>
+        <p className="mt-2 text-sm leading-6 text-[var(--brand-dark)]">
+          <span className="font-semibold">
+            {t("caseStatusBlock.ambiguityReasonLabel")}:
+          </span>{" "}
+          {t("caseStatusBlock.ambiguityReason")}
+        </p>
+        <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
+          <span className="font-semibold">
+            {t("caseStatusBlock.ambiguityMethodLabel")}:
+          </span>{" "}
+          {t("caseStatusBlock.ambiguityMethod")}
+        </p>
+      </div>
+      <div className="grid gap-3 border-t border-dashed border-[var(--muted)]/40 pt-4 sm:col-span-2 sm:grid-cols-2">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+            {t("caseStatusBlock.humanCooperationLabel")}
+          </p>
+          <p className="mt-1 font-mono text-xs font-semibold text-[var(--brand-dark)]">
+            {t("caseStatusBlock.humanCooperation")}
+          </p>
+        </div>
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+            {t("caseStatusBlock.stampStatusLabel")}
+          </p>
+          <p className="mt-1 font-mono text-xs font-semibold text-[var(--brand-dark)]">
+            {t("caseStatusBlock.stampStatus")}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <section className="border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-10 sm:py-14 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -254,6 +333,42 @@ export function WantedCaseContent({
                 </button>
               )}
 
+              <div className="mt-5 rounded-2xl border border-[var(--accent)]/45 bg-white/65 p-4 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+                    {t("settleShortcutLabel")}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-[var(--brand-dark)]">
+                    {t("settleShortcutText")}
+                  </p>
+                </div>
+                <div className="mt-3 flex flex-col gap-2 sm:mt-0 sm:min-w-[240px]">
+                  <LocalizedLink
+                    href={purchaseHref}
+                    onClick={() =>
+                      trackEvent("wanted_to_purchase_click", {
+                        source: "wanted_case_header_cta",
+                        tone,
+                        locale,
+                        personalized,
+                      })
+                    }
+                    className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+                  >
+                    {t("settleShortcutCta", {
+                      price: getTierPriceLabel("protected"),
+                    })}
+                  </LocalizedLink>
+                  <button
+                    type="button"
+                    onClick={scrollToResponseBlock}
+                    className="inline-flex min-h-[44px] items-center justify-center text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
+                  >
+                    {t("settleShortcutSecondary")}
+                  </button>
+                </div>
+              </div>
+
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
@@ -281,81 +396,22 @@ export function WantedCaseContent({
                 </div>
               </div>
 
-              <div className="mt-6 border-t border-[var(--muted)]/35 pt-5">
+              <details className="mt-6 overflow-hidden rounded-xl border border-[var(--muted)]/30 bg-white/35 md:hidden">
+                <summary className="flex min-h-[48px] cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  <span>{t("fullCaseFileSummary")}</span>
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <div className="border-t border-[var(--muted)]/25 px-4 py-4">
+                  {caseStatusContent}
+                </div>
+              </details>
+
+              <div className="mt-6 hidden border-t border-[var(--muted)]/35 pt-5 md:block">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("caseStatusBlock.title")}
                 </p>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      {t("caseStatusBlock.officerLabel")}
-                    </p>
-                    <p className="mt-1 font-semibold text-[var(--brand-dark)]">
-                      {t("caseStatusBlock.officerName")}
-                    </p>
-                    <p className="mt-0.5 text-sm text-[var(--muted)]">
-                      {t("caseStatusBlock.officerRole")}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      {t("caseStatusBlock.supervisorLabel")}
-                    </p>
-                    <p className="mt-1 font-semibold text-[var(--brand-dark)]">
-                      {t("caseStatusBlock.supervisorName")}
-                    </p>
-                    <p className="mt-0.5 text-sm text-[var(--muted)]">
-                      {t("caseStatusBlock.supervisorRole")}
-                    </p>
-                  </div>
-                  <div className="sm:col-span-2">
-                    <div className="flex items-start justify-between gap-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                        {t("caseStatusBlock.ambiguityLabel")}
-                      </p>
-                      <p className="font-mono text-sm font-bold text-[var(--brand-dark)]">
-                        {t("caseStatusBlock.ambiguityValue", {
-                          level: ambiguityLevel,
-                        })}
-                      </p>
-                    </div>
-                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/70">
-                      <div
-                        className="h-full rounded-full bg-[var(--accent)]"
-                        style={{ width: `${ambiguityLevel}%` }}
-                      />
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-[var(--brand-dark)]">
-                      <span className="font-semibold">
-                        {t("caseStatusBlock.ambiguityReasonLabel")}:
-                      </span>{" "}
-                      {t("caseStatusBlock.ambiguityReason")}
-                    </p>
-                    <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
-                      <span className="font-semibold">
-                        {t("caseStatusBlock.ambiguityMethodLabel")}:
-                      </span>{" "}
-                      {t("caseStatusBlock.ambiguityMethod")}
-                    </p>
-                  </div>
-                  <div className="grid gap-3 border-t border-dashed border-[var(--muted)]/40 pt-4 sm:col-span-2 sm:grid-cols-2">
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                        {t("caseStatusBlock.humanCooperationLabel")}
-                      </p>
-                      <p className="mt-1 font-mono text-xs font-semibold text-[var(--brand-dark)]">
-                        {t("caseStatusBlock.humanCooperation")}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                        {t("caseStatusBlock.stampStatusLabel")}
-                      </p>
-                      <p className="mt-1 font-mono text-xs font-semibold text-[var(--brand-dark)]">
-                        {t("caseStatusBlock.stampStatus")}
-                      </p>
-                    </div>
-                  </div>
+                <div className="mt-4">
+                  {caseStatusContent}
                 </div>
               </div>
             </div>

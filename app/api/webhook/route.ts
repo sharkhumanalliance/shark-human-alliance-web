@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
         ? buildAbsoluteLocalizedUrl(
             BASE_URL,
             locale,
-            `/gift?to=${encodeURIComponent(name.trim())}${fromName ? `&from=${encodeURIComponent(fromName.trim())}` : ""}${giftMessage ? `&msg=${encodeURIComponent(giftMessage)}` : ""}&token=${accessToken}`,
+            `/gift?to=${encodeURIComponent(name.trim())}${fromName ? `&from=${encodeURIComponent(fromName.trim())}` : ""}${giftMessage ? `&msg=${encodeURIComponent(giftMessage.slice(0, 600))}` : ""}&token=${accessToken}`,
           )
         : undefined;
 
