@@ -24,6 +24,7 @@ import { DIGITAL_CONTENT_VERSION, TERMS_VERSION } from "@/lib/legal";
 import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
 import { formatRegistryIdForDisplay } from "@/lib/registry-id";
+import { sendGa4PurchaseEvent } from "@/lib/ga4-measurement-protocol";
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
@@ -93,6 +94,9 @@ export async function POST(request: NextRequest) {
       digitalContentVersion = DIGITAL_CONTENT_VERSION,
       registryVisibility = "private",
       dedicationReviewStatus = "approved",
+      attributionSource = "",
+      analyticsConsent = "false",
+      gaClientId = "",
     } = meta;
 
     console.log("[SHA Webhook] checkout.session.completed received", {
@@ -106,6 +110,9 @@ export async function POST(request: NextRequest) {
       locale,
       paperFormat: normalizePaperFormatForTemplate(template, paperFormat),
       hasReferral: referredBy.trim().length > 0,
+      attributionSource: attributionSource || null,
+      hasGaClientId: gaClientId.trim().length > 0,
+      analyticsConsent: analyticsConsent === "true",
     });
 
     const referralCode = await generateUniqueReferralCode();
@@ -145,6 +152,28 @@ export async function POST(request: NextRequest) {
 
     if (referredBy) {
       await incrementReferralCount(referredBy);
+    }
+
+    if (analyticsConsent === "true" && gaClientId.trim()) {
+      const amountTotal =
+        typeof session.amount_total === "number"
+          ? session.amount_total / 100
+          : undefined;
+      const gaResult = await sendGa4PurchaseEvent({
+        clientId: gaClientId,
+        transactionId: session.id,
+        tier,
+        value: amountTotal,
+        currency: (session.currency || "usd").toUpperCase(),
+        source: attributionSource,
+        locale,
+        isGift: isGift === "true",
+      });
+      console.log("[SHA Webhook] GA4 purchase tracking processed", {
+        sessionId: session.id,
+        sent: gaResult.sent,
+        reason: "reason" in gaResult ? gaResult.reason : undefined,
+      });
     }
 
     // Send certificate email (link only)

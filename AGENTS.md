@@ -262,11 +262,11 @@ Important certificate rules:
 
 \## Wanted poster, OG, and attribution
 
-\- Wanted poster QR and gift CTAs should link to `/purchase?tier=protected&gift=true&from=wanted_poster&name=<encoded>`.
+\- Wanted poster QR and gift CTAs should link to `/purchase?tier=protected&gift=true&from=<canonical_source>&name=<encoded>`, usually `wanted_gift_cta`, `wanted_case_cta`, or `wanted_footer_cta`.
 
 \- Do not use `ref=wanted`; `ref` is reserved for valid `SHA-XXXX` referral codes and invalid values are intentionally ignored.
 
-\- `/purchase` reads `name`, `gift`, and `from`; `from` is persisted to `sessionStorage["sha_attribution_source"]` so the purchase event can keep attribution after the Stripe redirect.
+\- `/purchase` reads `name`, `gift`, and `from`; `from` is normalized to the canonical analytics source taxonomy and persisted to `sessionStorage["sha_attribution_source"]` so the purchase event can keep attribution after the Stripe redirect.
 
 \- Shared wanted poster URLs should use the long `/[locale]/wanted/case?name=...&tone=...` route so OG scrapers get personalized metadata; the short `/w?...` route is for compact QR/link use.
 
@@ -274,7 +274,7 @@ Important certificate rules:
 
 \- Public verify pages use certificate-style OG images from `app/og/certificate/route.tsx`; never include private certificate access tokens in OG metadata.
 
-\- GA4 wanted funnel events include `wanted_case_view`, `wanted_to_purchase_click`, and `wanted_poster_share`; preserve `source`, `tone`, `locale`, and `personalized` dimensions when editing this flow.
+\- GA4 wanted funnel events include `wanted_case_view`, `wanted_to_purchase_click`, and `wanted_poster_share`; preserve canonical `source`, `tone`, `locale`, and `personalized` dimensions when editing this flow. The complete event contract lives in `docs/analytics-events.md`.
 
 
 

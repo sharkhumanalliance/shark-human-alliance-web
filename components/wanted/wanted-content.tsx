@@ -7,6 +7,7 @@ import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
 import { getTierPriceLabel } from "@/lib/tiers";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
 
 function nameHash(name: string): number {
   let hash = 0;
@@ -1295,19 +1296,30 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
       setQueue(names);
       setQueueIndex(0);
       setName(names[0]);
-      trackEvent("wanted_poster_multi_tag", { name_count: names.length });
+      trackEvent("wanted_poster_multi_tag", {
+        source: ANALYTICS_SOURCES.wantedPoster,
+        tone: selectedTone,
+        locale,
+        name_count: names.length,
+      });
     } else {
       setQueue([]);
       setQueueIndex(0);
       if (names.length === 1 && names[0] !== name) setName(names[0]);
     }
-    trackEvent("wanted_poster_generate", { name_length: name.trim().length });
+    trackEvent("wanted_poster_generate", {
+      source: ANALYTICS_SOURCES.wantedPoster,
+      tone: selectedTone,
+      locale,
+      personalized: name.trim().length > 0,
+      name_length: name.trim().length,
+    });
     setGenerated(true);
     if (!window.matchMedia("(max-width: 1023px)").matches) return;
     window.setTimeout(() => {
       canvasRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 0);
-  }, [name]);
+  }, [locale, name, selectedTone]);
 
   // Advance the multi-tag stepper to the next accused human. Keeps `generated`
   // true so the action panel stays visible; only the active name changes, so
@@ -1323,9 +1335,15 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
       setRerollSeed(0);
       setLinkCopied(false);
       setShareError(null);
-      trackEvent("wanted_poster_multi_tag", { navigated: true, index: target });
+      trackEvent("wanted_poster_multi_tag", {
+        source: ANALYTICS_SOURCES.wantedPoster,
+        tone: selectedTone,
+        locale,
+        navigated: true,
+        index: target,
+      });
     },
-    [queue, queueIndex],
+    [locale, queue, queueIndex, selectedTone],
   );
 
   const createPosterExportBlob = useCallback(async () => {
@@ -1397,7 +1415,14 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
   }, [createPosterExportBlob, name, selectedTone, posterFormat, rerollSeed, useTilt]);
 
   const handleDownload = useCallback(async () => {
-    trackEvent("wanted_poster_download", { format: posterFormat, tilted: useTilt });
+    trackEvent("wanted_poster_download", {
+      source: ANALYTICS_SOURCES.wantedPoster,
+      format: posterFormat,
+      tone: selectedTone,
+      locale,
+      personalized: name.trim().length > 0,
+      tilted: useTilt,
+    });
     setDownloading(true);
     setShareError(null);
     try {
@@ -1430,10 +1455,11 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
     } finally {
       setDownloading(false);
     }
-  }, [createPosterExportBlob, name, posterFormat, useTilt]);
+  }, [createPosterExportBlob, locale, name, posterFormat, selectedTone, useTilt]);
 
   const handleShare = useCallback(async () => {
     trackEvent("wanted_poster_share", {
+      source: ANALYTICS_SOURCES.wantedPoster,
       format: posterFormat,
       tone: selectedTone,
       locale,
@@ -1529,10 +1555,14 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
   }, []);
 
   const handleReroll = useCallback(() => {
-    trackEvent("wanted_poster_reroll");
+    trackEvent("wanted_poster_reroll", {
+      source: ANALYTICS_SOURCES.wantedPoster,
+      tone: selectedTone,
+      locale,
+    });
     setRerollSeed((prev) => prev + 1);
     setLinkCopied(false);
-  }, []);
+  }, [locale, selectedTone]);
 
   const updateName = useCallback((value: string) => {
     setGenerated(false);
@@ -1563,12 +1593,12 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
     t: selectedTone,
     ...(name.trim() ? { n: name.trim() } : {}),
   }).toString()}`;
-  // Attribution: `from=wanted_poster` is read by /purchase, persisted into
+  // Attribution: `from=wanted_gift_cta` is read by /purchase, persisted into
   // sessionStorage and re-emitted on view_item / purchase events so we can
   // build the wanted → purchase funnel in GA4. The legacy `ref=wanted` was
   // silently rejected by getValidReferralCode (which requires SHA-XXXX), so
   // it produced no analytics value.
-  const giftUrl = `/purchase?tier=protected&gift=true&from=wanted_poster${
+  const giftUrl = `/purchase?tier=protected&gift=true&from=${ANALYTICS_SOURCES.wantedGiftCta}${
     name.trim() ? `&name=${encodeURIComponent(name.trim())}` : ""
   }`;
   const layout = POSTER_LAYOUTS[posterFormat];
@@ -1849,7 +1879,7 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
                         href={giftUrl}
                         onClick={() =>
                           trackEvent("wanted_to_purchase_click", {
-                            source: "wanted_gift_cta",
+                            source: ANALYTICS_SOURCES.wantedGiftCta,
                             tone: selectedTone,
                             locale,
                             personalized: name.trim().length > 0,
@@ -1934,12 +1964,13 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
             </p>
             <div className="mt-8 flex justify-center">
               <LocalizedLink
-                href="/purchase?tier=protected&gift=true&from=wanted_poster"
+                href={`/purchase?tier=protected&gift=true&from=${ANALYTICS_SOURCES.wantedFooterCta}`}
                 onClick={() =>
                   trackEvent("wanted_to_purchase_click", {
-                    source: "wanted_footer_cta",
+                    source: ANALYTICS_SOURCES.wantedFooterCta,
                     tone: selectedTone,
                     locale,
+                    personalized: name.trim().length > 0,
                   })
                 }
                 className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"

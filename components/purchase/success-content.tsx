@@ -11,7 +11,7 @@ import {
 } from "@/components/certificate/certificate-document";
 import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
-import { trackEvent } from "@/components/analytics";
+import { trackEvent, type AnalyticsParams } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { PostPurchaseShare } from "@/components/purchase/post-purchase-share";
 import { buildReferralHref, buildLocalizedPath } from "@/lib/navigation";
@@ -23,10 +23,14 @@ import {
 import {
   getPublicTierKey,
   getTierMetadata,
-  getTierPriceDollars,
   type TierKey,
 } from "@/lib/tiers";
 import { formatRegistryIdForDisplay } from "@/lib/registry-id";
+import {
+  ANALYTICS_ATTRIBUTION_SOURCE_KEY,
+  buildCertificateAnalyticsItem,
+  normalizeAnalyticsAttributionSource,
+} from "@/lib/analytics-events";
 
 interface MemberData {
   id: string;
@@ -55,6 +59,7 @@ function SuccessContentInner() {
   const locale = useLocale();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id") || "";
+  const isGiftSession = searchParams.get("gift") === "1";
 
   const [member, setMember] = useState<MemberData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -108,22 +113,32 @@ function SuccessContentInner() {
             const publicTier = getPublicTierKey(data.tier);
             // Recover cross-funnel attribution stored on /purchase before
             // the Stripe redirect. This is the bridge that lets GA4 group
-            // purchases by their originating surface (e.g. wanted_poster).
+            // purchases by their originating surface (e.g. wanted_gift_cta).
             let attributionSource = "";
             if (typeof window !== "undefined") {
               try {
-                attributionSource =
-                  window.sessionStorage.getItem("sha_attribution_source") || "";
+                attributionSource = normalizeAnalyticsAttributionSource(
+                  window.sessionStorage.getItem(
+                    ANALYTICS_ATTRIBUTION_SOURCE_KEY,
+                  ) || "",
+                );
               } catch {
                 // sessionStorage unavailable — proceed without source.
               }
             }
-            const params: Record<string, string | number | boolean> = {
+            const item = buildCertificateAnalyticsItem(data.tier);
+            const isPromo = sessionId.startsWith("promo_");
+            const params: AnalyticsParams = {
               transaction_id: sessionId,
-              value: getTierPriceDollars(data.tier),
+              value: isPromo ? 0 : item.price,
               currency: "USD",
               item_id: publicTier,
-              item_name: publicTier,
+              item_name: item.item_name,
+              tier: publicTier,
+              locale,
+              is_gift: isGiftSession,
+              is_promo: isPromo,
+              items: [item],
             };
             if (attributionSource) params.source = attributionSource;
             trackEvent("purchase", params);
@@ -131,7 +146,9 @@ function SuccessContentInner() {
             // re-attribute future unrelated sessions.
             if (attributionSource && typeof window !== "undefined") {
               try {
-                window.sessionStorage.removeItem("sha_attribution_source");
+                window.sessionStorage.removeItem(
+                  ANALYTICS_ATTRIBUTION_SOURCE_KEY,
+                );
               } catch {
                 // ignore
               }
@@ -159,7 +176,7 @@ function SuccessContentInner() {
     return () => {
       cancelled = true;
     };
-  }, [sessionId]);
+  }, [sessionId, locale, isGiftSession]);
 
   useEffect(() => pollForMember(), [pollForMember]);
 
@@ -302,7 +319,7 @@ function SuccessContentInner() {
   const publicRegistryId = member.registryCode || formatRegistryIdForDisplay(member.id);
   // Gift purchases get a shareable reveal link so the buyer can preview what
   // the recipient sees and hand it over personally.
-  const isGift = searchParams.get("gift") === "1";
+  const isGift = isGiftSession;
   const giftLink =
     isGift && member.accessToken
       ? `${typeof window !== "undefined" ? window.location.origin : ""}${buildLocalizedPath(locale, `/gift?to=${encodeURIComponent(member.name)}&token=${member.accessToken}`)}`

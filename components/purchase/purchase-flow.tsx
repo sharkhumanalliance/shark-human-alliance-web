@@ -10,7 +10,11 @@ import {
 } from "@/components/certificate/certificate-document";
 import type { PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
-import { trackEvent } from "@/components/analytics";
+import {
+  getAnalyticsClientContext,
+  trackEvent,
+  type AnalyticsParams,
+} from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
 import {
@@ -19,12 +23,16 @@ import {
 } from "@/lib/certificate-paper";
 import {
   getPublicTierKey,
-  getTierPriceDollars,
   getTierPriceLabel,
   getTierSelectionClass,
   PUBLIC_TIERS,
   type PublicTierKey,
 } from "@/lib/tiers";
+import {
+  ANALYTICS_ATTRIBUTION_SOURCE_KEY,
+  buildCertificateAnalyticsItem,
+  normalizeAnalyticsAttributionSource,
+} from "@/lib/analytics-events";
 
 const REFERRAL_CODE_PATTERN = /^SHA-[A-Z0-9]{4}$/;
 
@@ -80,11 +88,13 @@ function PurchaseFlowInner() {
   );
   const referredByFromUrl = getValidReferralCode(searchParams.get("ref"));
   const wasCanceled = searchParams.get("canceled") === "true";
-  // Cross-funnel attribution. `from=wanted_poster` (and friends) is set on
-  // CTAs that link into /purchase from other surfaces. We persist it into
+  // Cross-funnel attribution. Canonical `from` values are set on CTAs that
+  // link into /purchase from other surfaces. We persist them into
   // sessionStorage so it survives the Stripe round-trip and can be re-emitted
   // on the success page's `purchase` event for funnel analysis in GA4.
-  const attributionFromUrl = (searchParams.get("from") || "").trim().slice(0, 64);
+  const attributionSource = normalizeAnalyticsAttributionSource(
+    searchParams.get("from"),
+  );
 
   const [referredByCode, setReferredByCode] = useState(referredByFromUrl);
   const [tier, setTier] = useState<PublicTierKey>(initialTier);
@@ -160,33 +170,40 @@ function PurchaseFlowInner() {
     }
   }, [referredByCode]);
 
-  // Persist attribution source from the URL (e.g. ?from=wanted_poster) into
+  // Persist canonical attribution source from the URL into
   // sessionStorage. Stripe's redirect to /purchase/success would otherwise
   // drop this query param, breaking funnel attribution.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (attributionFromUrl) {
+    if (attributionSource) {
       try {
-        window.sessionStorage.setItem("sha_attribution_source", attributionFromUrl);
+        window.sessionStorage.setItem(
+          ANALYTICS_ATTRIBUTION_SOURCE_KEY,
+          attributionSource,
+        );
       } catch {
         // sessionStorage may be unavailable in private mode — silent fallback
         // means the purchase event simply ships without a source.
       }
     }
-  }, [attributionFromUrl]);
+  }, [attributionSource]);
 
   // Track view_item on initial load
   const viewedRef = useRef(false);
   useEffect(() => {
     if (viewedRef.current) return;
     viewedRef.current = true;
-    const params: Record<string, string | number | boolean> = {
+    const item = buildCertificateAnalyticsItem(initialTier);
+    const params: AnalyticsParams = {
       item_id: initialTier,
-      item_name: initialTier,
-      value: getTierPriceDollars(initialTier),
+      item_name: item.item_name,
+      tier: initialTier,
+      value: item.price,
       currency: "USD",
+      locale,
+      items: [item],
     };
-    if (attributionFromUrl) params.source = attributionFromUrl;
+    if (attributionSource) params.source = attributionSource;
     if (initialGift) params.is_gift = true;
     trackEvent("view_item", params);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -196,13 +213,18 @@ function PurchaseFlowInner() {
   const isFirstTierRender = useRef(true);
   useEffect(() => {
     if (isFirstTierRender.current) { isFirstTierRender.current = false; return; }
+      const item = buildCertificateAnalyticsItem(tier);
       trackEvent("select_item", {
         item_id: tier,
-        item_name: tier,
-        value: getTierPriceDollars(tier),
+        item_name: item.item_name,
+        tier,
+        value: item.price,
         currency: "USD",
+        locale,
+        ...(attributionSource ? { source: attributionSource } : {}),
+        items: [item],
       });
-  }, [tier]);
+  }, [tier, locale, attributionSource]);
 
 
   async function handleSubmit(e: React.FormEvent) {
@@ -222,30 +244,51 @@ function PurchaseFlowInner() {
     if (!email.trim() && !showEmailWarning) {
       setShowEmailWarning(true);
       setShowConfirmation(true);
-      trackEvent("no_email_warning_shown", { tier });
-      trackEvent("confirmation_shown", { tier });
+      trackEvent("no_email_warning_shown", {
+        tier,
+        locale,
+        ...(attributionSource ? { source: attributionSource } : {}),
+      });
+      trackEvent("confirmation_shown", {
+        tier,
+        locale,
+        ...(attributionSource ? { source: attributionSource } : {}),
+      });
       return;
     }
 
     if (!showConfirmation) {
       setShowConfirmation(true);
-      trackEvent("confirmation_shown", { tier });
+      trackEvent("confirmation_shown", {
+        tier,
+        locale,
+        ...(attributionSource ? { source: attributionSource } : {}),
+      });
       return;
     }
 
     // At this point, confirmation has been shown
     if (!email.trim() && showEmailWarning) {
-      trackEvent("no_email_confirmed", { tier });
+      trackEvent("no_email_confirmed", {
+        tier,
+        locale,
+        ...(attributionSource ? { source: attributionSource } : {}),
+      });
     }
 
+    const item = buildCertificateAnalyticsItem(tier);
     trackEvent("begin_checkout", {
       item_id: tier,
-      item_name: tier,
-      value: getTierPriceDollars(tier),
+      item_name: item.item_name,
+      tier,
+      value: item.price,
       currency: "USD",
+      locale,
+      ...(attributionSource ? { source: attributionSource } : {}),
       is_gift: isGift,
       has_promo: promoCode.trim().length > 0,
       has_email: email.trim().length > 0,
+      items: [item],
     });
 
     setShowEmailWarning(false);
@@ -254,6 +297,7 @@ function PurchaseFlowInner() {
     setError("");
 
     try {
+      const analyticsContext = await getAnalyticsClientContext();
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -274,6 +318,9 @@ function PurchaseFlowInner() {
           termsAccepted,
           digitalContentConsentAccepted,
           registryConsentAccepted,
+          attributionSource,
+          analyticsConsent: analyticsContext.analyticsConsent,
+          gaClientId: analyticsContext.gaClientId,
         }),
       });
 
@@ -561,7 +608,12 @@ function PurchaseFlowInner() {
                   checked={isGift}
                   onChange={(e) => {
                     setIsGift(e.target.checked);
-                    trackEvent("gift_toggle", { tier, enabled: e.target.checked });
+                    trackEvent("gift_toggle", {
+                      tier,
+                      locale,
+                      ...(attributionSource ? { source: attributionSource } : {}),
+                      enabled: e.target.checked,
+                    });
                   }}
                   className="size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
                 />

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { trackEvent } from "@/components/analytics";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
 
 const DISMISS_KEY = "sha_home_sticky_cta_dismissed";
 const DESKTOP_QUERY = "(min-width: 1024px)";
@@ -47,7 +48,8 @@ export function MobileStickyCta() {
       if (nextShow && !shownTrackedRef.current) {
         shownTrackedRef.current = true;
         trackEvent("sticky_cta_shown", {
-          source: "home_mobile_sticky_cta",
+          source: ANALYTICS_SOURCES.stickyCta,
+          placement: "home_mobile",
         });
       }
     };
@@ -113,7 +115,8 @@ export function MobileStickyCta() {
 
   const handleClick = () => {
     trackEvent("sticky_cta_click", {
-      source: "home_mobile_sticky_cta",
+      source: ANALYTICS_SOURCES.stickyCta,
+      placement: "home_mobile",
     });
   };
 
@@ -122,7 +125,8 @@ export function MobileStickyCta() {
     writeDismissed();
     setShow(false);
     trackEvent("sticky_cta_dismiss", {
-      source: "home_mobile_sticky_cta",
+      source: ANALYTICS_SOURCES.stickyCta,
+      placement: "home_mobile",
     });
   };
 
@@ -142,7 +146,7 @@ export function MobileStickyCta() {
           {t("text")}
         </p>
         <LocalizedLink
-          href="/purchase?tier=protected"
+          href="/purchase?tier=protected&from=sticky_cta"
           onClick={handleClick}
           tabIndex={show ? 0 : -1}
           className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"

@@ -35,6 +35,7 @@ import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
 import { isPublicTierKey } from "@/lib/tiers";
 import { formatRegistryIdForDisplay } from "@/lib/registry-id";
+import { normalizeAnalyticsAttributionSource } from "@/lib/analytics-events";
 const ENABLE_TEST_PROMO_CODES =
   process.env.ENABLE_TEST_PROMO_CODES === "true" ||
   process.env.NODE_ENV !== "production";
@@ -47,6 +48,12 @@ function getValidReferralCode(value: unknown) {
   if (typeof value !== "string") return "";
   const normalized = value.trim().toUpperCase().replace(/\s+/g, "");
   return REFERRAL_CODE_PATTERN.test(normalized) ? normalized : "";
+}
+
+function getSafeGaClientId(value: unknown) {
+  if (typeof value !== "string") return "";
+  const normalized = value.trim().slice(0, 128);
+  return /^[A-Za-z0-9._-]+$/.test(normalized) ? normalized : "";
 }
 
 export async function POST(request: NextRequest) {
@@ -69,6 +76,9 @@ export async function POST(request: NextRequest) {
       termsAccepted,
       digitalContentConsentAccepted,
       registryConsentAccepted,
+      attributionSource,
+      analyticsConsent,
+      gaClientId,
     } = body;
 
     const loc = locale || "en";
@@ -84,6 +94,12 @@ export async function POST(request: NextRequest) {
     const allowLocalPromoFallback = shouldUseDemoMembers() || isLocalRequest;
     const normalizedPromoCode = promoCode?.toUpperCase().trim() || "";
     const validReferredBy = getValidReferralCode(referredBy);
+    const normalizedAttributionSource =
+      normalizeAnalyticsAttributionSource(attributionSource);
+    const analyticsConsentGranted = analyticsConsent === true;
+    const safeGaClientId = analyticsConsentGranted
+      ? getSafeGaClientId(gaClientId)
+      : "";
     // Free promo codes are gated solely by ENABLE_TEST_PROMO_CODES (or non-production NODE_ENV).
     // Hostname checks are intentionally NOT used here to prevent DNS-rebinding bypass.
     const isFreePromoFlow = normalizedPromoCode
@@ -105,6 +121,9 @@ export async function POST(request: NextRequest) {
       template: template || null,
       paperFormat: normalizedPaperFormat,
       hasReferral: validReferredBy.length > 0,
+      attributionSource: normalizedAttributionSource || null,
+      hasGaClientId: safeGaClientId.length > 0,
+      analyticsConsent: analyticsConsentGranted,
     });
 
     if (!isPublicTierKey(tier)) {
@@ -409,6 +428,9 @@ export async function POST(request: NextRequest) {
         digitalContentVersion: DIGITAL_CONTENT_VERSION,
         registryVisibility: registryConsentAccepted === false ? "private" : "public",
         dedicationReviewStatus,
+        attributionSource: normalizedAttributionSource,
+        analyticsConsent: analyticsConsentGranted ? "true" : "false",
+        gaClientId: safeGaClientId,
       },
     });
 

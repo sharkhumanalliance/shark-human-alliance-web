@@ -24,6 +24,17 @@ declare global {
   }
 }
 
+export type AnalyticsParamValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | AnalyticsParamValue[]
+  | { [key: string]: AnalyticsParamValue };
+
+export type AnalyticsParams = Record<string, AnalyticsParamValue>;
+
 function updateGoogleConsent(analytics: boolean) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;
 
@@ -87,8 +98,44 @@ export function Analytics() {
 
 export function trackEvent(
   action: string,
-  params?: Record<string, string | number | boolean>,
+  params?: AnalyticsParams,
 ) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;
   window.gtag("event", action, params);
+}
+
+export async function getAnalyticsClientContext(): Promise<{
+  analyticsConsent: boolean;
+  gaClientId?: string;
+}> {
+  if (typeof window === "undefined") return { analyticsConsent: false };
+
+  const analyticsConsent = readConsent()?.analytics === true;
+  const gtag = window.gtag;
+  if (!analyticsConsent || !GA_ID || typeof gtag !== "function") {
+    return { analyticsConsent };
+  }
+
+  return new Promise((resolve) => {
+    let resolved = false;
+    const timeoutRef: { current?: number } = {};
+    const finish = (gaClientId?: string) => {
+      if (resolved) return;
+      resolved = true;
+      if (timeoutRef.current !== undefined) {
+        window.clearTimeout(timeoutRef.current);
+      }
+      resolve({ analyticsConsent, gaClientId });
+    };
+
+    timeoutRef.current = window.setTimeout(() => finish(), 350);
+
+    try {
+      gtag("get", GA_ID, "client_id", (clientId: unknown) => {
+        finish(typeof clientId === "string" ? clientId : undefined);
+      });
+    } catch {
+      finish();
+    }
+  });
 }

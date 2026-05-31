@@ -6,6 +6,7 @@ import { CertificatePreview } from "@/components/certificate/certificate-preview
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { getTierPriceLabel } from "@/lib/tiers";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
 import { useLocale, useTranslations } from "next-intl";
 
 type WantedCaseTone = "mild" | "clear" | "emergency";
@@ -83,7 +84,7 @@ export function WantedCaseContent({
   const purchaseParams = new URLSearchParams({
     tier: "protected",
     gift: "true",
-    from: "wanted_poster",
+    from: ANALYTICS_SOURCES.wantedCaseCta,
     name: displayName,
   });
   const purchaseHref = `/purchase?${purchaseParams.toString()}`;
@@ -100,6 +101,7 @@ export function WantedCaseContent({
     setActiveResponse(response);
     setDefenseShareStatus("idle");
     trackEvent("wanted_case_response", {
+      source: ANALYTICS_SOURCES.wantedCase,
       response,
       tone,
       locale,
@@ -115,7 +117,7 @@ export function WantedCaseContent({
       tone,
       locale,
       personalized,
-      source: "case_header",
+      source: ANALYTICS_SOURCES.header,
     });
     selectResponse("blame");
     scrollToResponseBlock();
@@ -163,6 +165,7 @@ export function WantedCaseContent({
 
     setSubmittedBlameName(normalizedBlameName);
     trackEvent("wanted_case_blame_submitted", {
+      source: ANALYTICS_SOURCES.wantedCase,
       tone,
       locale,
       personalized,
@@ -174,6 +177,7 @@ export function WantedCaseContent({
     if (viewedRef.current) return;
     viewedRef.current = true;
     trackEvent("wanted_case_view", {
+      source: ANALYTICS_SOURCES.wantedCase,
       tone,
       locale,
       personalized,
@@ -316,7 +320,7 @@ export function WantedCaseContent({
                       tone,
                       locale,
                       personalized,
-                      source: "case_header",
+                      source: ANALYTICS_SOURCES.header,
                     })
                   }
                   className="mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-red-300 bg-red-50/60 px-4 py-2.5 text-sm font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-50"
@@ -347,7 +351,8 @@ export function WantedCaseContent({
                     href={purchaseHref}
                     onClick={() =>
                       trackEvent("wanted_to_purchase_click", {
-                        source: "wanted_case_header_cta",
+                        source: ANALYTICS_SOURCES.wantedCaseCta,
+                        placement: "case_header",
                         tone,
                         locale,
                         personalized,
@@ -632,6 +637,7 @@ export function WantedCaseContent({
                                 tone,
                                 locale,
                                 personalized,
+                                source: ANALYTICS_SOURCES.wantedCase,
                               })
                             }
                             className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-red-700 sm:w-auto"
@@ -680,7 +686,8 @@ export function WantedCaseContent({
                       href={purchaseHref}
                       onClick={() =>
                         trackEvent("wanted_to_purchase_click", {
-                          source: "wanted_case_cta",
+                          source: ANALYTICS_SOURCES.wantedCaseCta,
+                          placement: "case_response",
                           tone,
                           locale,
                           personalized,

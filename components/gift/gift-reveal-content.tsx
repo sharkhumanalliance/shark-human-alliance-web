@@ -7,6 +7,7 @@ import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import type { CertificateTemplate } from "@/lib/certificate-templates";
 import { useLocale, useTranslations } from "next-intl";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
 
 export type GiftCertificate = {
   name: string;
@@ -76,6 +77,7 @@ export function GiftRevealContent({
     if (viewedRef.current) return;
     viewedRef.current = true;
     trackEvent("gift_reveal_view", {
+      source: ANALYTICS_SOURCES.giftReveal,
       locale,
       bare,
       personalized: clean(to).length > 0,
@@ -92,7 +94,10 @@ export function GiftRevealContent({
   }, []);
 
   function handleOpen() {
-    trackEvent("gift_reveal_opened", { locale });
+    trackEvent("gift_reveal_opened", {
+      source: ANALYTICS_SOURCES.giftReveal,
+      locale,
+    });
 
     const prefersReducedMotion =
       typeof window !== "undefined" &&
@@ -141,8 +146,14 @@ export function GiftRevealContent({
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <LocalizedLink
-                href="/purchase?gift=true"
-                onClick={() => trackEvent("gift_reveal_bare_gift_click", { locale })}
+                href="/purchase?gift=true&from=gift_reveal"
+                onClick={() =>
+                  trackEvent("gift_reveal_bare_gift_click", {
+                    source: ANALYTICS_SOURCES.giftReveal,
+                    locale,
+                    is_gift: true,
+                  })
+                }
                 className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[var(--accent)] px-8 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
               >
                 {t("bareGiftCta")}
@@ -249,7 +260,10 @@ export function GiftRevealContent({
                 <LocalizedLink
                   href={certificateHref}
                   onClick={() =>
-                    trackEvent("gift_reveal_certificate_click", { locale })
+                    trackEvent("gift_reveal_certificate_click", {
+                      source: ANALYTICS_SOURCES.giftReveal,
+                      locale,
+                    })
                   }
                   className="inline-flex min-h-[52px] w-full items-center justify-center rounded-xl bg-[var(--accent)] px-8 py-3 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
                 >
@@ -278,7 +292,11 @@ export function GiftRevealContent({
               <LocalizedLink
                 href="/purchase?gift=true&from=gift_reveal"
                 onClick={() =>
-                  trackEvent("gift_reveal_protect_back_click", { locale })
+                  trackEvent("gift_reveal_protect_back_click", {
+                    source: ANALYTICS_SOURCES.giftReveal,
+                    tier: "protected",
+                    locale,
+                  })
                 }
                 className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
               >
@@ -286,7 +304,12 @@ export function GiftRevealContent({
               </LocalizedLink>
               <LocalizedLink
                 href="/wanted"
-                onClick={() => trackEvent("gift_reveal_wanted_click", { locale })}
+                onClick={() =>
+                  trackEvent("gift_reveal_wanted_click", {
+                    source: ANALYTICS_SOURCES.giftReveal,
+                    locale,
+                  })
+                }
                 className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-red-300 bg-white px-6 py-3 text-sm font-semibold text-red-700 transition-colors duration-300 ease-out hover:bg-red-50"
               >
                 {t("wantedCta")}
