@@ -1,14 +1,14 @@
 # Shark Human Alliance Social Kit
 
-Last updated: 2026-05-20
+Last updated: 2026-05-31
 
 This folder is the working source of truth for Shark Human Alliance social media planning.
 
 Core rule:
 
-> Bureau first, mascots second, product third.
+> Cute and funny first. Finnley and Luna lead. The Bureau is the world they live in. Product comes last.
 
-The brand should feel like fictional paperwork with real conservation behind it. Finnley and Luna are the face of the project, but the world is held together by memoranda, forms, case files, stamps, registry IDs, redactions, and dry official language.
+The brand should feel like an adorable, very official shark agency: expressive plush characters with big feelings running absurdly serious paperwork, with real conservation behind the joke. On social, push the characters and the comedy hard. The Bureau (memoranda, case files, stamps, registry IDs, redactions) is the comedic world they operate in, not a reason to be flat.
 
 ## Documents
 
@@ -19,6 +19,7 @@ The brand should feel like fictional paperwork with real conservation behind it.
 - [sources.md](./sources.md) - approved shark facts, wording, citations, source-line rules.
 - [mascot-model-sheet.md](./mascot-model-sheet.md) - Finnley and Luna consistency brief for illustrators or AI generation.
 - [editorial-calendar-4-weeks.md](./editorial-calendar-4-weeks.md) - first 4 weeks of posts and stories.
+- [video-series.md](./video-series.md) - comedy-first short-form video engine: recurring series, hooks, Shark Court -> Wanted bridge, prompts.
 
 ## Working Rule
 
@@ -29,3 +30,7 @@ Do not publish humor during an active serious/fatal shark incident news cycle un
 Do not publish new mascot-heavy visuals unless they follow `mascot-model-sheet.md`.
 
 Do not publish product-forward social posts before the post has a Bureau-world reason to exist.
+
+Do not publish a present-tense "the conservation is real" claim until a citable allocation number or named recipient + committed % exists (see `strategy.md` Decision Filter and `brand-kit.md` Conservation Receipt).
+
+Every off-platform link carries a canonical `from=` source so the site GA funnel can attribute the visit (see `strategy.md` Measurement).

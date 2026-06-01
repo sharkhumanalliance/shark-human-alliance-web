@@ -1,18 +1,18 @@
 # Brand And Social Kit
 
-Last updated: 2026-05-20
+Last updated: 2026-05-31
 
 ## Core Principle
 
-> Bureau first, mascots second, product third.
+> Cute and funny first, mascots front and center, Bureau as the world, product last.
 
-The social identity should look like a fictional government office accidentally staffed by two soft shark ambassadors. The differentiator is paperwork, not generic shark cuteness.
+The social identity should look like an adorable fictional government office run by two expressive plush sharks. Lead with character and comedy; the official paperwork world is the comedic frame that makes the cuteness land, and what separates it from a generic shark account.
 
 ## Visual Tone
 
-Use official-ish paperwork, clean certificates, case files, stamps, cream paper, navy ink, restrained redactions, dry captions, and soft mascot appearances.
+Use expressive, front-and-center plush mascots inside an official paperwork world: certificates, case files, stamps, cream paper, navy ink, redactions, mini desks and props. Finnley and Luna carry the emotion and the comedy; the paperwork gives it the deadpan-official frame.
 
-Avoid generic ocean teal graphics, childish cartoon chaos, meme-template fonts, loud gradients, stock beach imagery, aggressive shark visuals, and overusing the SHA logo.
+Keep it cute and warm. Avoid: aggressive or scary shark visuals, gore, fearmongering, meme-template fonts, loud gradients, stock beach imagery, and overusing the SHA logo. Cartoon expressiveness is welcome; chaos that loses the official frame is not.
 
 ## Color System
 
@@ -126,6 +126,8 @@ Elements: timestamp, subject status, documentation status, recommendation, signe
 Use for trust and transparency.
 
 Elements: exact allocation number, plain explanation, no inflated claims, source or reporting note.
+
+Gate: do not publish a Conservation Receipt (or any "the conservation is real" claim) until there is a real, citable allocation figure or a named recipient org with a committed %. Until then the claim must be a forward commitment, not a present-tense fact.
 
 ### 8. Case Closed / Product Bridge
 

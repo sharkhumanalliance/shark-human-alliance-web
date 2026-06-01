@@ -677,6 +677,7 @@
     "confirmTier": "Nivel de membresía",
     "confirmTemplate": "Estilo de certificado",
     "confirmDedication": "Dedicatoria",
+    "confirmGiftMessage": "Mensaje personal",
     "confirmDelivery": "Entrega",
     "confirmDeliveryDownloadOnly": "Descarga inmediata",
     "confirmDeliveryEmail": "Email + descarga",
@@ -767,6 +768,7 @@
         }
       },
       "downloadButton": "Descargar imagen para Story",
+      "openStoryImageButton": "Abrir imagen Story",
       "copyButton": "Copiar enlace de verificación",
       "copySuccess": "Enlace copiado",
       "copyError": "No se pudo copiar el enlace. Cópialo manualmente antes de que el océano lo olvide.",
@@ -774,6 +776,7 @@
       "tipText": "Pulsa el botón principal en tu teléfono para abrir el menú de compartir. Si tu navegador no puede enviar la Story directamente, usa Descargar Story y súbela a Instagram manualmente.",
       "working": "Preparando tu Story…",
       "downloadReady": "Story descargada. Abre Instagram y súbela a Stories.",
+      "downloadReadyIos": "Imagen de Story abierta. En iPhone, usa Compartir y luego Guardar imagen o añádela a Instagram.",
       "downloadError": "No se pudo preparar la Story. Inténtalo de nuevo.",
       "nativeSuccess": "Menú de compartir abierto.",
       "nativeFallback": "Enlace compartido. Para Instagram Stories, usa también la imagen descargada.",

@@ -1,6 +1,6 @@
 # Approved Shark Facts And Sources
 
-Last updated: 2026-05-20
+Last updated: 2026-05-31
 
 Use this file for every factual post. If a number is not here, do not publish it until it is added with a citation.
 
@@ -131,6 +131,20 @@ The Bureau finds the ratio administratively embarrassing.
 ### Source Line
 
 `SOURCE - WORM ET AL. 2013 - FLORIDA MUSEUM ISAF`
+
+## Candidate Facts (verify and cite before use)
+
+These come from the external content analysis and are NOT yet approved. Add a real citation here, then move them up into a numbered Fact before publishing.
+
+### Apex predators / ecosystem role
+
+Proposed wording: "As apex and meso-predators, many sharks help keep ocean food webs in balance."
+
+Needs: a primary citation (e.g. NOAA Fisheries shark ecology page or a peer-reviewed source) with exact URL. Use "many sharks" / "help keep ... in balance", never an absolute claim. Until cited, do not publish.
+
+### Positive framing reduces fear (strategy rationale, not a post fact)
+
+Reference: positive-framed shark content has been shown to reduce viewers' fear and perceived danger (Frontiers in Communication). This is background that justifies the cute, non-fear approach. Do not present it as an on-graphic shark fact; keep it in strategy notes only.
 
 ## Review Checklist For Fact Posts
 

@@ -24,6 +24,14 @@ interface PostPurchaseShareProps {
 const STORY_WIDTH = 1080;
 const STORY_HEIGHT = 1920;
 
+function isAppleTouchDevice() {
+  if (typeof navigator === "undefined") return false;
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
+}
+
 function drawRoundedRect(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -372,17 +380,27 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
   async function downloadStory(options?: { preserveBusyState?: boolean }) {
     if (!options?.preserveBusyState) setIsBusy(true);
     setShareHint(null);
+    const shouldOpenImage = isAppleTouchDevice();
+    const imageWindow = shouldOpenImage
+      ? window.open("", "_blank", "noopener,noreferrer")
+      : null;
     try {
       const file = await getStoryFile();
       const objectUrl = URL.createObjectURL(file);
+      if (shouldOpenImage) {
+        if (imageWindow) {
+          imageWindow.location.href = objectUrl;
+        } else {
+          window.location.href = objectUrl;
+        }
+        window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+        trackEvent("share_story_downloaded", { tier: member.tier, mode: "open-image" });
+        setShareHint(t("downloadReadyIos"));
+        return;
+      }
       const anchor = document.createElement("a");
       anchor.href = objectUrl;
       anchor.download = file.name;
-      // iOS Safari ignores the download attribute and opens the image inline.
-      // We give it a hint by setting target="_blank" so the user at least sees
-      // the image and can long-press to save.
-      anchor.target = "_blank";
-      anchor.rel = "noopener";
       document.body.appendChild(anchor);
       anchor.click();
       document.body.removeChild(anchor);
@@ -506,7 +524,8 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
               disabled={isBusy}
               className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {t("downloadButton")}
+              <span className="sm:hidden">{t("openStoryImageButton")}</span>
+              <span className="hidden sm:inline">{t("downloadButton")}</span>
             </button>
             <button
               type="button"
@@ -569,7 +588,8 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
               disabled={isBusy}
               className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {t("downloadButton")}
+              <span className="sm:hidden">{t("openStoryImageButton")}</span>
+              <span className="hidden sm:inline">{t("downloadButton")}</span>
             </button>
             <button
               type="button"

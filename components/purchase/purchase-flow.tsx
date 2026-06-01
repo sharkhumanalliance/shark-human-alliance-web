@@ -914,6 +914,16 @@ function PurchaseFlowInner() {
                       </span>
                     </div>
                   )}
+                  {isGift && giftMessage.trim() && (
+                    <div className="flex justify-between items-start gap-3">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+                        {t("confirmGiftMessage")}
+                      </span>
+                      <span className="text-sm font-medium text-[var(--brand-dark)] text-right max-w-[200px] line-clamp-3">
+                        {giftMessage.trim()}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 {/* Action buttons */}
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row">

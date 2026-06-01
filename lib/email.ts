@@ -65,49 +65,67 @@ const EMAIL_COPY = {
   en: {
     certificateSubject: (name: string) =>
       `Your shark paperwork is approved, ${name}`,
-    giftBuyerSubject: (name: string, status: string) =>
-      `Gift sent! ${name} is now a ${status}`,
+    giftCertificateSubject: (name: string) =>
+      `${name}'s Shark Human Alliance gift is ready`,
+    giftBuyerSubject: (name: string) => `Gift sent: ${name}'s paperwork is ready`,
+    certificatePreheader: (name: string, status: string) =>
+      `${name}'s ${status} certificate is ready to download.`,
+    giftPreheader: (name: string) =>
+      `A Shark Human Alliance gift is waiting for ${name}.`,
+    giftBuyerPreheader: (name: string) =>
+      `Your gift for ${name} has been delivered. You can also send the reveal link yourself.`,
     title: "Your shark paperwork is approved",
     giftHeading: (safeName: string) =>
-      `A certificate has arrived for ${safeName}.`,
-    welcomeHeading: (safeName: string) => `Welcome to the Alliance, ${safeName}.`,
-    giftSubtitle: "A fellow diplomat has arranged your paperwork.",
+      `A gift for ${safeName} has arrived.`,
+    giftHeadingWithFrom: (safeName: string, safeFromName: string) =>
+      `A gift for ${safeName}, arranged by ${safeFromName}.`,
+    welcomeHeading: (safeName: string) =>
+      `Your shark paperwork is approved, ${safeName}.`,
+    giftSubtitle:
+      "Open the file, inspect the paperwork, and remain symbolically unbitten.",
     welcomeSubtitle:
       "Your diplomatic status has been registered. The sharks remain symbolically informed and practically indifferent.",
-    yourStatus: "Your Status",
+    yourStatus: "Status",
     registryId: "Registry ID",
     downloadCertificate: "Download certificate PDF",
-    viewRegistry: "View registry record &rarr;",
+    openGift: "Open your gift",
+    secondaryDownload: "Or download the certificate PDF",
+    viewRegistry: "View registry record",
     personalMessage: "Personal message",
-    careerHeading: "Your Alliance Career Starts Now",
+    careerHeading: "Your turn",
     careerText:
-      "Share your referral link. Every recruit moves you up the ranks, which is how bureaucracy proves it is alive.",
-    careerLink: "See the full career ladder &rarr;",
+      "Invite another human into the paperwork. Every recruit moves your Alliance record up the ladder.",
+    referralButton: "Share referral link",
+    careerLink: "See the full career ladder",
     wantedHeading: "Someone else still looks unfiled",
     wantedText:
       "Open a Wanted case for a friend, then let the Bureau recommend the paperwork.",
-    wantedLink: "Open a Wanted case &rarr;",
+    wantedLink: "Open a Wanted case",
     orderDetails: "Order details",
     digitalSupply:
       "Your certificate was supplied immediately in digital form at your express request. Once supply began, the withdrawal right ended.",
     manageText:
-      "Need to hide your registry record or request erasure? Use the private record controls linked below.",
-    manageLink: "Manage record visibility &rarr;",
-    termsLink: "Terms &amp; Purchase Conditions &rarr;",
-    footerTagline: "Shark Human Alliance &mdash; Peace between humans and sharks",
+      "Need to hide your registry record or request erasure? Use the private record controls.",
+    manageLink: "Manage record visibility",
+    termsLink: "Terms & Purchase Conditions",
+    footerTagline: "Shark Human Alliance - Peace between humans and sharks",
     fictionalDisclaimer:
-      "This certificate is 100% fictional and guarantees absolutely no marine protection.<br>The conservation allocation, however, is real, tracked, and considerably more useful than the paperwork.",
+      "This certificate is fictional and does not provide marine protection. A share of every certificate is committed to shark conservation, which is considerably more useful than the paperwork.",
     giftBadge: "Gift",
-    giftDelivered: "Gift Delivered!",
+    giftDelivered: "Gift delivered",
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>
-      `Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.<br>They'll receive their certificate and a warm welcome from the Alliance.`,
+      `Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.`,
+    giftDeliveredFollowup:
+      "They receive the certificate email. You can also use the reveal link below if you want to hand over the paperwork yourself.",
     includedMessage: "Included message:",
-    openGift: "Open your gift",
     giftFrom: (safeFromName: string) => `From ${safeFromName}`,
-    giftShareLink: "Gift link you can also send yourself:",
-    referralCode: "Your referral code:",
-    referralText: "Share it with friends to climb the Alliance career ladder!",
-    viewCareer: "View Career Ladder",
+    fellowHuman: "A fellow human",
+    giftShareLink: "Open the gift reveal",
+    buyerSoftCta: "Need another human protected?",
+    buyerSoftCtaText:
+      "Open another file, or get one for yourself before the Bureau notices.",
+    buyerPrimaryCta: "Open gift reveal",
+    buyerSecondaryCta: "Protect someone else",
     tierLabels: {
       protected: "Protected Friend",
       nonsnack: "Non-Snack Recognition",
@@ -117,50 +135,69 @@ const EMAIL_COPY = {
   es: {
     certificateSubject: (name: string) =>
       `Tu papeleo tiburón está aprobado, ${name}`,
-    giftBuyerSubject: (name: string, status: string) =>
-      `¡Regalo enviado! ${name} ahora tiene ${status}`,
+    giftCertificateSubject: (name: string) =>
+      `El regalo Shark Human Alliance de ${name} está listo`,
+    giftBuyerSubject: (name: string) =>
+      `Regalo enviado: el papeleo de ${name} está listo`,
+    certificatePreheader: (name: string, status: string) =>
+      `El certificado ${status} de ${name} está listo para descargar.`,
+    giftPreheader: (name: string) =>
+      `Hay un regalo de Shark Human Alliance esperando a ${name}.`,
+    giftBuyerPreheader: (name: string) =>
+      `Tu regalo para ${name} ha sido entregado. También puedes enviar tú el enlace de presentación.`,
     title: "Tu papeleo tiburón está aprobado",
     giftHeading: (safeName: string) =>
-      `Ha llegado un certificado para ${safeName}.`,
-    welcomeHeading: (safeName: string) => `Bienvenido/a a la Alianza, ${safeName}.`,
-    giftSubtitle: "Un/a diplomático/a ha gestionado tu papeleo.",
+      `Ha llegado un regalo para ${safeName}.`,
+    giftHeadingWithFrom: (safeName: string, safeFromName: string) =>
+      `Un regalo para ${safeName}, gestionado por ${safeFromName}.`,
+    welcomeHeading: (safeName: string) =>
+      `Tu papeleo tiburón está aprobado, ${safeName}.`,
+    giftSubtitle:
+      "Abre el expediente, revisa el papeleo y permanece simbólicamente sin mordidas.",
     welcomeSubtitle:
       "Tu estatus diplomático ha sido registrado. Los tiburones siguen simbólicamente informados y prácticamente indiferentes.",
-    yourStatus: "Tu estatus",
+    yourStatus: "Estatus",
     registryId: "ID de registro",
     downloadCertificate: "Descargar certificado PDF",
-    viewRegistry: "Ver registro &rarr;",
+    openGift: "Abrir tu regalo",
+    secondaryDownload: "O descargar el certificado PDF",
+    viewRegistry: "Ver registro",
     personalMessage: "Mensaje personal",
-    careerHeading: "Tu carrera en la Alianza comienza ahora",
+    careerHeading: "Tu turno",
     careerText:
-      "Comparte tu enlace de referido. Cada recluta te sube de rango, que es como la burocracia demuestra que está viva.",
-    careerLink: "Ver el escalafón completo &rarr;",
+      "Invita a otro humano al papeleo. Cada recluta hace subir tu registro en la Alianza.",
+    referralButton: "Compartir enlace de referido",
+    careerLink: "Ver el escalafón completo",
     wantedHeading: "Otra persona sigue sin expediente",
     wantedText:
       "Abre un caso Wanted para un amigo y deja que la Oficina recomiende el papeleo.",
-    wantedLink: "Abrir un caso Wanted &rarr;",
+    wantedLink: "Abrir un caso Wanted",
     orderDetails: "Detalles del pedido",
     digitalSupply:
       "Tu certificado fue suministrado inmediatamente en formato digital a petición expresa. Una vez iniciada la entrega, terminó el derecho de desistimiento.",
     manageText:
-      "¿Necesitas ocultar tu registro o solicitar la supresión? Usa los controles privados enlazados abajo.",
-    manageLink: "Gestionar visibilidad del registro &rarr;",
-    termsLink: "Condiciones de compra &rarr;",
+      "¿Necesitas ocultar tu registro o solicitar la supresión? Usa los controles privados.",
+    manageLink: "Gestionar visibilidad del registro",
+    termsLink: "Condiciones de compra",
     footerTagline:
-      "Shark Human Alliance &mdash; Paz entre humanos y tiburones",
+      "Shark Human Alliance - Paz entre humanos y tiburones",
     fictionalDisclaimer:
-      "Este certificado es 100 % ficticio y no garantiza ninguna protección marina.<br>La asignación para conservación, sin embargo, es real, rastreada y bastante más útil que el papeleo.",
+      "Este certificado es ficticio y no proporciona protección marina. Una parte de cada certificado se destina a la conservación de tiburones, lo cual es bastante más útil que el papeleo.",
     giftBadge: "Regalo",
-    giftDelivered: "¡Regalo entregado!",
+    giftDelivered: "Regalo entregado",
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>
-      `Tu regalo para <strong>${safeName}</strong> se ha enviado a <strong>${safeRecipientEmail}</strong>.<br>Recibirá su certificado y una bienvenida formal de la Alianza.`,
+      `Tu regalo para <strong>${safeName}</strong> se ha enviado a <strong>${safeRecipientEmail}</strong>.`,
+    giftDeliveredFollowup:
+      "Recibirá el email del certificado. También puedes usar el enlace de presentación si quieres entregar el papeleo personalmente.",
     includedMessage: "Mensaje incluido:",
-    openGift: "Abre tu regalo",
     giftFrom: (safeFromName: string) => `De ${safeFromName}`,
-    giftShareLink: "Enlace de regalo que también puedes enviar tú:",
-    referralCode: "Tu código de referido:",
-    referralText: "Compártelo con amigos para subir en el escalafón de la Alianza.",
-    viewCareer: "Ver escalafón",
+    fellowHuman: "Un humano aliado",
+    giftShareLink: "Abrir presentación del regalo",
+    buyerSoftCta: "¿Necesitas proteger a otro humano?",
+    buyerSoftCtaText:
+      "Abre otro expediente, o consigue uno para ti antes de que la Oficina se dé cuenta.",
+    buyerPrimaryCta: "Abrir presentación del regalo",
+    buyerSecondaryCta: "Proteger a otra persona",
     tierLabels: {
       protected: "Amigo Protegido",
       nonsnack: "Reconocimiento No-Snack",
@@ -180,18 +217,20 @@ function getEmailTierLabel(tier: string, locale?: string | null) {
 
 export function certificateEmailSubject(params: {
   name: string;
+  isGift?: boolean;
   locale?: string | null;
 }) {
-  return getEmailCopy(params.locale).certificateSubject(params.name);
+  const copy = getEmailCopy(params.locale);
+  return params.isGift
+    ? copy.giftCertificateSubject(params.name)
+    : copy.certificateSubject(params.name);
 }
 
 export function giftBuyerNotificationSubject(params: {
   name: string;
-  tier: string;
   locale?: string | null;
 }) {
-  const status = getEmailTierLabel(params.tier, params.locale);
-  return getEmailCopy(params.locale).giftBuyerSubject(params.name, status);
+  return getEmailCopy(params.locale).giftBuyerSubject(params.name);
 }
 
 export function logEmailRouteEntered(context: EmailLogContext) {
@@ -285,10 +324,54 @@ export async function sendEmailStrict(
   throw lastError!;
 }
 
-/**
- * Generate the HTML email template for a certificate delivery.
- */
-export function certificateEmailHtml(params: {
+function hiddenPreheader(text: string) {
+  return `<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${escapeHtml(text)}</div>`;
+}
+
+function primaryButton(label: string, url: string, color = "#f7843b") {
+  return `
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin:0 auto;">
+      <tr>
+        <td bgcolor="${color}" style="border-radius:12px;text-align:center;">
+          <a href="${url}" style="display:inline-block;min-width:210px;padding:15px 24px;border-radius:12px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;text-decoration:none;">
+            ${label}
+          </a>
+        </td>
+      </tr>
+    </table>`;
+}
+
+function textLine(label: string, url: string) {
+  return `<a href="${url}" style="color:#15324d;font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px;">${label}</a>`;
+}
+
+function outlineButton(label: string, url: string) {
+  return `<a href="${url}" style="display:inline-block;min-height:20px;padding:10px 15px;border:1px solid #15324d;border-radius:10px;background-color:#ffffff;color:#15324d;font-size:13px;font-weight:700;text-decoration:none;">${label}</a>`;
+}
+
+function certificateEmailPreheader(params: {
+  name: string;
+  tier: string;
+  isGift?: boolean;
+  locale?: string | null;
+}) {
+  const copy = getEmailCopy(params.locale);
+  return params.isGift
+    ? copy.giftPreheader(params.name)
+    : copy.certificatePreheader(
+        params.name,
+        getEmailTierLabel(params.tier, params.locale),
+      );
+}
+
+function giftBuyerNotificationPreheader(params: {
+  name: string;
+  locale?: string | null;
+}) {
+  return getEmailCopy(params.locale).giftBuyerPreheader(params.name);
+}
+
+type CertificateEmailTemplateParams = {
   name: string;
   tier: string;
   registryId: string;
@@ -304,7 +387,23 @@ export function certificateEmailHtml(params: {
   revealUrl?: string;
   isGift?: boolean;
   locale?: string | null;
-}): string {
+};
+
+type GiftBuyerNotificationEmailParams = {
+  name: string;
+  recipientEmail: string;
+  giftMessage?: string;
+  revealUrl?: string;
+  purchaseUrl?: string;
+  locale?: string | null;
+};
+
+/**
+ * Generate the HTML email template for a certificate delivery.
+ */
+export function certificateEmailHtml(
+  params: CertificateEmailTemplateParams
+): string {
   const {
     name,
     tier,
@@ -333,6 +432,12 @@ export function certificateEmailHtml(params: {
   const safeCareerUrl = escapeHtml(careerUrl);
   const safeTermsUrl = escapeHtml(termsUrl);
   const safeManageUrl = escapeHtml(manageUrl);
+  const preheader = certificateEmailPreheader({
+    name,
+    tier,
+    isGift,
+    locale: resolvedLocale,
+  });
   const safeWantedUrl = escapeHtml(
     buildAbsoluteLocalizedUrl(
       process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
@@ -348,92 +453,106 @@ export function certificateEmailHtml(params: {
         buildReferralHref(referralCode)
       )
   );
-  const safeGiftMessage = giftMessage
-    ? escapeHtmlWithLineBreaks(giftMessage)
+  const hasGiftMessage = isGift && !!giftMessage?.trim();
+  const safeGiftMessage = hasGiftMessage
+    ? escapeHtmlWithLineBreaks(giftMessage ?? "")
     : "";
-  const safeFromName = fromName ? escapeHtml(fromName) : "";
+  const safeFromName = escapeHtml(fromName?.trim() || copy.fellowHuman);
   const safeRevealUrl = revealUrl ? escapeHtml(revealUrl) : "";
   const safeRegistryUrl = registryUrl ? escapeHtml(registryUrl) : "";
+  const heading =
+    isGift
+      ? copy.giftHeadingWithFrom(safeName, safeFromName)
+      : copy.welcomeHeading(safeName);
+  const primaryAction =
+    isGift && safeRevealUrl
+      ? primaryButton(copy.openGift, safeRevealUrl)
+      : primaryButton(copy.downloadCertificate, safeDownloadUrl);
+  const secondaryAction =
+    isGift && safeRevealUrl
+      ? textLine(copy.secondaryDownload, safeDownloadUrl)
+      : safeRegistryUrl
+        ? textLine(copy.viewRegistry, safeRegistryUrl)
+        : "";
 
   return `<!DOCTYPE html>
 <html lang="${resolvedLocale}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="supported-color-schemes" content="light" />
   <title>${copy.title}</title>
 </head>
 <body style="margin:0;padding:0;background-color:#f5fbff;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  ${hiddenPreheader(preheader)}
   <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
-    <!-- Header -->
     <div style="text-align:center;padding:32px 24px;background-color:#15324d;border-radius:24px 24px 0 0;">
       <div style="display:inline-block;width:56px;height:56px;line-height:56px;background-color:#2f80ed;border-radius:16px;color:white;font-weight:bold;font-size:18px;">SHA</div>
-      <h1 style="margin:16px 0 0;color:white;font-size:24px;font-weight:600;">${isGift ? copy.giftHeading(safeName) : copy.welcomeHeading(safeName)}</h1>
+      <h1 style="margin:16px 0 0;color:white;font-size:24px;line-height:1.25;font-weight:700;">${heading}</h1>
       <p style="margin:8px 0 0;color:#a3c4e0;font-size:14px;">${isGift ? copy.giftSubtitle : copy.welcomeSubtitle}</p>
     </div>
 
-    <!-- Body -->
     <div style="background-color:white;padding:32px 24px;border-left:1px solid #d4e8f7;border-right:1px solid #d4e8f7;">
-      <div style="text-align:center;padding:24px;background-color:#f0fdfa;border:2px solid #5eead4;border-radius:16px;">
-        <p style="margin:0;font-size:12px;color:#0d9488;text-transform:uppercase;letter-spacing:3px;font-weight:600;">${copy.yourStatus}</p>
-        <p style="margin:12px 0 0;font-size:28px;font-weight:700;color:#15324d;">${safeStatus}</p>
-        <p style="margin:8px 0 0;font-size:13px;color:#5f7892;">${copy.registryId}: ${safeRegistryId}</p>
+      <div style="text-align:center;">
+        ${primaryAction}
+        ${secondaryAction ? `<p style="margin:14px 0 0;">${secondaryAction}</p>` : ""}
       </div>
 
-      ${isGift && revealUrl ? `
-      <div style="margin-top:24px;text-align:center;">
-        <a href="${safeRevealUrl}" style="display:inline-block;padding:14px 32px;background-color:#0d9488;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">${copy.openGift}</a>
-      </div>` : ""}
-
-      <div style="margin-top:24px;text-align:center;">
-        <a href="${safeDownloadUrl}" style="display:inline-block;padding:14px 32px;background-color:#2f80ed;color:white;text-decoration:none;font-weight:600;font-size:16px;border-radius:50px;">${copy.downloadCertificate}</a>
+      <div style="margin-top:28px;padding:16px;background-color:#f8fafc;border:1px solid #dbe4ee;border-radius:14px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+          <tr>
+            <td style="padding:4px 0;color:#5f7892;font-size:12px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;">${copy.yourStatus}</td>
+            <td align="right" style="padding:4px 0;color:#15324d;font-size:13px;font-weight:700;">${safeStatus}</td>
+          </tr>
+          <tr>
+            <td style="padding:4px 0;color:#5f7892;font-size:12px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;">${copy.registryId}</td>
+            <td align="right" style="padding:4px 0;color:#15324d;font-size:13px;font-weight:700;">${safeRegistryId}</td>
+          </tr>
+        </table>
       </div>
 
-      ${registryUrl ? `
-      <div style="margin-top:24px;text-align:center;">
-        <a href="${safeRegistryUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">${copy.viewRegistry}</a>
-      </div>` : ""}
-
-      ${(giftMessage || safeFromName) ? `
-      <div style="margin-top:24px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:16px;">
+      ${hasGiftMessage ? `
+      <div style="margin-top:24px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:14px;">
         <p style="margin:0 0 8px;font-size:12px;color:#9a3412;text-transform:uppercase;letter-spacing:2px;font-weight:700;">${copy.personalMessage}</p>
-        ${giftMessage ? `<p style="margin:0;font-size:14px;line-height:1.7;color:#7c2d12;">${safeGiftMessage}</p>` : ""}
-        ${safeFromName ? `<p style="margin:${giftMessage ? "12px" : "0"} 0 0;font-size:14px;font-weight:700;color:#7c2d12;">&mdash; ${copy.giftFrom(safeFromName)}</p>` : ""}
+        <p style="margin:0;font-size:14px;line-height:1.7;color:#7c2d12;">${safeGiftMessage}</p>
+        <p style="margin:12px 0 0;font-size:14px;font-weight:700;color:#7c2d12;">- ${copy.giftFrom(safeFromName)}</p>
       </div>` : ""}
 
-      <!-- Referral section -->
-      <div style="margin-top:32px;padding:24px;background-color:#edf8ff;border-radius:16px;text-align:center;">
-        <p style="margin:0;font-size:12px;color:#15324d;text-transform:uppercase;letter-spacing:2px;font-weight:600;">${copy.careerHeading}</p>
-        <p style="margin:8px 0;font-size:14px;color:#5f7892;">${copy.careerText}</p>
-        <div style="margin:12px auto;padding:12px 20px;background-color:white;border:1px solid #d4e8f7;border-radius:50px;font-family:monospace;font-size:13px;color:#15324d;max-width:360px;word-break:break-all;">
-          ${safeReferralUrl}
-        </div>
-        <a href="${safeCareerUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">${copy.careerLink}</a>
+      <div style="margin-top:28px;padding:22px;background-color:#f8fafc;border:1px solid #dbe4ee;border-radius:14px;">
+        <p style="margin:0;font-size:12px;color:#15324d;text-transform:uppercase;letter-spacing:2px;font-weight:700;">${copy.careerHeading}</p>
+        <p style="margin:8px 0 16px;font-size:14px;line-height:1.6;color:#5f7892;">${copy.careerText}</p>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+          <tr>
+            <td style="padding:0 0 12px;">
+              ${outlineButton(copy.referralButton, safeReferralUrl)}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0;">
+              ${textLine(copy.careerLink, safeCareerUrl)}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 0 0;border-top:1px solid #dbe4ee;">
+              <p style="margin:0 0 6px;font-size:12px;color:#15324d;text-transform:uppercase;letter-spacing:2px;font-weight:700;">${copy.wantedHeading}</p>
+              <p style="margin:0 0 10px;font-size:13px;line-height:1.6;color:#5f7892;">${copy.wantedText}</p>
+              ${textLine(copy.wantedLink, safeWantedUrl)}
+            </td>
+          </tr>
+        </table>
       </div>
 
-      <div style="margin-top:16px;padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-radius:16px;text-align:center;">
-        <p style="margin:0;font-size:12px;color:#9a3412;text-transform:uppercase;letter-spacing:2px;font-weight:700;">${copy.wantedHeading}</p>
-        <p style="margin:8px 0 12px;font-size:14px;line-height:1.6;color:#7c2d12;">${copy.wantedText}</p>
-        <a href="${safeWantedUrl}" style="color:#c2410c;font-weight:700;font-size:14px;text-decoration:none;">${copy.wantedLink}</a>
-      </div>
-
-      <div style="margin-top:24px;padding:20px;background-color:#f8fafc;border:1px solid #dbe4ee;border-radius:16px;">
-        <p style="margin:0 0 8px;font-size:12px;color:#15324d;text-transform:uppercase;letter-spacing:2px;font-weight:700;">${copy.orderDetails}</p>
-        <p style="margin:0;font-size:13px;line-height:1.7;color:#5f7892;">
-          ${copy.digitalSupply}
-        </p>
-        <p style="margin:12px 0 0;font-size:13px;line-height:1.7;color:#5f7892;">
-          ${copy.manageText}
-        </p>
-        <p style="margin:12px 0 0;">
-          <a href="${safeManageUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">${copy.manageLink}</a>
-        </p>
-        <p style="margin:10px 0 0;">
-          <a href="${safeTermsUrl}" style="color:#2f80ed;font-weight:600;font-size:14px;text-decoration:none;">${copy.termsLink}</a>
+      <div style="margin-top:24px;padding-top:18px;border-top:1px solid #dbe4ee;">
+        ${!isGift ? `<p style="margin:0 0 12px;font-size:12px;line-height:1.7;color:#5f7892;">${copy.digitalSupply}</p>` : ""}
+        <p style="margin:0 0 10px;font-size:12px;line-height:1.7;color:#5f7892;">${copy.manageText}</p>
+        <p style="margin:0;font-size:12px;line-height:1.8;">
+          ${textLine(copy.manageLink, safeManageUrl)}
+          ${!isGift ? `&nbsp;&nbsp; ${textLine(copy.termsLink, safeTermsUrl)}` : ""}
         </p>
       </div>
     </div>
 
-    <!-- Footer -->
     <div style="padding:24px;background-color:#15324d;border-radius:0 0 24px 24px;text-align:center;">
       <p style="margin:0;color:#a3c4e0;font-size:12px;">${copy.footerTagline}</p>
       <p style="margin:8px 0 0;color:#5f7892;font-size:11px;">${copy.fictionalDisclaimer}</p>
@@ -444,37 +563,111 @@ export function certificateEmailHtml(params: {
 </html>`;
 }
 
-export function giftBuyerNotificationEmailHtml(params: {
-  name: string;
-  recipientEmail: string;
-  referralCode: string;
-  careerUrl: string;
-  giftMessage?: string;
-  revealUrl?: string;
-  locale?: string | null;
-}): string {
+export function certificateEmailText(
+  params: CertificateEmailTemplateParams
+): string {
+  const resolvedLocale = getCertificateLocale(params.locale ?? undefined);
+  const copy = getEmailCopy(resolvedLocale);
+  const status = getEmailTierLabel(params.tier, resolvedLocale);
+  const from = params.fromName?.trim() || copy.fellowHuman;
+  const referralUrl =
+    params.referralUrl ||
+    buildAbsoluteLocalizedUrl(
+      process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+      resolvedLocale,
+      buildReferralHref(params.referralCode)
+    );
+  const wantedUrl = buildAbsoluteLocalizedUrl(
+    process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+    resolvedLocale,
+    "/wanted"
+  );
+  const lines = [
+    params.isGift
+      ? copy.giftHeadingWithFrom(params.name, from)
+      : copy.welcomeHeading(params.name),
+    "",
+    `${copy.yourStatus}: ${status}`,
+    `${copy.registryId}: ${params.registryId}`,
+    "",
+  ];
+
+  if (params.isGift && params.revealUrl) {
+    lines.push(`${copy.openGift}: ${params.revealUrl}`);
+    lines.push(`${copy.secondaryDownload}: ${params.downloadUrl}`);
+  } else {
+    lines.push(`${copy.downloadCertificate}: ${params.downloadUrl}`);
+    if (params.registryUrl) {
+      lines.push(`${copy.viewRegistry}: ${params.registryUrl}`);
+    }
+  }
+
+  if (params.isGift && params.giftMessage?.trim()) {
+    lines.push("", `${copy.personalMessage}:`, params.giftMessage.trim(), `- ${copy.giftFrom(from)}`);
+  }
+
+  lines.push(
+    "",
+    copy.careerHeading,
+    copy.careerText,
+    `${copy.referralButton}: ${referralUrl}`,
+    `${copy.careerLink}: ${params.careerUrl}`,
+    "",
+    copy.wantedHeading,
+    copy.wantedText,
+    `${copy.wantedLink}: ${wantedUrl}`,
+    "",
+    copy.manageText,
+    `${copy.manageLink}: ${params.manageUrl}`
+  );
+
+  if (!params.isGift) {
+    lines.push(copy.digitalSupply, `${copy.termsLink}: ${params.termsUrl}`);
+  }
+
+  lines.push("", copy.fictionalDisclaimer);
+  return lines.join("\n");
+}
+
+export function giftBuyerNotificationEmailHtml(
+  params: GiftBuyerNotificationEmailParams
+): string {
   const {
     name,
     recipientEmail,
-    referralCode,
-    careerUrl,
     giftMessage,
     revealUrl,
+    purchaseUrl,
     locale,
   } = params;
   const resolvedLocale = getCertificateLocale(locale ?? undefined);
   const copy = getEmailCopy(resolvedLocale);
   const safeName = escapeHtml(name);
   const safeRecipientEmail = escapeHtml(recipientEmail);
-  const safeReferralCode = escapeHtml(referralCode);
   const safeGiftMessage = giftMessage
     ? escapeHtmlWithLineBreaks(giftMessage)
     : "";
-  const safeCareerUrl = escapeHtml(careerUrl);
   const safeRevealUrl = revealUrl ? escapeHtml(revealUrl) : "";
+  const safePurchaseUrl = escapeHtml(
+    purchaseUrl ||
+      buildAbsoluteLocalizedUrl(
+        process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+        resolvedLocale,
+        "/purchase?tier=protected&gift=true"
+      )
+  );
 
   return `<!DOCTYPE html>
-<html lang="${resolvedLocale}"><body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
+<html lang="${resolvedLocale}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="supported-color-schemes" content="light" />
+  <title>${copy.giftDelivered}</title>
+</head>
+<body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
+${hiddenPreheader(giftBuyerNotificationPreheader({ name, locale: resolvedLocale }))}
 <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
   <div style="background:white;border-radius:24px;padding:32px;text-align:center;border:1px solid #d4e8f7;">
     <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#64748b;">${copy.giftBadge}</div>
@@ -483,14 +676,46 @@ export function giftBuyerNotificationEmailHtml(params: {
       ${copy.giftDeliveredBody(safeName, safeRecipientEmail)}
       ${safeGiftMessage ? `<br><br><em>${copy.includedMessage}</em> ${safeGiftMessage}` : ""}
     </p>
-    <p style="color:#5f7892;font-size:13px;margin-top:16px;">
-      ${copy.referralCode} <strong>${safeReferralCode}</strong><br>
-      ${copy.referralText}
-    </p>
-    ${revealUrl ? `<p style="color:#5f7892;font-size:13px;margin-top:16px;">${copy.giftShareLink}<br><a href="${safeRevealUrl}" style="color:#2f80ed;font-weight:600;word-break:break-all;">${safeRevealUrl}</a></p>` : ""}
-    <a href="${safeCareerUrl}" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#2f80ed;color:white;text-decoration:none;border-radius:50px;font-weight:600;">${copy.viewCareer}</a>
+    <p style="color:#5f7892;font-size:13px;line-height:1.6;margin:16px 0 24px;">${copy.giftDeliveredFollowup}</p>
+    ${safeRevealUrl ? primaryButton(copy.buyerPrimaryCta, safeRevealUrl) : primaryButton(copy.buyerSecondaryCta, safePurchaseUrl)}
+    <div style="margin-top:24px;padding:18px;background:#f8fafc;border:1px solid #dbe4ee;border-radius:14px;text-align:left;">
+      <p style="margin:0 0 8px;color:#15324d;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;">${copy.buyerSoftCta}</p>
+      <p style="margin:0 0 12px;color:#5f7892;font-size:14px;line-height:1.6;">${copy.buyerSoftCtaText}</p>
+      ${textLine(copy.buyerSecondaryCta, safePurchaseUrl)}
+    </div>
   </div>
   <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
 </div>
 </body></html>`;
+}
+
+export function giftBuyerNotificationEmailText(
+  params: GiftBuyerNotificationEmailParams
+): string {
+  const resolvedLocale = getCertificateLocale(params.locale ?? undefined);
+  const copy = getEmailCopy(resolvedLocale);
+  const purchaseUrl =
+    params.purchaseUrl ||
+    buildAbsoluteLocalizedUrl(
+      process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+      resolvedLocale,
+      "/purchase?tier=protected&gift=true"
+    );
+  const lines = [
+    copy.giftDelivered,
+    "",
+    `${params.name} -> ${params.recipientEmail}`,
+    copy.giftDeliveredFollowup,
+  ];
+
+  if (params.giftMessage?.trim()) {
+    lines.push("", `${copy.includedMessage} ${params.giftMessage.trim()}`);
+  }
+
+  if (params.revealUrl) {
+    lines.push("", `${copy.buyerPrimaryCta}: ${params.revealUrl}`);
+  }
+
+  lines.push("", copy.buyerSoftCta, copy.buyerSoftCtaText, `${copy.buyerSecondaryCta}: ${purchaseUrl}`);
+  return lines.join("\n");
 }

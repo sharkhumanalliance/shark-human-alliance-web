@@ -677,6 +677,7 @@
     "confirmTier": "Membership tier",
     "confirmTemplate": "Certificate style",
     "confirmDedication": "Dedication",
+    "confirmGiftMessage": "Personal message",
     "confirmDelivery": "Delivery",
     "confirmDeliveryDownloadOnly": "Download immediately",
     "confirmDeliveryEmail": "Email + download",
@@ -767,6 +768,7 @@
         }
       },
       "downloadButton": "Download Story image",
+      "openStoryImageButton": "Open Story image",
       "copyButton": "Copy verification link",
       "copySuccess": "Link copied",
       "copyError": "The link could not be copied. Please copy it manually before the ocean forgets.",
@@ -774,6 +776,7 @@
       "tipText": "Tap the main button on your phone to open sharing. If your browser cannot send the Story directly, use Download Story and upload it to Instagram manually.",
       "working": "Preparing your Story…",
       "downloadReady": "Story downloaded. Open Instagram and add it to Stories.",
+      "downloadReadyIos": "Story image opened. On iPhone, use the Share button, then Save Image or add it to Instagram.",
       "downloadError": "The Story could not be prepared. Please try again.",
       "nativeSuccess": "Share sheet opened.",
       "nativeFallback": "Link shared. For Instagram Stories, use the downloaded image as well.",

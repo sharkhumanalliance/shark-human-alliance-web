@@ -4,6 +4,7 @@ import {
   EMAIL_FROM,
   certificateEmailHtml,
   certificateEmailSubject,
+  certificateEmailText,
   logEmailRouteEntered,
   sendEmailStrict,
 } from "@/lib/email";
@@ -65,6 +66,26 @@ export async function POST(request: NextRequest) {
         to,
         subject: certificateEmailSubject({ name, locale }),
         html: certificateEmailHtml({
+          name,
+          tier,
+          registryId: publicRegistryId,
+          referralCode: referralCode || "",
+          downloadUrl: certificateUrl,
+          registryUrl:
+            member.registryVisibility === "public"
+              ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${encodeURIComponent(publicRegistryId)}`)
+              : undefined,
+          careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
+          termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/terms"),
+          manageUrl: buildAbsoluteLocalizedUrl(
+            BASE_URL,
+            locale,
+            `/certificate/view?token=${member.accessToken}#record-controls`
+          ),
+          referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode || "")),
+          locale,
+        }),
+        text: certificateEmailText({
           name,
           tier,
           registryId: publicRegistryId,

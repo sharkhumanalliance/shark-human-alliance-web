@@ -5,8 +5,10 @@ import {
   EMAIL_FROM,
   certificateEmailHtml,
   certificateEmailSubject,
+  certificateEmailText,
   giftBuyerNotificationEmailHtml,
   giftBuyerNotificationSubject,
+  giftBuyerNotificationEmailText,
   logEmailRouteEntered,
   sendEmailStrict,
 } from "@/lib/email";
@@ -215,8 +217,33 @@ export async function POST(request: NextRequest) {
           {
             from: EMAIL_FROM,
             to: targetEmail,
-            subject: certificateEmailSubject({ name, locale }),
+            subject: certificateEmailSubject({ name, isGift: isGift === "true", locale }),
             html: certificateEmailHtml({
+              name,
+              tier,
+              registryId: newMember.registryCode || formatRegistryIdForDisplay(newMember.id),
+              referralCode,
+              downloadUrl: certificateUrl,
+              registryUrl:
+                newMember.registryVisibility === "public"
+                  ? buildAbsoluteLocalizedUrl(BASE_URL, locale, `/registry?highlight=${encodeURIComponent(newMember.registryCode || formatRegistryIdForDisplay(newMember.id))}`)
+                  : undefined,
+              careerUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career"),
+              referralUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, buildReferralHref(referralCode)),
+              termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/terms"),
+              manageUrl: buildAbsoluteLocalizedUrl(
+                BASE_URL,
+                locale,
+                `/certificate/view?token=${accessToken}#record-controls`
+              ),
+              giftMessage: giftMessage || undefined,
+              fromName:
+                isGift === "true" && fromName ? fromName.trim() : undefined,
+              revealUrl: giftRevealUrl,
+              isGift: isGift === "true",
+              locale,
+            }),
+            text: certificateEmailText({
               name,
               tier,
               registryId: newMember.registryCode || formatRegistryIdForDisplay(newMember.id),
@@ -280,19 +307,30 @@ export async function POST(request: NextRequest) {
     // Also notify buyer if gift
     if (isGift === "true" && recipientEmail && email && email !== recipientEmail && process.env.RESEND_API_KEY) {
       try {
-        const careerUrl = buildAbsoluteLocalizedUrl(BASE_URL, locale, "/career");
+        const purchaseUrl = buildAbsoluteLocalizedUrl(
+          BASE_URL,
+          locale,
+          "/purchase?tier=protected&gift=true",
+        );
         await sendEmailStrict(
           {
             from: EMAIL_FROM,
             to: email,
-            subject: giftBuyerNotificationSubject({ name, tier, locale }),
+            subject: giftBuyerNotificationSubject({ name, locale }),
             html: giftBuyerNotificationEmailHtml({
               name,
               recipientEmail,
-              referralCode,
-              careerUrl,
               giftMessage: giftMessage || undefined,
               revealUrl: giftRevealUrl,
+              purchaseUrl,
+              locale,
+            }),
+            text: giftBuyerNotificationEmailText({
+              name,
+              recipientEmail,
+              giftMessage: giftMessage || undefined,
+              revealUrl: giftRevealUrl,
+              purchaseUrl,
               locale,
             }),
           },

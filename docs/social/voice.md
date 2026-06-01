@@ -1,16 +1,16 @@
 # Social Voice Guide
 
-Last updated: 2026-05-20
+Last updated: 2026-05-31
 
 ## Voice Formula
 
-Dry bureaucracy + real conservation + soft absurdity.
+Cute comedy + official-world bureaucracy + real conservation.
 
-The Bureau speaks as if shark-human relations are an ordinary administrative matter that has become mildly inconvenient.
+Finnley and Luna are expressive, lovable characters who treat absurd human prejudice as a deadly serious administrative emergency. Lead with warmth and humor; the official Bureau tone is the comedic frame, not a straitjacket.
 
 ## Brand Voice Rules
 
-Sound official but not corporate. Be dry, not zany. Let the absurdity sit without explaining it. Keep facts precise and source-backed. Keep product mentions administrative.
+Sound official but lovable. Cute and funny beats flat and dry. Big character emotion is welcome - Finnley can be dramatic, even tearful on a bad day; Luna stays deadpan, which is the contrast. Let the absurdity play; do not explain the joke. Keep facts precise and source-backed (see `sources.md`). Keep product mentions in-world (file paperwork, close the case).
 
 ## Sentence Shape
 
@@ -30,14 +30,14 @@ Avoid:
 
 ## Caption Rules
 
-- No emoji in feed captions.
-- No exclamation marks unless Finnley is directly quoted, and even then rarely.
+- Emoji allowed but sparingly; let the characters and visuals carry the cuteness, not an emoji wall.
+- Exclamation marks are fine for character emotion (Finnley especially). Do not pepper every line.
 - No explaining the joke after the joke.
 - No guilt-heavy activism language.
-- No clickbait.
-- No brand voice that sounds like a normal DTC gift company.
-- First line must work on its own.
+- No clickbait or fake urgency.
+- First line / first frame must work on its own.
 - If the post is factual, the caption should not overstate the graphic.
+- Comment-bait CTAs are welcome when they stay in-world (e.g. "Comment ACQUITTED to support the defendant", "Guilty or misunderstood?").
 
 ## Comment And Engagement Rules
 
@@ -53,7 +53,6 @@ Do not use:
 
 - "Hey guys"
 - "You won't believe"
-- "Tag a friend who"
 - "Let's make a change"
 - "Join the movement"
 - "Limited-time offer"
@@ -70,6 +69,10 @@ Also avoid fear-based hooks:
 - "Avoid shark attacks"
 
 Never imply the product provides real safety.
+
+### Tagging and comment CTAs
+
+Tagging and verdict-style comment CTAs are encouraged - they are how the Wanted/case mechanic spreads. Keep them characterful rather than generic: prefer "Open a case on the human who needs Lesson 1" or "Comment ACQUITTED to support the defendant" over a flat "Tag a friend who". The mechanic and the cuteness do the work.
 
 ## Approved Voice Patterns
 

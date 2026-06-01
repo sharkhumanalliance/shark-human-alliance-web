@@ -77,6 +77,7 @@ function SuccessContentInner() {
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
   const purchaseTrackedRef = useRef(false);
   const previewSectionRef = useRef<HTMLElement>(null);
+  const previewSummaryRef = useRef<HTMLDivElement>(null);
   const customizeSectionRef = useRef<HTMLElement>(null);
 
   const handleTemplateChange = useCallback((nextTemplate: CertificateTemplate) => {
@@ -225,6 +226,20 @@ function SuccessContentInner() {
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
+  }
+
+  function handleCustomizeToggle() {
+    setCustomizeOpen((current) => !current);
+  }
+
+  function handleHideCustomize() {
+    setCustomizeOpen(false);
+    window.setTimeout(() => {
+      previewSummaryRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 0);
   }
 
   if (loading) {
@@ -386,7 +401,7 @@ function SuccessContentInner() {
             </button>
             <button
               type="button"
-              onClick={() => setCustomizeOpen((value) => !value)}
+              onClick={handleCustomizeToggle}
               aria-expanded={customizeOpen}
               aria-controls="certificate-customize"
               className="text-sm font-semibold text-[var(--brand-dark)] underline underline-offset-4 transition hover:text-[var(--brand)]"
@@ -462,7 +477,7 @@ function SuccessContentInner() {
             Tracking ID is inlined into the impact text as a
             quiet footer — no separate badge column.
            ==================================================== */}
-        <div className={previewExpanded ? "mt-8" : "mt-8 grid gap-4 md:grid-cols-[220px_1fr] md:items-stretch"}>
+        <div ref={previewSummaryRef} className={previewExpanded ? "mt-8 scroll-mt-24" : "mt-8 grid scroll-mt-24 gap-4 md:grid-cols-[220px_1fr] md:items-stretch"}>
           {!previewExpanded && (
           <button
             type="button"
@@ -576,11 +591,27 @@ function SuccessContentInner() {
               </p>
               <button
                 type="button"
-                onClick={() => setCustomizeOpen(false)}
+                onClick={handleHideCustomize}
                 className="text-xs font-semibold text-[var(--muted)] underline-offset-4 transition hover:text-[var(--brand-dark)] hover:underline"
               >
                 {t("customizeHide")}
               </button>
+            </div>
+            <div className="sticky top-3 z-10 mx-auto mt-4 max-w-[170px] rounded-xl border border-[var(--border)] bg-white/95 p-2 shadow-sm backdrop-blur lg:hidden">
+              <CertificatePreview
+                name={member.name}
+                tier={publicTier}
+                dedication={member.dedication}
+                date={displayDate}
+                registryId={publicRegistryId}
+                referralCode={member.referralCode}
+                template={template}
+                paperFormat={paperFormat}
+                locale={locale}
+              />
+              <p className="mt-1 text-center text-[10px] font-medium text-[var(--muted)]">
+                {primaryPaperLabel} · {templatesT(`${template}.title`)}
+              </p>
             </div>
             <div className="mt-4">
               <CertificateTemplateSelector

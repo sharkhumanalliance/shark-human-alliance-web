@@ -1,6 +1,6 @@
 # Social Strategy
 
-Last updated: 2026-05-20
+Last updated: 2026-05-31
 
 ## Positioning
 
@@ -49,6 +49,19 @@ Harder product pushes can start after week 6, especially around:
 - first conservation allocation progress
 - seasonal beach/travel moments
 - gift moments
+
+Gifting and reciprocity (accuse-back) do not need to wait for the Sustained phase. They can run as soft beats from week 4-5, because both are already built into the site funnel.
+
+## Measurement (tie social to the site GA funnel)
+
+Judge social on the site's real funnel, not only platform vanity metrics:
+
+- awareness -> `wanted_poster_generate`
+- sharing -> `wanted_poster_share`, `wanted_accuse_back`
+- intent -> `wanted_to_purchase_click`
+- revenue -> `purchase`
+
+Every off-platform link (bio, Story link sticker, swipe-up) must carry a canonical `from=` source so the site attributes the visit after the Stripe redirect: `from=social_wanted`, `from=social_gift`, `from=social_bio`. The site normalizes these via `lib/analytics-events.ts` into `sessionStorage["sha_attribution_source"]`. The week-4 and week-6 checkpoints below use these events, not just saves/replies.
 
 ## Language Policy
 
@@ -100,6 +113,17 @@ Not "buy this certificate" as a standalone idea. Product appears as an administr
 - enter the registry
 - issue paperwork
 
+## Growth Loops (site mechanics to seed)
+
+The site has built-in loops the content should actively feed; ignoring them wastes the strongest acquisition the product already has.
+
+- **Reciprocity (accuse-back):** an accused human can file a Wanted poster back. Seed it ("Subject filed a counter-report. The Bureau is now uncomfortable in both directions."). This is the share engine; measured by `wanted_accuse_back`.
+- **Gifting + sealed reveal:** the site has a gift flow ending in a wax-seal reveal. Treat gifting as a primary use case (birthdays, "shark-free" holidays), not a late-phase afterthought. The reveal is shareable on its own.
+- **Registry as social proof:** once opt-in entries exist, run a recurring "newly protected this week" beat with initial-only names.
+- **UGC / seeding:** the Wanted generator IS content. Organic-from-zero is slow for a novelty product, so plan for amplifying the single best humor post and seeding a few creators to "open a case" on a friend, not only owned posts.
+- **Channel fit:** the tag/accuse-back behavior is DM/Stories/TikTok-native, not feed-native. Weight Stories/Reels/TikTok for the viral mechanic; keep polished 4:5 feed for brand/world-building. Re-evaluate FB feed cost vs. payoff.
+- **Career/referral:** referral ranks exist on the site; occasional posts can nod to rank progression.
+
 ## Weekly Mix
 
 Baseline:
@@ -113,6 +137,8 @@ Content rule:
 > Each week needs at least one factual/mission post or one product-bridge post.
 
 Do not force A/B/C rotation. Humor is the acquisition engine, so two humor posts in a row are allowed if the week still has a fact or bridge post.
+
+Production reality: with a small team, prefer fewer, consistent posts (e.g. 2 IG/week) over the full IG+FB matrix. Consistency beats volume; batch-produce a week at a time.
 
 ## Platform Role
 
@@ -204,3 +230,4 @@ Before publishing a post, ask:
 3. If it contains a fact, is the wording approved in `sources.md`?
 4. If it uses Finnley or Luna, does it follow the model sheet?
 5. Would this still make sense without explaining the joke in the caption?
+6. If it claims real conservation, can it cite a real allocation number or a named recipient org with a committed %? If neither exists yet, do not publish "the conservation is real" as present-tense fact, phrase it as a forward commitment.

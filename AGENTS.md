@@ -26,6 +26,28 @@ Core product characteristics:
 
 
 
+\## Social and brand docs
+
+Marketing, brand voice, and content live in `docs/social/`. This is the source of truth for any caption, post, mascot, or campaign work. The social tone is cute and funny first with mascots front and center; the website itself stays polished and deadpan.
+
+\- `docs/social/README.md` - index and core rule.
+
+\- `docs/social/voice.md` - caption rules and approved voice patterns.
+
+\- `docs/social/brand-kit.md` - visual system, colors, stamps, templates.
+
+\- `docs/social/strategy.md` - phases, growth loops, measurement tied to the GA funnel.
+
+\- `docs/social/video-series.md` - comedy-first short-form video engine (Shark Court -> Wanted bridge, hooks, prompts).
+
+\- `docs/social/editorial-calendar-4-weeks.md` - first 4 weeks of posts.
+
+\- `docs/social/sources.md` - approved shark facts; never publish a fact not listed here.
+
+\- `docs/social/crisis.md` - pause and response protocol for real shark incidents.
+
+
+
 \## Working style
 
 \- Act like a careful senior web engineer with solid product-design judgment.
@@ -423,4 +445,3 @@ In the final summary, always state:
 \- do not make the humor random or off-brand
 
 \- do not make high-risk payment or webhook changes casually
-

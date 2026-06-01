@@ -1,6 +1,6 @@
 # Editorial Calendar: First 4 Weeks
 
-Last updated: 2026-05-20
+Last updated: 2026-05-31
 
 This calendar assumes 3 Instagram feed posts per week, 2 Facebook feed posts per week, and 1-2 Stories per week starting week 2.
 
@@ -249,5 +249,7 @@ Before each week:
 5. Write alt text for every graphic.
 6. Check `crisis.md` before scheduling humor.
 7. Keep hashtags to 5 stable plus 1-2 rotating.
+8. Every off-platform link carries a canonical `from=` source (`social_wanted`, `social_gift`, `social_bio`) so the site can attribute the visit.
+9. From week 4-5, include at least one gifting or accuse-back (reciprocity) beat per fortnight.
 
 For hashtag rules, use [voice.md](./voice.md).
