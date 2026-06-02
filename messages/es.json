@@ -282,14 +282,14 @@
       "allQuestions": "Todas las preguntas respondidas"
     },
     "valueHook": {
-      "label": "Por qué existe esto",
-      "title": "Un chiste para humanos. Un mejor trato para los tiburones.",
-      "point1Title": "Dinero real. Conservación real.",
-      "point1Text": "Cada certificado ayuda a financiar conservación real de tiburones mediante una asignación de conservación rastreada.",
-      "point2Title": "Personalizado en 60 segundos.",
-      "point2Text": "Introduce un nombre, elige un nivel de autorización y recibe papeleo con aspecto oficial sin esperar a que los tiburones convoquen una reunión.",
-      "point3Title": "Entrega instantánea. Registro opcional.",
-      "point3Text": "Descarga tu certificado de inmediato. El listado público en el registro es opcional y solo aparece si eliges hacerlo visible.",
+      "label": "Cómo procede la Oficina",
+      "title": "Tu estatus de snack ha entrado en revisión formal.",
+      "point1Title": "Abre un expediente.",
+      "point1Text": "Introduce un nombre. La Oficina lo acepta como prueba suficiente de que eres humano.",
+      "point2Title": "Recibe una resolución.",
+      "point2Text": "Un certificado con aspecto oficial. Queda precioso enmarcado. No detiene tiburones.",
+      "point3Title": "Financia el lado correcto.",
+      "point3Text": "Tu protección es ceremonial. La conservación de tiburones no.",
       "impactLine": "Cada venta financia la conservación a través de Shark Trust, Oceana, Shark Conservation Fund y Fundación Malpelo."
     },
     "howStep1": "Elige un certificado",

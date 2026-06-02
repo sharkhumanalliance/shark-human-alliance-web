@@ -88,29 +88,29 @@ export function HomeContent() {
 
   return (
     <>
-      <section data-reveal className="bg-white py-12 sm:py-14">
+      <section data-reveal className="bg-white py-8 sm:py-12 lg:py-14">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--section-label)] sm:text-sm sm:tracking-[0.18em]">
               {t("valueHook.label")}
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
+            <h2 className="mt-2 text-xl font-semibold leading-tight tracking-tight text-[var(--brand-dark)] sm:mt-3 sm:text-4xl">
               {t("valueHook.title")}
             </h2>
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--surface-soft)]">
+          <div className="mt-5 overflow-hidden rounded-[18px] border border-[var(--border)] bg-[var(--surface-soft)] sm:mt-8 sm:rounded-[24px]">
             <div className="grid divide-y divide-[var(--border)] md:grid-cols-3 md:divide-x md:divide-y-0">
               {valueItems.map((item) => (
                 <article
                   data-reveal
                   key={item.title}
-                  className="px-5 py-5 sm:px-6 sm:py-6"
+                  className="px-4 py-4 sm:px-6 sm:py-6"
                 >
-                  <h3 className="text-lg font-semibold text-[var(--brand-dark)]">
+                  <h3 className="text-base font-semibold text-[var(--brand-dark)] sm:text-lg">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                  <p className="mt-1.5 text-sm leading-5 text-[var(--muted)] sm:mt-2 sm:leading-6">
                     {item.text}
                   </p>
                 </article>

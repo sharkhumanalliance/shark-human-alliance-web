@@ -282,14 +282,14 @@
       "allQuestions": "All questions answered"
     },
     "valueHook": {
-      "label": "Why this exists",
-      "title": "A joke for humans. A better deal for sharks.",
-      "point1Title": "Real money. Real conservation.",
-      "point1Text": "Every certificate helps fund real shark conservation through a tracked conservation allocation.",
-      "point2Title": "Personalized in 60 seconds.",
-      "point2Text": "Enter a name, choose a clearance level, and get official-looking paperwork without waiting for the sharks to convene.",
-      "point3Title": "Instant delivery. Optional record.",
-      "point3Text": "Download your certificate immediately. Public registry listing is optional and appears only if you choose to make it visible.",
+      "label": "How the Bureau proceeds",
+      "title": "Your snack status has entered formal review.",
+      "point1Title": "Open a file.",
+      "point1Text": "Enter a name. The Bureau accepts this as sufficient evidence of a human.",
+      "point2Title": "Receive a ruling.",
+      "point2Text": "An official-looking certificate. Frames beautifully. Stops no sharks.",
+      "point3Title": "Fund the better side.",
+      "point3Text": "Your protection is ceremonial. The shark conservation is not.",
       "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Shark Conservation Fund, and Fundación Malpelo."
     },
     "howStep1": "Pick a certificate",
