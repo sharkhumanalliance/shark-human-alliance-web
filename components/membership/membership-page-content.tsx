@@ -35,7 +35,8 @@ export function MembershipPageContent() {
       text: t("styleCards.0.text"),
       cta: t("styleCards.0.cta"),
       href: "/purchase?tier=protected&template=luxury",
-      accent: "border-amber-200 bg-gradient-to-b from-amber-50/60 via-white to-white",
+      accent:
+        "border-[var(--tier-protected-border-light)] bg-[var(--tier-protected-light)]/25",
       template: "luxury",
       previewTier: "Protected Friend",
       previewName: "Amelia Tide",
@@ -57,7 +58,7 @@ export function MembershipPageContent() {
       text: t("styleCards.2.text"),
       cta: t("styleCards.2.cta"),
       href: "/purchase?tier=protected&template=playful",
-      accent: "border-cyan-200 bg-gradient-to-b from-cyan-50/60 via-white to-white",
+      accent: "border-[var(--border)] bg-[var(--surface-soft)]/45",
       template: "playful",
       previewTier: "Protected Friend",
       previewName: "Sofia Current",

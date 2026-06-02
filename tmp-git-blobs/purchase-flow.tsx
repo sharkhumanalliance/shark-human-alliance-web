@@ -358,7 +358,7 @@ function PurchaseFlowInner() {
     return (
       <section data-reveal className="py-24 sm:py-32">
         <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
-          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-[var(--surface-soft)] border-t-[var(--brand)]" />
+          <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
             {t("redirecting")}
           </p>
@@ -493,8 +493,8 @@ function PurchaseFlowInner() {
                           isUnavailable
                             ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-500 opacity-80 grayscale"
                             : isSelected
-                            ? "border-[var(--brand)] bg-[var(--surface-soft)] shadow-sm"
-                            : "border-[var(--border)] bg-white hover:bg-[var(--surface-soft)]/50"
+                            ? "border-sky-400 bg-sky-50 shadow-sm"
+                            : "border-[var(--border)] bg-white hover:bg-sky-50/50"
                         }`}
                       >
                         <div
@@ -565,7 +565,7 @@ function PurchaseFlowInner() {
                       key={suggestion}
                       type="button"
                       onClick={() => setDedication(suggestion)}
-                      className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-white sm:w-auto"
+                      className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-sky-50 sm:w-auto"
                     >
                       {suggestion}
                     </button>
@@ -742,9 +742,9 @@ function PurchaseFlowInner() {
             </div>
 
             {/* Stripe secure payment note */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/45 p-4">
+            <div className="rounded-2xl border border-teal-100 bg-teal-50/35 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--brand)] shadow-sm">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-teal-100 bg-white text-teal-700 shadow-sm">
                   <SecureCardIcon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
@@ -758,11 +758,11 @@ function PurchaseFlowInner() {
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
                 <span className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] shadow-sm">
-                  <SecureCardIcon className="h-3.5 w-3.5 text-[var(--brand)]" />
+                  <SecureCardIcon className="h-3.5 w-3.5 text-teal-700" />
                   {t("secureBadgeCard")}
                 </span>
                 <span className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] shadow-sm">
-                  <StripeWordmarkIcon className="h-3.5 w-3.5 text-[var(--brand)]" />
+                  <StripeWordmarkIcon className="h-3.5 w-3.5 text-indigo-600" />
                   {t("secureBadgeStripe")}
                 </span>
               </div>
@@ -810,7 +810,7 @@ function PurchaseFlowInner() {
                 <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                   {t("optionalEyebrow")}
                 </p>
-                <label className="flex items-start gap-3 rounded-xl bg-[var(--surface-soft)]/60 p-3 text-sm leading-6 text-[var(--brand-dark)]">
+                <label className="flex items-start gap-3 rounded-xl bg-sky-50/45 p-3 text-sm leading-6 text-[var(--brand-dark)]">
                   <input
                     type="checkbox"
                     checked={registryConsentAccepted}
@@ -857,7 +857,7 @@ function PurchaseFlowInner() {
             {/* Confirmation card */}
             {showConfirmation && (
               <div
-                className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-5 sm:p-6"
+                className="rounded-2xl border border-[var(--border)] bg-sky-50 p-5 sm:p-6"
                 role="status"
                 aria-live="polite"
               >
@@ -939,7 +939,7 @@ function PurchaseFlowInner() {
                       setShowConfirmation(false);
                       setShowEmailWarning(false);
                     }}
-                    className="flex-1 min-h-[44px] rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+                    className="flex-1 min-h-[44px] rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
                   >
                     {t("confirmBack")}
                   </button>
@@ -992,7 +992,7 @@ export function PurchaseFlow() {
       fallback={
         <section data-reveal className="py-24 sm:py-32">
           <div className="mx-auto max-w-lg px-4 sm:px-6 text-center">
-            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-[var(--surface-soft)] border-t-[var(--brand)]" />
+            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>
         </section>
       }

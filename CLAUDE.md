@@ -21,7 +21,7 @@ The Edit and Write tools **routinely corrupt large files** (TS/TSX, any JSON, CS
 
 1. **Files > ~25 KB, and ALL `messages/*.json`: edit ONLY via Python through bash.** Never use the Edit or Write tool on them. Pattern: `python3 <<'PYEOF'` … read file → `assert s.count(old) == 1` (the marker must exist and be unique) → `s = s.replace(old, new)` → for JSON also `json.loads(s)` to validate → strip NULLs (`s.replace("\x00","")`) → write. Do the assert/validate **in the same bash call** as the write.
 2. **Edit tool is allowed only for small files (< ~25 KB).**
-3. **Verify in the SAME bash call as the edit** (`tail -c 80`, `tsc`, `eslint`, JSON parity) — one round trip, don't re-read files you just wrote.
+3. **Verify in the SAME bash call as the edit** (`tail -c 80`, `tsc`, `eslint`, JSON parity) — one round trip, don't re-read files you just wrote. BUT if bash output looks corrupted (especially across files you didn't touch), it is probably a stale sandbox, not real damage — confirm with the Read tool before reacting (see "Two different problems" below).
 4. **Don't create temp files** (e.g. a throwaway `tsconfig.verify.json`). The sandbox blocks `rm` by default, so temp files force a delete-permission detour. Filter tool output instead (`tsc --noEmit | grep -v '\.next'`).
 
 Recovery if a file was already corrupted:
@@ -31,6 +31,20 @@ Recovery if a file was already corrupted:
 - Broken JSON: re-derive from `git show HEAD:path` and re-apply patches via Python `str.replace` + `json.loads` validation.
 
 Files seen truncated: `wanted-content.tsx`, `success-content.tsx`, `purchase-flow.tsx`, `verify-content.tsx`, `registry-content.tsx`, `messages/{en,es}.json`, `globals.css`, `lib/tiers.ts`, several `app/[locale]/.../page.tsx`. Silent corruption — `tsc` catches it but only after layered edits make recovery harder.
+
+### ⚠️ Two different problems — don't confuse them
+
+There are **two separate** failure modes, and most "everything is truncated" panics are actually the second one:
+
+1. **Real Edit/Write truncation** (above) — the file on disk genuinely ends mid-line. Rare-ish; real.
+2. **Stale bash sandbox** — the bash shell runs in an isolated mount that periodically **desyncs from the real disk**. It then shows files dozens of lines shorter, "mid-line truncated", failing `tsc`/`git`/`wc` — while the actual file on disk is perfectly intact. There is **no "background process eating files"**; it is just the bash mount snapshot lagging. The tell: bash reports many files broken **including files not touched this session** (e.g. `lib/email.ts` shows 537 lines in bash but the Read tool shows the full 721). In this sandbox no parallel process runs — the only legitimate on-disk writers are the user's own editor/linter (the "modified by linter" notes).
+
+**Rules that follow:**
+
+- **The Read / Grep / Glob / Edit file tools are the source of truth for disk state.** Bash `tail`/`wc`/`tsc`/`git` are NOT — treat them skeptically.
+- **Before "repairing" an apparently-truncated file, confirm with the Read tool.** If Read shows it complete, do nothing — "repairing" from a stale bash view can overwrite a good file with stale content.
+- **Bash writes do reach disk**, but a bash edit first `read()`s the possibly-stale copy, so it can write stale content back. When the sandbox is acting up, prefer the Edit tool (file tool = real disk read+write) and verify the result with Read/Grep — not bash.
+- If the real `tsc`/`eslint` build can't be trusted in a stale session, say so and ask the user to run `npm run lint` / `npx tsc --noEmit` locally instead of asserting it passes from bash output.
 
 ## Project
 

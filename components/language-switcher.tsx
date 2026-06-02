@@ -52,7 +52,7 @@ export function LanguageSwitcher() {
         aria-expanded={open}
         aria-label={`Language: ${currentLocale.label}`}
         translate="no"
-        className="inline-flex h-10 min-w-[3.25rem] items-center justify-center gap-1 rounded-full bg-sky-100 px-3 text-xs font-semibold tracking-[0.18em] text-[var(--brand-dark)] shadow-sm transition hover:bg-sky-50 sm:h-11"
+        className="inline-flex h-10 min-w-[3.25rem] items-center justify-center gap-1 rounded-full bg-[var(--surface-soft)] px-3 text-xs font-semibold tracking-[0.18em] text-[var(--brand-dark)] shadow-sm transition hover:bg-white sm:h-11"
       >
         <span>{currentLocale.shortLabel}</span>
         <svg
@@ -93,8 +93,8 @@ export function LanguageSwitcher() {
                 onClick={() => setOpen(false)}
                 className={`flex items-center justify-between gap-3 px-3.5 py-2.5 text-sm font-semibold transition ${
                   isCurrent
-                    ? "bg-sky-50 text-[var(--brand-dark)]"
-                    : "text-[var(--muted)] hover:bg-sky-50 hover:text-[var(--brand-dark)]"
+                    ? "bg-[var(--surface-soft)] text-[var(--brand-dark)]"
+                    : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--brand-dark)]"
                 }`}
               >
                 <span>{loc.label}</span>

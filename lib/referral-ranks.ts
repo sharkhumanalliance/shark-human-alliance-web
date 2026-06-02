@@ -88,56 +88,56 @@ export function getRankUi(rankId: string): RankUi {
   switch (rankId) {
     case "intern":
       return {
-        panelClass: "border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50",
-        eyebrowClass: "text-sky-700/80",
+        panelClass: "border border-[var(--border)] bg-[var(--surface-soft)]/70",
+        eyebrowClass: "text-[var(--muted)]",
         labelClass: "text-[var(--brand-dark)]",
-        metaClass: "text-sky-700/80",
-        chipClass: "bg-sky-100 text-sky-800",
+        metaClass: "text-[var(--muted)]",
+        chipClass: "bg-white text-[var(--brand)] ring-1 ring-[var(--border)]",
         chipLabel: "Rising",
       };
     case "fieldAgent":
       return {
-        panelClass: "border border-teal-200 bg-gradient-to-br from-teal-50 via-white to-cyan-50 shadow-sm",
-        eyebrowClass: "text-teal-700/80",
+        panelClass: "border border-[var(--border)] bg-white shadow-sm",
+        eyebrowClass: "text-[var(--muted)]",
         labelClass: "text-[var(--brand-dark)]",
-        metaClass: "text-teal-700/80",
-        chipClass: "bg-teal-100 text-teal-800",
+        metaClass: "text-[var(--muted)]",
+        chipClass: "bg-[var(--surface-soft)] text-[var(--brand)] ring-1 ring-[var(--border)]",
         chipLabel: "Established",
       };
     case "seniorDiplomat":
       return {
-        panelClass: "border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 shadow-sm",
-        eyebrowClass: "text-amber-700/80",
+        panelClass: "border border-[var(--accent)]/30 bg-[var(--accent)]/5 shadow-sm",
+        eyebrowClass: "text-[var(--accent)]",
         labelClass: "text-[var(--brand-dark)]",
-        metaClass: "text-amber-700/80",
-        chipClass: "bg-amber-100 text-amber-800",
+        metaClass: "text-[var(--muted)]",
+        chipClass: "bg-white text-[var(--accent)] ring-1 ring-[var(--accent)]/35",
         chipLabel: "Distinguished",
       };
     case "ambassador":
       return {
-        panelClass: "border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 shadow-md",
-        eyebrowClass: "text-violet-700/80",
-        labelClass: "text-violet-950",
-        metaClass: "text-violet-700/80",
-        chipClass: "bg-violet-100 text-violet-800",
+        panelClass: "border border-[var(--accent)]/40 bg-white shadow-md",
+        eyebrowClass: "text-[var(--accent)]",
+        labelClass: "text-[var(--brand-dark)]",
+        metaClass: "text-[var(--muted)]",
+        chipClass: "bg-[var(--accent)]/10 text-[var(--accent)] ring-1 ring-[var(--accent)]/35",
         chipLabel: "Elite",
       };
     case "chiefWhisperer":
       return {
-        panelClass: "border border-amber-300 bg-gradient-to-br from-amber-100 via-white to-yellow-50 shadow-md",
-        eyebrowClass: "text-amber-800/90",
-        labelClass: "text-amber-950",
-        metaClass: "text-amber-800/90",
-        chipClass: "bg-amber-200 text-amber-900",
+        panelClass: "border border-[var(--accent)] bg-[var(--accent)]/10 shadow-md",
+        eyebrowClass: "text-[var(--accent)]",
+        labelClass: "text-[var(--brand-dark)]",
+        metaClass: "text-[var(--muted)]",
+        chipClass: "bg-[var(--accent)] text-white",
         chipLabel: "VIP",
       };
     case "civilian":
     default:
       return {
-        panelClass: "border border-sky-200 bg-sky-50/70",
-        eyebrowClass: "text-sky-700/80",
-        labelClass: "text-slate-700",
-        metaClass: "text-sky-700/80",
+        panelClass: "border border-[var(--border)] bg-[var(--surface-soft)]/70",
+        eyebrowClass: "text-[var(--muted)]",
+        labelClass: "text-[var(--brand-dark)]",
+        metaClass: "text-[var(--muted)]",
       };
   }
 }

@@ -302,7 +302,7 @@ export function VerifyContent({
                 {t("fileStatus")}
               </dt>
               <dd className="font-semibold leading-6">
-                <span className="text-emerald-700">{t("active")}</span>{" "}
+                <span className="text-[var(--brand)]">{t("active")}</span>{" "}
                 <span className="text-sm italic text-[var(--muted)]">
                   {t("sharksUnaware")}
                 </span>
@@ -320,7 +320,7 @@ export function VerifyContent({
               </dd>
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--surface-soft)]">
                 <div
-                  className="h-full rounded-full bg-emerald-500"
+                  className="h-full rounded-full bg-[var(--accent)]"
                   style={{ width: `${bureauConfidence}%` }}
                 />
               </div>

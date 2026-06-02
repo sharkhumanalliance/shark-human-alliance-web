@@ -1,42 +1,170 @@
 # Week 1 - Post 1: Bureau Opens (Memo 0001)
 
-Last updated: 2026-05-31
-Week 1 · Tue 20:00 CET · IG + FB · Pillar: Bureau · CTA: soft curiosity only (no product)
-Template: Bureau Memo (cream paper, SHARK HUMAN ALLIANCE header, one FILED stamp, navy ink, no humans)
+Last updated: 2026-06-01
 
-## Instagram caption
+Planned slot: Tuesday 2026-06-02, 20:00 Europe/Prague (CEST)
 
-`Memo 0001 - the Bureau is operational. Filing has commenced.`
+Channels: Instagram + Facebook
 
-`Memoranda, notices, and the occasional field report will follow from this desk.`
+Pillar: Bureau Humor / world opening
 
-`More notices will follow.`
+CTA level: soft curiosity only; no Wanted, no certificate, no product push
 
-## Facebook caption
+Primary format: static image, 4:5 feed
 
-`Memorandum 0001.`
+## Goal
 
-`As of this week, the Shark Human Alliance Bureau is operational. Filing has commenced. Stamps have been issued. Memoranda, notices, field reports, and the occasional press release will follow from this account.`
+Make the account instantly legible:
 
-`The Alliance is fictional. A share of every certificate issued is committed to shark conservation.`
+- cute fictional shark office
+- official-ish paperwork world
+- Finnley/Luna energy implied early
+- more notices are coming
 
-`No shark has filed a timely objection.`
+This post should feel like the Bureau just opened its desk drawer, not like a campaign launch.
 
-## Visual brief
+## Final Instagram Caption
 
-Top-down view of a bureau desk, cream paper (`#F6ECD8`), navy ink (`#162D50`), subtle grain. Small `SHARK HUMAN ALLIANCE` header, one memo paragraph ("Memo 0001 - The Bureau is operational. Filing has commenced."). One `FILED` stamp (navy, angle -12 to +12 deg). No mascots, no humans, no gradients. Export 4:5 (1080x1350) feed, optional 9:16 story.
+```text
+Memo 0001 - the Bureau is operational. Filing has commenced.
 
-## Alt text
+Finnley arranged the folders by optimism.
+Luna arranged them correctly.
 
-`A cream paper bureau memo on a desk. Header reads Shark Human Alliance. Text: Memo 0001, the Bureau is operational, filing has commenced. A navy FILED stamp sits in the corner.`
+More notices will follow.
+```
 
-## Hashtags (5 stable + 1 rotating)
+## Final Facebook Caption
 
-`#SharkHumanAlliance #SharkConservation #SharkFacts #OceanConservation #SaveTheSharks #LunaReef`
+```text
+Memorandum 0001.
 
-## Publishing notes
+As of this evening, the Shark Human Alliance Bureau is operational. Filing has commenced. Stamps have been issued.
 
-- Week 1 = soft CTA only. No product, no Wanted. Bio link carries `?from=social_bio` so the site attributes the visit (Measurement rule).
-- Conservation line is phrased as a forward commitment, not present-tense fact (conservation claim gate). When a concrete % and named org exist, replace with: "X % of every certificate is allocated to [org]."
-- Voice check: no emoji, no exclamation, first line stands alone, joke not explained.
-- Check `crisis.md` before publishing.
+Finnley arranged the folders by optimism. Luna arranged them correctly.
+
+Memoranda, notices, field reports, and the occasional press conference will follow from this account.
+
+The paperwork is fictional. The ocean remains inconveniently real.
+
+Filed,
+The Bureau
+```
+
+## Graphic Copy
+
+Use real text in Canva/Figma/SVG after image generation. Do not ask an image model to render the final text.
+
+```text
+SHARK HUMAN ALLIANCE
+MEMO 0001
+
+THE BUREAU IS OPERATIONAL
+
+Filing has commenced.
+More notices will follow.
+```
+
+Stamp: `FILED`
+
+No source line needed. This is not a factual conservation post.
+
+## Visual Direction
+
+Scene: a warm, official-ish miniature Bureau desk operated by plush shark mascots.
+
+Composition:
+
+- cream paper memo centered on desk
+- navy ink, one `FILED` stamp, folders, paper clips, small office props
+- Finnley and Luna visible or partially visible, but not overexplaining themselves yet
+- Finnley can look eager/proud; Luna can look calm, organized, mildly unimpressed
+- no humans, no scary shark anatomy, no realistic predator look
+- keep the approved plush/chibi website look
+
+The visual should be cuter than the original no-mascot flat lay, because the updated brand rule is mascots front and center. The Bureau frame still keeps it official.
+
+## Required Sizes
+
+Primary feed export:
+
+- `1080 x 1350 px`
+- IG feed 4:5
+- also suitable for Facebook feed
+
+Optional square fallback:
+
+- `1080 x 1080 px`
+- use only if a platform crop looks better square
+
+Optional Story teaser:
+
+- `1080 x 1920 px`
+- use later only if you want a launch-day Story; not required for week 1
+
+## Production Assets
+
+Use these existing/relevant assets:
+
+- `public/mascots/homepage-hero-plush.png` as the primary Finnley/Luna reference
+- `public/mascots/case-closed-share.png` as secondary reference for office props and plush consistency
+- `docs/social/assets/stamps/png/filed-navy.png`
+- `docs/social/assets/textures/clean-paper.png`
+- `docs/social/assets/templates/png/bureau-memo-feed.png` as a layout reference, not as the final image if you use a generated mascot scene
+
+## AI Image Prompt
+
+Use this for the base image, with the existing mascot images supplied as visual references if the tool supports references.
+
+```text
+A warm miniature bureaucratic office desk run by two soft plush chibi shark mascots, consistent with the Shark Human Alliance website mascots. A friendly blue plush shark ambassador and a smaller teal plush shark with coral scarf and flower are behind a cream paper memo on a wooden desk. The blue shark looks eager and proud, the teal shark looks calm, organized, and mildly unimpressed. Cream paperwork, navy folders, brass paper clips, an ink stamp, subtle office props, official-ish paperwork world, cute but polished, warm soft lighting, tactile paper texture, navy ink and aged cream palette. Leave the memo mostly blank for text to be added later. No readable text except optional blank lines. No humans, no scary teeth, no aggression, no horror, no hyperrealistic shark anatomy, no loud gradients, no generic ocean mascot.
+```
+
+Negative prompt:
+
+```text
+scary shark, realistic predator, sharp teeth, blood, attack, horror, human hands, messy childish cartoon, neon colors, ocean turquoise overload, unreadable fake text, distorted eyes, wrong mascot colors, missing Luna flower, missing Luna coral scarf, plastic 3D toy
+```
+
+## Post-Production Instructions
+
+1. Add the final graphic copy manually.
+2. Add `FILED` stamp in navy, slightly rotated between -8 and +8 degrees.
+3. Keep text mobile-readable.
+4. Do not add a conservation source line.
+5. Do not add product CTA or price.
+6. Export `1080 x 1350 px` PNG for the main post.
+
+## Alt Text
+
+```text
+A warm miniature Bureau desk with two friendly plush shark mascots behind a cream paper memo. The memo says the Shark Human Alliance Bureau is operational and filing has commenced. A navy FILED stamp and office paperwork sit on the desk.
+```
+
+## Hashtags
+
+Use 6-7 tags. This is not a fact post, so do not force `#SharkFacts` here.
+
+```text
+#SharkHumanAlliance #SharkConservation #OceanConservation #SaveTheSharks #Sharks #FinnleyMako #LunaReef
+```
+
+## Publishing Checklist
+
+Before publishing:
+
+1. Check `docs/social/crisis.md` for active serious/fatal shark incident news.
+2. Confirm no product-forward language is present.
+3. Confirm no present-tense conservation funding claim is present.
+4. Confirm mascot colors/accessories match `docs/social/mascot-model-sheet.md`.
+5. Add alt text.
+6. Bio link should carry `?from=social_bio` if linking off-platform.
+7. First comment, if used, should be in-world and low-pressure:
+
+```text
+The Bureau acknowledges early paperwork irregularities.
+```
+
+## Why This Version
+
+The earlier no-mascot desk memo was coherent but too flat for the revised social direction. This version keeps the Bureau opening mechanic while putting Finnley and Luna's dynamic into the first post: Finnley is eager, Luna is competent, and the account promises more notices without asking for a sale.

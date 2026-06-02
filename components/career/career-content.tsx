@@ -31,48 +31,48 @@ export function CareerContent() {
       name: t("ranks.civilian.name"),
       referralsNeeded: 0,
       icon: "01",
-      color: "text-slate-500",
-      borderClass: "border-slate-200",
+      color: "text-[var(--muted)]",
+      borderClass: "border-[var(--border)]",
       description: t("ranks.civilian.description"),
     },
     {
       name: t("ranks.probationaryLiaison.name"),
       referralsNeeded: 1,
       icon: "02",
-      color: "text-sky-600",
-      borderClass: "border-sky-200",
+      color: "text-[var(--brand)]",
+      borderClass: "border-[var(--border)]",
       description: t("ranks.probationaryLiaison.description"),
     },
     {
       name: t("ranks.fieldOperative.name"),
       referralsNeeded: 3,
       icon: "03",
-      color: "text-teal-600",
-      borderClass: "border-teal-200",
+      color: "text-[var(--brand)]",
+      borderClass: "border-[var(--border)]",
       description: t("ranks.fieldOperative.description"),
     },
     {
       name: t("ranks.seniorDiplomat.name"),
       referralsNeeded: 5,
       icon: "04",
-      color: "text-orange-600",
-      borderClass: "border-orange-200",
+      color: "text-[var(--accent)]",
+      borderClass: "border-[var(--accent)]/30",
       description: t("ranks.seniorDiplomat.description"),
     },
     {
       name: t("ranks.specialEnvoy.name"),
       referralsNeeded: 10,
       icon: "05",
-      color: "text-indigo-600",
-      borderClass: "border-indigo-200",
+      color: "text-[var(--accent)]",
+      borderClass: "border-[var(--accent)]/35",
       description: t("ranks.specialEnvoy.description"),
     },
     {
       name: t("ranks.chiefSharkWhisperer.name"),
       referralsNeeded: 25,
       icon: "06",
-      color: "text-amber-600",
-      borderClass: "border-amber-200",
+      color: "text-[var(--accent)]",
+      borderClass: "border-[var(--accent)]",
       description: t("ranks.chiefSharkWhisperer.description"),
     },
   ];
@@ -163,7 +163,7 @@ export function CareerContent() {
       <section data-reveal className="py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
               {t("hero.label")}
             </p>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
@@ -181,7 +181,7 @@ export function CareerContent() {
               </a>
               <LocalizedLink
                 href="/purchase?tier=protected"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
               >
                 {t("cta.button")}
               </LocalizedLink>
@@ -190,7 +190,7 @@ export function CareerContent() {
 
           <div className="mt-10 border-t border-[var(--border)] pt-6">
             <div className="max-w-4xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
                 {t("ladder.label")}
               </p>
               <div className="mt-4 space-y-4">
@@ -232,9 +232,9 @@ export function CareerContent() {
 
       <section id="career-rank-check" data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="overflow-hidden rounded-[28px] border border-sky-200 bg-gradient-to-br from-sky-50/70 via-white to-white shadow-sm">
-            <div className="border-b border-sky-100 bg-sky-50/80 px-5 py-3 sm:px-8">
-              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-sky-500">
+          <div className="overflow-hidden rounded-[28px] border border-[var(--border)] bg-white shadow-sm">
+            <div className="border-b border-[var(--border)] bg-[var(--surface-soft)]/80 px-5 py-3 sm:px-8">
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
                 {t("checkRank.terminalLabel")}
               </span>
             </div>
@@ -269,7 +269,7 @@ export function CareerContent() {
                       spellCheck={false}
                       value={referralCode}
                       onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
-                      className="mt-2 w-full rounded-lg border border-sky-200 bg-white px-5 py-3 text-[var(--brand-dark)] placeholder-[var(--muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
+                      className="mt-2 w-full rounded-lg border border-[var(--border)] bg-white px-5 py-3 text-[var(--brand-dark)] placeholder-[var(--muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20"
                     />
                   </div>
 
@@ -299,8 +299,8 @@ export function CareerContent() {
                   role="status"
                   aria-live="polite"
                 >
-                  <section className="rounded-2xl border border-sky-200 bg-white px-5 py-5 sm:px-6">
-                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
+                  <section className="rounded-2xl border border-[var(--border)] bg-white px-5 py-5 sm:px-6">
+                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand)]">
                       {t("checkRank.currentRank")}
                     </p>
                     <div className="mt-4 flex items-center gap-4">
@@ -320,10 +320,10 @@ export function CareerContent() {
 
                   <div className="space-y-4">
                     {nextRank ? (
-                      <section className="rounded-2xl border border-sky-200 bg-white px-5 py-5 sm:px-6">
+                      <section className="rounded-2xl border border-[var(--border)] bg-white px-5 py-5 sm:px-6">
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                           <div>
-                            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
+                            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand)]">
                               {t("checkRank.progressToNext")}
                             </p>
                             <div className="mt-3 flex items-center gap-3">
@@ -338,7 +338,7 @@ export function CareerContent() {
                             {t("checkRank.referralsRemaining")}
                           </span>
                         </div>
-                        <div className="mt-4 h-3 overflow-hidden rounded-full bg-sky-100">
+                        <div className="mt-4 h-3 overflow-hidden rounded-full bg-[var(--surface-soft)]">
                           <div
                             className="h-full bg-[var(--accent)] transition-all duration-300"
                             style={{ width: `${Math.min(progressPercent, 100)}%` }}
@@ -347,8 +347,8 @@ export function CareerContent() {
                       </section>
                     ) : null}
 
-                    <section className="rounded-2xl border border-sky-200 bg-white px-5 py-5 sm:px-6">
-                      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-800">
+                    <section className="rounded-2xl border border-[var(--border)] bg-white px-5 py-5 sm:px-6">
+                      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand)]">
                         {t("checkRank.yourLink")}
                       </p>
                       <div className="mt-4 flex flex-col gap-2 sm:flex-row">
@@ -356,7 +356,7 @@ export function CareerContent() {
                           type="text"
                           value={referralLink}
                           readOnly
-                          className="flex-grow rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sm font-mono text-[var(--brand-dark)] sm:min-w-0"
+                          className="flex-grow rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm font-mono text-[var(--brand-dark)] sm:min-w-0"
                         />
                         <button
                           type="button"
@@ -380,7 +380,7 @@ export function CareerContent() {
       <section data-reveal className="py-10 sm:py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
               {t("howWorks.label")}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
@@ -397,7 +397,7 @@ export function CareerContent() {
                     index > 0 ? "border-t border-[var(--border)] md:border-l md:border-t-0" : ""
                   }`}
                 >
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-800">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
                     {item.step}
                   </p>
                   <h3 className="mt-3 text-xl font-semibold text-[var(--brand-dark)]">

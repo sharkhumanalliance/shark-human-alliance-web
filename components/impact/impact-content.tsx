@@ -13,22 +13,25 @@ const PARTNERS = [
 
 const TIER_STYLES = {
   protected: {
-    badge: "bg-orange-50 text-orange-800",
-    amount: "text-orange-700",
-    barBg: "bg-orange-100",
-    barFill: "bg-orange-500",
+    badge:
+      "bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)]",
+    amount: "text-[var(--tier-protected-text)]",
+    barBg: "bg-[var(--tier-protected-light)]",
+    barFill: "bg-[var(--tier-protected)]",
   },
   nonsnack: {
-    badge: "bg-teal-50 text-teal-800",
-    amount: "text-teal-700",
-    barBg: "bg-teal-100",
-    barFill: "bg-teal-500",
+    badge:
+      "bg-[var(--tier-nonsnack-surface)] text-[var(--tier-nonsnack-text)]",
+    amount: "text-[var(--tier-nonsnack-text)]",
+    barBg: "bg-[var(--tier-nonsnack-light)]",
+    barFill: "bg-[var(--tier-nonsnack)]",
   },
   business: {
-    badge: "bg-indigo-50 text-indigo-800",
-    amount: "text-indigo-700",
-    barBg: "bg-indigo-100",
-    barFill: "bg-indigo-500",
+    badge:
+      "bg-[var(--tier-business-surface)] text-[var(--tier-business-text)]",
+    amount: "text-[var(--tier-business-text)]",
+    barBg: "bg-[var(--tier-business-light)]",
+    barFill: "bg-[var(--tier-business)]",
   },
 };
 
@@ -174,7 +177,7 @@ export function ImpactContent() {
               })}
             </div>
 
-            <aside className="mt-4 rounded-xl border border-sky-200 bg-sky-50/75 px-5 py-5 shadow-sm sm:px-6">
+            <aside className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]/75 px-5 py-5 shadow-sm sm:px-6">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
                 {t("splitOpsLabel")}
               </p>
@@ -224,7 +227,7 @@ export function ImpactContent() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${t(`partner${key}Name`)} - ${t("visitWebsite")} (${t("opensInNewTab")})`}
-                    className={`block px-5 py-5 transition-colors duration-300 ease-out hover:bg-sky-50/40 sm:px-6 ${
+                    className={`block px-5 py-5 transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]/40 sm:px-6 ${
                       index > 0 ? "border-t border-[var(--border)]" : ""
                     }`}
                   >
@@ -244,7 +247,7 @@ export function ImpactContent() {
                           {t(`partner${key}Focus`)}
                         </p>
                       </div>
-                      <span className="mt-5 inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm font-bold text-[var(--brand)] transition-colors hover:bg-sky-50 hover:text-[var(--brand-dark)]">
+                      <span className="mt-5 inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm font-bold text-[var(--brand)] transition-colors hover:bg-white hover:text-[var(--brand-dark)]">
                         {t("visitWebsite")} {"\u2192"}
                         <span className="text-xs font-medium text-[var(--muted)]">
                           ({t("opensInNewTab")})

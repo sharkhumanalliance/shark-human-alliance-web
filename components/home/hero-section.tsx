@@ -35,7 +35,7 @@ export function HeroSection() {
       </LocalizedLink>
       <LocalizedLink
         href="/wanted"
-        className="inline-flex items-center gap-1.5 rounded-lg border border-sky-200/75 bg-sky-50/75 px-3 py-1.5 text-sm font-semibold text-[var(--section-label)] transition hover:bg-white hover:text-[var(--brand-dark)]"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)]/75 px-3 py-1.5 text-sm font-semibold text-[var(--section-label)] transition hover:bg-white hover:text-[var(--brand-dark)]"
       >
         {t("wantedTeaserLink")} →
       </LocalizedLink>
@@ -75,7 +75,7 @@ export function HeroSection() {
         </div>
 
         <div className="relative z-10 min-w-0 lg:justify-self-end lg:w-full lg:max-w-[40rem] lg:pl-4 xl:max-w-[42rem] xl:pl-6">
-          <div className="pointer-events-none absolute inset-x-[10%] bottom-3 top-[14%] rounded-full bg-sky-200/35 blur-3xl" />
+          <div className="pointer-events-none absolute inset-x-[10%] bottom-3 top-[14%] rounded-full bg-[var(--surface-soft)] blur-3xl" />
           <div className="relative">
             <div className="overflow-hidden rounded-[30px] shadow-[0_28px_80px_rgba(22,45,80,0.18)]">
               <Image

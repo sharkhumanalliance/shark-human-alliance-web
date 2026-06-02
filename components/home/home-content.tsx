@@ -64,23 +64,23 @@ export function HomeContent() {
   const impactStats = [
     {
       key: "1",
-      valueClass: "text-slate-700",
-      bgClass: "bg-slate-50 border-slate-200",
+      valueClass: "text-[var(--brand-dark)]",
+      bgClass: "bg-[var(--surface-soft)]/50 border-[var(--border)]",
     },
     {
       key: "2",
-      valueClass: "text-sky-700",
-      bgClass: "bg-sky-50/50 border-sky-200",
+      valueClass: "text-[var(--tier-protected-text)]",
+      bgClass: "bg-[var(--tier-protected-light)]/35 border-[var(--tier-protected-border-light)]",
     },
     {
       key: "3",
-      valueClass: "text-teal-700",
-      bgClass: "bg-teal-50/50 border-teal-200",
+      valueClass: "text-[var(--tier-nonsnack-text)]",
+      bgClass: "bg-[var(--tier-nonsnack-light)]/30 border-[var(--tier-nonsnack-border-light)]",
     },
     {
       key: "4",
-      valueClass: "text-amber-700",
-      bgClass: "bg-amber-50/50 border-amber-200",
+      valueClass: "text-[var(--tier-business-text)]",
+      bgClass: "bg-[var(--tier-business-light)]/45 border-[var(--tier-business-border-light)]",
     },
   ];
 

@@ -247,7 +247,7 @@ function SuccessContentInner() {
       <section data-reveal className="py-24 sm:py-32">
         <div className="mx-auto max-w-lg px-4 sm:px-6">
           <div className="text-center">
-            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-[var(--surface-soft)] border-t-[var(--brand)]" />
+            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
             <p className="mt-8 text-lg font-semibold text-[var(--brand-dark)]">
               {t("processing")}
             </p>
@@ -282,7 +282,7 @@ function SuccessContentInner() {
             </button>
             <LocalizedLink
               href="/"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
             >
               {t("backHome")}
             </LocalizedLink>
@@ -312,7 +312,7 @@ function SuccessContentInner() {
             </LocalizedLink>
             <LocalizedLink
               href="/"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
             >
               {t("backHome")}
             </LocalizedLink>
@@ -420,7 +420,7 @@ function SuccessContentInner() {
             </div>
           ) : null}
 
-          <p className="mx-auto mt-3 max-w-md text-xs leading-5 text-[var(--brand)]">
+          <p className="mx-auto mt-3 max-w-md text-xs leading-5 text-sky-800">
             {member.hasEmail ? t("emailSentAutomatic") : t("downloadOnlyNotice")}
           </p>
         </header>
@@ -644,7 +644,7 @@ function SuccessContentInner() {
                       isUnavailable
                         ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-500 opacity-80 grayscale"
                         : isSelected
-                        ? "border-[var(--brand)] bg-[var(--surface-soft)] text-[var(--brand-dark)] shadow-sm"
+                        ? "border-sky-400 bg-sky-50 text-[var(--brand-dark)] shadow-sm"
                         : "border-[var(--border)] bg-white text-[var(--muted)] hover:bg-[var(--surface-soft)]"
                     }`}
                   >
@@ -865,7 +865,7 @@ export function SuccessContent() {
       fallback={
         <section data-reveal className="py-24 sm:py-32">
           <div className="mx-auto max-w-lg px-4 text-center sm:px-6">
-            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-[var(--surface-soft)] border-t-[var(--brand)]" />
+            <div className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-sky-200 border-t-[var(--brand)]" />
           </div>
         </section>
       }

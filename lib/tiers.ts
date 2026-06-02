@@ -87,15 +87,19 @@ const TIER_STYLES: Record<
   }
 > = {
   basic: {
-    badge: "bg-sky-100 text-sky-800",
-    surface: "bg-sky-50/30",
-    border: "border-sky-200",
-    bullet: "bg-sky-500",
-    button: "border border-sky-200 bg-sky-100 text-sky-900 hover:bg-sky-200",
-    registryBadge: "bg-sky-100 text-sky-800",
-    registryBorder: "border-sky-100",
-    selectedCard: "border-sky-400 bg-sky-50",
-    unselectedCard: "border-sky-100 bg-white",
+    badge:
+      "bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)]",
+    surface: "bg-[var(--tier-protected-light)]/30",
+    border: "border-[var(--tier-protected-border-light)]",
+    bullet: "bg-[var(--tier-protected)]",
+    button:
+      "border border-[var(--tier-protected-border-light)] bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)] hover:bg-[var(--tier-protected-light)]",
+    registryBadge:
+      "bg-[var(--tier-protected-surface)] text-[var(--tier-protected-text)]",
+    registryBorder: "border-[var(--tier-protected-border-light)]",
+    selectedCard:
+      "border-[var(--tier-protected)] bg-[var(--tier-protected-light)]",
+    unselectedCard: "border-[var(--tier-protected-border-light)] bg-white",
   },
   protected: {
     badge:

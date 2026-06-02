@@ -54,7 +54,7 @@ export function SiteHeader() {
       aria-hidden="true"
       className="flex shrink-0 items-center"
     >
-      <span className="h-10 w-[3.25rem] rounded-full bg-sky-50 sm:h-11" />
+      <span className="h-10 w-[3.25rem] rounded-full bg-[var(--surface-soft)] sm:h-11" />
     </div>
   );
 
@@ -155,7 +155,7 @@ export function SiteHeader() {
                 aria-current={isActiveNavItem(item.href) ? "page" : undefined}
                 className={`rounded-xl px-3 py-3 text-sm transition-colors duration-300 ease-out ${
                   isActiveNavItem(item.href)
-                    ? "bg-sky-50 font-semibold text-[var(--brand-dark)]"
+                    ? "bg-[var(--surface-soft)] font-semibold text-[var(--brand-dark)]"
                     : "text-[var(--muted)] hover:bg-gray-50 hover:text-[var(--brand-dark)]"
                 }`}
               >

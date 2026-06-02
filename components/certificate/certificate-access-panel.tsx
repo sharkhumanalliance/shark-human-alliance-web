@@ -87,7 +87,7 @@ export function CertificateAccessPanel({
             type="button"
             disabled={submitting || erased}
             onClick={() => runAction("hide")}
-            className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {t("hideButton")}
           </button>

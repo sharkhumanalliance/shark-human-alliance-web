@@ -544,7 +544,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
         </div>
         {shareHint ? (
           <p
-            className="mt-3 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm font-medium text-[var(--brand-dark)]"
+            className="mt-3 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm font-medium text-sky-900"
             role="status"
             aria-live="polite"
           >
@@ -559,7 +559,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
     <section data-reveal className="mt-10 rounded-[32px] border border-[var(--border)] bg-white px-4 py-5 shadow-sm sm:px-6 sm:py-7 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(300px,360px)] lg:items-center">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-800">
             {t("eyebrow")}
           </p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
@@ -586,7 +586,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
                 void downloadStory();
               }}
               disabled={isBusy}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50 disabled:cursor-not-allowed disabled:opacity-70"
             >
               <span className="sm:hidden">{t("openStoryImageButton")}</span>
               <span className="hidden sm:inline">{t("downloadButton")}</span>
@@ -596,7 +596,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
               onClick={() => {
                 void copyLink();
               }}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
             >
               {copyState === "done" ? t("copySuccess") : copyState === "error" ? t("copyError") : t("copyButton")}
             </button>
@@ -605,7 +605,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
           <div className="mt-4 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-sm leading-6 text-[var(--muted)] backdrop-blur">
             <p className="font-semibold text-[var(--brand-dark)]">{t("tipTitle")}</p>
             <p className="mt-1">{t("tipText")}</p>
-            {shareHint ? <p className="mt-2 font-medium text-[var(--brand)]">{shareHint}</p> : null}
+            {shareHint ? <p className="mt-2 font-medium text-sky-800">{shareHint}</p> : null}
           </div>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -617,7 +617,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
             </LocalizedLink>
             <LocalizedLink
               href="/wanted"
-              className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-sky-50"
             >
               {t("challengeButton")}
             </LocalizedLink>
@@ -626,11 +626,11 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
 
         <div className="mx-auto w-full max-w-[360px]">
           <div className="rounded-[34px] border border-[var(--border)] bg-[var(--surface-soft)]/60 p-3 shadow-sm">
-            <div className="relative overflow-hidden rounded-[28px] bg-white aspect-[9/16]">
+            <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-sky-50 via-white to-white aspect-[9/16]">
               {/* STORY READY pill — kept as a single mock-up label; the SHA bar
                   has been removed because the illustration carries SHA branding. */}
               <div className="absolute right-4 top-4">
-                <div className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--brand-dark)] backdrop-blur">
+                <div className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-900 backdrop-blur">
                   {t("storyBadge")}
                 </div>
               </div>
@@ -665,7 +665,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
 
               {/* Single merged identity + verification card. */}
               <div className="absolute inset-x-3 bottom-3 rounded-[22px] bg-[var(--brand-dark)] px-5 py-5 text-white shadow-lg">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/75">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sky-200">
                   {tierLabel}
                 </p>
                 <p className="mt-1 text-base font-semibold leading-tight text-white">
