@@ -276,27 +276,27 @@ export function WantedCaseContent({
   return (
     <section className="border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-10 sm:py-14 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:items-start xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.7fr)]">
-          <div>
+        <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:items-start xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.7fr)]">
+          <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("eyebrow")}
             </p>
 
-            <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[#f6ecd8] p-5 shadow-sm sm:p-6">
+            <div className="mt-5 min-w-0 overflow-hidden rounded-2xl border border-[var(--border)] bg-[#f6ecd8] p-5 shadow-sm sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] pb-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("caseFileLabel")}
                 </p>
-                <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+                <p className="min-w-0 truncate font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
                   {caseNumber}
                 </p>
               </div>
 
-              <h1 className="mt-5 max-w-2xl text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl sm:leading-[1.09]">
+              <h1 className="mt-5 max-w-2xl text-pretty text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl sm:leading-[1.09]">
                 {t("headline")}
               </h1>
 
-              <p className="mt-4 text-4xl font-black leading-none tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+              <p className="mt-4 break-words text-4xl font-black leading-none tracking-tight text-[var(--brand-dark)] sm:text-5xl">
                 {displayName}
               </p>
 
@@ -309,6 +309,66 @@ export function WantedCaseContent({
               <p className="mt-4 w-full border-l-4 border-[var(--accent)] bg-white/45 py-3 pl-4 pr-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
                 {t("caseTagline", { name: shortName })}
               </p>
+
+              <div className="mt-5 rounded-2xl border border-[var(--accent)]/45 bg-white/75 p-4 shadow-sm sm:p-5">
+                <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(220px,auto)] lg:items-center">
+                  <div className="min-w-0">
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="max-w-[16rem] text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+                        {t("caseStatusBlock.ambiguityLabel")}
+                      </p>
+                      <p className="shrink-0 font-mono text-xl font-bold leading-none text-[var(--brand-dark)] sm:text-2xl">
+                        {t("caseStatusBlock.ambiguityValue", {
+                          level: ambiguityLevel,
+                        })}
+                      </p>
+                    </div>
+                    <div
+                      className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--surface-soft)]"
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="h-full rounded-full bg-[var(--accent)]"
+                        style={{ width: `${ambiguityLevel}%` }}
+                      />
+                    </div>
+                    <div className="mt-3 rounded-xl border border-[var(--border)] bg-white/70 px-3 py-2.5">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+                        {t("caseStatusBlock.ambiguityMethodLabel")}
+                      </p>
+                      <p className="mt-1 text-sm font-semibold leading-5 text-[var(--brand-dark)]">
+                        {t("caseStatusBlock.ambiguityMethod")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2 lg:min-w-[230px]">
+                  <LocalizedLink
+                    href={purchaseHref}
+                    onClick={() =>
+                      trackEvent("wanted_to_purchase_click", {
+                        source: ANALYTICS_SOURCES.wantedCaseCta,
+                        placement: "case_header",
+                        tone,
+                        locale,
+                        personalized,
+                      })
+                    }
+                    className="inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto"
+                  >
+                    {t("settleShortcutCta", {
+                      price: getTierPriceLabel("protected"),
+                    })}
+                  </LocalizedLink>
+                  <button
+                    type="button"
+                    onClick={scrollToResponseBlock}
+                    className="inline-flex min-h-[40px] items-center justify-center text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
+                  >
+                    {t("settleShortcutSecondary")}
+                  </button>
+                  </div>
+                </div>
+              </div>
 
               {accuserName ? (
                 <LocalizedLink
@@ -337,43 +397,6 @@ export function WantedCaseContent({
                 </button>
               )}
 
-              <div className="mt-5 rounded-2xl border border-[var(--accent)]/45 bg-white/65 p-4 shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-4">
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
-                    {t("settleShortcutLabel")}
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-[var(--brand-dark)]">
-                    {t("settleShortcutText")}
-                  </p>
-                </div>
-                <div className="mt-3 flex flex-col gap-2 sm:mt-0 sm:min-w-[240px]">
-                  <LocalizedLink
-                    href={purchaseHref}
-                    onClick={() =>
-                      trackEvent("wanted_to_purchase_click", {
-                        source: ANALYTICS_SOURCES.wantedCaseCta,
-                        placement: "case_header",
-                        tone,
-                        locale,
-                        personalized,
-                      })
-                    }
-                    className="inline-flex min-h-[48px] items-center justify-center rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
-                  >
-                    {t("settleShortcutCta", {
-                      price: getTierPriceLabel("protected"),
-                    })}
-                  </LocalizedLink>
-                  <button
-                    type="button"
-                    onClick={scrollToResponseBlock}
-                    className="inline-flex min-h-[44px] items-center justify-center text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)]"
-                  >
-                    {t("settleShortcutSecondary")}
-                  </button>
-                </div>
-              </div>
-
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
@@ -401,24 +424,6 @@ export function WantedCaseContent({
                 </div>
               </div>
 
-              <details className="mt-6 overflow-hidden rounded-xl border border-[var(--muted)]/30 bg-white/35 md:hidden">
-                <summary className="flex min-h-[48px] cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  <span>{t("fullCaseFileSummary")}</span>
-                  <span aria-hidden="true">+</span>
-                </summary>
-                <div className="border-t border-[var(--muted)]/25 px-4 py-4">
-                  {caseStatusContent}
-                </div>
-              </details>
-
-              <div className="mt-6 hidden border-t border-[var(--muted)]/35 pt-5 md:block">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                  {t("caseStatusBlock.title")}
-                </p>
-                <div className="mt-4">
-                  {caseStatusContent}
-                </div>
-              </div>
             </div>
 
             <div className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm sm:p-6">
@@ -720,16 +725,31 @@ export function WantedCaseContent({
                 </div>
               ) : null}
             </div>
+
+            <details className="mt-5 overflow-hidden rounded-2xl border border-[var(--border)] bg-white/80 shadow-sm">
+              <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-3 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] sm:px-6">
+                <span>{t("fullCaseFileSummary")}</span>
+                <span aria-hidden="true">+</span>
+              </summary>
+              <div className="border-t border-[var(--border)] bg-[#f6ecd8]/45 px-5 py-5 sm:px-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {t("caseStatusBlock.title")}
+                </p>
+                <div className="mt-4">
+                  {caseStatusContent}
+                </div>
+              </div>
+            </details>
           </div>
 
-          <aside className="mx-auto w-full max-w-md lg:sticky lg:top-28 lg:mx-0 lg:ml-auto lg:max-h-[calc(100vh-8rem)] lg:max-w-[360px] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 xl:max-w-[390px]">
+          <aside className="mx-auto min-w-0 w-full max-w-md lg:sticky lg:top-28 lg:mx-0 lg:ml-auto lg:max-h-[calc(100vh-8rem)] lg:max-w-[360px] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 xl:max-w-[390px]">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("previewLabel", { name: shortName })}
             </p>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
               {t("previewText", { name: shortName })}
             </p>
-            <div className="mt-4 rounded-2xl border border-[var(--border)] bg-white p-3 shadow-sm">
+            <div className="mt-4 min-w-0 overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-3 shadow-sm">
               <CertificatePreview
                 name={displayName}
                 tier="protected"

@@ -1367,7 +1367,7 @@
     "caseTagline": "Los registros confirman que {name} existe. La Oficina no sabe cómo sentirse al respecto.",
     "settleShortcutLabel": "Resolución rápida",
     "settleShortcutText": "Cierra el expediente con papeleo simbólico de Amigo Protegido antes de que alguien añada más pestañas.",
-    "settleShortcutCta": "Resolver con un certificado — {price}",
+    "settleShortcutCta": "Cerrar el caso — {price}",
     "settleShortcutSecondary": "o responde abajo",
     "fullCaseFileSummary": "Expediente completo",
     "caseStatusBlock": {

@@ -1367,7 +1367,7 @@
     "caseTagline": "Records confirm {name} exists. The Bureau is unsure how to feel about this.",
     "settleShortcutLabel": "Fast resolution",
     "settleShortcutText": "Close the file with symbolic Protected Friend paperwork before anyone adds more tabs.",
-    "settleShortcutCta": "Settle this with a certificate — {price}",
+    "settleShortcutCta": "Close the case — {price}",
     "settleShortcutSecondary": "or respond below",
     "fullCaseFileSummary": "Full case file",
     "caseStatusBlock": {
