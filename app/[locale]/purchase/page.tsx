@@ -50,6 +50,9 @@ export default async function PurchasePage({ params }: Props) {
                 <p className="mt-3 max-w-3xl text-sm font-medium leading-6 text-[var(--brand-dark)] sm:text-base sm:leading-7">
                   {t("seoSummary.coffeeNote")}
                 </p>
+                <p className="mt-2 max-w-3xl text-xs font-medium leading-5 text-[var(--muted)] sm:text-sm sm:leading-6">
+                  {t("seoSummary.realityNote")}
+                </p>
               </div>
 
               <details className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm lg:hidden">
