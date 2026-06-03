@@ -57,13 +57,75 @@ function SecureCardIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-function StripeWordmarkIcon({ className = "h-4 w-4" }: { className?: string }) {
+const LETTER_PAPER_REGIONS = new Set(["US", "CA"]);
+const LETTER_PAPER_TIME_ZONES = new Set([
+  "America/Adak",
+  "America/Anchorage",
+  "America/Boise",
+  "America/Chicago",
+  "America/Denver",
+  "America/Detroit",
+  "America/Edmonton",
+  "America/Halifax",
+  "America/Indiana/Indianapolis",
+  "America/Indiana/Knox",
+  "America/Indiana/Marengo",
+  "America/Indiana/Petersburg",
+  "America/Indiana/Tell_City",
+  "America/Indiana/Vevay",
+  "America/Indiana/Vincennes",
+  "America/Indiana/Winamac",
+  "America/Juneau",
+  "America/Kentucky/Louisville",
+  "America/Kentucky/Monticello",
+  "America/Los_Angeles",
+  "America/Menominee",
+  "America/Metlakatla",
+  "America/New_York",
+  "America/Nome",
+  "America/North_Dakota/Beulah",
+  "America/North_Dakota/Center",
+  "America/North_Dakota/New_Salem",
+  "America/Phoenix",
+  "America/Regina",
+  "America/Sitka",
+  "America/St_Johns",
+  "America/Swift_Current",
+  "America/Toronto",
+  "America/Vancouver",
+  "America/Whitehorse",
+  "America/Winnipeg",
+  "America/Yakutat",
+  "Pacific/Honolulu",
+]);
+
+function getClientDefaultPaperFormat(): PaperFormat {
+  if (typeof window === "undefined") return "a4";
+
+  const languages = navigator.languages?.length
+    ? navigator.languages
+    : [navigator.language].filter(Boolean);
+  for (const language of languages) {
+    const region = language.match(/[-_]([A-Z]{2})\b/i)?.[1]?.toUpperCase();
+    if (region && LETTER_PAPER_REGIONS.has(region)) return "letter";
+  }
+
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return LETTER_PAPER_TIME_ZONES.has(timeZone) ? "letter" : "a4";
+}
+
+function PurchaseStepHeading({ step, title }: { step: string; title: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
-      <rect x="2.5" y="4" width="19" height="16" rx="4" fill="currentColor" opacity="0.12" />
-      <path d="M8.1 9.35c0-.74.61-1.16 1.62-1.16 1.44 0 3.25.44 4.69 1.22V6.17A9.23 9.23 0 0 0 9.72 5C6.7 5 4.7 6.58 4.7 9.23c0 4.13 5.67 3.47 5.67 5.3 0 .88-.77 1.16-1.85 1.16-1.56 0-3.56-.64-5.13-1.5v3.29c1.74.75 3.5 1.06 5.13 1.06 3.1 0 5.23-1.53 5.23-4.2 0-4.47-5.65-3.68-5.65-4.99Z" fill="currentColor" />
-      <path d="M14.98 6.3h3.7v11.22h-3.7z" fill="currentColor" opacity="0.82" />
-    </svg>
+    <div className="border-t border-[var(--border)] pt-5">
+      <div className="flex items-center gap-2.5">
+        <span className="shrink-0 text-base font-semibold text-[var(--brand-dark)]">
+          {step}.
+        </span>
+        <h2 className="text-base font-semibold text-[var(--brand-dark)]">
+          {title}
+        </h2>
+      </div>
+    </div>
   );
 }
 
@@ -82,9 +144,12 @@ function PurchaseFlowInner() {
   const normalizedInitialTemplate: CertificateTemplate = normalizeTemplate(
     initialTemplateParam,
   );
+  const initialPaperParam = searchParams.get("paper");
+  const hasExplicitPaperParam =
+    initialPaperParam === "a4" || initialPaperParam === "letter";
   const initialPaper = normalizePaperFormatForTemplate(
     normalizedInitialTemplate,
-    searchParams.get("paper"),
+    hasExplicitPaperParam ? initialPaperParam : null,
   );
   const referredByFromUrl = getValidReferralCode(searchParams.get("ref"));
   const wasCanceled = searchParams.get("canceled") === "true";
@@ -128,6 +193,8 @@ function PurchaseFlowInner() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [template, setTemplate] = useState<CertificateTemplate>(normalizedInitialTemplate);
   const [paperFormat, setPaperFormat] = useState<PaperFormat>(initialPaper);
+  const [paperOptionsOpen, setPaperOptionsOpen] = useState(false);
+  const [dedicationOpen, setDedicationOpen] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [digitalContentConsentAccepted, setDigitalContentConsentAccepted] = useState(false);
   const [registryConsentAccepted, setRegistryConsentAccepted] = useState(true);
@@ -190,6 +257,25 @@ function PurchaseFlowInner() {
 
   // Track view_item on initial load
   const viewedRef = useRef(false);
+  const clientPaperDefaultAppliedRef = useRef(false);
+
+  useEffect(() => {
+    if (clientPaperDefaultAppliedRef.current || hasExplicitPaperParam) return;
+    clientPaperDefaultAppliedRef.current = true;
+    setPaperFormat(
+      normalizePaperFormatForTemplate(
+        normalizedInitialTemplate,
+        getClientDefaultPaperFormat(),
+      ),
+    );
+  }, [hasExplicitPaperParam, normalizedInitialTemplate]);
+
+  useEffect(() => {
+    const shouldOpen =
+      Boolean(dedication.trim()) || Boolean(searchParams.get("dedication"));
+    if (shouldOpen) setDedicationOpen(true);
+  }, [dedication, searchParams]);
+
   useEffect(() => {
     if (viewedRef.current) return;
     viewedRef.current = true;
@@ -230,12 +316,8 @@ function PurchaseFlowInner() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
-    if (!termsAccepted) {
-      setError(t("termsRequiredError"));
-      return;
-    }
-    if (!digitalContentConsentAccepted) {
-      setError(t("digitalContentConsentRequiredError"));
+    if (!termsAccepted || !digitalContentConsentAccepted) {
+      setError(t("combinedConsentRequiredError"));
       return;
     }
 
@@ -340,8 +422,8 @@ function PurchaseFlowInner() {
       console.error("[SHA] Checkout error:", err);
       const errorCode = err instanceof Error ? err.message : "checkout_failed";
       const errorMap: Record<string, string> = {
-        terms_required: t("termsRequiredError"),
-        digital_content_consent_required: t("digitalContentConsentRequiredError"),
+        terms_required: t("combinedConsentRequiredError"),
+        digital_content_consent_required: t("combinedConsentRequiredError"),
         dedication_too_long: t("dedicationTooLongError"),
         dedication_contains_contact: t("dedicationContactError"),
         dedication_contains_url: t("dedicationUrlError"),
@@ -353,6 +435,12 @@ function PurchaseFlowInner() {
   }
 
   const currentDate = formatCertificateDate(new Date(), locale);
+  const selectedPaperLabel =
+    paperFormat === "letter"
+      ? t("paperSizes.letter.label")
+      : t("paperSizes.a4.label");
+  const legalConsentAccepted =
+    termsAccepted && digitalContentConsentAccepted;
 
   if (isRedirecting) {
     return (
@@ -440,245 +528,301 @@ function PurchaseFlowInner() {
               </div>
             </details>
 
-            {/* Tier selector */}
-            <div>
-              <label className="text-sm font-semibold text-[var(--brand-dark)]">
-                {t("tierLabel")}
-              </label>
-              <div className="mt-2 grid grid-cols-3 gap-2 sm:gap-3">
-                {PUBLIC_TIERS.map((tierOption) => {
-                  const isSelected = tier === tierOption;
-                  return (
-                    <button
-                      key={tierOption}
-                      type="button"
-                      onClick={() => setTier(tierOption)}
-                      className={`min-h-[58px] rounded-xl border ${getTierSelectionClass(tierOption, isSelected)} px-2 py-2 text-center transition-all duration-300 ease-out sm:min-h-[72px] sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[82px] ${
-                        isSelected
-                          ? "border-2 shadow-sm"
-                          : "bg-white text-[var(--brand-dark)] hover:-translate-y-0.5 hover:shadow-sm"
-                      }`}
-                    >
-                      <p className="text-[11px] font-medium leading-tight text-[var(--muted)] sm:text-sm sm:leading-snug">
-                        {t(`tiers.${tierOption}`)}
-                      </p>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            <div className="space-y-4">
+              <PurchaseStepHeading step="1" title={t("stepCertificate")} />
 
-            {/* Paper size */}
-            <div>
-              <label className="text-sm font-semibold text-[var(--brand-dark)]">
-                {t("paperSizeLabel")}
-              </label>
-                <div className="mt-2 grid grid-cols-2 gap-2 sm:gap-3">
-                  {(["a4", "letter"] as PaperFormat[]).map((formatOption) => {
-                    const isSelected = paperFormat === formatOption;
-                    const isUnavailable = !isPaperFormatAvailableForTemplate(
-                      template,
-                      formatOption,
-                    );
+              {/* Tier selector */}
+              <div>
+                <label className="text-sm font-semibold text-[var(--brand-dark)]">
+                  {t("tierLabel")}
+                </label>
+                <div className="mt-2 grid grid-cols-3 gap-2 sm:gap-3">
+                  {PUBLIC_TIERS.map((tierOption) => {
+                    const isSelected = tier === tierOption;
                     return (
                       <button
-                        key={formatOption}
+                        key={tierOption}
                         type="button"
-                        disabled={isUnavailable}
-                        aria-disabled={isUnavailable}
-                        onClick={() => {
-                          if (!isUnavailable) setPaperFormat(formatOption);
-                        }}
-                        className={`rounded-xl border px-3 py-2.5 text-left transition sm:px-4 sm:py-3 ${
-                          isUnavailable
-                            ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-500 opacity-80 grayscale"
-                            : isSelected
-                            ? "border-[var(--brand)] bg-[var(--surface-soft)] shadow-sm"
-                            : "border-[var(--border)] bg-white hover:bg-[var(--surface-soft)]/50"
+                        onClick={() => setTier(tierOption)}
+                        className={`min-h-[58px] rounded-xl border ${getTierSelectionClass(tierOption, isSelected)} px-2 py-2 text-center transition-all duration-300 ease-out sm:min-h-[72px] sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[82px] ${
+                          isSelected
+                            ? "border-2 shadow-sm"
+                            : "bg-white text-[var(--brand-dark)] hover:-translate-y-0.5 hover:shadow-sm"
                         }`}
                       >
-                        <div
-                          className={`text-sm font-semibold leading-tight ${
+                        <p className="text-[11px] font-medium leading-tight text-[var(--muted)] sm:text-sm sm:leading-snug">
+                          {t(`tiers.${tierOption}`)}
+                        </p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Paper size */}
+              <div className="rounded-xl border border-[var(--border)] bg-white px-3 py-2">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-[var(--brand-dark)]">
+                      {t("paperSizeLabel")}: {selectedPaperLabel}
+                    </p>
+                    <p className="mt-0.5 text-xs leading-5 text-[var(--muted)]">
+                      {t("paperSizeHint")}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPaperOptionsOpen((open) => !open)}
+                    className="shrink-0 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-white"
+                    aria-expanded={paperOptionsOpen}
+                  >
+                    {paperOptionsOpen ? t("hidePaperSize") : t("changePaperSize")}
+                  </button>
+                </div>
+
+                {paperOptionsOpen && (
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    {(["letter", "a4"] as PaperFormat[]).map((formatOption) => {
+                      const isSelected = paperFormat === formatOption;
+                      const isUnavailable = !isPaperFormatAvailableForTemplate(
+                        template,
+                        formatOption,
+                      );
+                      return (
+                        <button
+                          key={formatOption}
+                          type="button"
+                          disabled={isUnavailable}
+                          aria-disabled={isUnavailable}
+                          onClick={() => {
+                            if (!isUnavailable) setPaperFormat(formatOption);
+                          }}
+                          className={`rounded-lg border px-3 py-2 text-center text-sm font-semibold transition ${
                             isUnavailable
-                              ? "text-slate-500"
-                              : "text-[var(--brand-dark)]"
+                              ? "cursor-not-allowed border-slate-300 bg-slate-100 text-slate-500 opacity-80 grayscale"
+                              : isSelected
+                              ? "border-[var(--brand)] bg-[var(--surface-soft)] text-[var(--brand-dark)] shadow-sm"
+                              : "border-[var(--border)] bg-white text-[var(--brand-dark)] hover:bg-[var(--surface-soft)]/50"
                           }`}
                         >
                           {t(`paperSizes.${formatOption}.label`)}
-                        </div>
-                        <div
-                          className={`mt-1 text-[11px] leading-snug sm:text-xs ${
-                            isUnavailable
-                              ? "text-slate-500"
-                              : "text-[var(--muted)]"
-                          }`}
-                        >
-                          {isUnavailable
-                            ? t("paperSizes.letter.classicUnavailable")
-                            : t(`paperSizes.${formatOption}.description`)}
-                        </div>
-                      </button>
-                    );
-                })}
+                          {isUnavailable && (
+                            <span className="mt-1 block text-[11px] font-medium leading-tight">
+                              {t("paperSizes.letter.classicUnavailable")}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            </div>
 
-            {/* Name */}
-            <div>
-              <label htmlFor="name" className="text-sm font-semibold text-[var(--brand-dark)]">
-                {tier === "business" ? t("businessNameLabel") : t("nameLabel")}
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete={tier === "business" ? "organization" : "name"}
-                inputMode="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={tier === "business" ? t("businessNamePlaceholder") : t("namePlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-              />
-            </div>
-
-            {/* Dedication */}
-            <div>
-              <label htmlFor="dedication" className="text-sm font-semibold text-[var(--brand-dark)]">
-                {tier === "business" ? t("businessDedicationLabel") : t("dedicationLabel")}
-              </label>
-              <input
-                id="dedication"
-                name="dedication"
-                type="text"
-                autoComplete="off"
-                inputMode="text"
-                value={dedication}
-                onChange={(e) => setDedication(e.target.value)}
-                placeholder={tier === "business" ? t("businessDedicationPlaceholder") : t("dedicationPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-              />
-              {tier !== "business" && (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {dedicationSuggestions.map((suggestion) => (
-                    <button
-                      key={suggestion}
-                      type="button"
-                      onClick={() => setDedication(suggestion)}
-                      className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-left text-xs text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-white sm:w-auto"
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Email */}
-            <div>
-              <div className="flex flex-col gap-1 min-[420px]:flex-row min-[420px]:items-baseline min-[420px]:justify-between">
-                <label htmlFor="email" className="text-sm font-semibold text-[var(--brand-dark)]">
-                  {t("emailLabel")}
+              {/* Name */}
+              <div>
+                <label htmlFor="name" className="text-sm font-semibold text-[var(--brand-dark)]">
+                  {tier === "business" ? t("businessNameLabel") : t("nameLabel")}
                 </label>
-                <span className="text-xs text-[var(--muted)]">{t("emailOptionalTag")}</span>
-              </div>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                spellCheck={false}
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setShowEmailWarning(false);
-                  setShowConfirmation(false);
-                }}
-                placeholder={t("emailPlaceholder")}
-                className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-              />
-              <p className="mt-1.5 text-xs text-[var(--muted)]">{t("emailOptionalHint")}</p>
-            </div>
-
-            {/* Gift option */}
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm">
-              <label className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:px-4 sm:py-3">
                 <input
-                  type="checkbox"
-                  checked={isGift}
-                  onChange={(e) => {
-                    setIsGift(e.target.checked);
-                    trackEvent("gift_toggle", {
-                      tier,
-                      locale,
-                      ...(attributionSource ? { source: attributionSource } : {}),
-                      enabled: e.target.checked,
-                    });
-                  }}
-                  className="size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete={tier === "business" ? "organization" : "name"}
+                  inputMode="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder={tier === "business" ? t("businessNamePlaceholder") : t("namePlaceholder")}
+                  className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
                 />
-                <span>{t("giftToggle")}</span>
-              </label>
+              </div>
 
-              {isGift && (
-                <div className="space-y-3 border-t border-[var(--border)] bg-[var(--surface-soft)]/35 p-4 sm:p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">{t("giftDetailsTitle")}</p>
-                  <div>
-                    <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
-                      {t("recipientEmailLabel")}
+              {/* Dedication */}
+              <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm">
+                <label className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:px-4 sm:py-3">
+                  <input
+                    type="checkbox"
+                    checked={dedicationOpen}
+                    onChange={(e) => setDedicationOpen(e.target.checked)}
+                    className="size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  />
+                  <span>
+                    {tier === "business"
+                      ? t("businessDedicationToggle")
+                      : dedication.trim()
+                      ? t("editDedicationToggle")
+                      : t("dedicationToggle")}
+                  </span>
+                </label>
+
+                {dedicationOpen && (
+                  <div className="border-t border-[var(--border)] bg-[var(--surface-soft)]/35 p-4 sm:p-4">
+                    <label htmlFor="dedication" className="text-sm font-semibold text-[var(--brand-dark)]">
+                      {tier === "business" ? t("businessDedicationLabel") : t("dedicationLabel")}
                     </label>
                     <input
-                      id="recipientEmail"
-                      name="recipient_email"
-                      type="email"
-                      autoComplete="email"
-                      inputMode="email"
-                      spellCheck={false}
-                      required={isGift}
-                      value={recipientEmail}
-                      onChange={(e) => setRecipientEmail(e.target.value)}
-                      placeholder={t("recipientEmailPlaceholder")}
-                      className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-                    />
-                    <p className="mt-1.5 text-xs text-[var(--muted)]">{t("recipientEmailHint")}</p>
-                  </div>
-                  <div>
-                    <label htmlFor="fromName" className="text-sm font-semibold text-[var(--brand-dark)]">
-                      {t("fromNameLabel")}
-                    </label>
-                    <input
-                      id="fromName"
-                      name="from_name"
+                      id="dedication"
+                      name="dedication"
                       type="text"
-                      autoComplete="name"
-                      autoCapitalize="words"
-                      spellCheck={false}
-                      value={fromName}
-                      onChange={(e) => setFromName(e.target.value)}
-                      placeholder={t("fromNamePlaceholder")}
+                      autoComplete="off"
+                      inputMode="text"
+                      value={dedication}
+                      onChange={(e) => setDedication(e.target.value)}
+                      placeholder={tier === "business" ? t("businessDedicationPlaceholder") : t("dedicationPlaceholder")}
                       className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
                     />
-                    <p className="mt-1.5 text-xs text-[var(--muted)]">{t("fromNameHint")}</p>
+                    {tier !== "business" && (
+                      <>
+                        <div className="mt-2 sm:hidden">
+                          <label htmlFor="dedication-suggestion" className="sr-only">
+                            {t("dedicationSuggestionPlaceholder")}
+                          </label>
+                          <select
+                            id="dedication-suggestion"
+                            value={dedicationSuggestions.includes(dedication) ? dedication : ""}
+                            onChange={(e) => {
+                              if (e.target.value) setDedication(e.target.value);
+                            }}
+                            className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--brand-dark)] focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20"
+                          >
+                            <option value="">{t("dedicationSuggestionPlaceholder")}</option>
+                            {dedicationSuggestions.map((suggestion) => (
+                              <option key={suggestion} value={suggestion}>
+                                {suggestion}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="mt-2 hidden flex-wrap gap-2 sm:flex">
+                          {dedicationSuggestions.map((suggestion) => (
+                            <button
+                              key={suggestion}
+                              type="button"
+                              onClick={() => setDedication(suggestion)}
+                              className="min-h-[34px] rounded-lg border border-[var(--border)] bg-white px-2.5 py-1.5 text-left text-xs leading-4 text-[var(--muted)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <div>
-                    <label htmlFor="giftMessage" className="text-sm font-semibold text-[var(--brand-dark)]">
-                      {t("giftMessageLabel")}
-                    </label>
-                    <textarea
-                      id="giftMessage"
-                      name="gift_message"
-                      autoComplete="off"
-                      value={giftMessage}
-                      onChange={(e) => setGiftMessage(e.target.value)}
-                      placeholder={t("giftMessagePlaceholder")}
-                      rows={3}
-                      maxLength={600}
-                      className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
-                    />
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
+
+            <div className="space-y-4">
+              <PurchaseStepHeading step="2" title={t("stepDelivery")} />
+
+              {/* Email */}
+              <div>
+                <div className="flex flex-col gap-1 min-[420px]:flex-row min-[420px]:items-baseline min-[420px]:justify-between">
+                  <label htmlFor="email" className="text-sm font-semibold text-[var(--brand-dark)]">
+                    {t("emailLabel")}
+                  </label>
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  spellCheck={false}
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setShowEmailWarning(false);
+                    setShowConfirmation(false);
+                  }}
+                  placeholder={t("emailPlaceholder")}
+                  className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                />
+                <p className="mt-1.5 text-xs text-[var(--muted)]">{t("emailOptionalHint")}</p>
+              </div>
+
+              {/* Gift option */}
+              <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm">
+                <label className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:px-4 sm:py-3">
+                  <input
+                    type="checkbox"
+                    checked={isGift}
+                    onChange={(e) => {
+                      setIsGift(e.target.checked);
+                      trackEvent("gift_toggle", {
+                        tier,
+                        locale,
+                        ...(attributionSource ? { source: attributionSource } : {}),
+                        enabled: e.target.checked,
+                      });
+                    }}
+                    className="size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
+                  />
+                  <span>{t("giftToggle")}</span>
+                </label>
+
+                {isGift && (
+                  <div className="space-y-3 border-t border-[var(--border)] bg-[var(--surface-soft)]/35 p-4 sm:p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">{t("giftDetailsTitle")}</p>
+                    <div>
+                      <label htmlFor="recipientEmail" className="text-sm font-semibold text-[var(--brand-dark)]">
+                        {t("recipientEmailLabel")}
+                      </label>
+                      <input
+                        id="recipientEmail"
+                        name="recipient_email"
+                        type="email"
+                        autoComplete="email"
+                        inputMode="email"
+                        spellCheck={false}
+                        required={isGift}
+                        value={recipientEmail}
+                        onChange={(e) => setRecipientEmail(e.target.value)}
+                        placeholder={t("recipientEmailPlaceholder")}
+                        className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                      />
+                      <p className="mt-1.5 text-xs text-[var(--muted)]">{t("recipientEmailHint")}</p>
+                    </div>
+                    <div>
+                      <label htmlFor="fromName" className="text-sm font-semibold text-[var(--brand-dark)]">
+                        {t("fromNameLabel")}
+                      </label>
+                      <input
+                        id="fromName"
+                        name="from_name"
+                        type="text"
+                        autoComplete="name"
+                        autoCapitalize="words"
+                        spellCheck={false}
+                        value={fromName}
+                        onChange={(e) => setFromName(e.target.value)}
+                        placeholder={t("fromNamePlaceholder")}
+                        className="mt-2 w-full rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                      />
+                      <p className="mt-1.5 text-xs text-[var(--muted)]">{t("fromNameHint")}</p>
+                    </div>
+                    <div>
+                      <label htmlFor="giftMessage" className="text-sm font-semibold text-[var(--brand-dark)]">
+                        {t("giftMessageLabel")}
+                      </label>
+                      <textarea
+                        id="giftMessage"
+                        name="gift_message"
+                        autoComplete="off"
+                        value={giftMessage}
+                        onChange={(e) => setGiftMessage(e.target.value)}
+                        placeholder={t("giftMessagePlaceholder")}
+                        rows={3}
+                        maxLength={600}
+                        className="mt-2 w-full resize-none rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]/50 focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/20 sm:px-5 sm:py-4"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <PurchaseStepHeading step="3" title={t("stepConfirmPay")} />
 
             {/* Referral and promo codes */}
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-sm">
@@ -741,40 +885,14 @@ function PurchaseFlowInner() {
               )}
             </div>
 
-            {/* Stripe secure payment note */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/45 p-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--brand)] shadow-sm">
-                  <SecureCardIcon className="h-5 w-5" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                    {t("stripeSecure")}
-                  </p>
-                  <p className="mt-0.5 text-xs leading-5 text-[var(--muted)]">
-                    {t("stripeSecureNote")}
-                  </p>
-                </div>
-              </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] shadow-sm">
-                  <SecureCardIcon className="h-3.5 w-3.5 text-[var(--brand)]" />
-                  {t("secureBadgeCard")}
-                </span>
-                <span className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[var(--brand-dark)] shadow-sm">
-                  <StripeWordmarkIcon className="h-3.5 w-3.5 text-[var(--brand)]" />
-                  {t("secureBadgeStripe")}
-                </span>
-              </div>
-            </div>
-
             <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-white p-4 sm:p-5">
               <label className="flex items-start gap-3 text-sm leading-6 text-[var(--brand-dark)]">
                 <input
                   type="checkbox"
-                  checked={termsAccepted}
+                  checked={legalConsentAccepted}
                   onChange={(e) => {
                     setTermsAccepted(e.target.checked);
+                    setDigitalContentConsentAccepted(e.target.checked);
                     setError("");
                   }}
                   className="mt-1 size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
@@ -784,33 +902,16 @@ function PurchaseFlowInner() {
                   <LocalizedLink href="/terms" className="font-semibold text-[var(--brand)] underline underline-offset-2">
                     {t("termsConsentLink")}
                   </LocalizedLink>
-                  .
-                </span>
-              </label>
-
-              <label className="flex items-start gap-3 text-sm leading-6 text-[var(--brand-dark)]">
-                <input
-                  type="checkbox"
-                  checked={digitalContentConsentAccepted}
-                  onChange={(e) => {
-                    setDigitalContentConsentAccepted(e.target.checked);
-                    setError("");
-                  }}
-                  className="mt-1 size-4 shrink-0 rounded border-[var(--border)] text-[var(--brand)] focus:ring-[var(--brand)]"
-                />
-                <span>
-                  <span className="font-semibold">{t("digitalContentConsentShortLabel")}</span>
+                  {" "}
+                  {t("combinedConsentSuffix")}
                   <span className="mt-1 block text-xs leading-5 text-[var(--muted)]">
-                    {t("digitalContentConsentLabel")}
+                    {t("combinedConsentNotice")}
                   </span>
                 </span>
               </label>
 
               <div className="border-t border-dashed border-[var(--border)] pt-3">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
-                  {t("optionalEyebrow")}
-                </p>
-                <label className="flex items-start gap-3 rounded-xl bg-[var(--surface-soft)]/60 p-3 text-sm leading-6 text-[var(--brand-dark)]">
+                <label className="flex items-start gap-3 rounded-lg bg-[var(--surface-soft)]/35 p-2.5 text-sm leading-6 text-[var(--brand-dark)]">
                   <input
                     type="checkbox"
                     checked={registryConsentAccepted}
@@ -819,7 +920,7 @@ function PurchaseFlowInner() {
                   />
                   <span>
                     {t("registryConsentLabel")}
-                    <span className="mt-2 block text-xs leading-5 text-[var(--muted)]">
+                    <span className="mt-1 block text-xs leading-5 text-[var(--muted)]">
                       {t("registryConsentHint")}
                     </span>
                   </span>
@@ -944,21 +1045,32 @@ function PurchaseFlowInner() {
                     {t("confirmBack")}
                   </button>
                 </div>
+                <div className="mt-3 flex items-start justify-center gap-2 text-center text-xs leading-5 text-[var(--muted)]">
+                  <SecureCardIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--brand)]" />
+                  <span>{t("stripeSecureInline")}</span>
+                </div>
               </div>
             )}
 
             {/* Submit */}
             {!showConfirmation ? (
-              <button
-                type="submit"
-                disabled={isRedirecting}
-                className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                  {promoCode.trim()
-                    ? t("submitButtonPromo")
-                    : `${t("submitButton")} - ${getTierPriceLabel(tier)}`}
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  disabled={isRedirecting}
+                  className="min-h-[52px] w-full rounded-xl bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                    {promoCode.trim()
+                      ? t("submitButtonPromo")
+                      : `${t("submitButton")} - ${getTierPriceLabel(tier)}`}
+                </button>
+                <div className="mt-3 flex items-start justify-center gap-2 text-center text-xs leading-5 text-[var(--muted)]">
+                  <SecureCardIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--brand)]" />
+                  <span>{t("stripeSecureInline")}</span>
+                </div>
+              </div>
             ) : null}
+            </div>
           </form>
 
           {/* Live certificate preview */}

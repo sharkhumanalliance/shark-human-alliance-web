@@ -187,33 +187,33 @@
     "membershipSection": {
       "label": "Certificados",
       "title": "Elige el papeleo que mejor encaja con la situación.",
-      "description": "Ya sea para regularizar a un amigo, declarar a alguien no-snack o proteger una sala agresivamente terrestre, la Alianza tiene un formulario para eso.",
+      "description": "Las tres opciones son personalizadas y se entregan digitalmente. La diferencia real es la asignación a conservación, el estatus ceremonial y si la Oficina certifica a una persona o a un lugar.",
       "popularBadge": "Más Popular",
       "protectedTitle": "Estatus de Amigo Protegido",
       "protectedPrice": "$4",
-      "protectedDescription": "Para humanos cotidianos que necesitan papeleo amistoso de cara a los tiburones. Personal, ideal para regalar y con aspecto suficientemente oficial para provocar preguntas educadas en el trabajo.",
+      "protectedDescription": "El certificado cotidiano. Personalizado, ideal para regalar y con aspecto suficientemente oficial para provocar preguntas educadas en el trabajo. Un dólar se reserva para conservación de tiburones.",
       "protectedFeatures": [
-        "Certificado personalizado",
-        "Estatus de Amigo Protegido",
-        "Entrega digital instantánea"
+        "Certificado digital personalizado",
+        "$1 para conservación",
+        "Descarga instantánea — imprime y enmarca"
       ],
       "protectedCta": "Presentar el papeleo — $4",
       "nonsnackTitle": "Reconocimiento No-Snack",
       "nonsnackPrice": "$19",
-      "nonsnackDescription": "Para humanos que prefieren quedar documentados como persona, no como snack. La misma energía de papeleo official-ish, con una postura antiaperitivo un poco más firme.",
+      "nonsnackDescription": "El mismo certificado, con convicción más rotunda. Para humanos que prefieren quedar archivados como persona, no como snack, y quieren que una parte mayor vaya a los tiburones.",
       "nonsnackFeatures": [
-        "Certificado digital personalizado",
-        "Estatus certificado No-Snack",
-        "Mayor asignación a conservación de tiburones"
+        "Todo lo de Amigo Protegido",
+        "$12 para conservación — 12x básico",
+        "Estatus oficial más serio"
       ],
       "nonsnackCta": "Subir a No-Snack — $19",
       "businessTitle": "Zona Libre de Tiburones",
       "businessPrice": "$99",
-      "businessDescription": "Para oficinas, cafés, estudios, salas de reunión y otros espacios agresivamente terrestres que buscan confirmación formal de que no se espera que los tiburones operen allí.",
+      "businessDescription": "Un certificado para un lugar, no una persona. Declara formalmente una oficina, café o sala agresivamente terrestre fuera del menú de los tiburones, y envía la mayor parte a conservación.",
       "businessFeatures": [
-        "Certificado mural para negocios",
-        "Estatus de Zona Libre de Tiburones",
-        "La asignación más alta a conservación"
+        "Certificado para negocio o espacio",
+        "$70 para conservación — la mayor asignación",
+        "Máximo reconocimiento de la Oficina"
       ],
       "businessCta": "Certificar la zona — $99",
       "businessEyebrow": "Para empresas",
@@ -428,31 +428,31 @@
     ],
     "tiersLabel": "Primero, elige el nivel",
     "tiersTitle": "Elige el nivel de certificado que mejor encaja con la situación.",
-    "tiersDescription": "Esta es la verdadera decisión de producto. Las tres opciones son personalizadas, digitales y apoyan la conservación real. La diferencia está en cuánta ceremonia, reconocimiento o utilidad comercial quieres añadir.",
+    "tiersDescription": "Esta es la verdadera decisión de producto. Las tres opciones son personalizadas, digitales y apoyan la conservación real. La diferencia está en cuánto va a los tiburones, cuán oficial suena el título y si el certificado es para una persona o un lugar.",
     "protectedTitle": "Estatus de Amigo Protegido",
-    "protectedDescription": "Una entrada pulida para amantes de los tiburones, temerosos de la playa y personas con muy buen criterio para regalar. Divertido, personal y bastante enmarcable.",
+    "protectedDescription": "El certificado cotidiano. Personalizado, ideal para regalar y con aspecto suficientemente oficial para provocar preguntas educadas en el trabajo. Un dólar se reserva para conservación de tiburones.",
     "protectedFeatures": [
       "Certificado digital personalizado",
-      "Listado público opcional en el registro",
-      "Entrega inmediata para regalos y diplomacia de última hora"
+      "$1 para conservación",
+      "Descarga instantánea — imprime y enmarca"
     ],
     "protectedCta": "Empezar con Amigo Protegido — $4",
     "protectedPopular": "Más popular",
     "protectedDetailLink": "Por qué Amigo Protegido suele ser el punto de partida",
     "nonsnackTitle": "Reconocimiento No-Snack",
-    "nonsnackDescription": "Para quien quiere más energía ceremonial, una broma mejor enmarcada y reconocimiento oficial de su evidente no comestibilidad.",
+    "nonsnackDescription": "El mismo certificado, con convicción más rotunda. Para humanos que prefieren quedar archivados como persona, no como snack, y quieren que una parte mayor vaya a los tiburones.",
     "nonsnackFeatures": [
-      "Sensación de certificado premium",
-      "Estado oficial No-Snack",
-      "Ideal para amistades dramáticas"
+      "Todo lo de Amigo Protegido",
+      "$12 para conservación — 12x básico",
+      "Estatus oficial más serio"
     ],
     "nonsnackCta": "Obtener versión No-Snack — $19",
     "businessTitle": "Zona Libre de Tiburones",
-    "businessDescription": "Para cafés, estudios, oficinas e instituciones listas para mostrar estatus oficialmente libre de tiburones con total confianza administrativa.",
+    "businessDescription": "Un certificado para un lugar, no una persona. Declara formalmente una oficina, café o sala agresivamente terrestre fuera del menú de los tiburones, y envía la mayor parte a conservación.",
     "businessFeatures": [
-      "Certificado orientado a negocios",
-      "Credibilidad absurdamente decorativa",
-      "Ideal para equipos, espacios y prestigio tiburón"
+      "Certificado para negocio o espacio",
+      "$70 para conservación — la mayor asignación",
+      "Máximo reconocimiento de la Oficina"
     ],
     "businessCta": "Certifica tu oficina — $99",
     "includedLabel": "Qué recibes realmente",
@@ -478,7 +478,7 @@
         "label": "Estilo del certificado",
         "protected": "Certificado digital personalizado",
         "nonsnack": "Certificado premium más ceremonial",
-        "business": "Certificado mural para negocios"
+        "business": "Certificado para negocio o espacio"
       },
       {
         "label": "Ideal para",
@@ -637,13 +637,19 @@
       "privacyLink": "Política de privacidad",
       "refundLink": "política de reembolsos y correcciones"
     },
+    "stepCertificate": "Tu certificado",
+    "stepDelivery": "Entrega",
+    "stepConfirmPay": "Confirmar y pagar",
     "nameLabel": "Nombre en el certificado",
     "namePlaceholder": "ej. Capitán James Coral",
     "giftToggle": "Esto es un regalo",
     "recipientEmailLabel": "Email del destinatario",
     "recipientEmailPlaceholder": "amigo@email.com",
+    "dedicationToggle": "Añadir dedicatoria (opcional)",
+    "editDedicationToggle": "Editar dedicatoria",
     "dedicationLabel": "Dedicatoria (opcional)",
     "dedicationPlaceholder": "ej. Por seguir técnicamente sin ser comido desde 1987",
+    "dedicationSuggestionPlaceholder": "Usar una dedicatoria sugerida",
     "dedicationSuggestions": {
       "0": "Por sobrevivir cada temporada de playa con sospechosa confianza",
       "1": "Oficialmente menos cerca de ser snack que ayer",
@@ -655,6 +661,7 @@
     "previewName": "Tu nombre aquí",
     "businessNameLabel": "Nombre del negocio o local",
     "businessNamePlaceholder": "ej. Escuela de Surf Playa Dorada",
+    "businessDedicationToggle": "Añadir eslogan o ubicación (opcional)",
     "businessDedicationLabel": "Eslogan o ubicación (opcional)",
     "businessDedicationPlaceholder": "ej. Orgullosamente libre de tiburones desde 2026",
     "emailLabel": "Email para entrega del certificado",
@@ -666,8 +673,9 @@
     "noEmailAddEmail": "Añadir email para acceso posterior",
     "promoCodeLabel": "Código promocional",
     "promoCodePlaceholder": "Introduce el código",
-    "stripeSecure": "Checkout encriptado. Procesado por Stripe.",
-    "stripeSecureNote": "Hasta los tiburones saben que no se juega con la infraestructura de pagos.",
+    "stripeSecure": "Checkout seguro vía Stripe.",
+    "stripeSecureNote": "Los datos de tarjeta los gestiona Stripe y Shark Human Alliance nunca los almacena. Incluso los tiburones saben que no deben meterse con la infraestructura de pagos.",
+    "stripeSecureInline": "Pago seguro en Stripe. Nunca vemos tu tarjeta. Incluso los tiburones saben que no deben meterse con la infraestructura de pagos.",
     "secureBadgeCard": "Pago con tarjeta",
     "secureBadgeStripe": "Checkout con Stripe",
     "submitButton": "Revisar pedido",
@@ -723,7 +731,9 @@
     "downloadOnlyNotice": "Guarda tu PDF ahora. Este enlace de descarga es temporal.",
     "recipientEmailHint": "Úsalo si quieres que enviemos el certificado directamente.",
     "paperSizeLabel": "Tamaño del papel",
-    "paperSizeHint": "Imprime en Tamaño real / 100% para obtener el mejor resultado.",
+    "paperSizeHint": "Seleccionado según la región del navegador. Imprime en Tamaño real / 100%.",
+    "changePaperSize": "Cambiar",
+    "hidePaperSize": "Listo",
     "paperSizes": {
       "a4": {
         "label": "A4",
@@ -840,11 +850,14 @@
     "registryPrivateNotice": "Tu registro es actualmente privado y no aparecerá en el registro público salvo que hayas dado el consentimiento correspondiente.",
     "termsConsentPrefix": "He leído y acepto las",
     "termsConsentLink": "Condiciones de compra",
+    "combinedConsentSuffix": "y quiero entrega digital inmediata.",
+    "combinedConsentNotice": "Reconozco que, una vez iniciada la entrega, pierdo el derecho de desistimiento.",
     "digitalContentConsentShortLabel": "Quiero entrega digital inmediata.",
     "digitalContentConsentLabel": "Solicito expresamente la entrega digital inmediata antes de que termine el plazo de desistimiento y reconozco que, una vez iniciada la entrega, pierdo el derecho de desistimiento.",
     "optionalEyebrow": "Opcional",
     "registryConsentLabel": "Acepto que el nombre del titular del certificado y los datos aprobados del registro puedan aparecer en el Registro Diplomático público.",
-    "registryConsentHint": "Esta casilla del registro es opcional. Déjala sin marcar si el registro debe permanecer privado; los controles privados estarán disponibles más tarde a través del enlace de acceso al certificado.",
+    "registryConsentHint": "Desmarca para mantener el registro privado. Podrás cambiarlo después desde el enlace del certificado.",
+    "combinedConsentRequiredError": "Confirma las Condiciones de compra y la entrega digital inmediata antes de continuar.",
     "termsRequiredError": "Confirma las Condiciones de compra antes de continuar.",
     "digitalContentConsentRequiredError": "Confirma la entrega digital inmediata antes de continuar.",
     "dedicationTooLongError": "La dedicatoria es demasiado larga. Mejor breve y con porte de certificado.",

@@ -187,33 +187,33 @@
     "membershipSection": {
       "label": "Certificates",
       "title": "Choose the paperwork that best matches the situation.",
-      "description": "Whether you are clearing a friend, declaring someone non-snack, or protecting an aggressively land-based room, the Alliance has a form for that.",
+      "description": "All three are personalized and delivered digitally. The real difference is conservation allocation, ceremonial status, and whether the Bureau is clearing a human or a place.",
       "popularBadge": "Most Popular",
       "protectedTitle": "Protected Friend Status",
       "protectedPrice": "$4",
-      "protectedDescription": "For everyday humans who need friendly shark-facing paperwork. Personal, giftable, and official-looking enough to raise polite questions at work.",
+      "protectedDescription": "The everyday certificate. Personalized, giftable, and official-looking enough to raise polite questions at work. One dollar of it is set aside for shark conservation.",
       "protectedFeatures": [
-        "Personalized certificate",
-        "Protected Friend status",
-        "Instant digital delivery"
+        "Personalized digital certificate",
+        "$1 to conservation",
+        "Instant download — print and frame"
       ],
       "protectedCta": "File the paperwork — $4",
       "nonsnackTitle": "Non-Snack Recognition",
       "nonsnackPrice": "$19",
-      "nonsnackDescription": "For humans who would prefer to be documented as a person, not a snack. Same official-ish paperwork energy, slightly stronger anti-appetizer positioning.",
+      "nonsnackDescription": "The same certificate, with louder conviction. For humans who would rather be filed as a person than a snack — and want a bigger share going to the sharks.",
       "nonsnackFeatures": [
-        "Personalized digital certificate",
-        "Non-Snack Recognition status",
-        "Higher shark conservation allocation"
+        "Everything in Protected Friend",
+        "$12 to conservation — 12x basic allocation",
+        "More serious official status"
       ],
       "nonsnackCta": "Upgrade to Non-Snack — $19",
       "businessTitle": "Shark-Free Zone",
       "businessPrice": "$99",
-      "businessDescription": "For offices, cafés, studios, meeting rooms, and other aggressively land-based spaces seeking formal confirmation that sharks are not expected to operate there.",
+      "businessDescription": "A certificate for a place, not a person. Formally declares an office, café, or aggressively land-based room off the shark menu — and sends the most to conservation.",
       "businessFeatures": [
-        "Business-facing wall certificate",
-        "Shark-Free Zone status",
-        "Highest conservation allocation"
+        "Business or space certificate",
+        "$70 to conservation — most of any tier",
+        "Highest Bureau recognition"
       ],
       "businessCta": "Certify the zone — $99",
       "businessEyebrow": "For businesses",
@@ -428,31 +428,31 @@
     ],
     "tiersLabel": "First, choose the level",
     "tiersTitle": "Pick the certificate tier that matches the situation.",
-    "tiersDescription": "This is the real product choice. All three are personalized, delivered digitally, and tied to real conservation support. The difference is how much recognition, ceremony, or commercial usefulness you want attached to it.",
+    "tiersDescription": "This is the real product choice. All three are personalized, delivered digitally, and tied to real conservation support. The difference is how much goes to sharks, how official the title sounds, and whether the certificate is for a person or a place.",
     "protectedTitle": "Protected Friend Status",
-    "protectedDescription": "A polished entry point for shark lovers, beach-fearers, and suspiciously good gift buyers. Funny, personal, and surprisingly frameable.",
+    "protectedDescription": "The everyday certificate. Personalized, giftable, and official-looking enough to raise polite questions at work. One dollar of it is set aside for shark conservation.",
     "protectedFeatures": [
       "Personalized digital certificate",
-      "Optional public registry listing",
-      "Instant delivery for gifts and last-minute diplomacy"
+      "$1 to conservation",
+      "Instant download — print and frame"
     ],
     "protectedCta": "Start with Protected Friend — $4",
     "protectedPopular": "Most popular",
     "protectedDetailLink": "Why Protected Friend is the usual starting point",
     "nonsnackTitle": "Non-Snack Recognition",
-    "nonsnackDescription": "For buyers who want stronger ceremonial energy, a better framed punchline, and official recognition of their obvious non-edibility.",
+    "nonsnackDescription": "The same certificate, with louder conviction. For humans who would rather be filed as a person than a snack — and want a bigger share going to the sharks.",
     "nonsnackFeatures": [
-      "Premium certificate feel",
-      "Official Non-Snack status",
-      "Excellent choice for dramatic friends"
+      "Everything in Protected Friend",
+      "$12 to conservation — 12x basic allocation",
+      "More serious official status"
     ],
     "nonsnackCta": "Get the Non-Snack version — $19",
     "businessTitle": "Shark-Free Zone",
-    "businessDescription": "For cafés, studios, offices, and institutions ready to display certified shark-free confidence with complete administrative seriousness.",
+    "businessDescription": "A certificate for a place, not a person. Formally declares an office, café, or aggressively land-based room off the shark menu — and sends the most to conservation.",
     "businessFeatures": [
-      "Business-facing certificate",
-      "Wall-art level absurd credibility",
-      "Ideal for teams, venues, and shark-adjacent prestige"
+      "Business or space certificate",
+      "$70 to conservation — most of any tier",
+      "Highest Bureau recognition"
     ],
     "businessCta": "Certify your office — $99",
     "includedLabel": "What you actually get",
@@ -478,7 +478,7 @@
         "label": "Certificate style",
         "protected": "Personalized digital certificate",
         "nonsnack": "More ceremonial premium certificate",
-        "business": "Business-facing wall certificate"
+        "business": "Business or space certificate"
       },
       {
         "label": "Best for",
@@ -637,13 +637,19 @@
       "privacyLink": "Privacy Policy",
       "refundLink": "refund and correction policy"
     },
+    "stepCertificate": "Your certificate",
+    "stepDelivery": "Delivery",
+    "stepConfirmPay": "Confirm & pay",
     "nameLabel": "Name on the certificate",
     "namePlaceholder": "e.g. Captain James Coral",
     "giftToggle": "This is a gift",
     "recipientEmailLabel": "Recipient email",
     "recipientEmailPlaceholder": "friend@email.com",
+    "dedicationToggle": "Add a dedication (optional)",
+    "editDedicationToggle": "Edit dedication",
     "dedicationLabel": "Dedication (optional)",
     "dedicationPlaceholder": "e.g. For remaining technically uneaten since 1987",
+    "dedicationSuggestionPlaceholder": "Use a suggested dedication",
     "dedicationSuggestions": {
       "0": "For surviving every beach vacation with suspicious confidence",
       "1": "Officially less snack-adjacent than yesterday",
@@ -655,6 +661,7 @@
     "previewName": "Your Name Here",
     "businessNameLabel": "Business or venue name",
     "businessNamePlaceholder": "e.g. Sunset Beach Surf School",
+    "businessDedicationToggle": "Add a tagline or location (optional)",
     "businessDedicationLabel": "Tagline or location (optional)",
     "businessDedicationPlaceholder": "e.g. Proudly shark-free since 2026",
     "emailLabel": "Email for certificate delivery",
@@ -666,8 +673,9 @@
     "noEmailAddEmail": "Add email for later access",
     "promoCodeLabel": "Promo code",
     "promoCodePlaceholder": "Enter code",
-    "stripeSecure": "Encrypted checkout. Powered by Stripe.",
-    "stripeSecureNote": "Even sharks know not to mess with payment infrastructure.",
+    "stripeSecure": "Secure checkout via Stripe.",
+    "stripeSecureNote": "Card details are handled by Stripe and never stored by Shark Human Alliance. Even sharks know not to mess with payment infrastructure.",
+    "stripeSecureInline": "Secure payment on Stripe. We never see your card. Even sharks know not to mess with payment infrastructure.",
     "secureBadgeCard": "Card payment",
     "secureBadgeStripe": "Stripe checkout",
     "submitButton": "Review order",
@@ -723,7 +731,9 @@
     "downloadOnlyNotice": "Save your PDF now. This download link is temporary.",
     "recipientEmailHint": "Use this if you’d like us to send the certificate directly.",
     "paperSizeLabel": "Paper size",
-    "paperSizeHint": "Print at Actual Size / 100% for the best result.",
+    "paperSizeHint": "Auto-selected from your browser region. Print at Actual Size / 100%.",
+    "changePaperSize": "Change",
+    "hidePaperSize": "Done",
     "paperSizes": {
       "a4": {
         "label": "A4",
@@ -840,11 +850,14 @@
     "registryPrivateNotice": "Your record is currently private and will not appear in the public registry unless you opted in.",
     "termsConsentPrefix": "I have read and agree to the",
     "termsConsentLink": "Terms & Purchase Conditions",
+    "combinedConsentSuffix": "and want immediate digital delivery.",
+    "combinedConsentNotice": "I acknowledge that once delivery begins, the right to withdraw is lost.",
     "digitalContentConsentShortLabel": "I want immediate digital delivery.",
     "digitalContentConsentLabel": "I expressly request immediate digital delivery before the withdrawal period ends and acknowledge that, once delivery begins, the right to withdraw is lost.",
     "optionalEyebrow": "Optional",
     "registryConsentLabel": "I agree that the certificate holder's name and approved record details may appear in the public Diplomatic Registry.",
-    "registryConsentHint": "This registry checkbox is optional. Leave it unchecked if the record should stay private; dedicated record controls are available later through the certificate access link.",
+    "registryConsentHint": "Uncheck to keep the record private. You can change this later from the certificate link.",
+    "combinedConsentRequiredError": "Please confirm the Terms & Purchase Conditions and immediate digital delivery before continuing.",
     "termsRequiredError": "Please confirm the Terms & Purchase Conditions before continuing.",
     "digitalContentConsentRequiredError": "Please confirm immediate digital delivery before continuing.",
     "dedicationTooLongError": "Dedication is too long. Keep it short and certificate-sized.",

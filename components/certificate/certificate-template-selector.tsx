@@ -14,22 +14,18 @@ export function CertificateTemplateSelector({ value, onChange }: Props) {
   const options: Array<{
     value: CertificateTemplate;
     title: string;
-    description: string;
   }> = [
     {
       value: "luxury",
       title: t("luxury.title"),
-      description: t("luxury.description"),
     },
     {
       value: "classic",
       title: t("classic.title"),
-      description: t("classic.description"),
     },
     {
       value: "playful",
       title: t("playful.title"),
-      description: t("playful.description"),
     },
   ];
 
@@ -45,7 +41,6 @@ export function CertificateTemplateSelector({ value, onChange }: Props) {
           onClick={() => onChange(option.value)}
         >
           <div className="certificate-template-card__title">{option.title}</div>
-          <div className="certificate-template-card__desc">{option.description}</div>
         </button>
       ))}
     </div>

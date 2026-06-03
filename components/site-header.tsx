@@ -97,12 +97,6 @@ export function SiteHeader() {
             <LanguageSwitcher />
           </Suspense>
           <LocalizedLink
-            href="/purchase?gift=true"
-            className="hidden min-h-10 whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] min-[1120px]:inline-flex"
-          >
-            {t("giftCta")}
-          </LocalizedLink>
-          <LocalizedLink
             href="/purchase?tier=protected"
             className="hidden min-h-11 whitespace-nowrap rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:inline-flex sm:min-h-10"
           >

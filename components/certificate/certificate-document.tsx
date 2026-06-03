@@ -233,11 +233,8 @@ export function CertificateDocument({
 
           <div className="lux-a4-status-label">{statusLabel}</div>
 
-          {/* Decorative flourishes flanking the tier status — engraved feel. */}
           <div className={`lux-a4-status ${tierColorClass}`}>
-            <span className="lux-a4-status-flourish" aria-hidden="true">✦</span>
             <span className="lux-a4-status-text">{statusText}</span>
-            <span className="lux-a4-status-flourish" aria-hidden="true">✦</span>
           </div>
 
           <div className="lux-a4-body">{bodyText}</div>

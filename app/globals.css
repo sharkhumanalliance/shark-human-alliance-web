@@ -1843,10 +1843,7 @@ textarea:focus-visible {
   );
 }
 
-/* Status line — the tier label flanked by gold flourishes. The wrapper
-   becomes a flexbox so the ✦ glyphs stay centred and equidistant from
-   the status text; the previous text-stroke technique is replaced by a
-   subtle gold drop-shadow that survives high-DPI print better. */
+/* Status line — the tier label set as a clean centered luxury title. */
 .certificate-page--luxury.certificate-page--paper-a4 .lux-a4-status {
   top: 44.4%;
   left: 50%;
@@ -1855,7 +1852,6 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: calc(2.6 * var(--u));
   font-family: var(--font-cinzel), "Cinzel", serif;
   font-size: calc(5.2 * var(--u));
   font-weight: 800;
@@ -1883,29 +1879,16 @@ textarea:focus-visible {
   paint-order: stroke fill;
 }
 
-.lux-a4-status-flourish {
-  display: inline-block;
-  font-family: var(--font-cinzel), serif;
-  font-size: calc(2.6 * var(--u));
-  font-weight: 400;
-  letter-spacing: 0;
-  color: rgba(178, 151, 101, 0.92);
-  line-height: 1;
-  flex: 0 0 auto;
-}
-
 .certificate-page--luxury.certificate-page--paper-a4 .lux-a4-status.certificate-tier--nonsnack {
   width: 90%;
   font-size: calc(4.0 * var(--u));
   letter-spacing: 0.12em;
-  gap: calc(2.0 * var(--u));
 }
 
 .certificate-page--luxury.certificate-page--paper-a4 .lux-a4-status.certificate-tier--business {
   width: 90%;
   font-size: calc(4.6 * var(--u));
   letter-spacing: 0.14em;
-  gap: calc(2.2 * var(--u));
 }
 
 /* Body paragraph — switched from italic 700 to regular 500 so the italic
@@ -2883,16 +2866,15 @@ textarea:focus-visible {
 .certificate-template-card {
   appearance: none;
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  justify-content: flex-start;
-  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
   height: 100%;
   border: 1.5px solid var(--border, rgba(23, 50, 75, 0.14));
   border-radius: 12px;
   background: white;
-  padding: 8px 9px;
-  text-align: left;
+  padding: 8px 10px;
+  text-align: center;
   cursor: pointer;
   transition:
     border-color 140ms ease,
@@ -2923,30 +2905,14 @@ textarea:focus-visible {
   text-wrap: balance;
 }
 
-.certificate-template-card__desc {
-  margin-top: 0;
-  color: #5f7892;
-  font-size: 10px;
-  line-height: 1.25;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  text-wrap: pretty;
-}
-
 @media (min-width: 560px) {
   .certificate-template-card {
-    min-height: 82px;
-    gap: 5px;
-    padding: 12px 15px;
+    min-height: 48px;
+    padding: 11px 15px;
   }
 
   .certificate-template-card__title {
     font-size: 16px;
-  }
-
-  .certificate-template-card__desc {
-    margin-top: 0;
-    font-size: 12px;
   }
 }
 
