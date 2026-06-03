@@ -724,8 +724,8 @@
     "referralText": "Comparte tu enlace de referido con amigos. Cada recluta te sube de rango y hace que tu papeleo parezca cada vez más importante.",
     "referralCodeLabel": "Código de referido",
     "referralProgressLabel": "Progreso de rango",
-    "referralLinkLabel": "Enlace de referido",
-    "referralCopy": "Copiar",
+    "referralLinkLabel": "Código de referido",
+    "referralCopy": "Copiar enlace de referido",
     "referralCareerLink": "Ver el escalafón completo",
     "referralWantedPoster": "Crear póster Wanted",
     "downloadOnlyNotice": "Guarda tu PDF ahora. Este enlace de descarga es temporal.",
@@ -844,7 +844,12 @@
           "nativeText": "Esta zona ya es libre de tiburones, administrativamente hablando. Shark Human Alliance la ha dejado archivada."
         }
       },
-      "compactEyebrow": "Comparte la noticia"
+      "compactEyebrow": "Comparte la noticia",
+      "compactTitle": "Ahora difunde el papeleo.",
+      "compactDescription": "La mayoría de humanos que conoces sigue peligrosamente indocumentada.",
+      "wantedCompactTitle": "Alguien que conoces sigue sin papeleo.",
+      "wantedCompactText": "La Oficina puede ayudar.",
+      "wantedCompactButton": "Abrir un caso Wanted"
     },
     "manageRecord": "Gestionar visibilidad del registro",
     "registryPrivateNotice": "Tu registro es actualmente privado y no aparecerá en el registro público salvo que hayas dado el consentimiento correspondiente.",
@@ -870,8 +875,8 @@
     "downloadCertHero": "Descargar certificado ({paper})",
     "previewCustomizeLink": "Previsualizar y personalizar antes de descargar",
     "impactEyebrow": "Tu contribución",
-    "impactText": "<strong>{donation}</strong> va directo a la conservación de tiburones. Registrado y reportado en la próxima actualización pública de asignaciones.",
-    "impactTrackingLabel": "ID de seguimiento",
+    "impactText": "<strong>{donation}</strong> va directo a la conservación de tiburones. Registrado para el próximo informe público de asignaciones.",
+    "impactTrackingLabel": "ID de registro",
     "impactLink": "Ver adónde va el dinero",
     "manageRecordTitle": "Gestiona tu registro",
     "secondaryRegistryDesc": "Abre tu ficha en el Registro Diplomático público.",

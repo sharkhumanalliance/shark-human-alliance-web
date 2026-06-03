@@ -706,52 +706,6 @@ function SuccessContentInner() {
           }}
         />
 
-        {/* Manage record — inline horizontal row of links. */}
-        <nav
-          className="mt-2 border-b border-[var(--border)] py-4"
-          aria-label={t("manageRecordTitle")}
-        >
-          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-sm">
-            {member.registryVisibility === "public" ? (
-              <>
-                <LocalizedLink
-                  href={`/registry?highlight=${encodeURIComponent(publicRegistryId)}`}
-                  className="font-semibold text-[var(--brand-dark)] underline-offset-4 hover:underline"
-                >
-                  {t("viewRegistry")}
-                </LocalizedLink>
-                <span aria-hidden="true" className="text-[var(--muted)]">
-                  ·
-                </span>
-              </>
-            ) : null}
-            {member.accessToken ? (
-              <>
-                <LocalizedLink
-                  href={`/certificate/view?token=${member.accessToken}#record-controls`}
-                  className="font-semibold text-[var(--brand-dark)] underline-offset-4 hover:underline"
-                >
-                  {t("manageRecord")}
-                </LocalizedLink>
-                <span aria-hidden="true" className="text-[var(--muted)]">
-                  ·
-                </span>
-              </>
-            ) : null}
-            <LocalizedLink
-              href="/wanted"
-              className="font-semibold text-[var(--brand-dark)] underline-offset-4 hover:underline"
-            >
-              {t("referralWantedPoster")}
-            </LocalizedLink>
-          </div>
-          {member.registryVisibility !== "public" ? (
-            <p className="mt-2 text-center text-xs leading-5 text-[var(--muted)]">
-              {t("registryPrivateNotice")}
-            </p>
-          ) : null}
-        </nav>
-
         {/* Referral — compact one-liner status + progress + link. */}
         {member.referralCode && (
           <section className="mt-8 pb-2">
@@ -807,23 +761,18 @@ function SuccessContentInner() {
               </div>
             </div>
 
-            <div className="mt-4 flex flex-col items-stretch gap-3 rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 sm:flex-row sm:items-center sm:px-4">
-              <label htmlFor="referral-link" className="sr-only">
-                {t("referralLinkLabel")}
-              </label>
-              <input
-                id="referral-link"
-                type="text"
-                value={referralHref}
-                readOnly
-                aria-label={t("referralLinkLabel")}
-                className="min-w-0 flex-grow bg-transparent text-sm font-mono leading-6 text-[var(--brand-dark)] focus:outline-none"
-              />
+            <div className="mt-4 flex flex-col items-stretch gap-3 rounded-xl border border-[var(--border)] bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+                  {t("referralLinkLabel")}
+                </p>
+                <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
+                  {member.referralCode}
+                </p>
+              </div>
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText(
-                    `${window.location.origin}${buildLocalizedPath(locale, buildReferralHref(member.referralCode))}`
-                  );
+                  navigator.clipboard.writeText(referralHref);
                   setLinkCopied(true);
                   setDownloadStatus("");
                   trackEvent("referral_link_copy", { tier: publicTier });
@@ -846,14 +795,46 @@ function SuccessContentInner() {
           </section>
         )}
 
-        <div className="mt-8 text-center">
+        <nav
+          className="mt-8 border-t border-[var(--border)] pt-5 text-center"
+          aria-label={t("manageRecordTitle")}
+        >
+          {member.registryVisibility !== "public" ? (
+            <p className="mx-auto mb-3 max-w-xl text-xs leading-5 text-[var(--muted)]">
+              {t("registryPrivateNotice")}
+            </p>
+          ) : null}
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-[var(--muted)]">
+            {member.registryVisibility === "public" ? (
+              <>
+                <LocalizedLink
+                  href={`/registry?highlight=${encodeURIComponent(publicRegistryId)}`}
+                  className="transition hover:text-[var(--brand-dark)]"
+                >
+                  {t("viewRegistry")}
+                </LocalizedLink>
+                <span aria-hidden="true">{"·"}</span>
+              </>
+            ) : null}
+            {member.accessToken ? (
+              <>
+                <LocalizedLink
+                  href={`/certificate/view?token=${member.accessToken}#record-controls`}
+                  className="transition hover:text-[var(--brand-dark)]"
+                >
+                  {t("manageRecord")}
+                </LocalizedLink>
+                <span aria-hidden="true">{"·"}</span>
+              </>
+            ) : null}
           <LocalizedLink
             href="/"
-            className="text-sm text-[var(--muted)] transition hover:text-[var(--brand-dark)]"
+              className="transition hover:text-[var(--brand-dark)]"
           >
             {t("backHome")}
           </LocalizedLink>
-        </div>
+          </div>
+        </nav>
       </div>
     </section>
   );

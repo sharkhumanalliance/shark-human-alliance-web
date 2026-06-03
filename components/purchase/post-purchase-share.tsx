@@ -15,8 +15,8 @@ interface PostPurchaseShareProps {
   };
   /**
    * "full"    — original layout with Story preview, headings and Wanted Poster CTAs.
-   * "compact" — single horizontal action row used on the redesigned success page
-   *             where the Hero already owns the primary action.
+   * "compact" — streamlined growth block used on the redesigned success page
+   *             where the Hero already owns the certificate download.
    */
   variant?: "full" | "compact";
 }
@@ -492,47 +492,59 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
   }
 
   if (variant === "compact") {
-    // Compact share row used on the redesigned success page. The Hero already
-    // owns the primary action (Download certificate), so this strip is only a
-    // secondary "share what you just got" affordance — no Story mock-up, no
-    // Wanted Poster CTAs (those live in the dedicated secondary actions card).
+    // Compact growth block used on the redesigned success page. The Hero owns
+    // the certificate download, so this section pushes the share loop and the
+    // free Wanted case without repeating the main purchase CTA.
     return (
       <section
         data-reveal
-        className="mt-6 border-y border-[var(--border)] py-4"
+        className="mt-6 border-y border-[var(--border)] py-5 sm:py-6"
       >
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)] shrink-0">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.72fr)] lg:items-stretch">
+          <div className="min-w-0">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
             {t("compactEyebrow")}
           </p>
-          <div className="flex flex-1 flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                void shareStory();
-              }}
-              disabled={isBusy}
-              className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md border border-[var(--brand)] bg-[var(--brand)] px-4 py-2 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {isBusy && !storyFileReady ? t("working") : shareButtonLabel}
-            </button>
+          <h2 className="mt-2 text-xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-2xl">
+            {t("compactTitle")}
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted)]">
+            {t("compactDescription")}
+          </p>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             <button
               type="button"
               onClick={() => {
                 void downloadStory();
               }}
               disabled={isBusy}
-              className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-[var(--brand)] bg-[var(--brand)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              <span className="sm:hidden">{t("openStoryImageButton")}</span>
-              <span className="hidden sm:inline">{t("downloadButton")}</span>
+              {isBusy && !storyFileReady ? (
+                t("working")
+              ) : (
+                <>
+                  <span className="sm:hidden">{t("openStoryImageButton")}</span>
+                  <span className="hidden sm:inline">{t("downloadButton")}</span>
+                </>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                void shareStory();
+              }}
+              disabled={isBusy}
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-[var(--brand)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {isBusy && !storyFileReady ? t("working") : shareButtonLabel}
             </button>
             <button
               type="button"
               onClick={() => {
                 void copyLink();
               }}
-              className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
             >
               {copyState === "done"
                 ? t("copySuccess")
@@ -541,6 +553,23 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
                 : t("copyButton")}
             </button>
           </div>
+          </div>
+          <LocalizedLink
+            href="/wanted"
+            className="flex h-full flex-col justify-between rounded-xl border border-[var(--accent)]/35 bg-[var(--accent)]/5 px-4 py-4 transition hover:border-[var(--accent)]/60 hover:bg-[var(--accent)]/10"
+          >
+            <span>
+              <span className="block text-sm font-semibold text-[var(--brand-dark)]">
+                {t("wantedCompactTitle")}
+              </span>
+              <span className="mt-1 block text-sm leading-6 text-[var(--muted)]">
+                {t("wantedCompactText")}
+              </span>
+            </span>
+            <span className="mt-3 inline-flex items-center text-sm font-semibold text-[var(--accent-dark)]">
+              {t("wantedCompactButton")} <span aria-hidden="true" className="ml-1">{"->"}</span>
+            </span>
+          </LocalizedLink>
         </div>
         {shareHint ? (
           <p

@@ -724,8 +724,8 @@
     "referralText": "Share your referral link with friends. Every recruit moves you up the ranks and makes your paperwork look increasingly senior.",
     "referralCodeLabel": "Referral code",
     "referralProgressLabel": "Rank progress",
-    "referralLinkLabel": "Referral link",
-    "referralCopy": "Copy",
+    "referralLinkLabel": "Referral code",
+    "referralCopy": "Copy referral link",
     "referralCareerLink": "See the full career ladder",
     "referralWantedPoster": "Make a Wanted poster",
     "downloadOnlyNotice": "Save your PDF now. This download link is temporary.",
@@ -844,7 +844,12 @@
           "nativeText": "This zone is now shark-free, administratively speaking. Shark Human Alliance has placed it on file."
         }
       },
-      "compactEyebrow": "Share the news"
+      "compactEyebrow": "Share the news",
+      "compactTitle": "Now spread the paperwork.",
+      "compactDescription": "Most humans you know remain dangerously undocumented.",
+      "wantedCompactTitle": "Someone you know is still paperwork-free.",
+      "wantedCompactText": "The Bureau can help.",
+      "wantedCompactButton": "Open a Wanted case"
     },
     "manageRecord": "Manage record visibility",
     "registryPrivateNotice": "Your record is currently private and will not appear in the public registry unless you opted in.",
@@ -870,8 +875,8 @@
     "downloadCertHero": "Download certificate ({paper})",
     "previewCustomizeLink": "Preview & customize before downloading",
     "impactEyebrow": "Your contribution",
-    "impactText": "<strong>{donation}</strong> goes to shark conservation. Tracked and reported in the next public allocation update.",
-    "impactTrackingLabel": "Tracking ID",
+    "impactText": "<strong>{donation}</strong> goes to shark conservation. Recorded for the next public allocation report.",
+    "impactTrackingLabel": "Registry ID",
     "impactLink": "See where the money goes",
     "manageRecordTitle": "Manage your record",
     "secondaryRegistryDesc": "Open your record in the public Diplomatic Registry.",
