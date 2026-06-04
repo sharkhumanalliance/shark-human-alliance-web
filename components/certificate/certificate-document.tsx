@@ -85,6 +85,7 @@ export function CertificateDocument({
   const bodyText = copy.bodies[tierKey];
   const ribbonStatusText = copy.ribbonLabels[tierKey];
   const filedUnderText = copy.filedUnderLabels[tierKey];
+  const dedicationLabel = copy.dedicationLabels[tierKey];
   const tierColorClass = getTierColorClass(tier);
   const dedicationText = dedication?.trim() ?? "";
   const playfulRecipientClassName = [
@@ -286,7 +287,7 @@ export function CertificateDocument({
             <p>{diplomaticAssessment}</p>
             <p className="lux-a4-remarks-note">
               <span>
-                {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+                {dedicationText ? dedicationLabel : copy.marineNoteLabel}
               </span>
               {dedicationText || diplomaticNote}
             </p>
@@ -347,7 +348,7 @@ export function CertificateDocument({
               line of copy. */}
           <div className="lux-dedication-block">
             <span className="lux-dedication-label">
-              {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+              {dedicationText ? dedicationLabel : copy.marineNoteLabel}
             </span>
             <span className="lux-dedication-text">
               &ldquo;{dedicationText || diplomaticNote}&rdquo;
@@ -451,7 +452,7 @@ export function CertificateDocument({
           </div>
           <div className="cls-remarks-right">
             <div className="cls-remarks-heading">
-              {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+              {dedicationText ? dedicationLabel : copy.marineNoteLabel}
             </div>
             <p>&ldquo;{dedicationText || diplomaticNote}&rdquo;</p>
           </div>
@@ -525,7 +526,7 @@ export function CertificateDocument({
 
           <div className="playful-box playful-box--note">
             <div className="playful-box-label">
-              {dedicationText ? copy.dedicationLabel : copy.marineNoteLabel}
+              {dedicationText ? dedicationLabel : copy.marineNoteLabel}
             </div>
             <p>{dedicationText || diplomaticNote}</p>
           </div>

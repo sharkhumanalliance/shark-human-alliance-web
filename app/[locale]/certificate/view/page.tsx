@@ -8,11 +8,15 @@ import {
 } from "@/components/certificate/certificate-document";
 import { CertificateSheet, type PaperFormat } from "@/components/certificate/certificate-sheet";
 import { CertificateAccessPanel } from "@/components/certificate/certificate-access-panel";
+import { CertificateDownloadControls } from "@/components/certificate/certificate-download-controls";
 import { CertificatePrintTrigger } from "@/components/certificate/certificate-print-trigger";
 import { getMemberByAccessToken } from "@/lib/members";
 import { getDevPromoMemberByAccessToken } from "@/lib/dev-promo-store";
 import { getPublicTierKey } from "@/lib/tiers";
-import { normalizePaperFormatForTemplate } from "@/lib/certificate-paper";
+import {
+  isPaperFormatAvailableForTemplate,
+  normalizePaperFormatForTemplate,
+} from "@/lib/certificate-paper";
 import { formatRegistryIdForDisplay } from "@/lib/registry-id";
 
 type Props = {
@@ -71,11 +75,25 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
   );
 
   const pageSizeCss = paperFormat === "letter" ? "Letter portrait" : "A4 portrait";
+  const buildPaperHref = (nextPaper: PaperFormat) => {
+    const params = new URLSearchParams({
+      token,
+      template,
+      paper: nextPaper,
+    });
+    return `/certificate/view?${params.toString()}`;
+  };
 
   return (
     <main className="min-h-screen bg-white px-4 py-6 print:block print:bg-white print:p-0">
       <CertificatePrintTrigger enabled={autoPrint} />
       <style media="print">{`@page { size: ${pageSizeCss}; margin: 0; }`}</style>
+      <CertificateDownloadControls
+        paperFormat={paperFormat}
+        a4Href={buildPaperHref("a4")}
+        letterHref={buildPaperHref("letter")}
+        isLetterAvailable={isPaperFormatAvailableForTemplate(template, "letter")}
+      />
       <div className="flex items-start justify-center">
         <CertificateSheet
           paperFormat={paperFormat}

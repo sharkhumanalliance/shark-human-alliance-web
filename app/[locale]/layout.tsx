@@ -91,8 +91,9 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   alternates: {
     languages: {
-      en: "/en",
-      es: "/es",
+      en: `${BASE_URL}/en`,
+      es: `${BASE_URL}/es`,
+      "x-default": `${BASE_URL}/en`,
     },
   },
 };
@@ -118,85 +119,13 @@ function JsonLd() {
     email: "sharkhumanalliance@gmail.com",
   };
 
-  const productSchema = {
+  const websiteSchema = {
     "@context": "https://schema.org",
-    "@type": "Product",
-    name: "Protected Friend Certificate",
-    description:
-      "A funny personalized certificate that protects sharks more than it protects you. Official-ish, printable, and conservation-positive.",
-    image: `${BASE_URL}/mascots/homepage-hero-plush.png`,
-    brand: { "@type": "Brand", name: "Shark Human Alliance" },
-    offers: [
-      {
-        "@type": "Offer",
-        name: "Protected Friend",
-        price: "4.00",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock",
-        url: `${BASE_URL}/en/purchase?tier=protected`,
-        shippingDetails: {
-          "@type": "OfferShippingDetails",
-          shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
-          deliveryTime: {
-            "@type": "ShippingDeliveryTime",
-            handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
-            transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
-          },
-          shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
-        },
-        hasMerchantReturnPolicy: {
-          "@type": "MerchantReturnPolicy",
-          applicableCountry: "US",
-          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
-        },
-      },
-      {
-        "@type": "Offer",
-        name: "Non-Snack Recognition",
-        price: "19.00",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock",
-        url: `${BASE_URL}/en/purchase?tier=nonsnack`,
-        shippingDetails: {
-          "@type": "OfferShippingDetails",
-          shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
-          deliveryTime: {
-            "@type": "ShippingDeliveryTime",
-            handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
-            transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
-          },
-          shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
-        },
-        hasMerchantReturnPolicy: {
-          "@type": "MerchantReturnPolicy",
-          applicableCountry: "US",
-          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
-        },
-      },
-      {
-        "@type": "Offer",
-          name: "Shark-Free Zone",
-        price: "99.00",
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock",
-        url: `${BASE_URL}/en/purchase?tier=business`,
-        shippingDetails: {
-          "@type": "OfferShippingDetails",
-          shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },
-          deliveryTime: {
-            "@type": "ShippingDeliveryTime",
-            handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
-            transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
-          },
-          shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
-        },
-        hasMerchantReturnPolicy: {
-          "@type": "MerchantReturnPolicy",
-          applicableCountry: "US",
-          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
-        },
-      },
-    ],
+    "@type": "WebSite",
+    name: "Shark Human Alliance",
+    url: BASE_URL,
+    publisher: { "@type": "Organization", name: "Shark Human Alliance" },
+    inLanguage: ["en", "es"],
   };
 
   return (
@@ -207,7 +136,7 @@ function JsonLd() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
     </>
   );

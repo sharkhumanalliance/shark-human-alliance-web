@@ -19,7 +19,7 @@
     "yourTurnLabel": "Your turn",
     "yourTurnText": "Know someone else who's dangerously unprotected? Return the favor.",
     "protectBackCta": "Protect someone back",
-    "wantedCta": "Make a Wanted poster",
+    "wantedCta": "Make a Wanted Poster",
     "exploreCta": "Explore the Alliance →"
   },
   "seo": {
@@ -53,7 +53,7 @@
     },
     "wanted": {
       "title": "Free Shark Wanted Poster Generator",
-      "description": "Create a funny shark-themed Wanted poster for an unprotected human. Share the accusation, then close the case with official-ish shark paperwork."
+      "description": "Create a funny shark-themed Wanted Poster for an unprotected human. Share the accusation, then close the case with official-ish shark paperwork."
     },
     "wantedCase": {
       "title": "Active Shark-Human Compliance Case",
@@ -144,7 +144,7 @@
     "ctaPrimary": "File shark paperwork",
     "ctaSecondary": "Preview the certificate",
     "giftTeaserLink": "Send one as a gift",
-    "wantedTeaserLink": "Generate a Wanted poster",
+    "wantedTeaserLink": "Generate a Wanted Poster",
     "socialProof": "Join the Alliance",
     "giftBadge": "Snack status: under review",
     "finnleyName": "Finnley Mako",
@@ -374,8 +374,8 @@
         "answer": "Yes. Shark-Free Zone is built for offices, cafes, studios, meeting rooms, and other places where sharks are not expected but paperwork still improves morale."
       },
       {
-        "question": "Is the Wanted poster free?",
-        "answer": "Yes. The Wanted poster is free to generate and share. If the situation becomes administratively serious, you can close the case with a Protected Friend certificate."
+        "question": "Is the Wanted Poster free?",
+        "answer": "Yes. The Wanted Poster is free to generate and share. If the situation becomes administratively serious, you can close the case with a Protected Friend certificate."
       },
       {
         "question": "Do I need to fill out Form FIN-1 manually?",
@@ -659,6 +659,7 @@
     },
     "livePreview": "Certificate preview",
     "previewName": "Your Name Here",
+    "businessPreviewName": "Business Name Here",
     "businessNameLabel": "Business or venue name",
     "businessNamePlaceholder": "e.g. Sunset Beach Surf School",
     "businessDedicationToggle": "Add a tagline or location (optional)",
@@ -676,6 +677,7 @@
     "stripeSecure": "Secure checkout via Stripe.",
     "stripeSecureNote": "Card details are handled by Stripe and never stored by Shark Human Alliance. Even sharks know not to mess with payment infrastructure.",
     "stripeSecureInline": "Secure payment on Stripe. We never see your card. Even sharks know not to mess with payment infrastructure.",
+    "checkoutTrustLine": "Instant PDF delivery. Tracked conservation allocation by tier.",
     "secureBadgeCard": "Card payment",
     "secureBadgeStripe": "Stripe checkout",
     "submitButton": "Review order",
@@ -727,7 +729,7 @@
     "referralLinkLabel": "Referral code",
     "referralCopy": "Copy referral link",
     "referralCareerLink": "See the full career ladder",
-    "referralWantedPoster": "Make a Wanted poster",
+    "referralWantedPoster": "Make a Wanted Poster",
     "downloadOnlyNotice": "Save your PDF now. This download link is temporary.",
     "recipientEmailHint": "Use this if you’d like us to send the certificate directly.",
     "paperSizeLabel": "Paper size",
@@ -899,7 +901,7 @@
     "title": "The Diplomatic Registry",
     "subtitle": "An official-ish record of humans whose shark-related paperwork is, for once, in order.",
     "description": "Everyone listed here has filed enough shark-facing paperwork to appear in the public record. The Alliance is fictional. The shark conservation allocation is real, tracked, and reported publicly. The status is symbolic, legally meaningless, scientifically unverified, and aesthetically difficult to dispute.",
-    "loadingText": "Searching the oceanic archives... Careful, some records may have been nibbled.",
+    "loadingText": "Searching the oceanic archives… Careful, some records may have been nibbled.",
     "countLabel": "registered diplomats",
     "mobileStatTotal": "Total",
     "mobileStatFriends": "Friends",
@@ -966,7 +968,7 @@
       "3": "Knows where the stamp is kept."
     },
     "wantedPreviewName": "Unprotected Human",
-    "wantedPreviewAlt": "Wanted poster preview for an unprotected human",
+    "wantedPreviewAlt": "Wanted Poster preview for an unprotected human",
     "wantedPreviewLabel": "Live Wanted preview",
     "wantedPreviewCta": "Try the generator",
     "joinCta": "Get your name on file.",
@@ -1329,7 +1331,7 @@
     "formatA4": "A4 (print)",
     "formatStory": "Story (9:16)",
     "downloadButton": "Download poster",
-    "downloadingButton": "Preparing poster...",
+    "downloadingButton": "Preparing poster…",
     "shareButton": "Share poster",
     "linkCopied": "Link copied!",
     "shareTitle": "WANTED: {name}",
@@ -1450,7 +1452,7 @@
       "noteTitle": "TRANSFER NOTE",
       "noteText": "Responsibility may be transferred only to a human with equal or greater snack ambiguity.\nFinnley has prepared a fresh folder just in case.",
       "storyVersion": "I tried to transfer my shark compliance case.\nThe Bureau asked for a name.\nThis has become someone else’s problem, pending review.",
-      "issuePosterCta": "Issue a Wanted poster for {name} →",
+      "issuePosterCta": "Issue a Wanted Poster for {name} →",
       "issuePosterHint": "This opens the generator with their name prefilled — and your name on file as the one who reported them."
     },
     "previewLabel": "Preview of {name}'s certificate",
@@ -1512,7 +1514,7 @@
       "codeLabel": "Your referral code",
       "button": "Check my rank",
       "jumpButton": "Go to rank check",
-      "loading": "Consulting the archives...",
+      "loading": "Consulting the archives…",
       "notFound": "Hmm, that code wasn't found in our oceanic archives. Double-check and try again.",
       "error": "Something went wrong. The sharks may have chewed through a cable.",
       "currentRank": "Your current rank",
@@ -1574,7 +1576,7 @@
     "sections": {
       "operator": {
         "title": "1. Operator",
-        "body": "This website is operated by JEEL Wekeza s.r.o., Company ID (IČO): 07969694, registered office Radlická 663/28, 150 00 Prague, Czech Republic. The company is registered in the Commercial Register maintained by the Municipal Court in Prague, file no. C 310737. If you need help with an order, delivery issue, file defect, duplicate payment, or complaint, contact us at sharkhumanalliance@gmail.com."
+        "body": "This website is operated by JEEL Wekeza s.r.o., Company ID (IČO): 07969694, registered office Radlická 663/28, Smíchov, 150 00 Prague 5, Czech Republic. The company is registered in the Commercial Register maintained by the Municipal Court in Prague, file no. C 310737. If you need help with an order, delivery issue, file defect, duplicate payment, or complaint, contact us at sharkhumanalliance@gmail.com."
       },
       "products": {
         "title": "2. What is being sold",
@@ -1647,7 +1649,7 @@
     "referralCodeLabel": "Referral code:",
     "copyVerificationLink": "Copy verification link",
     "copyVerificationLinkCopied": "Verification link copied",
-    "wantedPosterAboutMe": "Generate a wanted poster",
+    "wantedPosterAboutMe": "Generate a Wanted Poster",
     "viewRegistry": "View Diplomatic Registry",
     "joinThroughReferral": "Join through {name}",
     "joinAlliance": "Join the Alliance",
@@ -1771,6 +1773,17 @@
     "toggleMenu": "Toggle menu",
     "closeMenuOverlay": "Close menu overlay"
   },
+  "certificateDownload": {
+    "eyebrow": "Download settings",
+    "title": "Choose the paper size.",
+    "description": "If the first file was the wrong size, switch formats here and print or download this version again.",
+    "paperLabel": "Paper size",
+    "a4": "A4",
+    "letter": "US Letter",
+    "unavailable": "US Letter is not available for this template yet.",
+    "printButton": "Print / download this version",
+    "printHint": "Use Actual Size / 100% in your browser print dialog."
+  },
   "certificateAccess": {
     "eyebrow": "Private record controls",
     "title": "Manage this certificate record",
@@ -1796,7 +1809,7 @@
     "sections": {
       "controller": {
         "title": "1. Controller and contact",
-        "body": "The controller for Shark Human Alliance is JEEL Wekeza s.r.o., with its registered office at Radlicka 663/28, Smichov, 150 00 Prague 5, Czech Republic, company ID 07969694. Legal form: limited liability company.\n\nPrimary privacy contact: sharkhumanalliance@gmail.com.\n\nNo separate data protection officer is currently published for this service."
+        "body": "The controller for Shark Human Alliance is JEEL Wekeza s.r.o., with its registered office at Radlická 663/28, Smíchov, 150 00 Prague 5, Czech Republic, company ID 07969694. Legal form: limited liability company.\n\nPrimary privacy contact: sharkhumanalliance@gmail.com.\n\nNo separate data protection officer is currently published for this service."
       },
       "dataCategories": {
         "title": "2. Which data we process",
@@ -1824,7 +1837,7 @@
       },
       "rights": {
         "title": "8. Your rights",
-        "body": "Subject to applicable law, you may request access, rectification, erasure, restriction, portability, withdrawal of consent, objection to certain processing and the right to lodge a complaint with a competent supervisory authority. Because the controller is established in the Czech Republic, the relevant authority for the controller is the Office for Personal Data Protection (UOOU), while data subjects in the EU may also have the right to complain to the authority in their place of residence, work or the place of the alleged infringement.\n\nIf a request concerns a public registry entry, please include the registry ID, referral code or certificate access link where possible."
+        "body": "Subject to applicable law, you may request access, rectification, erasure, restriction, portability, withdrawal of consent, objection to certain processing and the right to lodge a complaint with a competent supervisory authority. Because the controller is established in the Czech Republic, the relevant authority for the controller is the Office for Personal Data Protection (ÚOOÚ), while data subjects in the EU may also have the right to complain to the authority in their place of residence, work or the place of the alleged infringement.\n\nIf a request concerns a public registry entry, please include the registry ID, referral code or certificate access link where possible."
       },
       "cookies": {
         "title": "9. Cookies and analytics",
@@ -1832,7 +1845,7 @@
       },
       "contact": {
         "title": "10. How to exercise your rights",
-        "body": "Email privacy requests and complaints to sharkhumanalliance@gmail.com. If your request concerns a specific certificate, include enough information for us to identify the record safely, such as the certificate email address, registry ID or certificate access link.\n\nIf you believe we have not handled your request properly, you may also contact the competent supervisory authority. For the controller, that authority is the Czech Office for Personal Data Protection (UOOU)."
+        "body": "Email privacy requests and complaints to sharkhumanalliance@gmail.com. If your request concerns a specific certificate, include enough information for us to identify the record safely, such as the certificate email address, registry ID or certificate access link.\n\nIf you believe we have not handled your request properly, you may also contact the competent supervisory authority. For the controller, that authority is the Czech Office for Personal Data Protection (ÚOOÚ)."
       }
     }
   }

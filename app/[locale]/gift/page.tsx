@@ -4,7 +4,7 @@ import {
   GiftRevealContent,
   type GiftCertificate,
 } from "@/components/gift/gift-reveal-content";
-import { BASE_URL } from "@/lib/config";
+import { localizedAlternates } from "@/lib/seo";
 import { getMemberByAccessToken } from "@/lib/members";
 import { normalizeTemplate } from "@/lib/certificate-templates";
 import { formatCertificateDate } from "@/lib/dates";
@@ -24,18 +24,11 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "giftReveal" });
-  const otherLocale = locale === "en" ? "es" : "en";
 
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/gift`,
-      languages: {
-        [locale]: `/${locale}/gift`,
-        [otherLocale]: `/${otherLocale}/gift`,
-      },
-    },
+    alternates: localizedAlternates(locale, "/gift"),
     // Personalized gift links are private; keep them out of search indexes.
     robots: {
       index: false,

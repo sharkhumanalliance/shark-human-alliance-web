@@ -659,6 +659,7 @@
     },
     "livePreview": "Vista previa del certificado",
     "previewName": "Tu nombre aquí",
+    "businessPreviewName": "Nombre del negocio aquí",
     "businessNameLabel": "Nombre del negocio o local",
     "businessNamePlaceholder": "ej. Escuela de Surf Playa Dorada",
     "businessDedicationToggle": "Añadir eslogan o ubicación (opcional)",
@@ -676,6 +677,7 @@
     "stripeSecure": "Checkout seguro vía Stripe.",
     "stripeSecureNote": "Los datos de tarjeta los gestiona Stripe y Shark Human Alliance nunca los almacena. Incluso los tiburones saben que no deben meterse con la infraestructura de pagos.",
     "stripeSecureInline": "Pago seguro en Stripe. Nunca vemos tu tarjeta. Incluso los tiburones saben que no deben meterse con la infraestructura de pagos.",
+    "checkoutTrustLine": "PDF instantáneo. Asignación de conservación registrada según el nivel.",
     "secureBadgeCard": "Pago con tarjeta",
     "secureBadgeStripe": "Checkout con Stripe",
     "submitButton": "Revisar pedido",
@@ -899,7 +901,7 @@
     "title": "El Registro Diplomático",
     "subtitle": "Un registro medio oficial de humanos cuyo papeleo relacionado con tiburones, por una vez, está en orden.",
     "description": "Todas las personas listadas aquí han presentado suficiente papeleo ante tiburones como para aparecer en el registro público. La Alianza es ficticia. La asignación para conservación de tiburones es real, rastreada y reportada públicamente. El estatus es simbólico, legalmente inútil, científicamente no verificado y estéticamente difícil de discutir.",
-    "loadingText": "Buscando en los archivos oceánicos... Cuidado, algunos registros pueden haber sido mordisqueados.",
+    "loadingText": "Buscando en los archivos oceánicos… Cuidado, algunos registros pueden haber sido mordisqueados.",
     "countLabel": "diplomáticos registrados",
     "mobileStatTotal": "Total",
     "mobileStatFriends": "Amigos",
@@ -1329,7 +1331,7 @@
     "formatA4": "A4 (impresión)",
     "formatStory": "Story (9:16)",
     "downloadButton": "Descargar póster",
-    "downloadingButton": "Preparando póster...",
+    "downloadingButton": "Preparando póster…",
     "shareButton": "Compartir póster",
     "linkCopied": "¡Enlace copiado!",
     "shareTitle": "SE BUSCA: {name}",
@@ -1512,7 +1514,7 @@
       "codeLabel": "Tu código de referido",
       "button": "Consultar mi rango",
       "jumpButton": "Ir a consultar rango",
-      "loading": "Consultando los archivos...",
+      "loading": "Consultando los archivos…",
       "notFound": "Hmm, ese código no se encontró en nuestros archivos oceánicos. Revisa e intenta de nuevo.",
       "error": "Algo salió mal. Los tiburones pueden haber mordido un cable.",
       "currentRank": "Tu rango actual",
@@ -1574,7 +1576,7 @@
     "sections": {
       "operator": {
         "title": "1. Operador",
-        "body": "Este sitio web es operado por JEEL Wekeza s.r.o., ID de empresa (IČO): 07969694, domicilio social Radlická 663/28, 150 00 Praga, República Checa. La sociedad está inscrita en el Registro Mercantil llevado por el Tribunal Municipal de Praga, expediente n.º C 310737. Si necesitas ayuda con un pedido, un problema de entrega, un archivo defectuoso, un pago duplicado o una reclamación, contáctanos en sharkhumanalliance@gmail.com."
+        "body": "Este sitio web es operado por JEEL Wekeza s.r.o., ID de empresa (IČO): 07969694, domicilio social Radlická 663/28, Smíchov, 150 00 Praga 5, República Checa. La sociedad está inscrita en el Registro Mercantil llevado por el Tribunal Municipal de Praga, expediente n.º C 310737. Si necesitas ayuda con un pedido, un problema de entrega, un archivo defectuoso, un pago duplicado o una reclamación, contáctanos en sharkhumanalliance@gmail.com."
       },
       "products": {
         "title": "2. Qué se vende",
@@ -1771,6 +1773,17 @@
     "toggleMenu": "Abrir o cerrar el menú",
     "closeMenuOverlay": "Cerrar la superposición del menú"
   },
+  "certificateDownload": {
+    "eyebrow": "Configuración de descarga",
+    "title": "Elige el tamaño de papel.",
+    "description": "Si el primer archivo tenía el tamaño equivocado, cambia el formato aquí y vuelve a imprimir o descargar esta versión.",
+    "paperLabel": "Tamaño de papel",
+    "a4": "A4",
+    "letter": "US Letter",
+    "unavailable": "US Letter aún no está disponible para esta plantilla.",
+    "printButton": "Imprimir / descargar esta versión",
+    "printHint": "Usa Tamaño real / 100% en el diálogo de impresión del navegador."
+  },
   "certificateAccess": {
     "eyebrow": "Controles privados del registro",
     "title": "Gestiona este registro del certificado",
@@ -1796,7 +1809,7 @@
     "sections": {
       "controller": {
         "title": "1. Responsable y contacto",
-        "body": "El responsable de Shark Human Alliance es JEEL Wekeza s.r.o., con domicilio social en Radlicka 663/28, Smichov, 150 00 Praga 5, República Checa, IČO 07969694. Forma jurídica: sociedad de responsabilidad limitada.\n\nCanal principal de privacidad: sharkhumanalliance@gmail.com.\n\nActualmente no se publica un delegado de protección de datos independiente para este servicio."
+        "body": "El responsable de Shark Human Alliance es JEEL Wekeza s.r.o., con domicilio social en Radlická 663/28, Smíchov, 150 00 Praga 5, República Checa, IČO 07969694. Forma jurídica: sociedad de responsabilidad limitada.\n\nCanal principal de privacidad: sharkhumanalliance@gmail.com.\n\nActualmente no se publica un delegado de protección de datos independiente para este servicio."
       },
       "dataCategories": {
         "title": "2. Qué datos tratamos",

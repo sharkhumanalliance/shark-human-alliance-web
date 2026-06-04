@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/lib/config";
+import { localizedAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -11,18 +11,11 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo.cookiePolicy" });
-  const otherLocale = locale === "en" ? "es" : "en";
 
   return {
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/cookie-policy`,
-      languages: {
-        [locale]: `/${locale}/cookie-policy`,
-        [otherLocale]: `/${otherLocale}/cookie-policy`,
-      },
-    },
+    alternates: localizedAlternates(locale, "/cookie-policy"),
     openGraph: {
       title: t("title"),
       description: t("description"),

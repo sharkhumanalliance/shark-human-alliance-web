@@ -2,6 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { WantedCaseContent } from "@/components/wanted/wanted-case-content";
 import { BASE_URL } from "@/lib/config";
+import { localizedAlternates } from "@/lib/seo";
 import { formatCertificateDate } from "@/lib/dates";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
@@ -24,7 +25,6 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const { locale } = await params;
   const resolved = await searchParams;
   const t = await getTranslations({ locale, namespace: "seo.wantedCase" });
-  const otherLocale = locale === "en" ? "es" : "en";
 
   // Personalized OG: pulls the actual name + tone from the share URL so the
   // preview shows the accused human, not a generic placeholder.
@@ -37,13 +37,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/wanted/case`,
-      languages: {
-        [locale]: `/${locale}/wanted/case`,
-        [otherLocale]: `/${otherLocale}/wanted/case`,
-      },
-    },
+    alternates: localizedAlternates(locale, "/wanted/case"),
     robots: {
       index: false,
       follow: false,

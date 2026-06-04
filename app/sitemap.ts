@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { BASE_URL } from "@/lib/config";
+import { localizedSitemapAlternates } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ["en", "es"];
@@ -27,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: route.changeFrequency,
         priority: route.priority,
+        alternates: localizedSitemapAlternates(route.path),
       });
     }
   }

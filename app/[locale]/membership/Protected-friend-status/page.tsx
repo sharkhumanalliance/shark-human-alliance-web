@@ -2,6 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ProtectedFriendContent } from "@/components/membership/protected-friend-content";
+import { localizedAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 
 type Props = {
@@ -14,6 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
+    alternates: localizedAlternates(locale, "/membership/protected-friend-status"),
     openGraph: { title: t("title"), description: t("description"), type: "website" },
     twitter: { card: "summary_large_image", title: t("title"), description: t("description") },
   };

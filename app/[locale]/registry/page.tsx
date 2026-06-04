@@ -2,7 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { RegistryContent } from "@/components/registry/registry-content";
-import { BASE_URL } from "@/lib/config";
+import { localizedAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 
 type Props = {
@@ -12,17 +12,10 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo.registry" });
-  const otherLocale = locale === "en" ? "es" : "en";
   return {
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/registry`,
-      languages: {
-        [locale]: `/${locale}/registry`,
-        [otherLocale]: `/${otherLocale}/registry`,
-      },
-    },
+    alternates: localizedAlternates(locale, "/registry"),
     openGraph: { title: t("title"), description: t("description"), type: "website", images: [{ url: "/mascots/homepage-hero-plush.png", width: 1152, height: 768 }] },
     twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/mascots/homepage-hero-plush.png"] },
   };

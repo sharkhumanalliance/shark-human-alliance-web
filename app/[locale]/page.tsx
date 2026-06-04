@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { HomeContent } from "@/components/home/home-content";
 import { MobileStickyCta } from "@/components/home/mobile-sticky-cta";
-import { BASE_URL } from "@/lib/config";
+import { localizedAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 
 type Props = {
@@ -14,17 +14,10 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo.home" });
-  const otherLocale = locale === "en" ? "es" : "en";
   return {
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}`,
-      languages: {
-        [locale]: `/${locale}`,
-        [otherLocale]: `/${otherLocale}`,
-      },
-    },
+    alternates: localizedAlternates(locale),
     openGraph: {
       title: t("title"),
       description: t("description"),

@@ -199,6 +199,9 @@ function PurchaseFlowInner() {
   const [digitalContentConsentAccepted, setDigitalContentConsentAccepted] = useState(false);
   const [registryConsentAccepted, setRegistryConsentAccepted] = useState(true);
   const [codeOptionsOpen, setCodeOptionsOpen] = useState(Boolean(referredByFromUrl));
+  const previewName = name.trim() || t(
+    tier === "business" ? "businessPreviewName" : "previewName",
+  );
 
   function handleTemplateChange(nextTemplate: CertificateTemplate) {
     setTemplate(nextTemplate);
@@ -515,7 +518,7 @@ function PurchaseFlowInner() {
                 <CertificateTemplateSelector value={template} onChange={handleTemplateChange} />
                 <div className="mt-4">
                   <CertificatePreview
-                    name={name.trim() || t("previewName")}
+                    name={previewName}
                     tier={tier}
                     dedication={dedication.trim()}
                     date={currentDate}
@@ -1047,7 +1050,12 @@ function PurchaseFlowInner() {
                 </div>
                 <div className="mt-3 flex items-start justify-center gap-2 text-center text-xs leading-5 text-[var(--muted)]">
                   <SecureCardIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--brand)]" />
-                  <span>{t("stripeSecureInline")}</span>
+                  <span>
+                    <span className="block font-semibold text-[var(--brand-dark)]">
+                      {t("checkoutTrustLine")}
+                    </span>
+                    <span className="block">{t("stripeSecureInline")}</span>
+                  </span>
                 </div>
               </div>
             )}
@@ -1066,7 +1074,12 @@ function PurchaseFlowInner() {
                 </button>
                 <div className="mt-3 flex items-start justify-center gap-2 text-center text-xs leading-5 text-[var(--muted)]">
                   <SecureCardIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--brand)]" />
-                  <span>{t("stripeSecureInline")}</span>
+                  <span>
+                    <span className="block font-semibold text-[var(--brand-dark)]">
+                      {t("checkoutTrustLine")}
+                    </span>
+                    <span className="block">{t("stripeSecureInline")}</span>
+                  </span>
                 </div>
               </div>
             ) : null}
@@ -1081,7 +1094,7 @@ function PurchaseFlowInner() {
             <CertificateTemplateSelector value={template} onChange={handleTemplateChange} />
             <div className="sticky top-28 mt-4">
               <CertificatePreview
-                name={name.trim() || t("previewName")}
+                name={previewName}
                 tier={tier}
                 dedication={dedication.trim()}
                 date={currentDate}

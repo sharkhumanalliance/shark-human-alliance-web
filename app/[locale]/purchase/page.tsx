@@ -3,6 +3,8 @@ import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PurchaseFlow } from "@/components/purchase/purchase-flow";
 import { BASE_URL } from "@/lib/config";
+import { localizedAlternates } from "@/lib/seo";
+import { PUBLIC_TIERS, TIER_METADATA } from "@/lib/tiers";
 import type { Metadata } from "next";
 
 type Props = {
@@ -12,20 +14,75 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo.purchase" });
-  const otherLocale = locale === "en" ? "es" : "en";
   return {
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/purchase`,
-      languages: {
-        [locale]: `/${locale}/purchase`,
-        [otherLocale]: `/${otherLocale}/purchase`,
-      },
-    },
+    alternates: localizedAlternates(locale, "/purchase"),
     openGraph: { title: t("title"), description: t("description"), type: "website", images: [{ url: "/mascots/homepage-hero-plush.png", width: 1152, height: 768 }] },
     twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/mascots/homepage-hero-plush.png"] },
   };
+}
+
+function ProductJsonLd() {
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Shark Human Alliance Certificates",
+    description:
+      "Funny personalized shark-protection certificates. Official-ish, printable, and conservation-positive.",
+    image: `${BASE_URL}/mascots/homepage-hero-plush.png`,
+    brand: { "@type": "Brand", name: "Shark Human Alliance" },
+    offers: PUBLIC_TIERS.map((tier) => {
+      const metadata = TIER_METADATA[tier];
+      return {
+        "@type": "Offer",
+        name: metadata.stripeName,
+        price: (metadata.priceCents / 100).toFixed(2),
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `${BASE_URL}/en/purchase?tier=${tier}`,
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: {
+            "@type": "MonetaryAmount",
+            value: "0",
+            currency: "USD",
+          },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: {
+              "@type": "QuantitativeValue",
+              minValue: 0,
+              maxValue: 0,
+              unitCode: "DAY",
+            },
+            transitTime: {
+              "@type": "QuantitativeValue",
+              minValue: 0,
+              maxValue: 0,
+              unitCode: "DAY",
+            },
+          },
+          shippingDestination: {
+            "@type": "DefinedRegion",
+            addressCountry: "US",
+          },
+        },
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: "US",
+          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+        },
+      };
+    }),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+    />
+  );
 }
 
 export default async function PurchasePage({ params }: Props) {
@@ -35,6 +92,7 @@ export default async function PurchasePage({ params }: Props) {
 
   return (
     <>
+      <ProductJsonLd />
       <SiteHeader />
       <main id="main" className="flex flex-col pb-12 md:pb-0">
         <section className="order-2 border-b border-[var(--border)] bg-[var(--surface-soft)]/55 py-6 lg:order-1 lg:py-8">

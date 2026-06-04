@@ -55,6 +55,11 @@ const COPY = {
     assessmentText:
       "Any shark considering the holder a meal would be demonstrating exceptionally poor judgment.",
     dedicationLabel: "Filed dedication",
+    dedicationLabels: {
+      protected: "Filed dedication",
+      nonsnack: "Filed dedication",
+      business: "Tagline / location",
+    },
     marineNoteLabel: "Supplementary case note",
     tierLabels: {
       protected: "Protected Friend",
@@ -124,6 +129,11 @@ const COPY = {
     assessmentText:
       "Cualquier tiburón que considerara a la persona titular como comida demostraría un criterio excepcionalmente pobre.",
     dedicationLabel: "Dedicatoria archivada",
+    dedicationLabels: {
+      protected: "Dedicatoria archivada",
+      nonsnack: "Dedicatoria archivada",
+      business: "Eslogan / ubicación",
+    },
     marineNoteLabel: "Nota suplementaria del caso",
     tierLabels: {
       protected: "Amigo Protegido",

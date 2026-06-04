@@ -2,7 +2,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { CareerContent } from "@/components/career/career-content";
-import { BASE_URL } from "@/lib/config";
+import { localizedAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 
 type Props = {
@@ -12,17 +12,10 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo.career" });
-  const otherLocale = locale === "en" ? "es" : "en";
   return {
     title: t("title"),
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/career`,
-      languages: {
-        [locale]: `/${locale}/career`,
-        [otherLocale]: `/${otherLocale}/career`,
-      },
-    },
+    alternates: localizedAlternates(locale, "/career"),
     openGraph: {
       title: t("title"),
       description: t("description"),
