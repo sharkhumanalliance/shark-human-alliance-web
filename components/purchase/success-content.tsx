@@ -372,10 +372,10 @@ function SuccessContentInner() {
             {t("successStatusBadge")}
           </span>
           <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-4xl">
-            {t("successTitleNamed", { name: member.name })}
+            {isGift ? t("successTitleNamedGift", { name: member.name }) : t("successTitleNamed", { name: member.name })}
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg">
-            {t("successTextBrief")}
+            {isGift ? t("successTextBriefGift") : t("successTextBrief")}
           </p>
 
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
@@ -421,12 +421,12 @@ function SuccessContentInner() {
           ) : null}
 
           <p className="mx-auto mt-3 max-w-md text-xs leading-5 text-[var(--brand)]">
-            {member.hasEmail ? t("emailSentAutomatic") : t("downloadOnlyNotice")}
+            {isGift && member.hasEmail ? t("emailSentGift") : member.hasEmail ? t("emailSentAutomatic") : t("downloadOnlyNotice")}
           </p>
         </header>
 
         {isGift && giftLink ? (
-          <div className="mx-auto mt-6 max-w-md rounded-2xl border border-[var(--accent)]/40 bg-[var(--surface-soft)]/50 p-5 text-center">
+          <div className="mx-auto mt-8 max-w-md rounded-2xl border border-[var(--accent)]/40 bg-[var(--surface-soft)]/50 p-5 text-center sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("giftSendTitle")}
             </p>
@@ -525,7 +525,7 @@ function SuccessContentInner() {
 
           <section
             aria-label={t("impactEyebrow")}
-            className="rounded-2xl border border-[var(--tier-nonsnack-border)] bg-[var(--tier-nonsnack-light)] px-5 py-5 sm:px-6"
+            className="rounded-2xl border border-[var(--tier-nonsnack-border)] bg-[var(--tier-nonsnack-light)] p-5 sm:p-6"
           >
             <div className="flex h-full flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
               <div className="flex flex-1 items-start gap-3 sm:items-center">
@@ -568,7 +568,7 @@ function SuccessContentInner() {
               </div>
               <LocalizedLink
                 href="/impact"
-                className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-lg border border-[var(--tier-nonsnack-border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--tier-nonsnack-darker)] transition hover:bg-[var(--tier-nonsnack-surface)] sm:self-center"
+                className="inline-flex shrink-0 items-center gap-1.5 self-start text-sm font-semibold text-[var(--tier-nonsnack-darker)] underline underline-offset-4 transition hover:text-[var(--tier-nonsnack-text)] sm:self-center"
               >
                 {t("impactLink")}
                 <span aria-hidden="true">{"→"}</span>
@@ -583,7 +583,7 @@ function SuccessContentInner() {
           <section
             id="certificate-customize"
             ref={customizeSectionRef}
-            className="mt-6 scroll-mt-24 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6"
+            className="mt-8 scroll-mt-24 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6"
           >
             <div className="flex items-baseline justify-between gap-3">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
@@ -670,7 +670,7 @@ function SuccessContentInner() {
 
         {/* Expanded full-size preview — when thumbnail clicked */}
         {previewExpanded ? (
-          <section ref={previewSectionRef} className="mt-6 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6">
+          <section ref={previewSectionRef} className="mt-8 rounded-2xl border border-[var(--border)] bg-white p-5 sm:p-6">
             <div className="flex justify-end">
               <button
                 type="button"

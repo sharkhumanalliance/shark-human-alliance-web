@@ -498,9 +498,9 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
     return (
       <section
         data-reveal
-        className="mt-6 border-y border-[var(--border)] py-5 sm:py-6"
+        className="mt-8 border-y border-[var(--border)] py-6"
       >
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.72fr)] lg:items-stretch">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.72fr)] lg:items-start">
           <div className="min-w-0">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
             {t("compactEyebrow")}
@@ -518,7 +518,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
                 void downloadStory();
               }}
               disabled={isBusy}
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-[var(--brand)] bg-[var(--brand)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isBusy && !storyFileReady ? (
                 t("working")
@@ -535,7 +535,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
                 void shareStory();
               }}
               disabled={isBusy}
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-[var(--brand)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-[var(--brand)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isBusy && !storyFileReady ? t("working") : shareButtonLabel}
             </button>
@@ -544,7 +544,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
               onClick={() => {
                 void copyLink();
               }}
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
+              className="inline-flex min-h-[44px] items-center text-sm font-semibold text-[var(--brand-dark)] underline underline-offset-4 transition hover:text-[var(--brand)]"
             >
               {copyState === "done"
                 ? t("copySuccess")
@@ -556,7 +556,7 @@ export function PostPurchaseShare({ member, variant = "full" }: PostPurchaseShar
           </div>
           <LocalizedLink
             href="/wanted"
-            className="flex h-full flex-col justify-between rounded-xl border border-[var(--accent)]/35 bg-[var(--accent)]/5 px-4 py-4 transition hover:border-[var(--accent)]/60 hover:bg-[var(--accent)]/10"
+            className="flex flex-col gap-3 rounded-2xl border border-[var(--accent)]/35 bg-[var(--accent)]/5 p-5 transition hover:border-[var(--accent)]/60 hover:bg-[var(--accent)]/10"
           >
             <span>
               <span className="block text-sm font-semibold text-[var(--brand-dark)]">
