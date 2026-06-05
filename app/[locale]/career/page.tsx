@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { CareerContent } from "@/components/career/career-content";
 import { localizedAlternates } from "@/lib/seo";
@@ -29,12 +30,12 @@ export default async function CareerPage({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <RouteMessages route="career">
       <SiteHeader />
       <main id="main" className="pb-20 md:pb-0">
         <CareerContent />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

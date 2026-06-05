@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { FaqContent } from "@/components/faq/faq-content";
 import { localizedAlternates } from "@/lib/seo";
@@ -51,13 +52,13 @@ export default async function FaqPage({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <RouteMessages route="faq">
       <FaqJsonLd locale={locale} />
       <SiteHeader />
       <main id="main" className="bg-[var(--surface-soft)] pb-20 md:pb-0">
         <FaqContent />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

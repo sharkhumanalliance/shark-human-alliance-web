@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { WantedContent } from "@/components/wanted/wanted-content";
 import { BASE_URL } from "@/lib/config";
@@ -47,12 +48,12 @@ export default async function WantedPage({ params, searchParams }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <RouteMessages route="wanted">
       <SiteHeader />
       <main id="main" className="pb-20 md:pb-0">
         <WantedContent initialName={resolved?.name} initialBy={resolved?.by} />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

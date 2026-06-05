@@ -920,6 +920,7 @@ export function RegistryContent() {
                     height={630}
                     className="block aspect-[1200/630] w-full object-cover"
                     loading="lazy"
+                    sizes="(min-width: 1024px) 480px, 100vw"
                   />
                   <div className="pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-black/45 via-black/0 to-transparent opacity-0 transition-opacity duration-300 group-hover/preview:opacity-100 group-focus-visible/preview:opacity-100">
                     <span className="m-3 inline-flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-red-700 shadow-sm">

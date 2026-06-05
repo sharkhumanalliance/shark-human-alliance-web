@@ -16,7 +16,7 @@ import { CookieConsent } from "@/components/cookies/cookie-consent";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { BASE_URL } from "@/lib/config";
-import { pickClientMessages } from "@/lib/client-messages";
+import { pickClientMessages, BASE_CLIENT_NAMESPACES } from "@/lib/client-messages";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -24,9 +24,12 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+// Used only for code-like labels (registry IDs, form inputs) — never the LCP
+// element — so keep it out of the <head> preload list.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 // Decorative fonts: used only inside the certificate artwork (globals.css),
@@ -161,7 +164,9 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const clientMessages = pickClientMessages(messages);
+  // Root provider ships only BASE (header/footer/cookie banner/skip link).
+  // Each route re-declares BASE + its own namespaces via <RouteMessages>.
+  const clientMessages = pickClientMessages(messages, BASE_CLIENT_NAMESPACES);
   const t = await getTranslations({ locale, namespace: "accessibility" });
 
   return (
@@ -173,6 +178,16 @@ export default async function LocaleLayout({ children, params }: Props) {
           hrefLang="x-default"
           href={`${BASE_URL}/en`}
         />
+        {/*
+          Google Analytics is the ONLY runtime third-party origin. Fonts are
+          self-hosted by next/font and Stripe is a server-side redirect, so they
+          need no resource hints. GA is consent-gated and loaded
+          `afterInteractive`, so we use the cheaper dns-prefetch (just DNS, no
+          TCP/TLS) rather than preconnect — preconnecting would open a wasted
+          connection for users who decline analytics cookies.
+        */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
       <body
         suppressHydrationWarning

@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { SuccessContent } from "@/components/purchase/success-content";
 import type { Metadata } from "next";
@@ -23,12 +24,12 @@ export default async function PurchaseSuccessPage({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <RouteMessages route="purchaseSuccess">
       <SiteHeader />
       <main id="main" className="pb-12 md:pb-0">
         <SuccessContent />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

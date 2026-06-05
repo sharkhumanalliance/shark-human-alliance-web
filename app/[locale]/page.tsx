@@ -1,6 +1,7 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { HomeContent } from "@/components/home/home-content";
 import { MobileStickyCta } from "@/components/home/mobile-sticky-cta";
@@ -38,7 +39,7 @@ export default async function Home({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <RouteMessages route="home">
       <SiteHeader />
       <main id="main">
         <HeroSection />
@@ -46,6 +47,6 @@ export default async function Home({ params }: Props) {
       </main>
       <SiteFooter />
       <MobileStickyCta />
-    </>
+    </RouteMessages>
   );
 }

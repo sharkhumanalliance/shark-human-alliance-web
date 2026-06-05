@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { MembershipPageContent } from "@/components/membership/membership-page-content";
 import { localizedAlternates } from "@/lib/seo";
@@ -26,12 +27,12 @@ export default async function MembershipPage({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <RouteMessages route="membership">
       <SiteHeader />
       <main id="main" className="pb-20 md:pb-0">
         <MembershipPageContent />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

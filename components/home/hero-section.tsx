@@ -84,6 +84,7 @@ export function HeroSection() {
                 width={1152}
                 height={768}
                 className="h-auto w-full bg-[var(--surface-soft)] object-cover"
+                sizes="(min-width: 1024px) 640px, 100vw"
                 priority
               />
             </div>

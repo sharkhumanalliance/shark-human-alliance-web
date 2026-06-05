@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PurchaseFlow } from "@/components/purchase/purchase-flow";
 import { BASE_URL } from "@/lib/config";
@@ -91,7 +92,7 @@ export default async function PurchasePage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "purchase" });
 
   return (
-    <>
+    <RouteMessages route="purchase">
       <ProductJsonLd />
       <SiteHeader />
       <main id="main" className="flex flex-col pb-12 md:pb-0">
@@ -149,6 +150,6 @@ export default async function PurchasePage({ params }: Props) {
         </div>
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

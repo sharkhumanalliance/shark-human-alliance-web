@@ -1,3 +1,4 @@
+import "../../app/certificate.css";
 import {
   getCertificateDiplomaticAssessment,
   getCertificateDiplomaticNote,
@@ -187,20 +188,29 @@ export function CertificateDocument({
         ? "/background-formal-preview.webp"
         : "/background-formal.webp"
       : isLetter
-        ? "/background-playful-us-v1.webp"
-        : "/background-playful-v2.webp";
+        ? assetMode === "preview"
+          ? "/background-playful-us-v1-preview.webp"
+          : "/background-playful-us-v1.webp"
+        : assetMode === "preview"
+          ? "/background-playful-v2-preview.webp"
+          : "/background-playful-v2.webp";
   const qrSrc = getQrCodeUrl(verifyUrl, 200);
 
   return (
     <div
       className={`certificate-page certificate-page--${resolvedTemplate} certificate-page--paper-${paperFormat}`}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={backgroundSrc}
-        alt=""
-        className={`certificate-bg${isClassic ? " certificate-bg--classic" : ""}${isLuxury ? " certificate-bg--luxury" : ""}`}
-      />
+      <picture>
+        <source srcSet={backgroundSrc.replace(/\.webp$/, ".avif")} type="image/avif" />
+        <img
+          src={backgroundSrc}
+          alt=""
+          className={`certificate-bg${isClassic ? " certificate-bg--classic" : ""}${isLuxury ? " certificate-bg--luxury" : ""}`}
+          decoding="async"
+          loading={priorityImages ? "eager" : "lazy"}
+          fetchPriority={priorityImages ? "high" : "auto"}
+        />
+      </picture>
 
       <div className="certificate-inner-frame" />
 

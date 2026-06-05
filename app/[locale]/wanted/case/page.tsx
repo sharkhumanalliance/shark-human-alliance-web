@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import { WantedCaseContent } from "@/components/wanted/wanted-case-content";
 import { BASE_URL } from "@/lib/config";
 import { localizedAlternates } from "@/lib/seo";
@@ -65,7 +66,7 @@ export default async function WantedCasePage({ params, searchParams }: Props) {
   setRequestLocale(locale);
 
   return (
-    <>
+    <RouteMessages route="wantedCase">
       <SiteHeader />
       <main id="main" className="pb-16 md:pb-0">
         <WantedCaseContent
@@ -76,6 +77,6 @@ export default async function WantedCasePage({ params, searchParams }: Props) {
         />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

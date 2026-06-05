@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { RouteMessages } from "@/components/route-messages";
 import {
   GiftRevealContent,
   type GiftCertificate,
@@ -68,7 +69,7 @@ export default async function GiftRevealPage({ params, searchParams }: Props) {
   }
 
   return (
-    <>
+    <RouteMessages route="gift">
       <SiteHeader />
       <main id="main" className="pb-16 md:pb-0">
         <GiftRevealContent
@@ -80,6 +81,6 @@ export default async function GiftRevealPage({ params, searchParams }: Props) {
         />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

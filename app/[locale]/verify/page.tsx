@@ -8,6 +8,7 @@ import {
 } from "@/lib/demo-members";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { RouteMessages } from "@/components/route-messages";
 import { VerifyContent } from "@/components/verify/verify-content";
 import { VerifyLookupContent } from "@/components/verify/verify-lookup-content";
 import { VerifySampleContent } from "@/components/verify/verify-sample-content";
@@ -98,13 +99,13 @@ export default async function VerifyPage({ params, searchParams }: Props) {
 
   function renderLookup(reason: "missing" | "notFound" | "private") {
     return (
-      <>
+      <RouteMessages route="verify">
         <SiteHeader />
         <main id="main">
           <VerifyLookupContent reason={reason} />
         </main>
         <SiteFooter />
-      </>
+      </RouteMessages>
     );
   }
 
@@ -113,13 +114,13 @@ export default async function VerifyPage({ params, searchParams }: Props) {
   // Sample certificate preview — not a real member
   if (publicIdentifier === "sample") {
     return (
-      <>
+      <RouteMessages route="verify">
         <SiteHeader />
         <main id="main">
           <VerifySampleContent />
         </main>
         <SiteFooter />
-      </>
+      </RouteMessages>
     );
   }
 
@@ -132,7 +133,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
 
   if (!rateLimit.allowed) {
     return (
-      <>
+      <RouteMessages route="verify">
         <SiteHeader />
         <main id="main" className="pt-16">
           <section className="mx-auto max-w-xl px-4 text-center sm:px-6">
@@ -145,7 +146,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
           </section>
         </main>
         <SiteFooter />
-      </>
+      </RouteMessages>
     );
   }
 
@@ -175,7 +176,7 @@ export default async function VerifyPage({ params, searchParams }: Props) {
   const daysOnFile = getDaysOnFile(member.date);
 
   return (
-    <>
+    <RouteMessages route="verify">
       <SiteHeader />
       <main id="main">
         <VerifyContent
@@ -190,6 +191,6 @@ export default async function VerifyPage({ params, searchParams }: Props) {
         />
       </main>
       <SiteFooter />
-    </>
+    </RouteMessages>
   );
 }

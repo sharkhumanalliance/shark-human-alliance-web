@@ -10,6 +10,7 @@ import { CertificateSheet, type PaperFormat } from "@/components/certificate/cer
 import { CertificateAccessPanel } from "@/components/certificate/certificate-access-panel";
 import { CertificateDownloadControls } from "@/components/certificate/certificate-download-controls";
 import { CertificatePrintTrigger } from "@/components/certificate/certificate-print-trigger";
+import { RouteMessages } from "@/components/route-messages";
 import { getMemberByAccessToken } from "@/lib/members";
 import { getDevPromoMemberByAccessToken } from "@/lib/dev-promo-store";
 import { getPublicTierKey } from "@/lib/tiers";
@@ -85,6 +86,7 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
   };
 
   return (
+    <RouteMessages route="certificateView">
     <main className="min-h-screen bg-white px-4 py-6 print:block print:bg-white print:p-0">
       <CertificatePrintTrigger enabled={autoPrint} />
       <style media="print">{`@page { size: ${pageSizeCss}; margin: 0; }`}</style>
@@ -119,5 +121,6 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
         initialRegistryVisibility={member.registryVisibility}
       />
     </main>
+    </RouteMessages>
   );
 }
