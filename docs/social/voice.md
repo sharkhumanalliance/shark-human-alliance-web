@@ -1,6 +1,6 @@
 # Social Voice Guide
 
-Last updated: 2026-05-31
+Last updated: 2026-06-05
 
 ## Voice Formula
 
@@ -39,6 +39,10 @@ Avoid:
 - If the post is factual, the caption should not overstate the graphic.
 - Comment-bait CTAs are welcome when they stay in-world (e.g. "Comment ACQUITTED to support the defendant", "Guilty or misunderstood?").
 
+## Tagging and Comment CTAs
+
+Tagging and verdict-style comment CTAs are encouraged - they are how the Wanted/case mechanic spreads. Keep them characterful rather than generic: prefer "Open a case on the human who needs Lesson 1" or "Comment ACQUITTED to support the defendant" over a flat "Tag a friend who". The mechanic and the cuteness do the work.
+
 ## Comment And Engagement Rules
 
 Reply in-character to playful comments only.
@@ -69,10 +73,6 @@ Also avoid fear-based hooks:
 - "Avoid shark attacks"
 
 Never imply the product provides real safety.
-
-### Tagging and comment CTAs
-
-Tagging and verdict-style comment CTAs are encouraged - they are how the Wanted/case mechanic spreads. Keep them characterful rather than generic: prefer "Open a case on the human who needs Lesson 1" or "Comment ACQUITTED to support the defendant" over a flat "Tag a friend who". The mechanic and the cuteness do the work.
 
 ## Approved Voice Patterns
 
@@ -111,6 +111,20 @@ Examples:
 - `Finnley has prepared a statement. He insists it is brief.`
 - `Finnley remains optimistic. This is not legally binding.`
 - `Finnley has reviewed the footage and blames cinema.`
+
+### Reusable Finnley Statements
+
+Public-record statements attributable to Finnley as press spokesperson. Use as pull-quotes in graphics, FB caption highlights, or comment replies. Sparingly: one per post, and do not contradict a filed statement in later posts.
+
+- `The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary.`
+- `The Bureau has reviewed the footage. Sharks are not, as suggested, plotting.`
+- `Hollywood has been notified, in writing, that sharks are not auditioning for the role of antagonist.`
+- `Statistically, the average shark is having a quiet day.`
+- `Most humans entering the ocean are not, technically, on the menu.`
+- `The Bureau remains optimistic that shark-human relations can be improved administratively.`
+- `The Bureau cannot speak for all sharks. No shark has so far objected.`
+
+First on the record (post 1.3, Finnley introduction): `The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary.`
 
 ### Wanted
 

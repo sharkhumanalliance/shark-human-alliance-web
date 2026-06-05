@@ -16,6 +16,7 @@ import { CookieConsent } from "@/components/cookies/cookie-consent";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { BASE_URL } from "@/lib/config";
+import { pickClientMessages } from "@/lib/client-messages";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -28,10 +29,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Decorative fonts: used only inside the certificate artwork (globals.css),
+// never in the critical hero/above-the-fold text. preload:false keeps them out
+// of the <head> preload list so they don't compete with LCP; display:"swap"
+// (next/font default) renders fallback text first, then swaps when ready.
 const dancingScript = Dancing_Script({
   variable: "--font-dancing-script",
   subsets: ["latin"],
   weight: ["700"],
+  preload: false,
 });
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -39,18 +45,21 @@ const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   style: ["normal", "italic"],
+  preload: false,
 });
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
   subsets: ["latin"],
   weight: ["400", "700", "800", "900"],
+  preload: false,
 });
 
 const robotoCondensed = Roboto_Condensed({
   variable: "--font-roboto-condensed",
   subsets: ["latin"],
   weight: ["300", "400"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -152,6 +161,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const clientMessages = pickClientMessages(messages);
   const t = await getTranslations({ locale, namespace: "accessibility" });
 
   return (
@@ -174,7 +184,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         >
           {t("skipToContent")}
         </a>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={clientMessages}>
           <div className="overflow-x-clip">{children}</div>
           <CookieConsent />
         </NextIntlClientProvider>

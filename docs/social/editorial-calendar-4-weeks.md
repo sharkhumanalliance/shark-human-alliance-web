@@ -1,6 +1,6 @@
 # Editorial Calendar: First 4 Weeks
 
-Last updated: 2026-05-31
+Last updated: 2026-06-05
 
 This calendar assumes 3 Instagram feed posts per week, 2 Facebook feed posts per week, and 1-2 Stories per week starting week 2.
 
@@ -62,7 +62,11 @@ Visual:
 
 Finnley portrait with quote:
 
-`Most sharks would simply swim past and continue minding their business.`
+`The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary.`
+
+Attribution line below quote: `— FINNLEY MAKO, ON THE PUBLIC RECORD`.
+
+See `voice.md` (Reusable Finnley Statements) for the full approved pool and rules.
 
 ## Week 2: Cast Deepens
 

@@ -150,26 +150,26 @@ export function CertificateDocument({
     tierKey === "business"
       ? assetMode === "preview"
         ? "/background-luxury-a4-business-preview.webp"
-        : "/background-luxury-a4-business.png"
+        : "/background-luxury-a4-business.webp"
       : tierKey === "nonsnack"
       ? assetMode === "preview"
         ? "/background-luxury-a4-nonsnack-preview.webp"
-        : "/background-luxury-a4-nonsnack.png"
+        : "/background-luxury-a4-nonsnack.webp"
       : assetMode === "preview"
         ? "/background-luxury-a4-preview.webp"
-        : "/background-luxury-a4.png";
+        : "/background-luxury-a4.webp";
   const luxuryLetterProtectedBackground =
     assetMode === "preview"
       ? "/background-luxury-us-letter-protected-preview.webp"
-      : "/background-luxury-us-letter-protected.png";
+      : "/background-luxury-us-letter-protected.webp";
   const luxuryLetterNonsnackBackground =
     assetMode === "preview"
       ? "/background-luxury-us-letter-nonsnack-preview.webp"
-      : "/background-luxury-us-letter-nonsnack.png";
+      : "/background-luxury-us-letter-nonsnack.webp";
   const luxuryLetterBusinessBackground =
     assetMode === "preview"
       ? "/background-luxury-us-letter-business-preview.webp"
-      : "/background-luxury-us-letter-business.png";
+      : "/background-luxury-us-letter-business.webp";
   const backgroundSrc = isLuxury
     ? isLuxuryA4
       ? luxuryA4Background
@@ -181,14 +181,14 @@ export function CertificateDocument({
           : luxuryLetterProtectedBackground
         : assetMode === "preview"
           ? "/background-luxury-preview.webp"
-          : "/background-luxury.png"
+          : "/background-luxury.webp"
     : isClassic
       ? assetMode === "preview"
         ? "/background-formal-preview.webp"
-        : "/background-formal.png"
+        : "/background-formal.webp"
       : isLetter
-        ? "/background-playful-us-v1.png"
-        : "/background-playful-v2.png";
+        ? "/background-playful-us-v1.webp"
+        : "/background-playful-v2.webp";
   const qrSrc = getQrCodeUrl(verifyUrl, 200);
 
   return (

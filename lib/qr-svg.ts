@@ -1,28 +1,39 @@
 /**
- * Minimal QR-code SVG generator — zero external dependencies.
+ * Local QR-code generator — renders the QR as an inline SVG data URI.
  *
- * Uses the free goqr.me / qrserver API to generate a QR code image URL,
- * OR renders a simple SVG placeholder if called server-side.
- *
- * For production you can swap to a local generator (e.g. npm `qrcode`).
+ * Generated synchronously with the `qrcode` package (pure JS, isomorphic), so
+ * there is no runtime dependency on a third-party QR API and no extra network
+ * request / DNS / TLS hop when a certificate is displayed.
  */
 
-const QR_API = "https://api.qrserver.com/v1/create-qr-code";
+import QRCode from "qrcode";
 
 /**
- * Returns an image URL for a QR code encoding `data`.
+ * Returns a `data:image/svg+xml` URI for a QR code encoding `data`, usable
+ * directly as an <img src>.
  * @param data  The string to encode (typically a URL)
- * @param size  Pixel size of the QR code image (square)
+ * @param size  Rendered pixel size of the QR code image (square)
  */
 export function getQrCodeUrl(data: string, size = 200): string {
-  const params = new URLSearchParams({
-    size: `${size}x${size}`,
-    data,
-    format: "svg",
-    margin: "0",
-    ecc: "M",
-  });
-  return `${QR_API}?${params.toString()}`;
+  const qr = QRCode.create(data, { errorCorrectionLevel: "M" });
+  const count = qr.modules.size;
+  const bits = qr.modules.data;
+
+  let path = "";
+  for (let r = 0; r < count; r++) {
+    for (let c = 0; c < count; c++) {
+      if (bits[r * count + c]) {
+        path += `M${c} ${r}h1v1h-1z`;
+      }
+    }
+  }
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" ` +
+    `viewBox="0 0 ${count} ${count}" shape-rendering="crispEdges">` +
+    `<path d="${path}" fill="#000"/></svg>`;
+
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
 /**
