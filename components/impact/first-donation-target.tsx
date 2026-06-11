@@ -4,6 +4,10 @@ import { useTranslations } from "next-intl";
 
 const FIRST_DONATION_PROGRESS = 0;
 
+// Hide the numeric progress until the first real allocation exists —
+// a visible $0 bar reads as "nobody has bought this" to new visitors.
+const SHOW_PROGRESS = FIRST_DONATION_PROGRESS > 0;
+
 type FirstDonationTargetProps = {
   compact?: boolean;
 };
@@ -26,18 +30,20 @@ export function FirstDonationTarget({ compact = false }: FirstDonationTargetProp
               {t("firstTargetStatusShort")}
             </p>
           </div>
-          <div className="w-full shrink-0 sm:w-56">
-            <div className="flex items-center justify-between gap-3 text-xs font-semibold text-[var(--brand-dark)]">
-              <span>{t("firstTargetCurrent")}</span>
-              <span>{t("firstTargetGoal")}</span>
+          {SHOW_PROGRESS && (
+            <div className="w-full shrink-0 sm:w-56">
+              <div className="flex items-center justify-between gap-3 text-xs font-semibold text-[var(--brand-dark)]">
+                <span>{t("firstTargetCurrent")}</span>
+                <span>{t("firstTargetGoal")}</span>
+              </div>
+              <div className="mt-2 h-3 overflow-hidden rounded-full bg-[var(--surface-soft)]">
+                <div
+                  className="h-full rounded-full bg-[var(--accent)]"
+                  style={{ width: `${FIRST_DONATION_PROGRESS}%` }}
+                />
+              </div>
             </div>
-            <div className="mt-2 h-3 overflow-hidden rounded-full bg-[var(--surface-soft)]">
-              <div
-                className="h-full rounded-full bg-[var(--accent)]"
-                style={{ width: `${FIRST_DONATION_PROGRESS}%` }}
-              />
-            </div>
-          </div>
+          )}
         </div>
       </aside>
     );
@@ -59,22 +65,26 @@ export function FirstDonationTarget({ compact = false }: FirstDonationTargetProp
         </div>
 
         <div className="border-t border-[var(--border)] bg-[var(--surface-soft)]/70 px-5 py-4 sm:px-6 sm:py-5 lg:border-l lg:border-t-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
-            {t("firstTargetProgressLabel")}
-          </p>
-          <div className="mt-2 flex items-end justify-between gap-4">
-            <p className="text-3xl font-bold leading-none tracking-tight text-[var(--brand-dark)] tabular-nums">
-              {t("firstTargetCurrent")} <span className="text-xl text-[var(--muted)]/55">/</span>{" "}
-              {t("firstTargetGoalAmount")}
-            </p>
-          </div>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-white shadow-inner">
-            <div
-              className="h-full rounded-full bg-[var(--accent)]"
-              style={{ width: `${FIRST_DONATION_PROGRESS}%` }}
-            />
-          </div>
-          <div className="mt-3 rounded-lg border border-[var(--border)] bg-white/80 px-4 py-3">
+          {SHOW_PROGRESS && (
+            <>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+                {t("firstTargetProgressLabel")}
+              </p>
+              <div className="mt-2 flex items-end justify-between gap-4">
+                <p className="text-3xl font-bold leading-none tracking-tight text-[var(--brand-dark)] tabular-nums">
+                  {t("firstTargetCurrent")} <span className="text-xl text-[var(--muted)]/55">/</span>{" "}
+                  {t("firstTargetGoalAmount")}
+                </p>
+              </div>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-white shadow-inner">
+                <div
+                  className="h-full rounded-full bg-[var(--accent)]"
+                  style={{ width: `${FIRST_DONATION_PROGRESS}%` }}
+                />
+              </div>
+            </>
+          )}
+          <div className={`${SHOW_PROGRESS ? "mt-3" : ""} rounded-lg border border-[var(--border)] bg-white/80 px-4 py-3`}>
             <p className="text-sm font-semibold leading-5 text-[var(--brand-dark)]">
               {t("firstTargetStatusShort")}
             </p>

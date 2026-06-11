@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { getTierPriceLabel } from "@/lib/tiers";
 
 export function HeroSection() {
   const t = useTranslations("hero");
@@ -10,7 +11,7 @@ export function HeroSection() {
   const heroActions = (
     <div className="flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-3">
       <LocalizedLink
-        href="/purchase?tier=protected"
+        href="/purchase?tier=protected&gift=true"
         className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
       >
         {t("ctaPrimary")}
@@ -21,23 +22,6 @@ export function HeroSection() {
         className="inline-flex min-h-[44px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white/70 px-5 py-3 text-sm font-semibold text-[var(--brand-dark)] backdrop-blur transition-colors duration-300 ease-out hover:bg-white"
       >
         {t("ctaSecondary")}
-      </LocalizedLink>
-    </div>
-  );
-
-  const heroTeaserLinks = (
-    <div className="mt-4 flex flex-wrap gap-2">
-      <LocalizedLink
-        href="/purchase?tier=protected&gift=true"
-        className="inline-flex items-center gap-1.5 rounded-lg border border-orange-200/75 bg-orange-50/75 px-3 py-1.5 text-sm font-semibold text-[var(--section-label)] transition hover:bg-white hover:text-[var(--brand-dark)]"
-      >
-        {t("giftTeaserLink")} →
-      </LocalizedLink>
-      <LocalizedLink
-        href="/wanted"
-        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)]/75 px-3 py-1.5 text-sm font-semibold text-[var(--section-label)] transition hover:bg-white hover:text-[var(--brand-dark)]"
-      >
-        {t("wantedTeaserLink")} →
       </LocalizedLink>
     </div>
   );
@@ -53,6 +37,7 @@ export function HeroSection() {
 
           <h1 className="max-w-xl text-3xl font-bold leading-[1.09] tracking-tight text-[var(--brand-dark)] sm:text-5xl">
             {t("titleLine1")}
+            {" "}
             <br />
             <span className="text-[var(--section-label)]">{t("titleLine2")}</span>
           </h1>
@@ -62,15 +47,14 @@ export function HeroSection() {
           </p>
 
           <p className="mt-3 max-w-lg text-sm leading-6 text-[var(--muted)] sm:text-[1.03rem] sm:leading-7">
-            {t("description")}
+            {t("description", { price: getTierPriceLabel("protected") })}
           </p>
           <p className="mt-2 max-w-lg text-sm font-medium leading-6 text-[var(--muted)]">
             {t("trustDescription")}
           </p>
 
-          <div className="mt-8 hidden w-full max-w-[36rem] lg:block">
+          <div className="mt-7 w-full max-w-[36rem] lg:mt-8">
             {heroActions}
-            {heroTeaserLinks}
           </div>
         </div>
 
@@ -88,7 +72,7 @@ export function HeroSection() {
                 priority
               />
             </div>
-            <div className="mt-5 border-t border-white/70 px-1 pt-4">
+            <div className="mt-5 hidden border-t border-white/70 px-1 pt-4 sm:block">
               <div className="grid grid-cols-2 items-start gap-x-4 text-[10px] sm:gap-x-6 sm:text-sm">
                 <div className="min-w-0">
                   <p className="font-semibold leading-4 text-[var(--brand-dark)]">{t("finnleyName")}</p>
@@ -100,13 +84,6 @@ export function HeroSection() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="relative z-10 w-full lg:hidden">
-          <div>
-            {heroActions}
-            {heroTeaserLinks}
           </div>
         </div>
       </div>

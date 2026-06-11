@@ -24,7 +24,7 @@
   },
   "seo": {
     "home": {
-      "title": "Certificados de tiburón divertidos y papeleo tiburonesco casi oficial",
+      "title": "Certificados de Protección de Tiburones — Papeleo Casi Oficial, Conservación Real",
       "description": "Un certificado personalizado y divertido que protege más a los tiburones que a ti. Papeleo tiburonesco casi oficial para amigos, compañeros de trabajo, personas con miedo a la playa y gente que probablemente no es comida."
     },
     "purchase": {
@@ -133,18 +133,17 @@
     "title": "Esta página escapó del archivador.",
     "text": "La Alianza revisó los cajones habituales, un cajón sospechoso y el océano. No encontró una página coincidente.",
     "homeCta": "Volver a la sede",
-    "registryCta": "Consultar el Registro"
+    "registryCta": "Consultar el Registro",
+    "wantedCta": "Abrir un caso Wanted"
   },
   "hero": {
     "titleLine1": "Documentación oficial que confirma",
     "titleLine2": "que no eres comida.",
     "brandLine": "Protege a los tiburones considerablemente más de lo que te protege a ti.",
-    "description": "Papeleo tiburonesco personalizado para amigos, compañeros de trabajo, personas preocupadas por la playa y cualquiera que opere sin documentación adecuada de negación de snack.",
-    "trustDescription": "La Alianza es ficticia. El compromiso con la conservación es real.",
-    "ctaPrimary": "Presentar papeleo tiburón",
+    "description": "Un certificado personalizado para un amigo, un compañero de trabajo o alguien preocupado por la playa. Ningún tiburón lo ha reconocido todavía. Los destinatarios lo enmarcan de todos modos. {price}, entrega inmediata.",
+    "trustDescription": "La Alianza es ficticia. El compromiso con la conservación es real: registrado y reportado, certificado a certificado.",
+    "ctaPrimary": "Regala el papeleo",
     "ctaSecondary": "Vista previa del certificado",
-    "giftTeaserLink": "Envía uno como regalo",
-    "wantedTeaserLink": "Genera un póster Wanted",
     "socialProof": "Únete a la Alianza",
     "giftBadge": "Estatus de snack: en revisión",
     "finnleyName": "Finnley Mako",
@@ -162,7 +161,7 @@
       "title": "Sé parte de la primera ola de diplomáticos.",
       "text": "Cada certificado recibe un registro privado. El listado público es opcional y solo aparece si eliges hacerlo visible. Cada dólar se rastrea; el papeleo conserva el dramatismo adecuado.",
       "cta": "Obtén tu certificado — $4",
-      "purchaseCta": "Obtén tu certificado",
+      "purchaseCta": "Presenta el papeleo",
       "registryCta": "Ver el Registro",
       "ctaNonSnack": "Hazte No-Snack — $19",
       "ctaBusiness": "Certifica tu oficina — $99"
@@ -174,8 +173,8 @@
       "certName": "[ Tu nombre aquí ]",
       "certText": "es oficialmente reconocido por la Shark Human Alliance como un defensor de las relaciones pacíficas entre tiburones y humanos y un contribuyente a la conservación marina real.",
       "inputPlaceholder": "Tu nombre (los tiburones esperan)",
-      "ctaBuy": "Consigue el tuyo",
-      "ctaGift": "Regala uno",
+      "ctaBuy": "Presenta el papeleo",
+      "ctaGift": "Regala el papeleo",
       "previewSectionLabel": "Pruébalo en vivo"
     },
     "impactTeaser": {
@@ -242,13 +241,21 @@
       "partner4Desc": "Protección de la fauna marina y uno de los santuarios de tiburones más importantes del mundo en Colombia.",
       "partnersDisclaimer": "Listadas como destinatarias previstas. Las asociaciones formales se anunciarán solo si se confirman.",
       "stat1Value": "~100M",
-      "stat1Label": "tiburones sacrificados por humanos al año",
+      "stat1Label": "tiburones que se estima que los humanos matan al año",
       "stat2Value": "<10",
-      "stat2Label": "muertes humanas por tiburones en la mayoría de los años",
+      "stat2Label": "muertes humanas por mordeduras de tiburón no provocadas en la mayoría de los años",
       "stat3Value": "⅓",
-      "stat3Label": "de todas las especies de tiburones están amenazadas",
+      "stat3Label": "de las especies de tiburones y rayas están amenazadas",
       "stat4Value": "450M",
-      "stat4Label": "años que los tiburones han sobrevivido en la Tierra"
+      "stat4Label": "años que los tiburones han sobrevivido en la Tierra",
+    "statsSourceLine": "Fuente — Worm et al. 2013 · Dulvy et al. 2021 · Florida Museum ISAF"
+    },
+    "wantedTeaser": {
+      "label": "Canal público de denuncias",
+      "title": "Algunos humanos siguen peligrosamente sin papeleo.",
+      "text": "Abre un caso Wanted gratuito sobre un amigo, compañero de trabajo u otro humano indocumentado. Es instantáneo, compartible y administrativamente difícil de ignorar.",
+      "cta": "Abre un caso Wanted gratis",
+      "stamp": "CASO ABIERTO"
     },
     "faq": {
       "label": "FAQ",
@@ -324,6 +331,10 @@
       {
         "question": "¿Cuánto cuesta cada certificado?",
         "answer": "Amigo Protegido cuesta $4. Reconocimiento No-Snack cuesta $19. Zona Libre de Tiburones cuesta $99. La Alianza no negocia, sobre todo porque nadie lo ha pedido."
+      },
+      {
+        "question": "¿Hay una opción gratuita?",
+        "answer": "Sí — el generador de pósters Wanted es gratis. Abre un caso sobre un amigo, compañero de trabajo u otro humano indocumentado y comparte el póster. Si el asunto se vuelve administrativamente serio, el caso puede cerrarse más tarde con un certificado. Lo encontrarás como Póster Wanted en el menú."
       },
       {
         "question": "¿Recibiré un certificado de inmediato?",

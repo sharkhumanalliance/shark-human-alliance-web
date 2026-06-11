@@ -6,6 +6,15 @@ This calendar assumes 3 Instagram feed posts per week, 2 Facebook feed posts per
 
 Timezone default: CET/Prague unless target-market scheduling changes.
 
+## Publication Log
+
+| Post | Window | Status | Notes |
+| --- | --- | --- | --- |
+| 1.1 Bureau Opens | Week 1, Tue 20:00 | Published | Vintage Bureau Memo. Top-down desk, anonymous "Office Morale Officer" plush, FILED stamp. |
+| 1.2 Manifest Fact Card | Week 1, Thu 12:30 | Final layout approved | Public Notice Stat Card, vintage. Final design: bar chart with shared X-axis (0-100M), headline "THE RATIO HAS BEEN REVIEWED.", italic Bureau punchline, FILED stamp. Designed in Canva. |
+| 1.3 Finnley Introduction | Week 1, Sat 10:30 | Text finalized, visual in progress | Modern hybrid press portrait. First official remark on file: "The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary." Attribution: "FINNLEY MAKO, ON THE PUBLIC RECORD". AI portrait + Canva text overlay. |
+| 2.1 Luna Introduction | Week 2, Tue 20:00 | Next | Modern hybrid portrait, mirroring 1.3 logic. Luna with document stack, REDACTED stamp, controlled expression. |
+
 ## Week 1: Bureau Opens
 
 Goal: make the account legible and worth following.

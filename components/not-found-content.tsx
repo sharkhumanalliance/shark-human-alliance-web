@@ -31,6 +31,12 @@ export function NotFoundContent() {
           >
             {t("registryCta")}
           </LocalizedLink>
+          <LocalizedLink
+            href="/wanted"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--brand-dark)] transition-colors hover:bg-[var(--surface-soft)]"
+          >
+            {t("wantedCta")}
+          </LocalizedLink>
         </div>
       </div>
     </section>

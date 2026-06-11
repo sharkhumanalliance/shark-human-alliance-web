@@ -176,6 +176,14 @@ export function getTierPriceLabel(value?: string | null) {
   return `$${getTierPriceDollars(value)}`;
 }
 
+export function getTierDonationDollars(value?: string | null) {
+  return getTierMetadata(value).donationCents / 100;
+}
+
+export function getTierDonationLabel(value?: string | null) {
+  return `$${getTierDonationDollars(value)}`;
+}
+
 export function getTierBadgeClass(value?: string | null) {
   return TIER_STYLES[normalizeTier(value)].badge;
 }

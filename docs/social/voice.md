@@ -4,9 +4,9 @@ Last updated: 2026-06-05
 
 ## Voice Formula
 
-Cute comedy + official-world bureaucracy + real conservation.
+Humor first - cute character comedy and dry Bureau bureaucracy, both welcome - plus real conservation.
 
-Finnley and Luna are expressive, lovable characters who treat absurd human prejudice as a deadly serious administrative emergency. Lead with warmth and humor; the official Bureau tone is the comedic frame, not a straitjacket.
+Finnley and Luna are expressive, lovable characters who treat absurd human prejudice as a deadly serious administrative emergency. Lead with humor in whichever register fits the moment: warm and cute when the characters carry the post, dry and bureaucratic when the Bureau is filing the joke straight. Both registers belong to the same brand; neither owns it. The goal is to be funny enough to earn the audience - dryness alone or cuteness alone is not the point.
 
 ## Brand Voice Rules
 

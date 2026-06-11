@@ -24,7 +24,7 @@
   },
   "seo": {
     "home": {
-      "title": "Funny Shark Certificates & Official-ish Shark Paperwork",
+      "title": "Shark Protection Certificates — Official-ish Paperwork, Real Conservation",
       "description": "A funny personalized certificate that protects sharks more than it protects you. Official-ish shark paperwork for friends, coworkers, beach-fearers, and people who are probably not food."
     },
     "purchase": {
@@ -133,18 +133,17 @@
     "title": "This page escaped the filing cabinet.",
     "text": "The Alliance searched the usual drawers, one suspicious drawer, and the ocean. No matching page was found.",
     "homeCta": "Return to headquarters",
-    "registryCta": "Check the Registry"
+    "registryCta": "Check the Registry",
+    "wantedCta": "Open a Wanted case"
   },
   "hero": {
     "titleLine1": "Official paperwork confirming",
     "titleLine2": "you are not food.",
     "brandLine": "It protects sharks considerably more than it protects you.",
-    "description": "Personalized shark paperwork for friends, coworkers, beach-worriers, and anyone operating without adequate snack-denial documentation.",
-    "trustDescription": "The Alliance is fictional. The conservation commitment is real.",
-    "ctaPrimary": "File shark paperwork",
+    "description": "A personalized certificate for a friend, coworker, or beach-worrier. No shark has recognized it yet. Recipients frame it anyway. {price}, delivered instantly.",
+    "trustDescription": "The Alliance is fictional. The conservation commitment is real — tracked and reported, certificate by certificate.",
+    "ctaPrimary": "Gift the paperwork",
     "ctaSecondary": "Preview the certificate",
-    "giftTeaserLink": "Send one as a gift",
-    "wantedTeaserLink": "Generate a Wanted Poster",
     "socialProof": "Join the Alliance",
     "giftBadge": "Snack status: under review",
     "finnleyName": "Finnley Mako",
@@ -162,7 +161,7 @@
       "title": "Be among the first wave of diplomats.",
       "text": "Every certificate is assigned a private registry record. Public listing is optional and appears only if you choose to make it visible. Every dollar is tracked; the paperwork remains appropriately dramatic.",
       "cta": "Get your certificate — $4",
-      "purchaseCta": "Get your certificate",
+      "purchaseCta": "File the paperwork",
       "registryCta": "View the Registry",
       "ctaNonSnack": "Go Non-Snack — $19",
       "ctaBusiness": "Certify your office — $99"
@@ -180,8 +179,8 @@
       "certName": "[ Your Name Here ]",
       "certText": "is officially recognized by the Shark Human Alliance as a supporter of peaceful shark-human relations and a contributor to real ocean conservation.",
       "inputPlaceholder": "Your name (the sharks are waiting)",
-      "ctaBuy": "Get yours",
-      "ctaGift": "Gift one",
+      "ctaBuy": "File the paperwork",
+      "ctaGift": "Gift the paperwork",
       "previewSectionLabel": "Try it live"
     },
     "membershipSection": {
@@ -244,11 +243,19 @@
       "stat1Value": "~100M",
       "stat1Label": "sharks estimated killed by humans annually",
       "stat2Value": "<10",
-      "stat2Label": "human fatalities from sharks in most years",
+      "stat2Label": "human fatalities from unprovoked shark bites in most years",
       "stat3Value": "⅓",
-      "stat3Label": "of all shark species are threatened",
+      "stat3Label": "of shark and ray species are threatened",
       "stat4Value": "450M",
-      "stat4Label": "years sharks have survived on Earth"
+      "stat4Label": "years sharks have survived on Earth",
+    "statsSourceLine": "Source — Worm et al. 2013 · Dulvy et al. 2021 · Florida Museum ISAF"
+    },
+    "wantedTeaser": {
+      "label": "Public reporting channel",
+      "title": "Some humans remain dangerously paperwork-free.",
+      "text": "Open a free Wanted case on a friend, coworker, or other undocumented human. It is instant, shareable, and administratively difficult to ignore.",
+      "cta": "Open a free Wanted case",
+      "stamp": "CASE OPEN"
     },
     "faq": {
       "label": "FAQ",
@@ -324,6 +331,10 @@
       {
         "question": "How much does each certificate cost?",
         "answer": "Protected Friend is $4. Non-Snack Recognition is $19. Shark-Free Zone is $99. The Alliance does not negotiate, mostly because nobody asked."
+      },
+      {
+        "question": "Is there a free option?",
+        "answer": "Yes — the Wanted Poster generator is free. Open a case on a friend, coworker, or other undocumented human and share the poster. If the matter becomes administratively serious, the case can later be closed with a certificate. You will find it under Wanted Poster in the menu."
       },
       {
         "question": "Will I receive a certificate immediately?",

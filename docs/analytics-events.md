@@ -17,6 +17,7 @@ Use canonical `source` values from `lib/analytics-events.ts`.
 | `hero` | Homepage or page hero CTA |
 | `header` | Site header or case header secondary action |
 | `sticky_cta` | Mobile homepage sticky CTA |
+| `home_wanted_cta` | Homepage Wanted teaser section CTA |
 | `wanted_poster` | Wanted poster creation surface |
 | `wanted_gift_cta` | Wanted poster gift/protect CTA |
 | `wanted_case` | Wanted case page surface |
@@ -62,6 +63,7 @@ Use only dimensions that are meaningful for the event. For example,
 | `sticky_cta_shown` | Mobile homepage sticky CTA first becomes visible | `source`, `placement` | No |
 | `sticky_cta_click` | Mobile homepage sticky CTA is clicked | `source`, `placement` | No |
 | `sticky_cta_dismiss` | Mobile homepage sticky CTA is dismissed | `source`, `placement` | No |
+| `wanted_teaser_click` | Homepage Wanted teaser CTA is clicked | `source` | No |
 | `wanted_poster_generate` | Wanted poster is generated | `source`, `tone`, `locale`, `personalized`, `name_length` | No |
 | `wanted_poster_multi_tag` | Multiple wanted names are parsed or navigated | `source`, `tone`, `locale`, `name_count`, `navigated`, `index` | No |
 | `wanted_poster_share` | Wanted poster share is attempted | `source`, `format`, `tone`, `locale`, `personalized` | No |

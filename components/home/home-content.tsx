@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
@@ -8,6 +9,7 @@ import { CertificateTemplateSelector } from "@/components/certificate/certificat
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
 import { FirstDonationTarget } from "@/components/impact/first-donation-target";
 import { trackEvent } from "@/components/analytics";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { formatCertificateDate } from "@/lib/dates";
 import { getTierPriceLabel } from "@/lib/tiers";
@@ -162,16 +164,16 @@ export function HomeContent() {
                   />
                 </div>
 
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col xl:flex-row">
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col">
                   <LocalizedLink
                     href={previewPurchaseHref}
-                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-base lg:w-full"
                   >
                     {t("about.ctaBuy")}
                   </LocalizedLink>
                   <LocalizedLink
                     href={previewGiftHref}
-                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto sm:px-8 sm:text-base lg:w-full xl:w-auto"
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto sm:px-8 sm:text-base lg:w-full"
                   >
                     {t("about.ctaGift")}
                   </LocalizedLink>
@@ -297,6 +299,10 @@ export function HomeContent() {
             </div>
           </div>
 
+          <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--muted)]/75">
+            {t("realImpact.statsSourceLine")}
+          </p>
+
             <p className="mt-8 max-w-2xl text-base leading-7 text-[var(--muted)]">
               {t("impactTeaser.donationsIntro")}{" "}
             {PARTNERS.map(({ i, url }, idx) => (
@@ -330,6 +336,70 @@ export function HomeContent() {
             >
               {t("impactTeaser.linkText")} {"\u2192"}
             </LocalizedLink>
+          </div>
+        </div>
+      </section>
+
+      <section data-reveal id="wanted-teaser" className="bg-white py-10 sm:py-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="flex flex-col gap-6 rounded-[24px] border border-[var(--border)] bg-[var(--surface-soft)]/60 px-5 py-7 sm:px-8 sm:py-8 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <div className="flex flex-wrap items-center gap-3">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+                  {t("wantedTeaser.label")}
+                </p>
+                <span
+                  aria-hidden="true"
+                  className="inline-block -rotate-3 rounded border border-[#B94135]/70 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#B94135]"
+                >
+                  {t("wantedTeaser.stamp")}
+                </span>
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl">
+                {t("wantedTeaser.title")}
+              </h2>
+              <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+                {t("wantedTeaser.text")}
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-col items-center gap-5">
+              <div
+                aria-hidden="true"
+                className="w-40 -rotate-2 rounded-md border border-[#3A2515]/25 bg-[#F6ECD8] px-3 py-3 shadow-sm"
+              >
+                <p className="text-center font-mono text-[12px] font-bold uppercase tracking-[0.2em] text-[#3A2515]">
+                  Wanted
+                </p>
+                <div className="mt-2 overflow-hidden rounded-sm border border-[#3A2515]/15">
+                  <Image
+                    src="/wanted-poster_picture.png"
+                    alt=""
+                    width={1448}
+                    height={1086}
+                    sizes="160px"
+                    className="h-auto w-full"
+                  />
+                </div>
+                <div className="mt-2 space-y-1">
+                  <div className="h-1 w-full rounded bg-[#3A2515]/20" />
+                  <div className="h-1 w-3/4 rounded bg-[#3A2515]/20" />
+                </div>
+                <p className="mt-2 text-center font-mono text-[8px] uppercase tracking-[0.14em] text-[#3A2515]/60">
+                  Case No. 0042
+                </p>
+              </div>
+              <LocalizedLink
+                href="/wanted"
+                onClick={() =>
+                  trackEvent("wanted_teaser_click", {
+                    source: ANALYTICS_SOURCES.homeWanted,
+                  })
+                }
+                className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[#B94135] bg-white px-7 py-3.5 text-sm font-semibold text-[#B94135] transition-colors duration-300 ease-out hover:bg-[#B94135] hover:text-white sm:text-base md:w-auto"
+              >
+                {t("wantedTeaser.cta")}
+              </LocalizedLink>
+            </div>
           </div>
         </div>
       </section>

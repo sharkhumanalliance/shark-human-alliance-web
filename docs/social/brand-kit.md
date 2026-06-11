@@ -1,18 +1,23 @@
 # Brand And Social Kit
 
-Last updated: 2026-05-31
+Last updated: 2026-06-05
 
 ## Core Principle
 
-> Cute and funny first, mascots front and center, Bureau as the world, product last.
+> Humor first - cute character moments and dry Bureau humor side by side, mascots central, Bureau as the world, product last.
 
-The social identity should look like an adorable fictional government office run by two expressive plush sharks. Lead with character and comedy; the official paperwork world is the comedic frame that makes the cuteness land, and what separates it from a generic shark account.
+The social identity should look like a fictional government office run by two expressive plush sharks who take absurd shark-human misunderstandings deathly seriously. Humor is the base. The register can be warm and cute when the characters carry the post, or dry and deadpan when the Bureau files the joke straight - both are on-brand. The official paperwork world is what separates this from a generic shark account in either mode.
 
 ## Visual Tone
 
-Use expressive, front-and-center plush mascots inside an official paperwork world: certificates, case files, stamps, cream paper, navy ink, redactions, mini desks and props. Finnley and Luna carry the emotion and the comedy; the paperwork gives it the deadpan-official frame.
+Two valid modes inside the same paperwork world:
 
-Keep it cute and warm. Avoid: aggressive or scary shark visuals, gore, fearmongering, meme-template fonts, loud gradients, stock beach imagery, and overusing the SHA logo. Cartoon expressiveness is welcome; chaos that loses the official frame is not.
+- Character-driven posts: expressive, front-and-center plush mascots carry the emotion and the comedy. Use for statements, intros, field reports, redactions, press conferences.
+- Bureau-driven posts: official documents with no mascots; the joke lives in the paperwork itself. Use for memos, fact cards, public notices, Wanted posters.
+
+Both modes share the same world: certificates, case files, stamps, cream paper, navy ink, redactions, mini desks and props. The paperwork gives all of it the deadpan-official frame; Finnley and Luna add warmth when they appear.
+
+Keep it warm where it should be warm and dry where it should be dry. Avoid: aggressive or scary shark visuals, gore, fearmongering, meme-template fonts, loud gradients, stock beach imagery, and overusing the SHA logo. Cartoon expressiveness is welcome when characters carry the post; chaos that loses the official frame is not.
 
 ## Color System
 
@@ -154,6 +159,50 @@ Before launching the first feed post, prepare:
 - 4:5, 1:1, and 9:16 export variants.
 - Source-line component for fact cards.
 - Small SHA Bureau header component.
+
+## Page Bios
+
+Canonical page descriptions for the brand's social accounts. Use these when onboarding a new platform and when checking existing profiles for drift.
+
+### Facebook Page
+
+Bio (4 lines, URL inline):
+
+```
+The internet's most official-ish human protection program.
+Personalized certificates for shark-related concerns.
+Real shark conservation. Impeccable paperwork.
+Now accepting filings at sharkhumanalliance.com.
+```
+
+Page Category: `Nonprofit Organization` or `Environmental Conservation Organization`.
+
+### Instagram
+
+`Name` field (searchable, separate from handle): `Shark Human Alliance — Bureau`
+
+`Username`: `@sharkhumanalliance` (must match the Facebook Page username).
+
+`Category`: `Nonprofit Organization`.
+
+Bio (3 lines, ~139 characters; the URL goes in the dedicated `Website` field, not in bio text):
+
+```
+The internet's most official-ish human protection program.
+Certificates for shark-related concerns.
+Real conservation. Impeccable paperwork.
+```
+
+`Website`: `https://sharkhumanalliance.com`
+
+Story Highlights to set up at launch: `Bureau` (memo posts), `Cast` (Finnley + Luna), `Filings` (fact cards).
+
+### Bio Rules
+
+- Do not lead with product. The first line must be a Bureau-identity hook, not a sales pitch.
+- Do not use emoji in bios. The voice carries the personality.
+- Keep the "Real conservation" line on every platform. It is what separates the brand from a meme account.
+- Do not localize bios until the locale-specific landing pages exist.
 
 ## Treatment Rules
 

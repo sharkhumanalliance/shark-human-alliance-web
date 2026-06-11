@@ -10,6 +10,7 @@ export const ANALYTICS_SOURCES = {
   giftReveal: "gift_reveal",
   header: "header",
   hero: "hero",
+  homeWanted: "home_wanted_cta",
   stickyCta: "sticky_cta",
   wantedCase: "wanted_case",
   wantedCaseCta: "wanted_case_cta",
