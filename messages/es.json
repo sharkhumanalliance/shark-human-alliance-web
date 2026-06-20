@@ -24,7 +24,7 @@
   },
   "seo": {
     "home": {
-      "title": "Certificados de Protección de Tiburones — Papeleo Casi Oficial, Conservación Real",
+      "title": "Divertido Certificado de Tiburón — Un Regalo que Ayuda a los Tiburones de Verdad | Shark Human Alliance",
       "description": "Un certificado personalizado y divertido que protege más a los tiburones que a ti. Papeleo tiburonesco casi oficial para amigos, compañeros de trabajo, personas con miedo a la playa y gente que probablemente no es comida."
     },
     "purchase": {
@@ -138,7 +138,7 @@
   },
   "hero": {
     "titleLine1": "Documentación oficial que confirma",
-    "titleLine2": "que no eres comida.",
+    "titleLine2": "que no eres comida de tiburón.",
     "brandLine": "Protege a los tiburones considerablemente más de lo que te protege a ti.",
     "description": "Un certificado personalizado para un amigo, un compañero de trabajo o alguien preocupado por la playa. Ningún tiburón lo ha reconocido todavía. Los destinatarios lo enmarcan de todos modos. {price}, entrega inmediata.",
     "trustDescription": "La Alianza es ficticia. El compromiso con la conservación es real: registrado y reportado, certificado a certificado.",
@@ -291,13 +291,13 @@
     "valueHook": {
       "label": "Cómo procede la Oficina",
       "title": "Tu estatus de snack ha entrado en revisión formal.",
-      "point1Title": "Abre un expediente.",
-      "point1Text": "Introduce un nombre. La Oficina lo acepta como prueba suficiente de que eres humano.",
-      "point2Title": "Recibe una resolución.",
-      "point2Text": "Un certificado con aspecto oficial. Queda precioso enmarcado. No detiene tiburones.",
-      "point3Title": "Financia el lado correcto.",
-      "point3Text": "Tu protección es ceremonial. La conservación de tiburones no.",
-      "impactLine": "Cada venta financia la conservación a través de Shark Trust, Oceana, Shark Conservation Fund y Fundación Malpelo."
+      "point1Title": "Escribe un nombre.",
+      "point1Text": "El tuyo, o el de alguien a quien quieras molestar un poco. Ese es todo el proceso de selección.",
+      "point2Title": "Recibe un papeleo gloriosamente inútil.",
+      "point2Text": "De aspecto oficial, listo para enmarcar y completamente inútil ante tiburones de verdad.",
+      "point3Title": "Haz algo realmente bueno.",
+      "point3Text": "La protección es una broma. La conservación de tiburones que financia no lo es.",
+      "impactLine": "Los tiburones no son la amenaza — lo somos nosotros. Parte de cada venta financia la protección real de los tiburones."
     },
     "howStep1": "Elige un certificado",
     "howStep2": "Financia conservación real",
@@ -590,11 +590,11 @@
     "reason2Text": "Soporta naturalmente un certificado personalizado e insignia de reconocimiento.",
     "reason3Title": "Mejor producto de lanzamiento",
     "reason3Text": "Si solo existe un producto de pago en el lanzamiento, probablemente debería ser este.",
-    "buyLabel": "Marcador de flujo de compra",
-    "buyTitle": "Siguiente paso: conectar esta página al checkout.",
-    "buyText": "Por ahora esta es una página de detalle de producto elegante. El siguiente paso de construcción será añadir un botón de compra, luego checkout, luego personalización del certificado.",
-    "buyCtaPrimary": "Ver todos los niveles de membresía",
-    "buyCtaSecondary": "Leer FAQ",
+    "buyLabel": "Cuando quieras",
+    "buyTitle": "Consigue el Estatus de Amigo Protegido — $4",
+    "buyText": "Añade un nombre, elige un estilo y descarga el certificado en menos de un minuto. $1 de cada $4 financia conservación real de tiburones.",
+    "buyCtaPrimary": "Presentar el papeleo — $4",
+    "buyCtaSecondary": "Comparar todos los niveles",
     "faqLabel": "FAQ",
     "faqTitle": "Aclaraciones del producto.",
     "faqItems": [
@@ -1213,7 +1213,7 @@
   },
   "wanted": {
     "label": "Oficina de Seguridad de la Alianza",
-    "title": "Alguien que conoces sigue administrativamente sin resolver.",
+    "title": "Alguien que conoces tiene cero papeleo sobre tiburones.",
     "subtitle": "Crea la acusación oficial. Compártela. Luego cierra el caso con un certificado que claramente debió presentar hace meses.",
     "formTitle": "Presenta un informe sobre un humano desprotegido",
     "formSubtitle": "Escribe el nombre de la persona que opera actualmente sin credenciales orientadas a tiburones. La Oficina inventará el resto.",
@@ -1349,7 +1349,7 @@
     "shareButton": "Compartir póster",
     "linkCopied": "¡Enlace copiado!",
     "shareTitle": "SE BUSCA: {name}",
-    "shareText": "{name} ha sido identificado como un humano desprotegido. Haz lo correcto.",
+    "shareText": "{name} ha sido clasificado como un humano desprotegido. La Alianza ha abierto un caso de cumplimiento sobre tiburones — mira los cargos.",
     "giftCta": "Regalar protección a esta persona — {price}",
     "caseLinkLabel": "Abrir el expediente",
     "caseLinkDescription": "Una landing personalizada donde la acusación puede convertirse en papeleo.",

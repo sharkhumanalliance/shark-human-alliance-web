@@ -27,7 +27,7 @@ The labels and fine print are the joke. Keep them deadpan and specific.
 
 **Letterhead**
 - `SHARK HUMAN ALLIANCE`
-- `BUREAU OF INTERSPECIES MISUNDERSTANDING`
+- `BUREAU OF INTERSPECIES DIPLOMACY`
 - `FORM FIN-1`
 - `PRE-BEACH SNACK-DENIAL DECLARATION`
 
@@ -60,7 +60,7 @@ You generate the whole form, including text, in one pass. Field labels and fine 
 A vintage official government form photographed top-down on a desk, aged cream paper
 (#EFE7D4) with subtle grain and faint ink imperfections, thin navy (#162D50) Bureau frame,
 deadpan bureaucratic layout. Letterhead at top, centered, small letter-spaced serif:
-"SHARK HUMAN ALLIANCE" / "BUREAU OF INTERSPECIES MISUNDERSTANDING" / "FORM FIN-1" /
+"SHARK HUMAN ALLIANCE" / "BUREAU OF INTERSPECIES DIPLOMACY" / "FORM FIN-1" /
 "PRE-BEACH SNACK-DENIAL DECLARATION". Below, a clean blank form with labeled ruled lines
 and small tick-boxes:
 "Name of human:", "Body of water / beach:", "Date of intended entry:",
@@ -93,10 +93,11 @@ The calendar caption is already strong; below it are sharper-voice variants cons
 **IG caption — options:**
 
 1. (calendar baseline) `Bureau bulletin — Form FIN-1 (Pre-Beach Snack-Denial Declaration) is now in circulation. Filing is voluntary. The Bureau strongly recommends it anyway.`
-2. ★ **Recommended** — `Form FIN-1 is now in circulation. It lets you formally declare that you do not intend to be a snack. Filing is voluntary. The Bureau strongly recommends it anyway.`
+2. ★ **Recommended** — `Form FIN-1 is now in circulation. It allows humans to declare, in writing, that they do not intend to be a snack. The sharks have not countersigned it, but this has not delayed the filing.`
 3. (drier) `The Bureau has issued a form. It asks whether you intend to be a snack. There is no wrong answer, but there is a recommended one.`
+4. (shortest) `Snack-denial paperwork is now available. The sharks have not objected, for reasons the Bureau refuses to overinterpret.`
 
-**Recommendation: 2.** It states the absurd premise plainly (declare you are not a snack) without explaining the joke, and keeps the canonical "voluntary / recommends it anyway" beat. Use **3** if you want maximum deadpan and are happy to let the form image carry the premise.
+**Recommendation: 2.** It states the absurd premise plainly (declare you are not a snack), then adds the sharper Bureau joke: the sharks have not signed it, but the paperwork proceeds anyway. It is funnier than the baseline without becoming a hard product CTA. Use **3** if you want maximum deadpan and are happy to let the form image carry the premise.
 
 **CTA line (soft, append or as last line):** `More forms may follow.`
 
@@ -104,11 +105,18 @@ The calendar caption is already strong; below it are sharper-voice variants cons
 
 ```
 Bureau bulletin. Form FIN-1, the Pre-Beach Snack-Denial Declaration, is now in circulation.
-It allows any human to formally declare, in writing, that they do not intend to be a snack.
-Filing is voluntary. The Bureau strongly recommends it anyway. The form has no effect on
-sharks, who have not been consulted and cannot read, but the Bureau finds the gesture
-reassuring. More forms may follow. The Alliance is fictional. The shark conservation it
-supports is not.
+
+It allows any human approaching a body of water to declare, in writing, that they do not
+intend to be a snack. The Bureau considers this kind of clarity helpful.
+
+Filing is voluntary. The Bureau strongly recommends it anyway.
+
+The sharks have not countersigned it, but this has not delayed the filing.
+
+More forms may follow.
+
+Filed,
+The Bureau
 ```
 
 ---
@@ -154,7 +162,7 @@ small fine print and a navy FILED stamp.
 Bureau-voice post. Replies dry, short, in-world for playful comments; plain human tone for genuine questions or distress (`voice.md` / `crisis.md`).
 
 - "Where do I file this / can I get one?" (playful) → `Filing is voluntary. The Bureau accepts intent in lieu of a form, for now.` / `Form FIN-1 is in circulation. Additional forms are threatened.`
-- "Does this actually protect me?" → answer plainly: it's a joke form; real safety comes from respecting wildlife and local guidance; the project funds real shark conservation. Never imply the product/form provides real safety (voice.md hard rule).
+- "Does this actually protect me?" → answer plainly: it's a joke form; real safety comes from respecting wildlife and local guidance; proceeds will fund real shark conservation. Never imply the product/form provides real safety (voice.md hard rule).
 - Tagging a friend "you need this" → fine, light Bureau reply: `The subject has been noted. A form will be made available.`
 - Real shark-incident or distress → `crisis.md`, no humor.
 

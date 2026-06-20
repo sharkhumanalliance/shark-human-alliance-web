@@ -24,7 +24,7 @@
   },
   "seo": {
     "home": {
-      "title": "Shark Protection Certificates — Official-ish Paperwork, Real Conservation",
+      "title": "Funny Shark Certificate — A Gift That Helps Real Sharks | Shark Human Alliance",
       "description": "A funny personalized certificate that protects sharks more than it protects you. Official-ish shark paperwork for friends, coworkers, beach-fearers, and people who are probably not food."
     },
     "purchase": {
@@ -138,7 +138,7 @@
   },
   "hero": {
     "titleLine1": "Official paperwork confirming",
-    "titleLine2": "you are not food.",
+    "titleLine2": "you're not shark food.",
     "brandLine": "It protects sharks considerably more than it protects you.",
     "description": "A personalized certificate for a friend, coworker, or beach-worrier. No shark has recognized it yet. Recipients frame it anyway. {price}, delivered instantly.",
     "trustDescription": "The Alliance is fictional. The conservation commitment is real — tracked and reported, certificate by certificate.",
@@ -291,13 +291,13 @@
     "valueHook": {
       "label": "How the Bureau proceeds",
       "title": "Your snack status has entered formal review.",
-      "point1Title": "Open a file.",
-      "point1Text": "Enter a name. The Bureau accepts this as sufficient evidence of a human.",
-      "point2Title": "Receive a ruling.",
-      "point2Text": "An official-looking certificate. Frames beautifully. Stops no sharks.",
-      "point3Title": "Fund the better side.",
-      "point3Text": "Your protection is ceremonial. The shark conservation is not.",
-      "impactLine": "Every sale funds conservation through Shark Trust, Oceana, Shark Conservation Fund, and Fundación Malpelo."
+      "point1Title": "Enter a name.",
+      "point1Text": "Yours, or someone you'd quite like to bother. That's the entire vetting process.",
+      "point2Title": "Get gloriously useless paperwork.",
+      "point2Text": "Official-looking, frame-ready, and completely powerless against actual sharks.",
+      "point3Title": "Do one genuinely good thing.",
+      "point3Text": "The protection is a joke. The shark conservation it funds is not.",
+      "impactLine": "Sharks aren't the threat — we are. Part of every sale funds real shark protection."
     },
     "howStep1": "Pick a certificate",
     "howStep2": "Fund real conservation",
@@ -590,11 +590,11 @@
     "reason2Text": "It naturally supports a personalized certificate and recognition badge.",
     "reason3Title": "Best launch product",
     "reason3Text": "If only one paid product exists at launch, it should probably be this one.",
-    "buyLabel": "Purchase flow placeholder",
-    "buyTitle": "Next step: connect this page to checkout.",
-    "buyText": "For now this is a polished product detail page. The next build step will be adding a purchase button, then checkout, then certificate personalization.",
-    "buyCtaPrimary": "View all membership tiers",
-    "buyCtaSecondary": "Read FAQ",
+    "buyLabel": "Ready when you are",
+    "buyTitle": "Get Protected Friend Status — $4",
+    "buyText": "Add a name, pick a style, and download the certificate in under a minute. $1 of every $4 funds real shark conservation.",
+    "buyCtaPrimary": "File the paperwork — $4",
+    "buyCtaSecondary": "Compare all tiers",
     "faqLabel": "FAQ",
     "faqTitle": "Product clarifications.",
     "faqItems": [
@@ -1213,7 +1213,7 @@
   },
   "wanted": {
     "label": "Alliance Security Bureau",
-    "title": "Someone you know is still administratively unresolved.",
+    "title": "Someone you know has zero shark paperwork.",
     "subtitle": "Create the official accusation. Share it. Then close the case with a certificate they clearly should have filed months ago.",
     "formTitle": "File a report on an unprotected human",
     "formSubtitle": "Enter the name of the person currently operating without shark-facing credentials. The Bureau will invent the rest.",
@@ -1349,7 +1349,7 @@
     "shareButton": "Share poster",
     "linkCopied": "Link copied!",
     "shareTitle": "WANTED: {name}",
-    "shareText": "{name} has been identified as an unprotected human. Do the right thing.",
+    "shareText": "{name} has been classified as an unprotected human. A shark-compliance case is now open — see the charges.",
     "giftCta": "Gift protection to this human — {price}",
     "caseLinkLabel": "Open the case file",
     "caseLinkDescription": "A personalized landing page where the accusation can become paperwork.",

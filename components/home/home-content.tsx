@@ -119,6 +119,10 @@ export function HomeContent() {
               ))}
             </div>
           </div>
+
+          <p className="mt-5 max-w-3xl text-sm font-medium leading-6 text-[var(--brand-dark)] sm:text-base">
+            {t("valueHook.impactLine")}
+          </p>
         </div>
       </section>
 

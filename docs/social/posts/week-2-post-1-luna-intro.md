@@ -135,8 +135,8 @@ Finnley issues the statements; Luna decides which ones survive.
 Meet Luna Reef, head of the Department of Misunderstanding Prevention. Luna reads what
 the Bureau files, initials what holds up, and redacts what does not. Where Finnley is
 optimistic and public-facing, Luna is quiet, organized, and calmly unimpressed. She has
-not raised her voice once. She has not needed to. The Alliance is fictional. The shark
-conservation it supports is not.
+not raised her voice once. She has not needed to. The Alliance is fictional. Proceeds will fund
+real shark conservation.
 ```
 
 **Alt text:**

@@ -134,13 +134,13 @@ export function ProtectedFriendContent() {
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <LocalizedLink
-                href="/membership"
+                href="/purchase?tier=protected"
                 className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto"
               >
                 {t("buyCtaPrimary")}
               </LocalizedLink>
               <LocalizedLink
-                href="/#faq"
+                href="/membership"
                 className="inline-flex min-h-[52px] w-full items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-white/10 sm:w-auto"
               >
                 {t("buyCtaSecondary")}

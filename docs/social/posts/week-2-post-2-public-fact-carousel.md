@@ -133,7 +133,7 @@ than one-third of shark, ray, and chimaera species are threatened with extinctio
 years, fewer than 10 human fatalities result from unprovoked shark bites — a number the public
 appears to have rounded up dramatically. The Bureau finds the ratio administratively
 embarrassing and has filed accordingly. Sources are printed on each card, because Luna insisted.
-The Alliance is fictional. The shark conservation it supports is not.
+The Alliance is fictional. Proceeds will fund real shark conservation.
 ```
 
 **Alt text (one line covering the set):**

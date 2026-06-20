@@ -118,6 +118,24 @@ Use "sharks or their ancestors" when being precise.
 
 Do not imply modern shark species have been unchanged for 450 million years.
 
+### Approved Comparison — Older Than Trees
+
+#### Approved wording
+
+Sharks are older than trees. (Plain-language hook.)
+
+Sharks and their ancient relatives have a fossil record stretching back about 450 million years — before the first trees existed. (Precise; keep "ancient relatives" so the claim refers to the lineage, not modern species.)
+
+#### Citation
+
+The "before trees existed" comparison is stated directly by the same NHM source as Fact 4: "Sharks have been around for hundreds of millions of years, appearing in the fossil record before trees even existed." — Natural History Museum, "Shark evolution: a 450 million year timeline." https://www.nhm.ac.uk/discover/shark-evolution-a-450-million-year-timeline.html
+
+Supporting date anchor for "the first trees": the earliest known forest-forming trees (Archaeopteris) date to about 385 million years ago (Late Devonian), roughly 65 million years after the earliest shark scales. Stein, W. E., Berry, C. M., Morris, J. L. et al. (2020). "Mid-Devonian Archaeopteris Roots Signal Revolutionary Change in Earliest Fossil Forests." Current Biology, 30(3), 421-431. https://doi.org/10.1016/j.cub.2019.11.067
+
+#### Notes
+
+NHM alone supports the qualitative "older than trees" claim; the ~385 Mya / ~65-million-year figures are supporting precision, not required on-graphic. Keep the "ancient relatives" qualifier present whenever the hook is used, so "sharks are older than trees" is not misread as "modern shark species are unchanged."
+
 ## Combined Manifest Card
 
 ### Approved Graphic Copy
