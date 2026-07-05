@@ -25,11 +25,19 @@ export function normalizePaperFormat(value?: string | null): PaperFormat {
   return value === "letter" ? "letter" : "a4";
 }
 
+/** Every template ships in both formats. Classic (and Luxury Basic) have no
+ *  native Letter art yet — on Letter they render through the scaled A4
+ *  artboard in CertificateSheet (A4 design ×0.9394, centered; see
+ *  `.certificate-sheet__scaled`). Phase 2 (native Classic Letter layout with
+ *  dedicated letter-ratio art) can flip `useNativePaperLayout` for classic
+ *  without touching callers of this helper. */
 export function isPaperFormatAvailableForTemplate(
-  template: CertificateTemplate,
-  paperFormat: PaperFormat,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- signature kept for phase 2
+  _template: CertificateTemplate,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- signature kept for phase 2
+  _paperFormat: PaperFormat,
 ) {
-  return !(template === "classic" && paperFormat === "letter");
+  return true;
 }
 
 export function normalizePaperFormatForTemplate(

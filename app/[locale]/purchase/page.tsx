@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t("title"),
     description: t("description"),
     alternates: localizedAlternates(locale, "/purchase"),
-    openGraph: { title: t("title"), description: t("description"), type: "website", images: [{ url: "/mascots/homepage-hero-plush.png", width: 1152, height: 768 }] },
-    twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/mascots/homepage-hero-plush.png"] },
+    openGraph: { title: t("title"), description: t("description"), type: "website", images: [{ url: "/mascots/homepage-hero-og.jpg", width: 1200, height: 630 }] },
+    twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/mascots/homepage-hero-og.jpg"] },
   };
 }
 
@@ -31,7 +31,7 @@ function ProductJsonLd() {
     name: "Shark Human Alliance Certificates",
     description:
       "Funny personalized shark-protection certificates. Official-ish, printable, and conservation-positive.",
-    image: `${BASE_URL}/mascots/homepage-hero-plush.png`,
+    image: `${BASE_URL}/mascots/homepage-hero-office.jpg`,
     brand: { "@type": "Brand", name: "Shark Human Alliance" },
     offers: PUBLIC_TIERS.map((tier) => {
       const metadata = TIER_METADATA[tier];

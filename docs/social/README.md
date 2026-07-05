@@ -18,7 +18,10 @@ The brand should feel like an adorable, very official shark agency: expressive p
 - [crisis.md](./crisis.md) - pause rules and response protocol for real shark incidents or sensitive criticism.
 - [sources.md](./sources.md) - approved shark facts, wording, citations, source-line rules.
 - [mascot-model-sheet.md](./mascot-model-sheet.md) - Finnley and Luna consistency brief for illustrators or AI generation.
-- [editorial-calendar-4-weeks.md](./editorial-calendar-4-weeks.md) - first 4 weeks of posts and stories.
+- [editorial-calendar-4-weeks.md](./editorial-calendar-4-weeks.md) - first 4 weeks of posts as production-ready cards (final copy, timing tables, per-shot generation prompts).
+- [production-runbook.md](./production-runbook.md) - deterministic "give me the next post" procedure + master prompt for any assistant.
+- [distribution-playbook.md](./distribution-playbook.md) - off-account growth from zero: Shark Week window, comment strategy, creator seeding DM templates, first-48h protocol, boost rules, press pitches.
+- [posts/README.md](./posts/README.md) - status index of post specs: which are active in the current calendar vs. archived from the replaced plan.
 - [video-series.md](./video-series.md) - comedy-first short-form video engine: recurring series, hooks, Shark Court -> Wanted bridge, prompts.
 
 ## Working Rule

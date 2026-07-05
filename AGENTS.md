@@ -40,7 +40,9 @@ Marketing, brand voice, and content live in `docs/social/`. This is the source o
 
 \- `docs/social/video-series.md` - comedy-first short-form video engine (Shark Court -> Wanted bridge, hooks, prompts).
 
-\- `docs/social/editorial-calendar-4-weeks.md` - first 4 weeks of posts.
+\- `docs/social/editorial-calendar-4-weeks.md` - first 4 weeks as production-ready cards: final copy, on-screen-text timing tables, per-shot generation prompts, Publication Log with statuses.
+
+\- `docs/social/production-runbook.md` - deterministic "give me the next post" procedure: which files to read, how to expand the `[FINNLEY]`/`[LUNA]`/`[STYLE]`/`[NEG]` prompt blocks, and the fixed output-package format. Any agent producing a post MUST follow it.
 
 \- `docs/social/sources.md` - approved shark facts; never publish a fact not listed here.
 

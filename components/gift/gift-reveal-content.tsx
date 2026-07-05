@@ -8,6 +8,7 @@ import { trackEvent } from "@/components/analytics";
 import type { CertificateTemplate } from "@/lib/certificate-templates";
 import { useLocale, useTranslations } from "next-intl";
 import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
+import { getPublicTierKey } from "@/lib/tiers";
 
 export type GiftCertificate = {
   name: string;
@@ -220,7 +221,12 @@ export function GiftRevealContent({
               {t("revealedHeadline", { name: toName })}
             </h1>
             <p className="mt-3 text-base leading-7 text-[var(--muted)]">
-              {t("revealedSubtitle")}
+              {/* Tier-aware: the gift can be any tier, so the subtitle must
+                  match the real certificate. Falls back to the generic
+                  Protected line for legacy links without a certificate. */}
+              {certificate
+                ? t(`revealedSubtitles.${getPublicTierKey(certificate.tier)}`)
+                : t("revealedSubtitle")}
             </p>
 
             {certificate ? (

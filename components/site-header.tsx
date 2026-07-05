@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { LanguageSwitcher } from "./language-switcher";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
 import { buildLocalizedPath } from "@/lib/navigation";
 
 export function SiteHeader() {
@@ -97,7 +98,7 @@ export function SiteHeader() {
             <LanguageSwitcher />
           </Suspense>
           <LocalizedLink
-            href="/purchase?tier=protected"
+            href={`/purchase?tier=protected&from=${ANALYTICS_SOURCES.header}`}
             className="hidden min-h-11 whitespace-nowrap rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:inline-flex sm:min-h-10"
           >
             {t("cta")}
@@ -135,7 +136,7 @@ export function SiteHeader() {
         <div className="overflow-hidden">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
             <LocalizedLink
-              href="/purchase?tier=protected"
+              href={`/purchase?tier=protected&from=${ANALYTICS_SOURCES.header}`}
               onClick={() => setMenuOpen(false)}
               className="mb-2 flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-3.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
             >

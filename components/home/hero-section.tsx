@@ -1,17 +1,23 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
+import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { LocalizedLink } from "@/components/ui/localized-link";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
+import { formatCertificateDate } from "@/lib/dates";
 import { getTierPriceLabel } from "@/lib/tiers";
 
 export function HeroSection() {
   const t = useTranslations("hero");
+  const tHome = useTranslations("home");
+  const locale = useLocale();
+  const previewDate = formatCertificateDate(new Date(), locale);
 
   const heroActions = (
     <div className="flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-3">
       <LocalizedLink
-        href="/purchase?tier=protected&gift=true"
+        href={`/purchase?tier=protected&gift=true&from=${ANALYTICS_SOURCES.hero}`}
         className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-7 py-3.5 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
       >
         {t("ctaPrimary")}
@@ -61,16 +67,39 @@ export function HeroSection() {
         <div className="relative z-10 min-w-0 lg:justify-self-end lg:w-full lg:max-w-[40rem] lg:pl-4 xl:max-w-[42rem] xl:pl-6">
           <div className="pointer-events-none absolute inset-x-[10%] bottom-3 top-[14%] rounded-full bg-[var(--surface-soft)] blur-3xl" />
           <div className="relative">
-            <div className="overflow-hidden rounded-[30px] shadow-[0_28px_80px_rgba(22,45,80,0.18)]">
-              <Image
-                src="/mascots/homepage-hero-plush.png"
-                alt={t("imageAlt")}
-                width={1152}
-                height={768}
-                className="h-auto w-full bg-[var(--surface-soft)] object-cover"
-                sizes="(min-width: 1024px) 640px, 100vw"
-                priority
-              />
+            <div className="relative">
+              <div className="overflow-hidden rounded-[30px] shadow-[0_28px_80px_rgba(22,45,80,0.18)]">
+                <Image
+                  src="/mascots/homepage-hero-office.jpg"
+                  alt={t("imageAlt")}
+                  width={1536}
+                  height={1024}
+                  className="h-auto w-full bg-[var(--surface-soft)] object-cover"
+                  sizes="(min-width: 1024px) 640px, 100vw"
+                  priority
+                />
+              </div>
+              {/* The actual product, visible in the first viewport: a small
+                  live certificate "sheet" pinned over the mascot photo.
+                  Clicking it jumps to the interactive preview below. Props
+                  mirror the preview section's defaults so the QR request is
+                  shared (browser cache) instead of duplicated. */}
+              <LocalizedLink
+                href="#certificate-preview"
+                aria-label={t("ctaSecondary")}
+                className="absolute -bottom-4 -left-2 block w-36 -rotate-[5deg] rounded-lg bg-white p-1.5 shadow-[0_18px_44px_rgba(22,45,80,0.35)] transition-transform duration-300 ease-out hover:-rotate-2 hover:scale-[1.03] sm:-left-5 sm:w-48"
+              >
+                <div className="pointer-events-none overflow-hidden rounded-[4px]">
+                  <CertificatePreview
+                    name={tHome("about.certName")}
+                    tier="protected"
+                    date={previewDate}
+                    registryId="SHA-XXXX-DIP"
+                    template="luxury"
+                    locale={locale}
+                  />
+                </div>
+              </LocalizedLink>
             </div>
             <div className="mt-5 hidden border-t border-white/70 px-1 pt-4 sm:block">
               <div className="grid grid-cols-2 items-start gap-x-4 text-[10px] sm:gap-x-6 sm:text-sm">

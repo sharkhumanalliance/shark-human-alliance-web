@@ -82,7 +82,7 @@ Big Canvas-based generator in `components/wanted/wanted-content.tsx`. `drawPoste
 
 ## Homepage (`components/home/home-content.tsx`)
 
-Live certificate customizer: `previewName` input + template selector → live `CertificatePreview`; the buy/gift CTAs carry `&name=` into `/purchase` (they currently omit `&template=`, which `/purchase` would accept — a known continuity gap). `components/home/mobile-sticky-cta.tsx` is a mobile-only bottom CTA that appears after the hero scrolls past (IntersectionObserver + matchMedia desktop guard, `sessionStorage` dismiss, `prefers-reduced-motion`, safe-area inset).
+Live certificate customizer: `previewName` input + template selector → live `CertificatePreview`; the buy/gift CTAs carry `&name=`, `&template=` and canonical `&from=home_preview_cta` into `/purchase`. Hero, tier cards, and the final CTA also carry canonical `from=` (`hero`, `home_tier_card`, `home_final_cta`). `components/home/mobile-sticky-cta.tsx` is a mobile-only bottom CTA that appears after the hero scrolls past (IntersectionObserver + matchMedia desktop guard, `sessionStorage` dismiss, `prefers-reduced-motion`, safe-area inset).
 
 ## Post-purchase share
 
@@ -119,6 +119,10 @@ See `.env.example`. Required: `DATABASE_URL`, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_
 ## Tracked GA4 events (`components/analytics.tsx`)
 
 Canonical event contract lives in `docs/analytics-events.md`. `purchase` is the only GA4 key event. Ecommerce events use `items[]` with certificate tier as the item, and wanted/gift/sticky funnel events use canonical `source` values from `lib/analytics-events.ts` (`wanted_gift_cta`, `wanted_case_cta`, `wanted_footer_cta`, `gift_reveal`, `sticky_cta`, etc.). `view_item`, `begin_checkout`, and `purchase` re-emit canonical `source` from `sessionStorage["sha_attribution_source"]` so funnel reports survive Stripe's redirect. Paid Stripe purchases are also sent from `/api/webhook` through GA4 Measurement Protocol when analytics consent and GA client id are present; do not send PII to GA4.
+
+## Social content (`docs/social/`)
+
+For any "next post" / social production request: follow `docs/social/production-runbook.md` — a deterministic procedure with a fixed output-package format. `editorial-calendar-4-weeks.md` holds production cards (final copy, on-screen-text timing tables, per-shot generation prompts using reusable `[FINNLEY]`/`[LUNA]`/`[STYLE]`/`[NEG]` blocks from its PRODUCTION SYSTEM section); "next post" = first non-`Published` row in its Publication Log, and published posts must be marked there. Hard rules: facts only verbatim from `sources.md` (else output BLOCKED, never improvise); captions/on-screen text/alt text are final — copy character-for-character; never render typography in image/video generators (text is added in Canva/CapCut); check `crisis.md` before scheduling humor; off-platform links carry canonical `from=`. Channel policy: video-first (IG Reels + TikTok natively), FB feed and Stories paused. Off-account promo (seeding, comments, boosts, press) follows `docs/social/distribution-playbook.md`; `docs/social/posts/README.md` says which old post specs are active vs. archived.
 
 ## Other constraints
 

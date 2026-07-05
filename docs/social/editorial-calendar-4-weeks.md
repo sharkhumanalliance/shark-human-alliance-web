@@ -1,341 +1,423 @@
-# Editorial Calendar: First 4 Weeks
+# Editorial Calendar: Relaunch — First 4 Weeks From Zero
 
-Last updated: 2026-06-05
+Last updated: 2026-07-01 (v2 — production-ready cards with generation prompts)
 
-This calendar assumes 3 Instagram feed posts per week, 2 Facebook feed posts per week, and 1-2 Stories per week starting week 2.
+> **Replaces the previous IG+FB static-image calendar** (old plan in git history). At zero followers, static feed posts have no discovery surface — Reels/TikTok are the only organic reach a new account gets. Old specs in `posts/` are reused where noted; `voice.md`, `sources.md`, `brand-kit.md`, `mascot-model-sheet.md`, and `crisis.md` still govern everything.
+>
+> **v2 change:** every post is now a self-contained production card — exact on-screen text, final caption, alt text, and copy-paste generation prompts per shot. You should never need to invent copy or a prompt on production day.
 
-Timezone default: CET/Prague unless target-market scheduling changes.
+## Relaunch Principles
+
+1. **Video-first.** 2-3 Reels/week, posted natively to BOTH Instagram Reels and TikTok (same file, no watermark). Optional free YouTube Shorts re-post.
+2. **Every post stands alone.** Every viewer is a first-time viewer. Callbacks are a bonus layer, never load-bearing.
+3. **The free Wanted generator opens week 2**, not week 4. Free ≠ hard sell. Certificate stays invisible until the week-4 soft hint.
+4. **Facebook feed paused.** Revisit after IG/TikTok traction.
+5. **Stories paused** until ~500 followers. Exception: a free link-sticker duplicate of a feed CTA.
+6. **Verdict/comment CTA on (almost) every post.** Comments outrank saves for distribution.
+7. **One flexible trend slot/week** (see Trend Slot Playbook below). Skip if nothing fits. Check `crisis.md` first, always.
+8. **Timing loose.** Default window 17:00-20:00 CEST; consistency and watch time beat clock precision.
+9. **Keywords over hashtags.** Max 3-5 tags (`voice.md` list); searchable phrases ("shark facts", "wanted poster", "sharks older than trees") go in caption line 1 and on-screen text.
+
+## Account Setup At Relaunch (one-time)
+
+1. Bios exactly per `brand-kit.md` → Page Bios (IG name field `Shark Human Alliance — Bureau`; the "Real conservation" line stays on every platform).
+2. **Bio link (permanent):** `https://sharkhumanalliance.com/wanted?from=social_bio`. The free tool converts cold profile visits better than the homepage. Per-post "link in bio" CTAs resolve to this URL, so that traffic is attributed `social_bio` — correct and expected. Reserve `from=social_wanted` for real per-post links (TikTok link button, Story link-sticker duplicates, future FB posts).
+3. TikTok: same handle, same bio lines, same link once the account qualifies for one.
+4. Pinning: after week 1 pin R1.2 (glossary engine); after week 2 pin R2.1 and R2.2 (court + free tool). Keep exactly 3 pins from week 2 on.
+5. Legacy grid posts from the old plan (e.g. the Bureau Opens memo) stay — on-brand world-building. Do not delete, do not repost.
+
+## Weekly Rhythm
+
+| Slot | Format | Purpose |
+| --- | --- | --- |
+| Reel A (Mon-Tue) | 25-30s Reel | Character comedy |
+| Reel B (Wed-Thu) | 25-30s Reel | Shark Court / Wanted mechanic — the share engine |
+| Feed C (Fri-Sat) | 4:5 IMG/carousel | Facts (saves + search) or archetype Wanted poster (tags) |
+| Trend slot (any day) | Reel | Optional. Current trend × Bureau voice |
+
+Format contract (`video-series.md`): 0-2s muted-readable hook → 2-7s plush + prop → 7-18s absurd escalation → 18-24s ONE sourced fact → 24-30s in-world comment trigger. 9:16, burned-in captions, first frame carries the joke alone.
+
+---
+
+## PRODUCTION SYSTEM (read once, reuse forever)
+
+### Workflow per Reel
+
+1. Generate 3-4 short clips (5-8s each) with the shot prompts below. **Generate silent and with NO text in frame** — generators mangle text; typography is added afterwards.
+2. Use the approved mascot reference images as character reference in the generator (`public/mascots/homepage-hero-plush.png`, `public/mascots/case-closed-share.png`; per `mascot-model-sheet.md`, reference-editing beats pure text prompting). Regenerate on any color/eye/proportion drift.
+3. Assemble in CapCut/Canva: cut clips to the timing plan, add ON-SCREEN TEXT (Geist Sans for readable lines, Cinzel for official headers — per `brand-kit.md`), overlay stamps from `assets/stamps/png/`, add trending or quiet audio, burn in captions.
+4. Fact text must be copied verbatim from `sources.md`. Source line uses the `source-line` component.
+5. Export the 0-2s hook frame (with text) as the Reel cover; keep all cover text inside the central 4:5 zone so the profile-grid crop does not cut it.
+
+### Workflow per static graphic
+
+Image-gen only for scene/mascot layers (textless). Layout, copy, stamps, and source lines come from `assets/templates/` + Canva. Never let a generator render final typography.
+
+### Reusable prompt blocks
+
+Paste these into every prompt where marked.
+
+**[FINNLEY]** = `Finnley Mako, a soft blue plush shark (body color #4A9BE8), slightly larger of the two mascots, earnest, dramatic, big expressive eyes with white highlights, no accessories`
+
+**[LUNA]** = `Luna Reef, a light teal plush shark (body color #5BC4BF) wearing a small coral scarf (#EE8A45), tiny flower and badge, calm, deadpan, tidy`
+
+**[STYLE]** = `soft plush chibi shark mascot style consistent with provided reference images, rounded friendly body, gentle fabric texture, cozy miniature government-office set, cream paper documents, navy ink, wooden mini desk, rubber stamps, warm soft studio lighting, shallow depth of field, subtle film grain, NO text or letters anywhere in frame, vertical 9:16`
+
+**[NEG]** = `scary shark, aggressive teeth, blood, horror, realistic predator anatomy, wrong colors, missing Luna scarf, missing Luna flower, harsh neon, plastic 3D toy look, distorted eyes, text, letters, words, watermark, logo`
+
+**[PAPERSTYLE]** (for document/poster stills) = `vintage bureaucratic document on warm cream paper (#F6ECD8), navy ink (#162D50), subtle fiber texture and light ink imperfections, tactile official-form look, flat lay or straight-on, NO readable text (layout blocks only), 4:5 portrait`
+
+---
 
 ## Publication Log
 
-| Post | Window | Status | Notes |
-| --- | --- | --- | --- |
-| 1.1 Bureau Opens | Week 1, Tue 20:00 | Published | Vintage Bureau Memo. Top-down desk, anonymous "Office Morale Officer" plush, FILED stamp. |
-| 1.2 Manifest Fact Card | Week 1, Thu 12:30 | Final layout approved | Public Notice Stat Card, vintage. Final design: bar chart with shared X-axis (0-100M), headline "THE RATIO HAS BEEN REVIEWED.", italic Bureau punchline, FILED stamp. Designed in Canva. |
-| 1.3 Finnley Introduction | Week 1, Sat 10:30 | Text finalized, visual in progress | Modern hybrid press portrait. First official remark on file: "The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary." Attribution: "FINNLEY MAKO, ON THE PUBLIC RECORD". AI portrait + Canva text overlay. |
-| 2.1 Luna Introduction | Week 2, Tue 20:00 | Spec ready | Modern hybrid portrait, mirroring 1.3 logic. Luna + document stack, REDACTED stamp. Spec: `posts/week-2-post-1-luna-intro.md`. |
-| 2.2 Public Fact Carousel | Week 2, Thu 12:30 | Spec ready (captions FINAL) | Vintage 5-card notice carousel, no mascots. Staged ratio, threaded deadpan, "For comparison." turn. Spec: `posts/week-2-post-2-public-fact-carousel.md`. |
-| 2.3 Form FIN-1 Reveal | Week 2, Sat 10:30 | Spec ready | Vintage mock form, no mascots. Soft CTA only (no purchase link). Spec: `posts/week-2-post-3-form-fin1.md`. |
-| 3.1 Finnley Goes Into the Field | Week 3, Tue 18:30 IG / 18:45 FB | Spec ready (NEW) | Character-driven modern hybrid; replaces the form moved to 3.3. Spec: `posts/week-3-post-1-finnley-fieldwork.md`. |
-| 3.2 Serious Evolution Moment | Week 3, Thu 18:30 IG / 18:45 FB | Spec ready | Austere 450M-years trust beat, no stamp, no mascots. Spec: `posts/week-3-post-2-450-million-years.md`. |
-| 3.3 Field Report | Week 3, Sat 18:30 IG / 18:45 FB | Graphic produced; relocated from 3.1 | Vintage Field Report form, FIN-1 callback, CTA Share. Spec: `posts/week-3-post-3-field-report.md`. |
-| 4.1 PSA — Resume | Week 4, Tue 20:00 | Spec ready | Retro PSA poster, Bureau-driven, no funnel link. Spec: `posts/week-4-post-1-psa-resume.md`. |
-| 4.2 Luna Quarterly | Week 4, Thu 12:30 | Spec ready (character-driven) | Luna in frame holding redacted statement; restores Week-4 mascot beat. Spec: `posts/week-4-post-2-luna-quarterly.md`. |
-| 4.3 First Wanted Bridge | Week 4, Sat 10:30 | Spec ready (FUNNEL) | First off-platform CTA; free Wanted poster; `from=social_wanted`; IG link-in-bio. Spec: `posts/week-4-post-3-wanted-bridge.md`. |
-| Carryover: Ocean Did Not Reply | Week 4, Story | Resolved → Story | Envelope `To: The Sharks`, RETURNED stamp. Moved from 3.3. |
-| 5.1 Case SHA-0001 Closed | Week 5, Tue 20:00 | Spec ready | Product bridge, character-driven; payoff of 4.3; CTA close the case. Spec: `posts/week-5-post-1-case-closed.md`. |
-| 5.2 Accuse-Back | Week 5, Thu 12:30 | Planned | Reciprocity share engine; calendar stub only. |
-| 5.3 Gift a Closed Case | Week 5, Sat 10:30 | Planned | Gifting + sealed reveal; calendar stub only. |
+| Post | Window | Status |
+| --- | --- | --- |
+| R1.1 Emergency PR Meeting | Week 1, Reel A | Production card ready |
+| R1.2 Language Correction #1 | Week 1, Reel B | Production card ready |
+| C1.3 Public Fact Carousel | Week 1, Feed C | Captions FINAL in `posts/week-2-post-2-public-fact-carousel.md` |
+| R2.1 Shark Court #1 | Week 2, Reel A | Production card ready |
+| R2.2 Wanted Archetype #1 (funnel opens) | Week 2, Reel B | Production card ready |
+| C2.3 Wanted Archetype #2 (static) | Week 2, Feed C | Production card ready |
+| R3.1 Older Than Trees | Week 3, Reel A | Production card ready |
+| R3.2 Luna Redacts | Week 3, Reel B | Production card ready |
+| C3.3 Field Report | Week 3, Feed C | **Graphic already produced** — caption swap only |
+| R4.1 Human Training Program, Lesson 1 | Week 4, Reel A | Production card ready |
+| R4.2 Verdict Day — Case SHA-0001 Closed | Week 4, Reel B | Production card ready |
+| C4.3 PSA — Resume | Week 4, Feed C | Reuse `posts/week-4-post-1-psa-resume.md` |
 
-## Week 1: Bureau Opens
+---
 
-Goal: make the account legible and worth following.
+## WEEK 1 — The Bureau Is Legible In One View
 
-| Day | Channel | Format | Pillar | Post | CTA |
-| --- | --- | --- | --- | --- | --- |
-| Tue 20:00 | IG + FB | IMG | Bureau | Memo 0001 - Bureau operational | More notices will follow |
-| Thu 12:30 | IG + FB | TXT/IMG | Mission | 100M vs fewer than 10 manifest | Save/share |
-| Sat 10:30 | IG + FB | IMG | Character | Finnley Mako introduction | Follow for statements |
+No product, no links. A stranger seeing any single post gets the account and laughs.
 
-### 1.1 Bureau Opens
+### R1.1 Emergency PR Meeting (Reel A — Finnley intro)
 
-IG caption:
+The joke: a plush shark runs crisis PR about a 51-year-old movie, and behind him is a full conspiracy board about it.
 
-`Memo 0001 - the Bureau is operational. Filing has commenced.`
+TIMING & ON-SCREEN TEXT (add in edit):
 
-FB caption:
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-2s | `EMERGENCY PR MEETING.` / `A shark has been called scary again.` | Shot 1 |
+| 2-7s | — | Shot 1 continues |
+| 7-14s | `THE BUREAU WISHES TO CLARIFY THAT THE 1975 FILM WAS NOT, IN FACT, A DOCUMENTARY.` (typed-memo style, Cinzel header optional) | Shot 2 |
+| 14-18s | `FILED` stamp slams over frame (use `filed-navy.png`) | Shot 3 |
+| 18-24s | `Statistically, the average shark is having a quiet day.` + `Fewer than 10 human fatalities from unprovoked shark bites occur in most years.` + source line `FLORIDA MUSEUM ISAF` | Text card (Canva, ledger paper) |
+| 24-30s | `Comment one word of support. Finnley reads everything. Twice.` | Shot 4 |
 
-`Memorandum 0001. As of this week, the Shark Human Alliance Bureau is operational. Filing has commenced. Stamps have been issued. Memoranda, notices, field reports, and the occasional press release will follow from this account. The Alliance is fictional. The shark conservation it supports is not.`
+SHOT PROMPTS:
 
-Visual:
+- **Shot 1 (hook, 6s):** `[FINNLEY] sitting at a tiny wooden desk in a miniature press office, visibly distressed, one fin on his forehead, a chunky manila folder on the desk, behind him a cork board covered in blank papers connected by dramatic red string, one crumpled paper ball rolls off the desk, [STYLE]` — Negative: `[NEG]`
+- **Shot 2 (statement, 7s):** `[FINNLEY] standing at a tiny press-conference podium with a miniature microphone, composing himself, delivering a statement with great dignity, a single spotlight, blank cream statement paper in fin, [STYLE]` — Negative: `[NEG]`
+- **Shot 3 (Luna stamp, 4s):** `[LUNA] slides into frame from the side, stamps a document on the desk once with a wooden rubber stamp without looking up from the clipboard in her other fin, slides back out of frame, deadpan, [FINNLEY] blurred in background mid-speech, [STYLE]` — Negative: `[NEG]`
+- **Shot 4 (CTA, 4s):** `[FINNLEY] close-up, hopeful wet-eyed expression, clutching the folder to his chest like a comfort object, looking directly into camera, [STYLE]` — Negative: `[NEG]`
 
-Top-down desk, cream papers, one stamp, no humans. Use `FILED`.
+CAPTION (final): `A shark has been called scary again. Press spokesperson Finnley Mako has prepared a statement. He insists you watch it. Twice. #SharkHumanAlliance #SharkFacts #FinnleyMako`
 
-### 1.2 Manifest Fact Card
+ALT TEXT: `A blue plush shark in a tiny press office delivers an official statement; a teal plush shark stamps it FILED without looking.`
 
-Graphic copy:
+AUDIO: quiet office ambience or a trending "serious announcement" sound.
 
-`Humans kill an estimated 100 million sharks per year.`
+PINNED COMMENT (paste as-is): `Finnley has asked the Bureau to relay that he is "doing fine." This has been filed under Optimism.`
 
-`Fewer than 10 human fatalities from unprovoked shark bites occur in most years.`
+COMMENT REPLIES: in character, grateful, slightly too moved.
 
-`The Bureau finds the ratio administratively embarrassing.`
+### R1.2 Language Correction #1 (Reel B — the running joke starts)
 
-Source line:
+The joke: the Bureau formally corrects "shark-infested waters" — and then produces a map of Earth to prove whose house it is.
 
-`SOURCE - WORM ET AL. 2013 - FLORIDA MUSEUM ISAF`
+TIMING & ON-SCREEN TEXT:
 
-Caption:
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-2s | `Please stop saying "shark-infested waters."` | Shot 1 |
+| 2-8s | `OFFICIAL CORRECTION № 1` / `infested` (struck through) → `inhabited` | Shot 2 + text overlay |
+| 8-15s | `That is our house. You are the visitor.` | Shot 2 continues |
+| 15-20s | `For reference, the house:` + `REVIEWED` stamp (`reviewed-navy.png`) — CORRECTED is not in the stamp set; the correction lives in the 2-8s overlay text | Shot 3 |
+| 20-25s | `More than one-third of shark, ray, and chimaera species are threatened with extinction.` + `SOURCE — DULVY ET AL. 2021` + `The paperwork situation is currently worse for them than for you.` | Text card (ledger paper) |
+| 25-30s | `The Bureau accepts further corrections in the comments.` | Shot 4 |
 
-`Filed for the public record. Regrettably, the number is real.`
+SHOT PROMPTS:
 
-### 1.3 Finnley Introduction
+- **Shot 1 (hook, 4s):** `[LUNA] at a tiny desk holding up one flat fin toward the camera in a calm "stop" gesture, unimpressed, a tall stack of documents beside her, [STYLE]` — Negative: `[NEG]`
+- **Shot 2 (correction, 8s):** `[LUNA] drawing a single precise line through a word on an official document with a fountain pen, then writing above it, extreme care, close-up on fins and paper, [FINNLEY] in soft-focus background nodding with too much emotion, one tear, [STYLE]` — Negative: `[NEG]`
+- **Shot 3 (the map, 6s):** `[LUNA] unrolls a vintage classroom-style world map onto a stand and taps the ocean with a wooden pointer, completely deadpan, the ocean area subtly highlighted, [STYLE]` — Negative: `[NEG]`
+- **Shot 4 (CTA, 4s):** `[LUNA] holding an empty official suggestion-box tray toward the camera, expectant, one eyebrow area slightly raised, [STYLE]` — Negative: `[NEG]`
 
-IG caption:
+CAPTION (final): `Official correction: the waters are not infested. They are inhabited. Roughly 71% of the planet is, administratively speaking, their house. The Bureau will now accept other phrases requiring review. #SharkHumanAlliance #SharkConservation`
 
-`Press spokesperson Finnley Mako has prepared a statement. He insists you read it.`
+> The 71% figure is approved as Fact 5 in `sources.md` (NOAA citation). Use the wording there.
 
-FB caption:
+ALT TEXT: `A teal plush shark formally corrects the phrase "shark-infested waters" to "shark-inhabited waters" and presents a world map as evidence.`
 
-`Meet Finnley Mako, press spokesperson for the Shark Human Alliance, stubborn optimist, and slightly offended by Hollywood. Finnley has been with the Alliance since its founding and is prepared to issue statements at the slightest provocation.`
+AUDIO: soft pen-scratch and office ambience; a deadpan "serious reveal" trending sound also works.
 
-Visual:
+PINNED COMMENT (paste as-is): `Corrections are reviewed in the order received. "Shark week" is already under investigation.`
 
-Finnley portrait with quote:
+This launches the community-glossary engine — audience-submitted "corrections" feed future episodes. Reply in character; best submissions become Official Correction № 2, 3, …
 
-`The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary.`
+### C1.3 Public Fact Carousel (Feed C)
 
-Attribution line below quote: `— FINNLEY MAKO, ON THE PUBLIC RECORD`.
+Direct reuse of `posts/week-2-post-2-public-fact-carousel.md` (slides + captions FINAL there). One change — append to caption: `Comment FILED to acknowledge receipt.`
 
-See `voice.md` (Reusable Finnley Statements) for the full approved pool and rules.
+Slides are text-led: build from `public-notice-stat-card` templates + `sha-bureau-header` + `source-line`. No image-gen needed.
 
-## Week 2: Cast Deepens
+---
 
-Goal: establish Luna and introduce low-cost Stories.
+## WEEK 2 — Wanted Opens (the growth loop starts)
 
-| Day | Channel | Format | Pillar | Post | CTA |
-| --- | --- | --- | --- | --- | --- |
-| Tue 20:00 | IG + FB | IMG | Character | Luna Reef introduction | None |
-| Thu 12:30 | IG + FB | CAR/IMG | Mission | Things we'd like the public to know | Save |
-| Sat 10:30 | IG + FB | TXT/IMG | Bureau | Form FIN-1 reveal | More forms may follow |
-| Wed or Fri | Stories | Story | Bureau | Stamp closeup / "Reviewed by Luna" | Low-touch reply |
+Link mechanic: IG bio link. Canonical URL `https://sharkhumanalliance.com/wanted?from=social_wanted` — **verify `from=` persists before publishing** (`docs/analytics-events.md`).
 
-### 2.1 Luna Introduction
+### R2.1 Shark Court #1 (Reel A)
 
-Caption:
+The joke: a shark is on trial for looking too pointy; the evidence collapses because he has no pockets and the "lurking" footage is his own living room.
 
-`Luna Reef, Misunderstanding Prevention. Reads, initials, occasionally redacts.`
+TIMING & ON-SCREEN TEXT:
 
-Visual:
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-2s | `SHARK COURT IS IN SESSION.` / `The People v. Tiny Hammerhead.` | Shot 1 |
+| 2-8s | `CHARGE: looking too pointy near a public beach.` | Shot 1 continues |
+| 8-14s | `EXHIBIT A: the defendant has no pockets, and therefore no evil plan.` | Shot 2 |
+| 14-20s | `EXHIBIT B: security footage of the defendant "lurking."` / `The defendant lives there.` | Shot 3 |
+| 20-25s | `Most humans entering the ocean are not, technically, on the menu.` + `SOURCE — FLORIDA MUSEUM ISAF` | Text card |
+| 25-30s | `GUILTY or MISUNDERSTOOD?` / `The Bureau invites your verdict.` | Shot 4 |
 
-Luna with document stack, `REDACTED` stamp, controlled expression.
+SHOT PROMPTS:
 
-### 2.2 Public Fact Carousel
+- **Shot 1 (courtroom, 7s):** `miniature courtroom scene, [FINNLEY] as the nervous defendant wearing a tiny crooked tie, sitting very straight in a small wooden dock, [LUNA] beside him as defense counsel calmly arranging documents, a tall judge bench looming empty above them, wood paneling, [STYLE]` — Negative: `[NEG]`
+- **Shot 2 (Exhibit A, 6s):** `[LUNA] presenting evidence in a miniature courtroom: she gestures with a wooden pointer at [FINNLEY] who slowly rotates in place showing he has no pockets, fins slightly raised, apologetic, [STYLE]` — Negative: `[NEG]`
+- **Shot 3 (Exhibit B, 6s):** `grainy black-and-white security-camera style footage of [FINNLEY] in a cozy miniature living room, sitting in a small armchair with a cup of tea, completely peaceful, timestamp-corner aesthetic without readable characters, [STYLE]` — Negative: `[NEG]`
+- **Shot 4 (verdict CTA, 4s):** `[FINNLEY] gripping the edge of the wooden dock, big pleading eyes to camera, [LUNA] beside him already stamping a document, split emotional register, [STYLE]` — Negative: `[NEG]`
 
-Slides:
+CAPTION (final): `Shark Court is in session. The defendant is charged with looking too pointy. The defense notes he has no pockets. Verdicts accepted below: GUILTY or MISUNDERSTOOD. #SharkHumanAlliance #SharkCourt #FinnleyMako`
 
-1. `Things we'd like the public to know.`
-2. `Humans kill an estimated 100 million sharks per year.`
-3. `The published estimate ranges from 63-273 million.`
-4. `More than one-third of shark, ray, and chimaera species are threatened with extinction.`
-5. `Fewer than 10 human fatalities from unprovoked shark bites occur in most years.`
+ALT TEXT: `A plush shark stands trial in a miniature courtroom for looking too pointy; his lawyer presents his lack of pockets as evidence.`
 
-Source lines:
+AUDIO: courtroom-drama strings, slightly too dramatic for plush sharks; or a trending "objection" sound.
 
-- Worm et al. 2013
-- Dulvy et al. 2021
-- Florida Museum ISAF
+PINNED COMMENT (paste as-is): `The defendant would like the record to show he was commuting.`
 
-Caption:
+### R2.2 Wanted Archetype #1 (Reel B — funnel opens)
 
-`Filed for the public record. Source line included because the Bureau is pretending to be responsible.`
+The joke: the Bureau opens actual cases on a human archetype everyone knows — and Luna hangs the poster with a tiny spirit level, because procedure.
 
-### 2.3 Form FIN-1 Reveal
+TIMING & ON-SCREEN TEXT:
 
-Caption:
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-2s | `A case has been opened.` | Shot 1 |
+| 2-9s | `WANTED:` / `the friend who says "shark-infested waters."` | Shot 2 (poster insert) |
+| 9-16s | — (the level gag carries it) | Shot 3 |
+| 16-22s | `The poster is free.` / `The Bureau is not made of money. The Bureau is made of paperwork.` | Shot 3 continues |
+| 22-30s | `Know this human? Tag them.` / `Or open your own case — free, link in bio.` + `CASE OPENED` stamp (red) + small mono line `CASE № SHA-0001` | Shot 4 / end card |
 
-`Form FIN-1 is now in circulation. It allows humans to declare, in writing, that they do not intend to be a snack. The sharks have not countersigned it, but this has not delayed the filing.`
+SHOT PROMPTS:
 
-Visual:
+- **Shot 1 (hook, 4s):** `top-down shot of a miniature Bureau desk, two plush shark fins sliding a thick red-labeled case folder into center frame, dramatic but cozy lighting, [STYLE]` — Negative: `[NEG]`
+- **Shot 2 (poster insert):** screen recording OR export of the actual site generator poster (`/wanted`) with the archetype name — this is product-true and needs no image-gen. Add the poster text in the generator itself.
+- **Shot 3 (the level, 8s):** `[LUNA] pinning a vintage wanted poster to a cork board, then holding a tiny spirit level against it and adjusting the poster two millimeters, absolute focus, [FINNLEY] behind her holding three more rolled posters and vibrating with excitement, [STYLE]` — Negative: `[NEG]`
+- **Shot 4 (CTA, 4s):** `slow push-in on the cork board with three vintage wanted posters pinned in a neat row, one clearly newer, warm lamp light, [STYLE]` — Negative: `[NEG]`
 
-Mock form with fields:
+CAPTION (final): `Some humans remain dangerously paperwork-free. The Bureau has opened a public reporting channel. Tag the accused, or open a case of your own — free, link in bio. #SharkHumanAlliance #WantedPoster`
 
-- Name
-- Beach destination
-- Snack-denial intent
-- Signature
+ALT TEXT: `A teal plush shark pins a wanted poster for "the friend who says shark-infested waters" to a cork board, using a tiny spirit level.`
 
-Stamp:
+AUDIO: cozy detective/noir suspense.
 
-`FILED`
+PINNED COMMENT (paste as-is): `The accused may respond by opening a counter-case. The Bureau accepts filings in both directions.`
 
-### Stories
+Continuity: this is case `SHA-0001`. It closes on camera in R4.2 — do not renumber.
 
-Options:
+Watch: `wanted_poster_generate`, `wanted_poster_share`, `wanted_accuse_back`.
 
-- `Luna reviewed this` overlay on a document crop.
-- Poll: `Should the Bureau extend office hours?` Options: `No` / `Forward to Luna`.
-- Stamp closeup: `REVIEWED`.
+### C2.3 Wanted Archetype #2 (Feed C — static poster)
 
-## Week 3: Field Observations
+4:5 image, pure paperwork mode (no mascots — per `mascot-model-sheet.md` social usage rule).
 
-Goal: make the Bureau feel active and repeatable.
+POSTER COPY (exact, set in the `wanted-case` template):
 
-| Day | Channel | Format | Pillar | Post | CTA |
-| --- | --- | --- | --- | --- | --- |
-| Tue 16 Jun, 18:30 IG / 18:45 FB | IG + FB | IMG | Character | Finnley goes into the field | Comment softly |
-| Thu 18 Jun, 18:30 IG / 18:45 FB | IG + FB | TXT/IMG | Mission | 450M years serious moment | Save |
-| Sat 20 Jun, 18:30 IG / 18:45 FB | IG + FB | IMG | Bureau | Finnley field report (FIN-1 callback) | Share |
-| Wed or Fri | Stories | Story | Character | Luna redaction (balances a Finnley-heavy week; gives Luna a Week-3 beat) | Reply |
+- Header: `WANTED` (red, Cinzel)
+- Subject: `Watched a certain 1975 film once and has never trusted a lake since.`
+- Charges (mono, form-style): `1. Slandering an entire species at a barbecue.` / `2. Pointing at fins that were dolphins.` / `3. Humming the two-note song at the beach. Twice.`
+- Footer: `CASE № SHA-0002 · REPORT SIMILAR HUMANS AT THE LINK IN BIO` + `CASE OPENED` stamp (red)
 
-> Week 3 revised (2026-06-13): the Field Report graphic moved from 3.1 (Tue) to 3.3 (Sat) so it is not adjacent to the FIN-1 form (2.3). A new character-driven post — Finnley goes into the field (3.1) — opens the week, breaks the form-on-form repetition, and restores the weekly mascot beat. The "Letter to the sharks returned" gag moved to Week 4. Full specs in `posts/week-3-post-1-finnley-fieldwork.md` and `posts/week-3-post-3-field-report.md`.
->
-> Timing revised (2026-06-14): Week 3 feed posts use 18:30 CEST for IG and 18:45 CEST for FB to better overlap with the US target audience while staying publishable from Europe.
+BACKGROUND PROMPT (if regenerating the paper layer): `[PAPERSTYLE], aged wanted-poster sheet with a deep brown outer frame (#3A2515), central empty silhouette area, distressed edges` — Negative: `[NEG]`. Silhouette stays neutral — never a real face.
 
-### 3.1 Finnley Goes Into the Field (character-driven)
+CAPTION (final): `The Bureau does not name names. The Bureau simply files posters and waits. Tag the subject if the description fits — or open your own case, link in bio. #SharkHumanAlliance #WantedPoster`
 
-Modern hybrid Finnley portrait — the optimist volunteers for fieldwork. Announces field observations have begun; sets up the filed report on Saturday (3.3). Full spec: `posts/week-3-post-1-finnley-fieldwork.md`.
+ALT TEXT: `A vintage wanted poster for a human who watched a certain 1975 film once and has never trusted a lake since, with three formal charges.`
 
-Pull-quote (recommended):
+FUTURE ARCHETYPES (one per fortnight, rotate): refuses to swim past waist depth; announces "something touched my leg" annually; watches shark documentaries "for safety reasons"; brings a floatie as a legal defense; checks the water for fins from the parking lot.
 
-`The Bureau has entered the field. Humans appear unaware they are being protected.`
+---
 
-Attribution: `— FINNLEY MAKO, FIELD OFFICER (SELF-APPOINTED)`.
+## WEEK 3 — Repeatable Series + The Gravitas Beat
 
-Caption:
+### R3.1 Older Than Trees (Reel A — gravitas, no jokes)
 
-`Field observations have begun. Finnley volunteered. Nobody asked him to, which did not affect his confidence. A full report is expected by the weekend.`
+One of the most-shared shark facts on the internet — which is exactly why it gets video treatment, not a static. No stamps, no mascots, no gags. Quiet piano or ambient audio.
 
-### 3.2 Serious Evolution Moment
+TIMING & ON-SCREEN TEXT (slow card sequence, Cinzel + Cormorant):
 
-The deliberate gravitas beat — austere, no stamp, no joke, no mascots. Gravitas hook "Sharks are older than trees" added and verified against NHM (2026-06-13; same source already cited). Full spec: `posts/week-3-post-2-450-million-years.md`.
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-3s | `450 MILLION YEARS` | Shot 1 |
+| 3-8s | `Sharks are older than trees.` | Shot 1 continues |
+| 8-16s | `Sharks and their ancient relatives have a fossil record stretching back about 450 million years — before the first trees existed.` | Shot 2 |
+| 16-22s | `SOURCE — NATURAL HISTORY MUSEUM` | Shot 2 continues |
+| 22-28s | `The Bureau would like them to stay.` | Shot 3 |
 
-Graphic copy:
+SHOT PROMPTS (textless backgrounds; all text added in edit):
 
-`450 MILLION YEARS` / `Sharks are older than trees.` / `Sharks and their ancient relatives have a fossil record stretching back about 450 million years — before the first trees existed.`
+- **Shot 1 (8s):** `extremely slow push-in over deep dark ocean water surface at dusk, minimal, austere, navy and black palette, faint light rays underwater, no animals visible, cinematic, vertical 9:16, no text` — Negative: `[NEG]`
+- **Shot 2 (8s):** `slow drift across an ancient fossil texture in stone, ammonite and sediment layers, museum-lighting mood, navy-tinted shadows, macro detail, vertical 9:16, no text` — Negative: `[NEG]`
+- **Shot 3 (6s):** `a single small shark silhouette swimming calmly in vast open blue water, seen from distance, peaceful, immense negative space, vertical 9:16, no text` — Negative: `[NEG]`
 
-Source line:
+CAPTION (final, per original spec): `A factual entry, not a joke. Sharks were here before trees. The Bureau would like them to stay. #SharkFacts #SharkConservation #SharkHumanAlliance`
 
-`SOURCE - NATURAL HISTORY MUSEUM`
+ALT TEXT: `Slow, quiet video card sequence: sharks have existed for about 450 million years — longer than trees.`
 
-Caption (recommended):
+AUDIO: quiet piano or ambient pad. No trending sounds on this one.
 
-`A factual entry, not a joke. Sharks were here before trees. The Bureau would like them to stay.`
+PINNED COMMENT: none. Keep this comment section quiet; reply plainly (not in character) to questions.
 
-### 3.3 Field Report (relocated from 3.1)
+### R3.2 Luna Redacts (Reel B — character via action)
 
-Vintage Field Report form, Bureau-driven; graphic already produced. Moved here from Tue so it is not adjacent to the FIN-1 form (2.3). Payoff of 3.1's fieldwork announcement. Full spec: `posts/week-3-post-3-field-report.md`.
+The joke: Finnley's three-page press release survives contact with Luna as a single word. Even his signature heart gets redacted.
 
-Graphic copy (rendered as a filled form):
+TIMING & ON-SCREEN TEXT:
 
-`Time: 09:14. Subject: one (1) human, recreational. Confidence: high. Documentation: none. Snack-denial paperwork: unfiled. Threat to sharks: negligible. Threat from sharks: also negligible. Recommendation: gentle administrative reminder. Filed by: F.M.`
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-2s | `Luna Reef will now review Finnley's press release.` | Shot 1 |
+| 2-9s | — (handover + first strike-throughs) | Shot 1-2 |
+| 9-16s | — (marker sounds carry it; escalating speed) | Shot 2 |
+| 16-20s | `What survived:` / `"Filed."` | Shot 3 |
+| 20-24s | `Even the heart. Especially the heart.` + `REDACTED` stamp | Shot 3 continues |
+| 24-30s | `Comment one word Finnley should be allowed to keep.` | Shot 4 |
 
-Stamp: `FORWARD TO LUNA`.
+SHOT PROMPTS:
 
-Caption:
+- **Shot 1 (handover, 5s):** `[FINNLEY] proudly presenting a comically long document that unrolls off the desk and onto the floor, beaming, [LUNA] receiving it with both fins and zero expression, [STYLE]` — Negative: `[NEG]`
+- **Shot 2 (redaction montage, 8s):** `extreme close-up of plush shark fins redacting a document with a thick black marker, line after line disappearing under black bars, methodical then faster, paper texture visible, [STYLE]` — Negative: `[NEG]`
+- **Shot 3 (the survivor, 6s):** `a mostly-black redacted document held up to camera, one tiny unredacted spot near the bottom, then a fin redacts one final small doodle in the corner, [STYLE]` — Negative: `[NEG]`
+- **Shot 4 (aftermath, 4s):** `[FINNLEY] staring at the redacted page in devastated disbelief, fin over his heart, [LUNA] already filing the document into a drawer, serene, [STYLE]` — Negative: `[NEG]`
 
-`Finnley filed a field report. Luna is reviewing it. Forward this to the undocumented human in your life.`
+CAPTION (final): `Finnley wrote three pages. Luna reviewed them. One word survived. Comment one word Finnley should be allowed to keep. #SharkHumanAlliance #LunaReef #FinnleyMako`
 
-> Moved out: "Ocean Did Not Reply" (cream envelope `To: The Sharks`, stamp `RETURNED - RECIPIENT UNREACHABLE`, caption `The Bureau attempted to notify the shark community. The ocean did not reply.`) — relocated to Week 4 (see 4.0 below).
+ALT TEXT: `A teal plush shark redacts a blue plush shark's three-page press release down to the single word "Filed."`
 
-## Week 4: Public Service And First Wanted Bridge
+AUDIO: marker squeaks and page turns, ASMR-leaning; or a trending "getting ready" sound under the montage.
 
-Goal: keep world-building, then introduce Wanted as a free action.
+PINNED COMMENT (paste as-is): `Luna has reviewed this comment section in advance. Several of you are already redacted.`
 
-| Day | Channel | Format | Pillar | Post | CTA |
-| --- | --- | --- | --- | --- | --- |
-| Tue 20:00 | IG + FB | IMG | Bureau | PSA: sharks have not seen your resume | Share |
-| Thu 12:30 | IG + FB | IMG | Character | Luna quarterly statement (Luna in frame) | Comment |
-| Sat 10:30 | IG + FB | IMG | Product bridge | First Wanted CTA (free; link in bio) | Open a Wanted case |
+### C3.3 Field Report (Feed C — asset already produced)
 
-> Week 4 notes (2026-06-13): 4.2 revised to **character-driven** (Luna in frame holding her redacted statement) so the week has a mascot beat and Luna gets a feed appearance — otherwise all three feed posts were vintage/no-mascot. 4.3 is the month's first off-platform CTA: IG routes via **link in bio** (feed posts can't link) + an optional Story link sticker; FB links directly. Canonical URL `https://sharkhumanalliance.com/wanted?from=social_wanted` — verify `/wanted` persists `from=` before publishing. Full specs in `posts/week-4-post-1-psa-resume.md`, `posts/week-4-post-2-luna-quarterly.md`, `posts/week-4-post-3-wanted-bridge.md`.
-| Wed or Fri | Stories | Story | Bureau | Mini poll / stamp / case number / **Ocean Did Not Reply** envelope | Open case teaser |
+Reuse the produced graphic from `posts/week-3-post-3-field-report.md` unchanged. New caption: `Finnley filed a field report. Luna is reviewing it. Forward this to the undocumented human in your life. Verdict below: THOROUGH or CONCERNING? #SharkHumanAlliance`
 
-> **4.0 Carryover — "Ocean Did Not Reply"** (moved from Week 3.3). Cream envelope `To: The Sharks`, stamp `RETURNED - RECIPIENT UNREACHABLE`, caption `The Bureau attempted to notify the shark community. The ocean did not reply.` **Resolved: runs as a Week 4 Story** (Wed/Fri slot above) — the envelope gag is short and visual, and Week 4's feed is full with the Wanted-bridge climax. Override available: if you'd rather run it as a feed post, Week 4 needs a reshuffle — say so and I'll restructure.
+---
 
-### 4.1 PSA
+## WEEK 4 — Loops Reinforced + First Soft Product Hint
 
-Caption:
+CTA ladder stays at step 3-4 (`strategy.md`): free tool primary, "close the case with paperwork" as narrative resolution. No price, no urgency, no discount language.
 
-`Public service announcement from the Alliance: sharks have not seen your resume. You may consider this confirmed in writing.`
+### R4.1 Human Training Program, Lesson 1 (Reel A)
 
-Visual:
+The joke: sharks run a corporate-training seminar for humans, whiteboard and all. Callback to R1.2 for followers; complete on its own for everyone else.
 
-Retro PSA poster, restrained colors, `PUBLIC NOTICE`.
+TIMING & ON-SCREEN TEXT:
 
-### 4.2 Luna Quarterly Statement (character-driven)
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-2s | `HUMAN TRAINING PROGRAM` / `Lesson 1: stop calling our home infested.` | Shot 1 |
+| 2-9s | `infested` → struck through → `inhabited` → struck through → `correctly staffed` | Shot 2 + overlays |
+| 9-16s | `Attendance today:` / `zero humans. The Bureau remains optimistic.` | Shot 3 |
+| 16-22s | `The Bureau remains optimistic that shark-human relations can be improved administratively.` | Shot 3 continues |
+| 22-30s | `Open a case on the human who needs Lesson 1 — free, link in bio.` + `PENDING` stamp | Shot 4 / end card |
 
-Modern hybrid: **Luna in frame** holding her almost-entirely-redacted quarterly statement (restores the Week-4 mascot beat; first Luna feed appearance since 2.1). Redaction gag intact on the held document. Full spec: `posts/week-4-post-2-luna-quarterly.md`.
+SHOT PROMPTS:
 
-Caption:
+- **Shot 1 (classroom, 5s):** `[LUNA] standing beside a miniature whiteboard on wheels with a wooden pointer, teacher energy, tiny classroom with empty small chairs, [STYLE]` — Negative: `[NEG]`
+- **Shot 2 (whiteboard, 7s):** `close-up of a plush fin crossing out writing on a miniature whiteboard and writing beneath it, marker squeak energy, blank scribble shapes instead of readable words, [STYLE]` — Negative: `[NEG]`
+- **Shot 3 (empty room, 7s):** `reverse shot of the miniature classroom: all tiny chairs empty, [FINNLEY] alone in the front row taking enthusiastic notes, [LUNA] at the whiteboard unbothered, [STYLE]` — Negative: `[NEG]`
+- **Shot 4 (CTA, 4s):** `[LUNA] placing a single sheet titled with a blank header into an outbox tray labeled with a blank label, tidy, final, [STYLE]` — Negative: `[NEG]`
 
-`Luna Reef's quarterly statement, in full.`
+CAPTION (final): `Lesson 1 of the Human Training Program has concluded. Attendance: zero humans, one extremely supportive colleague. Enrollment for Lesson 2 opens in the comments. Open a case on the human who needs Lesson 1 — link in bio. #SharkHumanAlliance`
 
-Visible fragments on the document:
+ALT TEXT: `A teal plush shark teaches "Lesson 1: stop calling our home infested" to an empty miniature classroom; a blue plush shark takes notes alone in the front row.`
 
-`The Department has reviewed [REDACTED]. Several [REDACTED] were initialed. One [REDACTED] was returned. Filed.`
+AUDIO: gentle corporate-training muzak.
 
-Stamp:
+PINNED COMMENT (paste as-is): `Lesson 2 ("not every fin is a threat") begins once enrollment reaches one (1) human.`
 
-`REDACTED`
+### R4.2 Verdict Day — Case SHA-0001 Closed (Reel B — soft bridge)
 
-### 4.3 First Wanted Bridge (funnel opens)
+The joke: the archetype case from R2.2 finally resolves. Verdict: guilty of operating without paperwork. Sentence: paperwork. One-shark standing ovation. First time the certificate exists on screen — as resolution, not ad.
 
-Month's first off-platform CTA. Free Wanted poster; certificate only hinted. Full spec (incl. link mechanic + attribution): `posts/week-4-post-3-wanted-bridge.md`.
+TIMING & ON-SCREEN TEXT:
 
-Caption:
+| Time | On-screen text (exact) | Visual |
+| --- | --- | --- |
+| 0-2s | `VERDICT DAY.` / `Case SHA-0001: the friend who says "shark-infested waters."` | Shot 1 |
+| 2-8s | `Verdict: GUILTY of operating without shark-facing paperwork.` | Shot 1 continues |
+| 8-15s | `Sentence: paperwork.` | Shot 2 |
+| 15-20s | `The human is now, administratively, no longer a snack.` + `CASE CLOSED` stamp (gold) | Shot 2 continues |
+| 20-25s | — (single clap gag) | Shot 3 |
+| 25-30s | `Open a case. Some of them close.` / `Free, link in bio.` | End card |
 
-`Some humans remain dangerously paperwork-free. The Bureau has opened a public reporting channel.`
+SHOT PROMPTS:
 
-CTA:
+- **Shot 1 (verdict, 6s):** `miniature courtroom, [FINNLEY] as judge with a tiny gavel far too small for the moment, striking it with maximum ceremony, [STYLE]` — Negative: `[NEG]`
+- **Shot 2 (ceremony, 7s):** adapt the existing asset `public/mascots/case-closed-share.png` (this exact scene) — animate with image-to-video: `two plush sharks formally presenting an ornate certificate document toward the camera, ceremonial, proud, warm light, [STYLE]` — Negative: `[NEG]`
+- **Shot 3 (single clap, 5s):** `[LUNA] delivering exactly one slow clap, then returning her fins to a folded resting position, [FINNLEY] wiping away a tear with a tiny handkerchief, [STYLE]` — Negative: `[NEG]`
 
-`Open a Wanted case.` — IG via **link in bio** (+ optional Story link sticker); FB links directly. Canonical URL: `https://sharkhumanalliance.com/wanted?from=social_wanted` (verify `/wanted` persists `from=` first).
+CAPTION (final): `Case SHA-0001 is closed. Verdict: guilty of operating without shark-facing paperwork. Sentence: paperwork. The human is now, administratively, no longer a snack. Open a case of your own — free, link in bio. #SharkHumanAlliance #WantedPoster`
 
-Visual:
+ALT TEXT: `A plush shark judge finds a human guilty of operating without paperwork; the sentence is paperwork, a certificate is ceremonially presented, and one shark delivers a single slow clap.`
 
-Wanted poster preview or case-file desk scene. Neutral silhouette, never a real face. Stamp `CASE OPENED`, case `SHA-0001`.
+Conservation gate (`strategy.md` filter #6): no present-tense "the conservation is real" claim without a citable allocation — forward commitment phrasing only.
 
-FB caption extension:
+AUDIO: ceremonial brass, slightly too grand for the size of the gavel.
 
-`The Wanted Poster is free. It is suitable for friends, coworkers, family members, and other humans currently operating without shark-facing credentials. If the matter becomes administratively serious, the case may later be closed with paperwork.`
+PINNED COMMENT (paste as-is): `The certificate is real, in the sense that it is really a certificate.`
 
-## Week 5: Soft Conversion (Phase 3 begins)
+### C4.3 PSA — Resume (Feed C)
 
-> Extends the original 4-week plan. Per `strategy.md`, weeks 5-6 are the **Soft conversion** phase (posts 13-18): the Wanted→certificate bridge, product shown as *case closure*, not ad copy. CTA ladder stays at step 4 ("Close the case with paperwork") — do NOT jump to the hard step 5 ("File shark paperwork") until after week 6. Each off-platform link carries a canonical `from=`.
+Reuse `posts/week-4-post-1-psa-resume.md` unchanged (retro PSA poster, `PUBLIC NOTICE`). Caption per spec + `Share with a human currently updating their resume.`
 
-Goal: turn the free Wanted action into soft certificate conversion, while keeping humor the engine and feeding the gifting + accuse-back growth loops.
+---
 
-| Day | Channel | Format | Pillar | Post | CTA |
-| --- | --- | --- | --- | --- | --- |
-| Tue 20:00 | IG + FB | IMG | Product bridge | Case SHA-0001 closed (certificate) | Close the case with paperwork |
-| Thu 12:30 | IG + FB | IMG | Bureau | Accuse-back / counter-report | Open a counter-case |
-| Sat 10:30 | IG + FB | IMG | Product bridge | Gift a closed case (sealed reveal) | Gift the paperwork |
-| Wed or Fri | Stories | Story | Product/Char | Wanted repost / "CASE CLOSED" stamp / gift-reveal teaser | Link sticker |
+## Trend Slot Playbook (evergreen adapters)
 
-### 5.1 Case SHA-0001 Closed (product bridge, character-driven)
+Keep one slot/week for a current sound/format. Three adapters that always work in Bureau voice:
 
-Payoff of 4.3: the first opened case is now closed with a certificate. Finnley + Luna in frame (existing asset `public/mascots/case-closed-share.png` is this exact scene — adapt it). Product as administrative resolution, no discount language. Full spec: `posts/week-5-post-1-case-closed.md`.
+1. **"POV / interview" audio** → intern interview at the Bureau: `Finnley interviews a new intern. The only question is "how do you feel about paperwork."`
+2. **"Explaining my job to my family" format** → `I regulate shark-human misunderstandings. No, it does not pay in fish.`
+3. **Any dramatic-reveal sound** → drawer opens to reveal… another form. `The Bureau has located the missing paperwork. It was paperwork all along.`
 
-Caption (recommended):
+Rules: trend audio + Bureau text overlay + one plush shot is enough; do not force a fact beat into trend posts; `crisis.md` check applies.
 
-`Case SHA-0001 is closed. The human has been issued paperwork and is now, administratively, no longer a snack.`
+## Week 5 Preview (decide at week-4 checkpoint)
 
-CTA: `Close the case with paperwork.` — IG via link in bio; FB direct. URL: `https://sharkhumanalliance.com/purchase?from=social_wanted`.
+Priority order: accuse-back beat (`Subject filed a counter-report. The Bureau is now uncomfortable in both directions.` — drives `wanted_accuse_back`) → gift/sealed-reveal beat (reuse `posts/week-5` drafts, `from=social_gift`) → Shark Court #3 built from audience-submitted charges → first registry beat if opt-in entries exist.
 
-### 5.2 Accuse-Back / Counter-Report (Bureau humor)
+## Measurement Checkpoints
 
-The reciprocity share engine: an accused human files a Wanted poster back. No hard sell; drives `wanted_accuse_back`.
+- **End of week 2:** completion rate + avg watch time per format (PR vs Correction vs Court). Kill or fix the weakest, double the strongest. Site-side: first `wanted_poster_generate` with `from=social_wanted`.
+- **End of week 4:** is Wanted earning generates/shares? If yes → week 5 leans accuse-back + gift. If no → fix the free-tool CTA before any certificate push.
+- Follower count is secondary to: completion rate, comments/reach, `wanted_poster_generate`, `wanted_poster_share`.
 
-Caption (draft):
+## Production Checklist (per week)
 
-`Subject filed a counter-report. The Bureau is now uncomfortable in both directions.`
-
-CTA: `Open a counter-case.` (free Wanted, `from=social_wanted`).
-
-### 5.3 Gift a Closed Case (product bridge, gifting)
-
-Gifting beat with the site's sealed wax-seal reveal. Treat gifting as a primary use case (birthdays, "shark-free" holidays). Shareable reveal.
-
-Caption (draft):
-
-`Some paperwork is best given to someone else. The Bureau now accepts filings on behalf of loved ones.`
-
-CTA: `Gift the paperwork.` — URL `https://sharkhumanalliance.com/purchase?gift=true&from=social_gift`.
-
-> Conservation gate (strategy Decision Filter #6): if any Week-5 post claims "the conservation is real" in present tense, it must cite a real allocation number or named recipient org with a committed %. Until that exists, phrase as a forward commitment.
-
-## Production Checklist
-
-Before each week:
-
-1. Confirm all fact graphics use `sources.md`.
-2. Check mascot visuals against `mascot-model-sheet.md`.
-3. Export 4:5 feed and 9:16 Story variants where useful.
-4. Check first-line caption strength.
-5. Write alt text for every graphic.
-6. Check `crisis.md` before scheduling humor.
-7. Keep hashtags to 5 stable plus 1-2 rotating.
-8. Every off-platform link carries a canonical `from=` source (`social_wanted`, `social_gift`, `social_bio`) so the site can attribute the visit.
-9. From week 4-5, include at least one gifting or accuse-back (reciprocity) beat per fortnight.
-
-For hashtag rules, use [voice.md](./voice.md).
+1. Fact copy verbatim from `sources.md` — video text cards included.
+2. Mascot shots checked against `mascot-model-sheet.md` references; regenerate on drift.
+3. Reels: 9:16, burned-in captions, hook readable muted in frame 1; generators produce NO text — typography in edit only.
+4. Post natively to IG Reels AND TikTok; no watermarked cross-posts. Optional YouTube Shorts.
+5. Alt text (provided per card) attached to every post.
+6. `crisis.md` check before scheduling any humor or Wanted post.
+7. Max 3-5 hashtags; searchable keywords in caption line 1 and on-screen text.
+8. Every off-platform link carries canonical `from=` (`social_wanted`, `social_gift`, `social_bio`).
+9. Reply in character (playful) or plainly (serious) per `voice.md`; audience corrections and verdicts feed future episodes; pin one in-world comment per Reel.

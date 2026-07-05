@@ -1029,6 +1029,24 @@ function PurchaseFlowInner() {
                     </div>
                   )}
                 </div>
+                {/* Gentle upsell — shown only for the entry tier, at the one
+                    moment the buyer is already committed. Switching tiers
+                    keeps the confirmation open; `select_item` fires via the
+                    existing tier-change effect. */}
+                {tier === "protected" && (
+                  <div className="mt-4 rounded-lg border border-[var(--tier-nonsnack-border-light)] bg-[var(--tier-nonsnack-light)]/30 p-3">
+                    <p className="text-xs leading-5 text-[var(--brand-dark)]">
+                      {t("confirmUpsellText")}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setTier("nonsnack")}
+                      className="mt-2 text-xs font-semibold text-[var(--tier-nonsnack-text)] underline underline-offset-2 transition-opacity hover:opacity-75"
+                    >
+                      {t("confirmUpsellButton")}
+                    </button>
+                  </div>
+                )}
                 {/* Action buttons */}
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                     <button

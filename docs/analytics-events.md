@@ -18,6 +18,9 @@ Use canonical `source` values from `lib/analytics-events.ts`.
 | `header` | Site header or case header secondary action |
 | `sticky_cta` | Mobile homepage sticky CTA |
 | `home_wanted_cta` | Homepage Wanted teaser section CTA |
+| `home_preview_cta` | Homepage live certificate preview buy/gift CTAs |
+| `home_tier_card` | Homepage membership tier card CTA |
+| `home_final_cta` | Homepage final closing section CTA |
 | `wanted_poster` | Wanted poster creation surface |
 | `wanted_gift_cta` | Wanted poster gift/protect CTA |
 | `wanted_case` | Wanted case page surface |

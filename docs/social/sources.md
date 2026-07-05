@@ -1,6 +1,6 @@
 # Approved Shark Facts And Sources
 
-Last updated: 2026-05-31
+Last updated: 2026-07-01
 
 Use this file for every factual post. If a number is not here, do not publish it until it is added with a citation.
 
@@ -135,6 +135,24 @@ Supporting date anchor for "the first trees": the earliest known forest-forming 
 #### Notes
 
 NHM alone supports the qualitative "older than trees" claim; the ~385 Mya / ~65-million-year figures are supporting precision, not required on-graphic. Keep the "ancient relatives" qualifier present whenever the hook is used, so "sharks are older than trees" is not misread as "modern shark species are unchanged."
+
+## Fact 5: Ocean Coverage Of Earth
+
+### Approved Short Wording
+
+The ocean covers about 71% of Earth's surface.
+
+### Bureau Wording
+
+Roughly 71% of the planet is, administratively speaking, their house. The Bureau rents the remainder.
+
+### Citation
+
+NOAA National Ocean Service, "How much water is in the ocean?" https://oceanservice.noaa.gov/facts/oceanwater.html (states that about 71 percent of the Earth's surface is ocean).
+
+### Notes
+
+Use "about 71%" or "roughly 71%", never "exactly". This is a context/housing-joke anchor, not a conservation statistic — do not build a standalone fact card around it.
 
 ## Combined Manifest Card
 

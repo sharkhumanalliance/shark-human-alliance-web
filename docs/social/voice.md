@@ -180,4 +180,4 @@ Use 5 stable tags plus 1-2 rotating tags. Do not overload captions.
 
 Stable: `#SharkHumanAlliance #SharkConservation #SharkFacts #OceanConservation #SaveTheSharks`
 
-Rotating: `#FinnleyMako #LunaReef #WantedPoster #SharkFreeZone #NotASnack`
+Rotating: `#FinnleyMako #LunaReef #WantedPoster #SharkFreeZone #NotASnack #SharkCourt`

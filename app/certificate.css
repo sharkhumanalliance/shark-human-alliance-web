@@ -49,6 +49,15 @@
   height: 279mm;
 }
 
+/* Classic has no native Letter layout yet. On Letter it renders through the
+   scaled A4 artboard (.certificate-sheet__scaled), so the page itself must
+   keep A4 dimensions — the parchment art (A4-ratio, incl. printed border and
+   wax seal) and the %-positioned cls-* blocks only line up at 210x297. */
+.certificate-page--classic.certificate-page--paper-letter {
+  width: 210mm;
+  height: 297mm;
+}
+
 .certificate-bg {
   position: absolute;
   inset: 0;

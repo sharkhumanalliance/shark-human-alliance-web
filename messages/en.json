@@ -13,6 +13,11 @@
     "openButton": "Open your gift",
     "revealedHeadline": "You're officially protected, {name}.",
     "revealedSubtitle": "Your Protected Friend paperwork is filed. The sharks have been symbolically notified.",
+    "revealedSubtitles": {
+     "protected": "Your Protected Friend paperwork is filed. The sharks have been symbolically notified.",
+     "nonsnack": "Your Non-Snack Recognition is filed. The sharks have been formally — and symbolically — notified.",
+     "business": "This place is now a certified Shark-Free Zone. The sharks have been symbolically notified."
+    },
     "fromLabel": "From {name}",
     "messageLabel": "A note for you",
     "certificateCta": "Open your certificate",
@@ -159,8 +164,9 @@
     "earlyAdopter": {
       "label": "Join the Alliance",
       "title": "Be among the first wave of diplomats.",
-      "text": "Every certificate is assigned a private registry record. Public listing is optional and appears only if you choose to make it visible. Every dollar is tracked; the paperwork remains appropriately dramatic.",
+      "text": "The certificate is a joke your friend will frame anyway. The money for sharks is real. The whole thing takes about a minute.",
       "cta": "Get your certificate — $4",
+      "privacyNote": "Every certificate gets a private registry record. Public listing is optional — only if you choose to be visible.",
       "purchaseCta": "File the paperwork",
       "registryCta": "View the Registry",
       "ctaNonSnack": "Go Non-Snack — $19",
@@ -194,7 +200,8 @@
       "protectedFeatures": [
         "Personalized digital certificate",
         "$1 to conservation",
-        "Instant download — print and frame"
+        "Instant download — print and frame",
+        "Private registry record — public listing optional"
       ],
       "protectedCta": "File the paperwork — $4",
       "nonsnackTitle": "Non-Snack Recognition",
@@ -203,7 +210,8 @@
       "nonsnackFeatures": [
         "Everything in Protected Friend",
         "$12 to conservation — 12x basic allocation",
-        "More serious official status"
+        "More serious official status",
+        "Non-Snack status highlighted in the public registry"
       ],
       "nonsnackCta": "Upgrade to Non-Snack — $19",
       "businessTitle": "Shark-Free Zone",
@@ -212,7 +220,8 @@
       "businessFeatures": [
         "Business or space certificate",
         "$70 to conservation — most of any tier",
-        "Highest Bureau recognition"
+        "Highest Bureau recognition",
+        "Registry record for the zone — public listing optional"
       ],
       "businessCta": "Certify the zone — $99",
       "businessEyebrow": "For businesses",
@@ -391,6 +400,10 @@
       {
         "question": "Do I need to fill out Form FIN-1 manually?",
         "answer": "No. Form FIN-1 is processed automatically during checkout. The Bureau stamps it on your behalf. Other forms are handled internally and rarely escape."
+      },
+      {
+       "question": "What is the registry? Will my name be public?",
+       "answer": "Every certificate gets a private registry record. Nothing is published unless you opt in — you choose public listing at checkout, and you can change the visibility later from your certificate page."
       }
     ],
     "ctaTitle": "Still have questions?",
@@ -678,7 +691,7 @@
     "businessDedicationPlaceholder": "e.g. Proudly shark-free since 2026",
     "emailLabel": "Email for certificate delivery",
     "emailOptionalTag": "optional",
-    "emailOptionalHint": "We'll email you the PDF immediately. You can also download it on the next page.",
+    "emailOptionalHint": "We'll email you your certificate immediately. You can also download the PDF on the next page.",
     "emailPlaceholder": "your@email.com",
     "noEmailWarningTitle": "Download-only delivery",
     "noEmailWarningText": "No email means no inbox rescue later. Continue if you are ready to download the certificate on the next page.",
@@ -706,6 +719,8 @@
     "confirmButton": "Confirm & pay securely",
     "confirmButtonPromo": "Apply promo & continue",
     "confirmBack": "Go back and edit",
+    "confirmUpsellText": "Before you pay: Non-Snack Recognition sends $12 to conservation instead of $1 — same certificate, louder conviction.",
+    "confirmUpsellButton": "Upgrade to Non-Snack — $19",
     "redirecting": "Redirecting to secure checkout. The sharks do not handle card details.",
     "checkoutError": "Checkout could not be opened. Try again — if the sharks continue interfering, contact support and we will file a complaint nobody will read.",
     "canceledNotice": "Your payment was canceled. No worries — your form data is still here. Ready when you are!",
@@ -741,7 +756,7 @@
     "referralCopy": "Copy referral link",
     "referralCareerLink": "See the full career ladder",
     "referralWantedPoster": "Make a Wanted Poster",
-    "downloadOnlyNotice": "Save your PDF now. This download link is temporary.",
+    "downloadOnlyNotice": "Save your PDF now — this page won't be reachable later.",
     "emailSentGift": "We've emailed the certificate to your recipient, with a copy to you. If it isn't there, check spam — sharks file in odd places.",
     "recipientEmailHint": "Use this if you’d like us to send the certificate directly.",
     "paperSizeLabel": "Paper size",

@@ -13,6 +13,11 @@
     "openButton": "Abre tu regalo",
     "revealedHeadline": "Estás oficialmente protegido/a, {name}.",
     "revealedSubtitle": "Tu papeleo de Amigo Protegido está archivado. Los tiburones han sido informados simbólicamente.",
+    "revealedSubtitles": {
+     "protected": "Tu papeleo de Amigo Protegido está archivado. Los tiburones han sido informados simbólicamente.",
+     "nonsnack": "Tu Reconocimiento No-Snack está archivado. Los tiburones han sido informados formal — y simbólicamente.",
+     "business": "Este lugar es ahora una Zona Libre de Tiburones certificada. Los tiburones han sido informados simbólicamente."
+    },
     "fromLabel": "De {name}",
     "messageLabel": "Una nota para ti",
     "certificateCta": "Abre tu certificado",
@@ -159,8 +164,9 @@
     "earlyAdopter": {
       "label": "Únete a la Alianza",
       "title": "Sé parte de la primera ola de diplomáticos.",
-      "text": "Cada certificado recibe un registro privado. El listado público es opcional y solo aparece si eliges hacerlo visible. Cada dólar se rastrea; el papeleo conserva el dramatismo adecuado.",
+      "text": "El certificado es una broma que tu amigo va a enmarcar igualmente. El dinero para los tiburones es real. Todo el proceso lleva apenas un minuto.",
       "cta": "Obtén tu certificado — $4",
+      "privacyNote": "Cada certificado recibe un registro privado. El listado público es opcional — solo si eliges hacerte visible.",
       "purchaseCta": "Presenta el papeleo",
       "registryCta": "Ver el Registro",
       "ctaNonSnack": "Hazte No-Snack — $19",
@@ -194,7 +200,8 @@
       "protectedFeatures": [
         "Certificado digital personalizado",
         "$1 para conservación",
-        "Descarga instantánea — imprime y enmarca"
+        "Descarga instantánea — imprime y enmarca",
+        "Registro privado — listado público opcional"
       ],
       "protectedCta": "Presentar el papeleo — $4",
       "nonsnackTitle": "Reconocimiento No-Snack",
@@ -203,7 +210,8 @@
       "nonsnackFeatures": [
         "Todo lo de Amigo Protegido",
         "$12 para conservación — 12x básico",
-        "Estatus oficial más serio"
+        "Estatus oficial más serio",
+        "Estatus No-Snack destacado en el registro público"
       ],
       "nonsnackCta": "Subir a No-Snack — $19",
       "businessTitle": "Zona Libre de Tiburones",
@@ -212,7 +220,8 @@
       "businessFeatures": [
         "Certificado para negocio o espacio",
         "$70 para conservación — la mayor asignación",
-        "Máximo reconocimiento de la Oficina"
+        "Máximo reconocimiento de la Oficina",
+        "Registro de la zona — listado público opcional"
       ],
       "businessCta": "Certificar la zona — $99",
       "businessEyebrow": "Para empresas",
@@ -391,6 +400,10 @@
       {
         "question": "¿Tengo que rellenar el Formulario FIN-1 manualmente?",
         "answer": "No. El Formulario FIN-1 se procesa automáticamente durante el checkout. El Bureau lo sella en tu nombre. Otros formularios se gestionan internamente y rara vez escapan."
+      },
+      {
+       "question": "¿Qué es el registro? ¿Mi nombre será público?",
+       "answer": "Cada certificado recibe un registro privado. No se publica nada salvo que tú lo decidas — eliges el listado público en el checkout y puedes cambiar la visibilidad más tarde desde la página de tu certificado."
       }
     ],
     "ctaTitle": "¿Aún tienes preguntas?",
@@ -678,7 +691,7 @@
     "businessDedicationPlaceholder": "ej. Orgullosamente libre de tiburones desde 2026",
     "emailLabel": "Email para entrega del certificado",
     "emailOptionalTag": "opcional",
-    "emailOptionalHint": "Te enviaremos el PDF por email inmediatamente. También podrás descargarlo en la página siguiente.",
+    "emailOptionalHint": "Te enviaremos tu certificado por email inmediatamente. También podrás descargar el PDF en la página siguiente.",
     "emailPlaceholder": "tu@email.com",
     "noEmailWarningTitle": "Entrega solo por descarga",
     "noEmailWarningText": "Sin email no hay rescate por bandeja de entrada más tarde. Continúa si puedes descargar el certificado en la página siguiente.",
@@ -706,6 +719,8 @@
     "confirmButton": "Confirmar y pagar con seguridad",
     "confirmButtonPromo": "Aplicar promo y continuar",
     "confirmBack": "Volver y editar",
+    "confirmUpsellText": "Antes de pagar: el Reconocimiento No-Snack envía $12 a conservación en lugar de $1 — el mismo certificado, con más convicción.",
+    "confirmUpsellButton": "Mejorar a No-Snack — $19",
     "redirecting": "Redirigiendo al checkout seguro. Los tiburones no gestionan datos de tarjeta.",
     "checkoutError": "No se pudo abrir el checkout. Inténtalo de nuevo; si los tiburones siguen interfiriendo, contacta con soporte y presentaremos una queja que nadie leerá.",
     "canceledNotice": "Tu pago fue cancelado. Sin problema — tus datos del formulario siguen aquí. ¡Cuando estés listo!",
@@ -741,7 +756,7 @@
     "referralCopy": "Copiar enlace de referido",
     "referralCareerLink": "Ver el escalafón completo",
     "referralWantedPoster": "Crear póster Wanted",
-    "downloadOnlyNotice": "Guarda tu PDF ahora. Este enlace de descarga es temporal.",
+    "downloadOnlyNotice": "Guarda tu PDF ahora — esta página no estará disponible más adelante.",
     "emailSentGift": "Hemos enviado el certificado por correo a tu destinatario, con una copia para ti. Si no está ahí, revisa spam — los tiburones archivan en lugares raros.",
     "recipientEmailHint": "Úsalo si quieres que enviemos el certificado directamente.",
     "paperSizeLabel": "Tamaño del papel",

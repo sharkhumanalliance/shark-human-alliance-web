@@ -7,6 +7,7 @@ import { MembershipCard } from "./membership-card";
 import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { CertificateTemplateSelector } from "@/components/certificate/certificate-template-selector";
 import type { CertificateTemplate } from "@/components/certificate/certificate-document";
+import { getCertificateTemplateQueryParam } from "@/lib/certificate-templates";
 import { FirstDonationTarget } from "@/components/impact/first-donation-target";
 import { trackEvent } from "@/components/analytics";
 import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
@@ -50,15 +51,23 @@ export function HomeContent() {
     };
   }, [previewName]);
 
-  const previewPurchaseHref = `/purchase?tier=protected${
-    previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""
-  }`;
-  const previewGiftHref = `/purchase?tier=protected&gift=true${
-    previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""
-  }`;
+  // Carry the customized template and name into /purchase so the
+  // personalization survives the click, and a canonical `from` so the
+  // funnel can attribute purchases to this surface.
+  const previewCtaQuery = `${getCertificateTemplateQueryParam(previewTemplate)}&from=${
+    ANALYTICS_SOURCES.homePreviewCta
+  }${previewName ? `&name=${encodeURIComponent(previewName.trim())}` : ""}`;
+  const previewPurchaseHref = `/purchase?tier=protected${previewCtaQuery}`;
+  const previewGiftHref = `/purchase?tier=protected&gift=true${previewCtaQuery}`;
 
-  const valueItems = [
-    { title: t("valueHook.point1Title"), text: t("valueHook.point1Text") },
+  const valueItems: { title: string; text: string; href?: string }[] = [
+    {
+      title: t("valueHook.point1Title"),
+      text: t("valueHook.point1Text"),
+      // Step 1 links straight to the live preview input below, so the
+      // first instruction immediately leads to the action it describes.
+      href: "#certificate-preview",
+    },
     { title: t("valueHook.point2Title"), text: t("valueHook.point2Text") },
     { title: t("valueHook.point3Title"), text: t("valueHook.point3Text") },
   ];
@@ -110,7 +119,16 @@ export function HomeContent() {
                   className="px-4 py-4 sm:px-6 sm:py-6"
                 >
                   <h3 className="text-base font-semibold text-[var(--brand-dark)] sm:text-lg">
-                    {item.title}
+                    {item.href ? (
+                      <LocalizedLink
+                        href={item.href}
+                        className="underline decoration-slate-300 underline-offset-4 transition hover:text-[var(--section-label)] hover:decoration-slate-500"
+                      >
+                        {item.title}
+                      </LocalizedLink>
+                    ) : (
+                      item.title
+                    )}
                   </h3>
                   <p className="mt-1.5 text-sm leading-5 text-[var(--muted)] sm:mt-2 sm:leading-6">
                     {item.text}
@@ -168,16 +186,19 @@ export function HomeContent() {
                   />
                 </div>
 
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:max-w-md lg:flex-col">
+                {/* Desktop-only CTAs: below lg the buttons render after the
+                    certificate (see the preview column) so the mobile order
+                    is input → live certificate → CTA. */}
+                <div className="mt-6 hidden gap-3 lg:flex lg:max-w-md lg:flex-col">
                   <LocalizedLink
                     href={previewPurchaseHref}
-                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-base lg:w-full"
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
                   >
                     {t("about.ctaBuy")}
                   </LocalizedLink>
                   <LocalizedLink
                     href={previewGiftHref}
-                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto sm:px-8 sm:text-base lg:w-full"
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-base font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)]"
                   >
                     {t("about.ctaGift")}
                   </LocalizedLink>
@@ -195,6 +216,22 @@ export function HomeContent() {
                   template={previewTemplate}
                   locale={locale}
                 />
+                {/* Mobile-only CTAs: directly under the live certificate so
+                    typing a name → seeing the result → buying is one flow. */}
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:hidden">
+                  <LocalizedLink
+                    href={previewPurchaseHref}
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg bg-[var(--accent)] px-6 py-4 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-base"
+                  >
+                    {t("about.ctaBuy")}
+                  </LocalizedLink>
+                  <LocalizedLink
+                    href={previewGiftHref}
+                    className="inline-flex min-h-[48px] w-full items-center justify-center whitespace-nowrap rounded-lg border border-[var(--border)] bg-white px-6 py-4 text-sm font-semibold text-[var(--brand-dark)] transition-colors duration-300 ease-out hover:bg-[var(--surface-soft)] sm:w-auto sm:px-8 sm:text-base"
+                  >
+                    {t("about.ctaGift")}
+                  </LocalizedLink>
+                </div>
               </div>
             </div>
           </div>
@@ -225,9 +262,10 @@ export function HomeContent() {
                 t("membershipSection.protectedFeatures.0"),
                 t("membershipSection.protectedFeatures.1"),
                 t("membershipSection.protectedFeatures.2"),
+                t("membershipSection.protectedFeatures.3"),
               ]}
               ctaLabel={t("membershipSection.protectedCta")}
-              href="/purchase?tier=protected"
+              href={`/purchase?tier=protected&from=${ANALYTICS_SOURCES.homeTierCard}`}
               popular
               popularLabel={t("membershipSection.popularBadge")}
               eyebrow={t("membershipSection.protectedEyebrow")}
@@ -242,9 +280,10 @@ export function HomeContent() {
                 t("membershipSection.nonsnackFeatures.0"),
                 t("membershipSection.nonsnackFeatures.1"),
                 t("membershipSection.nonsnackFeatures.2"),
+                t("membershipSection.nonsnackFeatures.3"),
               ]}
               ctaLabel={t("membershipSection.nonsnackCta")}
-              href="/purchase?tier=nonsnack"
+              href={`/purchase?tier=nonsnack&from=${ANALYTICS_SOURCES.homeTierCard}`}
               eyebrow={t("membershipSection.nonsnackEyebrow")}
             />
 
@@ -257,9 +296,10 @@ export function HomeContent() {
                 t("membershipSection.businessFeatures.0"),
                 t("membershipSection.businessFeatures.1"),
                 t("membershipSection.businessFeatures.2"),
+                t("membershipSection.businessFeatures.3"),
               ]}
               ctaLabel={t("membershipSection.businessCta")}
-              href="/purchase?tier=business"
+              href={`/purchase?tier=business&from=${ANALYTICS_SOURCES.homeTierCard}`}
               eyebrow={t("membershipSection.businessEyebrow")}
             />
           </div>
@@ -422,7 +462,7 @@ export function HomeContent() {
           </p>
           <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <LocalizedLink
-              href="/purchase?tier=protected"
+              href={`/purchase?tier=protected&from=${ANALYTICS_SOURCES.homeFinalCta}`}
               className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--accent-dark)] sm:w-auto"
             >
               {t("earlyAdopter.purchaseCta")} {"\u2192"}
@@ -434,6 +474,11 @@ export function HomeContent() {
               {t("faq.allQuestions")} {"\u2192"}
             </LocalizedLink>
           </div>
+          {/* Registry privacy reassurance \u2014 kept as a small footnote so the
+              closing argument above stays focused on gift + real impact. */}
+          <p className="mx-auto mt-5 max-w-xl text-xs leading-5 text-white/70">
+            {t("earlyAdopter.privacyNote")}
+          </p>
         </div>
       </section>
     </>
