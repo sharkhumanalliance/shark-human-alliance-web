@@ -743,6 +743,12 @@
     "giftSendText": "Previsualiza lo que verá tu destinatario y entrégale este enlace tú mismo.",
     "giftLinkLabel": "Enlace del regalo",
     "giftLinkCopy": "Copiar enlace del regalo",
+    "giftLinkCopiedLabel": "Copiado",
+    "giftSteps": {
+     "copy": "Copia el enlace",
+     "send": "Envíaselo",
+     "open": "Rompen el sello"
+    },
     "giftPreview": "Previsualizar el regalo →",
     "giftMessageLabel": "Mensaje personal (opcional)",
     "giftMessagePlaceholder": "ej. ¡Feliz cumpleaños! Ahora los tiburones saben que no estás en el menú.",
@@ -1407,7 +1413,6 @@
     "downloadHintIOS": "En el iPhone el póster se abre en una pestaña nueva — pulsa y mantén pulsado sobre la imagen y elige «Guardar en Fotos»."
   },
   "wantedCase": {
-    "contextBanner": "Se ha abierto un caso de cumplimiento tiburón para {name}. La Oficina solicita una respuesta, preferiblemente antes de que Luna vuelva a leer el expediente.",
     "eyebrow": "Caso abierto de papeleo tiburón",
     "caseFileLabel": "Expediente",
     "filedByLabel": "Presentado por {name}",
@@ -1415,8 +1420,6 @@
     "accuseBackGeneric": "¿Apareces tú en la lista? Culpa a otra persona →",
     "headline": "Se ha abierto un caso de cumplimiento tiburón",
     "caseTagline": "Los registros confirman que {name} existe. La Oficina no sabe cómo sentirse al respecto.",
-    "settleShortcutLabel": "Resolución rápida",
-    "settleShortcutText": "Cierra el expediente con papeleo simbólico de Amigo Protegido antes de que alguien añada más pestañas.",
     "settleShortcutCta": "Cerrar el caso — {price}",
     "settleShortcutSecondary": "o responde abajo",
     "fullCaseFileSummary": "Expediente completo",
@@ -1455,6 +1458,8 @@
       "settleTag": "Recomendado"
     },
     "defenseStatement": {
+      "bridgeText": "La negación ha sido registrada. La carpeta, sin embargo, sigue abierta.",
+      "bridgeCta": "Ciérrala oficialmente — {price}",
       "statusTitle": "Negación Registrada",
       "statusText": "Luna Reef leyó tu declaración dos veces, hizo una pequeña nota y se negó a parecer tranquila.",
       "updatedStatusLabel": "Estado actualizado",
@@ -1490,6 +1495,7 @@
     "resolutionLabel": "Resolución sugerida",
     "resolutionTitle": "Cerrar el expediente oficialmente",
     "resolutionText": "El Estatus de Amigo Protegido da a la Oficina un documento al que señalar. Esto se considera progreso.",
+    "resolutionPreviewLink": "Ver la vista previa del certificado ↓",
     "settledOutcomes": {
       "ambiguity": "Ambigüedad snack: 0%",
       "status": "Estado del caso: Cerrado",

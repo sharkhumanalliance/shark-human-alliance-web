@@ -241,6 +241,7 @@ export async function POST(request: NextRequest) {
                 isGift === "true" && fromName ? fromName.trim() : undefined,
               revealUrl: giftRevealUrl,
               isGift: isGift === "true",
+              includePurchaseTerms: isGift !== "true" || !recipientEmail,
               locale,
             }),
             text: certificateEmailText({
@@ -266,6 +267,7 @@ export async function POST(request: NextRequest) {
                 isGift === "true" && fromName ? fromName.trim() : undefined,
               revealUrl: giftRevealUrl,
               isGift: isGift === "true",
+              includePurchaseTerms: isGift !== "true" || !recipientEmail,
               locale,
             }),
           },
@@ -323,6 +325,7 @@ export async function POST(request: NextRequest) {
               giftMessage: giftMessage || undefined,
               revealUrl: giftRevealUrl,
               purchaseUrl,
+              termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/terms"),
               locale,
             }),
             text: giftBuyerNotificationEmailText({
@@ -331,6 +334,7 @@ export async function POST(request: NextRequest) {
               giftMessage: giftMessage || undefined,
               revealUrl: giftRevealUrl,
               purchaseUrl,
+              termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, locale, "/terms"),
               locale,
             }),
           },

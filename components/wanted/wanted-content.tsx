@@ -1573,8 +1573,10 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
     setName(value);
   }, []);
 
+  // Tone behaves like the format switch: the preview re-renders live and the
+  // action panel (incl. the multi-name queue stepper) stays put. Resetting
+  // `generated` here used to silently drop the rest of a multi-name queue.
   const updateTone = useCallback((tone: WantedTone) => {
-    setGenerated(false);
     setLinkCopied(false);
     setSelectedTone(tone);
   }, []);
@@ -1880,6 +1882,7 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
                         onClick={() =>
                           trackEvent("wanted_to_purchase_click", {
                             source: ANALYTICS_SOURCES.wantedGiftCta,
+                            placement: "generator_panel",
                             tone: selectedTone,
                             locale,
                             personalized: name.trim().length > 0,
@@ -1968,6 +1971,7 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
                 onClick={() =>
                   trackEvent("wanted_to_purchase_click", {
                     source: ANALYTICS_SOURCES.wantedFooterCta,
+                    placement: "footer",
                     tone: selectedTone,
                     locale,
                     personalized: name.trim().length > 0,

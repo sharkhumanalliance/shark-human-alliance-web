@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { FirstDonationTarget } from "@/components/impact/first-donation-target";
+import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
 
 const PARTNERS = [
   { key: 1, url: "https://www.sharktrust.org" },
@@ -108,7 +109,7 @@ export function ImpactContent() {
                 {t("heroProofCta")}
               </a>
               <LocalizedLink
-                href="/purchase?tier=protected"
+                href={`/purchase?tier=protected&from=${ANALYTICS_SOURCES.impactCta}`}
                 className="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--accent-dark)]"
               >
                 {t("heroPurchaseCta")}
@@ -351,7 +352,7 @@ export function ImpactContent() {
             </p>
             <div className="mt-8 flex justify-center">
               <LocalizedLink
-                href="/purchase?tier=protected"
+                href={`/purchase?tier=protected&from=${ANALYTICS_SOURCES.impactCta}`}
                 className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] px-6 py-4 text-base font-bold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)] sm:w-auto sm:px-8 sm:text-lg"
               >
                 {t("ctaButton")}

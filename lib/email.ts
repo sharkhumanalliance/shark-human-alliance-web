@@ -104,6 +104,8 @@ const EMAIL_COPY = {
     orderDetails: "Order details",
     digitalSupply:
       "Your certificate was supplied immediately in digital form at your express request. Once supply began, the withdrawal right ended.",
+    giftDigitalSupply:
+      "The certificate was supplied immediately in digital form at your express request. Once supply began, the withdrawal right ended.",
     manageText:
       "Need to hide your registry record or request erasure? Use the private record controls.",
     manageLink: "Manage record visibility",
@@ -115,6 +117,8 @@ const EMAIL_COPY = {
     giftDelivered: "Gift delivered",
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>
       `Your gift for <strong>${safeName}</strong> has been sent to <strong>${safeRecipientEmail}</strong>.`,
+    giftDeliveredBodyText: (name: string, recipientEmail: string) =>
+      `Your gift for ${name} has been sent to ${recipientEmail}.`,
     giftDeliveredFollowup:
       "They receive the certificate email. You can also use the reveal link below if you want to hand over the paperwork yourself.",
     includedMessage: "Included message:",
@@ -175,6 +179,8 @@ const EMAIL_COPY = {
     orderDetails: "Detalles del pedido",
     digitalSupply:
       "Tu certificado fue suministrado inmediatamente en formato digital a petición expresa. Una vez iniciada la entrega, terminó el derecho de desistimiento.",
+    giftDigitalSupply:
+      "El certificado fue suministrado inmediatamente en formato digital a petición expresa. Una vez iniciada la entrega, terminó el derecho de desistimiento.",
     manageText:
       "¿Necesitas ocultar tu registro o solicitar la supresión? Usa los controles privados.",
     manageLink: "Gestionar visibilidad del registro",
@@ -187,6 +193,8 @@ const EMAIL_COPY = {
     giftDelivered: "Regalo entregado",
     giftDeliveredBody: (safeName: string, safeRecipientEmail: string) =>
       `Tu regalo para <strong>${safeName}</strong> se ha enviado a <strong>${safeRecipientEmail}</strong>.`,
+    giftDeliveredBodyText: (name: string, recipientEmail: string) =>
+      `Tu regalo para ${name} se ha enviado a ${recipientEmail}.`,
     giftDeliveredFollowup:
       "Recibirá el email del certificado. También puedes usar el enlace de presentación si quieres entregar el papeleo personalmente.",
     includedMessage: "Mensaje incluido:",
@@ -386,6 +394,10 @@ type CertificateEmailTemplateParams = {
   fromName?: string;
   revealUrl?: string;
   isGift?: boolean;
+  /** Show the digital-supply / withdrawal confirmation + terms link.
+   *  Must be true whenever the e-mail goes to the BUYER (incl. gift
+   *  purchases without a recipient e-mail). Defaults to !isGift. */
+  includePurchaseTerms?: boolean;
   locale?: string | null;
 };
 
@@ -395,6 +407,7 @@ type GiftBuyerNotificationEmailParams = {
   giftMessage?: string;
   revealUrl?: string;
   purchaseUrl?: string;
+  termsUrl?: string;
   locale?: string | null;
 };
 
@@ -419,6 +432,7 @@ export function certificateEmailHtml(
     fromName,
     revealUrl,
     isGift,
+    includePurchaseTerms,
     locale,
   } = params;
 
@@ -453,6 +467,11 @@ export function certificateEmailHtml(
         buildReferralHref(referralCode)
       )
   );
+  const showPurchaseTerms = includePurchaseTerms ?? !isGift;
+  const supplyText = isGift ? copy.giftDigitalSupply : copy.digitalSupply;
+  const logoUrl = escapeHtml(
+    `${process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com"}/logo-square.png`
+  );
   const hasGiftMessage = isGift && !!giftMessage?.trim();
   const safeGiftMessage = hasGiftMessage
     ? escapeHtmlWithLineBreaks(giftMessage ?? "")
@@ -486,9 +505,9 @@ export function certificateEmailHtml(
 </head>
 <body style="margin:0;padding:0;background-color:#f5fbff;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   ${hiddenPreheader(preheader)}
-  <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="width:100%;max-width:600px;margin:0 auto;"><tr><td style="padding:40px 20px;">
     <div style="text-align:center;padding:32px 24px;background-color:#15324d;border-radius:24px 24px 0 0;">
-      <div style="display:inline-block;width:56px;height:56px;line-height:56px;background-color:#2f80ed;border-radius:16px;color:white;font-weight:bold;font-size:18px;">SHA</div>
+      <img src="${logoUrl}" alt="Shark Human Alliance" width="56" height="56" style="display:inline-block;width:56px;height:56px;border-radius:16px;" />
       <h1 style="margin:16px 0 0;color:white;font-size:24px;line-height:1.25;font-weight:700;">${heading}</h1>
       <p style="margin:8px 0 0;color:#a3c4e0;font-size:14px;">${isGift ? copy.giftSubtitle : copy.welcomeSubtitle}</p>
     </div>
@@ -544,11 +563,11 @@ export function certificateEmailHtml(
       </div>
 
       <div style="margin-top:24px;padding-top:18px;border-top:1px solid #dbe4ee;">
-        ${!isGift ? `<p style="margin:0 0 12px;font-size:12px;line-height:1.7;color:#5f7892;">${copy.digitalSupply}</p>` : ""}
+        ${showPurchaseTerms ? `<p style="margin:0 0 12px;font-size:12px;line-height:1.7;color:#5f7892;">${supplyText}</p>` : ""}
         <p style="margin:0 0 10px;font-size:12px;line-height:1.7;color:#5f7892;">${copy.manageText}</p>
         <p style="margin:0;font-size:12px;line-height:1.8;">
           ${textLine(copy.manageLink, safeManageUrl)}
-          ${!isGift ? `&nbsp;&nbsp; ${textLine(copy.termsLink, safeTermsUrl)}` : ""}
+          ${showPurchaseTerms ? `&nbsp;&nbsp; ${textLine(copy.termsLink, safeTermsUrl)}` : ""}
         </p>
       </div>
     </div>
@@ -556,9 +575,9 @@ export function certificateEmailHtml(
     <div style="padding:24px;background-color:#15324d;border-radius:0 0 24px 24px;text-align:center;">
       <p style="margin:0;color:#a3c4e0;font-size:12px;">${copy.footerTagline}</p>
       <p style="margin:8px 0 0;color:#5f7892;font-size:11px;">${copy.fictionalDisclaimer}</p>
-      <p style="margin:12px 0 0;color:#5f7892;font-size:11px;">&copy; 2026 Shark Human Alliance</p>
+      <p style="margin:12px 0 0;color:#5f7892;font-size:11px;">&copy; ${new Date().getFullYear()} Shark Human Alliance</p>
     </div>
-  </div>
+  </td></tr></table>
 </body>
 </html>`;
 }
@@ -621,8 +640,12 @@ export function certificateEmailText(
     `${copy.manageLink}: ${params.manageUrl}`
   );
 
-  if (!params.isGift) {
-    lines.push(copy.digitalSupply, `${copy.termsLink}: ${params.termsUrl}`);
+  const showPurchaseTerms = params.includePurchaseTerms ?? !params.isGift;
+  if (showPurchaseTerms) {
+    lines.push(
+      params.isGift ? copy.giftDigitalSupply : copy.digitalSupply,
+      `${copy.termsLink}: ${params.termsUrl}`,
+    );
   }
 
   lines.push("", copy.fictionalDisclaimer);
@@ -638,6 +661,7 @@ export function giftBuyerNotificationEmailHtml(
     giftMessage,
     revealUrl,
     purchaseUrl,
+    termsUrl,
     locale,
   } = params;
   const resolvedLocale = getCertificateLocale(locale ?? undefined);
@@ -656,6 +680,17 @@ export function giftBuyerNotificationEmailHtml(
         "/purchase?tier=protected&gift=true"
       )
   );
+  const safeTermsUrl = escapeHtml(
+    termsUrl ||
+      buildAbsoluteLocalizedUrl(
+        process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+        resolvedLocale,
+        "/terms"
+      )
+  );
+  const logoUrl = escapeHtml(
+    `${process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com"}/logo-square.png`
+  );
 
   return `<!DOCTYPE html>
 <html lang="${resolvedLocale}">
@@ -668,8 +703,9 @@ export function giftBuyerNotificationEmailHtml(
 </head>
 <body style="margin:0;padding:0;background:#f5fbff;font-family:'Helvetica Neue',Arial,sans-serif;">
 ${hiddenPreheader(giftBuyerNotificationPreheader({ name, locale: resolvedLocale }))}
-<div style="max-width:600px;margin:0 auto;padding:40px 20px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="width:100%;max-width:600px;margin:0 auto;"><tr><td style="padding:40px 20px;">
   <div style="background:white;border-radius:24px;padding:32px;text-align:center;border:1px solid #d4e8f7;">
+    <img src="${logoUrl}" alt="Shark Human Alliance" width="56" height="56" style="display:inline-block;width:56px;height:56px;border-radius:16px;margin-bottom:12px;" />
     <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#64748b;">${copy.giftBadge}</div>
     <h1 style="color:#15324d;font-size:24px;margin:16px 0 8px;">${copy.giftDelivered}</h1>
     <p style="color:#5f7892;font-size:14px;line-height:1.6;">
@@ -683,9 +719,14 @@ ${hiddenPreheader(giftBuyerNotificationPreheader({ name, locale: resolvedLocale 
       <p style="margin:0 0 12px;color:#5f7892;font-size:14px;line-height:1.6;">${copy.buyerSoftCtaText}</p>
       ${textLine(copy.buyerSecondaryCta, safePurchaseUrl)}
     </div>
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid #dbe4ee;text-align:left;">
+      <p style="margin:0 0 8px;font-size:12px;line-height:1.7;color:#5f7892;">${copy.giftDigitalSupply}</p>
+      ${textLine(copy.termsLink, safeTermsUrl)}
+    </div>
   </div>
-  <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">&copy; 2026 Shark Human Alliance</p>
-</div>
+  <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:16px;">${copy.fictionalDisclaimer}</p>
+  <p style="text-align:center;color:#5f7892;font-size:11px;margin-top:8px;">&copy; ${new Date().getFullYear()} Shark Human Alliance</p>
+</td></tr></table>
 </body></html>`;
 }
 
@@ -701,10 +742,17 @@ export function giftBuyerNotificationEmailText(
       resolvedLocale,
       "/purchase?tier=protected&gift=true"
     );
+  const termsUrl =
+    params.termsUrl ||
+    buildAbsoluteLocalizedUrl(
+      process.env.NEXT_PUBLIC_BASE_URL || "https://sharkhumanalliance.com",
+      resolvedLocale,
+      "/terms"
+    );
   const lines = [
     copy.giftDelivered,
     "",
-    `${params.name} -> ${params.recipientEmail}`,
+    copy.giftDeliveredBodyText(params.name, params.recipientEmail),
     copy.giftDeliveredFollowup,
   ];
 
@@ -717,5 +765,7 @@ export function giftBuyerNotificationEmailText(
   }
 
   lines.push("", copy.buyerSoftCta, copy.buyerSoftCtaText, `${copy.buyerSecondaryCta}: ${purchaseUrl}`);
+  lines.push("", copy.giftDigitalSupply, `${copy.termsLink}: ${termsUrl}`);
+  lines.push("", copy.fictionalDisclaimer);
   return lines.join("\n");
 }

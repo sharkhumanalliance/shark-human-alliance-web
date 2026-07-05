@@ -426,14 +426,39 @@ function SuccessContentInner() {
         </header>
 
         {isGift && giftLink ? (
-          <div className="mx-auto mt-8 max-w-md rounded-2xl border border-[var(--accent)]/40 bg-[var(--surface-soft)]/50 p-5 text-center sm:p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
+          /* "Gift dossier" card: parchment surface with the Bureau wax seal
+             pinned over the top edge; 1-2-3 steps; the raw token URL hides
+             inside a truncated pill so the card stays presentable. */
+          <div className="relative mx-auto mt-14 max-w-md rounded-2xl border border-[#3A2515]/20 bg-[#F6ECD8] px-5 pb-6 pt-12 text-center shadow-[0_16px_36px_rgba(58,37,21,0.12)] sm:px-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/seal-gift.webp"
+              alt=""
+              aria-hidden="true"
+              className="absolute -top-9 left-1/2 h-[76px] w-[76px] -translate-x-1/2 drop-shadow-[0_8px_10px_rgba(55,58,64,0.32)]"
+            />
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7A5C3E]">
               {t("giftSendTitle")}
             </p>
             <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
               {t("giftSendText")}
             </p>
-            <div className="mt-4 flex flex-col items-stretch gap-2 rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 sm:flex-row sm:items-center sm:px-4">
+            <ol className="mx-auto mt-5 flex max-w-sm items-start justify-between gap-2">
+              {(["copy", "send", "open"] as const).map((step, i) => (
+                <li
+                  key={step}
+                  className="flex flex-1 flex-col items-center gap-1.5 text-center"
+                >
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[#3A2515]/25 bg-white text-xs font-bold text-[#3A2515]">
+                    {i + 1}
+                  </span>
+                  <span className="text-[11px] font-semibold leading-4 text-[#3A2515]">
+                    {t(`giftSteps.${step}`)}
+                  </span>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-5 flex items-center gap-2 rounded-full border border-[#3A2515]/15 bg-white/85 py-1.5 pl-4 pr-1.5">
               <label htmlFor="gift-link" className="sr-only">
                 {t("giftLinkLabel")}
               </label>
@@ -443,7 +468,7 @@ function SuccessContentInner() {
                 value={giftLink}
                 readOnly
                 aria-label={t("giftLinkLabel")}
-                className="min-w-0 flex-grow bg-transparent text-sm font-mono leading-6 text-[var(--brand-dark)] focus:outline-none"
+                className="min-w-0 flex-grow truncate bg-transparent font-mono text-xs leading-6 text-[var(--muted)] focus:outline-none"
               />
               <button
                 onClick={() => {
@@ -452,9 +477,9 @@ function SuccessContentInner() {
                   trackEvent("gift_link_copy", { tier: publicTier });
                   setTimeout(() => setGiftLinkCopied(false), 2000);
                 }}
-                className="shrink-0 rounded-md bg-[var(--accent)] px-4 py-2.5 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+                className="shrink-0 whitespace-nowrap rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
               >
-                {giftLinkCopied ? "✓" : t("giftLinkCopy")}
+                {giftLinkCopied ? `✓ ${t("giftLinkCopiedLabel")}` : t("giftLinkCopy")}
               </button>
             </div>
             <a
@@ -464,7 +489,7 @@ function SuccessContentInner() {
               onClick={() =>
                 trackEvent("gift_reveal_preview_click", { tier: publicTier })
               }
-              className="mt-3 inline-flex min-h-[40px] items-center justify-center text-sm font-semibold text-[var(--accent)] transition hover:text-[var(--accent-dark)]"
+              className="mt-4 inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[#3A2515]/20 bg-white px-5 text-sm font-semibold text-[#3A2515] transition hover:bg-white/70"
             >
               {t("giftPreview")}
             </a>

@@ -125,7 +125,7 @@ function JsonLd() {
     "@type": "Organization",
     name: "Shark Human Alliance",
     url: BASE_URL,
-    logo: `${BASE_URL}/mascots/homepage-hero-plush.png`,
+    logo: `${BASE_URL}/logo-square.png`,
     description:
       "A fictional alliance selling funny personalized certificates that protect sharks more than they protect humans.",
     email: "sharkhumanalliance@gmail.com",

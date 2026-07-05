@@ -296,6 +296,7 @@ export async function POST(request: NextRequest) {
                 fromName: isGift && fromName ? fromName.trim() : undefined,
                 revealUrl: giftRevealUrl,
                 isGift,
+                includePurchaseTerms: !isGift || !recipientEmail,
                 locale: loc,
               }),
               text: certificateEmailText({
@@ -320,6 +321,7 @@ export async function POST(request: NextRequest) {
                 fromName: isGift && fromName ? fromName.trim() : undefined,
                 revealUrl: giftRevealUrl,
                 isGift,
+                includePurchaseTerms: !isGift || !recipientEmail,
                 locale: loc,
               }),
             },
@@ -373,6 +375,7 @@ export async function POST(request: NextRequest) {
                 giftMessage: giftMessage || undefined,
                 revealUrl: giftRevealUrl,
                 purchaseUrl,
+                termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/terms"),
                 locale: loc,
               }),
               text: giftBuyerNotificationEmailText({
@@ -381,6 +384,7 @@ export async function POST(request: NextRequest) {
                 giftMessage: giftMessage || undefined,
                 revealUrl: giftRevealUrl,
                 purchaseUrl,
+                termsUrl: buildAbsoluteLocalizedUrl(BASE_URL, loc, "/terms"),
                 locale: loc,
               }),
             },

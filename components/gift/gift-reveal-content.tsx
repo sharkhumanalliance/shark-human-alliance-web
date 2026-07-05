@@ -34,17 +34,14 @@ function clean(value: string | undefined, max = 80): string {
 function WaxSeal() {
   // The seal is two clipped halves stacked over each other so it can crack
   // straight down the middle and fall apart when the gift is opened.
+  // Each half shows the Bureau seal artwork (public/seal-gift.webp).
   return (
     <div className="gr-seal" aria-hidden="true">
       <span className="gr-seal__half gr-seal__half--left">
-        <span className="gr-seal__face">
-          <span className="gr-seal__monogram">SHA</span>
-        </span>
+        <span className="gr-seal__face" />
       </span>
       <span className="gr-seal__half gr-seal__half--right">
-        <span className="gr-seal__face">
-          <span className="gr-seal__monogram">SHA</span>
-        </span>
+        <span className="gr-seal__face" />
       </span>
       <span className="gr-seal__crack" />
       <span className="gr-seal__burst" />
@@ -132,13 +129,14 @@ export function GiftRevealContent({
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--section-label)]">
             {t("eyebrow")}
           </p>
-          <div className="mt-6 rounded-3xl border border-[var(--border)] bg-white p-8 shadow-sm sm:p-12">
-            <div
+          <div className="mt-6 rounded-3xl border border-[#3A2515]/15 bg-white p-8 shadow-sm sm:p-12">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/seal-gift.webp"
+              alt=""
               aria-hidden="true"
-              className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-[var(--accent)] bg-[var(--surface-soft)] text-2xl"
-            >
-              🦈
-            </div>
+              className="mx-auto h-20 w-20"
+            />
             <h1 className="mt-6 text-2xl font-black tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("bareTitle")}
             </h1>
@@ -180,7 +178,7 @@ export function GiftRevealContent({
         </p>
 
         {!revealed ? (
-          <div className="mt-6 overflow-hidden rounded-3xl border border-[var(--border)] bg-[#f6ecd8] p-8 text-center shadow-sm sm:p-12">
+          <div className="mt-6 overflow-hidden rounded-3xl border border-[#3A2515]/20 bg-[#f6ecd8] p-8 text-center shadow-sm sm:p-12">
             <div
               className={`gr-seal-stage${breaking ? " gr-seal-stage--breaking" : ""}`}
               onAnimationEnd={handleSealAnimationEnd}
@@ -210,13 +208,14 @@ export function GiftRevealContent({
             </div>
           </div>
         ) : (
-          <div className="gr-reveal mt-6 rounded-3xl border border-[var(--border)] bg-white p-8 text-center shadow-sm sm:p-12">
-            <div
+          <div className="gr-reveal mt-6 rounded-3xl border border-[#3A2515]/15 bg-[#FFFDF7] p-8 text-center shadow-sm sm:p-12">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/seal-gift.webp"
+              alt=""
               aria-hidden="true"
-              className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-[var(--accent)] bg-[var(--surface-soft)] text-2xl"
-            >
-              🦈
-            </div>
+              className="mx-auto h-20 w-20"
+            />
             <h1 className="mt-6 text-2xl font-black tracking-tight text-[var(--brand-dark)] sm:text-4xl">
               {t("revealedHeadline", { name: toName })}
             </h1>
@@ -230,7 +229,7 @@ export function GiftRevealContent({
             </p>
 
             {certificate ? (
-              <div className="mx-auto mt-8 max-w-md rounded-2xl border border-[var(--border)] bg-white p-3 shadow-sm">
+              <div className="mx-auto mt-8 max-w-md rounded-2xl border border-[#3A2515]/15 bg-[#F6ECD8] p-3 shadow-[0_18px_40px_rgba(58,37,21,0.14)] sm:p-4">
                 <CertificatePreview
                   name={certificate.name}
                   tier={certificate.tier}
@@ -328,13 +327,13 @@ export function GiftRevealContent({
       <style>{`
         .gr-seal-stage {
           margin: 0 auto;
-          width: 116px;
-          height: 116px;
+          width: 140px;
+          height: 140px;
         }
         .gr-seal {
           position: relative;
-          width: 116px;
-          height: 116px;
+          width: 140px;
+          height: 140px;
           margin: 0 auto;
         }
         .gr-seal__half {
@@ -348,30 +347,8 @@ export function GiftRevealContent({
         .gr-seal__face {
           position: absolute;
           inset: 0;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: radial-gradient(circle at 36% 30%, var(--accent), var(--accent-dark));
-          box-shadow:
-            inset 0 5px 12px rgba(255, 255, 255, 0.28),
-            inset 0 -10px 18px rgba(0, 0, 0, 0.3),
-            0 10px 20px rgba(0, 0, 0, 0.18);
-        }
-        .gr-seal__face::before {
-          content: "";
-          position: absolute;
-          inset: 10px;
-          border-radius: 50%;
-          border: 1.5px dashed rgba(255, 255, 255, 0.4);
-        }
-        .gr-seal__monogram {
-          font-family: Georgia, "Times New Roman", serif;
-          font-weight: 800;
-          font-size: 27px;
-          letter-spacing: 1px;
-          color: rgba(255, 255, 255, 0.94);
-          text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+          background: url("/seal-gift.webp") center / contain no-repeat;
+          filter: drop-shadow(0 10px 14px rgba(55, 58, 64, 0.35));
         }
         .gr-seal__crack {
           position: absolute;
@@ -392,7 +369,7 @@ export function GiftRevealContent({
           position: absolute;
           inset: 0;
           border-radius: 50%;
-          border: 2px solid var(--accent);
+          border: 2px solid #9aa1ab;
           opacity: 0;
           transform: scale(0.4);
         }

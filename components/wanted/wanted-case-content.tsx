@@ -76,7 +76,11 @@ export function WantedCaseContent({
   const [submittedBlameName, setSubmittedBlameName] = useState("");
   const settlementRef = useRef<HTMLDivElement | null>(null);
   const responseRef = useRef<HTMLDivElement | null>(null);
-  const caseNumber = `CASE SHA-${nameHash(`${displayName}:${tone}`)
+  const certPreviewRef = useRef<HTMLElement | null>(null);
+  // Must match the poster's formula exactly (nameHash of the name alone) —
+  // the visitor arrives from a QR on a poster showing this case number, and
+  // the fiction cracks if the two documents disagree.
+  const caseNumber = `CASE SHA-${nameHash(displayName)
     .toString()
     .slice(-4)
     .padStart(4, "0")}`;
@@ -85,9 +89,18 @@ export function WantedCaseContent({
     tier: "protected",
     gift: "true",
     from: ANALYTICS_SOURCES.wantedCaseCta,
-    name: displayName,
   });
+  // Prefill the certificate name only when the case actually names someone.
+  // Anonymous cases fall back to the "Unidentified Human" placeholder for
+  // display — that must never end up as a prefilled (and silently purchasable)
+  // certificate name on /purchase.
+  if (personalized) purchaseParams.set("name", displayName);
   const purchaseHref = `/purchase?${purchaseParams.toString()}`;
+  // Same guard for the accuse-back trail: carry `by` only when the case
+  // subject is a real name, not the placeholder.
+  const accuseBackByQuery = personalized
+    ? `&by=${encodeURIComponent(displayName)}`
+    : "";
 
   const defenseShareText = [
     t("defenseStatement.title"),
@@ -128,6 +141,19 @@ export function WantedCaseContent({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     responseRef.current?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  }
+
+  // Mobile-only helper: the certificate preview lives in the sidebar, which
+  // stacks below the whole main column on small screens — the settle panel
+  // references it, so give readers a one-tap way to see it.
+  function scrollToCertificatePreview() {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    certPreviewRef.current?.scrollIntoView({
       behavior: prefersReducedMotion ? "auto" : "smooth",
       block: "start",
     });
@@ -269,6 +295,24 @@ export function WantedCaseContent({
             {t("caseStatusBlock.stampStatus")}
           </p>
         </div>
+        {/* Tone meta fields relocated from the header card — same
+            administrative-metadata genre as the rest of the dossier. */}
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+            {wantedT("filedBecauseLabel")}
+          </p>
+          <p className="mt-1 font-mono text-xs font-semibold text-[var(--brand-dark)]">
+            {wantedT(`tones.${tone}.filedBecause`)}
+          </p>
+        </div>
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+            {wantedT("remedyLabel")}
+          </p>
+          <p className="mt-1 font-mono text-xs font-semibold text-[var(--brand-dark)]">
+            {wantedT(`tones.${tone}.remedy`)}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -287,9 +331,20 @@ export function WantedCaseContent({
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
                   {t("caseFileLabel")}
                 </p>
-                <p className="min-w-0 truncate font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
-                  {caseNumber}
-                </p>
+                <div className="flex min-w-0 flex-wrap items-center justify-end gap-x-3 gap-y-1.5">
+                  {/* Bureau mood stays above the fold as the one tone-specific
+                      flavor chip; the other tone meta fields live in the
+                      collapsed dossier below. */}
+                  <span className="inline-flex max-w-full items-center gap-1 rounded-full border border-[var(--accent)]/40 bg-white/60 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--brand-dark)]">
+                    {wantedT("bureauMoodLabel")}:{" "}
+                    <span className="truncate">
+                      {wantedT(`tones.${tone}.bureauMood`)}
+                    </span>
+                  </span>
+                  <p className="min-w-0 truncate font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
+                    {caseNumber}
+                  </p>
+                </div>
               </div>
 
               <h1 className="mt-5 max-w-2xl text-pretty text-2xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-3xl sm:leading-[1.09]">
@@ -308,6 +363,13 @@ export function WantedCaseContent({
 
               <p className="mt-4 w-full border-l-4 border-[var(--accent)] bg-white/45 py-3 pl-4 pr-3 text-base font-semibold leading-7 text-[var(--brand-dark)]">
                 {t("caseTagline", { name: shortName })}
+              </p>
+
+              {/* Trust line in the first viewport: a cold QR visitor must
+                  learn within seconds that the joke is a joke and the
+                  conservation part is not. Styled as a filed margin note. */}
+              <p className="mt-3 inline-block rounded-md border border-dashed border-[var(--muted)]/50 bg-white/55 px-3 py-1.5 font-mono text-xs font-semibold text-[var(--muted)]">
+                {t("explanation")}
               </p>
 
               <div className="mt-5 rounded-2xl border border-[var(--accent)]/45 bg-white/75 p-4 shadow-sm sm:p-5">
@@ -372,9 +434,7 @@ export function WantedCaseContent({
 
               {accuserName ? (
                 <LocalizedLink
-                  href={`/wanted?name=${encodeURIComponent(
-                    accuserName,
-                  )}&by=${encodeURIComponent(displayName)}`}
+                  href={`/wanted?name=${encodeURIComponent(accuserName)}${accuseBackByQuery}`}
                   onClick={() =>
                     trackEvent("wanted_accuse_back", {
                       tone,
@@ -397,32 +457,6 @@ export function WantedCaseContent({
                 </button>
               )}
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {wantedT("filedBecauseLabel")}
-                  </p>
-                  <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
-                    {wantedT(`tones.${tone}.filedBecause`)}
-                  </p>
-                </div>
-                <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {wantedT("bureauMoodLabel")}
-                  </p>
-                  <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
-                    {wantedT(`tones.${tone}.bureauMood`)}
-                  </p>
-                </div>
-                <div className="border-t border-dashed border-[var(--muted)]/55 pt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {wantedT("remedyLabel")}
-                  </p>
-                  <p className="mt-1 font-mono text-sm font-semibold text-[var(--brand-dark)]">
-                    {wantedT(`tones.${tone}.remedy`)}
-                  </p>
-                </div>
-              </div>
 
             </div>
 
@@ -432,9 +466,6 @@ export function WantedCaseContent({
               </p>
               <p className="mt-3 whitespace-pre-line text-base font-semibold leading-7 text-[var(--brand-dark)]">
                 {t("finding", { name: displayName })}
-              </p>
-              <p className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)]/70 px-3 py-2 text-sm font-medium leading-6 text-[var(--brand-dark)]">
-                {t("explanation")}
               </p>
 
               <div ref={responseRef} className="mt-5 border-t border-[var(--border)] pt-5">
@@ -562,6 +593,23 @@ export function WantedCaseContent({
                         </p>
                       ) : null}
                     </div>
+
+                    {/* Denial is the fun dead-end — bridge it back into the
+                        conversion path so the loop never just stops. */}
+                    <div className="mt-5 border-t border-dashed border-[var(--border)] pt-4">
+                      <p className="text-sm leading-6 text-[var(--muted)]">
+                        {t("defenseStatement.bridgeText")}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => selectResponse("settle")}
+                        className="mt-2 inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 ease-out hover:bg-[var(--accent-dark)]"
+                      >
+                        {t("defenseStatement.bridgeCta", {
+                          price: getTierPriceLabel("protected"),
+                        })}
+                      </button>
+                    </div>
                   </div>
                 ) : null}
 
@@ -634,9 +682,7 @@ export function WantedCaseContent({
 
                         <div className="mt-5 border-t border-dashed border-[var(--border)] pt-4">
                           <LocalizedLink
-                            href={`/wanted?name=${encodeURIComponent(
-                              submittedBlameName,
-                            )}&by=${encodeURIComponent(displayName)}`}
+                            href={`/wanted?name=${encodeURIComponent(submittedBlameName)}${accuseBackByQuery}`}
                             onClick={() =>
                               trackEvent("wanted_accuse_back", {
                                 tone,
@@ -685,6 +731,14 @@ export function WantedCaseContent({
                       </p>
                     ))}
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={scrollToCertificatePreview}
+                    className="mt-3 inline-flex min-h-[40px] items-center text-sm font-semibold text-[var(--section-label)] transition hover:text-[var(--brand-dark)] lg:hidden"
+                  >
+                    {t("resolutionPreviewLink")}
+                  </button>
 
                   <div className="mt-6 flex flex-col gap-3 sm:items-start">
                     <LocalizedLink
@@ -742,7 +796,10 @@ export function WantedCaseContent({
             </details>
           </div>
 
-          <aside className="mx-auto min-w-0 w-full max-w-md lg:sticky lg:top-28 lg:mx-0 lg:ml-auto lg:max-h-[calc(100vh-8rem)] lg:max-w-[360px] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 xl:max-w-[390px]">
+          <aside
+            ref={certPreviewRef}
+            className="mx-auto min-w-0 w-full max-w-md scroll-mt-24 lg:sticky lg:top-28 lg:mx-0 lg:ml-auto lg:max-h-[calc(100vh-8rem)] lg:max-w-[360px] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 xl:max-w-[390px]"
+          >
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--section-label)]">
               {t("previewLabel", { name: shortName })}
             </p>

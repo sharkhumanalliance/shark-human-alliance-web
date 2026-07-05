@@ -743,6 +743,12 @@
     "giftSendText": "Preview what your recipient will see, then hand them this link yourself.",
     "giftLinkLabel": "Gift reveal link",
     "giftLinkCopy": "Copy gift link",
+    "giftLinkCopiedLabel": "Copied",
+    "giftSteps": {
+     "copy": "Copy the link",
+     "send": "Send it to them",
+     "open": "They break the seal"
+    },
     "giftPreview": "Preview the gift reveal →",
     "giftMessageLabel": "Personal message (optional)",
     "giftMessagePlaceholder": "e.g. Happy birthday! Now the sharks know you're off the menu.",
@@ -1407,7 +1413,6 @@
     "downloadHintIOS": "On iPhone the poster opens in a new tab — long-press it and choose “Save to Photos”."
   },
   "wantedCase": {
-    "contextBanner": "A shark compliance case has been opened for {name}. The Bureau requests a response, preferably before Luna reads the file again.",
     "eyebrow": "Open shark-paperwork case",
     "caseFileLabel": "File",
     "filedByLabel": "Filed by {name}",
@@ -1415,8 +1420,6 @@
     "accuseBackGeneric": "On the list yourself? Blame someone else →",
     "headline": "A Shark Compliance Case Has Been Opened",
     "caseTagline": "Records confirm {name} exists. The Bureau is unsure how to feel about this.",
-    "settleShortcutLabel": "Fast resolution",
-    "settleShortcutText": "Close the file with symbolic Protected Friend paperwork before anyone adds more tabs.",
     "settleShortcutCta": "Close the case — {price}",
     "settleShortcutSecondary": "or respond below",
     "fullCaseFileSummary": "Full case file",
@@ -1455,6 +1458,8 @@
       "settleTag": "Recommended"
     },
     "defenseStatement": {
+      "bridgeText": "The denial has been logged. The folder, however, remains open.",
+      "bridgeCta": "Close it properly — {price}",
       "statusTitle": "Denial Logged",
       "statusText": "Luna Reef read your statement twice, made one small note, and declined to look reassured.",
       "updatedStatusLabel": "Updated status",
@@ -1490,6 +1495,7 @@
     "resolutionLabel": "Suggested resolution",
     "resolutionTitle": "Close the File Officially",
     "resolutionText": "Protected Friend Status gives the Bureau a document to point at. This is considered progress.",
+    "resolutionPreviewLink": "See the certificate preview ↓",
     "settledOutcomes": {
       "ambiguity": "Snack Ambiguity: 0%",
       "status": "Case Status: Cleared",

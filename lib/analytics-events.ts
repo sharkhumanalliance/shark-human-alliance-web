@@ -14,6 +14,7 @@ export const ANALYTICS_SOURCES = {
   homePreviewCta: "home_preview_cta",
   homeTierCard: "home_tier_card",
   homeWanted: "home_wanted_cta",
+  impactCta: "impact_cta",
   stickyCta: "sticky_cta",
   wantedCase: "wanted_case",
   wantedCaseCta: "wanted_case_cta",

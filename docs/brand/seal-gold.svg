@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <circle cx="256" cy="256" r="250" fill="#F6ECD8"/>
+  <circle cx="256" cy="256" r="250" fill="none" stroke="#B98A3B" stroke-width="4"/>
+  
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#8C6420" stroke-width="9"/>
+  <circle cx="256" cy="256" r="224" fill="none" stroke="#8C6420" stroke-width="2.5"/>
+  <circle cx="256" cy="256" r="162" fill="none" stroke="#8C6420" stroke-width="3"/>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#8C6420" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round"/>
+  <defs><path id="tag" d="M 78.4 338.8 A 196 196 0 1 1 433.6 338.8"/><path id="bag" d="M 42.0 256.0 A 214 214 0 0 0 470.0 256.0"/></defs>
+  <text font-family="DejaVu Serif" font-size="31" font-weight="bold" letter-spacing="5" fill="#8C6420">
+    <textPath href="#tag" startOffset="50%" text-anchor="middle">SHARK HUMAN ALLIANCE</textPath>
+  </text>
+  <text font-family="DejaVu Serif" font-size="22" font-weight="bold" letter-spacing="3" fill="#8C6420">
+    <textPath href="#bag" startOffset="50%" text-anchor="middle">INTERSPECIES DIPLOMATIC BUREAU</textPath>
+  </text>
+  <path d="M 256 298 L 172.9 250.0 Q 170.8 230.0 190.7 227.6 Q 194.6 207.9 214.3 211.5 Q 223.9 193.8 241.7 203.1 Q 256.0 189.0 270.3 203.1 Q 288.1 193.8 297.7 211.5 Q 317.4 207.9 321.3 227.6 Q 341.2 230.0 339.1 250.0 Z" fill="none" stroke="#8C6420" stroke-width="7" stroke-linejoin="round"/><path d="M 256 298 L 194.8 232.0" stroke="#8C6420" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 256 298 L 217.0 216.9" stroke="#8C6420" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 256 298 L 242.6 209.0" stroke="#8C6420" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 256 298 L 269.4 209.0" stroke="#8C6420" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 256 298 L 295.0 216.9" stroke="#8C6420" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 256 298 L 317.2 232.0" stroke="#8C6420" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M 236 298 h 40 v 11 h -40 Z" fill="#8C6420"/>
+  <path d="M 178 336 q 13.0 -9 26.0 0 t 26.0 0 q 13.0 -9 26.0 0 t 26.0 0 q 13.0 -9 26.0 0 t 26.0 0 " fill="none" stroke="#8C6420" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 178 358 q 13.0 -9 26.0 0 t 26.0 0 q 13.0 -9 26.0 0 t 26.0 0 q 13.0 -9 26.0 0 t 26.0 0 " fill="none" stroke="#8C6420" stroke-width="6" stroke-linecap="round"/></svg>
