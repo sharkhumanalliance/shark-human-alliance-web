@@ -113,6 +113,7 @@ export default async function CertificateViewPage({ params, searchParams }: Prop
             template={template}
             paperFormat={paperFormat}
             locale={locale}
+            issueNumber={member.issueNumber}
           />
         </CertificateSheet>
       </div>

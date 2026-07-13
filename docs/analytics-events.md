@@ -28,6 +28,17 @@ Use canonical `source` values from `lib/analytics-events.ts`.
 | `wanted_case_cta` | Wanted case settle/protect CTA |
 | `wanted_footer_cta` | Wanted page footer CTA |
 | `gift_reveal` | Gift reveal page and its protect-back CTA |
+| `social_wanted` | Campaign origin: social post linking to the Wanted generator |
+| `social_gift` | Campaign origin: social post linking to the gift purchase flow |
+| `social_bio` | Campaign origin: permanent social bio link |
+
+Campaign origins (`social_*` prefix) mark where the session started and are
+persisted first-touch: `/wanted` and `/purchase` store them in
+`sessionStorage["sha_attribution_source"]`, and internal surface sources never
+overwrite a stored campaign origin (see `persistAttributionSource` /
+`resolveAttributionSource` in `lib/analytics-events.ts`). A visitor arriving
+from a social post therefore keeps `source=social_wanted` through `view_item`,
+`begin_checkout`, `purchase`, and the webhook Measurement Protocol `purchase`.
 
 Legacy incoming source values are normalized before analytics use:
 

@@ -167,7 +167,7 @@
       "text": "El certificado es una broma que tu amigo va a enmarcar igualmente. El dinero para los tiburones es real. Todo el proceso lleva apenas un minuto.",
       "cta": "Obtén tu certificado — $4",
       "privacyNote": "Cada certificado recibe un registro privado. El listado público es opcional — solo si eliges hacerte visible.",
-      "purchaseCta": "Presenta el papeleo",
+      "purchaseCta": "Regala el papeleo",
       "registryCta": "Ver el Registro",
       "ctaNonSnack": "Hazte No-Snack — $19",
       "ctaBusiness": "Certifica tu oficina — $99"
@@ -262,7 +262,7 @@
     "wantedTeaser": {
       "label": "Canal público de denuncias",
       "title": "Algunos humanos siguen peligrosamente sin papeleo.",
-      "text": "Abre un caso Wanted gratuito sobre un amigo, compañero de trabajo u otro humano indocumentado. Es instantáneo, compartible y administrativamente difícil de ignorar.",
+      "text": "Abre un caso Wanted gratuito sobre un amigo, compañero de trabajo u otro humano sin papeleo. Es instantáneo, compartible y administrativamente difícil de ignorar.",
       "cta": "Abre un caso Wanted gratis",
       "stamp": "CASO ABIERTO"
     },
@@ -302,7 +302,7 @@
       "title": "Tu estatus de snack ha entrado en revisión formal.",
       "point1Title": "Escribe un nombre.",
       "point1Text": "El tuyo, o el de alguien a quien quieras molestar un poco. Ese es todo el proceso de selección.",
-      "point2Title": "Recibe un papeleo gloriosamente inútil.",
+      "point2Title": "Recibe papeleo sospechosamente oficial.",
       "point2Text": "De aspecto oficial, listo para enmarcar y completamente inútil ante tiburones de verdad.",
       "point3Title": "Haz algo realmente bueno.",
       "point3Text": "La protección es una broma. La conservación de tiburones que financia no lo es.",
@@ -343,7 +343,7 @@
       },
       {
         "question": "¿Hay una opción gratuita?",
-        "answer": "Sí — el generador de pósters Wanted es gratis. Abre un caso sobre un amigo, compañero de trabajo u otro humano indocumentado y comparte el póster. Si el asunto se vuelve administrativamente serio, el caso puede cerrarse más tarde con un certificado. Lo encontrarás como Póster Wanted en el menú."
+        "answer": "Sí — el generador de pósters Wanted es gratis. Abre un caso sobre un amigo, compañero de trabajo u otro humano sin papeleo y comparte el póster. Si el asunto se vuelve administrativamente serio, el caso puede cerrarse más tarde con un certificado. Lo encontrarás como Póster Wanted en el menú."
       },
       {
         "question": "¿Recibiré un certificado de inmediato?",
@@ -938,6 +938,8 @@
     "description": "Todas las personas listadas aquí han presentado suficiente papeleo ante tiburones como para aparecer en el registro público. La Alianza es ficticia. La asignación para conservación de tiburones es real, rastreada y reportada públicamente. El estatus es simbólico, legalmente inútil, científicamente no verificado y estéticamente difícil de discutir.",
     "loadingText": "Buscando en los archivos oceánicos… Cuidado, algunos registros pueden haber sido mordisqueados.",
     "countLabel": "diplomáticos registrados",
+    "eyebrow": "Registro oficial · Copia pública · Formulario SHA-R",
+    "recruitersEyebrow": "Menciones internas · Públicas por error administrativo",
     "mobileStatTotal": "Total",
     "mobileStatFriends": "Amigos",
     "mobileStatNonsnacks": "No-Snacks",
@@ -962,7 +964,7 @@
     "recruitsLabel": "Reclutas",
     "recruitStatusLabel": "Estado de recluta",
     "soloOperator": "Operador solitario",
-    "firstRecruit": "Acaba de reclutar al 1º",
+    "firstRecruit": "Primer testigo asegurado",
     "recruitSummary": "{count} reclutas",
     "actionsLabel": "Acciones",
     "copyAction": "Copiar",
@@ -981,7 +983,22 @@
     "filterBusinessHint": "Zonas Libres de Tiburones → papeleo extendido a todo un local sospechoso.",
     "copyLink": "Copiar enlace del perfil",
     "randomDiplomat": "🎲 Diplomático aleatorio",
-    "newTag": "Nuevo",
+    "newTag": "Tinta fresca",
+    "registryIdShort": "ID de registro",
+    "onFileLabel": "humanos archivados",
+    "statAudit": "Todos los números contados a mano por Luna. Dos veces.",
+    "statChip": "Revisado",
+    "filterBarLine": "La Oficina recuerda: filtrar el registro es administración, no juicio.",
+    "flavorLines": [
+      "No se recibieron objeciones.",
+      "Papeleo intacto. Sospechosamente intacto.",
+      "Expediente revisado. Nadie fue devorado.",
+      "Estado: húmedo pero documentado.",
+      "Luna puso sus iniciales sin comentar.",
+      "Estatus de snack: denegado administrativamente.",
+      "Última auditoría realizada por un tiburón muy pequeño.",
+      "Archivado correctamente al primer intento. Poco habitual."
+    ],
     "nextRankShort": "{count} más → {rank}",
     "topRankStatus": "Rango máximo alcanzado. El papeleo está impresionado.",
     "viralNewest": "Diplomáticos más recientes",

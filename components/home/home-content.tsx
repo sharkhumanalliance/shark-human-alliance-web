@@ -462,7 +462,7 @@ export function HomeContent() {
           </p>
           <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <LocalizedLink
-              href={`/purchase?tier=protected&from=${ANALYTICS_SOURCES.homeFinalCta}`}
+              href={`/purchase?tier=protected&gift=true&from=${ANALYTICS_SOURCES.homeFinalCta}`}
               className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--accent-dark)] sm:w-auto"
             >
               {t("earlyAdopter.purchaseCta")} {"\u2192"}

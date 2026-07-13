@@ -118,6 +118,8 @@ CAPTION (final): `A shark has been called scary again. Press spokesperson Finnle
 
 ALT TEXT: `A blue plush shark in a tiny press office delivers an official statement; a teal plush shark stamps it FILED without looking.`
 
+ASSEMBLY: desk (S1) → cut-away to podium statement (S2) → back to desk for Luna's stamp (S3) → close-up (S4). The location jump is intentional — it reads as edited press footage. Fallback if two-character consistency fails in S3: shoot Luna alone stamping, Finnley stays off-frame (his speech continues as on-screen text).
+
 AUDIO: quiet office ambience or a trending "serious announcement" sound.
 
 PINNED COMMENT (paste as-is): `Finnley has asked the Bureau to relay that he is "doing fine." This has been filed under Optimism.`
@@ -168,7 +170,9 @@ Slides are text-led: build from `public-notice-stat-card` templates + `sha-burea
 
 ## WEEK 2 — Wanted Opens (the growth loop starts)
 
-Link mechanic: IG bio link. Canonical URL `https://sharkhumanalliance.com/wanted?from=social_wanted` — **verify `from=` persists before publishing** (`docs/analytics-events.md`).
+> **Shark Awareness Day is Tue July 14** — publish R2.1 that day and open its caption with `Shark Court is in session on Shark Awareness Day.` (+ hashtag `#SharkAwarenessDay` as the rotating tag). Optionally spend the week-2 trend slot on a straight Bureau memo Reel: `The Bureau acknowledges Shark Awareness Day. The sharks remain unaware. The Bureau finds this fitting.`
+
+Link mechanic: IG bio link. Canonical URL `https://sharkhumanalliance.com/wanted?from=social_wanted` — **implemented 2026-07-06:** `/wanted` persists the campaign origin first-touch; internal CTAs no longer overwrite it (`docs/analytics-events.md`).
 
 ### R2.1 Shark Court #1 (Reel A)
 

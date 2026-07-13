@@ -1,18 +1,13 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { CertificatePreview } from "@/components/certificate/certificate-preview";
 import { LocalizedLink } from "@/components/ui/localized-link";
 import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
-import { formatCertificateDate } from "@/lib/dates";
 import { getTierPriceLabel } from "@/lib/tiers";
 
 export function HeroSection() {
   const t = useTranslations("hero");
-  const tHome = useTranslations("home");
-  const locale = useLocale();
-  const previewDate = formatCertificateDate(new Date(), locale);
 
   const heroActions = (
     <div className="flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-3">
@@ -79,24 +74,21 @@ export function HeroSection() {
                   priority
                 />
               </div>
-              {/* The actual product, visible in the first viewport: a small
-                  live certificate "sheet" pinned over the mascot photo.
-                  Clicking it jumps to the interactive preview below. Props
-                  mirror the preview section's defaults so the QR request is
-                  shared (browser cache) instead of duplicated. */}
+              {/* A static product thumbnail avoids a blank hydration frame in
+                  the hero. The full interactive preview remains below. */}
               <LocalizedLink
                 href="#certificate-preview"
                 aria-label={t("ctaSecondary")}
                 className="absolute -bottom-4 -left-2 block w-36 -rotate-[5deg] rounded-lg bg-white p-1.5 shadow-[0_18px_44px_rgba(22,45,80,0.35)] transition-transform duration-300 ease-out hover:-rotate-2 hover:scale-[1.03] sm:-left-5 sm:w-48"
               >
                 <div className="pointer-events-none overflow-hidden rounded-[4px]">
-                  <CertificatePreview
-                    name={tHome("about.certName")}
-                    tier="protected"
-                    date={previewDate}
-                    registryId="SHA-XXXX-DIP"
-                    template="luxury"
-                    locale={locale}
+                  <Image
+                    src="/certificate-hero-preview.webp"
+                    alt=""
+                    width={480}
+                    height={688}
+                    className="h-auto w-full"
+                    priority
                   />
                 </div>
               </LocalizedLink>

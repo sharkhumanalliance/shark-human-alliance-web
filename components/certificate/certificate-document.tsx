@@ -52,6 +52,9 @@ export type CertificateDocumentProps = {
   assetMode?: "preview" | "full";
   paperFormat?: PaperFormat;
   locale?: string;
+  /** Sequential collector number shown as a small "No. 84 —" prefix in the
+   *  footer line. Omitted on previews (no member yet). */
+  issueNumber?: number;
 };
 
 function getTierColorClass(tier: string) {
@@ -78,6 +81,7 @@ export function CertificateDocument({
   assetMode = priorityImages ? "full" : "preview",
   paperFormat = "a4",
   locale,
+  issueNumber,
 }: CertificateDocumentProps) {
   const copy = getCertificateDisplayCopy(locale);
   const tierKey = getCertificateTierKey(tier);
@@ -127,6 +131,9 @@ export function CertificateDocument({
   const diplomaticNote = getCertificateDiplomaticNote(tokenBase, locale, tier);
   const footerAside = getCertificateFooterAside(tokenBase, locale);
   const displayRegistryId = formatRegistryIdForDisplay(registryId);
+  // Collector line prefix for the footer. Kept deliberately short (~9 chars)
+  // so it never pushes the mm-calibrated footer blocks onto an extra line.
+  const issuePrefix = issueNumber ? `${copy.issueNoLabel} ${issueNumber} — ` : "";
   const resolvedTemplate = normalizeTemplate(template);
   const isClassic = resolvedTemplate === "classic";
   const isLuxury = resolvedTemplate === "luxury";
@@ -304,7 +311,7 @@ export function CertificateDocument({
           </div>
 
           <footer className="lux-a4-footer-block">
-            {copy.symbolicDisclaimer}
+            {issuePrefix}{copy.symbolicDisclaimer}
           </footer>
         </>
       )}
@@ -388,7 +395,7 @@ export function CertificateDocument({
           </div>
 
           <footer className="lux-footer-block">
-            {copy.symbolicDisclaimer}{" "}
+            {issuePrefix}{copy.symbolicDisclaimer}{" "}
             &ldquo;{footerAside}&rdquo;
           </footer>
         </>
@@ -471,7 +478,7 @@ export function CertificateDocument({
               two-line block in the narrow strip between the seal's bottom
               and the printed bottom border. */}
           <footer className="cls-disclaimer">
-            {copy.symbolicDisclaimer}{" "}
+            {issuePrefix}{copy.symbolicDisclaimer}{" "}
             &ldquo;{footerAside}&rdquo;
           </footer>
         </>
@@ -552,7 +559,7 @@ export function CertificateDocument({
           </div>
 
           <div className="playful-footer-note">
-            {copy.symbolicDisclaimer} &ldquo;{footerAside}&rdquo;
+            {issuePrefix}{copy.symbolicDisclaimer} &ldquo;{footerAside}&rdquo;
           </div>
         </section>
       )}

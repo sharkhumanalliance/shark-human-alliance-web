@@ -78,13 +78,14 @@ Big Canvas-based generator in `components/wanted/wanted-content.tsx`. `drawPoste
 - **Reciprocity (accuse-back):** `/wanted/case` (`wanted-case-content.tsx`) blame panel + header shortcut issue a fresh poster for the blamed person via `/wanted?name=<x>&by=<accuser>`. The generator carries `by` into its share URL so the next case shows "Filed by …". `by`/`from`/`msg` are third-party names passed ONLY in URLs — never persisted to Postgres. Events: `wanted_accuse_back`, `wanted_poster_multi_tag`.
 - Download/share exports tilt the canvas deterministically on an off-screen canvas before `toBlob` (A4 ±2–3°; Story ±0.65–1° with a scale-fit that preserves 9:16). Preview stays straight. Tone and format switches keep `generated` (and the multi-name queue) alive — only name edits reset the panel.
 - Procedural distress on WANTED + parchment grain via `mulberry32(seededHash)` — no font assets.
+- Social watermark: `drawPoster` prints `@sharkhumanalliance` centered on the bottom border strip (cream `rgba(246,236,216,0.72)` on the dark frame, `s(isStory ? 58 : 34)`, both formats). It sits in the margin below the paper, so it survives the tilted exports too — keep it when touching poster layout.
 - OG image (1200×630) is generated dynamically by `app/og/wanted/route.tsx` (uses `next/og`). Shared `/wanted/case?name=...&tone=...` URLs get a personalized preview; the generic `/wanted` page is seeded with a sample name. Share button in `wanted-content.tsx` emits the long `/wanted/case?...` URL (not `/w?...`) because some scrapers do not follow redirects. See `public/og/README.md`.
 - Case numbers must stay identical on the poster canvas and `/wanted/case` — both derive from `nameHash(displayName)` (no tone salt); the QR handoff depends on the two documents agreeing.
 - Case-file header card on `/wanted/case` keeps `bureauMood` as a chip next to the case number; `filedBecause` / `remedy` live in the collapsed "Full case file" dossier alongside the other administrative metadata.
 
 ## Homepage (`components/home/home-content.tsx`)
 
-Live certificate customizer: `previewName` input + template selector → live `CertificatePreview`; the buy/gift CTAs carry `&name=`, `&template=` and canonical `&from=home_preview_cta` into `/purchase`. Hero, tier cards, and the final CTA also carry canonical `from=` (`hero`, `home_tier_card`, `home_final_cta`). `components/home/mobile-sticky-cta.tsx` is a mobile-only bottom CTA that appears after the hero scrolls past (IntersectionObserver + matchMedia desktop guard, `sessionStorage` dismiss, `prefers-reduced-motion`, safe-area inset).
+Live certificate customizer: `previewName` input + template selector → live `CertificatePreview`; the buy/gift CTAs carry `&name=`, `&template=` and canonical `&from=home_preview_cta` into `/purchase`. Hero, tier cards, and the final CTA also carry canonical `from=` (`hero`, `home_tier_card`, `home_final_cta`). The hero certificate overlay and the homepage OG image are STATIC snapshots (`public/certificate-hero-preview.webp`, `public/mascots/homepage-hero-og-certificate.jpg`) — regenerate both whenever the luxury certificate design or copy changes. `components/home/mobile-sticky-cta.tsx` is a mobile-only bottom CTA that appears after the hero scrolls past (IntersectionObserver + matchMedia desktop guard, `sessionStorage` dismiss, `prefers-reduced-motion`, safe-area inset).
 
 ## Post-purchase share
 
@@ -120,7 +121,7 @@ See `.env.example`. Required: `DATABASE_URL`, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_
 
 ## Tracked GA4 events (`components/analytics.tsx`)
 
-Canonical event contract lives in `docs/analytics-events.md`. `purchase` is the only GA4 key event. Ecommerce events use `items[]` with certificate tier as the item, and wanted/gift/sticky funnel events use canonical `source` values from `lib/analytics-events.ts` (`wanted_gift_cta`, `wanted_case_cta`, `wanted_footer_cta`, `gift_reveal`, `sticky_cta`, etc.). `view_item`, `begin_checkout`, and `purchase` re-emit canonical `source` from `sessionStorage["sha_attribution_source"]` so funnel reports survive Stripe's redirect. Paid Stripe purchases are also sent from `/api/webhook` through GA4 Measurement Protocol when analytics consent and GA client id are present; do not send PII to GA4.
+Canonical event contract lives in `docs/analytics-events.md`. `purchase` is the only GA4 key event. Ecommerce events use `items[]` with certificate tier as the item, and wanted/gift/sticky funnel events use canonical `source` values from `lib/analytics-events.ts` (`wanted_gift_cta`, `wanted_case_cta`, `wanted_footer_cta`, `gift_reveal`, `sticky_cta`, etc.). `view_item`, `begin_checkout`, and `purchase` re-emit canonical `source` from `sessionStorage["sha_attribution_source"]` so funnel reports survive Stripe's redirect. `social_*` values are campaign origins persisted first-touch on `/wanted` and `/purchase` — internal CTA sources never overwrite a stored campaign origin. Paid Stripe purchases are also sent from `/api/webhook` through GA4 Measurement Protocol when analytics consent and GA client id are present; do not send PII to GA4.
 
 ## Social content (`docs/social/`)
 
@@ -128,8 +129,9 @@ For any "next post" / social production request: follow `docs/social/production-
 
 ## Other constraints
 
-- `middleware.ts` uses deprecated convention (Next 16 wants `proxy`). Warning only.
+- Routing middleware lives in root `proxy.ts` (Next 16 convention; the old `middleware.ts` note is obsolete). Its matcher skips `/api`, `/og`, `/_next`, `/_vercel` and dotted paths — those requests render OUTSIDE `app/[locale]`: `app/layout.tsx` is a pass-through and `app/not-found.tsx` provides the `<html>/<body>` there. Keep both, otherwise dev logs the "missing root layout tags" warning (Chrome DevTools' `/.well-known/...` probe triggers it constantly).
 - `data/members.json` historical, unused. All data in Postgres.
 - `wanted.socialProofText` is hand-maintained (currently "18 wanted posters issued this week"). Bump manually until real analytics.
-- `lib/qr-svg.ts` `getQrCodeUrl` hits an external QR API — swap to local `qrcode` npm if it ever needs to go offline.
+- `lib/qr-svg.ts` renders QR codes locally (`qrcode` npm → inline SVG data URI; navy modules `#15324d` on a white 2-module quiet zone). No external QR API.
+- `issue_number` is the sequential collector number (migration `db/migration-006-issue-number.sql`: backfill + sequence default). App code treats it as optional (`member.issueNumber`); certificates render it as a short `No. N —` footer prefix only when present.
 - `registry_code` is the public registry identifier. Migration stage 1 (`db/migration-004-registry-code.sql`) and hardening stage 2 (`db/migration-005-registry-code-not-null.sql`) have been run against production.

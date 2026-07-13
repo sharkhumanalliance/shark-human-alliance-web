@@ -31,6 +31,9 @@ export interface Member {
   registryVisibility: RegistryVisibility;
   dedicationReviewStatus: DedicationReviewStatus;
   erasedAt?: string;
+  /** Sequential collector number (1-based issue order). Optional until
+   *  db/migration-006-issue-number.sql has run. */
+  issueNumber?: number;
 }
 
 /** Shape of a row coming from the `members` table. */
@@ -56,6 +59,7 @@ interface MemberRow {
   registry_visibility: RegistryVisibility;
   dedication_review_status: DedicationReviewStatus;
   erased_at: string | null;
+  issue_number?: number | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -92,6 +96,7 @@ function rowToMember(row: MemberRow): Member {
     registryVisibility: row.registry_visibility ?? "private",
     dedicationReviewStatus: row.dedication_review_status ?? "approved",
     erasedAt: row.erased_at ?? undefined,
+    issueNumber: row.issue_number ?? undefined,
   };
 }
 

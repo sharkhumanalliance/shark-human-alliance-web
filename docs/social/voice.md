@@ -124,7 +124,7 @@ Public-record statements attributable to Finnley as press spokesperson. Use as p
 - `The Bureau remains optimistic that shark-human relations can be improved administratively.`
 - `The Bureau cannot speak for all sharks. No shark has so far objected.`
 
-First on the record (post 1.3, Finnley introduction): `The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary.`
+First on the record (relaunch post R1.1, Emergency PR Meeting — the originally planned static post 1.3 was never published): `The Bureau wishes to clarify that the 1975 film was not, in fact, a documentary.`
 
 ### Wanted
 

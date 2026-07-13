@@ -29,9 +29,9 @@ import {
   type PublicTierKey,
 } from "@/lib/tiers";
 import {
-  ANALYTICS_ATTRIBUTION_SOURCE_KEY,
   buildCertificateAnalyticsItem,
-  normalizeAnalyticsAttributionSource,
+  persistAttributionSource,
+  resolveAttributionSource,
 } from "@/lib/analytics-events";
 
 const REFERRAL_CODE_PATTERN = /^SHA-[A-Z0-9]{4}$/;
@@ -154,12 +154,10 @@ function PurchaseFlowInner() {
   const referredByFromUrl = getValidReferralCode(searchParams.get("ref"));
   const wasCanceled = searchParams.get("canceled") === "true";
   // Cross-funnel attribution. Canonical `from` values are set on CTAs that
-  // link into /purchase from other surfaces. We persist them into
-  // sessionStorage so it survives the Stripe round-trip and can be re-emitted
-  // on the success page's `purchase` event for funnel analysis in GA4.
-  const attributionSource = normalizeAnalyticsAttributionSource(
-    searchParams.get("from"),
-  );
+  // link into /purchase from other surfaces. A stored campaign origin
+  // (social_*) outranks internal CTA sources so the social funnel survives
+  // the wanted -> purchase hop (first-touch wins; see lib/analytics-events).
+  const attributionSource = resolveAttributionSource(searchParams.get("from"));
 
   const [referredByCode, setReferredByCode] = useState(referredByFromUrl);
   const [tier, setTier] = useState<PublicTierKey>(initialTier);
@@ -240,22 +238,12 @@ function PurchaseFlowInner() {
     }
   }, [referredByCode]);
 
-  // Persist canonical attribution source from the URL into
-  // sessionStorage. Stripe's redirect to /purchase/success would otherwise
-  // drop this query param, breaking funnel attribution.
+  // Persist the effective attribution source into sessionStorage. Stripe's
+  // redirect to /purchase/success would otherwise drop it, breaking funnel
+  // attribution. Campaign origins are first-touch (never overwritten by
+  // internal CTA sources).
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (attributionSource) {
-      try {
-        window.sessionStorage.setItem(
-          ANALYTICS_ATTRIBUTION_SOURCE_KEY,
-          attributionSource,
-        );
-      } catch {
-        // sessionStorage may be unavailable in private mode — silent fallback
-        // means the purchase event simply ships without a source.
-      }
-    }
+    persistAttributionSource(attributionSource);
   }, [attributionSource]);
 
   // Track view_item on initial load

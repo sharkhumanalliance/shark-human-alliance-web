@@ -15,6 +15,9 @@ export const ANALYTICS_SOURCES = {
   homeTierCard: "home_tier_card",
   homeWanted: "home_wanted_cta",
   impactCta: "impact_cta",
+  socialBio: "social_bio",
+  socialGift: "social_gift",
+  socialWanted: "social_wanted",
   stickyCta: "sticky_cta",
   wantedCase: "wanted_case",
   wantedCaseCta: "wanted_case_cta",
@@ -75,6 +78,48 @@ function normalizeSourceValue(value?: unknown) {
     .replace(/_+/g, "_")
     .replace(/^_|_$/g, "")
     .slice(0, 64);
+}
+
+// Campaign origins (social_*) identify where a session STARTED (bio link,
+// social post). They are first-touch: once stored, internal surface CTAs
+// (wanted_gift_cta, sticky_cta, ...) must not overwrite them, otherwise the
+// social -> wanted -> purchase funnel loses its origin on the first hop.
+const CAMPAIGN_SOURCE_PREFIX = "social_";
+
+export function isCampaignAnalyticsSource(value?: string | null) {
+  return !!value && value.startsWith(CAMPAIGN_SOURCE_PREFIX);
+}
+
+export function getStoredAttributionSource(): AnalyticsSource | "" {
+  if (typeof window === "undefined") return "";
+  try {
+    return normalizeAnalyticsAttributionSource(
+      window.sessionStorage.getItem(ANALYTICS_ATTRIBUTION_SOURCE_KEY),
+    );
+  } catch {
+    return "";
+  }
+}
+
+export function resolveAttributionSource(value?: unknown): AnalyticsSource | "" {
+  const normalized = normalizeAnalyticsAttributionSource(value);
+  const stored = getStoredAttributionSource();
+  if (isCampaignAnalyticsSource(stored) && !isCampaignAnalyticsSource(normalized)) {
+    return stored;
+  }
+  return normalized;
+}
+
+export function persistAttributionSource(value?: unknown): AnalyticsSource | "" {
+  const resolved = resolveAttributionSource(value);
+  if (!resolved || typeof window === "undefined") return resolved;
+  try {
+    window.sessionStorage.setItem(ANALYTICS_ATTRIBUTION_SOURCE_KEY, resolved);
+  } catch {
+    // sessionStorage unavailable (private mode) — events still carry the
+    // in-memory source; only the Stripe round-trip loses it.
+  }
+  return resolved;
 }
 
 export function buildCertificateAnalyticsItem(

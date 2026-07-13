@@ -28,10 +28,16 @@ export function getQrCodeUrl(data: string, size = 200): string {
     }
   }
 
+  // Brand-styled: navy modules on a white quiet zone (2 modules on each
+  // side). The white backing keeps the code scannable on parchment and
+  // poster backgrounds; navy stays well within scanner contrast limits.
+  const margin = 2;
+  const total = count + margin * 2;
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" ` +
-    `viewBox="0 0 ${count} ${count}" shape-rendering="crispEdges">` +
-    `<path d="${path}" fill="#000"/></svg>`;
+    `viewBox="0 0 ${total} ${total}" shape-rendering="crispEdges">` +
+    `<rect width="${total}" height="${total}" fill="#ffffff"/>` +
+    `<path d="${path}" fill="#15324d" transform="translate(${margin} ${margin})"/></svg>`;
 
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }

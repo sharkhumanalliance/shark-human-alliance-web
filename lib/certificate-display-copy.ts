@@ -28,6 +28,7 @@ const COPY = {
     finnleyPlayfulAside: "(and Optimist)",
     lunaPlayfulRole: "Head of Culinary Inspection &",
     lunaPlayfulAside: "Dept. of Misunderstanding Prevention",
+    issueNoLabel: "No.",
     symbolicDisclaimer:
       "This document is officially symbolic and diplomatically non-binding. Sharks cannot read, do not recognize human bureaucracy, and remain largely unaware of our existence. Your purchase supports real ocean conservation - which is more than most certificates can say.",
     playfulIntro: "This certifies that",
@@ -103,6 +104,7 @@ const COPY = {
     finnleyPlayfulAside: "(y optimista)",
     lunaPlayfulRole: "Jefa de Inspección Culinaria y",
     lunaPlayfulAside: "Depto. de Prevención de Malentendidos",
+    issueNoLabel: "N.º",
     symbolicDisclaimer:
       "Este documento es oficialmente simbólico y diplomáticamente no vinculante. Los tiburones no saben leer, no reconocen la burocracia humana y, en general, desconocen nuestra existencia. Tu compra apoya conservación oceánica real - que ya es más de lo que pueden decir la mayoría de certificados.",
     playfulIntro: "Esto certifica que",

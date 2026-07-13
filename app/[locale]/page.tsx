@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t("title"),
       description: t("description"),
       type: "website",
-      images: [{ url: "/mascots/homepage-hero-og.jpg", width: 1200, height: 630, alt: "Shark Human Alliance mascots Finnley and Luna" }],
+      images: [{ url: "/mascots/homepage-hero-og-certificate.jpg", width: 1200, height: 630, alt: "Finnley and Luna presenting a Shark Human Alliance certificate" }],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["/mascots/homepage-hero-og.jpg"],
+      images: ["/mascots/homepage-hero-og-certificate.jpg"],
     },
   };
 }

@@ -7,7 +7,10 @@ import { LocalizedLink } from "@/components/ui/localized-link";
 import { trackEvent } from "@/components/analytics";
 import { buildAbsoluteLocalizedUrl } from "@/lib/navigation";
 import { getTierPriceLabel } from "@/lib/tiers";
-import { ANALYTICS_SOURCES } from "@/lib/analytics-events";
+import {
+  ANALYTICS_SOURCES,
+  persistAttributionSource,
+} from "@/lib/analytics-events";
 
 function nameHash(name: string): number {
   let hash = 0;
@@ -417,6 +420,22 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
       ctx.beginPath();
       ctx.roundRect(marginX, marginY, paperWidth, paperHeight, s(16));
       ctx.fill();
+
+      // Social handle printed on the bottom border strip — every shared or
+      // printed poster doubles as an account pointer. Deliberately subtle:
+      // cream ink on the dark frame, centered in the empty margin below the
+      // paper, so it never competes with the poster composition itself.
+      // Story needs a larger base size (half-width canvas → ~11 px after
+      // phone downscale, same target as the charges text rule above).
+      ctx.fillStyle = "rgba(246, 236, 216, 0.72)";
+      ctx.font = `600 ${s(isStory ? 58 : 34)}px 'Geist', sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.letterSpacing = `${s(3)}px`;
+      ctx.fillText("@sharkhumanalliance", width / 2, height - marginY / 2);
+      ctx.letterSpacing = "0px";
+      ctx.textBaseline = "alphabetic";
+      ctx.textAlign = "start";
 
       // Procedural paper grain — subtle noise dots over the parchment so it
       // doesn't read as a flat fill. Deterministic per seed.
@@ -1595,6 +1614,17 @@ export function WantedContent({ initialName, initialBy }: WantedContentProps = {
     t: selectedTone,
     ...(name.trim() ? { n: name.trim() } : {}),
   }).toString()}`;
+  // Campaign attribution: social posts and the bio link send visitors here
+  // with `?from=social_wanted` / `?from=social_bio`. Persist it (first-touch)
+  // so the origin survives the wanted -> purchase -> Stripe funnel; internal
+  // CTA sources below never overwrite a stored campaign origin.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    persistAttributionSource(
+      new URLSearchParams(window.location.search).get("from"),
+    );
+  }, []);
+
   // Attribution: `from=wanted_gift_cta` is read by /purchase, persisted into
   // sessionStorage and re-emitted on view_item / purchase events so we can
   // build the wanted → purchase funnel in GA4. The legacy `ref=wanted` was

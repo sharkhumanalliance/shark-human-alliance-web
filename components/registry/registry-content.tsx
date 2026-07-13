@@ -54,6 +54,14 @@ function getInitials(name: string) {
     .join("");
 }
 
+function flavorIndex(name: string) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i += 1) {
+    hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash);
+}
+
 function getTierAvatarClass(tier: PublicTierKey) {
   return AVATAR_STYLE_BY_TIER[tier];
 }
@@ -103,7 +111,10 @@ export function RegistryContent() {
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [lookupError, setLookupError] = useState("");
-  const [explainedFilter, setExplainedFilter] = useState<TierFilter>("all");
+  const flavorLines = useMemo(
+    () => (t.raw("flavorLines") as string[]) ?? [],
+    [t]
+  );
 
   useEffect(() => {
     fetch("/api/members")
@@ -202,10 +213,6 @@ export function RegistryContent() {
     },
   ];
 
-  const explainedFilterDescription =
-    filters.find((item) => item.key === explainedFilter)?.description ??
-    filters[0].description;
-
   const tierSummaryStats = [
     {
       label: t("filterProtected"),
@@ -241,15 +248,6 @@ export function RegistryContent() {
     [getMemberHref, locale]
   );
 
-  const copyReferralCode = useCallback((memberId: string, referralCode?: string) => {
-    if (!referralCode) return;
-
-    navigator.clipboard.writeText(referralCode).then(() => {
-      setCopiedId(`referral:${memberId}`);
-      setTimeout(() => setCopiedId(null), 2000);
-    });
-  }, []);
-
   const handleOpenRecord = useCallback(() => {
     if (!normalizedQuery) return;
 
@@ -276,7 +274,10 @@ export function RegistryContent() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">
             <div className="max-w-3xl">
-              <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
+              <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                {t("eyebrow")}
+              </p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] sm:text-5xl">
                 {t("title")}
               </h1>
               <p className="mt-3 max-w-3xl text-balance text-lg leading-7 text-[var(--muted)]">
@@ -288,10 +289,16 @@ export function RegistryContent() {
             </div>
 
             {!loading ? (
-              <aside className="hidden rounded-[28px] border border-[var(--border)] bg-white px-5 py-5 shadow-sm sm:px-6 lg:block">
+              <aside className="relative hidden rounded-[28px] border border-[var(--border)] bg-white px-5 py-5 shadow-sm sm:px-6 lg:block">
+                <span
+                  aria-hidden="true"
+                  className="absolute -right-3 -top-3 rotate-[8deg] rounded-full border-2 border-[var(--border)] bg-white px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--muted)] shadow-sm"
+                >
+                  {t("statChip")}
+                </span>
                 <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                    {t("countLabel")}
+                    {t("onFileLabel")}
                   </p>
                   <p className="mt-2 text-3xl font-semibold tracking-tight text-[var(--brand-dark)] tabular-nums sm:text-4xl">
                     {members.length}
@@ -314,6 +321,9 @@ export function RegistryContent() {
                     </div>
                   ))}
                 </div>
+                <p className="mt-3 text-xs italic leading-5 text-[var(--muted)]">
+                  {t("statAudit")}
+                </p>
               </aside>
             ) : null}
           </div>
@@ -411,12 +421,7 @@ export function RegistryContent() {
                       key={item.key}
                       type="button"
                       title={item.description}
-                      onMouseEnter={() => setExplainedFilter(item.key)}
-                      onFocus={() => setExplainedFilter(item.key)}
-                      onClick={() => {
-                        setFilter(item.key);
-                        setExplainedFilter(item.key);
-                      }}
+                      onClick={() => setFilter(item.key)}
                       aria-pressed={filter === item.key}
                       className={`min-h-[44px] rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
                         filter === item.key
@@ -443,8 +448,8 @@ export function RegistryContent() {
               </p>
             </div>
 
-            <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-              {explainedFilterDescription}
+            <p className="mt-2 text-xs italic leading-5 text-[var(--muted)]">
+              {t("filterBarLine")}
             </p>
 
             <div aria-live="polite" className="mt-3 min-h-6">
@@ -459,7 +464,10 @@ export function RegistryContent() {
 
         <div className="mx-auto mt-10 max-w-6xl px-4 sm:mt-12 sm:px-6">
           {loading ? (
-            <div role="status" aria-live="polite" aria-label={t("loadingText")}>
+            <div role="status" aria-live="polite">
+              <p className="mb-4 text-sm italic leading-6 text-[var(--muted)]">
+                {t("loadingText")}
+              </p>
               <div className="space-y-3">
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
@@ -529,6 +537,10 @@ export function RegistryContent() {
                   const memberHref = getMemberHref(publicMemberId);
                   const memberDate = formatCertificateDate(member.date, locale);
                   const newMember = isNewMember(member.date);
+                  const flavorLine =
+                    flavorLines.length > 0
+                      ? flavorLines[flavorIndex(member.name) % flavorLines.length]
+                      : "";
 
                   return (
                     <article
@@ -543,7 +555,7 @@ export function RegistryContent() {
                           router.push(buildLocalizedPath(locale, memberHref));
                         }
                       }}
-                      className={`group relative cursor-pointer overflow-hidden rounded-[22px] border ${borderClass} bg-white px-5 py-4 shadow-sm transition-colors hover:bg-[var(--surface-soft)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/25`}
+                      className={`group relative cursor-pointer overflow-hidden rounded-[22px] border border-l-4 ${borderClass} bg-white px-5 py-4 shadow-sm transition-colors hover:bg-[var(--surface-soft)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/25`}
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div className="relative z-10 flex min-w-0 items-start gap-3">
@@ -590,7 +602,7 @@ export function RegistryContent() {
                               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
                                 {t("memberSince")}
                               </p>
-                              <p className="mt-1 whitespace-nowrap">{memberDate}</p>
+                              <p className="mt-1 whitespace-nowrap font-mono">{memberDate}</p>
                             </div>
                             <div>
                               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
@@ -620,39 +632,16 @@ export function RegistryContent() {
                             >
                               {copiedId === publicMemberId ? t("copiedShort") : t("copyAction")}
                             </button>
-                            <LocalizedLink
-                              href={memberHref}
-                              className="inline-flex min-h-[44px] items-center rounded-lg bg-[var(--brand)] px-3 py-2 text-xs font-semibold !text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
-                              style={{ color: "#ffffff" }}
-                            >
-                              {t("openAction")}
-                            </LocalizedLink>
                           </div>
                         </div>
                       </div>
-                      <div className="relative z-10 mt-3 border-t border-[var(--border)] pt-3">
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            event.stopPropagation();
-                            copyReferralCode(publicMemberId, member.referralCode);
-                          }}
-                          disabled={!member.referralCode}
-                          className="inline-flex min-h-[44px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
-                        >
-                          <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
-                            {t("referralCodeLabel")}
-                          </span>
-                          <span className="truncate font-mono text-xs font-semibold text-[var(--brand-dark)]">
-                            {member.referralCode || "-"}
-                          </span>
-                          <span className="shrink-0 text-xs font-bold text-[var(--brand)]">
-                            {copiedId === `referral:${publicMemberId}`
-                              ? t("copiedShort")
-                              : t("copyLinkShort")}
-                          </span>
-                        </button>
+                      <div className="relative z-10 mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] pt-3">
+                        <span className="rounded-md border border-dashed border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 font-mono text-[11px] font-semibold text-[var(--brand-dark)]">
+                          {t("registryIdShort")} · {member.registryCode || "—"}
+                        </span>
+                        <span className="text-xs italic leading-5 text-[var(--muted)]">
+                          {flavorLine}
+                        </span>
                       </div>
                       <div
                         className="absolute inset-x-0 bottom-0 z-10 h-1 bg-[var(--surface-soft)]"
@@ -697,6 +686,10 @@ export function RegistryContent() {
                   const memberHref = getMemberHref(publicMemberId);
                   const memberDate = formatCertificateDate(member.date, locale);
                   const newMember = isNewMember(member.date);
+                  const flavorLine =
+                    flavorLines.length > 0
+                      ? flavorLines[flavorIndex(member.name) % flavorLines.length]
+                      : "";
 
                   return (
                     <article
@@ -711,7 +704,7 @@ export function RegistryContent() {
                           router.push(buildLocalizedPath(locale, memberHref));
                         }
                       }}
-                      className={`relative cursor-pointer overflow-hidden rounded-2xl border ${borderClass} bg-white px-4 py-4 shadow-sm transition hover:bg-[var(--surface-soft)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/25`}
+                      className={`relative cursor-pointer overflow-hidden rounded-2xl border border-l-4 ${borderClass} bg-white px-4 py-4 shadow-sm transition hover:bg-[var(--surface-soft)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/25`}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex min-w-0 items-start gap-3">
@@ -733,7 +726,7 @@ export function RegistryContent() {
                                 </span>
                               ) : null}
                             </div>
-                            <p className="mt-1 text-xs text-[var(--muted)]">{memberDate}</p>
+                            <p className="mt-1 font-mono text-xs text-[var(--muted)]">{t("memberSince")} {memberDate}</p>
                           </div>
                         </div>
                         {recruiterBadgeLabel ? (
@@ -763,29 +756,13 @@ export function RegistryContent() {
                         </span>
                       </div>
 
-                      <div className="mt-3 flex flex-col gap-1.5 border-t border-[var(--border)] pt-3">
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            event.stopPropagation();
-                            copyReferralCode(publicMemberId, member.referralCode);
-                          }}
-                          disabled={!member.referralCode}
-                          className="inline-flex min-h-[44px] max-w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-left transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
-                        >
-                          <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
-                            {t("referralCodeLabel")}
-                          </span>
-                          <span className="truncate font-mono text-xs font-semibold text-[var(--brand-dark)]">
-                            {member.referralCode || "-"}
-                          </span>
-                          <span className="shrink-0 text-xs font-bold text-[var(--brand)]">
-                            {copiedId === `referral:${publicMemberId}`
-                              ? t("copiedShort")
-                              : t("copyLinkShort")}
-                          </span>
-                        </button>
+                      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] pt-3">
+                        <span className="rounded-md border border-dashed border-[var(--border)] bg-[var(--surface-soft)] px-2.5 py-1 font-mono text-[11px] font-semibold text-[var(--brand-dark)]">
+                          {t("registryIdShort")} · {member.registryCode || "—"}
+                        </span>
+                        <span className="text-xs italic leading-5 text-[var(--muted)]">
+                          {flavorLine}
+                        </span>
                       </div>
 
                       <div className="mt-3 flex items-center justify-end gap-2">
@@ -801,13 +778,6 @@ export function RegistryContent() {
                           >
                             {copiedId === publicMemberId ? t("copiedShort") : t("copyAction")}
                           </button>
-                        <LocalizedLink
-                          href={memberHref}
-                          className="inline-flex min-h-[44px] items-center rounded-lg bg-[var(--brand)] px-3 py-2 text-xs font-semibold !text-white transition-colors duration-300 ease-out hover:bg-[var(--brand-dark)]"
-                          style={{ color: "#ffffff" }}
-                        >
-                          {t("openAction")}
-                        </LocalizedLink>
                         </div>
                       <div
                         className="absolute inset-x-0 bottom-0 h-1 bg-[var(--surface-soft)]"
@@ -838,7 +808,10 @@ export function RegistryContent() {
         <section data-reveal className="pb-12">
           <div className="mx-auto max-w-6xl space-y-5 px-4 sm:px-6">
             <section className="rounded-[28px] border border-[var(--border)] bg-white p-6 shadow-sm sm:p-7">
-              <h2 className="text-lg font-semibold text-[var(--brand-dark)]">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                {t("recruitersEyebrow")}
+              </p>
+              <h2 className="mt-1 text-lg font-semibold text-[var(--brand-dark)]">
                 {t("viralRecruiters")}
               </h2>
               <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
@@ -855,8 +828,18 @@ export function RegistryContent() {
                       className="grid gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm sm:grid-cols-[minmax(0,1fr)_minmax(170px,0.8fr)] sm:items-center"
                     >
                       <div className="flex min-w-0 items-center gap-3">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--brand-dark)] text-lg font-bold text-white tabular-nums">
-                          {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`}
+                        <div
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold tabular-nums ring-2 ${
+                            index === 0
+                              ? "bg-amber-100 text-amber-900 ring-amber-400"
+                              : index === 1
+                                ? "bg-slate-100 text-slate-700 ring-slate-300"
+                                : index === 2
+                                  ? "bg-orange-100 text-orange-900 ring-orange-300"
+                                  : "bg-[var(--brand-dark)] text-white ring-[var(--brand-dark)]"
+                          }`}
+                        >
+                          {`#${index + 1}`}
                         </div>
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-[var(--brand-dark)]">
